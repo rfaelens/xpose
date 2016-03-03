@@ -7,7 +7,6 @@ The `ggxpose` package was designed as a ggplot2-based alternative to the lattice
 
 `ggxpose` was designed to bring  [`ggplot2`](https://github.com/hadley/ggplot2). quality graphs to `xpose` and allow a high level of customization. A working knowledge of the `ggplot2` package is highly recommended.
 
-![example](inst/img/default.png)
 
 # Installation
 
@@ -41,6 +40,8 @@ xpose_data(runno = '037') %>%
 dv_vs_ipred()
 ```
 This specific command will dipslay the DV vs. IPRED plot in the preview window of R.
+
+![example](inst/img/default.png)
 
 
 ### Plot type
