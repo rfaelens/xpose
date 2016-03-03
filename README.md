@@ -1,10 +1,3 @@
----
-title: "ReadMe"
-author: "Benjamin Guiastrennec"
-date: "March 3, 2016"
-output: html_document
----
-
 # Warning
 This is a "prototype" package and is subject to major change. Your work should not rely on it. We recommend to use [`xpose4`](https://github.com/andrewhooker/xpose4) instead.
 
@@ -14,7 +7,7 @@ The `ggxpose` package was designed as a ggplot2-based alternative to the lattice
 
 `ggxpose` was designed to bring  [`ggplot2`](https://github.com/hadley/ggplot2). quality graphs to `xpose` and allow a high level of customization. A working knowledge of the `ggplot2` package is highly recommended.
 
-![example](inst/img/default.png)
+![example](inst/img/default.png | width=75)
 
 # Installation
 
@@ -86,7 +79,7 @@ In addition the `by` argument can be used to quicky facet according to a given v
 dv_vs_ipred(xpdb, by = STUDY, aes(smooth_color = STUDY, smooth_fill = STUDY))
 ```
 
-![facet](inst/img/facet.png)
+![facet](inst/img/facet.png | width=75)
 
 
 ### Additional layers
@@ -109,7 +102,7 @@ dv_vs_ipred(xpdb,
                                    size = 0.4)))
 ```
 
-![layers](inst/img/layers.png)
+![layers](inst/img/layers.png | width=75)
 
 Layers can also be used to modify the aesthetics scales for example  `scale_color_manual()`.
 
