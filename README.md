@@ -155,6 +155,11 @@ dv_vs_ipred(xpdb, xscale_breaks = c(0, 0.15, 0.3),
 ## Multiple pages
 In some cases faceting may result in numerous panels. ggxpose bring the multiple page faceting feature to `ggplot2` through the function `multiple_pages()`. This function works in the spirit of `facet_wrap()` in `ggplot2`, simply define the variable(s) to use for faceting and define the number of rows (`nrow`) and columns (`ncol`). The function will then automatically generate multiple pages according to the given layout.
 
+```
+xpose_data(runno = '037') %>% 
+ dv_vs_ipred() %>%
+ multiple_pages(by = 'STUDY')
+```
 ![multiple1](inst/img/multiple_1.jpg) ![multiple2](inst/img/multiple_2.jpg)
 
 *Note: this is an experimental feature and it is currently not possible to store the pages in an R object.*
@@ -163,9 +168,9 @@ In some cases faceting may result in numerous panels. ggxpose bring the multiple
 ## Saving plots
 Saving plots in `ggxpose` is very simple, the function `xpose_save()` was designed to automatically save the plot after the name of the run and the `ggxpose` function that was used to generate the plot.
 ```
-xpose_data(runno = '037')
-dv_vs_ipred(xpdb) %>% 
-  xpose_save()
+xpose_data(runno = '037') %>% 
+ dv_vs_ipred() %>% 
+ xpose_save()
 ```
 This command would save the graphs DV vs. IPRED under **run037_dv_vs_ipred.pdf** in the current working directory. Multiple options such as manual name (`name`), the file format (`format = "pdf", "jpg" or "png"`), page size (`width`, `height`) are available.
 
