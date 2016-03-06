@@ -1,9 +1,9 @@
-#' Allows \code{facet_wrap()} to spread over multiple pages
+#' Allows \code{facet_wrap()} to work on multiple pages
 #'
 #' @description Allows \code{ggplot2} panels to be plotted over multiple pages.
 #'
 #' @param plot a ggplot object
-#' @param facets variables to facet by
+#' @param by variables to facet by
 #' @param nrow number of rows
 #' @param ncol number of columns
 #' @param scales should scales be fixed ("fixed", the default), free ("free"),
@@ -17,23 +17,23 @@
 #' geom_point(alpha = 0.5) +
 #' labs(x = 'Price', y = 'Carat', title = 'Diamonds')
 #'
-#' multiple_pages(plot = p, facets = 'color', ncol = 2, nrow = 2)
+#' multiple_pages(plot = p, by = 'color', ncol = 2, nrow = 2)
 #' }
 #' @export
 #'
-multiple_pages <- function(plot = NULL, facets = NULL, ncol = 2, nrow = 2, scales = 'fixed') {
+multiple_pages <- function(plot = NULL, by = NULL, ncol = 2, nrow = 2, scales = 'fixed') {
 
   if (is.null(plot)) {   # Check plot argument
     stop('Argument \"plot\" required')
   }
 
-  if (is.null(facets)) {   # Check facets argument
-    message('Argument \"facets\" not provided. Ploting single panel')
+  if (is.null(by)) {   # Check by argument
+    message('Argument \"by\" not provided. Ploting single panel')
     return(plot)
   }
 
-  if (!all(facets %in% colnames(plot$data))) {   # Ensure facets exists
-    stop(paste('The facets:', facets, 'could not be found in the data'))
+  if (!all(by %in% colnames(plot$data))) {   # Ensure by exists
+    stop(paste('The by:', by, 'could not be found in the data'))
   }
 
   if (is.null(ncol) | is.null(nrow)) {   # Check ncol and nrow arguments
@@ -41,10 +41,10 @@ multiple_pages <- function(plot = NULL, facets = NULL, ncol = 2, nrow = 2, scale
   }
 
   # Get info on layout
-  n_panel_tot <- nrow(unique(plot$data[, facets, drop = FALSE]))
+  n_panel_tot <- nrow(unique(plot$data[, by, drop = FALSE]))
   n_layout    <- ncol*nrow
   n_pages     <- ceiling(n_panel_tot/n_layout)
-  plot        <- plot + facet_wrap(facets = facets, ncol = ncol, scales = scales)
+  plot        <- plot + facet_wrap(facets = by, ncol = ncol, scales = scales)
 
   # When no multiple page needed
   if (n_pages == 1) {
@@ -69,7 +69,7 @@ multiple_pages <- function(plot = NULL, facets = NULL, ncol = 2, nrow = 2, scale
   }
 
   # Prepare the grouping
-  data$groups <- findInterval(unclass(interaction(data[,facets])),
+  data$groups <- findInterval(unclass(interaction(data[,by])),
                               seq(from = 1, by = n_layout, length.out = n_pages)[-1]) + 1
 
   # Plot each page
@@ -79,7 +79,7 @@ multiple_pages <- function(plot = NULL, facets = NULL, ncol = 2, nrow = 2, scale
 
     # For last page call panel_layout
     if (i == n_pages) {
-      plot <- panel_layout(plot = plot, facets = facets, ncol = ncol, nrow = nrow, scales = scales)
+      plot <- panel_layout(plot = plot, facets = by, ncol = ncol, nrow = nrow, scales = scales)
     }
 
     # Print plots

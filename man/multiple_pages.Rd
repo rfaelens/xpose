@@ -2,15 +2,15 @@
 % Please edit documentation in R/multiple_pages.R
 \name{multiple_pages}
 \alias{multiple_pages}
-\title{Allows \code{facet_wrap()} to spread over multiple pages}
+\title{Allows \code{facet_wrap()} to work on multiple pages}
 \usage{
-multiple_pages(plot = NULL, facets = NULL, ncol = 2, nrow = 2,
+multiple_pages(plot = NULL, by = NULL, ncol = 2, nrow = 2,
   scales = "fixed")
 }
 \arguments{
 \item{plot}{a ggplot object}
 
-\item{facets}{variables to facet by}
+\item{by}{variables to facet by}
 
 \item{ncol}{number of columns}
 
@@ -28,7 +28,7 @@ p <- ggplot(diamonds, aes(x = price, y = carat, color = cut)) +
 geom_point(alpha = 0.5) +
 labs(x = 'Price', y = 'Carat', title = 'Diamonds')
 
-multiple_pages(plot = p, facets = 'color', ncol = 2, nrow = 2)
+multiple_pages(plot = p, by = 'color', ncol = 2, nrow = 2)
 }
 }
 \seealso{

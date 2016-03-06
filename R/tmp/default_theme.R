@@ -32,6 +32,17 @@ xp_theme_default <- structure(list(
     smooth_size     = 1,
     smooth_weight   = 1,
 
+    # Panel
+    panel_ncol      = NULL,
+    panel_nrow      = NULL,
+    panel_scales    = 'fixed',
+    panel_shrink    = TRUE,
+    panel_labeller  = 'label_value',
+    panel_as.table  = TRUE,
+    panel_switch    = NULL,
+    panel_drop      = TRUE,
+    panel_dir       = 'h',
+
     # Text
     text_alpha      = 1,
     text_angle      = 0,
