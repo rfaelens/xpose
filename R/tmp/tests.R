@@ -7,7 +7,11 @@ library(ggxpose)
 
 # Test bench
 xpdb <- xpose_data(dir = 'inst/models/', runno = '037')
-dv_vs_ipred(xpdb)
+dv_vs_ipred(xpdb, by = 'MEAL') #, by = 'ID', panel_facets = 'ID')
+dv_vs_pred(xpdb, by = c('T2DM','MEAL'), panel_labeller = 'label_both')
+cwres_vs_idv(xpdb)
+cwres_vs_pred(xpdb)
+absval_iwres_vs_pred(xpdb)
 
 dv_vs_ipred(xpdb, point_color = 'coral2', point_alpha = 0.3, line_color = 'blue', line_linetype = 'dashed', smooth_method = 'lm')
 
@@ -60,13 +64,6 @@ dv_vs_ipred(xpdb) %>%
 ## Example 7 make DV vs. PRED
 dv_vs_ipred(xpdb, title = 'DV vs. PRED') +
   aes(x = PRED)
-
-## Example 8 make CWRES vs. TIME
-dv_vs_ipred(xpdb,
-            abline_slope = 0,
-            title = 'CWRES vs. TIME',
-            by = 'T2DM') +
-  aes(x = TIME, y = CWRES)
 
 # ggplot2 tests -----------------------------------------------------------
 P <- ggplot(xpdb$data, aes(x = IPRED, y = DV)) +

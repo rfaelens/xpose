@@ -1,6 +1,6 @@
-#' Observations (DV) plotted against individual predictions (IPRED)
+#' Observations (DV) plotted against population predictions (PRED)
 #'
-#' @description Plot of observations (DV) vs individual predictions (IPRED).
+#' @description Plot of observations (DV) vs population predictions (PRED).
 #'
 #' @param xpdb an xpose database object.
 #' @param aes ggxpose aesthetics (eg. \code{point_color}).
@@ -18,36 +18,35 @@
 #' @param gg_theme a ggplot2 theme to be used on this specific plot.
 #'
 #' @export
-dv_vs_ipred <- function(xpdb,
-                        aes      = NULL,
-                        group    = 'ID',
-                        type     = 'pls',
-                        by       = NULL,
-                        layers   = NULL,
-                        title    = NULL,
-                        subtitle = NULL,
-                        log      = FALSE,
-                        guides   = TRUE,
-                        gg_theme = NULL,
-                        ...) {
+dv_vs_pred <- function(xpdb,
+                       aes      = NULL,
+                       group    = 'ID',
+                       type     = 'pls',
+                       by       = NULL,
+                       layers   = NULL,
+                       title    = NULL,
+                       subtitle = NULL,
+                       log      = FALSE,
+                       guides   = TRUE,
+                       gg_theme = NULL,
+                       ...) {
 
   check_xpdb(xpdb)
   plot_name <- as.character(match.call()[[1]])
 
-  check_vars(c('IPRED', 'DV', by))
-  vars   <- aes_(x = quote(IPRED), y = quote(DV))
+  check_vars(c('PRED', 'DV', by))
+  vars   <- aes_(x = quote(PRED), y = quote(DV))
   xscale <- ifelse(log, 'log10', 'continuous')
   yscale <- xscale
   guide_slope <- 1
-  title_label  <- 'DV vs. IPRED'
+  title_label  <- 'DV vs. PRED'
 
   if (is.null(title)) { title <- paste0(title_label, ' (', xpdb$modfile, ')') }
-  if (is.null(subtitle)) { subtitle <- xpdb$mod_info$eps_shrink }
+  if (is.null(subtitle)) { subtitle <- xpdb$mod_info$ofv }
 
   xpose_plot_default(xpdb = xpdb, vars = vars, aes = aes, group = group,
                      layers = layers, type = type, title = title,
                      subtitle = subtitle, guides = guides, panel_facets = by,
                      xscale = xscale, yscale = yscale, gg_theme = gg_theme,
                      plot_name = plot_name, guide_slope = guide_slope, ...)
-
 }

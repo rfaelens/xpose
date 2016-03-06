@@ -5,10 +5,9 @@
 \title{Default xpose plot}
 \usage{
 xpose_plot_default(xpdb, vars = NULL, aes = NULL, group = "ID",
-  type = "pls", by = NULL, layers = NULL, title = NULL,
-  subtitle = NULL, guides = TRUE, xscale = "continuous",
-  yscale = "continuous", gg_theme = NULL,
-  plot_name = "xpose_plot_default", ...)
+  type = "pls", layers = NULL, title = NULL, subtitle = NULL,
+  guides = TRUE, xscale = "continuous", yscale = "continuous",
+  gg_theme = NULL, plot_name = "xpose_plot_default", ...)
 }
 \arguments{
 \item{xpdb}{an xpose database object.}
@@ -19,8 +18,6 @@ xpose_plot_default(xpdb, vars = NULL, aes = NULL, group = "ID",
 
 \item{type}{string setting the type of plot to be used points 'p',
 line 'l' and smooth 's' or any combination of the 3.}
-
-\item{by}{variable to be used for faceting.}
 
 \item{layers}{a list of additional ggplot layers to be used.}
 

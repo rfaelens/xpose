@@ -7,7 +7,6 @@
 #' @param group grouping variable to be used.
 #' @param type string setting the type of plot to be used points 'p',
 #' line 'l' and smooth 's' or any combination of the 3.
-#' @param by variable to be used for faceting.
 #' @param layers a list of additional ggplot layers to be used.
 #' @param title the main title of the plot. If NULL automated title will be generated.
 #' Use FALSE to remove title and subtitle.
@@ -30,7 +29,6 @@ xpose_plot_default <- function(xpdb,
                                aes      = NULL,
                                group    = 'ID',
                                type     = 'pls',
-                               by       = NULL,
                                layers   = NULL,
                                title    = NULL,
                                subtitle = NULL,
@@ -96,10 +94,10 @@ xpose_plot_default <- function(xpdb,
 
   # Add title and subtitle
 
-   if (!(is.logical(title) && title == FALSE)) {
-  #   if (is.null(title)) {
-  #     title <- paste0(title, ' (', xpdb$modfile, ')')
-  #   }
+  if (!(is.logical(title) && title == FALSE)) {
+    #   if (is.null(title)) {
+    #     title <- paste0(title, ' (', xpdb$modfile, ')')
+    #   }
 
     # if (is.null(subtitle)) {
     #   subtitle <- xpdb$mod_info$eps_shrink
@@ -110,7 +108,7 @@ xpose_plot_default <- function(xpdb,
     } else {
       xp <- xp + labs(title = title)
     }
-   }
+  }
 
   # Define scales
   xp <- xp + xp_geoms(mapping  = aes,
@@ -125,8 +123,14 @@ xpose_plot_default <- function(xpdb,
                       ggfun    = paste0('scale_y_', yscale),
                       ...)
 
-  # Add facet
-  if (!is.null(by)) { xp <- xp + facet_wrap(facets = by) }
+  # Define panels
+  if (!is.null(list(...)[['panel_facets']])) {
+    xp <- xp + xp_geoms(mapping  = aes,
+                        xp_theme = xpdb$xp_theme,
+                        name     = 'panel',
+                        ggfun    = 'facet_wrap',
+                        ...)
+  }
 
   # Add users defined layers
   if (!is.null(layers)) { xp <- xp + layers }

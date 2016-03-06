@@ -15,6 +15,6 @@ ofv <- function(model) {
 
   string <- model$CODE[which.max(grepl('#OBJV', model$CODE))]
   string <- gsub('[^\\d\\.-]+', '', string, perl = TRUE)
-  string <- paste(string, collapse = '\n')
+  string <- paste('OBJ:', string, collapse = '\n')
   return(string)
 }

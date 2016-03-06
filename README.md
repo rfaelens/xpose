@@ -34,7 +34,14 @@ This command will look for the run037.lst file in the current directory. The `xp
 
 
 ## Generating plots
-Many functions will be made available in the future. Currently ggxpose only features basic goodness of fit functions such as DV vs. IPRED (`dv_vs_ipred()`) or CWRES vs. PRED (`cwres_vs_time()`). These functions are used as follow:
+Many functions will be made available in the future. Currently ggxpose only features basic goodness of fit functions such as:   
+ - DV vs. PRED (`dv_vs_pred()`)   
+ - DV vs. IPRED (`dv_vs_ipred()`)   
+ - CWRES vs. IDV (`cwres_vs_idv()`)   
+ - CWRES vs. PRED (`cwres_vs_pred()`)   
+ - |IWRES| vs. PRED (`absval_iwres_vs_pred()`)   
+ 
+These functions are used as follow:
 ```
 xpose_data(runno = '037') %>% 
 dv_vs_ipred()
@@ -57,7 +64,7 @@ The option `guides` can enable (`TRUE`) or disable (`FALSE`) the visual guides o
 
 
 ### Modify aesthetics
-As in `ggplot2`, `ggxpose` was designed to make use of aesthetics however additional mapping information was required. Thus to change the color of points one would not use `color = 'red'` but `point_color = 'red'` to avoid lines, smooth and any over layer to become `red` as well. Using this simple mapping one can independently customize the each layer from a single function such as `dv_vs_ipred()`. The mapping is currently defined as `point_xxx`, `line_xxx`, `smooth_xxx`, `guide_xxx`, `xscale_xxx`, `yscale_xxx` where `xxx` can be any option available in the `ggplot2` layers: `geom_point`, `geom_line`, `geom_smooth`, `geom_abline`, `scale_x_continuous`, etc.
+As in `ggplot2`, `ggxpose` was designed to make use of aesthetics however additional mapping information was required. Thus to change the color of points one would not use `color = 'red'` but `point_color = 'red'` to avoid lines, smooth and any over layer to become `red` as well. Using this simple mapping one can independently customize the each layer from a single function such as `dv_vs_ipred()`. The mapping is currently defined as `point_xxx`, `line_xxx`, `smooth_xxx`, `guide_xxx`, `panel_xxx`, `xscale_xxx`, `yscale_xxx` where `xxx` can be any option available in the `ggplot2` layers: `geom_point`, `geom_line`, `geom_smooth`, `geom_abline`, `facet_wrap`, `scale_x_continuous`, etc.
 ```
 dv_vs_ipred(xpdb, point_color = 'coral2', guide_alpha = 0.5, line_color = 'blue', line_linetype = 'longdash', smooth_method = 'lm')
 ```
@@ -75,12 +82,15 @@ dv_vs_ipred(xpdb, aes(smooth_color = STUDY, smooth_fill = STUDY))
 
 ```
 
-In addition the `by` argument can be used to quicky facet according to a given variable.
+### Panels
+Panels (or faceting) can be created by using the `by` argument as follows:
 ```
 dv_vs_ipred(xpdb, by = STUDY, aes(smooth_color = STUDY, smooth_fill = STUDY))
 ```
 
 ![facet](inst/img/facet.png)
+
+Additional arguments can be passed to the panel function using the `panel_xxx` notation (eg. `panel_ncol = 2`, `panel_labeller = 'label_both'`). For more options read the help of `facet_wrap` from `ggplot2`
 
 
 ### Additional layers
@@ -105,7 +115,9 @@ dv_vs_ipred(xpdb,
 
 ![layers](inst/img/layers.png)
 
-Layers can also be used to modify the aesthetics scales for example  `scale_color_manual()`.
+Layers can also be used to modify the aesthetics scales for example  `scale_color_manual()`, or remove a legend `scale_fill_identity()`.
+
+Note2: while it is currently possible to use the `ggplot2 +` argument (eg. dv_vs_ipred() + geom_rug()), this practice may not possible with all future `ggxpose` plots as they will become more complex. To ensure consistency the `layers` argument should be prefered.
 
 
 ### Scales options
