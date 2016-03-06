@@ -90,13 +90,13 @@ dv_vs_ipred(xpdb, by = STUDY, aes(smooth_color = STUDY, smooth_fill = STUDY))
 
 ![facet](inst/img/facet.png)
 
-Additional arguments can be passed to the panel function using the `panel_xxx` notation (eg. `panel_ncol = 2`, `panel_labeller = 'label_both'`). For more options read the help of `facet_wrap` from `ggplot2`
+Additional arguments can be passed to the panel function using the `panel_xxx` notation (eg. `panel_ncol = 2`, `panel_labeller = 'label_both'`). For more options read the help of `facet_wrap` from `ggplot2`.
 
 
 ### Additional layers
 `ggxpose` offers the opportunity to add additional layers to a plot, for example you could add `geom_rug()` to a plot or an annotation. All layers must be provied as a list object. 
 
-Note: additional layers do not inherit the aesthetic mapping ie. colors or other options need to be defined in each layer as shown below.
+*Note: additional layers do not inherit the aesthetic mapping ie. colors or other options need to be defined in each layer as shown below.*
 
 ```
 # Note: this plot is purely demonstrative of the flexibility of ggxpose and is not used for diagnostic purposes.
@@ -117,7 +117,7 @@ dv_vs_ipred(xpdb,
 
 Layers can also be used to modify the aesthetics scales for example  `scale_color_manual()`, or remove a legend `scale_fill_identity()`.
 
-Note2: while it is currently possible to use the `ggplot2 +` argument (eg. dv_vs_ipred() + geom_rug()), this practice may not possible with all future `ggxpose` plots as they will become more complex. To ensure consistency the `layers` argument should be prefered.
+*Note: while it is currently possible to use the `ggplot2 +` argument (eg. `dv_vs_ipred() + geom_rug()`), this practice may not possible with all future `ggxpose` plots as they will become more complex. To ensure consistency the `layers` argument should be prefered.*
 
 
 ### Scales options
@@ -130,7 +130,7 @@ dv_vs_ipred(xpdb, xscale_breaks = seq(0, 100, 10),
 ## Multiple pages
 In some cases faceting may result in numerous panels. ggxpose bring the multiple page faceting feature to `ggplot2` through the function `multiple_pages()`. This function works in the spirit of `facet_wrap()` in `ggplot2`, simply define the variable(s) to use for faceting and define the number of rows (`nrow`) and colums (`ncol`). The function will then automatically generate multiple pages according to the given layout.
 
-_Note: this is an experimental feature and it is currently not possible to store the pages in an R object._
+*Note: this is an experimental feature and it is currently not possible to store the pages in an R object.*
 
 
 ## Saving plots
