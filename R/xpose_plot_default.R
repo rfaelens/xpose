@@ -42,15 +42,11 @@ xpose_plot_default <- function(xpdb,
   check_xpdb(xpdb) # Check inputs
 
   # Format data
-  data <- dplyr::filter_(.data = xpdb$data, 'MDV == 0')
-
-  # Create pretty labels for facetting
-  # Not needed in ggplot2 v2.0
-  # if (!is.null(by)) {
-  #   data[,by] <- lapply(X = by, FUN = function(x) {
-  #     factor(data[,x], labels = paste0(tolower(x),': ', levels(as.factor(data[,x]))))
-  #   })
-  # }
+  if ('MDV' %in% colnames(xpdb$data)) {
+    data <- dplyr::filter_(.data = xpdb$data, 'MDV == 0')
+  } else if ('EVID' %in% colnames(xpdb$data)) {
+    data <- dplyr::filter_(.data = xpdb$data, 'EVID == 0')
+  }
 
   # Create ggplot base
   xp   <- ggplot(data = data, ...) + vars
@@ -95,14 +91,6 @@ xpose_plot_default <- function(xpdb,
   # Add title and subtitle
 
   if (!(is.logical(title) && title == FALSE)) {
-    #   if (is.null(title)) {
-    #     title <- paste0(title, ' (', xpdb$modfile, ')')
-    #   }
-
-    # if (is.null(subtitle)) {
-    #   subtitle <- xpdb$mod_info$eps_shrink
-    # }
-
     if (!(is.logical(subtitle) && subtitle == FALSE)) {
       xp <- xp + labs(title = bquote(atop(bold(.(title)), scriptstyle(.(subtitle)))))
     } else {

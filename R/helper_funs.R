@@ -17,7 +17,8 @@ check_xpdb <- function(xpdb) {
 # Check variables
 check_vars <- function(vars, xpdb) {
  if (!all(vars %in% colnames(xpdb$data))) {
-   stop('suplied variables (ie. ',
-        paste(vars, collapse = ', '), ') not found in the data')
+   stop('requested variables ',
+        paste(vars[!vars %in% colnames(xpdb$data)],
+              collapse = ', '), ' not found in the data')
  }
 }

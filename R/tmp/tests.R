@@ -5,40 +5,42 @@
 library(ggxpose)
 
 # Test bench
-xpdb <- xpose_data(dir = 'inst/models/', runno = '037')
+#model  <- parse_nm_model(file = 'inst/models/run001.lst')
+xpdb <- xpose_data(dir = 'inst/models/', runno = '001')
 
-model  <- parse_nm_model(file = 'inst/models/run037.lst')
 
+# Default tests -----------------------------------------------------------
 dv_vs_ipred(xpdb)
-dv_vs_ipred(xpdb, by = 'MEAL')
-dv_vs_pred(xpdb, by = c('T2DM','MEAL'), panel_labeller = 'label_both')
+dv_vs_pred(xpdb)
 cwres_vs_idv(xpdb)
 cwres_vs_pred(xpdb)
 absval_iwres_vs_pred(xpdb)
 
-# Example on the use of theme, color options and additional layers --------
-## Example 1 use of pipes and xpose_save()
-xpdb <- xpose_data(dir = 'inst/models/', runno = '037') %>%
+
+# Panels tests ------------------------------------------------------------
+dv_vs_ipred(xpdb, by = NULL)
+dv_vs_ipred(xpdb, by = 'OCC')
+dv_vs_ipred(xpdb, by = c('MED1', 'MED2'), panel_labeller = 'label_both')
+
+
+# Pipes and xpose_save() --------------------------------------------------
+xpose_data(dir = 'inst/models/', runno = '001') %>%
   xpose_theme(gg_theme = theme_bw(),
               xp_theme = xp_theme_xpose4) %>%
-  dv_vs_ipred()
-
-xpose_data(dir = 'inst/models/', runno = '037') %>%
-  xpose_theme(gg_theme = theme_bw(),
-              xp_theme = c(point_color = 'dodgerblue4',
-                           line_color  = 'dodgerblue4')) %>%
   dv_vs_ipred() %>%
   xpose_save()
 
-## Example 2 use of aes
-dv_vs_ipred(xpdb, by = 'MEAL', type = 'lps',
-            aes(smooth_group = MEAL,
-                smooth_fill  = as.factor(MEAL),
-                smooth_color = as.factor(MEAL)),
-            layers = list(scale_fill_discrete(name = 'STUDY'),
-                          scale_color_discrete(name = 'STUDY')))
 
-## Example 3 use of layers
+# Use of aes --------------------------------------------------------------
+dv_vs_ipred(xpdb, by = 'CLASS', type = 'lps',
+            aes(smooth_group = CLASS,
+                smooth_fill  = as.factor(CLASS),
+                smooth_color = as.factor(CLASS)),
+            layers = list(scale_fill_discrete(name = 'CLASS'),
+                          scale_color_discrete(name = 'CLASS')))
+
+
+# Use of layers -----------------------------------------------------------
 dv_vs_ipred(xpdb,
             line_alpha   = 0.8,
             line_color   = 'grey50',
@@ -46,91 +48,59 @@ dv_vs_ipred(xpdb,
             point_color  = 'grey50',
             smooth_fill  = 'deepskyblue2',
             smooth_color = 'deepskyblue2',
-            layers = list(geom_density(aes(x = IPRED, ..scaled..*0.2),
-                                       fill  = 'blue',
-                                       color = NA,
-                                       alpha = 0.2,
-                                       inherit.aes = FALSE),
-                          geom_rug(alpha = 0.1,
+            layers = list(geom_rug(alpha = 0.2,
+                                   color = 'grey50',
+                                   sides = 'l',
+                                   size = 0.4),
+                          geom_rug(alpha = 0.2,
                                    color = 'grey50',
                                    sides = 'b',
                                    size = 0.4)))
 
-## Example 4 multiple faceting
-dv_vs_ipred(xpdb, by = c('MEAL','T2DM'), log = TRUE)
 
-dv_vs_ipred(xpdb, by = NULL, log = TRUE)
-
-## Example 5 use of multiple_pages
+# Multiple_pages ----------------------------------------------------------
 dv_vs_ipred(xpdb) %>%
-  multiple_pages(facets = 'MEAL',
-                 ncol   = 2,
-                 nrow   = 2)
+  multiple_pages(by = 'CLASS', ncol = 2, nrow = )
 
-## Example 7 make DV vs. PRED
-dv_vs_ipred(xpdb, title = 'DV vs. PRED') +
-  aes(x = PRED)
 
-# ggplot2 tests -----------------------------------------------------------
+#=========================================================================#
+# Title : ggplot2 benchmark
+#=========================================================================#
+
 P <- ggplot(xpdb$data, aes(x = IPRED, y = DV)) +
   geom_point() +
   geom_line(aes_string(group = 'ID'))
 
 
-
 # Benchmarking ------------------------------------------------------------
 library(microbenchmark)
 control <- function(xpdb) {
-  ggplot(xpdb$data[xpdb$data$MDV == 0, ],
-         aes(x = IPRED, y = DV, color = as.factor(T2DM))) +
+  ggplot(xpdb$data[xpdb$data$EVID == 0, ],
+         aes(x = IPRED, y = DV, color = as.factor(SEX))) +
     geom_abline(slope = 1) +
     geom_point() +
     geom_line(aes(group = ID)) +
-    geom_smooth(method = 'loess', color = 'red', fill = 'red') +
-    labs(title = bquote(atop(bold(.(title)), scriptstyle(.(subtitle)))))
+    geom_smooth(method = 'loess', color = 'blue', fill = 'blue') +
+    labs(title = bquote(atop(bold(.('Hello')), scriptstyle(.('World !!!')))))
 }
 
-microbenchmark(control(xpdb), dv_vs_ipred(xpdb))
+#microbenchmark(control(xpdb), dv_vs_ipred(xpdb))
+#benchplot(control(xpdb))
+#benchplot(dv_vs_ipred(xpdb, by = 'CLASS'))
 
-benchplot(control(xpdb))
-benchplot(dv_vs_ipred(xpdb, by = 'MEAL'))
 
-
-dv_vs_ipred(xpdb,
-            gg_theme = theme_bw(),
-            guide_color = 'black',
-            guide_size = 0.5,
-            smooth_se = FALSE,
-            smooth_color = 'red',
-            point_color = 'blue',
-            point_shape = 1,
-            point_size = 2,
-            line_color = 'blue',
-            line_size = 0.5,
-            type      = 'pls',
-            guides    = TRUE)
-
-# xpose4 ------------------------------------------------------------------
+#=========================================================================#
+# Title : xpose4 benchmark
+#=========================================================================#
 library(xpose4)
 system.time({
-  xp4 <- xpose.data(dir = 'inst/models/', runno = '037')
+  xp4 <- xpose.data(dir = 'inst/models/', runno = '001')
   print(dv.vs.ipred(xp4))
 })
 
 system.time({
-  xp5 <- xpose_data(dir = 'inst/models/', runno = '037')
-  print(
-    dv_vs_ipred(xp5,
-                smooth_se = TRUE,
-                type      = 'pls',
-                guides    = TRUE,
-                gg_theme  = theme_classic(),
-                xscale_expand = c(0, 0),
-                yscale_expand = c(0, 0)) +
-      facet_wrap(facets   = c('MEAL', 'MEAL'),
-                 labeller = label_both()) +
-      theme(strip.background = element_blank())
-  )
+  xp5 <- xpose_data(dir = 'inst/models/', runno = '001')
+  print(dv_vs_ipred(xp5))
 })
 
 # The end

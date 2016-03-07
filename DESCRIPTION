@@ -2,7 +2,7 @@ Package: ggxpose
 Type: Package
 Title: Modern tools for Nonlinear Mixed-Effect Model Building and Diagnostics
 Version: 0.1.3
-Date: 2016-03-04
+Date: 2016-03-07
 Authors@R: c(person('Benjamin', 'Guiastrennec', role = c('aut','cre'),
             email = 'guiastrennec@gmail.com'))
 Description: Modern tools for nonlinear mixed-effect model building and

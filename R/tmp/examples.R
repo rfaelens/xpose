@@ -1,7 +1,7 @@
 library(ggxpose)
 library(gridExtra)
 
-xpdb <- xpose_data(dir = 'inst/models/', runno = '037')
+xpdb <- xpose_data(dir = 'inst/models/', runno = '001')
 
 # Default -----------------------------------------------------------------
 P1_A <- dv_vs_ipred(xpdb)
@@ -51,10 +51,10 @@ P5_A <- dv_vs_ipred(xpdb, point_color = 'dodgerblue3',
                     line_linetype = 'solid', smooth_method = 'lm')
 
 
-P5_B <- dv_vs_ipred(xpdb, aes(smooth_color = as.factor(MEAL),
-                              smooth_fill = as.factor(MEAL)),
-                    layers = list(scale_color_discrete(name = 'Study'),
-                                  scale_fill_discrete(name = 'Study')))
+P5_B <- dv_vs_ipred(xpdb, aes(smooth_color = as.factor(CLASS),
+                              smooth_fill = as.factor(CLASS)),
+                    layers = list(scale_color_discrete(name = 'Class'),
+                                  scale_fill_discrete(name = 'Class')))
 
 jpeg('./inst/img/aes_%d.jpg', width = 4, height = 3.5, units = 'in', res = 80)
 print(P5_A)
@@ -63,7 +63,7 @@ dev.off()
 
 
 # Grouping variable -------------------------------------------------------
-P6 <- dv_vs_ipred(xpdb, aes(smooth_group = MEAL))
+P6 <- dv_vs_ipred(xpdb, aes(smooth_group = CLASS))
 
 jpeg('./inst/img/group.jpg', width = 4, height = 3.5, units = 'in', res = 80)
 print(P6)
@@ -71,7 +71,7 @@ dev.off()
 
 
 # Panels ------------------------------------------------------------------
-P7 <- dv_vs_ipred(xpdb, by = 'MEAL')
+P7 <- dv_vs_ipred(xpdb, by = 'CLASS')
 
 jpeg('./inst/img/panels.jpg', width = 8, height = 7, units = 'in', res = 80)
 print(P7)
@@ -79,12 +79,17 @@ dev.off()
 
 # Layers ------------------------------------------------------------------
 P8 <- dv_vs_ipred(xpdb,
-                  layers = list(geom_density(aes(x = IPRED, ..scaled..*0.2),
-                                             fill  = 'blue',
-                                             color = NA,
-                                             alpha = 0.2,
-                                             inherit.aes = FALSE),
-                                geom_rug(alpha = 0.1,
+                  line_alpha   = 0.8,
+                  line_color   = 'grey50',
+                  point_alpha  = 0.8,
+                  point_color  = 'grey50',
+                  smooth_fill  = 'deepskyblue2',
+                  smooth_color = 'deepskyblue2',
+                  layers = list(geom_rug(alpha = 0.2,
+                                         color = 'grey50',
+                                         sides = 'l',
+                                         size = 0.4),
+                                geom_rug(alpha = 0.2,
                                          color = 'grey50',
                                          sides = 'b',
                                          size = 0.4)))
@@ -94,9 +99,9 @@ print(P8)
 dev.off()
 
 # Scales ------------------------------------------------------------------
-P9 <- dv_vs_ipred(xpdb, xscale_breaks = c(0, 0.15, 0.3),
+P9 <- dv_vs_ipred(xpdb, xscale_breaks = c(-4, -2, 0),
                   xscale_labels = c('Low', 'Med', 'High'),
-                  xscale_expand = c(0.2,0),
+                  xscale_expand = c(0.2, 0),
                   xscale_name = 'Individual model prediction (mg/L)')
 
 jpeg('./inst/img/scales.jpg', width = 4, height = 3.5, units = 'in', res = 80)
@@ -135,8 +140,7 @@ dev.off()
 
 
 # Multiple pages ----------------------------------------------------------
-
 jpeg('./inst/img/multiple_%d.jpg', width = 4, height = 4, units = 'in', res = 80)
-dv_vs_ipred(xpdb) %>% multiple_pages(by = 'MEAL')
+dv_vs_ipred(xpdb) %>% multiple_pages(by = 'CLASS', nrow = 1)
 dev.off()
 
