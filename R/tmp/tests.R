@@ -8,7 +8,6 @@ library(ggxpose)
 #model  <- parse_nm_model(file = 'inst/models/run001.lst')
 xpdb <- xpose_data(dir = 'inst/models/', runno = '001')
 
-
 # Default tests -----------------------------------------------------------
 dv_vs_ipred(xpdb)
 dv_vs_pred(xpdb)

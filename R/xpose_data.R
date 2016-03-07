@@ -7,7 +7,10 @@
 #' @param runno run number to be evaluated
 #' @param ext model file extention
 #' @param file full file name as an alternative to \code{dir}, \code{prefix},
-#' \code{runno} and \code{ext}
+#' @param rounding number of significant digits to be used on model info numerical
+#' values (eg. OFV, shrinkage).
+#' @param gg_theme a ggplot2 complete theme object (eg. \code{theme_classic()})
+#' @param xp_theme a ggxpose theme or vector of modifications of the ggxpose theme#' \code{runno} and \code{ext}
 #' @param verbose if \code{TRUE} messages are printed to the console
 #'
 #' @examples

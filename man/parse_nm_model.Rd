@@ -28,10 +28,10 @@ Parse NONMEM model files in R format
 }
 \examples{
 \dontrun{
-mod_file <- parse_nm_model(dir = '../models/pk/', runno = '101')
+mod_file <- parse_nm_model(dir = '../models/pk/', runno = '001')
 }
 }
 \seealso{
-\code{\link{import_qmd_info}}, \code{\link{read_nmtab}}
+\code{\link{xpose_data}}, \code{\link{read_nmtab}}
 }
 

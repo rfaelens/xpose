@@ -17,8 +17,14 @@ xpose_data(dir = NULL, prefix = "run", runno = NULL, ext = ".lst",
 
 \item{ext}{model file extention}
 
-\item{file}{full file name as an alternative to \code{dir}, \code{prefix},
-\code{runno} and \code{ext}}
+\item{file}{full file name as an alternative to \code{dir}, \code{prefix},}
+
+\item{rounding}{number of significant digits to be used on model info numerical
+values (eg. OFV, shrinkage).}
+
+\item{gg_theme}{a ggplot2 complete theme object (eg. \code{theme_classic()})}
+
+\item{xp_theme}{a ggxpose theme or vector of modifications of the ggxpose theme#' \code{runno} and \code{ext}}
 
 \item{verbose}{if \code{TRUE} messages are printed to the console}
 }

@@ -16,6 +16,7 @@
 #' @param log logical if TRUE axes will be logged.
 #' @param guides should the guides (eg. unity line) be displayed.
 #' @param gg_theme a ggplot2 theme to be used on this specific plot.
+#' @param ... any additional aesthetics.
 #'
 #' @export
 cwres_vs_pred <- function(xpdb,

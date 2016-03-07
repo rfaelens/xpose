@@ -9,12 +9,12 @@
 #' @param file full file name as an alternative to \code{dir}, \code{prefix},
 #' \code{runno} and \code{ext}
 #'
-#' @seealso \code{\link{import_qmd_info}}, \code{\link{read_nmtab}}
+#' @seealso \code{\link{xpose_data}}, \code{\link{read_nmtab}}
 #' @return A \code{data.frame} containing the parsed model code (\code{CODE}) as well as a numeric
 #' (\code{LEVEL}) and character (\code{SUB}) indexing for subroutines.
 #' @examples
 #' \dontrun{
-#' mod_file <- parse_nm_model(dir = '../models/pk/', runno = '101')
+#' mod_file <- parse_nm_model(dir = '../models/pk/', runno = '001')
 #' }
 #' @export
 parse_nm_model <- function(dir    = NULL,

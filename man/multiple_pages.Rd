@@ -32,7 +32,6 @@ multiple_pages(plot = p, by = 'color', ncol = 2, nrow = 2)
 }
 }
 \seealso{
-\code{\link{facet_wrap}}, \code{\link{facet_layout}} or
-\code{gridExtra::marrangeGrob}
+\code{\link{facet_wrap}}
 }
 

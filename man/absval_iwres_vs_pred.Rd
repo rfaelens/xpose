@@ -31,6 +31,8 @@ Use FALSE to remove subtitle.}
 \item{log}{logical if TRUE axes will be logged.}
 
 \item{gg_theme}{a ggplot2 theme to be used on this specific plot.}
+
+\item{...}{any additional aesthetics.}
 }
 \description{
 Plot of absolute value of individual weighted residuals (IWRES) plotted against population predictions (PRED).

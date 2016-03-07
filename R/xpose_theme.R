@@ -7,7 +7,7 @@
 #'
 #' @param xpdb a ggxpose database object
 #' @param gg_theme a ggplot2 complete theme object (eg. \code{theme_classic()})
-#' @param xp_theme an vector of modifications of the ggxpose theme
+#' @param xp_theme a ggxpose theme or vector of modifications of the ggxpose theme
 #' (eg. \code{c(point_color = 'red', line_linetype = 'dashed')})
 #'
 #' @return An xpdb object

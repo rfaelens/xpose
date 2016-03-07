@@ -12,6 +12,8 @@ xpose_plot_default(xpdb, vars = NULL, aes = NULL, group = "ID",
 \arguments{
 \item{xpdb}{an xpose database object.}
 
+\item{vars}{the variable mapping from an aes().}
+
 \item{aes}{ggxpose aesthetics (eg. \code{point_color}).}
 
 \item{group}{grouping variable to be used.}
@@ -36,6 +38,8 @@ Use FALSE to remove subtitle.}
 \item{gg_theme}{a ggplot2 theme to be used on this specific plot.}
 
 \item{plot_name}{name that will be used by \code{xpose_save()} to save the plot.}
+
+\item{...}{any additional aesthetics.}
 }
 \value{
 An \code{xpose_plot}
@@ -45,7 +49,7 @@ manually generate plotting functions.
 }
 \examples{
 \dontrun{
-
+xpose_plot_default(xpdb, vars = aes(x = IPRED, y = DV))
 }
 }
 

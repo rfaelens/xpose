@@ -11,7 +11,7 @@ xpose_theme(xpdb = NULL, gg_theme = NULL, xp_theme = NULL)
 
 \item{gg_theme}{a ggplot2 complete theme object (eg. \code{theme_classic()})}
 
-\item{xp_theme}{an vector of modifications of the ggxpose theme
+\item{xp_theme}{a ggxpose theme or vector of modifications of the ggxpose theme
 (eg. \code{c(point_color = 'red', line_linetype = 'dashed')})}
 }
 \value{

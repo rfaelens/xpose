@@ -33,6 +33,8 @@ Use FALSE to remove subtitle.}
 \item{guides}{should the guides (eg. unity line) be displayed.}
 
 \item{gg_theme}{a ggplot2 theme to be used on this specific plot.}
+
+\item{...}{any additional aesthetics.}
 }
 \description{
 Plot of observations (DV) vs individual predictions (IPRED).

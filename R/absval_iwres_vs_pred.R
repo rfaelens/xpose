@@ -15,6 +15,7 @@
 #' Use FALSE to remove subtitle.
 #' @param log logical if TRUE axes will be logged.
 #' @param gg_theme a ggplot2 theme to be used on this specific plot.
+#' @param ... any additional aesthetics.
 #'
 #' @export
 absval_iwres_vs_pred <- function(xpdb,

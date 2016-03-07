@@ -9,8 +9,7 @@
 #' @param scales should scales be fixed ("fixed", the default), free ("free"),
 #' or free in one dimension ("free_x", "free_y")
 #'
-#' @seealso \code{\link{facet_wrap}}, \code{\link{facet_layout}} or
-#' \code{gridExtra::marrangeGrob}
+#' @seealso \code{\link{facet_wrap}}
 #' @examples
 #' \dontrun{
 #' p <- ggplot(diamonds, aes(x = price, y = carat, color = cut)) +

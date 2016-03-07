@@ -3,6 +3,7 @@
 #' @description manually generate plotting functions.
 #'
 #' @param xpdb an xpose database object.
+#' @param vars the variable mapping from an aes().
 #' @param aes ggxpose aesthetics (eg. \code{point_color}).
 #' @param group grouping variable to be used.
 #' @param type string setting the type of plot to be used points 'p',
@@ -17,11 +18,12 @@
 #' @param yscale scale type for y axis (eg. 'continuous', 'discrete', 'log10').
 #' @param gg_theme a ggplot2 theme to be used on this specific plot.
 #' @param plot_name name that will be used by \code{xpose_save()} to save the plot.
+#' @param ... any additional aesthetics.
 #'
 #' @return An \code{xpose_plot}
 #' @examples
 #' \dontrun{
-#'
+#' xpose_plot_default(xpdb, vars = aes(x = IPRED, y = DV))
 #' }
 #' @export
 xpose_plot_default <- function(xpdb,
