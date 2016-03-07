@@ -118,9 +118,6 @@ Additional arguments can be passed to the panel function using the `panel_xxx` n
 *Note: additional layers do not inherit the aesthetic mapping ie. colors or other options need to be defined in each layer as shown below.*
 
 ```
-# Note: this plot is purely demonstrative of the flexibility 
-#       of ggxpose and is not used for diagnostic purposes.
-
 dv_vs_ipred(xpdb,
                   line_alpha   = 0.8,
                   line_color   = 'grey50',
