@@ -1,3 +1,12 @@
+# Correct header following readr data import ------------------------------
+# Correct bug in the headers (not needed with newer versions)
+# if (header) {
+#   colnames(tab_file)[grepl('\n',colnames(tab_file))] <-
+#     gsub('\n.+', '', colnames(tab_file)[grepl('\n', colnames(tab_file))])
+# }
+
+
+
 # Create pretty labels for facetting --------------------------------------
 # Not needed in ggplot2 v2.0
 # if (!is.null(by)) {

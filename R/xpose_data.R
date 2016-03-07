@@ -59,34 +59,34 @@ xpose_data <- function(dir         = NULL,
 
 
   # Import parsed patab -----------------------------------------------------
-  tab_file  <- combine_nmtab(mod_file, dir, verbose)
-
-
-  # Model info --------------------------------------------------------------
-  mod_info  <- list(eps_shrink = shrinkage(mod_file, 'EPS',
-                                           ifelse(is.null(rounding), xp_theme$rounding, rounding)),
-                    eta_shrink = shrinkage(mod_file, 'ETA',
-                                           ifelse(is.null(rounding), xp_theme$rounding, rounding)),
-                    ofv        = ofv(model = mod_file),
-                    run        = paste0(prefix, runno),
-                    input_dat  = raw_dat(mod_file),
-                    nobs       = n_oi(mod_file),
-                    method     = m_est(mod_file)
-  )
-
-
+  tab_out  <- combine_nmtab(mod_file, dir, verbose)
 
 
   # Model file name ---------------------------------------------------------
   mod_name <- gsub('\\.\\w+$', '', basename(file_full))
 
+
+  # Model info --------------------------------------------------------------
+  mod_info  <- list(descr      = descr(mod_file),
+                    run        = mod_name,
+                    input_dat  = raw_dat(mod_file),
+                    nobs       = nobs(mod_file),
+                    nind       = nind(mod_file),
+                    ofv        = ofv(mod_file),
+                    method     = method(mod_file),
+                    eps_shrink = shrinkage(mod_file, 'EPS',
+                                           ifelse(is.null(rounding), xp_theme$rounding, rounding)),
+                    eta_shrink = shrinkage(mod_file, 'ETA',
+                                           ifelse(is.null(rounding), xp_theme$rounding, rounding))
+  )
+
   # Create the qmd_info object ----------------------------------------------
   out <- structure(list(
     modfile  = mod_name,                               # modelfile
-    descr    = mod_file$CODE[mod_file$ABREV == 'PRO'], # Model description
     mod      = mod_file,                               # Raw model file
     mod_info = mod_info,                               # Parsed model information
-    data     = tab_file,                               # Output tables
+    data     = tab_out$data,                           # Output tables
+    index    = tab_out$index,                          # Index of tab files
     gg_theme = gg_theme,                               # ggplot theme
     xp_theme = xp_theme                                # xpose theme
   ), class = c('xpose_data', 'uneval'))

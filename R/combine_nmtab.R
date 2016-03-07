@@ -1,9 +1,9 @@
 combine_nmtab <- function(mod_file = NULL,
-                          dir = NULL,
-                          verbose = FALSE){
+                          dir      = NULL,
+                          verbose  = FALSE){
 
   # Check inputs
-  if(is.null(mod_file)) {
+  if (is.null(mod_file)) {
     stop('Argument \"mod_file\" required.')
   }
 
@@ -15,11 +15,13 @@ combine_nmtab <- function(mod_file = NULL,
   # Ensure file exsits
   tab_file  <- tab_file[file.exists(paste0(dir, tab_file))]
 
-  if(is.null(tab_file) | length(tab_file) == 0) {
+  if (is.null(tab_file) || length(tab_file) == 0) {
     stop('No output table available.')
   } else {
-    tab_file  <- read_nmtab(file = paste0(dir, tab_file), rm_duplicates = TRUE)
+    tab_out  <- read_nmtab(file = paste0(dir, tab_file),
+                           rm_duplicates = TRUE,
+                           index = TRUE)
   }
-  return(tab_file)
+  return(tab_out)
 
 }

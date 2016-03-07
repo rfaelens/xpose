@@ -9,14 +9,14 @@ xp_theme_default <- structure(list(
     guide_size      = 1,
 
     # Line
-    line_alpha      =  0.8,
-    line_color      = 'grey25',
+    line_alpha      =  0.7,
+    line_color      = 'grey30',
     line_linetype   = 'solid',
     line_size       =  0.5,
 
     # Point
-    point_alpha     = 0.8,
-    point_color     = 'grey25',
+    point_alpha     = 0.7,
+    point_color     = 'grey30',
     point_fill      = NA,
     point_shape     = 19,
     point_size      = 1.5,
@@ -24,8 +24,8 @@ xp_theme_default <- structure(list(
 
     # Smooth
     smooth_alpha    = 0.4,
-    smooth_color    = 'coral',
-    smooth_fill     = 'coral',
+    smooth_color    = 'deepskyblue2',
+    smooth_fill     = 'deepskyblue2',
     smooth_linetype = 1,
     smooth_method   = 'loess',
     smooth_se       = TRUE,

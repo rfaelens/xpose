@@ -31,21 +31,18 @@ absval_iwres_vs_pred <- function(xpdb,
                                  ...) {
 
   check_xpdb(xpdb)
-  plot_name <- as.character(match.call()[[1]])
-
   check_vars(c('PRED', 'IWRES', by), xpdb)
+
   vars   <- aes_(x = quote(PRED), y = quote(abs(IWRES)))
   xscale <- ifelse(log, 'log10', 'continuous')
   yscale <- 'continuous'
-  guides <- FALSE
-  title_label     <- '|IWRES| vs. PRED'
-
-  if (is.null(title)) { title <- paste0(title_label, ' (', xpdb$modfile, ')') }
-  if (is.null(subtitle)) { subtitle <- xpdb$mod_info$eps_shrink }
+  titles <- titlr('|IWRES| vs. PRED', subfun = 'eps_shrink',
+                  title, subtitle, xpdb)
 
   xpose_plot_default(xpdb = xpdb, vars = vars, aes = aes, group = group,
-                     layers = layers, type = type, title = title,
-                     subtitle = subtitle, guides = guides, panel_facets = by,
-                     xscale = xscale, yscale = yscale, gg_theme = gg_theme,
-                     plot_name = plot_name, ...)
+                     layers = layers, type = type, guides = FALSE,
+                     gg_theme = gg_theme, panel_facets = by, xscale = xscale,
+                     yscale = yscale, title = titles[1], subtitle = titles[2],
+                     plot_name = as.character(match.call()[[1]]), ...)
 }
+

@@ -43,6 +43,14 @@ grid.arrange(P4_A, P4_B, P4_C, ncol = 3)
 dev.off()
 
 
+P4_D <- dv_vs_ipred(xpdb,
+                    title = paste0('DV vs. IPRED (', run, ', ', ofv, ')'),
+                    subtitle = paste('Based on:', nind, 'and', nobs))
+
+jpeg('./inst/img/titles_2.jpg', width = 4, height = 3.5, units = 'in', res = 80)
+print(P4_D)
+dev.off()
+
 # Aes ---------------------------------------------------------------------
 P5_A <- dv_vs_ipred(xpdb, point_color = 'dodgerblue3',
                     point_alpha = 0.5, point_stroke = 0,
@@ -80,11 +88,11 @@ dev.off()
 # Layers ------------------------------------------------------------------
 P8 <- dv_vs_ipred(xpdb,
                   line_alpha   = 0.8,
-                  line_color   = 'grey50',
+                  line_color   = 'dodgerblue3',
                   point_alpha  = 0.8,
-                  point_color  = 'grey50',
-                  smooth_fill  = 'deepskyblue2',
-                  smooth_color = 'deepskyblue2',
+                  point_color  = 'dodgerblue3',
+                  smooth_fill  = 'coral2',
+                  smooth_color = 'coral2',
                   layers = list(geom_rug(alpha = 0.2,
                                          color = 'grey50',
                                          sides = 'l',

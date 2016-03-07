@@ -33,22 +33,18 @@ dv_vs_ipred <- function(xpdb,
                         ...) {
 
   check_xpdb(xpdb)
-  plot_name <- as.character(match.call()[[1]])
-
   check_vars(c('IPRED', 'DV', by), xpdb)
+
   vars   <- aes_(x = quote(IPRED), y = quote(DV))
   xscale <- ifelse(log, 'log10', 'continuous')
   yscale <- xscale
-  guide_slope <- 1
-  title_label  <- 'DV vs. IPRED'
-
-  if (is.null(title)) { title <- paste0(title_label, ' (', xpdb$modfile, ')') }
-  if (is.null(subtitle)) { subtitle <- xpdb$mod_info$eps_shrink }
+  titles <- titlr('DV vs. IPRED', subfun = 'eps_shrink',
+                  title, subtitle, xpdb)
 
   xpose_plot_default(xpdb = xpdb, vars = vars, aes = aes, group = group,
-                     layers = layers, type = type, title = title,
-                     subtitle = subtitle, guides = guides, panel_facets = by,
-                     xscale = xscale, yscale = yscale, gg_theme = gg_theme,
-                     plot_name = plot_name, guide_slope = guide_slope, ...)
-
+                     layers = layers, type = type, guides = guides,
+                     gg_theme = gg_theme, panel_facets = by, xscale = xscale,
+                     yscale = yscale, title = titles[1], subtitle = titles[2],
+                     plot_name = as.character(match.call()[[1]]),
+                     guide_slope = 1, ...)
 }

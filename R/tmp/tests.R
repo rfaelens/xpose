@@ -5,7 +5,9 @@
 library(ggxpose)
 
 # Test bench
-#model  <- parse_nm_model(file = 'inst/models/run001.lst')
+#mod_file  <- parse_nm_model(file = 'inst/models/run001.lst')
+#dir       <- 'inst/models/'
+#mod_file <- 'inst/models/run001.lst'
 xpdb <- xpose_data(dir = 'inst/models/', runno = '001')
 
 # Default tests -----------------------------------------------------------
@@ -42,11 +44,11 @@ dv_vs_ipred(xpdb, by = 'CLASS', type = 'lps',
 # Use of layers -----------------------------------------------------------
 dv_vs_ipred(xpdb,
             line_alpha   = 0.8,
-            line_color   = 'grey50',
+            line_color   = 'dodgerblue3',
             point_alpha  = 0.8,
-            point_color  = 'grey50',
-            smooth_fill  = 'deepskyblue2',
-            smooth_color = 'deepskyblue2',
+            point_color  = 'dodgerblue3',
+            smooth_fill  = 'coral2',
+            smooth_color = 'coral2',
             layers = list(geom_rug(alpha = 0.2,
                                    color = 'grey50',
                                    sides = 'l',
@@ -59,7 +61,7 @@ dv_vs_ipred(xpdb,
 
 # Multiple_pages ----------------------------------------------------------
 dv_vs_ipred(xpdb) %>%
-  multiple_pages(by = 'CLASS', ncol = 2, nrow = )
+  multiple_pages(by = 'CLASS', ncol = 2, nrow = 1)
 
 
 #=========================================================================#

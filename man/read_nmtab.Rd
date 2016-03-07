@@ -5,7 +5,7 @@
 \title{NONMEM output table import function}
 \usage{
 read_nmtab(file = NULL, skip = NULL, header = NULL,
-  rm_duplicates = FALSE, nonmem_tab = TRUE)
+  rm_duplicates = FALSE, nonmem_tab = TRUE, index = FALSE)
 }
 \arguments{
 \item{file}{full file name}
@@ -19,9 +19,9 @@ of the variables as its first line}
 
 \item{nonmem_tab}{logical value indicading to the function whether the file is a
 table or a nonmem additional output file.}
-}
-\value{
-A \code{data.frame}
+
+\item{index}{logical, when nonmem_tab is true returns a list with the data and an
+index of all filenames and their colnames.}
 }
 \description{
 Quickly import NONMEM output tables into R.

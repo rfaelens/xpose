@@ -14,8 +14,9 @@
 #' @param rm_duplicates logical value indicating whether duplicated columns should be removed
 #' @param nonmem_tab logical value indicading to the function whether the file is a
 #' table or a nonmem additional output file.
+#' @param index logical, when nonmem_tab is true returns a list with the data and an
+#' index of all filenames and their colnames.
 #'
-#' @return A \code{data.frame}
 #' @examples
 #' \dontrun{
 #' data <- read_nmtab(file = '../models/pk/sdtab101')
@@ -25,7 +26,8 @@ read_nmtab <- function(file = NULL,
                        skip = NULL,
                        header = NULL,
                        rm_duplicates = FALSE,
-                       nonmem_tab = TRUE) {
+                       nonmem_tab = TRUE,
+                       index = FALSE) {
 
   # Check inputs
   if (is.null(file)) {
@@ -47,21 +49,23 @@ read_nmtab <- function(file = NULL,
     }
 
     # Import data
-    tab_file <- do.call('cbind', lapply(file, readr::read_table,
-                                        skip = skip, col_names = header))
+    raw   <- lapply(file, readr::read_table, skip = skip, col_names = header)
 
+    # Index datasets
+    if (index) {
+      index_dat <- lapply(raw, colnames)
+      names(index_dat) <- basename(file)
+    }
+
+    # Compact data
+    tab_file <- do.call('cbind', raw)
     tab_file <- as.data.frame(apply(tab_file, MARGIN = 2, FUN = as.numeric))
 
     # Drop rows with NA (in simtab)
     tab_file <- na.omit(tab_file)
 
-    # Correct bug in the headers
-    if (header) {
-      colnames(tab_file)[grepl('\n',colnames(tab_file))] <-
-        gsub('\n.+', '', colnames(tab_file)[grepl('\n', colnames(tab_file))])
-    }
-
   } else {
+    # if nonmem_tab == FALSE
     # Search for final results only
     skip     <- max(grep('TABLE NO', readLines(file[1])))
 
@@ -74,6 +78,10 @@ read_nmtab <- function(file = NULL,
 
   if (rm_duplicates) {
     tab_file <- tab_file[, !duplicated(colnames(tab_file))]
+  }
+
+  if (index) {
+    tab_file <- list(data  = tab_file, index = index_dat)
   }
 
   return(tab_file)

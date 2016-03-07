@@ -30,8 +30,20 @@ The first step is to import the NONMEM output files to R and can be as simple as
 ```
 xpdb <- xpose_data(runno = '001')
 ```
-This command will look for the run001.lst file in the current directory. The `xpose_data` function gather the all the output tables listed in the lst file under $TABLE (eg. sdtab, cotab, catab, patab) as well as the crucial information from the NONMEM run such as the OFV, ETA and EPS shrinkage. ggxpose makes use of the [`readr`](https://github.com/hadley/readr) package to rapidly import big dataset into R.
+This command will look for the **run001.lst** file in the current directory. The `xpose_data` function gather the all the output tables listed in the .lst file under $TABLE (eg. sdtab, cotab, catab, patab) as well as the additional information from the NONMEM as shown below. All these model information can be used in the title and subtitle of the plot (see section *Title and subtitle* below)
+```
+$descr: "ggxpose test run"
+$run: "run001"
+$input_dat: "Data: ggxpose_test_dataset.csv"
+$nobs: "1022 recs."
+$nind: "74 ind."
+$ofv: "OBJ: -656.873"
+$method: "Method: FOCE-I"
+$eps_shrink: "EPS shrink: 6.7 % [1]"
+$eta_shrink: "ETA shrink: 10.2 % [1], 48.2 % [2], 14.7 % [3]"
+```
 
+ggxpose makes use of the [`readr`](https://github.com/hadley/readr) package to rapidly import big dataset into R.
 
 ## Generating plots
 Many functions will be made available in the future. Currently ggxpose only features basic goodness of fit functions such as:   
@@ -72,6 +84,17 @@ From left to right is:
  + `title = FALSE`   
 
 ![titles](inst/img/titles.jpg)
+
+Additional model information contained in the model_info par of the xpdb can be used in titles and subtitles:
+
+```
+dv_vs_ipred(xpdb,
+            title = paste0('DV vs. IPRED (', run, ', ', ofv, ')'),
+            subtitle = paste('Based on:', nind, 'and', nobs))
+```
+
+![titles2](inst/img/titles_2.jpg)
+
 
 ### Modify aesthetics
 As in `ggplot2`, `ggxpose` was designed to make use of aesthetics however additional mapping information was required. Thus to change the color of points one would not use `color = 'red'` but `point_color = 'red'` to avoid lines, smooth and any over layer to become `red` as well. Using this simple mapping one can independently customize the each layer from a single function such as `dv_vs_ipred()`. The mapping is currently defined as `point_xxx`, `line_xxx`, `smooth_xxx`, `guide_xxx`, `panel_xxx`, `xscale_xxx`, `yscale_xxx` where `xxx` can be any option available in the `ggplot2` layers: `geom_point`, `geom_line`, `geom_smooth`, `geom_abline`, `facet_wrap`, `scale_x_continuous`, etc.
@@ -119,20 +142,20 @@ Additional arguments can be passed to the panel function using the `panel_xxx` n
 
 ```
 dv_vs_ipred(xpdb,
-                  line_alpha   = 0.8,
-                  line_color   = 'grey50',
-                  point_alpha  = 0.8,
-                  point_color  = 'grey50',
-                  smooth_fill  = 'deepskyblue2',
-                  smooth_color = 'deepskyblue2',
-                  layers = list(geom_rug(alpha = 0.2,
-                                         color = 'grey50',
-                                         sides = 'l',
-                                         size = 0.4),
-                                geom_rug(alpha = 0.2,
-                                         color = 'grey50',
-                                         sides = 'b',
-                                         size  = 0.4)))
+            line_alpha   = 0.8,
+            line_color   = 'dodgerblue3',
+            point_alpha  = 0.8,
+            point_color  = 'dodgerblue3',
+            smooth_fill  = 'coral2',
+            smooth_color = 'coral2',
+            layers = list(geom_rug(alpha = 0.2,
+                                   color = 'grey50',
+                                   sides = 'l',
+                                   size = 0.4),
+                          geom_rug(alpha = 0.2,
+                                   color = 'grey50',
+                                   sides = 'b',
+                                   size = 0.4)))
 ```
 
 ![layers](inst/img/layers.jpg)
