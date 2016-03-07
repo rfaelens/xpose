@@ -1,34 +1,35 @@
-xp_theme_default <- structure(list(
+xp_theme_xpose4 <- structure(list(
+
     # General
     rounding        = 1,
 
     # Guide
-    guide_alpha     = 0.8,
-    guide_color     = 'grey60',
+    guide_alpha     = 1,
+    guide_color     = 'black',
     guide_linetype  = 'solid',
-    guide_size      = 1,
+    guide_size      = 0.5,
 
     # Line
-    line_alpha      =  0.8,
-    line_color      = 'grey25',
+    line_alpha      =  1,
+    line_color      = 'blue',
     line_linetype   = 'solid',
     line_size       =  0.5,
 
     # Point
-    point_alpha     = 0.8,
-    point_color     = 'grey25',
+    point_alpha     = 1,
+    point_color     = 'blue',
     point_fill      = NA,
-    point_shape     = 19,
-    point_size      = 1.5,
+    point_shape     = 1,
+    point_size      = 2,
     point_stroke    = 0.5,
 
     # Smooth
     smooth_alpha    = 0.4,
-    smooth_color    = 'coral',
-    smooth_fill     = 'coral',
+    smooth_color    = 'red',
+    smooth_fill     = 'red',
     smooth_linetype = 1,
     smooth_method   = 'loess',
-    smooth_se       = TRUE,
+    smooth_se       = FALSE,
     smooth_size     = 1,
     smooth_weight   = 1,
 
@@ -56,4 +57,4 @@ xp_theme_default <- structure(list(
 
     ), class = c('xpose_theme', 'uneval'))
 
-save(xp_theme_default, file = 'data/xp_theme_default.RData')
+save(xp_theme_xpose4, file = 'data/xp_theme_xpose4.RData')

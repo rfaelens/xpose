@@ -186,8 +186,7 @@ Themes can be attached to an xpdb when importing the data with `xpose_data()`, u
 # xpose_data() example (create the xpdb)
 xpdb <- xpose_data(runno = '037', 
                    gg_theme = theme_classic(), 
-                   xp_theme = c(point_stroke = 1, 
-                                point_shape  = 2))
+                   xp_theme = xp_theme_xpose4)
 
 # xpose_theme() example (update pre-existing xpdb)
 xpdb <- xpose_theme(xpdb     = xpdb,
@@ -201,9 +200,19 @@ dv_vs_ipred(xpdb = xpdb,
             point_color = 'darkblue')
 ```
 
-Examples of `ggplot2` themes:
 
-![themes](inst/img/themes.jpg)
+### Examples of `gg_theme` themes:
+
+![ggthemes](inst/img/themes.jpg)
+
+*Note: `theme_readable()` was created to make the plot more readable by increasing labels size. The visibility of the grids was also reduced to bring the focus on the data itself.*
+
+
+### Examples of `xp_theme` themes:
+
+![xpthemes](inst/img/xp_themes.jpg)
+
+*Note: `gg_theme = theme_bw()` was also used in the xpose4 plot*
 
 
 ## The pipes

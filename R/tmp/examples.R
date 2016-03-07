@@ -104,6 +104,7 @@ print(P9)
 dev.off()
 
 # Themes ------------------------------------------------------------------
+## ggplot2
 P10_A <- dv_vs_ipred(xpdb,  gg_theme = theme_readable(),
                      title = 'gg_theme = theme_readable()', subtitle = 'Default in ggxpose')
 P10_B <- dv_vs_ipred(xpdb,  gg_theme = theme_grey(),
@@ -115,6 +116,21 @@ P10_D <- dv_vs_ipred(xpdb,  gg_theme = theme_dark(),
 
 jpeg('./inst/img/themes.jpg', width = 8, height = 7, units = 'in', res = 80)
 grid.arrange(P10_A, P10_B, P10_C, P10_D, ncol = 2)
+dev.off()
+
+## xp_themes
+P11_A <- dv_vs_ipred(xpdb,
+                     title = 'xp_theme = xp_theme_default',
+                     subtitle = 'Default in ggxpose')
+
+P11_B <- xpose_theme(xpdb,
+                     gg_theme = theme_bw(),
+                     xp_theme = xp_theme_xpose4) %>%
+  dv_vs_ipred(title = 'xp_theme = xp_theme_xpose4',
+              subtitle = 'Make ggxpose look like xpose4')
+
+jpeg('./inst/img/xp_themes.jpg', width = 8, height = 3.5, units = 'in', res = 80)
+grid.arrange(P11_A, P11_B, ncol = 2)
 dev.off()
 
 

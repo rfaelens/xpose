@@ -34,7 +34,7 @@ dv_vs_ipred <- function(xpdb,
   check_xpdb(xpdb)
   plot_name <- as.character(match.call()[[1]])
 
-  check_vars(c('IPRED', 'DV', by))
+  check_vars(c('IPRED', 'DV', by), xpdb)
   vars   <- aes_(x = quote(IPRED), y = quote(DV))
   xscale <- ifelse(log, 'log10', 'continuous')
   yscale <- xscale

@@ -32,7 +32,7 @@ absval_iwres_vs_pred <- function(xpdb,
   check_xpdb(xpdb)
   plot_name <- as.character(match.call()[[1]])
 
-  check_vars(c('PRED', 'IWRES', by))
+  check_vars(c('PRED', 'IWRES', by), xpdb)
   vars   <- aes_(x = quote(PRED), y = quote(abs(IWRES)))
   xscale <- ifelse(log, 'log10', 'continuous')
   yscale <- 'continuous'

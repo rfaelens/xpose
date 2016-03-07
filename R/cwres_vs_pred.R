@@ -34,7 +34,7 @@ cwres_vs_pred <- function(xpdb,
   check_xpdb(xpdb)
   plot_name <- as.character(match.call()[[1]])
 
-  check_vars(c('PRED', 'CWRES', by))
+  check_vars(c('PRED', 'CWRES', by), xpdb)
   vars   <- aes_(x = quote(PRED), y = quote(CWRES))
   xscale <- ifelse(log, 'log10', 'continuous')
   yscale <- 'continuous'

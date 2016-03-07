@@ -34,7 +34,7 @@ cwres_vs_idv <- function(xpdb,
   check_xpdb(xpdb)
   plot_name <- as.character(match.call()[[1]])
 
-  check_vars(c('TIME', 'CWRES', by))
+  check_vars(c('TIME', 'CWRES', by), xpdb)
   vars   <- aes_(x = quote(TIME), y = quote(CWRES))
   xscale <- ifelse(log, 'log10', 'continuous')
   yscale <- 'continuous'

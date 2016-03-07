@@ -2,21 +2,24 @@
 # Title : ggxpose benchmark
 #=========================================================================#
 
-#library(ggplot2)
 library(ggxpose)
 
 # Test bench
 xpdb <- xpose_data(dir = 'inst/models/', runno = '037')
-dv_vs_ipred(xpdb, by = 'MEAL') #, by = 'ID', panel_facets = 'ID')
+
+dv_vs_ipred(xpdb, by = 'MEAL')
 dv_vs_pred(xpdb, by = c('T2DM','MEAL'), panel_labeller = 'label_both')
 cwres_vs_idv(xpdb)
 cwres_vs_pred(xpdb)
 absval_iwres_vs_pred(xpdb)
 
-dv_vs_ipred(xpdb, point_color = 'coral2', point_alpha = 0.3, line_color = 'blue', line_linetype = 'dashed', smooth_method = 'lm')
-
 # Example on the use of theme, color options and additional layers --------
 ## Example 1 use of pipes and xpose_save()
+xpdb <- xpose_data(dir = 'inst/models/', runno = '037') %>%
+  xpose_theme(gg_theme = theme_bw(),
+              xp_theme = xp_theme_xpose4) %>%
+  dv_vs_ipred()
+
 xpose_data(dir = 'inst/models/', runno = '037') %>%
   xpose_theme(gg_theme = theme_bw(),
               xp_theme = c(point_color = 'dodgerblue4',
@@ -89,6 +92,20 @@ microbenchmark(control(xpdb), dv_vs_ipred(xpdb))
 benchplot(control(xpdb))
 benchplot(dv_vs_ipred(xpdb, by = 'MEAL'))
 
+
+dv_vs_ipred(xpdb,
+            gg_theme = theme_bw(),
+            guide_color = 'black',
+            guide_size = 0.5,
+            smooth_se = FALSE,
+            smooth_color = 'red',
+            point_color = 'blue',
+            point_shape = 1,
+            point_size = 2,
+            line_color = 'blue',
+            line_size = 0.5,
+            type      = 'pls',
+            guides    = TRUE)
 
 # xpose4 ------------------------------------------------------------------
 library(xpose4)
