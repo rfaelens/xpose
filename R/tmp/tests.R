@@ -7,6 +7,9 @@ library(ggxpose)
 # Test bench
 xpdb <- xpose_data(dir = 'inst/models/', runno = '037')
 
+model  <- parse_nm_model(file = 'inst/models/run037.lst')
+
+dv_vs_ipred(xpdb)
 dv_vs_ipred(xpdb, by = 'MEAL')
 dv_vs_pred(xpdb, by = c('T2DM','MEAL'), panel_labeller = 'label_both')
 cwres_vs_idv(xpdb)

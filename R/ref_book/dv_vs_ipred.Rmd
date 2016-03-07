@@ -1,0 +1,27 @@
+---
+title: "DV vs. IPRED"
+mainfont: Arial
+sansfont: Arial
+monofont: Courier
+output:
+  pdf_document:
+    highlight: tango
+    latex_engine: xelatex
+    number_sections: yes
+---
+
+# Purpose of this plot
+The DV vs. IPRED plot is intended to ensure a proper coorelation between the obervations (DV) and the individual model predictions (IPRED). This plot is commonly used to verify the absence of trend in the IPRED.
+
+# Interpetting this plot
+ + Points should align on the unity line.    
+ + Points below the unity line indicate over prediction (DV < IPRED) of the model while points above the unity line indicate under prediction of the model (DV > IPRED).   
+ + They should be no apparent trend in the data (ie. check the look of the smooth curve).   
+ + Search for single outlier point (an observation distant from the unity line) or outlier individual (several observations distan from the unity line and connected together by a line).   
+
+# Creating this plot
+```{r, message=FALSE, fig.height=3.5, fig.width=4, fig.align='center'}
+library(ggxpose)
+xpose_data(dir = '../../inst/models/', runno = '037') %>%
+  dv_vs_ipred()
+```

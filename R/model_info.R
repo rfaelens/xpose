@@ -12,9 +12,37 @@ shrinkage <- function(model, type, rounding) {
 }
 
 ofv <- function(model) {
-
   string <- model$CODE[which.max(grepl('#OBJV', model$CODE))]
-  string <- gsub('[^\\d\\.-]+', '', string, perl = TRUE)
-  string <- paste('OBJ:', string, collapse = '\n')
+  if (!is.null(string)) {
+    string <- gsub('[^\\d\\.-]+', '', string, perl = TRUE)
+    string <- paste('OBJ:', string, collapse = '\n')
+  }
+  return(string)
+}
+
+raw_dat <- function(model) {
+  string <- gsub('\\s+.*$', '', model$CODE[model$ABREV == 'DAT'][1])
+  string <- paste('Data:' , string)
+  return(string)
+}
+
+n_oi <- function(model) {
+  nobs <- gsub('\\D', '',
+               model$CODE[grepl('TOT. NO. OF OBS RECS', model$CODE)])
+  nind <- gsub('\\D', '',
+               model$CODE[grepl('TOT. NO. OF INDIVIDUALS', model$CODE)])
+  string <- paste(nobs, 'recs. from' , nind, 'ind.')
+  return(string)
+}
+
+m_est <- function(model) {
+  string <- gsub('.*METHOD=(\\w+)\\s+.*', '\\1', model$CODE[grepl('METHOD=', model$CODE)])
+  inter  <- ifelse(grepl('INTER', model$CODE[grepl('METHOD=', model$CODE)]), '-I', '')
+
+  if (any(grepl('\\d', string))) {
+    string[grepl('\\d', string)] <- c('FO', 'FOCE')[as.numeric(string[grepl('\\d', string)]) + 1]
+  }
+  string <- paste0(string, inter)
+  string <- paste('Method:', paste(string, collapse = ', '))
   return(string)
 }

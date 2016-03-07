@@ -64,7 +64,11 @@ xpose_data <- function(dir         = NULL,
                                            ifelse(is.null(rounding), xp_theme$rounding, rounding)),
                     eta_shrink = shrinkage(mod_file, 'ETA',
                                            ifelse(is.null(rounding), xp_theme$rounding, rounding)),
-                    ofv        = ofv(model = mod_file)
+                    ofv        = ofv(model = mod_file),
+                    run        = paste0(prefix, runno),
+                    input_dat  = raw_dat(mod_file),
+                    nobs       = n_oi(mod_file),
+                    method     = m_est(mod_file)
   )
 
 
