@@ -12,14 +12,14 @@ The `ggxpose` package was designed as a ggplot2-based alternative to the lattice
 
 ## Install `ggplus` package 
 The installation is only required the first time you use the package.
-```
+``` r
 devtools::install_github("guiastrennec/ggxpose")
 ```
 
 
 ## Load `ggxpose` package
 Every time you want to use `ggxpose` functions in R.
-```
+``` r
 library(ggxpose)
 ```
 
@@ -27,11 +27,11 @@ library(ggxpose)
 
 ## Import NONMEM output
 The first step is to import the NONMEM output files to R and can be as simple as shown below.
-```
+``` r
 xpdb <- xpose_data(runno = '001')
 ```
 This command will look for the **run001.lst** file in the current directory. The `xpose_data` function gather the all the output tables listed in the .lst file under $TABLE (eg. sdtab, cotab, catab, patab) as well as the additional information from the NONMEM as shown below. All these model information can be used in the title and subtitle of the plot (see section *Title and subtitle* below)
-```
+``` r
 $descr: "ggxpose test run"
 $run: "run001"
 $input_dat: "data: ggxpose_test_dataset.csv"
@@ -54,7 +54,7 @@ Many functions will be made available in the future. Currently ggxpose only feat
  - |IWRES| vs. PRED (`absval_iwres_vs_pred()`)   
  
 These functions are used as follow:
-```
+``` r
 xpdb <- xpose_data(runno = '001')
 
 # DV vs. IPRED plot
@@ -91,7 +91,7 @@ From left to right is:
 
 Additional model information contained in the model_info par of the xpdb can be used in titles and subtitles:
 
-```
+``` r
 dv_vs_ipred(xpdb,
             title = paste0('DV vs. IPRED (', run, ', ', ofv, ')'),
             subtitle = paste('Based on:', nind, 'and', nobs))
@@ -103,7 +103,7 @@ dv_vs_ipred(xpdb,
 ### Modify aesthetics
 As in `ggplot2`, `ggxpose` was designed to make use of aesthetics however additional mapping information was required. Thus to change the color of points one would not use `color = 'red'` but `point_color = 'red'` to avoid lines, smooth and any over layer to become `red` as well. Using this simple mapping one can independently customize the each layer from a single function such as `dv_vs_ipred()`. The mapping is currently defined as `point_xxx`, `line_xxx`, `smooth_xxx`, `guide_xxx`, `panel_xxx`, `xscale_xxx`, `yscale_xxx` where `xxx` can be any option available in the `ggplot2` layers: `geom_point`, `geom_line`, `geom_smooth`, `geom_abline`, `facet_wrap`, `scale_x_continuous`, etc.
 
-```
+``` r
 dv_vs_ipred(xpdb, point_color = 'blue',
                   point_alpha = 0.5, point_stroke = 0,
                   point_size = 1.5, line_alpha = 0.5,
@@ -114,7 +114,7 @@ dv_vs_ipred(xpdb, point_color = 'blue',
 ![aes1](inst/img/aes_1.jpg)
 
 Aesthetics can also be defined within the `ggplot2` `aes()` function for example one may want to use different point and line color for different subgroups:
-```
+``` r
 dv_vs_ipred(xpdb, aes(smooth_color = as.factor(CLASS), 
                       smooth_fill = as.factor(CLASS))) 
 ```
@@ -123,7 +123,8 @@ dv_vs_ipred(xpdb, aes(smooth_color = as.factor(CLASS),
 
 ### Grouping variable
 The argument group defines the grouping variable to be used in the dataset __for the lines only__, by default group is defined to `'ID'`. To apply a grouping variable on any other layer one can use the layer's group argument `xxx_group`, for example:
-```
+
+``` r
 dv_vs_ipred(xpdb, aes(smooth_group = CLASS)) 
 ```
 
@@ -131,7 +132,8 @@ dv_vs_ipred(xpdb, aes(smooth_group = CLASS))
 
 ### Panels
 Panels (or faceting) can be created by using the `by` argument as follows:
-```
+
+``` r
 dv_vs_ipred(xpdb, by = 'CLASS')
 ```
 
@@ -145,7 +147,7 @@ Additional arguments can be passed to the panel function using the `panel_xxx` n
 
 *Note: additional layers do not inherit the aesthetic mapping ie. colors or other options need to be defined in each layer as shown below.*
 
-```
+``` r
 dv_vs_ipred(xpdb,
             layers = list(geom_rug(alpha = 0.2,
                                    color = 'grey50',
@@ -171,7 +173,8 @@ Layers can also be used to modify the aesthetics scales for example  `scale_colo
 
 ### Scales options
 The argument `log` allows to automatically log the axes when set to `TRUE`. Many arguments can be provided to the scales by using the naming convention `xscale_xxx` or `yscale_xxx` where `xxx` is the name of a `ggplot2` scale argument such as `name`, `breaks`, `labels`, `expand`.
-```
+
+``` r
 dv_vs_ipred(xpdb, xscale_breaks = c(-4, -2, 0),
                   xscale_labels = c('Low', 'Med', 'High'),
                   xscale_expand = c(0.2, 0),
@@ -184,7 +187,7 @@ dv_vs_ipred(xpdb, xscale_breaks = c(-4, -2, 0),
 ## Multiple pages
 In some cases faceting may result in numerous panels. ggxpose bring the multiple page faceting feature to `ggplot2` through the function `multiple_pages()`. This function works in the spirit of `facet_wrap()` in `ggplot2`, simply define the variable(s) to use for faceting and define the number of rows (`nrow`) and columns (`ncol`). The function will then automatically generate multiple pages according to the given layout.
 
-```
+``` r
 xpose_data(runno = '001') %>% 
  dv_vs_ipred() %>%
  multiple_pages(by = 'CLASS', nrow = 1)
@@ -196,7 +199,8 @@ xpose_data(runno = '001') %>%
 
 ## Saving plots
 Saving plots in `ggxpose` is very simple, the function `xpose_save()` was designed to automatically save the plot after the name of the run and the `ggxpose` function that was used to generate the plot.
-```
+
+``` r
 xpose_data(runno = '001') %>% 
  dv_vs_ipred() %>% 
  xpose_save()
@@ -211,7 +215,7 @@ Theme in `ggxpose` are easily customizable. Themes are made up of two parts:
 
 Themes can be attached to an xpdb when importing the data with `xpose_data()`, using the function `xpose_theme()` on an xpdb object or when creating a graph.
 
-```
+``` r
 # xpose_data() example (create the xpdb)
 xpdb <- xpose_data(runno = '001', 
                    gg_theme = theme_classic(), 
@@ -246,7 +250,8 @@ dv_vs_ipred(xpdb = xpdb,
 
 ## The pipes
 `ggxpose` makes use of the pipe operator `%>%`. It can be used to generate clear flow as follows.
-```
+
+``` r
 xpose_data(runno = '001') %>% 
   dv_vs_ipred() %>% 
   xpose_save()
