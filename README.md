@@ -34,11 +34,11 @@ This command will look for the **run001.lst** file in the current directory. The
 ```
 $descr: "ggxpose test run"
 $run: "run001"
-$input_dat: "Data: ggxpose_test_dataset.csv"
+$input_dat: "data: ggxpose_test_dataset.csv"
 $nobs: "1022 recs."
 $nind: "74 ind."
-$ofv: "OBJ: -656.873"
-$method: "Method: FOCE-I"
+$ofv: "obj: -656.873"
+$method: "method: FOCE-I"
 $eps_shrink: "EPS shrink: 6.7 % [1]"
 $eta_shrink: "ETA shrink: 10.2 % [1], 48.2 % [2], 14.7 % [3]"
 ```
@@ -56,7 +56,11 @@ Many functions will be made available in the future. Currently ggxpose only feat
 These functions are used as follow:
 ```
 xpdb <- xpose_data(runno = '001')
+
+# DV vs. IPRED plot
 dv_vs_ipred(xpdb)
+
+# DV vs. PRED plot
 dv_vs_pred(xpdb)
 ```
 This specific command will display the DV vs. IPRED plot in the preview window of R.
@@ -98,12 +102,13 @@ dv_vs_ipred(xpdb,
 
 ### Modify aesthetics
 As in `ggplot2`, `ggxpose` was designed to make use of aesthetics however additional mapping information was required. Thus to change the color of points one would not use `color = 'red'` but `point_color = 'red'` to avoid lines, smooth and any over layer to become `red` as well. Using this simple mapping one can independently customize the each layer from a single function such as `dv_vs_ipred()`. The mapping is currently defined as `point_xxx`, `line_xxx`, `smooth_xxx`, `guide_xxx`, `panel_xxx`, `xscale_xxx`, `yscale_xxx` where `xxx` can be any option available in the `ggplot2` layers: `geom_point`, `geom_line`, `geom_smooth`, `geom_abline`, `facet_wrap`, `scale_x_continuous`, etc.
+
 ```
-dv_vs_ipred(xpdb, point_color = 'dodgerblue3',
-                    point_alpha = 0.5, point_stroke = 0,
-                    point_size = 2.5, line_alpha = 0.5, 
-                    line_size = 0.5, line_color = 'dodgerblue3',
-                    line_linetype = 'solid', smooth_method = 'lm')
+dv_vs_ipred(xpdb, point_color = 'blue',
+                  point_alpha = 0.5, point_stroke = 0,
+                  point_size = 1.5, line_alpha = 0.5,
+                  line_size = 0.5, line_color = 'red',
+                  line_linetype = 'solid', smooth_method = 'lm')
 ```
 
 ![aes1](inst/img/aes_1.jpg)
@@ -136,26 +141,25 @@ Additional arguments can be passed to the panel function using the `panel_xxx` n
 
 
 ### Additional layers
-`ggxpose` offers the opportunity to add additional layers to a plot, for example you could add `geom_rug()` to a plot or an annotation. All layers must be provided as a list object. 
+`ggxpose` offers the opportunity to add additional layers to a plot, for example you could add `geom_rug()` to a plot or use `annotate()`. All layers must be provided as a list object. 
 
 *Note: additional layers do not inherit the aesthetic mapping ie. colors or other options need to be defined in each layer as shown below.*
 
 ```
 dv_vs_ipred(xpdb,
-            line_alpha   = 0.8,
-            line_color   = 'dodgerblue3',
-            point_alpha  = 0.8,
-            point_color  = 'dodgerblue3',
-            smooth_fill  = 'coral2',
-            smooth_color = 'coral2',
             layers = list(geom_rug(alpha = 0.2,
                                    color = 'grey50',
-                                   sides = 'l',
+                                   sides = 'lb',
                                    size = 0.4),
-                          geom_rug(alpha = 0.2,
-                                   color = 'grey50',
-                                   sides = 'b',
-                                   size = 0.4)))
+                          annotate(geom = 'text',
+                                   fontface = 'bold',
+                                   color = 'darkred',
+                                   label = 'LLOQ',
+                                   x = -4, y = -4),
+                          annotate(geom = 'rect',
+                                   alpha = 0.2, fill = 'red',
+                                   xmin = -Inf, xmax = -3,
+                                   ymin = -Inf, ymax = -3)))
 ```
 
 ![layers](inst/img/layers.jpg)

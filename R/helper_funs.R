@@ -35,15 +35,15 @@ parse_title <- function(string, xpdb) {
 titlr <- function(plot_name, subfun, title, subtitle, xpdb) {
   if (is.null(title)) {
     title <- paste0(plot_name, ' (', xpdb[['modfile']], ')')
-  } else {
+  } else if (!(is.logical(title) && title == FALSE)) {
     title <- parse_title(title, xpdb)
   }
 
   if (is.null(subtitle)) {
     subtitle <- xpdb$mod_info[[subfun]]
-  } else {
+  } else if (!(is.logical(subtitle) && subtitle == FALSE)) {
     subtitle <- parse_title(subtitle, xpdb)
   }
 
-  return( c(title, subtitle) )
+  return( list(title, subtitle) )
 }

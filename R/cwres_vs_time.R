@@ -44,7 +44,7 @@ cwres_vs_idv <- function(xpdb,
   xpose_plot_default(xpdb = xpdb, vars = vars, aes = aes, group = group,
                      layers = layers, type = type, guides = guides,
                      gg_theme = gg_theme, panel_facets = by, xscale = xscale,
-                     yscale = yscale, title = titles[1], subtitle = titles[2],
+                     yscale = yscale, title = titles[[1]], subtitle = titles[[2]],
                      plot_name = as.character(match.call()[[1]]),
-                     guide_slope = 0, guide_intercept = 0, ...)
+                     guides_slope = 0, guides_intercept = 0, ...)
 }

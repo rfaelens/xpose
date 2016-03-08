@@ -23,10 +23,11 @@ dev.off()
 
 
 # Guides ------------------------------------------------------------------
-P3_A <- dv_vs_ipred(xpdb, guides = T, type = 'p',
-                    title = "guides = TRUE" , subtitle = FALSE)
-P3_B <- dv_vs_ipred(xpdb, guides = F, type = 'p',
-                    title = "guides = FALSE" , subtitle = FALSE)
+P3_A <- dv_vs_ipred(xpdb, guides = TRUE, type = 'p',
+                    guides_color = 'black', guides_alpha = 0.9, guides_size = 1,
+                    title = "guides = TRUE", subtitle = FALSE)
+P3_B <- dv_vs_ipred(xpdb, guides = FALSE, type = 'p',
+                    title = "guides = FALSE", subtitle = FALSE)
 
 jpeg('./inst/img/guides.jpg', width = 8, height = 3.5, units = 'in', res = 80)
 grid.arrange(P3_A, P3_B, ncol = 2)
@@ -52,10 +53,10 @@ print(P4_D)
 dev.off()
 
 # Aes ---------------------------------------------------------------------
-P5_A <- dv_vs_ipred(xpdb, point_color = 'dodgerblue3',
+P5_A <- dv_vs_ipred(xpdb, point_color = 'blue',
                     point_alpha = 0.5, point_stroke = 0,
-                    point_size = 2.5, line_alpha = 0.5,
-                    line_size = 0.5, line_color = 'dodgerblue3',
+                    point_size = 1.5, line_alpha = 0.5,
+                    line_size = 0.5, line_color = 'red',
                     line_linetype = 'solid', smooth_method = 'lm')
 
 
@@ -87,20 +88,19 @@ dev.off()
 
 # Layers ------------------------------------------------------------------
 P8 <- dv_vs_ipred(xpdb,
-                  line_alpha   = 0.8,
-                  line_color   = 'dodgerblue3',
-                  point_alpha  = 0.8,
-                  point_color  = 'dodgerblue3',
-                  smooth_fill  = 'coral2',
-                  smooth_color = 'coral2',
                   layers = list(geom_rug(alpha = 0.2,
                                          color = 'grey50',
-                                         sides = 'l',
+                                         sides = 'lb',
                                          size = 0.4),
-                                geom_rug(alpha = 0.2,
-                                         color = 'grey50',
-                                         sides = 'b',
-                                         size = 0.4)))
+                                annotate(geom = 'text',
+                                         fontface = 'bold',
+                                         color = 'darkred',
+                                         label = 'LLOQ',
+                                         x = -4, y = -4),
+                                annotate(geom = 'rect',
+                                         alpha = 0.2, fill = 'red',
+                                         xmin = -Inf, xmax = -3,
+                                         ymin = -Inf, ymax = -3)))
 
 jpeg('./inst/img/layers.jpg', width = 4, height = 3.5, units = 'in', res = 80)
 print(P8)

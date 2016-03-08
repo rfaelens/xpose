@@ -4,10 +4,10 @@ xp_theme_xpose4 <- structure(list(
     rounding        = 1,
 
     # Guide
-    guide_alpha     = 1,
-    guide_color     = 'black',
-    guide_linetype  = 'solid',
-    guide_size      = 0.5,
+    guides_alpha    = 1,
+    guides_color    = 'black',
+    guides_linetype = 'solid',
+    guides_size     = 0.5,
 
     # Line
     line_alpha      =  1,

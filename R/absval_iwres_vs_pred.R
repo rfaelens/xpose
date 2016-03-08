@@ -42,7 +42,7 @@ absval_iwres_vs_pred <- function(xpdb,
   xpose_plot_default(xpdb = xpdb, vars = vars, aes = aes, group = group,
                      layers = layers, type = type, guides = FALSE,
                      gg_theme = gg_theme, panel_facets = by, xscale = xscale,
-                     yscale = yscale, title = titles[1], subtitle = titles[2],
+                     yscale = yscale, title = titles[[1]], subtitle = titles[[2]],
                      plot_name = as.character(match.call()[[1]]), ...)
 }
 

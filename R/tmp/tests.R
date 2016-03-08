@@ -32,6 +32,14 @@ xpose_data(dir = 'inst/models/', runno = '001') %>%
   xpose_save()
 
 
+# Use of titles and subtitles ---------------------------------------------
+dv_vs_ipred(xpdb)
+dv_vs_ipred(xpdb, title = FALSE)
+dv_vs_ipred(xpdb, title = FALSE, subtitle = FALSE)
+dv_vs_ipred(xpdb, title = 'Some', subtitle = 'Text')
+dv_vs_ipred(xpdb, title = paste(nind, nobs), subtitle = ofv)
+
+
 # Use of aes --------------------------------------------------------------
 dv_vs_ipred(xpdb, by = 'CLASS', type = 'lps',
             aes(smooth_group = CLASS,
@@ -43,20 +51,19 @@ dv_vs_ipred(xpdb, by = 'CLASS', type = 'lps',
 
 # Use of layers -----------------------------------------------------------
 dv_vs_ipred(xpdb,
-            line_alpha   = 0.8,
-            line_color   = 'dodgerblue3',
-            point_alpha  = 0.8,
-            point_color  = 'dodgerblue3',
-            smooth_fill  = 'coral2',
-            smooth_color = 'coral2',
             layers = list(geom_rug(alpha = 0.2,
                                    color = 'grey50',
-                                   sides = 'l',
+                                   sides = 'lb',
                                    size = 0.4),
-                          geom_rug(alpha = 0.2,
-                                   color = 'grey50',
-                                   sides = 'b',
-                                   size = 0.4)))
+                          annotate(geom = 'text',
+                                   fontface = 'bold',
+                                   color = 'darkred',
+                                   label = 'LLOQ',
+                                   x = -4, y = -4),
+                          annotate(geom = 'rect',
+                                   alpha = 0.2, fill = 'red',
+                                   xmin = -Inf, xmax = -3,
+                                   ymin = -Inf, ymax = -3)))
 
 
 # Multiple_pages ----------------------------------------------------------

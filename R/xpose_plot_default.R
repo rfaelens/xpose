@@ -56,7 +56,7 @@ xpose_plot_default <- function(xpdb,
   # Add unity line
   if (guides) {
     xp <- xp + xp_geoms(xp_theme = xpdb$xp_theme,
-                        name     = 'guide',
+                        name     = 'guides',
                         ggfun    = 'geom_abline',
                         ...)
   }
@@ -93,6 +93,9 @@ xpose_plot_default <- function(xpdb,
   # Add title and subtitle
 
   if (!(is.logical(title) && title == FALSE)) {
+
+    titles <- titlr('', subfun = 'ofv', title, subtitle, xpdb)
+
     if (!(is.logical(subtitle) && subtitle == FALSE)) {
       xp <- xp + labs(title = bquote(atop(bold(.(title)), scriptstyle(.(subtitle)))))
     } else {

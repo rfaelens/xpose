@@ -22,7 +22,7 @@ ofv <- function(model) {
   string <- model$CODE[which.max(grepl('#OBJV', model$CODE))]
   if (!is.null(string)) {
     string <- gsub('[^\\d\\.-]+', '', string, perl = TRUE)
-    string <- paste('OBJ:', string, collapse = ', ')
+    string <- paste('obj:', string, collapse = ', ')
   }
   return(string)
 }
@@ -30,7 +30,7 @@ ofv <- function(model) {
 
 raw_dat <- function(model) {
   string <- gsub('\\s+.*$', '', model$CODE[model$ABREV == 'DAT'][1])
-  string <- paste('Data:' , string)
+  string <- paste('data:' , string)
   return(string)
 }
 
@@ -59,7 +59,7 @@ method <- function(model) {
     string[grepl('\\d', string)] <- c('FO', 'FOCE')[as.numeric(string[grepl('\\d', string)]) + 1]
   }
   string <- paste0(string, inter)
-  string <- paste('Method:', paste(string, collapse = ', '))
+  string <- paste('method:', paste(string, collapse = ', '))
   return(string)
 }
 

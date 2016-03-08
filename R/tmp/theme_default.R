@@ -3,10 +3,10 @@ xp_theme_default <- structure(list(
     rounding        = 1,
 
     # Guide
-    guide_alpha     = 0.8,
-    guide_color     = 'grey60',
-    guide_linetype  = 'solid',
-    guide_size      = 1,
+    guides_alpha    = 1,
+    guides_color    = 'grey70',
+    guides_linetype = 'solid',
+    guides_size     = 1,
 
     # Line
     line_alpha      =  0.7,
