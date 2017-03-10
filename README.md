@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/guiastrennec/ggxpose.svg?branch=master)](https://travis-ci.org/guiastrennec/ggxpose)
 ![](http://www.r-pkg.org/badges/version/ggxpose)
 
 # Warning
