@@ -1,3 +1,5 @@
+![](http://www.r-pkg.org/badges/version/ggxpose)
+
 # Warning
 This is a "prototype" package and is subject to major change. Your work should not rely on it. We recommend to use [`xpose4`](https://github.com/andrewhooker/xpose4) instead.
 
