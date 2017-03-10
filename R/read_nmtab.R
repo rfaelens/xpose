@@ -35,7 +35,7 @@ read_nmtab <- function(file = NULL,
   }
 
   if (!any(file.exists(file))) {
-    stop('No file not found.')
+    stop('No file not found.', call. = FALSE)
   } else {
     file <- file[file.exists(file)]
   }
