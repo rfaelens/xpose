@@ -1,6 +1,6 @@
-[![build_status](https://travis-ci.org/guiastrennec/ggxpose.svg?branch=master)](https://travis-ci.org/guiastrennec/ggxpose)
-![cran_version](http://www.r-pkg.org/badges/version/ggxpose)
-[![codecov](https://codecov.io/gh/guiastrennec/ggxpose/branch/master/graph/badge.svg)](https://codecov.io/gh/guiastrennec/ggxpose)
+[![build_status](https://travis-ci.org/guiastrennec/ggxpose.svg?style=flat-square)](https://travis-ci.org/guiastrennec/ggxpose)
+![cran_version](http://www.r-pkg.org/badges/version/ggxpose?style=flat-square)
+[![codecov](https://codecov.io/gh/guiastrennec/ggxpose/branch/master/graph/badge.svg?style=flat-square)](https://codecov.io/gh/guiastrennec/ggxpose)
 
 # Warning
 This is a "prototype" package and is subject to major change. Your work should not rely on it. We recommend to use [`xpose4`](https://github.com/andrewhooker/xpose4) instead.
