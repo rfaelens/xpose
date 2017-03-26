@@ -24,6 +24,3 @@ ggplot(diamonds, aes(x = price, y = carat, color = cut)) +
  theme_readable(legend.position = 'top')
 }
 }
-\seealso{
-\code{\link{ggtheme}}, \code{\link{theme}}
-}

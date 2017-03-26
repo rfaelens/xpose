@@ -8,7 +8,6 @@
 #' @param legend.position the position of legends ("none", "left", "right", "bottom",
 #' "top", or two-element numeric vector)
 #'
-#' @seealso \code{\link{ggtheme}}, \code{\link{theme}}
 #' @examples
 #' \dontrun{
 #' ggplot(diamonds, aes(x = price, y = carat, color = cut)) +
