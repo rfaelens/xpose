@@ -39,4 +39,3 @@ Use FALSE to remove subtitle.}
 \description{
 Plot of observations (DV) vs individual predictions (IPRED).
 }
-

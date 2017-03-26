@@ -15,4 +15,3 @@ The default ggxpose theme.
    dv_vs_ipred()
 }
 }
-

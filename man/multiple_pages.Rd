@@ -34,4 +34,3 @@ multiple_pages(plot = p, by = 'color', ncol = 2, nrow = 2)
 \seealso{
 \code{\link{facet_wrap}}
 }
-

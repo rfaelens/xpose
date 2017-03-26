@@ -31,4 +31,3 @@ xpdb <- xpose_theme(xpdb     = xpdb,
                                  line_color  = 'blue'))
 }
 }
-

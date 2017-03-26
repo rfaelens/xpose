@@ -37,4 +37,3 @@ Use FALSE to remove subtitle.}
 \description{
 Plot of absolute value of individual weighted residuals (IWRES) plotted against population predictions (PRED).
 }
-

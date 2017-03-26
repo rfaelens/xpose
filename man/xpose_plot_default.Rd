@@ -52,4 +52,3 @@ manually generate plotting functions.
 xpose_plot_default(xpdb, vars = aes(x = IPRED, y = DV))
 }
 }
-

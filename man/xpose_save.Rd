@@ -35,4 +35,3 @@ by using the metadata attached to the plot.
 dv_vs_ipred(xpdb) \%>\% xpose_save()
 }
 }
-

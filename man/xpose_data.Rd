@@ -36,4 +36,3 @@ Import NONMEM output into a R database
 xpdb <- xpose_data(dir = '../models/pk/', runno = '001')
 }
 }
-

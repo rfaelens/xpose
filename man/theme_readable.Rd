@@ -27,4 +27,3 @@ ggplot(diamonds, aes(x = price, y = carat, color = cut)) +
 \seealso{
 \code{\link{ggtheme}}, \code{\link{theme}}
 }
-

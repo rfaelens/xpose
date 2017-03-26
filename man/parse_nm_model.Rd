@@ -34,4 +34,3 @@ mod_file <- parse_nm_model(dir = '../models/pk/', runno = '001')
 \seealso{
 \code{\link{xpose_data}}, \code{\link{read_nmtab}}
 }
-

@@ -39,4 +39,3 @@ Use FALSE to remove subtitle.}
 \description{
 Plot of conditional residuals (CWRES) plotted against population predictions (PRED).
 }
-

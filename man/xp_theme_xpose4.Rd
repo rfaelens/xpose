@@ -15,4 +15,3 @@ An xp_theme that makes ggxpose look like xpose4.
    dv_vs_ipred()
 }
 }
-
