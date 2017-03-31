@@ -6,7 +6,7 @@
 \usage{
 absval_iwres_vs_pred(xpdb, aes = NULL, group = "ID", type = "pls",
   by = NULL, layers = NULL, title = NULL, subtitle = NULL,
-  log = FALSE, gg_theme = NULL, ...)
+  caption = NULL, log = FALSE, guides = TRUE, gg_theme = NULL, ...)
 }
 \arguments{
 \item{xpdb}{an xpose database object.}

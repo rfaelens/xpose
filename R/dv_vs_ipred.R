@@ -27,24 +27,26 @@ dv_vs_ipred <- function(xpdb,
                         layers   = NULL,
                         title    = NULL,
                         subtitle = NULL,
+                        caption  = NULL,
                         log      = FALSE,
                         guides   = TRUE,
                         gg_theme = NULL,
                         ...) {
-
+  
+  ##### Change this to true false
   check_xpdb(xpdb)
   check_vars(c('IPRED', 'DV', by), xpdb)
-
-  vars   <- aes_(x = quote(IPRED), y = quote(DV))
-  xscale <- ifelse(log, 'log10', 'continuous')
-  yscale <- xscale
-  titles <- titlr('DV vs. IPRED', subfun = 'eps_shrink',
-                  title, subtitle, xpdb)
-
-  xpose_plot_default(xpdb = xpdb, vars = vars, aes = aes, group = group,
+  #######
+  
+  xpose_plot_default(xpdb = xpdb, aes = aes, group = group,
+                     vars = ggplot2::aes_(x = quote(IPRED), y = quote(DV)), 
                      layers = layers, type = type, guides = guides,
-                     gg_theme = gg_theme, panel_facets = by, xscale = xscale,
-                     yscale = yscale, title = titles[[1]], subtitle = titles[[2]],
+                     gg_theme = gg_theme, panel_facets = by, 
+                     xscale = ifelse(log, 'log10', 'continuous'),
+                     yscale = ifelse(log, 'log10', 'continuous'), 
+                     title = check_title(title, 'DV vs. IPRED | @run'), 
+                     subtitle = check_title(subtitle, 'Ofv: @ofv, @eps_shrink'),
+                     caption = check_title(caption, '@dir'),
                      plot_name = as.character(match.call()[[1]]),
                      guides_slope = 1, ...)
 }

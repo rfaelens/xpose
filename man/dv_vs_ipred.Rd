@@ -5,8 +5,8 @@
 \title{Observations (DV) plotted against individual predictions (IPRED)}
 \usage{
 dv_vs_ipred(xpdb, aes = NULL, group = "ID", type = "pls", by = NULL,
-  layers = NULL, title = NULL, subtitle = NULL, log = FALSE,
-  guides = TRUE, gg_theme = NULL, ...)
+  layers = NULL, title = NULL, subtitle = NULL, caption = NULL,
+  log = FALSE, guides = TRUE, gg_theme = NULL, ...)
 }
 \arguments{
 \item{xpdb}{an xpose database object.}
