@@ -5,7 +5,7 @@
 #' @examples
 #' # Make ggxpose look like xpose4
 #' \dontrun{
-#'  xpose_data(dir = 'inst/models/', runno = '037') %>%
+#'  xpose_data(dir = 'inst/models/', runno = '001') %>%
 #'    xpose_theme(gg_theme = theme_bw(),
 #'                xp_theme = xp_theme_xpose4) %>%
 #'    dv_vs_ipred()

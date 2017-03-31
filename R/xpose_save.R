@@ -7,48 +7,65 @@
 #' by using the metadata attached to the plot.
 #'
 #' @param plot a ggxpose plot object.
+#' @param filename an optional name to be given to the file. Template variables such as @run 
+#' can be used to generate template names. By default, the file extension will be set to .pdf 
+#' by default but can be changed to .jpeg, .png, .bmp, .tiff
 #' @param dir an optional path to a specific directory.
-#' @param name an optional name to be given to the file. If left NULL the run
-#' number and plotting function will be used instead.
-#' @param format the file format to use: 'pdg', 'jpg' or 'png',
 #' @param width the page width in inches
 #' @param height the page height in inches
-#' @param ... additional options to be passed to \code{jpg()} or \code{png()} functions.
+#' @param res the nominal resolution in ppi. Not used with .pdf
+#' @param ... additional options to be passed to ploting functions.
 #'
 #' @examples
 #' \dontrun{
-#' dv_vs_ipred(xpdb) %>% xpose_save()
+#' xpdb %>% 
+#'  dv_vs_ipred() %>% 
+#'  xpose_save()
 #' }
 #' @export
-xpose_save <- function(plot   = NULL,
-                       dir    = NULL,
-                       name   = NULL,
-                       format = 'pdf',
-                       width  = 12,
-                       height = 9,
+xpose_save <- function(plot     = ggplot2::last_plot(),
+                       filename = '@run_@plotfun.pdf',
+                       dir      = NULL,
+                       width    = 8,
+                       height   = 7,
+                       res      = 200,
                        ...) {
-
+  
   if (is.null(plot)) {
     stop('Argument \"plot\" required.')
   }
-
+  
   if (!is.null(dir) && !substr(dir, nchar(dir), nchar(dir)) == '/') {
     dir <- paste0(dir, '/')
   }
-
-  if (is.null(name)) {
-    name <- paste(plot$xpose$modfile, plot$xpose$fun, sep = '_')
+  
+  filename <- parse_title(string = filename, xpdb = plot$xpose, 
+                          extra_key = '@plotfun', extra_value = plot$xpose$fun)
+  
+  format <- unlist(regmatches(filename, gregexpr('\\.\\w+$', filename)))
+  
+  if (length(format) == 0) {
+    format <- '.pdf'
+    filename <- paste0(filename, format)
   }
-
+  
   switch(format,
-         'pdf' = pdf(file = paste0(dir, name,'.pdf'),
-                     width = width, height = height),
-         'jpg' = jpeg(filename = paste0(dir, name,'.jpg'),
-                      width = width, height = height, units = 'in',...),
-         'png' = png(filename = paste0(dir, name,'.png'),
-                     width = width, height = height, units = 'in',...)
-         )
-
+         '.pdf' = grDevices::pdf(file = paste0(dir, filename),
+                                 width = width, height = height, ...),
+         '.jpeg' = grDevices::jpeg(filename = paste0(dir, filename),
+                                   width = width, height = height, units = 'in',
+                                   res = res, ...),
+         '.png' = grDevices::png(filename = paste0(dir, filename),
+                                 width = width, height = height, units = 'in', 
+                                 res = res, ...),
+         '.bmp' = grDevices::bmp(filename = paste0(dir, filename),
+                                 width = width, height = height, units = 'in', 
+                                 res = res, ...),
+         '.tiff' = grDevices::tiff(filename = paste0(dir, filename),
+                                   width = width, height = height, units = 'in', 
+                                   res = res, ...)
+  )
+  
   print(plot)
   dev.off()
 }

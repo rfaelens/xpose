@@ -4,16 +4,16 @@
 \alias{xpose_data}
 \title{Import NONMEM output into R}
 \usage{
-xpose_data(dir = NULL, prefix = "run", runno = NULL, ext = ".lst",
+xpose_data(runno = NULL, dir = NULL, prefix = "run", ext = ".lst",
   file = NULL, rounding = NULL, gg_theme = theme_readable(),
   xp_theme = xp_theme_default, verbose = FALSE)
 }
 \arguments{
+\item{runno}{run number to be evaluated}
+
 \item{dir}{location of the model files}
 
 \item{prefix}{prefix of the model file name}
-
-\item{runno}{run number to be evaluated}
 
 \item{ext}{model file extention}
 

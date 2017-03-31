@@ -1,18 +1,20 @@
 #' Default xpose plot
 #'
-#' @description manually generate plotting functions.
+#' @description Manually generate plotting functions.
 #'
 #' @param xpdb an xpose database object.
 #' @param vars the variable mapping from an aes().
 #' @param aes ggxpose aesthetics (eg. \code{point_color}).
 #' @param group grouping variable to be used.
 #' @param type string setting the type of plot to be used points 'p',
-#' line 'l' and smooth 's' or any combination of the 3.
+#' line 'l', smooth 's' and text 't' or any combination of the 4.
 #' @param layers a list of additional ggplot layers to be used.
 #' @param title the main title of the plot. If NULL automated title will be generated.
 #' Use FALSE to remove title and subtitle.
 #' @param subtitle the plot subtitle. If NULL automated subtitle will be generated.
 #' Use FALSE to remove subtitle.
+#' @param caption page caption. If NULL automated caption will be generated.
+#' Use FALSE to remove caption.
 #' @param guides should the guides (eg. unity line) be displayed.
 #' @param xscale scale type for x axis (eg. 'continuous', 'discrete', 'log10').
 #' @param yscale scale type for y axis (eg. 'continuous', 'discrete', 'log10').
@@ -20,6 +22,15 @@
 #' @param plot_name name that will be used by \code{xpose_save()} to save the plot.
 #' @param ... any additional aesthetics.
 #'
+#' @section Template titles:
+#' Template titles can be used to create highly informative diagnostics plots. 
+#' They can be applied to any plot title, subtitle and caption. Template titles 
+#' are defined via a single string containing key variables staring with a @ (e.g. @ofv)
+#' which will be replaced by their actual value when rendering the plot.
+#' For example '@run, @nobs observations in @nind subjects' would become 'run001, 
+#' 1022 observations in 74 subjects'. The available key variables are listed under 
+#' \code{\link{template_titles}}.
+#' 
 #' @return An \code{xpose_plot}
 #' @examples
 #' \dontrun{
@@ -34,6 +45,7 @@ xpose_plot_default <- function(xpdb,
                                layers   = NULL,
                                title    = NULL,
                                subtitle = NULL,
+                               caption  = NULL,
                                guides   = TRUE,
                                xscale   = 'continuous',
                                yscale   = 'continuous',
@@ -51,7 +63,7 @@ xpose_plot_default <- function(xpdb,
   }
 
   # Create ggplot base
-  xp   <- ggplot(data = data, ...) + vars
+  xp   <- ggplot2::ggplot(data = data, ...) + vars
 
   # Add unity line
   if (guides) {
@@ -80,6 +92,15 @@ xpose_plot_default <- function(xpdb,
                         ...)
   }
 
+  # Add text (need a way to link labels = )
+  # if (grepl('t', tolower(type))) {
+  #   xp <- xp + xp_geoms(mapping  = aes,
+  #                       xp_theme = xpdb$xp_theme,
+  #                       name     = 'text',
+  #                       ggfun    = 'geom_text',
+  #                       ...)
+  # }
+  
   # Add smooth
   if (grepl('s', tolower(type))) {
     xp <- xp + xp_geoms(mapping  = aes,
@@ -91,17 +112,10 @@ xpose_plot_default <- function(xpdb,
 
 
   # Add title and subtitle
-
-  if (!(is.logical(title) && title == FALSE)) {
-
-    titles <- titlr('', subfun = 'ofv', title, subtitle, xpdb)
-
-    if (!(is.logical(subtitle) && subtitle == FALSE)) {
-      xp <- xp + labs(title = bquote(atop(bold(.(title)), scriptstyle(.(subtitle)))))
-    } else {
-      xp <- xp + labs(title = title)
-    }
-  }
+  xp <- xp + ggplot2::labs(title    = write_title(title, xpdb),
+                           subtitle = write_title(subtitle, xpdb),
+                           caption  = write_title(caption, xpdb))
+  
 
   # Define scales
   xp <- xp + xp_geoms(mapping  = aes,

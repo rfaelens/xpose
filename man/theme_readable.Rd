@@ -14,8 +14,8 @@ theme_readable(base_size = 11, legend.position = "right")
 }
 \description{
 Theme intended to make ggplot2 more readable when used
-in presentation or papers. Background and grid lines were dimed to focus
-the attention on the data itself.
+in presentation or papers. Background and grid lines were dimed to bring the 
+focus on the data.
 }
 \examples{
 \dontrun{

@@ -6,15 +6,13 @@ shrinkage <- function(model, type, rounding) {
   names(string) <- seq_along(string)
   string <- string[string != 100]
   string <- paste0(string, ' % [', names(string),']', collapse = ', ')
-  string <- paste(type, 'shrink:', string)
-  return(string)
+  paste(type, 'shrink:', string)
 }
 
 
 descr <- function(model) {
   string <- model$CODE[model$ABREV == 'PRO']
-  string <- paste(string, collapse = ', ')
-  return(string)
+  paste(string, collapse = ', ')
 }
 
 
@@ -22,32 +20,24 @@ ofv <- function(model) {
   string <- model$CODE[which.max(grepl('#OBJV', model$CODE))]
   if (!is.null(string)) {
     string <- gsub('[^\\d\\.-]+', '', string, perl = TRUE)
-    string <- paste('obj:', string, collapse = ', ')
+    string <- paste(string, collapse = ', ')
   }
   return(string)
 }
 
 
 raw_dat <- function(model) {
-  string <- gsub('\\s+.*$', '', model$CODE[model$ABREV == 'DAT'][1])
-  string <- paste('data:' , string)
-  return(string)
+  gsub('\\s+.*$', '', model$CODE[model$ABREV == 'DAT'][1])
 }
 
 
 nobs <- function(model) {
-  string <- gsub('\\D', '',
-                 model$CODE[grepl('TOT. NO. OF OBS RECS', model$CODE)])
-  string <- paste(string, 'recs.')
-  return(string)
+  gsub('\\D', '', model$CODE[grepl('TOT. NO. OF OBS RECS', model$CODE)])
 }
 
 
 nind <- function(model) {
-  string <- gsub('\\D', '',
-                 model$CODE[grepl('TOT. NO. OF INDIVIDUALS', model$CODE)])
-  string <- paste(string, 'ind.')
-  return(string)
+  gsub('\\D', '', model$CODE[grepl('TOT. NO. OF INDIVIDUALS', model$CODE)])
 }
 
 
@@ -55,12 +45,11 @@ method <- function(model) {
   string <- gsub('.*METHOD=(\\w+)\\s+.*', '\\1', model$CODE[grepl('METHOD=', model$CODE)])
   inter  <- ifelse(grepl('INTER', model$CODE[grepl('METHOD=', model$CODE)]), '-I', '')
   lapl   <- ifelse(grepl('LAPL', model$CODE[grepl('METHOD=', model$CODE)]), ' Laplace', '')
-
+  
   if (any(grepl('\\d', string))) {
     string[grepl('\\d', string)] <- c('FO', 'FOCE')[as.numeric(string[grepl('\\d', string)]) + 1]
   }
   string <- paste0(string, inter, lapl)
-  string <- paste('method:', paste(string, collapse = ', '))
-  return(string)
+  paste(string, collapse = ', ')
 }
 

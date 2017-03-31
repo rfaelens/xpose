@@ -4,24 +4,25 @@
 \alias{xpose_save}
 \title{Save ggxpose plot}
 \usage{
-xpose_save(plot = NULL, dir = NULL, name = NULL, format = "pdf",
-  width = 12, height = 9, ...)
+xpose_save(plot = ggplot2::last_plot(), filename = "@run_@plotfun.pdf",
+  dir = NULL, width = 8, height = 7, res = 200, ...)
 }
 \arguments{
 \item{plot}{a ggxpose plot object.}
 
+\item{filename}{an optional name to be given to the file. Template variables such as @run 
+can be used to generate template names. By default, the file extension will be set to .pdf 
+by default but can be changed to .jpeg, .png, .bmp, .tiff}
+
 \item{dir}{an optional path to a specific directory.}
-
-\item{name}{an optional name to be given to the file. If left NULL the run
-number and plotting function will be used instead.}
-
-\item{format}{the file format to use: 'pdg', 'jpg' or 'png',}
 
 \item{width}{the page width in inches}
 
 \item{height}{the page height in inches}
 
-\item{...}{additional options to be passed to \code{jpg()} or \code{png()} functions.}
+\item{res}{the nominal resolution in ppi. Not used with .pdf}
+
+\item{...}{additional options to be passed to ploting functions.}
 }
 \description{
 Automatically save ggxpose plots to pdf, jpg or png.
@@ -32,6 +33,8 @@ by using the metadata attached to the plot.
 }
 \examples{
 \dontrun{
-dv_vs_ipred(xpdb) \%>\% xpose_save()
+xpdb \%>\% 
+ dv_vs_ipred() \%>\% 
+ xpose_save()
 }
 }

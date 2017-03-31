@@ -5,8 +5,8 @@
 \title{Observations (DV) plotted against population predictions (PRED)}
 \usage{
 dv_vs_pred(xpdb, aes = NULL, group = "ID", type = "pls", by = NULL,
-  layers = NULL, title = NULL, subtitle = NULL, log = FALSE,
-  guides = TRUE, gg_theme = NULL, ...)
+  layers = NULL, title = NULL, subtitle = NULL, caption = NULL,
+  log = FALSE, guides = TRUE, gg_theme = NULL, ...)
 }
 \arguments{
 \item{xpdb}{an xpose database object.}
@@ -28,6 +28,9 @@ Use FALSE to remove title and subtitle.}
 \item{subtitle}{the plot subtitle. If NULL automated subtitle will be generated.
 Use FALSE to remove subtitle.}
 
+\item{caption}{page caption. If NULL automated caption will be generated.
+Use FALSE to remove caption.}
+
 \item{log}{logical if TRUE axes will be logged.}
 
 \item{guides}{should the guides (eg. unity line) be displayed.}
@@ -36,6 +39,25 @@ Use FALSE to remove subtitle.}
 
 \item{...}{any additional aesthetics.}
 }
+\value{
+An \code{xpose_plot}
+}
 \description{
 Plot of observations (DV) vs population predictions (PRED).
+}
+\section{Template titles}{
+
+Template titles can be used to create highly informative diagnostics plots. 
+They can be applied to any plot title, subtitle and caption. Template titles 
+are defined via a single string containing key variables staring with a @ (e.g. @ofv)
+which will be replaced by their actual value when rendering the plot.
+For example '@run, @nobs observations in @nind subjects' would become 'run001, 
+1022 observations in 74 subjects'. The available key variables are listed under 
+\code{\link{template_titles}}.
+}
+
+\examples{
+\dontrun{
+dv_vs_ipred(xpdb)
+}
 }

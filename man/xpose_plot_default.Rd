@@ -6,8 +6,9 @@
 \usage{
 xpose_plot_default(xpdb, vars = NULL, aes = NULL, group = "ID",
   type = "pls", layers = NULL, title = NULL, subtitle = NULL,
-  guides = TRUE, xscale = "continuous", yscale = "continuous",
-  gg_theme = NULL, plot_name = "xpose_plot_default", ...)
+  caption = NULL, guides = TRUE, xscale = "continuous",
+  yscale = "continuous", gg_theme = NULL,
+  plot_name = "xpose_plot_default", ...)
 }
 \arguments{
 \item{xpdb}{an xpose database object.}
@@ -19,7 +20,7 @@ xpose_plot_default(xpdb, vars = NULL, aes = NULL, group = "ID",
 \item{group}{grouping variable to be used.}
 
 \item{type}{string setting the type of plot to be used points 'p',
-line 'l' and smooth 's' or any combination of the 3.}
+line 'l', smooth 's' and text 't' or any combination of the 4.}
 
 \item{layers}{a list of additional ggplot layers to be used.}
 
@@ -28,6 +29,9 @@ Use FALSE to remove title and subtitle.}
 
 \item{subtitle}{the plot subtitle. If NULL automated subtitle will be generated.
 Use FALSE to remove subtitle.}
+
+\item{caption}{page caption. If NULL automated caption will be generated.
+Use FALSE to remove caption.}
 
 \item{guides}{should the guides (eg. unity line) be displayed.}
 
@@ -45,8 +49,19 @@ Use FALSE to remove subtitle.}
 An \code{xpose_plot}
 }
 \description{
-manually generate plotting functions.
+Manually generate plotting functions.
 }
+\section{Template titles}{
+
+Template titles can be used to create highly informative diagnostics plots. 
+They can be applied to any plot title, subtitle and caption. Template titles 
+are defined via a single string containing key variables staring with a @ (e.g. @ofv)
+which will be replaced by their actual value when rendering the plot.
+For example '@run, @nobs observations in @nind subjects' would become 'run001, 
+1022 observations in 74 subjects'. The available key variables are listed under 
+\code{\link{template_titles}}.
+}
+
 \examples{
 \dontrun{
 xpose_plot_default(xpdb, vars = aes(x = IPRED, y = DV))

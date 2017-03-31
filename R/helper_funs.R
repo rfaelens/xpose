@@ -3,18 +3,18 @@ msg <- function(txt, verbose = FALSE) { # From ronkeizer
   if (verbose) { message(txt) }
 }
 
-# Check xpdb argument
+# Check xpdb argument (return true false instead!!)
 check_xpdb <- function(xpdb) {
   if (is.null(xpdb)) {
     stop('argument \"xpdb\" is missing with no default')
   }
-
+  
   if (!is.null(xpdb) && class(xpdb) != 'xpose_data') {
     stop('argument \"xpdb\" must be of class xpose_data')
   }
 }
 
-# Check variables
+# Check variables (return true false instead!!)
 check_vars <- function(vars, xpdb) {
   if (!all(vars %in% colnames(xpdb$data))) {
     stop('requested variables ',
@@ -24,26 +24,38 @@ check_vars <- function(vars, xpdb) {
 }
 
 
-# Interactive title
-parse_title <- function(string, xpdb) {
-  # Add safety, how?
-  attach(xpdb$mod_info, warn.conflicts = FALSE)
-  return(string)
+# Check title
+check_title <- function(x, default) {
+  if (is.null(x)) {
+    default 
+  } else {
+    x
+  }
 }
 
-# Make titles
-titlr <- function(plot_name, subfun, title, subtitle, xpdb) {
-  if (is.null(title)) {
-    title <- paste0(plot_name, ' (', xpdb[['modfile']], ')')
-  } else if (!(is.logical(title) && title == FALSE)) {
-    title <- parse_title(title, xpdb)
-  }
 
-  if (is.null(subtitle)) {
-    subtitle <- xpdb$mod_info[[subfun]]
-  } else if (!(is.logical(subtitle) && subtitle == FALSE)) {
-    subtitle <- parse_title(subtitle, xpdb)
+# Get key values in template titles
+parse_title <- function(string, xpdb, extra_key = NULL, extra_value = NULL) {
+  keys   <- unlist(regmatches(string, gregexpr('@\\w+', string)))
+  values <- xpdb$mod_info[substring(keys, 2)]
+  
+  if (!is.null(extra_key) && any(keys == extra_key)) {
+    values[keys == extra_key] <- extra_value
   }
-
-  return( list(title, subtitle) )
+  
+  for (s in seq_along(keys)) {
+    if (is.null(values[[s]])) { 
+      warning(keys[s], ' not part of the available keywords for titles', call. = FALSE)
+    } else {
+      string <- gsub(keys[s], values[[s]], string) 
+    }
+  }
+  string
 }
+
+
+# Generate template title
+write_title <- function(x, xpdb) {
+  if (x != FALSE) parse_title(x, xpdb)
+}
+

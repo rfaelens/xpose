@@ -2,9 +2,9 @@
 #'
 #' @description Import NONMEM output into a R database
 #'
+#' @param runno run number to be evaluated
 #' @param dir location of the model files
 #' @param prefix prefix of the model file name
-#' @param runno run number to be evaluated
 #' @param ext model file extention
 #' @param file full file name as an alternative to \code{dir}, \code{prefix},
 #' @param rounding number of significant digits to be used on model info numerical
@@ -18,9 +18,9 @@
 #' xpdb <- xpose_data(dir = '../models/pk/', runno = '001')
 #' }
 #' @export
-xpose_data <- function(dir         = NULL,
+xpose_data <- function(runno       = NULL,
+                       dir         = NULL,
                        prefix      = 'run',
-                       runno       = NULL,
                        ext         = '.lst',
                        file        = NULL,
                        rounding    = NULL,
@@ -67,16 +67,32 @@ xpose_data <- function(dir         = NULL,
 
 
   # Model info --------------------------------------------------------------
-  mod_info  <- list(descr      = descr(mod_file),
-                    run        = mod_name,
-                    input_dat  = raw_dat(mod_file),
-                    nobs       = nobs(mod_file),
-                    nind       = nind(mod_file),
-                    ofv        = ofv(mod_file),
-                    method     = method(mod_file),
-                    eps_shrink = shrinkage(mod_file, 'EPS',
+  mod_info  <- list(descr      = descr(mod_file),     # Model description
+                    dir        = dir,                 # Model directory
+                    run        = mod_name,            # Model file name
+                    ref        = NULL,                # Reference model
+                    input_dat  = raw_dat(mod_file),   # Model input data used
+                    nobs       = nobs(mod_file),      # Number of observations
+                    nind       = nind(mod_file),      # Number of individuals
+                    nsim       = NULL,                # Number of simulations
+                    ssim       = NULL,                # Simulation seed
+                    niter      = NULL,                # Number of iteration
+                    software   = NULL,                # Software used (e.g. NONMEM)
+                    version    = NULL,                # Software version (e.g. 7.3)
+                    subroutine = NULL,                # Des solver
+                    runtime    = NULL,                # Estimation/Sim runtime
+                    covtime    = NULL,                # Covariance matrix runtime
+                    warnings   = NULL,                # Run warnings (e.g. boundary)
+                    errors     = NULL,                # Run errors (e.g termination error)
+                    nsig       = NULL,                # Number of significant digits
+                    condition  = NULL,                # Condition number
+                    nnpde      = NULL,                # Number of NPDE
+                    snpde      = NULL,                # NPDE seed number
+                    ofv        = ofv(mod_file),       # Objective function value
+                    method     = method(mod_file),    # Estimation method or sim
+                    eps_shrink = shrinkage(mod_file, 'EPS', # Epsilon shrinkage
                                            ifelse(is.null(rounding), xp_theme$rounding, rounding)),
-                    eta_shrink = shrinkage(mod_file, 'ETA',
+                    eta_shrink = shrinkage(mod_file, 'ETA', # Eta shrinkage
                                            ifelse(is.null(rounding), xp_theme$rounding, rounding))
   )
 
@@ -89,7 +105,8 @@ xpose_data <- function(dir         = NULL,
     index    = tab_out$index,                          # Index of tab files
     gg_theme = gg_theme,                               # ggplot theme
     xp_theme = xp_theme                                # xpose theme
-  ), class = c('xpose_data', 'uneval'))
+  ), 
+  class = c('xpose_data', 'uneval'))
 
   return(out)
 
