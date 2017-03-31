@@ -5,3 +5,5 @@
 ^logo\.png$
 ^README\.Rmd$
 ^temporary$
+^packrat/
+^\.Rprofile$
