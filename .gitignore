@@ -3,7 +3,6 @@
 .Rhistory
 .RData
 .DS_Store
+.Rprofile
 temporary/
 packrat/
-packrat/lib*/
-packrat/src/
