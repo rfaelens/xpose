@@ -28,7 +28,12 @@ Use FALSE to remove title and subtitle.}
 \item{subtitle}{the plot subtitle. If NULL automated subtitle will be generated.
 Use FALSE to remove subtitle.}
 
+\item{caption}{page caption. If NULL automated caption will be generated.
+Use FALSE to remove caption.}
+
 \item{log}{logical if TRUE axes will be logged.}
+
+\item{guides}{should the guides (eg. unity line) be displayed.}
 
 \item{gg_theme}{a ggplot2 theme to be used on this specific plot.}
 

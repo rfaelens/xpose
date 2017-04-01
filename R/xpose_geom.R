@@ -46,7 +46,7 @@ xp_geoms <- function(mapping = NULL,
 
   # Add grouping
   if (ggfun == 'geom_line' && !is.null(group) && !'group' %in% names(out$mapping)) {
-    out$mapping <- structure(append(out$mapping, aes_string(group = group)),
+    out$mapping <- structure(append(out$mapping, ggplot2::aes_string(group = group)),
                              class = 'uneval')
   }
 

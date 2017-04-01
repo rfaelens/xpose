@@ -25,12 +25,12 @@ xpose_data <- function(runno       = NULL,
                        file        = NULL,
                        rounding    = NULL,
                        gg_theme    = theme_readable(),
-                       xp_theme    = xp_theme_default,
+                       xp_theme    = xp_theme_default(),
                        verbose     = FALSE) {
 
   # Check inputs ------------------------------------------------------------
   if (is.null(runno) & is.null(file)) {
-    stop('Argument \"runno\" or \"file\" required.')
+    stop('Argument \"runno\" or \"file\" required.', call. = FALSE)
   }
 
   if (!is.null(file)) {
@@ -43,14 +43,14 @@ xpose_data <- function(runno       = NULL,
     }
 
     if (!ext %in% paste0('.', c('ctl', 'mod', 'lst', 'txt'))) {
-      stop('Argument \"ext\" must be one of: \".ctl\", \".mod\", \".lst\" or \".txt\".')
+      stop('Argument \"ext\" must be one of: \".ctl\", \".mod\", \".lst\" or \".txt\".', call. = FALSE)
     }
 
     file_full <- paste0(dir, prefix, runno, ext)
   }
 
   if (!file.exists(file_full)) {
-    stop(paste('file', basename(file_full), 'not found.'))
+    stop(paste('file', basename(file_full), 'not found.'), call. = FALSE)
   }
 
 
@@ -98,13 +98,12 @@ xpose_data <- function(runno       = NULL,
 
   # Create the qmd_info object ----------------------------------------------
   out <- structure(list(
-    modfile  = mod_name,                               # modelfile
-    mod      = mod_file,                               # Raw model file
-    mod_info = mod_info,                               # Parsed model information
-    data     = tab_out$data,                           # Output tables
-    index    = tab_out$index,                          # Index of tab files
-    gg_theme = gg_theme,                               # ggplot theme
-    xp_theme = xp_theme                                # xpose theme
+    code      = mod_file,                               # Model code
+    summary   = mod_info,                               # Run summary
+    data      = tab_out$data,                           # Output tables
+    tab_index = tab_out$index,                          # Index of tab files
+    gg_theme  = gg_theme,                               # ggplot theme
+    xp_theme  = xp_theme                                # xpose theme
   ), 
   class = c('xpose_data', 'uneval'))
 

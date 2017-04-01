@@ -13,6 +13,8 @@
 #' Use FALSE to remove title and subtitle.
 #' @param subtitle the plot subtitle. If NULL automated subtitle will be generated.
 #' Use FALSE to remove subtitle.
+#' @param caption page caption. If NULL automated caption will be generated.
+#' Use FALSE to remove caption.
 #' @param log logical if TRUE axes will be logged.
 #' @param guides should the guides (eg. unity line) be displayed.
 #' @param gg_theme a ggplot2 theme to be used on this specific plot.

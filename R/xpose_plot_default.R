@@ -43,7 +43,7 @@ xpose_plot_default <- function(xpdb,
                                group    = 'ID',
                                type     = 'pls',
                                layers   = NULL,
-                               title    = NULL,
+                               title    = '@run',
                                subtitle = NULL,
                                caption  = NULL,
                                guides   = TRUE,
@@ -149,10 +149,9 @@ xpose_plot_default <- function(xpdb,
     xp <- xp + gg_theme
   }
 
-  # Add metadata
-  xp$xpose <- list(modfile = xpdb$modfile,
-                   descr   = xpdb$descr,
-                   fun     = plot_name)
+  # Add metadata to plots
+  xp$xpose <- list(fun     = plot_name,
+                   summary = xpdb$summary)
 
   xp <- structure(xp, class = c('xpose_plot', 'gg', 'ggplot'))
 

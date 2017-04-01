@@ -25,7 +25,7 @@ parse_nm_model <- function(dir    = NULL,
 
   # Check inputs
   if (is.null(runno) & is.null(file)) {
-    stop('Argument \"runno\" or \"file\" required.')
+    stop('Argument \"runno\" or \"file\" required.', call. = FALSE)
   }
 
   if (!is.null(dir) && !substr(dir, nchar(dir), nchar(dir)) == '/') {
@@ -38,7 +38,7 @@ parse_nm_model <- function(dir    = NULL,
     file_full <- paste0(dir, prefix, runno, ext)
   }
 
-  if (!file.exists(file_full)) { stop(paste('file', file_full, 'not found.')) }
+  if (!file.exists(file_full)) { stop(paste('file', file_full, 'not found.'), call. = FALSE) }
 
   # Import mod_file
   mod_file <- readLines(file_full)

@@ -31,7 +31,7 @@ read_nmtab <- function(file = NULL,
 
   # Check inputs
   if (is.null(file)) {
-    stop('Argument \"file\" required.')
+    stop('Argument \"file\" required.', call. = FALSE)
   }
 
   if (!any(file.exists(file))) {
@@ -62,7 +62,7 @@ read_nmtab <- function(file = NULL,
     tab_file <- as.data.frame(apply(tab_file, MARGIN = 2, FUN = as.numeric))
 
     # Drop rows with NA (in simtab)
-    tab_file <- na.omit(tab_file)
+    tab_file <- stats::na.omit(tab_file)
 
   } else {
     # if nonmem_tab == FALSE
@@ -70,7 +70,7 @@ read_nmtab <- function(file = NULL,
     skip     <- max(grep('TABLE NO', readLines(file[1])))
 
     # Import all files
-    tab_file <- do.call('cbind', lapply(file, read.table, skip = skip,
+    tab_file <- do.call('cbind', lapply(file, utils::read.table, skip = skip,
                                         header = FALSE, fill = TRUE, as.is = TRUE))
     colnames(tab_file) <- tab_file[1, ]
     tab_file <- suppressWarnings(as.data.frame(apply(tab_file[-1, ], 2, as.numeric)))

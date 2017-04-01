@@ -32,14 +32,14 @@ xpose_save <- function(plot     = ggplot2::last_plot(),
                        ...) {
   
   if (is.null(plot)) {
-    stop('Argument \"plot\" required.')
+    stop('Argument \"plot\" required.', call. = FALSE)
   }
   
   if (!is.null(dir) && !substr(dir, nchar(dir), nchar(dir)) == '/') {
     dir <- paste0(dir, '/')
   }
   
-  filename <- parse_title(string = filename, xpdb = plot$xpose, 
+  filename <- parse_title(string = filename, xpdb = plot$xpose,
                           extra_key = '@plotfun', extra_value = plot$xpose$fun)
   
   format <- unlist(regmatches(filename, gregexpr('\\.\\w+$', filename)))
@@ -63,9 +63,10 @@ xpose_save <- function(plot     = ggplot2::last_plot(),
                                  res = res, ...),
          '.tiff' = grDevices::tiff(filename = paste0(dir, filename),
                                    width = width, height = height, units = 'in', 
-                                   res = res, ...)
+                                   res = res, ...),
+         stop('unknown format provided in \"filename\"', call. = FALSE)
   )
   
   print(plot)
-  dev.off()
+  grDevices::dev.off()
 }

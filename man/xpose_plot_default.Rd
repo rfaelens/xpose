@@ -5,7 +5,7 @@
 \title{Default xpose plot}
 \usage{
 xpose_plot_default(xpdb, vars = NULL, aes = NULL, group = "ID",
-  type = "pls", layers = NULL, title = NULL, subtitle = NULL,
+  type = "pls", layers = NULL, title = "@run", subtitle = NULL,
   caption = NULL, guides = TRUE, xscale = "continuous",
   yscale = "continuous", gg_theme = NULL,
   plot_name = "xpose_plot_default", ...)

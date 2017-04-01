@@ -25,7 +25,7 @@ xpose_theme <- function(xpdb     = NULL,
 
   # Check xpdb
   if (is.null(xpdb)) {
-    stop('Argument \"xpdb\" required.')
+    stop('Argument \"xpdb\" required.', call. = FALSE)
   }
 
   # Assign gg_theme

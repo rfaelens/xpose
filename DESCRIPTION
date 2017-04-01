@@ -9,15 +9,19 @@ Authors@R: c(
       )
 Description: Automated generation of graphical diagnostics for non-linear mixed effect models.
 Depends:
-  R (>= 3.0.0),
-  dplyr,
-  ggplot2
+  R (>= 3.0.0)
 Imports:
-  readr
+  dplyr,
+  ggplot2,
+  readr,
+  utils,
+  stats,
+  grDevices
 Suggests:
     testthat
 License: GPL-3 + file LICENSE
 URL: https://github.com/guiastrennec
 BugReports: https://github.com/guiastrennec
+Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1

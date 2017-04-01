@@ -6,11 +6,11 @@ msg <- function(txt, verbose = FALSE) { # From ronkeizer
 # Check xpdb argument (return true false instead!!)
 check_xpdb <- function(xpdb) {
   if (is.null(xpdb)) {
-    stop('argument \"xpdb\" is missing with no default')
+    stop('argument \"xpdb\" is missing with no default', call. = FALSE)
   }
   
   if (!is.null(xpdb) && class(xpdb) != 'xpose_data') {
-    stop('argument \"xpdb\" must be of class xpose_data')
+    stop('argument \"xpdb\" must be of class xpose_data', call. = FALSE)
   }
 }
 
@@ -19,7 +19,7 @@ check_vars <- function(vars, xpdb) {
   if (!all(vars %in% colnames(xpdb$data))) {
     stop('requested variables ',
          paste(vars[!vars %in% colnames(xpdb$data)],
-               collapse = ', '), ' not found in the data')
+               collapse = ', '), ' not found in the data', call. = FALSE)
   }
 }
 
@@ -36,8 +36,8 @@ check_title <- function(x, default) {
 
 # Get key values in template titles
 parse_title <- function(string, xpdb, extra_key = NULL, extra_value = NULL) {
-  keys   <- unlist(regmatches(string, gregexpr('@\\w+', string)))
-  values <- xpdb$mod_info[substring(keys, 2)]
+  keys   <- unlist(regmatches(string, gregexpr('@[[:alnum:]]+_?[[:alnum:]]+', string)))
+  values <- xpdb$summary[substring(keys, 2)]
   
   if (!is.null(extra_key) && any(keys == extra_key)) {
     values[keys == extra_key] <- extra_value
@@ -56,6 +56,10 @@ parse_title <- function(string, xpdb, extra_key = NULL, extra_value = NULL) {
 
 # Generate template title
 write_title <- function(x, xpdb) {
-  if (x != FALSE) parse_title(x, xpdb)
+  if (!is.null(x) && x != FALSE) {
+    parse_title(x, xpdb)
+  } else { 
+    return(NULL)
+  }
 }
 

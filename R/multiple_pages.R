@@ -18,12 +18,13 @@
 #'
 #' multiple_pages(plot = p, by = 'color', ncol = 2, nrow = 2)
 #' }
+#' @importFrom ggplot2 %+%
 #' @export
 #'
 multiple_pages <- function(plot = NULL, by = NULL, ncol = 2, nrow = 2, scales = 'fixed') {
 
   if (is.null(plot)) {   # Check plot argument
-    stop('Argument \"plot\" required')
+    stop('Argument \"plot\" required', call. = FALSE)
   }
 
   if (is.null(by)) {   # Check by argument
@@ -32,18 +33,18 @@ multiple_pages <- function(plot = NULL, by = NULL, ncol = 2, nrow = 2, scales = 
   }
 
   if (!all(by %in% colnames(plot$data))) {   # Ensure by exists
-    stop(paste('The by:', by, 'could not be found in the data'))
+    stop(paste('The by:', by, 'could not be found in the data'), call. = FALSE)
   }
 
   if (is.null(ncol) | is.null(nrow)) {   # Check ncol and nrow arguments
-    stop('Arguments \"ncol\" and \"nrow\" required')
+    stop('Arguments \"ncol\" and \"nrow\" required', call. = FALSE)
   }
 
   # Get info on layout
   n_panel_tot <- nrow(unique(plot$data[, by, drop = FALSE]))
   n_layout    <- ncol*nrow
   n_pages     <- ceiling(n_panel_tot/n_layout)
-  plot        <- plot + facet_wrap(facets = by, ncol = ncol, scales = scales)
+  plot        <- plot + ggplot2::facet_wrap(facets = by, ncol = ncol, scales = scales)
 
   # When no multiple page needed
   if (n_pages == 1) {
@@ -74,7 +75,7 @@ multiple_pages <- function(plot = NULL, by = NULL, ncol = 2, nrow = 2, scales = 
   # Plot each page
   for (i in seq_along(1:n_pages)) {
     plot <- plot %+% data[data$groups == i,] +
-      ggtitle(label = bquote(atop(bold(.(title)), atop(italic(Page~.(i)~of~.(n_pages))))))
+      ggplot2::ggtitle(label = bquote(atop(bold(.(title)), atop(italic(Page~.(i)~of~.(n_pages))))))
 
     # For last page call panel_layout
     if (i == n_pages) {

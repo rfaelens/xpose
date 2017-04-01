@@ -3,6 +3,9 @@
 \name{xp_theme_xpose4}
 \alias{xp_theme_xpose4}
 \title{Xpose4 theme for ggxpose}
+\usage{
+xp_theme_xpose4()
+}
 \description{
 An xp_theme that makes ggxpose look like xpose4.
 }
@@ -11,7 +14,7 @@ An xp_theme that makes ggxpose look like xpose4.
 \dontrun{
  xpose_data(dir = 'inst/models/', runno = '001') \%>\%
    xpose_theme(gg_theme = theme_bw(),
-               xp_theme = xp_theme_xpose4) \%>\%
+               xp_theme = xp_theme_xpose4()) \%>\%
    dv_vs_ipred()
 }
 }

@@ -3,6 +3,9 @@
 \name{xp_theme_default}
 \alias{xp_theme_default}
 \title{Default ggxpose theme}
+\usage{
+xp_theme_default()
+}
 \description{
 The default ggxpose theme.
 }
@@ -11,7 +14,7 @@ The default ggxpose theme.
 \dontrun{
  xpose_data(dir = 'inst/models/', runno = '001') \%>\%
    xpose_theme(gg_theme = theme_readable(),
-               xp_theme = xp_theme_default) \%>\%
+               xp_theme = xp_theme_default()) \%>\%
    dv_vs_ipred()
 }
 }
