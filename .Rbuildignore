@@ -6,4 +6,5 @@
 ^README\.Rmd$
 ^temporary$
 ^packrat/
+^inst/models/
 ^\.Rprofile$
