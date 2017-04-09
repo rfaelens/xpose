@@ -5,8 +5,18 @@ Version: 0.1.3
 Authors@R: c(
       person('Benjamin', 'Guiastrennec'
              , role = c('aut','cre')
-             , email = 'guiastrennec@gmail.com')
-      )
+             , email = 'guiastrennec@gmail.com'),
+      person('Anna', 'Olofsson'
+             , role = 'aut'),
+      person('Andrew C.', 'Hooker', 
+             role = 'aut',
+             email='andrew.hooker@farmbio.uu.se'),
+      person('Sebastian', 'Ueckert'
+             , role = 'ctb'),
+      person('Kajsa', 'Harling'
+             , role = 'ctb'),
+      person('Elodie', 'Plan'
+             , role = 'ctb'))
 Description: Automated generation of graphical diagnostics for non-linear mixed effect models.
 Depends:
   R (>= 3.0.0)
@@ -18,10 +28,12 @@ Imports:
   stats,
   grDevices
 Suggests:
-    testthat
+  knitr,
+  testthat
 License: GPL-3 + file LICENSE
-URL: https://github.com/guiastrennec
-BugReports: https://github.com/guiastrennec
+URL: https://github.com/guiastrennec/ggxpose
+BugReports: https://github.com/guiastrennec/ggxpose/issues
 Encoding: UTF-8
 LazyData: true
+VignetteBuilder: knitr
 RoxygenNote: 6.0.1
