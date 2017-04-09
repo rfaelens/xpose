@@ -72,37 +72,29 @@
 <a href="#ggxpose" class="anchor"></a>ggxpose <img src="logo.png" align="right">
 </h1></div>
 
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
+<div id="overview" class="section level3">
+<h3 class="hasAnchor">
+<a href="#overview" class="anchor"></a>Overview</h3>
 <p>ggxpose was designed as a <a href="https://github.com/tidyverse/ggplot2">ggplot2</a>-based alternative to <a href="http://xpose.sourceforge.net">xpose4</a>. ggxpose aims to reduce the post processing burden and improve diagnostics commonly associated the development of non-linear mixed effect models.</p>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<div id="installation" class="section level3">
+<h3 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h3>
 <p>Install the development version from github</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages('devtools')</span>
 devtools::<span class="kw">install_github</span>(<span class="st">'guiastrennec/ggxpose'</span>)</code></pre></div>
+</div>
 <div id="getting-started" class="section level3">
 <h3 class="hasAnchor">
 <a href="#getting-started" class="anchor"></a>Getting started</h3>
-<div id="load-ggxpose" class="section level4">
-<h4 class="hasAnchor">
-<a href="#load-ggxpose" class="anchor"></a>Load ggxpose</h4>
+<p>Load ggxpose</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggxpose)</code></pre></div>
-</div>
-<div id="import-run-output" class="section level4">
-<h4 class="hasAnchor">
-<a href="#import-run-output" class="anchor"></a>Import run output</h4>
+<p>Import run output</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xpdb &lt;-<span class="st"> </span><span class="kw"><a href="reference/xpose_data.html">xpose_data</a></span>(<span class="dt">runno =</span> <span class="st">'001'</span>)</code></pre></div>
-</div>
-<div id="generate-diagnostics" class="section level4">
-<h4 class="hasAnchor">
-<a href="#generate-diagnostics" class="anchor"></a>Generate diagnostics</h4>
+<p>Generate diagnostics</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/dv_vs_ipred.html">dv_vs_ipred</a></span>(xpdb)
 <span class="kw"><a href="reference/cwres_vs_pred.html">cwres_vs_pred</a></span>(xpdb)</code></pre></div>
 <p><img src="inst/img/readme_example_figure-1.png" width="672"></p>
-</div>
 </div>
 <div id="recommended-reading" class="section level3">
 <h3 class="hasAnchor">
@@ -115,7 +107,6 @@ devtools::<span class="kw">install_github</span>(<span class="st">'guiastrennec/
 </li>
 <li>Internet resources (stack overflow, etc.)</li>
 </ul>
-</div>
 </div>
 </div>
 </div>

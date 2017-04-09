@@ -4,13 +4,11 @@ ggxpose <img src="logo.png" align="right" />
 
 [![build\_status](https://travis-ci.org/guiastrennec/ggxpose.svg?branch=master)](https://travis-ci.org/guiastrennec/ggxpose) [![cran\_version](http://www.r-pkg.org/badges/version/ggxpose)]() [![codecov](https://codecov.io/gh/guiastrennec/ggxpose/branch/master/graph/badge.svg)](https://codecov.io/gh/guiastrennec/ggxpose)
 
-Overview
---------
+### Overview
 
 ggxpose was designed as a [ggplot2](https://github.com/tidyverse/ggplot2)-based alternative to [xpose4](http://xpose.sourceforge.net). ggxpose aims to reduce the post processing burden and improve diagnostics commonly associated the development of non-linear mixed effect models.
 
-Installation
-------------
+### Installation
 
 Install the development version from github
 
@@ -21,19 +19,19 @@ devtools::install_github('guiastrennec/ggxpose')
 
 ### Getting started
 
-#### Load ggxpose
+Load ggxpose
 
 ``` r
 library(ggxpose)
 ```
 
-#### Import run output
+Import run output
 
 ``` r
 xpdb <- xpose_data(runno = '001')
 ```
 
-#### Generate diagnostics
+Generate diagnostics
 
 ``` r
 dv_vs_ipred(xpdb)

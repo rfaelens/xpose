@@ -12,11 +12,11 @@ output: github_document
 knitr::opts_chunk$set(fig.path = 'inst/img/')
 ```
 
-## Overview
+### Overview
 ggxpose was designed as a [ggplot2](https://github.com/tidyverse/ggplot2)-based alternative to [xpose4](http://xpose.sourceforge.net). ggxpose aims to reduce the post processing burden and improve diagnostics commonly associated the development of non-linear mixed effect models.
 
 
-## Installation
+### Installation
 Install the development version from github
 ``` r
 # install.packages('devtools')
@@ -26,17 +26,17 @@ devtools::install_github('guiastrennec/ggxpose')
 
 ### Getting started
 
-#### Load ggxpose
+Load ggxpose
 ``` r
 library(ggxpose)
 ```
 
-#### Import run output
+Import run output
 ``` r
 xpdb <- xpose_data(runno = '001')
 ```
 
-#### Generate diagnostics
+Generate diagnostics
 ```r
 dv_vs_ipred(xpdb)
 cwres_vs_pred(xpdb)

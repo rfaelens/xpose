@@ -9,6 +9,10 @@ reference:
     - xpose_data
     - read_nmtab
     - parse_nm_model
+  - title: Example
+    desc: Example of xpose_data
+    contents:
+    - xpdb_ex_pk
   - title: Customize plots
     desc:  Add, customize themes or template titles.
     contents:
@@ -16,6 +20,7 @@ reference:
     - xpose_theme
     - xp_theme_default
     - xp_theme_xpose4
+    - theme_readable
   - title: Save plots
     desc:  Save plots to a file.
     contents:
@@ -28,6 +33,10 @@ reference:
     - cwres_vs_pred
     - dv_vs_ipred
     - dv_vs_pred
+  - title: General plotting functions
+    desc:  Functions to manually create customized plots from an xpose_data object.
+    contents:
+    - xpose_plot_default
 
 navbar:
   left:
