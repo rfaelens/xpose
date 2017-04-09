@@ -1,0 +1,44 @@
+template:
+  params:
+    bootswatch: paper
+
+reference:
+  - title: Run import
+    desc:  Import output files and tables from a NLME run to R.
+    contents:
+    - xpose_data
+    - read_nmtab
+    - parse_nm_model
+  - title: Customize plots
+    desc:  Add, customize themes or template titles.
+    contents:
+    - template_titles
+    - xpose_theme
+    - xp_theme_default
+    - xp_theme_xpose4
+  - title: Save plots
+    desc:  Save plots to a file.
+    contents:
+    - xpose_save
+  - title: Basic gof
+    desc:  Basic goodness-of-fit plots.
+    contents:
+    - absval_iwres_vs_pred
+    - cwres_vs_idv
+    - cwres_vs_pred
+    - dv_vs_ipred
+    - dv_vs_pred
+
+navbar:
+  left:
+  - text: Getting started
+    href: articles/index.html
+  - text: Reference
+    href: reference/index.html
+  - text: News
+    href: news/index.html
+  right:
+  - icon: fa-github fa-lg
+    href: https://github.com/guiastrennec/ggxpose
+  - icon: fa-download
+    href: https://github.com/guiastrennec/ggxpose/releases

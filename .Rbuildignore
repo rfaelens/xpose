@@ -1,5 +1,6 @@
 ^\.travis\.yml$
 ^_config\.yml$
+^_pkgdown\.yml$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^logo\.png$
@@ -8,3 +9,4 @@
 ^packrat/
 ^inst/models/
 ^\.Rprofile$
+^docs$
