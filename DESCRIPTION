@@ -15,6 +15,8 @@ Authors@R: c(
              , role = 'ctb'),
       person('Kajsa', 'Harling'
              , role = 'ctb'),
+      person('Mike K.', 'Smith'
+             , role = 'ctb'),
       person('Elodie', 'Plan'
              , role = 'ctb'))
 Description: Automated generation of graphical diagnostics for non-linear mixed effect models.
