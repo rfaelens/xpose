@@ -1,6 +1,6 @@
 
-ggxpose <img src="logo.png" align="right" />
-============================================
+ggxpose <a href="https://guiastrennec.github.io/ggxpose/"><img src="logo.png" align="right" /></a>
+==================================================================================================
 
 [![build\_status](https://travis-ci.org/guiastrennec/ggxpose.svg?branch=master)](https://travis-ci.org/guiastrennec/ggxpose) [![cran\_version](http://www.r-pkg.org/badges/version/ggxpose)]() [![codecov](https://codecov.io/gh/guiastrennec/ggxpose/branch/master/graph/badge.svg)](https://codecov.io/gh/guiastrennec/ggxpose)
 

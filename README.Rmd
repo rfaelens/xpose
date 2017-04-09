@@ -2,7 +2,7 @@
 output: github_document
 ---
 
-# ggxpose <img src="logo.png" align="right" />
+# ggxpose <a href="https://guiastrennec.github.io/ggxpose/"><img src="logo.png" align="right" /></a>
 
 [![build_status](https://travis-ci.org/guiastrennec/ggxpose.svg?branch=master)](https://travis-ci.org/guiastrennec/ggxpose)
 [![cran_version](http://www.r-pkg.org/badges/version/ggxpose)]()
