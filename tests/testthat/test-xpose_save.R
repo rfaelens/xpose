@@ -36,17 +36,3 @@ test_that("all graphical devices work properly", {
   xpose_save(plot = plot, filename = paths_2[5]) # tiff
   expect_true(all(file.exists(paths_2)))
 })
-
-
-test_that("template filenames and auto extension work properly", {
-  paths_3 <- paste0(tempdir(), '/run001_dv_vs_ipred.pdf')
-  on.exit(unlink(paths_3))
-  
-  expect_false(file.exists(paths_3))
-  
-  # Pdf extension should automatically be added and template keywords
-  # replaced by their value
-  xpose_save(plot = plot, 
-             filename = paste0(tempdir(), '/@run_@plotfun'))
-  expect_true(file.exists(paths_3))
-})
