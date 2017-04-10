@@ -7,8 +7,6 @@ reference:
     desc:  Import output files and tables from a NLME run to R.
     contents:
     - xpose_data
-    - read_nmtab
-    - parse_nm_model
   - title: Example
     desc: Example of xpose_data
     contents:
@@ -21,6 +19,7 @@ reference:
     - xp_theme_default
     - xp_theme_xpose4
     - theme_readable
+    - theme_bw2
   - title: Save plots
     desc:  Save plots to a file.
     contents:
@@ -37,11 +36,23 @@ reference:
     desc:  Functions to manually create customized plots from an xpose_data object.
     contents:
     - xpose_plot_default
+  - title: Manual run import
+    desc:  Manually import run output.
+    contents:
+    - read_nmtab
+    - parse_nm_model
 
 navbar:
   left:
-  - text: Getting started
-    href: articles/index.html
+  - text: Articles
+    icon: fa-book
+    menu:
+        - text: Workflow
+          href: articles/workflow.html
+        - text: Importing model outputs
+          href: articles/importing_model_outputs.html
+        - text: Customizing plots
+          href: articles/customizing_plots.html
   - text: Reference
     href: reference/index.html
   - text: News

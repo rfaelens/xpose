@@ -16,14 +16,14 @@ knitr::opts_chunk$set(fig.dpi = 96,
                       fig.align = 'center', 
                       fig.height = 4, 
                       fig.width = 4,
-                      out.width = '75%')
+                      out.width = '50%')
 ```
 
 
 ### Plot type
 The option `type` allows to control how the data should be represented i.e. whether to use points `'p'`, lines `'l'`, smooth `'s'` or any combination of the three (e.g. `type = 'pl'`).
 
-```{r demo type, echo = FALSE, fig.height = 2.5, fig.width = 6, out.width = '100%'}
+```{r demo type, echo = FALSE, fig.height = 2.5, fig.width = 6, out.width = '75%'}
 gridExtra::grid.arrange(
   dv_vs_ipred(xpdb, title = "type = \'p\'", subtitle = FALSE, caption = FALSE, type = 'p'),
   dv_vs_ipred(xpdb, title = "type = \'l\'", subtitle = FALSE, caption = FALSE, type = 'l'),
@@ -148,11 +148,11 @@ dv_vs_ipred(xpdb        = xpdb,
 ```
 
 
-### Examples of `gg_theme` themes:
+#### Examples of `gg_theme` themes:
 
 ggxpose brings two additional themes (`theme_readable()` and `theme_bw2()`), to those available in `ggplot2`.
 
-```{r demo gg_theme, echo = FALSE, fig.height = 6, fig.width = 6, out.width = '100%'}
+```{r demo gg_theme, echo = FALSE, fig.height = 6, fig.width = 6, out.width = '75%'}
 gridExtra::grid.arrange(
   dv_vs_ipred(xpdb, subtitle = 'gg_theme = theme_readable()', title = FALSE, caption = '', gg_theme = theme_readable()),
   dv_vs_ipred(xpdb, subtitle = 'gg_theme = theme_grey()', title = FALSE, caption = '', gg_theme = theme_grey()),
@@ -162,9 +162,9 @@ gridExtra::grid.arrange(
 ```
 
 
-### Examples of `xp_theme` themes:
+#### Examples of `xp_theme` themes:
 
-```{r demo xp_theme, echo = FALSE, fig.height = 4, fig.width = 6, out.width = '100%'}
+```{r demo xp_theme, echo = FALSE, fig.height = 3.2, fig.width = 6, out.width = '75%'}
 gridExtra::grid.arrange(
   dv_vs_ipred(xpose_theme(xpdb = xpdb, xp_theme = xp_theme_default()),
               subtitle = 'xp_theme = xp_theme_default()', title = FALSE, caption = ''),

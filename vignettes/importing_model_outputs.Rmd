@@ -27,7 +27,7 @@ To import the model output files (e.g. NONMEM tables). The function `xpose_data(
 xpdb <- xpose_data(runno = '001')
 ```
 
-#### Required files
+### Required files
 #### NONMEM runs
 To make full use of the functionality offered by `ggxpose` the following NONMEM output files should be available:
 
@@ -40,11 +40,12 @@ To make full use of the functionality offered by `ggxpose` the following NONMEM 
 - output tables: for the actual data
 
 #### Others NLME tools
-Tbd
+Coming with future releases...
 
 
-#### Structure of the `xpdb` object
+### Structure of the `xpdb` object
 A typical `xpdb` object contains 7 levels namely:
+
 - code: the parsed model code
 - summary: contains key information regarding the model. All the information contained in the summary can be used as part of the template titles (`help('R/template_titles')`).
 - data: an aggregated dataset of all output tables
