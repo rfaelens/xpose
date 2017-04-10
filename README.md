@@ -34,11 +34,18 @@ xpdb <- xpose_data(runno = '001')
 Generate diagnostics
 
 ``` r
+# DV vs. IPRED plot
 dv_vs_ipred(xpdb)
+```
+
+<img src="inst/img/readme_example_figure-1.png" width="75%" style="display: block; margin: auto;" />
+
+``` r
+# CWRES vs. PRED plot
 cwres_vs_pred(xpdb)
 ```
 
-![](inst/img/readme_example_figure-1.png)
+<img src="inst/img/readme_example_figure-2.png" width="75%" style="display: block; margin: auto;" />
 
 ### Recommended reading
 

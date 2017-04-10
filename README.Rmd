@@ -8,8 +8,17 @@ output: github_document
 [![cran_version](http://www.r-pkg.org/badges/version/ggxpose)]()
 [![codecov](https://codecov.io/gh/guiastrennec/ggxpose/branch/master/graph/badge.svg)](https://codecov.io/gh/guiastrennec/ggxpose)
 
-```{r global_options, include=FALSE}
-knitr::opts_chunk$set(fig.path = 'inst/img/')
+```{r, include = FALSE}
+library(ggxpose)
+
+xpdb <- xpdb_ex_pk
+
+knitr::opts_chunk$set(fig.path = 'inst/img/', 
+                      fig.dpi = 96,
+                      fig.height = 4, 
+                      fig.width = 4, 
+                      out.width = '75%', 
+                      fig.align = 'center')
 ```
 
 ### Overview
@@ -37,18 +46,12 @@ xpdb <- xpose_data(runno = '001')
 ```
 
 Generate diagnostics
-```r
+```{r readme_example_figure}
+# DV vs. IPRED plot
 dv_vs_ipred(xpdb)
-cwres_vs_pred(xpdb)
-```
 
-```{r readme_example_figure, echo=FALSE, message=FALSE, fig.height= 4}
-library(ggplot2)
-library(ggxpose)
-gridExtra::grid.arrange(
- dv_vs_ipred(xpdb_ex_pk),
- cwres_vs_pred(xpdb_ex_pk),
- ncol = 2)
+# CWRES vs. PRED plot
+cwres_vs_pred(xpdb)
 ```
 
 
