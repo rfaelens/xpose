@@ -1,11 +1,12 @@
+# Rstudio files
 .Rproj.user
 .Rproj
 .Rhistory
 .RData
 .DS_Store
 .Rprofile
+
+# Local directories
 temporary/
 packrat/
-packrat/lib*/
-packrat/src/
 inst/models

@@ -1,0 +1,42 @@
+---
+title: "Importing model outputs"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Importing model outputs}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+library(ggxpose)
+
+xpdb <- xpdb_ex_pk
+
+knitr::opts_chunk$set(fig.dpi = 96,
+                      fig.align = 'center', 
+                      fig.height = 4, 
+                      fig.width = 4,
+                      out.width = '75%')
+```
+
+
+### Import model output
+To import the model output files (e.g. NONMEM tables). The function `xpose_data()` collects all model output files and table and organizes them into an R object commonly called `xpdb` for xpose data base.  Note that ggxpose makes use of the [readr](http://readr.tidyverse.org) package to rapidly import big dataset into R.
+
+``` r
+xpdb <- xpose_data(runno = '001')
+```
+
+
+
+#### Structure of the `xpdb` object
+A typical `xpdb` object contains 7 levels namely:
+
+- code: the parsed model code
+- summary: contains key information regarding the model. All the information contained in the summary can be used as part of the template titles.
+- data: an aggregated dataset of all output tables
+- tab_index: the names and column names of all original tables
+- simtab: an aggregated dataset of all simulated output tables
+- gg_theme: a ggplot2 theme
+- xp_theme: an xpose theme 
+
