@@ -10,3 +10,7 @@
 temporary/
 packrat/
 inst/models
+
+# Built vignettes
+vignettes/*.html
+vignettes/*.R
