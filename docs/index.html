@@ -28,8 +28,25 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-book"></span>
+     
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
 <li>
-  <a href="articles/index.html">Getting started</a>
+      <a href="articles/workflow.html">Workflow</a>
+    </li>
+    <li>
+      <a href="articles/importing_model_outputs.html">Importing model outputs</a>
+    </li>
+    <li>
+      <a href="articles/customizing_plots.html">Customizing plots</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="reference/index.html">Reference</a>
@@ -69,7 +86,7 @@
 <div class="contents">
 <div id="ggxpose" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#ggxpose" class="anchor"></a>ggxpose <img src="logo.png" align="right">
+<a href="#ggxpose" class="anchor"></a>ggxpose <a href="https://guiastrennec.github.io/ggxpose/"><img src="logo.png" align="right"></a>
 </h1></div>
 
 <div id="overview" class="section level3">
@@ -92,9 +109,12 @@ devtools::<span class="kw">install_github</span>(<span class="st">'guiastrennec/
 <p>Import run output</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xpdb &lt;-<span class="st"> </span><span class="kw"><a href="reference/xpose_data.html">xpose_data</a></span>(<span class="dt">runno =</span> <span class="st">'001'</span>)</code></pre></div>
 <p>Generate diagnostics</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/dv_vs_ipred.html">dv_vs_ipred</a></span>(xpdb)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># DV vs. IPRED plot</span>
+<span class="kw"><a href="reference/dv_vs_ipred.html">dv_vs_ipred</a></span>(xpdb)</code></pre></div>
+<p><img src="inst/img/readme_example_figure-1.png" width="50%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># CWRES vs. PRED plot</span>
 <span class="kw"><a href="reference/cwres_vs_pred.html">cwres_vs_pred</a></span>(xpdb)</code></pre></div>
-<p><img src="inst/img/readme_example_figure-1.png" width="672"></p>
+<p><img src="inst/img/readme_example_figure-2.png" width="50%" style="display: block; margin: auto;"></p>
 </div>
 <div id="recommended-reading" class="section level3">
 <h3 class="hasAnchor">

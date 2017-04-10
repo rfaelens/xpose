@@ -50,8 +50,25 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li>
-  <a href="../articles/index.html">Getting started</a>
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-book"></span>
+     
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/workflow.html">Workflow</a>
+    </li>
+    <li>
+      <a href="../articles/importing_model_outputs.html">Importing model outputs</a>
+    </li>
+    <li>
+      <a href="../articles/customizing_plots.html">Customizing plots</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -112,18 +129,6 @@
             <p><code><a href="xpose_data.html">xpose_data</a></code> </p>
           </td>
           <td><p>Import NONMEM output into R</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="read_nmtab.html">read_nmtab</a></code> </p>
-          </td>
-          <td><p>NONMEM output table import function</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="parse_nm_model.html">parse_nm_model</a></code> </p>
-          </td>
-          <td><p>NONMEM model file parser</p></td>
         </tr>
       </tbody><tbody>
         <tr>
@@ -174,6 +179,12 @@
           <!--  -->
           <td>
             <p><code><a href="theme_readable.html">theme_readable</a></code> </p>
+          </td>
+          <td><p>ggplot2 theme</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="theme_bw2.html">theme_bw2</a></code> </p>
           </td>
           <td><p>ggplot2 theme</p></td>
         </tr>
@@ -243,6 +254,26 @@
           </td>
           <td><p>Default xpose plot</p></td>
         </tr>
+      </tbody><tbody>
+        <tr>
+          <th colspan="2">
+            <h2 id="section-manual-run-import" class="hasAnchor"><a href="#section-manual-run-import" class="anchor"></a>Manual run import</h2>
+            <p class="section-desc"><p>Manually import run output.</p></p>
+          </th>
+        </tr>
+        <tr>
+          <!--  -->
+          <td>
+            <p><code><a href="read_nmtab.html">read_nmtab</a></code> </p>
+          </td>
+          <td><p>NONMEM output table import function</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="parse_nm_model.html">parse_nm_model</a></code> </p>
+          </td>
+          <td><p>NONMEM model file parser</p></td>
+        </tr>
       </tbody>
       </table>
     </div>
@@ -257,6 +288,7 @@
       <li><a href="#section-save-plots">Save plots</a></li>
       <li><a href="#section-basic-gof">Basic gof</a></li>
       <li><a href="#section-general-plotting-functions">General plotting functions</a></li>
+      <li><a href="#section-manual-run-import">Manual run import</a></li>
     </ul>
   </div>
 </div>
