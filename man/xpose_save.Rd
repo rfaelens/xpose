@@ -4,8 +4,8 @@
 \alias{xpose_save}
 \title{Save ggxpose plot}
 \usage{
-xpose_save(plot = ggplot2::last_plot(), filename = "@run_@plotfun.pdf",
-  dir = NULL, width = 8, height = 7, res = 200, ...)
+xpose_save(plot = last_plot(), filename = "@run_@plotfun.pdf", dir = NULL,
+  width = 8, height = 7, res = 200, ...)
 }
 \arguments{
 \item{plot}{a ggxpose plot object.}

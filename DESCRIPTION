@@ -21,14 +21,15 @@ Authors@R: c(
              , role = 'ctb'))
 Description: Automated generation of graphical diagnostics for non-linear mixed effect models.
 Depends:
-  R (>= 3.1.2)
+  R (>= 3.1.2),
+  ggplot2 (>= 2.2.1)
 Imports:
   dplyr,
-  ggplot2,
   readr,
   utils,
   stats,
-  grDevices
+  grDevices,
+  gridExtra
 Suggests:
   knitr,
   testthat

@@ -18,7 +18,6 @@
 #'
 #' multiple_pages(plot = p, by = 'color', ncol = 2, nrow = 2)
 #' }
-#' @importFrom ggplot2 %+%
 #' @export
 #'
 multiple_pages <- function(plot = NULL, by = NULL, ncol = 2, nrow = 2, scales = 'fixed') {
@@ -44,7 +43,7 @@ multiple_pages <- function(plot = NULL, by = NULL, ncol = 2, nrow = 2, scales = 
   n_panel_tot <- nrow(unique(plot$data[, by, drop = FALSE]))
   n_layout    <- ncol*nrow
   n_pages     <- ceiling(n_panel_tot/n_layout)
-  plot        <- plot + ggplot2::facet_wrap(facets = by, ncol = ncol, scales = scales)
+  plot        <- plot + facet_wrap(facets = by, ncol = ncol, scales = scales)
 
   # When no multiple page needed
   if (n_pages == 1) {
@@ -75,7 +74,7 @@ multiple_pages <- function(plot = NULL, by = NULL, ncol = 2, nrow = 2, scales = 
   # Plot each page
   for (i in seq_along(1:n_pages)) {
     plot <- plot %+% data[data$groups == i,] +
-      ggplot2::ggtitle(label = bquote(atop(bold(.(title)), atop(italic(Page~.(i)~of~.(n_pages))))))
+      ggtitle(label = bquote(atop(bold(.(title)), atop(italic(Page~.(i)~of~.(n_pages))))))
 
     # For last page call panel_layout
     if (i == n_pages) {

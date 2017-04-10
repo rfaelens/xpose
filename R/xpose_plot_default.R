@@ -52,19 +52,19 @@ xpose_plot_default <- function(xpdb,
                                gg_theme = NULL,
                                plot_name = 'xpose_plot_default',
                                ...) {
-
+  
   check_xpdb(xpdb) # Check inputs
-
+  
   # Format data
   if ('MDV' %in% colnames(xpdb$data)) {
     data <- dplyr::filter_(.data = xpdb$data, 'MDV == 0')
   } else if ('EVID' %in% colnames(xpdb$data)) {
     data <- dplyr::filter_(.data = xpdb$data, 'EVID == 0')
   }
-
+  
   # Create ggplot base
-  xp   <- ggplot2::ggplot(data = data, ...) + vars
-
+  xp   <- ggplot(data = data, ...) + vars
+  
   # Add unity line
   if (guides) {
     xp <- xp + xp_geoms(xp_theme = xpdb$xp_theme,
@@ -72,7 +72,7 @@ xpose_plot_default <- function(xpdb,
                         ggfun    = 'geom_abline',
                         ...)
   }
-
+  
   # Add lines
   if (grepl('l', tolower(type))) {
     xp <- xp + xp_geoms(mapping  = aes,
@@ -82,7 +82,7 @@ xpose_plot_default <- function(xpdb,
                         ggfun    = 'geom_line',
                         ...)
   }
-
+  
   # Add points
   if (grepl('p', tolower(type))) {
     xp <- xp + xp_geoms(mapping  = aes,
@@ -91,7 +91,7 @@ xpose_plot_default <- function(xpdb,
                         ggfun    = 'geom_point',
                         ...)
   }
-
+  
   # Add text (need a way to link labels = )
   # if (grepl('t', tolower(type))) {
   #   xp <- xp + xp_geoms(mapping  = aes,
@@ -109,27 +109,27 @@ xpose_plot_default <- function(xpdb,
                         ggfun    = 'geom_smooth',
                         ...)
   }
-
-
-  # Add title and subtitle
-  xp <- xp + ggplot2::labs(title    = write_title(title, xpdb),
-                           subtitle = write_title(subtitle, xpdb),
-                           caption  = write_title(caption, xpdb))
   
-
+  
+  # Add title and subtitle
+  xp <- xp + labs(title    = write_title(title, xpdb),
+                  subtitle = write_title(subtitle, xpdb),
+                  caption  = write_title(caption, xpdb))
+  
+  
   # Define scales
   xp <- xp + xp_geoms(mapping  = aes,
                       xp_theme = xpdb$xp_theme,
                       name     = 'xscale',
                       ggfun    = paste0('scale_x_', xscale),
                       ...)
-
+  
   xp <- xp + xp_geoms(mapping  = aes,
                       xp_theme = xpdb$xp_theme,
                       name     = 'yscale',
                       ggfun    = paste0('scale_y_', yscale),
                       ...)
-
+  
   # Define panels
   if (!is.null(list(...)[['panel_facets']])) {
     xp <- xp + xp_geoms(mapping  = aes,
@@ -138,22 +138,22 @@ xpose_plot_default <- function(xpdb,
                         ggfun    = 'facet_wrap',
                         ...)
   }
-
+  
   # Add users defined layers
   if (!is.null(layers)) { xp <- xp + layers }
-
+  
   # Add themes
   if (is.null(gg_theme)) {
     xp <- xp + xpdb$gg_theme
   } else {
     xp <- xp + gg_theme
   }
-
+  
   # Add metadata to plots
   xp$xpose <- list(fun     = plot_name,
                    summary = xpdb$summary)
-
+  
   xp <- structure(xp, class = c('xpose_plot', 'gg', 'ggplot'))
-
+  
   return(xp)
 }

@@ -17,6 +17,7 @@
 #' \dontrun{
 #' xpdb <- xpose_data(dir = '../models/pk/', runno = '001')
 #' }
+#' @import ggplot2
 #' @export
 xpose_data <- function(runno       = NULL,
                        dir         = NULL,

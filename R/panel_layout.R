@@ -30,7 +30,7 @@ panel_layout <- function(plot = NULL, facets = NULL, nrow = 2, ncol = 2, scales 
   panel_last <- n_panel_tot - ncol*(nrow_last - 1)
 
   if (n_missing == 0 || nrow_last == nrow & nrow != 1) {
-    plot <- plot + ggplot2::facet_wrap(facets = facets, ncol = ncol, scales = scales)
+    plot <- plot + facet_wrap(facets = facets, ncol = ncol, scales = scales)
     return(plot)
   }
 
@@ -42,7 +42,7 @@ panel_layout <- function(plot = NULL, facets = NULL, nrow = 2, ncol = 2, scales 
                                   levels = c(levels(plot$data[, 'ghosts']),
                                              paste0('ghost=', 1:n_missing)))
 
-  plot <- plot + ggplot2::facet_wrap(facets = 'ghosts', ncol = ncol, drop = FALSE, scales = scales)
+  plot <- plot + facet_wrap(facets = 'ghosts', ncol = ncol, drop = FALSE, scales = scales)
 
   drop_grobs <- function(sep = '', ...) {
     if (scales %in% c('free', 'free_x')) {
@@ -57,7 +57,7 @@ panel_layout <- function(plot = NULL, facets = NULL, nrow = 2, ncol = 2, scales 
   }
 
   # Convert ggplot to grob
-  g <- ggplot2::ggplotGrob(plot)
+  g <- ggplotGrob(plot)
 
   # Remove empty panels
   g$grobs[names(g$grobs) %in% drop_grobs()] <- NULL

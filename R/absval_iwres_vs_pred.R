@@ -41,7 +41,7 @@ absval_iwres_vs_pred <- function(xpdb,
   #######
   
   xpose_plot_default(xpdb = xpdb, aes = aes, group = group,
-                     vars = ggplot2::aes_(x = quote(PRED), y = quote(abs(IWRES))), 
+                     vars = aes_(x = quote(PRED), y = quote(abs(IWRES))), 
                      layers = layers, type = type, guides = guides,
                      gg_theme = gg_theme, panel_facets = by, 
                      xscale = ifelse(log, 'log10', 'continuous'),

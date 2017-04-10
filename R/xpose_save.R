@@ -23,7 +23,7 @@
 #'  xpose_save()
 #' }
 #' @export
-xpose_save <- function(plot     = ggplot2::last_plot(),
+xpose_save <- function(plot     = last_plot(),
                        filename = '@run_@plotfun.pdf',
                        dir      = NULL,
                        width    = 8,
