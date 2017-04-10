@@ -42,6 +42,26 @@ reference:
     - read_nmtab
     - parse_nm_model
 
+authors:
+  Benjamin Guiastrennec:
+    href: https://github.com/guiastrennec/ggxpose
+  Andrew C. Hooker:
+    href: https://github.com/andrewhooker
+  Anna Olofsson:
+    href: https://github.com/OlofssonA
+  Sebastian Ueckert:
+    href: https://github.com/sebastianueckert
+  Kajsa Harling:
+    href: https://github.com/kharling
+  Mike K. Smith:
+    href: https://github.com/MikeKSmith
+  Pharmetheus:
+    href: http://pharmetheus.com
+    html: <img src="http://wcop2016.org/wp-content/uploads/2014/09/B_pharmetheus-cropped.png" height="24" /
+  Pfizer:
+    href: http://www.pfizer.com
+    html: <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Pfizer.svg/200px-Pfizer.svg.png" height="24" /
+
 navbar:
   left:
   - text: Articles
