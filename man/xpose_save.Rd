@@ -4,8 +4,8 @@
 \alias{xpose_save}
 \title{Save ggxpose plot}
 \usage{
-xpose_save(plot = last_plot(), filename = "@run_@plotfun.pdf", dir = NULL,
-  width = 8, height = 7, res = 200, ...)
+xpose_save(plot = last_plot(), filename = "@run_@plotfun.pdf", width = 8,
+  height = 7, res = 200, ...)
 }
 \arguments{
 \item{plot}{a ggxpose plot object.}
@@ -13,8 +13,6 @@ xpose_save(plot = last_plot(), filename = "@run_@plotfun.pdf", dir = NULL,
 \item{filename}{an optional name to be given to the file. Template variables such as @run 
 can be used to generate template names. By default, the file extension will be set to .pdf 
 by default but can be changed to .jpeg, .png, .bmp, .tiff}
-
-\item{dir}{an optional path to a specific directory.}
 
 \item{width}{the page width in inches}
 

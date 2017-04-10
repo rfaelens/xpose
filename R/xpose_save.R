@@ -10,7 +10,6 @@
 #' @param filename an optional name to be given to the file. Template variables such as @run 
 #' can be used to generate template names. By default, the file extension will be set to .pdf 
 #' by default but can be changed to .jpeg, .png, .bmp, .tiff
-#' @param dir an optional path to a specific directory.
 #' @param width the page width in inches
 #' @param height the page height in inches
 #' @param res the nominal resolution in ppi. Not used with .pdf
@@ -25,7 +24,6 @@
 #' @export
 xpose_save <- function(plot     = last_plot(),
                        filename = '@run_@plotfun.pdf',
-                       dir      = NULL,
                        width    = 8,
                        height   = 7,
                        res      = 200,
@@ -33,10 +31,10 @@ xpose_save <- function(plot     = last_plot(),
   
   if (is.null(plot)) {
     stop('Argument \"plot\" required.', call. = FALSE)
-  }
-  
-  if (!is.null(dir) && !substr(dir, nchar(dir), nchar(dir)) == '/') {
-    dir <- paste0(dir, '/')
+  } else if (is.null(filename)) {
+    stop('Argument \"filename\" should not be NULL.', call. = FALSE)
+  } else if (length(filename) != 1) {
+    stop('Argument \"filename\" should be of length 1.', call. = FALSE)
   }
   
   filename <- parse_title(string = filename, xpdb = plot$xpose,
@@ -50,18 +48,21 @@ xpose_save <- function(plot     = last_plot(),
   }
   
   switch(format,
-         '.pdf' = grDevices::pdf(file = paste0(dir, filename),
+         '.pdf' = grDevices::pdf(file = filename,
                                  width = width, height = height, ...),
-         '.jpeg' = grDevices::jpeg(filename = paste0(dir, filename),
+         '.jpeg' = grDevices::jpeg(filename = filename,
                                    width = width, height = height, units = 'in',
                                    res = res, ...),
-         '.png' = grDevices::png(filename = paste0(dir, filename),
+         '.jpg' = grDevices::jpeg(filename = filename,
+                                  width = width, height = height, units = 'in',
+                                  res = res, ...),
+         '.png' = grDevices::png(filename = filename,
                                  width = width, height = height, units = 'in', 
                                  res = res, ...),
-         '.bmp' = grDevices::bmp(filename = paste0(dir, filename),
+         '.bmp' = grDevices::bmp(filename = filename,
                                  width = width, height = height, units = 'in', 
                                  res = res, ...),
-         '.tiff' = grDevices::tiff(filename = paste0(dir, filename),
+         '.tiff' = grDevices::tiff(filename = filename,
                                    width = width, height = height, units = 'in', 
                                    res = res, ...),
          stop('unknown format provided in \"filename\"', call. = FALSE)
