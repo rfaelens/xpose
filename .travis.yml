@@ -1,9 +1,11 @@
 language: r
-
+sudo: required
+cache: packages
 warnings_are_errors: false
 
-sudo: required
-
+global:
+  - R_CHECK_ARGS="--no-build-vignettes --no-examples --no-manual"
+  
 r_packages:
   - covr
 
