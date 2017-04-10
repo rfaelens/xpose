@@ -6,7 +6,7 @@ ggxpose <a href="https://guiastrennec.github.io/ggxpose/"><img src="logo.png" al
 
 ### Overview
 
-ggxpose was designed as a [ggplot2](https://github.com/tidyverse/ggplot2)-based alternative to [xpose4](http://xpose.sourceforge.net). ggxpose aims to reduce the post processing burden and improve diagnostics commonly associated the development of non-linear mixed effect models.
+[ggxpose](https://guiastrennec.github.io/ggxpose/) was designed as a [ggplot2](https://github.com/tidyverse/ggplot2)-based alternative to [xpose4](http://xpose.sourceforge.net). ggxpose aims to reduce the post processing burden and improve diagnostics commonly associated the development of non-linear mixed effect models.
 
 ### Installation
 
@@ -49,8 +49,6 @@ cwres_vs_pred(xpdb)
 
 ### Recommended reading
 
-To fully make use of the power of ggxpose, a working knowledge of ggplot2 is recommended. Help for ggplot2 can be found in:
+The [ggxpose website](https://guiastrennec.github.io/ggxpose/) contains several useful articles to make full use of ggxpose
 
--   The ggplot2 [documentation](http://docs.ggplot2.org/current/)
--   The ggplot2 [mailing list](https://groups.google.com/forum/?fromgroups#!forum/ggplot2)
--   Internet resources (stack overflow, etc.)
+When working with ggxpose, a working knowledge of ggplot2 is recommended. Help for ggplot2 can be found in: - The ggplot2 [documentation](http://docs.ggplot2.org/current/) - The ggplot2 [mailing list](https://groups.google.com/forum/?fromgroups#!forum/ggplot2) - Internet resources (stack overflow, etc.)
