@@ -17,7 +17,7 @@ knitr::opts_chunk$set(fig.path = 'inst/img/',
                       fig.dpi = 96,
                       fig.height = 4, 
                       fig.width = 4, 
-                      out.width = '75%', 
+                      out.width = '50%', 
                       fig.align = 'center')
 ```
 

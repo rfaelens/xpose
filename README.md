@@ -38,14 +38,14 @@ Generate diagnostics
 dv_vs_ipred(xpdb)
 ```
 
-<img src="inst/img/readme_example_figure-1.png" width="75%" style="display: block; margin: auto;" />
+<img src="inst/img/readme_example_figure-1.png" width="50%" style="display: block; margin: auto;" />
 
 ``` r
 # CWRES vs. PRED plot
 cwres_vs_pred(xpdb)
 ```
 
-<img src="inst/img/readme_example_figure-2.png" width="75%" style="display: block; margin: auto;" />
+<img src="inst/img/readme_example_figure-2.png" width="50%" style="display: block; margin: auto;" />
 
 ### Recommended reading
 
