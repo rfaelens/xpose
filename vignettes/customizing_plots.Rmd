@@ -21,9 +21,9 @@ knitr::opts_chunk$set(fig.dpi = 96,
 
 
 ### Plot type
-The option `type` allows to control how the data should be represented ie. whether to use points `'p'`, lines `'l'`, smooth `'s'` or any combination of the three (eg. `type = 'pl'`).
+The option `type` allows to control how the data should be represented i.e. whether to use points `'p'`, lines `'l'`, smooth `'s'` or any combination of the three (e.g. `type = 'pl'`).
 
-```{r demo type, echo = FALSE, fig.width = 6, out.width = '100%'}
+```{r demo type, echo = FALSE, fig.height = 2.5, fig.width = 6, out.width = '100%'}
 gridExtra::grid.arrange(
   dv_vs_ipred(xpdb, title = "type = \'p\'", subtitle = FALSE, caption = FALSE, type = 'p'),
   dv_vs_ipred(xpdb, title = "type = \'l\'", subtitle = FALSE, caption = FALSE, type = 'l'),
@@ -37,7 +37,7 @@ The option `guides` can enable (`TRUE`) or disable (`FALSE`) the visual guides o
 
 
 ### Titles
-All ggxpose plots have by default an informative title, subtitle and caption. For example all plots using individual model predictions (IPRED) will display the shrinkage of the epsilons. These titles can easily be edited as templates using keywords wich will be replaced by their actual value stored in the summary level of the `xpdb` object when rendering the plots. Keywords are defined by a word preceeded by a `@` e.g. `'@ofv'`. A list of all available keyword can be accessed via `help('template_titles')`. Finally, the title, subtitle or caption can be disabled by setting them to `FALSE`.
+All ggxpose plots have by default an informative title, subtitle and caption. For example all plots using individual model predictions (IPRED) will display the shrinkage of the epsilons. These titles can easily be edited as templates using keywords which will be replaced by their actual value stored in the summary level of the `xpdb` object when rendering the plots. Keywords are defined by a word preceded by a `@` e.g. `'@ofv'`. A list of all available keyword can be accessed via `help('template_titles')`. Finally, the title, subtitle or caption can be disabled by setting them to `FALSE`.
 
 ```{r demo titles}
 # Using template titles
@@ -86,7 +86,7 @@ Panels (or faceting) can be created by using the `by` argument as follows.
 dv_vs_ipred(xpdb, by = 'SEX')
 ```
 
-Additional arguments can be passed to the panel function using the `panel_xxx` notation (eg. `panel_ncol = 2`, `panel_labeller = 'label_both'`). For more options read the help of [`facet_wrap`](http://docs.ggplot2.org/current/facet_wrap.html) from `ggplot2`.
+Additional arguments can be passed to the panel function using the `panel_xxx` notation (e.g. `panel_ncol = 2`, `panel_labeller = 'label_both'`). For more options read the help of [`facet_wrap`](http://docs.ggplot2.org/current/facet_wrap.html) from `ggplot2`.
 
 
 ### Additional layers
@@ -143,26 +143,32 @@ xpdb <- xpose_theme(xpdb     = xpdb,
 ```{r demo themes plot}
 # For a single plot only
 dv_vs_ipred(xpdb        = xpdb, 
-            gg_theme    = ggplot2::theme_dark(), 
+            gg_theme    = theme_readable(), 
             point_color = 'darkblue')
 ```
 
 
 ### Examples of `gg_theme` themes:
 
-*Note: `theme_readable()` was created to make the plot more readable by increasing labels size. The visibility of the grids was also reduced to bring the focus on the data itself.*
+ggxpose brings two additional themes (`theme_readable()` and `theme_bw2()`), to those available in `ggplot2`.
+
+```{r demo gg_theme, echo = FALSE, fig.height = 6, fig.width = 6, out.width = '100%'}
+gridExtra::grid.arrange(
+  dv_vs_ipred(xpdb, subtitle = 'gg_theme = theme_readable()', title = FALSE, caption = '', gg_theme = theme_readable()),
+  dv_vs_ipred(xpdb, subtitle = 'gg_theme = theme_grey()', title = FALSE, caption = '', gg_theme = theme_grey()),
+  dv_vs_ipred(xpdb, subtitle = 'gg_theme = theme_bw2()', title = FALSE, caption = FALSE, gg_theme = theme_bw2()),
+  dv_vs_ipred(xpdb, subtitle = 'gg_theme = theme_dark()', title = FALSE, caption = FALSE, gg_theme = theme_dark()),
+  ncol = 2)
+```
 
 
 ### Examples of `xp_theme` themes:
 
-*Note: `gg_theme = theme_bw()` was also used in the xpose4 plot*
-
-
-### The pipes
-`ggxpose` makes use of the pipe operator `%>%`. It can be used to generate clear flow as follows.
-
-```{r, eval = FALSE}
-xpose_data(runno = '001') %>% 
-  dv_vs_ipred() %>% 
-  xpose_save()
+```{r demo xp_theme, echo = FALSE, fig.height = 4, fig.width = 6, out.width = '100%'}
+gridExtra::grid.arrange(
+  dv_vs_ipred(xpose_theme(xpdb = xpdb, xp_theme = xp_theme_default()),
+              subtitle = 'xp_theme = xp_theme_default()', title = FALSE, caption = ''),
+  dv_vs_ipred(xpose_theme(xpdb = xpdb, xp_theme = xp_theme_xpose4()),
+              subtitle = 'xp_theme = xp_theme_xpose4()\nwith gg_theme = theme_bw2()', title = FALSE, caption = '', gg_theme = theme_bw2()),
+  ncol = 2)
 ```

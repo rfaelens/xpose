@@ -74,18 +74,29 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3>Import model output</h3>
 <p>To import the model output files (e.g. NONMEM tables). The function <code>xpose_data()</code> collects all model output files and table and organizes them into an R object commonly called <code>xpdb</code> for xpose data base. Note that ggxpose makes use of the <a href="http://readr.tidyverse.org">readr</a> package to rapidly import big dataset into R.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xpdb &lt;-<span class="st"> </span><span class="kw">xpose_data</span>(<span class="dt">runno =</span> <span class="st">'001'</span>)</code></pre></div>
+<div id="required-files" class="section level4">
+<h4>Required files</h4>
+</div>
+<div id="nonmem-runs" class="section level4">
+<h4>NONMEM runs</h4>
+<p>To make full use of the functionality offered by <code>ggxpose</code> the following NONMEM output files should be available:</p>
+<ul>
+<li>.lst: for the template titles</li>
+<li>.mod: for parameter labels and output table names</li>
+<li>.ext: for final parameter estimates and RSE</li>
+<li>.phi: for random effects and iOFV</li>
+<li>.cor: for correlation matrix</li>
+<li>.grd: for estimation gradients</li>
+<li>output tables: for the actual data</li>
+</ul>
+</div>
+<div id="others-nlme-tools" class="section level4">
+<h4>Others NLME tools</h4>
+<p>Tbd</p>
+</div>
 <div id="structure-of-the-xpdb-object" class="section level4">
 <h4>Structure of the <code>xpdb</code> object</h4>
-<p>A typical <code>xpdb</code> object contains 7 levels namely:</p>
-<ul>
-<li>code: the parsed model code</li>
-<li>summary: contains key information regarding the model. All the information contained in the summary can be used as part of the template titles.</li>
-<li>data: an aggregated dataset of all output tables</li>
-<li>tab_index: the names and column names of all original tables</li>
-<li>simtab: an aggregated dataset of all simulated output tables</li>
-<li>gg_theme: a ggplot2 theme</li>
-<li>xp_theme: an xpose theme</li>
-</ul>
+<p>A typical <code>xpdb</code> object contains 7 levels namely: - code: the parsed model code - summary: contains key information regarding the model. All the information contained in the summary can be used as part of the template titles (<code>help('R/template_titles')</code>). - data: an aggregated dataset of all output tables - tab_index: the names and column names of all original tables - simtab: an aggregated dataset of all simulated output tables - gg_theme: a ggplot2 theme - xp_theme: an xpose theme</p>
 </div>
 </div>
 

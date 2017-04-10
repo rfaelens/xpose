@@ -4,12 +4,15 @@
 \alias{theme_readable}
 \title{ggplot2 theme}
 \usage{
-theme_readable(base_size = 11, legend.position = "right")
+theme_readable(base_size = 11, base_family = "",
+  legend_position = "right")
 }
 \arguments{
 \item{base_size}{base font size}
 
-\item{legend.position}{the position of legends ("none", "left", "right", "bottom",
+\item{base_family}{base font family}
+
+\item{legend_position}{the position of legends ("none", "left", "right", "bottom",
 "top", or two-element numeric vector)}
 }
 \description{
@@ -21,6 +24,6 @@ focus on the data.
 \dontrun{
 ggplot(diamonds, aes(x = price, y = carat, color = cut)) +
  geom_point(alpha = 0.5) +
- theme_readable(legend.position = 'top')
+ theme_readable(legend_position = 'top')
 }
 }
