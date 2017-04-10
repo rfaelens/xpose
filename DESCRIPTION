@@ -18,7 +18,11 @@ Authors@R: c(
       person('Mike K.', 'Smith'
              , role = 'ctb'),
       person('Elodie', 'Plan'
-             , role = 'ctb'))
+             , role = 'ctb'),
+      person('Pharmetheus'
+             , role = 'fnd'),
+      person('Pfizer'
+             , role = 'fnd'))
 Description: Automated generation of graphical diagnostics for non-linear mixed effect models.
 Depends:
   R (>= 3.1.2),
