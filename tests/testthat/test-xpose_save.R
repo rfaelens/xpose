@@ -25,9 +25,14 @@ test_that("errors are returned for bad filename input", {
 
 
 test_that("all graphical devices work properly", {
-  paths_2 <- file.path(tempdir(), 
+  tmp_dr <- tempdir()
+  paths_2 <- file.path(tmp_dr, 
                        paste0('test_plot.', c('pdf', 'jpeg', 'png', 'bmp', 'tiff')))
   on.exit(unlink(paths_2))
+  
+  print(paths_2)
+  
+  expect_true(dir.exists(tmp_dr))
   
   #expect_false(any(file.exists(paths_2)))
   xpose_save(plot = plot, filename = paths_2[1])           # pdf
