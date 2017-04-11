@@ -7,14 +7,16 @@ test_that("errors are returned for bad plot input", {
   expect_error(xpose_save(plot = NULL))
 })
 
-
 test_that("errors are returned for bad filename input", {
   paths_1 <- file.path(tempdir(), 
-                       paste0('test_plot.', c('abcd', 'bcde')))
+                       paste0('test_plot', c('.abcd', '.bcde', '')))
   on.exit(unlink(paths_1))
   
   # Unrecognized extension
   expect_error(xpose_save(plot = plot, filename = paths_1[1]))
+  
+  # Missing extension
+  expect_error(xpose_save(plot = plot, filename = paths_1[3]))
   
   # Missing filename
   expect_error(xpose_save(plot = plot, filename = NULL))
@@ -24,53 +26,38 @@ test_that("errors are returned for bad filename input", {
 })
 
 
-test_that("pdf graphical device works properly", {
-  paths_2 <- file.path(tempdir(), paste0('test_plot.pdf'))
+test_that("common graphical device work properly", {
+  paths_2 <- file.path(tempdir(), 
+                       paste0('test_plot.', c('pdf', 'jpeg', 'png')))
   on.exit(unlink(paths_2))
-
-  xpose_save(plot = plot, filename = paths_2)               # pdf
-  expect_true(file.exists(paths_2))
+  
+  expect_false(any(file.exists(paths_2)))
+  
+  # Test pdf
+  xpose_save(plot = plot, filename = paths_2[1])
+  expect_true(file.exists(paths_2[1]))
+  
+  # Test jpeg
+  if (capabilities('jpeg')) {
+    xpose_save(plot = plot, filename = paths_2[2], dpi = 20) # jpeg
+    expect_true(file.exists(paths_2[2]))
+  }
+  
+  # Test png
+  if (capabilities('png')) {
+    xpose_save(plot = plot, filename = paths_2[3], dpi = 20) # png
+    expect_true(file.exists(paths_2[3]))
+  }
 })
 
-test_that("jpeg graphical device works properly", {
-  paths_3 <- file.path(tempdir(), paste0('test_plot.jpeg'))
+test_that("template filenames and auto file extension work properly", {
+  paths_3 <- file.path(tempdir(), 'run001_dv_vs_ipred.pdf') 
   on.exit(unlink(paths_3))
   
-  xpose_save(plot = plot, filename = paths_3, res = 20)    # jpeg
+  expect_false(file.exists(paths_3))
   
+  xpose_save(plot = plot, 
+             filename = file.path(tempdir(), '@run_@plotfun'), 
+             device = 'pdf')
   expect_true(file.exists(paths_3))
 })
-
-test_that("png graphical device works properly", {
-  paths_4 <- file.path(tempdir(), paste0('test_plot.png'))
-  on.exit(unlink(paths_4))
-  
-  xpose_save(plot = plot, filename = paths_4, res = 20)    # png
-  
-  expect_true(file.exists(paths_4))
-})
-
-test_that("bmp graphical device works properly", {
-  paths_5 <- file.path(tempdir(), paste0('test_plot.bmp'))
-  on.exit(unlink(paths_5))
-  
-  xpose_save(plot = plot, filename = paths_5, res = 20)    # bmp
-  
-  expect_true(file.exists(paths_5))
-})
-
-test_that("tiff graphical device works properly", {
-  paths_6 <- file.path(tempdir(), paste0('test_plot.tiff'))
-  on.exit(unlink(paths_6))
-  
-  xpose_save(plot = plot, filename = paths_6, res = 20)    # tiff
-  
-  expect_true(file.exists(paths_6))
-})
-
-  #expect_false(any(file.exists(paths_2)))
-  #xpose_save(plot = plot, filename = paths_2[2], res = 20) # jpeg
-  #xpose_save(plot = plot, filename = paths_2[3], res = 20) # png
-  #xpose_save(plot = plot, filename = paths_2[4], res = 20) # bmp
-  #xpose_save(plot = plot, filename = paths_2[5], res = 20) # tiff
-  #expect_true(all(file.exists(paths_2)))

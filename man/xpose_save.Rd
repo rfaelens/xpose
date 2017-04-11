@@ -4,30 +4,36 @@
 \alias{xpose_save}
 \title{Save ggxpose plot}
 \usage{
-xpose_save(plot = last_plot(), filename = "@run_@plotfun.pdf", width = 8,
-  height = 7, res = 200, ...)
+xpose_save(plot = last_plot(), filename = "@run_@plotfun.pdf",
+  path = NULL, device = NULL, width = 7, height = 6, units = c("in",
+  "cm", "mm"), dpi = 200, ...)
 }
 \arguments{
-\item{plot}{a ggxpose plot object.}
+\item{plot}{A ggxpose plot object.}
 
-\item{filename}{an optional name to be given to the file. Template variables such as @run 
-can be used to generate template names. By default, the file extension will be set to .pdf 
-by default but can be changed to .jpeg, .png, .bmp, .tiff}
+\item{filename}{An optional name to be given to the file. Template variables such as @run 
+can be used to generate template names.}
 
-\item{width}{the page width in inches}
+\item{path}{Path under which the ggxpose plot will be saved.}
 
-\item{height}{the page height in inches}
+\item{device}{Graphical device to use. Can be either be a device function
+(e.g. \code{\link{png}}), or one of 'eps', 'ps', 'tex' (pictex),
+'pdf' (default), 'jpeg', 'tiff', 'png', 'bmp', 'svg' or 'wmf' (windows only).}
 
-\item{res}{the nominal resolution in ppi. Not used with .pdf}
+\item{width, height}{Plot size in \code{units}.}
 
-\item{...}{additional options to be passed to ploting functions.}
+\item{units}{Units of the plot size ('in', 'cm', or 'mm').}
+
+\item{dpi}{Plot resolution. Applies only to raster output types.}
+
+\item{...}{Additional arguments passed on to \link[ggplot2]{ggsave} or graphics \code{device}.}
 }
 \description{
-Automatically save ggxpose plots to pdf, jpg or png.
+Automatically save ggxpose plots to files.
 
-If no arguments are provided, the function will automatically name
-and save a plot after its run number and the plotting function name
-by using the metadata attached to the plot.
+This function was inspired by the \link[ggplot2]{ggsave}. If no arguments are provided, 
+the function will automatically name and save a plot after its run number and the plotting 
+function name by using the metadata attached to the plot.
 }
 \examples{
 \dontrun{
