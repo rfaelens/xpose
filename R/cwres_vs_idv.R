@@ -20,6 +20,8 @@
 #' @param gg_theme a ggplot2 theme to be used on this specific plot.
 #' @param ... any additional aesthetics.
 #'
+#' @inheritSection xplot_scatter Template titles
+#' 
 #' @export
 cwres_vs_idv <- function(xpdb,
                          aes      = NULL,
@@ -40,15 +42,15 @@ cwres_vs_idv <- function(xpdb,
   check_vars(c('CWRES', 'TIME', by), xpdb)
   #######
   
-  xpose_plot_default(xpdb = xpdb, aes = aes, group = group,
-                     vars = aes_(x = quote(TIME), y = quote(CWRES)), 
-                     layers = layers, type = type, guides = guides,
-                     gg_theme = gg_theme, panel_facets = by, 
-                     xscale = ifelse(log, 'log10', 'continuous'),
-                     yscale = 'continuous', 
-                     title = check_title(title, 'CWRES vs. TIME | @run'), 
-                     subtitle = check_title(subtitle, 'Ofv: @ofv'),
-                     caption = check_title(caption, '@dir'),
-                     plot_name = as.character(match.call()[[1]]),
-                     guides_slope = 0, ...)
+  xplot_scatter(xpdb = xpdb, aes = aes, group = group,
+                vars = aes_(x = quote(TIME), y = quote(CWRES)), 
+                layers = layers, type = type, guides = guides,
+                gg_theme = gg_theme, panel_facets = by, 
+                xscale = ifelse(log, 'log10', 'continuous'),
+                yscale = 'continuous', 
+                title = check_title(title, 'CWRES vs. TIME | @run'), 
+                subtitle = check_title(subtitle, 'Ofv: @ofv'),
+                caption = check_title(caption, '@dir'),
+                plot_name = as.character(match.call()[[1]]),
+                guides_slope = 0, ...)
 }

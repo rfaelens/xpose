@@ -20,7 +20,7 @@
 #' @param gg_theme a ggplot2 theme to be used on this specific plot.
 #' @param ... any additional aesthetics.
 #'
-#' @inheritSection xpose_plot_default Template titles
+#' @inheritSection xplot_scatter Template titles
 #' 
 #' @return An \code{xpose_plot}
 #' 
@@ -42,21 +42,21 @@ dv_vs_pred <- function(xpdb,
                        guides   = TRUE,
                        gg_theme = NULL,
                        ...) {
-
+  
   ##### Change this to true false
   check_xpdb(xpdb)
   check_vars(c('PRED', 'DV', by), xpdb)
   #######
   
-  xpose_plot_default(xpdb = xpdb, aes = aes, group = group,
-                     vars = aes_(x = quote(PRED), y = quote(DV)), 
-                     layers = layers, type = type, guides = guides,
-                     gg_theme = gg_theme, panel_facets = by, 
-                     xscale = ifelse(log, 'log10', 'continuous'),
-                     yscale = ifelse(log, 'log10', 'continuous'), 
-                     title = check_title(title, 'DV vs. PRED | @run'), 
-                     subtitle = check_title(subtitle, 'Ofv: @ofv'),
-                     caption = check_title(caption, '@dir'),
-                     plot_name = as.character(match.call()[[1]]),
-                     guides_slope = 1, ...)
+  xplot_scatter(xpdb = xpdb, aes = aes, group = group,
+                vars = aes_(x = quote(PRED), y = quote(DV)), 
+                layers = layers, type = type, guides = guides,
+                gg_theme = gg_theme, panel_facets = by, 
+                xscale = ifelse(log, 'log10', 'continuous'),
+                yscale = ifelse(log, 'log10', 'continuous'), 
+                title = check_title(title, 'DV vs. PRED | @run'), 
+                subtitle = check_title(subtitle, 'Ofv: @ofv'),
+                caption = check_title(caption, '@dir'),
+                plot_name = as.character(match.call()[[1]]),
+                guides_slope = 1, ...)
 }

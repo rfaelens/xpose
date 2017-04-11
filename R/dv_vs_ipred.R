@@ -19,6 +19,8 @@
 #' @param guides should the guides (eg. unity line) be displayed.
 #' @param gg_theme a ggplot2 theme to be used on this specific plot.
 #' @param ... any additional aesthetics.
+#' 
+#' @inheritSection xplot_scatter Template titles
 #'
 #' @export
 dv_vs_ipred <- function(xpdb,
@@ -40,15 +42,15 @@ dv_vs_ipred <- function(xpdb,
   check_vars(c('IPRED', 'DV', by), xpdb)
   #######
   
-  xpose_plot_default(xpdb = xpdb, aes = aes, group = group,
-                     vars = aes_(x = quote(IPRED), y = quote(DV)), 
-                     layers = layers, type = type, guides = guides,
-                     gg_theme = gg_theme, panel_facets = by, 
-                     xscale = ifelse(log, 'log10', 'continuous'),
-                     yscale = ifelse(log, 'log10', 'continuous'), 
-                     title = check_title(title, 'DV vs. IPRED | @run'), 
-                     subtitle = check_title(subtitle, 'Ofv: @ofv, @eps_shrink'),
-                     caption = check_title(caption, '@dir'),
-                     plot_name = as.character(match.call()[[1]]),
-                     guides_slope = 1, ...)
+  xplot_scatter(xpdb = xpdb, aes = aes, group = group,
+                vars = aes_(x = quote(IPRED), y = quote(DV)), 
+                layers = layers, type = type, guides = guides,
+                gg_theme = gg_theme, panel_facets = by, 
+                xscale = ifelse(log, 'log10', 'continuous'),
+                yscale = ifelse(log, 'log10', 'continuous'), 
+                title = check_title(title, 'DV vs. IPRED | @run'), 
+                subtitle = check_title(subtitle, 'Ofv: @ofv, @eps_shrink'),
+                caption = check_title(caption, '@dir'),
+                plot_name = as.character(match.call()[[1]]),
+                guides_slope = 1, ...)
 }

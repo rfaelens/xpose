@@ -19,6 +19,8 @@
 #' @param guides should the guides (eg. unity line) be displayed.
 #' @param gg_theme a ggplot2 theme to be used on this specific plot.
 #' @param ... any additional aesthetics.
+#' 
+#' @inheritSection xplot_scatter Template titles
 #'
 #' @export
 absval_iwres_vs_pred <- function(xpdb,
@@ -40,17 +42,17 @@ absval_iwres_vs_pred <- function(xpdb,
   check_vars(c('IWRES', 'PRED', by), xpdb)
   #######
   
-  xpose_plot_default(xpdb = xpdb, aes = aes, group = group,
-                     vars = aes_(x = quote(PRED), y = quote(abs(IWRES))), 
-                     layers = layers, type = type, guides = guides,
-                     gg_theme = gg_theme, panel_facets = by, 
-                     xscale = ifelse(log, 'log10', 'continuous'),
-                     yscale = 'continuous', 
-                     title = check_title(title, '|IWRES| vs. PRED | @run'), 
-                     subtitle = check_title(subtitle, 'Ofv: @ofv'),
-                     caption = check_title(caption, '@dir'),
-                     plot_name = as.character(match.call()[[1]]),
-                     guides_slope = 0, ...)
+  xplot_scatter(xpdb = xpdb, aes = aes, group = group,
+                vars = aes_(x = quote(PRED), y = quote(abs(IWRES))), 
+                layers = layers, type = type, guides = guides,
+                gg_theme = gg_theme, panel_facets = by, 
+                xscale = ifelse(log, 'log10', 'continuous'),
+                yscale = 'continuous', 
+                title = check_title(title, '|IWRES| vs. PRED | @run'), 
+                subtitle = check_title(subtitle, 'Ofv: @ofv'),
+                caption = check_title(caption, '@dir'),
+                plot_name = as.character(match.call()[[1]]),
+                guides_slope = 0, ...)
 }
 
 

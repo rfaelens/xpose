@@ -106,47 +106,53 @@
     </div>
 
     
-    <p>Automatically save ggxpose plots to pdf, jpg or png.</p>
-<p>If no arguments are provided, the function will automatically name
-and save a plot after its run number and the plotting function name
-by using the metadata attached to the plot.</p>
+    <p>Automatically save ggxpose plots to files.</p>
+<p>This function was inspired by the <a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggsave'>ggsave</a>. If no arguments are provided, 
+the function will automatically name and save a plot after its run number and the plotting 
+function name by using the metadata attached to the plot.</p>
     
 
-    <pre><span class='fu'>xpose_save</span>(<span class='kw'>plot</span> <span class='kw'>=</span> <span class='fu'>last_plot</span>(), <span class='kw'>filename</span> <span class='kw'>=</span> <span class='st'>"@run_@plotfun.pdf"</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>8</span>, <span class='kw'>height</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='no'>...</span>)</pre>
+    <pre><span class='fu'>xpose_save</span>(<span class='kw'>plot</span> <span class='kw'>=</span> <span class='fu'>last_plot</span>(), <span class='kw'>filename</span> <span class='kw'>=</span> <span class='st'>"@run_@plotfun.pdf"</span>,
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>device</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>height</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>units</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"in"</span>,
+  <span class='st'>"cm"</span>, <span class='st'>"mm"</span>), <span class='kw'>dpi</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>plot</th>
-      <td><p>a ggxpose plot object.</p></td>
+      <td><p>A ggxpose plot object.</p></td>
     </tr>
     <tr>
       <th>filename</th>
-      <td><p>an optional name to be given to the file. Template variables such as @run 
-can be used to generate template names. By default, the file extension will be set to .pdf 
-by default but can be changed to .jpeg, .png, .bmp, .tiff</p></td>
+      <td><p>An optional name to be given to the file. Template variables such as @run 
+can be used to generate template names.</p></td>
     </tr>
     <tr>
-      <th>dir</th>
-      <td><p>an optional path to a specific directory.</p></td>
+      <th>path</th>
+      <td><p>Path under which the ggxpose plot will be saved.</p></td>
     </tr>
     <tr>
-      <th>width</th>
-      <td><p>the page width in inches</p></td>
+      <th>device</th>
+      <td><p>Graphical device to use. Can be either be a device function
+(e.g. <code>png</code>), or one of 'eps', 'ps', 'tex' (pictex),
+'pdf' (default), 'jpeg', 'tiff', 'png', 'bmp', 'svg' or 'wmf' (windows only).</p></td>
     </tr>
     <tr>
-      <th>height</th>
-      <td><p>the page height in inches</p></td>
+      <th>width, height</th>
+      <td><p>Plot size in <code>units</code>.</p></td>
     </tr>
     <tr>
-      <th>res</th>
-      <td><p>the nominal resolution in ppi. Not used with .pdf</p></td>
+      <th>units</th>
+      <td><p>Units of the plot size ('in', 'cm', or 'mm').</p></td>
+    </tr>
+    <tr>
+      <th>dpi</th>
+      <td><p>Plot resolution. Applies only to raster output types.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>additional options to be passed to ploting functions.</p></td>
+      <td><p>Additional arguments passed on to <a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggsave'>ggsave</a> or graphics <code>device</code>.</p></td>
     </tr>
     </table>
     

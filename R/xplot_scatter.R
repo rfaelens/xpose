@@ -1,6 +1,6 @@
-#' Default xpose plot
+#' Default xpose scatter plot function
 #'
-#' @description Manually generate plotting functions.
+#' @description Manually generate scatter plots from an xpdb object.
 #'
 #' @param xpdb an xpose database object.
 #' @param vars the variable mapping from an aes().
@@ -34,24 +34,24 @@
 #' @return An \code{xpose_plot}
 #' @examples
 #' \dontrun{
-#' xpose_plot_default(xpdb, vars = aes(x = IPRED, y = DV))
+#' xplot_scatter(xpdb, vars = aes(x = IPRED, y = DV))
 #' }
 #' @export
-xpose_plot_default <- function(xpdb,
-                               vars     = NULL,
-                               aes      = NULL,
-                               group    = 'ID',
-                               type     = 'pls',
-                               layers   = NULL,
-                               title    = '@run',
-                               subtitle = NULL,
-                               caption  = NULL,
-                               guides   = TRUE,
-                               xscale   = 'continuous',
-                               yscale   = 'continuous',
-                               gg_theme = NULL,
-                               plot_name = 'xpose_plot_default',
-                               ...) {
+xplot_scatter <- function(xpdb,
+                          vars     = NULL,
+                          aes      = NULL,
+                          group    = 'ID',
+                          type     = 'pls',
+                          layers   = NULL,
+                          title    = '@run',
+                          subtitle = NULL,
+                          caption  = NULL,
+                          guides   = TRUE,
+                          xscale   = 'continuous',
+                          yscale   = 'continuous',
+                          gg_theme = NULL,
+                          plot_name = 'xplot_scatter',
+                          ...) {
   
   check_xpdb(xpdb) # Check inputs
   

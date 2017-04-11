@@ -35,7 +35,7 @@ reference:
   - title: General plotting functions
     desc:  Functions to manually create customized plots from an xpose_data object.
     contents:
-    - xpose_plot_default
+    - xplot_scatter
   - title: Manual run import
     desc:  Manually import run output.
     contents:
