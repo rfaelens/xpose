@@ -45,6 +45,17 @@ An \code{xpose_plot}
 \description{
 Plot of observations (DV) vs population predictions (PRED).
 }
+\section{Template titles}{
+
+Template titles can be used to create highly informative diagnostics plots. 
+They can be applied to any plot title, subtitle and caption. Template titles 
+are defined via a single string containing key variables staring with a @ (e.g. @ofv)
+which will be replaced by their actual value when rendering the plot.
+For example '@run, @nobs observations in @nind subjects' would become 'run001, 
+1022 observations in 74 subjects'. The available key variables are listed under 
+\code{\link{template_titles}}.
+}
+
 \examples{
 \dontrun{
 dv_vs_ipred(xpdb)
