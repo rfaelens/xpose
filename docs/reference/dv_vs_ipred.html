@@ -174,13 +174,26 @@ Use FALSE to remove caption.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="template-titles"><a class="anchor" href="#template-titles"></a>Template titles</h2>
+
+    
+    <p>Template titles can be used to create highly informative diagnostics plots. 
+They can be applied to any plot title, subtitle and caption. Template titles 
+are defined via a single string containing key variables staring with a @ (e.g. @ofv)
+which will be replaced by their actual value when rendering the plot.
+For example '@run, @nobs observations in @nind subjects' would become 'run001, 
+1022 observations in 74 subjects'. The available key variables are listed under 
+<code><a href='template_titles.html'>template_titles</a></code>.</p>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#template-titles">Template titles</a></li>
+          </ul>
 
   </div>
 </div>

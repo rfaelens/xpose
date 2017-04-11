@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Allows <code>facet_wrap()</code> to work on multiple pages — multiple_pages • ggxpose</title>
+<title>Default xpose scatter plot function — xplot_scatter • ggxpose</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -102,54 +102,106 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Allows <code>facet_wrap()</code> to work on multiple pages</h1>
+    <h1>Default xpose scatter plot function</h1>
     </div>
 
     
-    <p>Allows <code>ggplot2</code> panels to be plotted over multiple pages.</p>
+    <p>Manually generate scatter plots from an xpdb object.</p>
     
 
-    <pre><span class='fu'>multiple_pages</span>(<span class='kw'>plot</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>scales</span> <span class='kw'>=</span> <span class='st'>"fixed"</span>)</pre>
+    <pre><span class='fu'>xplot_scatter</span>(<span class='no'>xpdb</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>aes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pls"</span>,
+  <span class='kw'>layers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"@run"</span>, <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>guides</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>xscale</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>, <span class='kw'>yscale</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>,
+  <span class='kw'>gg_theme</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>plot_name</span> <span class='kw'>=</span> <span class='st'>"xplot_scatter"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>plot</th>
-      <td><p>a ggplot object</p></td>
+      <th>xpdb</th>
+      <td><p>an xpose database object.</p></td>
     </tr>
     <tr>
-      <th>by</th>
-      <td><p>variables to facet by</p></td>
+      <th>vars</th>
+      <td><p>the variable mapping from an aes().</p></td>
     </tr>
     <tr>
-      <th>ncol</th>
-      <td><p>number of columns</p></td>
+      <th>aes</th>
+      <td><p>ggxpose aesthetics (eg. <code>point_color</code>).</p></td>
     </tr>
     <tr>
-      <th>nrow</th>
-      <td><p>number of rows</p></td>
+      <th>group</th>
+      <td><p>grouping variable to be used.</p></td>
     </tr>
     <tr>
-      <th>scales</th>
-      <td><p>should scales be fixed ("fixed", the default), free ("free"),
-or free in one dimension ("free_x", "free_y")</p></td>
+      <th>type</th>
+      <td><p>string setting the type of plot to be used points 'p',
+line 'l', smooth 's' and text 't' or any combination of the 4.</p></td>
+    </tr>
+    <tr>
+      <th>layers</th>
+      <td><p>a list of additional ggplot layers to be used.</p></td>
+    </tr>
+    <tr>
+      <th>title</th>
+      <td><p>the main title of the plot. If NULL automated title will be generated.
+Use FALSE to remove title and subtitle.</p></td>
+    </tr>
+    <tr>
+      <th>subtitle</th>
+      <td><p>the plot subtitle. If NULL automated subtitle will be generated.
+Use FALSE to remove subtitle.</p></td>
+    </tr>
+    <tr>
+      <th>caption</th>
+      <td><p>page caption. If NULL automated caption will be generated.
+Use FALSE to remove caption.</p></td>
+    </tr>
+    <tr>
+      <th>guides</th>
+      <td><p>should the guides (eg. unity line) be displayed.</p></td>
+    </tr>
+    <tr>
+      <th>xscale</th>
+      <td><p>scale type for x axis (eg. 'continuous', 'discrete', 'log10').</p></td>
+    </tr>
+    <tr>
+      <th>yscale</th>
+      <td><p>scale type for y axis (eg. 'continuous', 'discrete', 'log10').</p></td>
+    </tr>
+    <tr>
+      <th>gg_theme</th>
+      <td><p>a ggplot2 theme to be used on this specific plot.</p></td>
+    </tr>
+    <tr>
+      <th>plot_name</th>
+      <td><p>name that will be used by <code>xpose_save()</code> to save the plot.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>any additional aesthetics.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>facet_wrap</code></p>
+    <p>An <code>xpose_plot</code></p>
+    
+    <h2 class="hasAnchor" id="template-titles"><a class="anchor" href="#template-titles"></a>Template titles</h2>
+
+    
+    <p>Template titles can be used to create highly informative diagnostics plots. 
+They can be applied to any plot title, subtitle and caption. Template titles 
+are defined via a single string containing key variables staring with a @ (e.g. @ofv)
+which will be replaced by their actual value when rendering the plot.
+For example '@run, @nobs observations in @nind subjects' would become 'run001, 
+1022 observations in 74 subjects'. The available key variables are listed under 
+<code><a href='template_titles.html'>template_titles</a></code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># p &lt;- ggplot(diamonds, aes(x = price, y = carat, color = cut)) +</span>
-<span class='co'># geom_point(alpha = 0.5) +</span>
-<span class='co'># labs(x = 'Price', y = 'Carat', title = 'Diamonds')</span>
-<span class='co'># </span>
-<span class='co'># multiple_pages(plot = p, by = 'color', ncol = 2, nrow = 2)</span>
+<span class='co'># xplot_scatter(xpdb, vars = aes(x = IPRED, y = DV))</span>
 <span class='co'>## ---------------------------------------------</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -157,7 +209,9 @@ or free in one dimension ("free_x", "free_y")</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#template-titles">Template titles</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
