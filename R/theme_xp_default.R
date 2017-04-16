@@ -1,49 +1,48 @@
-#' Xpose4 theme for ggxpose
+#' Default ggxpose theme
 #'
-#' @description An xp_theme that makes ggxpose look like xpose4.
+#' @description The default ggxpose theme.
 #'
 #' @examples
-#' # Make ggxpose look like xpose4
+#' # Standard ggxpose theme
 #' \dontrun{
 #'  xpose_data(dir = 'inst/models/', runno = '001') %>%
-#'    xpose_theme(gg_theme = theme_bw(),
-#'                xp_theme = xp_theme_xpose4()) %>%
+#'    xpose_theme(gg_theme = theme_readable(),
+#'                xp_theme = theme_xp_default()) %>%
 #'    dv_vs_ipred()
 #' }
 #' @export
-xp_theme_xpose4 <- function() {
+theme_xp_default <- function() {
   structure(list(
-    
     # General
     rounding        = 1,
     
     # Guide
     guides_alpha    = 1,
-    guides_color    = 'black',
+    guides_color    = 'grey70',
     guides_linetype = 'solid',
-    guides_size     = 0.5,
+    guides_size     = 1,
     
     # Line
-    line_alpha      =  1,
-    line_color      = 'blue',
+    line_alpha      =  0.7,
+    line_color      = 'grey30',
     line_linetype   = 'solid',
     line_size       =  0.5,
     
     # Point
-    point_alpha     = 1,
-    point_color     = 'blue',
+    point_alpha     = 0.7,
+    point_color     = 'grey30',
     point_fill      = NA,
-    point_shape     = 1,
-    point_size      = 2,
+    point_shape     = 19,
+    point_size      = 1.5,
     point_stroke    = 0.5,
     
     # Smooth
     smooth_alpha    = 0.4,
-    smooth_color    = 'red',
-    smooth_fill     = 'red',
+    smooth_color    = 'deepskyblue2',
+    smooth_fill     = 'deepskyblue2',
     smooth_linetype = 1,
     smooth_method   = 'loess',
-    smooth_se       = FALSE,
+    smooth_se       = TRUE,
     smooth_size     = 1,
     smooth_weight   = 1,
     

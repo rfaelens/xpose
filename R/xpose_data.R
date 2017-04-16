@@ -26,7 +26,7 @@ xpose_data <- function(runno       = NULL,
                        file        = NULL,
                        rounding    = NULL,
                        gg_theme    = theme_readable(),
-                       xp_theme    = xp_theme_default(),
+                       xp_theme    = theme_xp_default(),
                        verbose     = FALSE) {
 
   # Check inputs ------------------------------------------------------------
