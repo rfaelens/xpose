@@ -6,7 +6,7 @@
 \usage{
 xpose_data(runno = NULL, dir = NULL, prefix = "run", ext = ".lst",
   file = NULL, rounding = NULL, gg_theme = theme_readable(),
-  xp_theme = xp_theme_default(), verbose = FALSE)
+  xp_theme = theme_xp_default(), verbose = FALSE)
 }
 \arguments{
 \item{runno}{run number to be evaluated}

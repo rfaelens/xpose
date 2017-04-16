@@ -22,31 +22,40 @@
 xpose_theme <- function(xpdb     = NULL,
                         gg_theme = NULL,
                         xp_theme = NULL) {
-
+  
   # Check xpdb
   if (is.null(xpdb)) {
     stop('Argument \"xpdb\" required.', call. = FALSE)
   }
-
-  # Assign gg_theme
-  if (!is.null(gg_theme) && class(gg_theme)[1] == 'theme') {
-    xpdb$gg_theme <- gg_theme
+  
+  # Replace/Update gg_theme
+  if (!is.null(gg_theme) && is.theme(gg_theme)) {
+    if (attr(gg_theme, 'complete')) {
+      xpdb$gg_theme <- gg_theme
+    } else {
+      xpdb$gg_theme <- xpdb$gg_theme + gg_theme
+    }  
   }
-
-  if (!is.null(gg_theme) && class(gg_theme)[1] != 'theme') {
+  
+  if (!is.null(gg_theme) && !is.theme(gg_theme)) {
     msg('Bad input for argument \"gg_theme\".', TRUE)
   }
-
-  # Assign xp_theme
-  if (!is.null(xp_theme) && !is.null(names(xp_theme))) {
-    for (x in seq_along(xp_theme)) {
-      xpdb$xp_theme[[names(xp_theme[x])]] <- xp_theme[[x]]
+  
+  # Replace/Update xp_theme
+  if (!is.null(xp_theme)) { 
+    if (inherits(xp_theme, 'xpose_theme')) {
+      xpdb$xp_theme <- xp_theme
+      
+    } else if (!is.null(names(xp_theme))) {
+      for (x in seq_along(xp_theme)) {
+        # Beware drops NULL elements
+        xpdb$xp_theme[[names(xp_theme[x])]] <- xp_theme[[x]] 
+      }
+    } else {
+      msg('Bad input for argument \"xp_theme\".', TRUE)
     }
   }
-
-  if (!is.null(xp_theme) && is.null(names(xp_theme))) {
-    msg('Bad input for argument \"xp_theme\".', TRUE)
-  }
-
   return(xpdb)
 }
+
+
