@@ -1,8 +1,19 @@
 context('Check default plot functions')
 
+
+# Define plots to be tested -----------------------------------------------
+
+# General tests
 p1 <- xplot_scatter(xpdb = xpdb_ex_pk, aes_string(x = 'PRED', y = 'DV'),
                     title = '@run-title', subtitle = '@run-subtitle', caption = '@run-caption',
                     point_color = 'red', line_color = 'blue', smooth_color = 'green')
+
+# Faceting test
+p2 <- xplot_scatter(xpdb = xpdb_ex_pk, aes_string(x = 'PRED', y = 'DV'), 
+                    panel_facets = 'SEX')
+
+
+# Tests start here --------------------------------------------------------
 
 test_that("errors are returned for missing xpdb", {
   expect_error(xplot_scatter())
@@ -37,6 +48,11 @@ test_that('geom_point layer is present', {
 
 test_that('geom_smooth layer is present', {
   expect_equal(class(p1$layers[[4]]$geom)[1], 'GeomSmooth')
+})
+
+test_that('faceting works properly', {
+  expect_true(is.null(p1$facet$params$facets))
+  expect_true(is.list(p2$facet$params$facets))
 })
 
 test_that('xpose_geom mapping works properly', {
