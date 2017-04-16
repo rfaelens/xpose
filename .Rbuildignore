@@ -10,3 +10,4 @@
 ^inst/models/
 ^\.Rprofile$
 ^docs$
+^appveyor\.yml$

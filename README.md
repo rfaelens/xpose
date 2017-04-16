@@ -2,7 +2,7 @@
 ggxpose <a href="https://guiastrennec.github.io/ggxpose/"><img src="logo.png" align="right" /></a>
 ==================================================================================================
 
-[![build\_status](https://travis-ci.org/guiastrennec/ggxpose.svg?branch=master)](https://travis-ci.org/guiastrennec/ggxpose) [![cran\_version](http://www.r-pkg.org/badges/version/ggxpose)]() [![codecov](https://codecov.io/gh/guiastrennec/ggxpose/branch/master/graph/badge.svg)](https://codecov.io/gh/guiastrennec/ggxpose)
+[![build\_status](https://travis-ci.org/guiastrennec/ggxpose.svg?branch=master)](https://travis-ci.org/guiastrennec/ggxpose) [![app\_veyor](https://ci.appveyor.com/api/projects/status/3w06ve94gne2xg91?svg=true)](https://ci.appveyor.com/project/guiastrennec/ggxpose) [![cran\_version](http://www.r-pkg.org/badges/version/ggxpose)]() [![codecov](https://codecov.io/gh/guiastrennec/ggxpose/branch/master/graph/badge.svg)](https://codecov.io/gh/guiastrennec/ggxpose)
 
 ### Overview
 
