@@ -2,6 +2,8 @@ context('Check model summary functions')
 
 # Note: Add tests where the information is not available
 
+# Tests start here --------------------------------------------------------
+
 test_that("descr can be found in model code", {
   expect_equal(descr(xpdb_ex_pk$code), "ggxpose test run")
 })

@@ -1,5 +1,7 @@
 context('Check basic gof functions')
 
+# Tests start here --------------------------------------------------------
+
 test_that("errors are returned for missing xpdb", {
   expect_error(dv_vs_pred())
   expect_error(dv_vs_ipred())

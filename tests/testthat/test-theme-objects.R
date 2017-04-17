@@ -1,4 +1,6 @@
-context("Testing theme objects")
+context("Check theme objects")
+
+# Tests start here --------------------------------------------------------
 
 test_that("gg_themes objects were properly created", {
   # Proper object class

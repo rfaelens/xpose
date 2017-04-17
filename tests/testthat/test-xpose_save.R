@@ -1,7 +1,12 @@
-context('xpose save')
 # Inspired from ggplot2 ggsave tests
+context('Check xpose_save')
+
+# Define plots to be tested -----------------------------------------------
 
 plot <- dv_vs_ipred(xpdb = xpdb_ex_pk)
+
+
+# Tests start here --------------------------------------------------------
 
 test_that("errors are returned for bad plot input", {
   expect_error(xpose_save(plot = NULL))
