@@ -2,7 +2,7 @@ context('Check read_nm_tab')
 
 # Define files to be tested -----------------------------------------------
 
-test_tab <- read_nm_tab(file = 'test_sdtab.tab')
+test_tab <- read_nm_tab(file = 'sdtab001')
 ctrl_tab <- xpdb_ex_pk$data[, xpdb_ex_pk$tab_index$sdtab001]
 
 test_file <- c("TABLE NO.  4",

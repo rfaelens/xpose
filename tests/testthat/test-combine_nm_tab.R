@@ -16,8 +16,8 @@ test_mod_true <- data.frame(LEVEL = c(19, 20, 20, 21),
                             ABREV = c('COV', rep('TAB', 3)),
                             CODE  = c('PRINT=E', 
                                       'ID OCC DOSE AMT SS II TIME TAD IPRED CWRES CPRED IWRES',
-                                      'EVID ONEHEADER NOPRINT FILE=test_sdtab.tab',
-                                      'ID KA CL V ALAG1 ETAS(1:LAST) ONEHEADER NOPRINT FILE=test_patab.tab'),
+                                      'EVID ONEHEADER NOPRINT FILE=sdtab001',
+                                      'ID KA CL V ALAG1 ETAS(1:LAST) ONEHEADER NOPRINT FILE=patab001'),
                             COMMENT = NA)
 
 ctrl_tab   <- xpdb_ex_pk$data[, union(xpdb_ex_pk$tab_index$sdtab001, xpdb_ex_pk$tab_index$patab001)]
