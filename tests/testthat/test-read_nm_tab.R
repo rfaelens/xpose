@@ -1,36 +1,40 @@
-context('Check model summary functions')
+context('Check read_nm_tab')
 
-# Note: Add tests where the information is not available
+# Define files to be tested -----------------------------------------------
 
-test_that("descr can be found in model code", {
-  expect_equal(descr(xpdb_ex_pk$code), "ggxpose test run")
+test_tab <- read_nm_tab(file = file.path('..', '..', 'inst', 'extdata', 'sdtab001'))
+ctrl_tab <- xpdb_ex_pk$data[, xpdb_ex_pk$tab_index$sdtab001]
+
+test_file <- c("TABLE NO.  4",
+               " ID          KA          CL          V           ALAG1       ETA1        ETA2        ETA3        DV          PRED        RES         WRES",
+               "  1.1000E+02  4.1052E-01  2.5483E+01  1.4917E+02  2.3223E-01 -4.5845E-02 -3.5313E-03 -2.1460E+00  0.0000E+00 -3.6889E+00  0.0000E+00  0.0000E+00",
+               "  1.1000E+02  4.1052E-01  2.5483E+01  1.4917E+02  2.3223E-01 -4.5845E-02 -3.5313E-03 -2.1460E+00 -2.4841E+00 -5.6877E-01 -1.9153E+00 -3.8853E+00")
+ctrl_file <- xpdb_ex_pk$data[1:2, xpdb_ex_pk$tab_index$patab001]
+
+
+# Tests start here --------------------------------------------------------
+
+test_that("error is returned when missing file argument", {
+  expect_error(read_nm_tab())
 })
 
-test_that("shrinkage can be found in model code", {
-  # Etas
-  expect_equal(shrinkage(xpdb_ex_pk$code, type = 'ETA', rounding = 2), 
-               "ETA shrink: 10.16 % [1], 48.17 % [2], 14.7 % [3]")
-  # Epsilons
-  expect_equal(shrinkage(xpdb_ex_pk$code, type = 'EPS', rounding = 2), 
-               "EPS shrink: 6.75 % [1]")
+test_that("error is returned when all provided files are missing", {
+  expect_error(read_nm_tab(file = 'fake_table.tab'))
 })
 
-test_that("ofv can be obtained in model code", {
-  expect_equal(ofv(xpdb_ex_pk$code), "-656.869")
+test_that("returns a proper table when valid arguments are provided", {
+  expect_equal(test_tab, ctrl_tab)
 })
 
-test_that("raw_dat can be obtained in model code", {
-  expect_equal(raw_dat(xpdb_ex_pk$code), "mx19_1.csv")
-})
-
-test_that("nobs can be obtained in model code", {
-  expect_equal(nobs(xpdb_ex_pk$code), "1022")
-})
-
-test_that("nind can be obtained in model code", {
-  expect_equal(nind(xpdb_ex_pk$code), "74")
-})
-
-test_that("method can be obtained in model code", {
-  expect_equal(method(xpdb_ex_pk$code), "FOCE-I")
+test_that("auto mode properly assign skip and header arguments", {
+  files <- tempfile(c('tmp_a', 'tmp_b'))
+  on.exit(unlink(files))
+  
+  # Test with skip = 1 and header = TRUE
+  writeLines(text = test_file[1:4], con = files[1])
+  expect_equal(read_nm_tab(file = files[1]),  ctrl_file)
+  
+  # Test with skip = 0 and header = TRUE
+  writeLines(text = test_file[2:4], con = files[2])
+  expect_equal(read_nm_tab(file = files[2]),  ctrl_file)
 })
