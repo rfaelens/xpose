@@ -25,11 +25,11 @@ ctrl_tab   <- xpdb_ex_pk$data[, union(xpdb_ex_pk$tab_index$sdtab001, xpdb_ex_pk$
 
 # Tests start here --------------------------------------------------------
 
-test_that("error is returned when missing file argument", {
+test_that("error is returned when missing mod_file argument", {
   expect_error(combine_nm_tab())
 })
 
-test_that("error is returned when all provided files are missing", {
+test_that("error is returned when all table listed in mod_file are missing", {
   expect_error(combine_nm_tab(mod_file = test_mod_false))
 })
 
