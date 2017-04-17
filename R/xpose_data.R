@@ -60,7 +60,7 @@ xpose_data <- function(runno       = NULL,
 
 
   # Import parsed patab -----------------------------------------------------
-  tab_out  <- combine_nmtab(mod_file, dir, verbose)
+  tab_out  <- combine_nm_tab(mod_file, dir, verbose)
 
 
   # Model file name ---------------------------------------------------------

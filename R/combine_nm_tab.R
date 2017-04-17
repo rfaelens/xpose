@@ -1,6 +1,6 @@
-combine_nmtab <- function(mod_file = NULL,
-                          dir      = NULL,
-                          verbose  = FALSE){
+combine_nm_tab <- function(mod_file = NULL,
+                           dir      = NULL,
+                           verbose  = FALSE){
   
   # Check inputs
   if (is.null(mod_file)) {
