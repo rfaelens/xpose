@@ -9,7 +9,7 @@
 #' @param file full file name as an alternative to \code{dir}, \code{prefix},
 #' \code{runno} and \code{ext}
 #'
-#' @seealso \code{\link{xpose_data}}, \code{\link{read_nmtab}}
+#' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_tab}}
 #' @return A \code{data.frame} containing the parsed model code (\code{CODE}) as well as a numeric
 #' (\code{LEVEL}) and character (\code{SUB}) indexing for subroutines.
 #' @examples
