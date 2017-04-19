@@ -182,17 +182,17 @@
 </li>
 <li>An <code>xpose</code> (<code>xp_theme</code>) theme controlling the aspect of the layers such as points or lines</li>
 </ul>
-<p>Themes can be attached to an <code>xpdb</code> when importing the data with <code><a href="../reference/xpose_data.html">xpose_data()</a></code>, using the function <code><a href="../reference/xpose_theme.html">xpose_theme()</a></code> on an xpdb object or when creating a graph.</p>
+<p>Themes can be attached to an <code>xpdb</code> when importing the data with <code><a href="../reference/xpose_data.html">xpose_data()</a></code>, using the function <code><a href="../reference/update_themes.html">update_themes()</a></code> on an xpdb object or when creating a graph.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># While creating the xpdb</span>
 xpdb &lt;-<span class="st"> </span><span class="kw"><a href="../reference/xpose_data.html">xpose_data</a></span>(<span class="dt">runno =</span> <span class="st">'001'</span>, 
                    <span class="dt">gg_theme =</span> <span class="kw">theme_classic</span>(), 
-                   <span class="dt">xp_theme =</span> <span class="kw"><a href="../reference/xp_theme_xpose4.html">xp_theme_xpose4</a></span>())
+                   <span class="dt">xp_theme =</span> <span class="kw"><a href="../reference/theme_xp_xpose4.html">theme_xp_xpose4</a></span>())
 
 <span class="co"># Update a pre-existing xpdb</span>
-xpdb &lt;-<span class="st"> </span><span class="kw"><a href="../reference/xpose_theme.html">xpose_theme</a></span>(<span class="dt">xpdb     =</span> xpdb,
-                    <span class="dt">gg_theme =</span> <span class="kw">theme_bw</span>(),
-                    <span class="dt">xp_theme =</span> <span class="kw">c</span>(<span class="dt">point_color =</span> <span class="st">'dodgerblue4'</span>,
-                                 <span class="dt">line_color  =</span> <span class="st">'dodgerblue4'</span>)) </code></pre></div>
+xpdb &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update_themes.html">update_themes</a></span>(<span class="dt">xpdb     =</span> xpdb,
+                     <span class="dt">gg_theme =</span> <span class="kw">theme_bw</span>(),
+                     <span class="dt">xp_theme =</span> <span class="kw">c</span>(<span class="dt">point_color =</span> <span class="st">'dodgerblue4'</span>,
+                                  <span class="dt">line_color  =</span> <span class="st">'dodgerblue4'</span>)) </code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># For a single plot only</span>
 <span class="kw"><a href="../reference/dv_vs_ipred.html">dv_vs_ipred</a></span>(<span class="dt">xpdb        =</span> xpdb, 
             <span class="dt">gg_theme    =</span> <span class="kw"><a href="../reference/theme_readable.html">theme_readable</a></span>(), 

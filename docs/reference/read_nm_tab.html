@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Import NONMEM output into R — xpose_data • ggxpose</title>
+<title>NONMEM output table import function — read_nm_tab • ggxpose</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -102,63 +102,51 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Import NONMEM output into R</h1>
+    <h1>NONMEM output table import function</h1>
     </div>
 
     
-    <p>Import NONMEM output into a R database</p>
+    <p>Quickly import NONMEM output tables into R.
+When both <code>skip</code> and <code>header</code> are <code>NULL</code>,
+<code>read_nm_tab</code> will automatically detect the optimal
+settings to import the tables. When more than one files are
+provided for a same NONMEM run, they will be combined into
+a single <code>data.frame</code>.</p>
     
 
-    <pre><span class='fu'>xpose_data</span>(<span class='kw'>runno</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"run"</span>, <span class='kw'>ext</span> <span class='kw'>=</span> <span class='st'>".lst"</span>,
-  <span class='kw'>file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rounding</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>gg_theme</span> <span class='kw'>=</span> <span class='fu'><a href='theme_readable.html'>theme_readable</a></span>(),
-  <span class='kw'>xp_theme</span> <span class='kw'>=</span> <span class='fu'><a href='theme_xp_default.html'>theme_xp_default</a></span>(), <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre><span class='fu'>read_nm_tab</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>header</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>rm_duplicates</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>index</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>runno</th>
-      <td><p>run number to be evaluated</p></td>
-    </tr>
-    <tr>
-      <th>dir</th>
-      <td><p>location of the model files</p></td>
-    </tr>
-    <tr>
-      <th>prefix</th>
-      <td><p>prefix of the model file name</p></td>
-    </tr>
-    <tr>
-      <th>ext</th>
-      <td><p>model file extention</p></td>
-    </tr>
-    <tr>
       <th>file</th>
-      <td><p>full file name as an alternative to <code>dir</code>, <code>prefix</code>,</p></td>
+      <td><p>Path to the file.</p></td>
     </tr>
     <tr>
-      <th>rounding</th>
-      <td><p>number of significant digits to be used on model info numerical
-values (eg. OFV, shrinkage).</p></td>
+      <th>skip</th>
+      <td><p>Number of lines to skip before reading data.</p></td>
     </tr>
     <tr>
-      <th>gg_theme</th>
-      <td><p>a ggplot2 complete theme object (eg. <code>theme_classic()</code>)</p></td>
+      <th>header</th>
+      <td><p>Logical value indicating whether the file has a header row or not.</p></td>
     </tr>
     <tr>
-      <th>xp_theme</th>
-      <td><p>a ggxpose theme or vector of modifications of the ggxpose theme#' <code>runno</code> and <code>ext</code></p></td>
+      <th>rm_duplicates</th>
+      <td><p>Logical value indicating whether duplicated columns should be removed.</p></td>
     </tr>
     <tr>
-      <th>verbose</th>
-      <td><p>if <code>TRUE</code> messages are printed to the console</p></td>
+      <th>index</th>
+      <td><p>Logical value indiacating whether the data should be returned as a simple data.frame or 
+a list containing the data and an index of the colum names.</p></td>
     </tr>
     </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># xpdb &lt;- xpose_data(dir = '../models/pk/', runno = '001')</span>
+<span class='co'># data &lt;- read_nm_tab(file = '../models/pk/sdtab101')</span>
 <span class='co'>## ---------------------------------------------</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

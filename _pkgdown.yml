@@ -15,9 +15,9 @@ reference:
     desc:  Add, customize themes or template titles.
     contents:
     - template_titles
-    - xpose_theme
-    - xp_theme_default
-    - xp_theme_xpose4
+    - update_themes
+    - theme_xp_default
+    - theme_xp_xpose4
     - theme_readable
     - theme_bw2
   - title: Save plots
@@ -39,8 +39,8 @@ reference:
   - title: Manual run import
     desc:  Manually import run output.
     contents:
-    - read_nmtab
-    - parse_nm_model
+    - read_nm_tab
+    - read_nm_model
 
 authors:
   Benjamin Guiastrennec:

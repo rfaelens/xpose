@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Import NONMEM output into R — xpose_data • ggxpose</title>
+<title>Default ggxpose theme — theme_xp_default • ggxpose</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -102,69 +102,28 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Import NONMEM output into R</h1>
+    <h1>Default ggxpose theme</h1>
     </div>
 
     
-    <p>Import NONMEM output into a R database</p>
+    <p>The default ggxpose theme.</p>
     
 
-    <pre><span class='fu'>xpose_data</span>(<span class='kw'>runno</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"run"</span>, <span class='kw'>ext</span> <span class='kw'>=</span> <span class='st'>".lst"</span>,
-  <span class='kw'>file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rounding</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>gg_theme</span> <span class='kw'>=</span> <span class='fu'><a href='theme_readable.html'>theme_readable</a></span>(),
-  <span class='kw'>xp_theme</span> <span class='kw'>=</span> <span class='fu'><a href='theme_xp_default.html'>theme_xp_default</a></span>(), <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>runno</th>
-      <td><p>run number to be evaluated</p></td>
-    </tr>
-    <tr>
-      <th>dir</th>
-      <td><p>location of the model files</p></td>
-    </tr>
-    <tr>
-      <th>prefix</th>
-      <td><p>prefix of the model file name</p></td>
-    </tr>
-    <tr>
-      <th>ext</th>
-      <td><p>model file extention</p></td>
-    </tr>
-    <tr>
-      <th>file</th>
-      <td><p>full file name as an alternative to <code>dir</code>, <code>prefix</code>,</p></td>
-    </tr>
-    <tr>
-      <th>rounding</th>
-      <td><p>number of significant digits to be used on model info numerical
-values (eg. OFV, shrinkage).</p></td>
-    </tr>
-    <tr>
-      <th>gg_theme</th>
-      <td><p>a ggplot2 complete theme object (eg. <code>theme_classic()</code>)</p></td>
-    </tr>
-    <tr>
-      <th>xp_theme</th>
-      <td><p>a ggxpose theme or vector of modifications of the ggxpose theme#' <code>runno</code> and <code>ext</code></p></td>
-    </tr>
-    <tr>
-      <th>verbose</th>
-      <td><p>if <code>TRUE</code> messages are printed to the console</p></td>
-    </tr>
-    </table>
-    
+    <pre><span class='fu'>theme_xp_default</span>()</pre>
+        
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># xpdb &lt;- xpose_data(dir = '../models/pk/', runno = '001')</span>
+    <pre class="examples"><div class='input'><span class='co'># Standard ggxpose theme</span>
+<span class='co'>## Not run: ------------------------------------</span>
+<span class='co'>#  xpose_data(dir = 'inst/models/', runno = '001') %&gt;%</span>
+<span class='co'>#    xpose_theme(gg_theme = theme_readable(),</span>
+<span class='co'>#                xp_theme = theme_xp_default()) %&gt;%</span>
+<span class='co'>#    dv_vs_ipred()</span>
 <span class='co'>## ---------------------------------------------</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
             
       <li><a href="#examples">Examples</a></li>
     </ul>

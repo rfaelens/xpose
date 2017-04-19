@@ -67,13 +67,13 @@ dv_vs_ipred(xpdb,
 #  # While creating the xpdb
 #  xpdb <- xpose_data(runno = '001',
 #                     gg_theme = theme_classic(),
-#                     xp_theme = xp_theme_xpose4())
+#                     xp_theme = theme_xp_xpose4())
 #  
 #  # Update a pre-existing xpdb
-#  xpdb <- xpose_theme(xpdb     = xpdb,
-#                      gg_theme = theme_bw(),
-#                      xp_theme = c(point_color = 'dodgerblue4',
-#                                   line_color  = 'dodgerblue4'))
+#  xpdb <- update_themes(xpdb     = xpdb,
+#                       gg_theme = theme_bw(),
+#                       xp_theme = c(point_color = 'dodgerblue4',
+#                                    line_color  = 'dodgerblue4'))
 
 ## ----demo themes plot----------------------------------------------------
 # For a single plot only
@@ -91,9 +91,9 @@ gridExtra::grid.arrange(
 
 ## ----demo xp_theme, echo = FALSE, fig.height = 3.2, fig.width = 6, out.width = '75%'----
 gridExtra::grid.arrange(
-  dv_vs_ipred(xpose_theme(xpdb = xpdb, xp_theme = xp_theme_default()),
-              subtitle = 'xp_theme = xp_theme_default()', title = FALSE, caption = ''),
-  dv_vs_ipred(xpose_theme(xpdb = xpdb, xp_theme = xp_theme_xpose4()),
-              subtitle = 'xp_theme = xp_theme_xpose4()\nwith gg_theme = theme_bw2()', title = FALSE, caption = '', gg_theme = theme_bw2()),
+  dv_vs_ipred(update_themes(xpdb = xpdb, xp_theme = theme_xp_default()),
+              subtitle = 'xp_theme = theme_xp_default()', title = FALSE, caption = ''),
+  dv_vs_ipred(update_themes(xpdb = xpdb, xp_theme = theme_xp_xpose4()),
+              subtitle = 'xp_theme = theme_xp_xpose4()\nwith gg_theme = theme_bw2()', title = FALSE, caption = '', gg_theme = theme_bw2()),
   ncol = 2)
 
