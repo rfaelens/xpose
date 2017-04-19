@@ -13,19 +13,19 @@
 #' @return An xpdb object
 #' @examples
 #' \dontrun{
-#' xpdb <- xpose_theme(xpdb     = xpdb,
+#' xpdb <- update_themes(xpdb     = xpdb,
 #'                     gg_theme = theme_bw(),
 #'                     xp_theme = c(point_color = 'blue',
 #'                                  line_color  = 'blue'))
 #' }
 #' @export
-xpose_theme <- function(xpdb     = NULL,
+update_themes <- function(xpdb     = NULL,
                         gg_theme = NULL,
                         xp_theme = NULL) {
   
   # Check xpdb
   if (is.null(xpdb)) {
-    stop('Argument \"xpdb\" required.', call. = FALSE)
+    stop('Argument `xpdb` required.', call. = FALSE)
   }
   
   # Replace/Update gg_theme
@@ -38,7 +38,7 @@ xpose_theme <- function(xpdb     = NULL,
   }
   
   if (!is.null(gg_theme) && !is.theme(gg_theme)) {
-    msg('Bad input for argument \"gg_theme\".', TRUE)
+    msg('Bad input for argument `gg_theme`.', TRUE)
   }
   
   # Replace/Update xp_theme
@@ -52,7 +52,7 @@ xpose_theme <- function(xpdb     = NULL,
         xpdb$xp_theme[[names(xp_theme[x])]] <- xp_theme[[x]] 
       }
     } else {
-      msg('Bad input for argument \"xp_theme\".', TRUE)
+      msg('Bad input for argument `xp_theme`.', TRUE)
     }
   }
   return(xpdb)

@@ -54,20 +54,18 @@ xpose_data <- function(runno       = NULL,
     stop(paste('file', basename(file_full), 'not found.'), call. = FALSE)
   }
 
+  
+  # Import model
+  mod_file  <- read_nm_model(file = file_full)
 
-  # Import parsed model -----------------------------------------------------
-  mod_file  <- parse_nm_model(file = file_full)
-
-
-  # Import parsed patab -----------------------------------------------------
+  # Import estimation tables
   tab_out  <- combine_nm_tab(mod_file, dir, verbose)
 
-
-  # Model file name ---------------------------------------------------------
+  # Model file name
   mod_name <- gsub('\\.\\w+$', '', basename(file_full))
 
 
-  # Model info --------------------------------------------------------------
+  # Model info 
   mod_info  <- list(descr      = descr(mod_file),     # Model description
                     dir        = dir,                 # Model directory
                     run        = mod_name,            # Model file name
