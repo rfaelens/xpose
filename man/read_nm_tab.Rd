@@ -5,22 +5,19 @@
 \title{NONMEM output table import function}
 \usage{
 read_nm_tab(file = NULL, skip = NULL, header = NULL,
-  rm_duplicates = FALSE, nonmem_tab = TRUE, index = FALSE)
+  rm_duplicates = FALSE, index = FALSE)
 }
 \arguments{
-\item{file}{Full file name.}
+\item{file}{Path to the file.}
 
 \item{skip}{Number of lines to skip before reading data.}
 
-\item{header}{Logical value indicating whether the file has header or not.}
+\item{header}{Logical value indicating whether the file has a header row or not.}
 
 \item{rm_duplicates}{Logical value indicating whether duplicated columns should be removed.}
 
-\item{nonmem_tab}{Logical value indicading to the function whether the file is a
-table or an additional NONMEM output file.}
-
-\item{index}{Logical, when \code{nonmem_tab} is \code{TRUE} returns a list with the data and an
-index of all filenames and their colnames.}
+\item{index}{Logical value indiacating whether the data should be returned as a simple data.frame or 
+a list containing the data and an index of the colum names.}
 }
 \description{
 Quickly import NONMEM output tables into R.
