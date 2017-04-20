@@ -5,39 +5,39 @@
 \title{Absolute value of individual weighted residuals (IWRES) plotted against population predictions (PRED)}
 \usage{
 absval_iwres_vs_pred(xpdb, aes = NULL, group = "ID", type = "pls",
-  by = NULL, layers = NULL, title = NULL, subtitle = NULL,
-  caption = NULL, log = FALSE, guides = TRUE, gg_theme = NULL, ...)
+  facets = NULL, title = NULL, subtitle = NULL, caption = NULL,
+  log = NULL, guides = TRUE, ...)
 }
 \arguments{
-\item{xpdb}{an xpose database object.}
+\item{xpdb}{An xpose database object.}
 
-\item{aes}{ggxpose aesthetics (eg. \code{point_color}).}
+\item{aes}{The ggxpose aesthetics (eg. \code{point_color}).}
 
-\item{group}{grouping variable to be used.}
+\item{group}{Grouping variable to be used for lines.}
 
-\item{type}{string setting the type of plot to be used points 'p',
-line 'l' and smooth 's' or any combination of the 3.}
+\item{type}{String setting the type of plot to be used points 'p',
+line 'l' and smooth 's' or any combination of the three.}
 
-\item{by}{variable to be used for faceting.}
+\item{facets}{Either a character string to use \link[ggplot2]{facet_wrap} or a formula 
+to use \link[ggplot2]{facet_grid}.}
 
-\item{layers}{a list of additional ggplot layers to be used.}
-
-\item{title}{the main title of the plot. If NULL automated title will be generated.
-Use FALSE to remove title and subtitle.}
+\item{title}{Main title of the plot. If NULL automated title will be generated.
+Use \code{FALSE} to remove title and subtitle.}
 
 \item{subtitle}{the plot subtitle. If NULL automated subtitle will be generated.
-Use FALSE to remove subtitle.}
+Use \code{FALSE} to remove subtitle.}
 
 \item{caption}{page caption. If NULL automated caption will be generated.
-Use FALSE to remove caption.}
+Use \code{FALSE} to remove caption.}
 
-\item{log}{logical if TRUE axes will be logged.}
+\item{log}{String assigning logarithmic scale to axes, can be either '', 'x', y' or 'xy'.}
 
-\item{guides}{should the guides (eg. unity line) be displayed.}
+\item{guides}{Enable guides display (e.g. unity line).}
 
-\item{gg_theme}{a ggplot2 theme to be used on this specific plot.}
-
-\item{...}{any additional aesthetics.}
+\item{...}{Any additional aesthetics to be passed on \code{xplot_scatter}.}
+}
+\value{
+An \code{xpose_plot}
 }
 \description{
 Plot of absolute value of individual weighted residuals (IWRES) plotted against population predictions (PRED).
@@ -53,3 +53,11 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 \code{\link{template_titles}}.
 }
 
+\examples{
+\dontrun{
+absval_iwres_vs_pred(xpdb_ex_pk)
+}
+}
+\seealso{
+\code{\link{xplot_scatter}}
+}

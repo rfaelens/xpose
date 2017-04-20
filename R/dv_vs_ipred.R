@@ -2,52 +2,48 @@
 #'
 #' @description Plot of observations (DV) vs individual predictions (IPRED).
 #'
-#' @param xpdb an xpose database object.
-#' @param aes ggxpose aesthetics (eg. \code{point_color}).
-#' @param group grouping variable to be used.
-#' @param type string setting the type of plot to be used points 'p',
-#' line 'l' and smooth 's' or any combination of the 3.
-#' @param by variable to be used for faceting.
-#' @param layers a list of additional ggplot layers to be used.
-#' @param title the main title of the plot. If NULL automated title will be generated.
-#' Use FALSE to remove title and subtitle.
+#' @param xpdb An xpose database object.
+#' @param aes The ggxpose aesthetics (eg. \code{point_color}).
+#' @param group Grouping variable to be used for lines.
+#' @param type String setting the type of plot to be used points 'p',
+#' line 'l' and smooth 's' or any combination of the three.
+#' @param facets Either a character string to use \link[ggplot2]{facet_wrap} or a formula 
+#' to use \link[ggplot2]{facet_grid}.
+#' @param title Main title of the plot. If NULL automated title will be generated.
+#' Use \code{FALSE} to remove title and subtitle.
 #' @param subtitle the plot subtitle. If NULL automated subtitle will be generated.
-#' Use FALSE to remove subtitle.
+#' Use \code{FALSE} to remove subtitle.
 #' @param caption page caption. If NULL automated caption will be generated.
-#' Use FALSE to remove caption.
-#' @param log logical if TRUE axes will be logged.
-#' @param guides should the guides (eg. unity line) be displayed.
-#' @param gg_theme a ggplot2 theme to be used on this specific plot.
-#' @param ... any additional aesthetics.
+#' Use \code{FALSE} to remove caption.
+#' @param log String assigning logarithmic scale to axes, can be either '', 'x', y' or 'xy'.
+#' @param guides Enable guides display (e.g. unity line).
+#' @param ... Any additional aesthetics to be passed on \code{xplot_scatter}.
 #' 
 #' @inheritSection xplot_scatter Template titles
-#'
+#' @return An \code{xpose_plot}
+#' @seealso \code{\link{xplot_scatter}}
+#' @examples
+#' \dontrun{
+#' dv_vs_ipred(xpdb_ex_pk)
+#' }
 #' @export
 dv_vs_ipred <- function(xpdb,
                         aes      = NULL,
                         group    = 'ID',
                         type     = 'pls',
-                        by       = NULL,
-                        layers   = NULL,
+                        facets   = NULL,
                         title    = NULL,
                         subtitle = NULL,
                         caption  = NULL,
-                        log      = FALSE,
+                        log      = NULL,
                         guides   = TRUE,
-                        gg_theme = NULL,
                         ...) {
-  
-  ##### Change this to true false
-  check_xpdb(xpdb)
-  check_vars(c('IPRED', 'DV', by), xpdb)
-  #######
   
   xplot_scatter(xpdb = xpdb, aes = aes, group = group,
                 vars = aes_(x = quote(IPRED), y = quote(DV)), 
-                layers = layers, type = type, guides = guides,
-                gg_theme = gg_theme, panel_facets = by, 
-                xscale = ifelse(log, 'log10', 'continuous'),
-                yscale = ifelse(log, 'log10', 'continuous'), 
+                type = type, guides = guides, panel_facets = facets, 
+                xscale = check_scales('x', log), 
+                yscale = check_scales('y', log), 
                 title = check_title(title, 'DV vs. IPRED | @run'), 
                 subtitle = check_title(subtitle, 'Ofv: @ofv, @eps_shrink'),
                 caption = check_title(caption, '@dir'),
