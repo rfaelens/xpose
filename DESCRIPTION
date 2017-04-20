@@ -30,6 +30,7 @@ Depends:
 Imports:
   dplyr,
   readr,
+  stringr,
   utils,
   stats,
   grDevices,
