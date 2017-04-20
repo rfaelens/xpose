@@ -1,38 +1,20 @@
-# Messages
-msg <- function(txt, verbose = FALSE) { # From ronkeizer
-  if (verbose) { message(txt) }
-}
-
-# Check xpdb argument (return true false instead!!)
-check_xpdb <- function(xpdb) {
-  if (is.null(xpdb)) {
-    stop('argument \"xpdb\" is missing with no default', call. = FALSE)
-  }
-  
-  if (!is.null(xpdb) && class(xpdb) != 'xpose_data') {
-    stop('argument \"xpdb\" must be of class xpose_data', call. = FALSE)
-  }
-}
-
-# Check variables (return true false instead!!)
+# Check plot input variables
 check_vars <- function(vars, xpdb) {
   if (!all(vars %in% colnames(xpdb$data))) {
-    stop('requested variables ',
-         paste(vars[!vars %in% colnames(xpdb$data)],
-               collapse = ', '), ' not found in the data', call. = FALSE)
+    vars[!vars %in% colnames(xpdb$data)]
   }
 }
 
+# Check plot scales
+check_scales <- function(scale, log) {
+  if (is.null(log)) return('continuous')
+  ifelse(stringr::str_detect(string = log, pattern = scale), 'log10', 'continuous')
+}
 
-# Check title
+# Check plot titles
 check_title <- function(x, default) {
-  if (is.null(x)) {
-    default 
-  } else {
-    x
-  }
+  ifelse(is.null(x), default, x)
 }
-
 
 # Get key values in template titles
 parse_title <- function(string, xpdb, extra_key = NULL, extra_value = NULL) {
@@ -52,7 +34,6 @@ parse_title <- function(string, xpdb, extra_key = NULL, extra_value = NULL) {
   }
   string
 }
-
 
 # Generate template title
 write_title <- function(x, xpdb) {
