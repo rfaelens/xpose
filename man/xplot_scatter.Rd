@@ -7,7 +7,7 @@
 xplot_scatter(xpdb, vars = NULL, aes = NULL, group = "ID", type = "pls",
   layers = NULL, title = "@run", subtitle = NULL, caption = NULL,
   guides = TRUE, xscale = "continuous", yscale = "continuous",
-  gg_theme = NULL, plot_name = "xplot_scatter", ...)
+  plot_name = "xplot_scatter", ...)
 }
 \arguments{
 \item{xpdb}{an xpose database object.}
@@ -37,8 +37,6 @@ Use FALSE to remove caption.}
 \item{xscale}{scale type for x axis (eg. 'continuous', 'discrete', 'log10').}
 
 \item{yscale}{scale type for y axis (eg. 'continuous', 'discrete', 'log10').}
-
-\item{gg_theme}{a ggplot2 theme to be used on this specific plot.}
 
 \item{plot_name}{name that will be used by \code{xpose_save()} to save the plot.}
 

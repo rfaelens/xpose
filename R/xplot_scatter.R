@@ -18,7 +18,6 @@
 #' @param guides should the guides (eg. unity line) be displayed.
 #' @param xscale scale type for x axis (eg. 'continuous', 'discrete', 'log10').
 #' @param yscale scale type for y axis (eg. 'continuous', 'discrete', 'log10').
-#' @param gg_theme a ggplot2 theme to be used on this specific plot.
 #' @param plot_name name that will be used by \code{xpose_save()} to save the plot.
 #' @param ... any additional aesthetics.
 #'
@@ -49,11 +48,13 @@ xplot_scatter <- function(xpdb,
                           guides   = TRUE,
                           xscale   = 'continuous',
                           yscale   = 'continuous',
-                          gg_theme = NULL,
                           plot_name = 'xplot_scatter',
                           ...) {
   
-  check_xpdb(xpdb) # Check inputs
+  if (!is.xpdb(xpdb)) { 
+    msg('Bad input to the argument`xpdb`', verbose = TRUE)
+    return(NULL)
+  }
   
   # Format data
   if ('MDV' %in% colnames(xpdb$data)) {
@@ -63,7 +64,9 @@ xplot_scatter <- function(xpdb,
   }
   
   # Create ggplot base
-  xp   <- ggplot(data = data, ...) + vars
+  xp   <- ggplot(data = data, ...) + 
+    xpdb$gg_theme + 
+    vars
   
   # Add unity line
   if (guides) {
@@ -135,19 +138,13 @@ xplot_scatter <- function(xpdb,
     xp <- xp + xp_geoms(mapping  = aes,
                         xp_theme = xpdb$xp_theme,
                         name     = 'panel',
-                        ggfun    = 'facet_wrap',
+                        ggfun    = ifelse(is.formula(list(...)[['panel_facets']]), 
+                                          'facet_grid', 'facet_wrap'),
                         ...)
   }
   
   # Add users defined layers
   if (!is.null(layers)) { xp <- xp + layers }
-  
-  # Add themes
-  if (is.null(gg_theme)) {
-    xp <- xp + xpdb$gg_theme
-  } else {
-    xp <- xp + gg_theme
-  }
   
   # Add metadata to plots
   xp$xpose <- list(fun     = plot_name,

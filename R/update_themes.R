@@ -20,8 +20,8 @@
 #' }
 #' @export
 update_themes <- function(xpdb     = NULL,
-                        gg_theme = NULL,
-                        xp_theme = NULL) {
+                          gg_theme = NULL,
+                          xp_theme = NULL) {
   
   # Check xpdb
   if (is.null(xpdb)) {

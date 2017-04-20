@@ -4,8 +4,8 @@
 \alias{read_nm_tab}
 \title{NONMEM output table import function}
 \usage{
-read_nm_tab(file = NULL, skip = NULL, header = NULL,
-  rm_duplicates = FALSE, index = FALSE)
+read_nm_tab(file = NULL, skip = NULL, header = NULL, format = NULL,
+  rm_duplicates = TRUE, index = FALSE)
 }
 \arguments{
 \item{file}{Path to the file.}
