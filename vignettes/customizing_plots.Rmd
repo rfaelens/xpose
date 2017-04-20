@@ -70,8 +70,7 @@ dv_vs_ipred(xpdb,
 
 Aesthetics can also be defined mapped to a variable using the ggplot2 `aes()` function.
 ```{r demo mapping}
-dv_vs_ipred(xpdb, type = 'p',
-            ggplot2::aes(point_color = as.factor(SEX))) 
+dv_vs_ipred(xpdb, type = 'p', aes(point_color = as.factor(SEX))) 
 ```
 
 
@@ -140,14 +139,6 @@ xpdb <- update_themes(xpdb     = xpdb,
                                   line_color  = 'dodgerblue4')) 
 ```
                                  
-```{r demo themes plot}
-# For a single plot only
-dv_vs_ipred(xpdb        = xpdb, 
-            gg_theme    = theme_readable(), 
-            point_color = 'darkblue')
-```
-
-
 #### Examples of `gg_theme` themes:
 
 ggxpose brings two additional themes (`theme_readable()` and `theme_bw2()`), to those available in `ggplot2`.
