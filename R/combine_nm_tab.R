@@ -9,8 +9,7 @@ combine_nm_tab <- function(mod_file = NULL,
   tab_file  <- stringr::str_match(string = mod_file$CODE[mod_file$ABREV == 'TAB'], 
                                   pattern = '\\s+FILE\\s*=\\s*([^\\s]+)')[, 2]
   tab_file  <- tab_file[!is.na(tab_file)]
-  tab_file  <- tab_file[file.exists(file_path(dir, tab_file))]
-  
+
   if (length(tab_file) == 0) {
     msg('No output table available.', verbose)
   } else {

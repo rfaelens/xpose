@@ -19,7 +19,7 @@ test_that("error is returned when missing file argument", {
 })
 
 test_that("error is returned when all provided files are missing", {
-  expect_error(read_nm_tab(file = 'fake_table.tab'))
+  expect_message(read_nm_tab(file = 'fake_table.tab', verbose = TRUE))
 })
 
 test_that("returns a proper table when valid arguments are provided", {

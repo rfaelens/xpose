@@ -4,20 +4,20 @@
 \alias{read_nm_tab}
 \title{NONMEM output table import function}
 \usage{
-read_nm_tab(file = NULL, skip = NULL, header = NULL, format = NULL,
-  rm_duplicates = TRUE, index = FALSE)
+read_nm_tab(file = NULL, rm_duplicates = TRUE, index = FALSE,
+  verbose = TRUE, ...)
 }
 \arguments{
 \item{file}{Path to the file.}
-
-\item{skip}{Number of lines to skip before reading data.}
-
-\item{header}{Logical value indicating whether the file has a header row or not.}
 
 \item{rm_duplicates}{Logical value indicating whether duplicated columns should be removed.}
 
 \item{index}{Logical value indiacating whether the data should be returned as a simple data.frame or 
 a list containing the data and an index of the colum names.}
+
+\item{verbose}{Logical, if \code{TRUE} messages are printed to the console}
+
+\item{...}{Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions}
 }
 \description{
 Quickly import NONMEM output tables into R.
