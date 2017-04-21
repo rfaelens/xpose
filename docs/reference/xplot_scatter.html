@@ -112,7 +112,7 @@
     <pre><span class='fu'>xplot_scatter</span>(<span class='no'>xpdb</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>aes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pls"</span>,
   <span class='kw'>layers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"@run"</span>, <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>guides</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>xscale</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>, <span class='kw'>yscale</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>,
-  <span class='kw'>gg_theme</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>plot_name</span> <span class='kw'>=</span> <span class='st'>"xplot_scatter"</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>plot_name</span> <span class='kw'>=</span> <span class='st'>"xplot_scatter"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -170,10 +170,6 @@ Use FALSE to remove caption.</p></td>
       <td><p>scale type for y axis (eg. 'continuous', 'discrete', 'log10').</p></td>
     </tr>
     <tr>
-      <th>gg_theme</th>
-      <td><p>a ggplot2 theme to be used on this specific plot.</p></td>
-    </tr>
-    <tr>
       <th>plot_name</th>
       <td><p>name that will be used by <code>xpose_save()</code> to save the plot.</p></td>
     </tr>
@@ -221,7 +217,7 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/guiastrennec/ggxpose'>Benjamin Guiastrennec</a>, <a href='https://github.com/OlofssonA'>Anna Olofsson</a>, <a href='https://github.com/andrewhooker'>Andrew C. Hooker</a>, <a href='http://pharmetheus.com'><img src="http://wcop2016.org/wp-content/uploads/2014/09/B_pharmetheus-cropped.png" height="24" /</a>, <a href='http://www.pfizer.com'><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Pfizer.svg/200px-Pfizer.svg.png" height="24" /</a>.</p>
+  <p>Developed by <a href='https://github.com/guiastrennec/ggxpose'>Benjamin Guiastrennec</a>, <a href='https://github.com/OlofssonA'>Anna Olofsson</a>, <a href='https://github.com/andrewhooker'>Andrew C. Hooker</a>.</p>
 </div>
 
 <div class="pkgdown">

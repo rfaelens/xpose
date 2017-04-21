@@ -38,8 +38,7 @@ dv_vs_ipred(xpdb,
             smooth_method = 'lm')
 
 ## ----demo mapping--------------------------------------------------------
-dv_vs_ipred(xpdb, type = 'p',
-            ggplot2::aes(point_color = as.factor(SEX))) 
+dv_vs_ipred(xpdb, type = 'p', aes(point_color = as.factor(SEX))) 
 
 ## ----demo panels---------------------------------------------------------
 dv_vs_ipred(xpdb, by = 'SEX')
@@ -74,12 +73,6 @@ dv_vs_ipred(xpdb,
 #                       gg_theme = theme_bw(),
 #                       xp_theme = c(point_color = 'dodgerblue4',
 #                                    line_color  = 'dodgerblue4'))
-
-## ----demo themes plot----------------------------------------------------
-# For a single plot only
-dv_vs_ipred(xpdb        = xpdb, 
-            gg_theme    = theme_readable(), 
-            point_color = 'darkblue')
 
 ## ----demo gg_theme, echo = FALSE, fig.height = 6, fig.width = 6, out.width = '75%'----
 gridExtra::grid.arrange(

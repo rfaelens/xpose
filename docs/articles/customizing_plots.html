@@ -128,8 +128,7 @@
             <span class="dt">smooth_method =</span> <span class="st">'lm'</span>)</code></pre></div>
 <p><img src="customizing_plots_files/figure-html/demo%20aesthetics-1.png" width="50%" style="display: block; margin: auto;"></p>
 <p>Aesthetics can also be defined mapped to a variable using the ggplot2 <code>aes()</code> function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dv_vs_ipred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">type =</span> <span class="st">'p'</span>,
-            ggplot2::<span class="kw">aes</span>(<span class="dt">point_color =</span> <span class="kw">as.factor</span>(SEX))) </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dv_vs_ipred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">type =</span> <span class="st">'p'</span>, <span class="kw">aes</span>(<span class="dt">point_color =</span> <span class="kw">as.factor</span>(SEX))) </code></pre></div>
 <p><img src="customizing_plots_files/figure-html/demo%20mapping-1.png" width="50%" style="display: block; margin: auto;"></p>
 </div>
 <div id="grouping-variable" class="section level3">
@@ -193,11 +192,6 @@ xpdb &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update
                      <span class="dt">gg_theme =</span> <span class="kw">theme_bw</span>(),
                      <span class="dt">xp_theme =</span> <span class="kw">c</span>(<span class="dt">point_color =</span> <span class="st">'dodgerblue4'</span>,
                                   <span class="dt">line_color  =</span> <span class="st">'dodgerblue4'</span>)) </code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># For a single plot only</span>
-<span class="kw"><a href="../reference/dv_vs_ipred.html">dv_vs_ipred</a></span>(<span class="dt">xpdb        =</span> xpdb, 
-            <span class="dt">gg_theme    =</span> <span class="kw"><a href="../reference/theme_readable.html">theme_readable</a></span>(), 
-            <span class="dt">point_color =</span> <span class="st">'darkblue'</span>)</code></pre></div>
-<p><img src="customizing_plots_files/figure-html/demo%20themes%20plot-1.png" width="50%" style="display: block; margin: auto;"></p>
 <div id="examples-of-gg_theme-themes" class="section level4">
 <h4 class="hasAnchor">
 <a href="#examples-of-gg_theme-themes" class="anchor"></a>Examples of <code>gg_theme</code> themes:</h4>
@@ -220,7 +214,7 @@ xpdb &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://github.com/guiastrennec/ggxpose">Benjamin Guiastrennec</a>, <a href="https://github.com/OlofssonA">Anna Olofsson</a>, <a href="https://github.com/andrewhooker">Andrew C. Hooker</a>, <a href="http://pharmetheus.com"><img src="http://wcop2016.org/wp-content/uploads/2014/09/B_pharmetheus-cropped.png" height="24">, </a><a href="http://www.pfizer.com"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Pfizer.svg/200px-Pfizer.svg.png" height="24">.</a></p>
+  <p>Developed by <a href="https://github.com/guiastrennec/ggxpose">Benjamin Guiastrennec</a>, <a href="https://github.com/OlofssonA">Anna Olofsson</a>, <a href="https://github.com/andrewhooker">Andrew C. Hooker</a>.</p>
 </div>
 
 <div class="pkgdown">

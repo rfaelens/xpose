@@ -109,70 +109,67 @@
     <p>Plot of conditional residuals (CWRES) plotted against independent variable (IDV).</p>
     
 
-    <pre><span class='fu'>cwres_vs_idv</span>(<span class='no'>xpdb</span>, <span class='kw'>aes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pls"</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>layers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>guides</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>gg_theme</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+    <pre><span class='fu'>cwres_vs_idv</span>(<span class='no'>xpdb</span>, <span class='kw'>aes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pls"</span>,
+  <span class='kw'>facets</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guides</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>xpdb</th>
-      <td><p>an xpose database object.</p></td>
+      <td><p>An xpose database object.</p></td>
     </tr>
     <tr>
       <th>aes</th>
-      <td><p>ggxpose aesthetics (eg. <code>point_color</code>).</p></td>
+      <td><p>The ggxpose aesthetics (eg. <code>point_color</code>).</p></td>
     </tr>
     <tr>
       <th>group</th>
-      <td><p>grouping variable to be used.</p></td>
+      <td><p>Grouping variable to be used for lines.</p></td>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>string setting the type of plot to be used points 'p',
-line 'l' and smooth 's' or any combination of the 3.</p></td>
+      <td><p>String setting the type of plot to be used points 'p',
+line 'l' and smooth 's' or any combination of the three.</p></td>
     </tr>
     <tr>
-      <th>by</th>
-      <td><p>variable to be used for faceting.</p></td>
-    </tr>
-    <tr>
-      <th>layers</th>
-      <td><p>a list of additional ggplot layers to be used.</p></td>
+      <th>facets</th>
+      <td><p>Either a character string to use <a href='http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap'>facet_wrap</a> or a formula 
+to use <a href='http://www.rdocumentation.org/packages/ggplot2/topics/facet_grid'>facet_grid</a>.</p></td>
     </tr>
     <tr>
       <th>title</th>
-      <td><p>the main title of the plot. If NULL automated title will be generated.
-Use FALSE to remove title and subtitle.</p></td>
+      <td><p>Main title of the plot. If NULL automated title will be generated.
+Use <code>FALSE</code> to remove title and subtitle.</p></td>
     </tr>
     <tr>
       <th>subtitle</th>
       <td><p>the plot subtitle. If NULL automated subtitle will be generated.
-Use FALSE to remove subtitle.</p></td>
+Use <code>FALSE</code> to remove subtitle.</p></td>
     </tr>
     <tr>
       <th>caption</th>
       <td><p>page caption. If NULL automated caption will be generated.
-Use FALSE to remove caption.</p></td>
+Use <code>FALSE</code> to remove caption.</p></td>
     </tr>
     <tr>
       <th>log</th>
-      <td><p>logical if TRUE axes will be logged.</p></td>
+      <td><p>String assigning logarithmic scale to axes, can be either '', 'x', y' or 'xy'.</p></td>
     </tr>
     <tr>
       <th>guides</th>
-      <td><p>should the guides (eg. unity line) be displayed.</p></td>
-    </tr>
-    <tr>
-      <th>gg_theme</th>
-      <td><p>a ggplot2 theme to be used on this specific plot.</p></td>
+      <td><p>Enable guides display (e.g. unity line).</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>any additional aesthetics.</p></td>
+      <td><p>Any additional aesthetics to be passed on <code>xplot_scatter</code>.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>An <code>xpose_plot</code></p>
     
     <h2 class="hasAnchor" id="template-titles"><a class="anchor" href="#template-titles"></a>Template titles</h2>
 
@@ -185,22 +182,36 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 1022 observations in 74 subjects'. The available key variables are listed under 
 <code><a href='template_titles.html'>template_titles</a></code>.</p>
     
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
+    <p><code><a href='xplot_scatter.html'>xplot_scatter</a></code></p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
+<span class='co'># cwres_vs_idv(xpdb_ex_pk)</span>
+<span class='co'>## ---------------------------------------------</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#template-titles">Template titles</a></li>
-          </ul>
+
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/guiastrennec/ggxpose'>Benjamin Guiastrennec</a>, <a href='https://github.com/OlofssonA'>Anna Olofsson</a>, <a href='https://github.com/andrewhooker'>Andrew C. Hooker</a>, <a href='http://pharmetheus.com'><img src="http://wcop2016.org/wp-content/uploads/2014/09/B_pharmetheus-cropped.png" height="24" /</a>, <a href='http://www.pfizer.com'><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Pfizer.svg/200px-Pfizer.svg.png" height="24" /</a>.</p>
+  <p>Developed by <a href='https://github.com/guiastrennec/ggxpose'>Benjamin Guiastrennec</a>, <a href='https://github.com/OlofssonA'>Anna Olofsson</a>, <a href='https://github.com/andrewhooker'>Andrew C. Hooker</a>.</p>
 </div>
 
 <div class="pkgdown">
