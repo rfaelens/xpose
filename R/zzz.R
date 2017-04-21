@@ -1,5 +1,5 @@
 .onAttach <- function(...) {
-  
+
   if (!interactive()) return()
   
   text <- c('ggxpose is under active development, for updates, checkout: https://guiastrennec.github.io/ggxpose',
@@ -8,3 +8,6 @@
   
   packageStartupMessage(sample(text, size = 1))
 }
+
+# Remove CRAN note on no visible binding for global variable
+utils::globalVariables(c("."))

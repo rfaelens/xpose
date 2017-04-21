@@ -20,9 +20,9 @@ Authors@R: c(
       person('Elodie', 'Plan'
              , role = 'ctb'),
       person('Pharmetheus'
-             , role = 'fnd'),
+             , role = 'ctb'),
       person('Pfizer'
-             , role = 'fnd'))
+             , role = 'ctb'))
 Description: Automated generation of graphical diagnostics for non-linear mixed effect models.
 Depends:
   R (>= 3.1.2),
@@ -31,6 +31,7 @@ Imports:
   dplyr,
   readr,
   stringr,
+  purrr,
   utils,
   stats,
   grDevices,
