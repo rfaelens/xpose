@@ -50,7 +50,7 @@ read_nm_tab <- function(file = NULL,
           '. The use of $TABLE NOHEADER is not recommended!'), verbose = !header & verbose)
     dplyr::data_frame(fun    = read_funs[fun],
                       params = list(list(file = y, skip = skip, col_names = header, 
-                                         col_types = readr::cols(), ...)))
+                                         col_types = readr::cols(.default = 'd'), ...)))
   }
   
   file <- file[file.exists(file)]
