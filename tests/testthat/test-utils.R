@@ -12,6 +12,11 @@ test_that("is.xpdb works as expected", {
   expect_true(is.xpdb(xpdb_ex_pk))
 })
 
+test_that("is.model.file works as expected", {
+  expect_false(is.model.file(xpdb_ex_pk$data))
+  expect_true(is.model.file(xpdb_ex_pk$code))
+})
+
 test_that("is.formula works as expected", {
   expect_false(is.formula('x~y'))
   expect_true(is.formula(x~y))
@@ -23,6 +28,6 @@ test_that("msg works as expected", {
 })
 
 test_that("file_path works as expected", {
-  expect_equal(file_path(dir = NULL, file = 'file.csv'), paste('.', 'file.csv', sep = .Platform$file.sep))
+  expect_equal(file_path(dir = NULL, file = 'file.csv'), 'file.csv')
   expect_equal(file_path(dir = 'dir', file = 'file.csv'), paste('dir', 'file.csv', sep = .Platform$file.sep))
 })

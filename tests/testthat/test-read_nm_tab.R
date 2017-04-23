@@ -14,11 +14,13 @@ ctrl_file <- xpdb_ex_pk$data[1:2, xpdb_ex_pk$tab_index$patab001]
 
 # Tests start here --------------------------------------------------------
 
-test_that("error is returned when missing file argument", {
-  expect_error(read_nm_tab())
+test_that("message is returned when missing file argument", {
+  expect_null(read_nm_tab(verbose = FALSE))
+  expect_message(read_nm_tab(verbose = TRUE))
 })
 
-test_that("error is returned when all provided files are missing", {
+test_that("message is returned when all provided files are missing", {
+  expect_null(read_nm_tab(file = 'fake_table.tab', verbose = FALSE))
   expect_message(read_nm_tab(file = 'fake_table.tab', verbose = TRUE))
 })
 
