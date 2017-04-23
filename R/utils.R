@@ -20,8 +20,6 @@ msg <- function(txt, verbose = FALSE) {
 
 # Generate file paths
 file_path <- function(dir, file) {
-  if (is.null(dir)) {
-    dir <- '.'
-  } 
+  if (is.null(dir)) return(file) 
   file.path(dir, file)
 }
