@@ -34,30 +34,10 @@ read_nm_tab <- function(file = NULL,
     return()
   }
   
-  read_funs <- c(csv = readr::read_csv,
-                 csv2 = readr::read_csv2,
-                 table = readr::read_table,
-                 table2 = readr::read_table2)
-  
-  read_args <- function(x, y,...) {
-    fun <- dplyr::case_when(stringr::str_detect(x[3], '\\d,\\d+E[+-]\\d+\\s*;') ~ 'csv2',
-                            stringr::str_detect(x[3], '\\d.\\d+E[+-]\\d+\\s*,') ~ 'csv', 
-                            stringr::str_detect(x[3], '\\d,\\d+E[+-]\\d+\\s+') ~ 'table2',
-                            TRUE ~ 'table')
-    skip <- ifelse(stringr::str_detect(x[1], 'TABLE NO\\.\\s+\\d'), 1, 0)
-    header <- ifelse(stringr::str_detect(x[1 + skip], '[A-z]{2,}+'), TRUE, FALSE)
-    msg(c('No header detected in ', basename(y), 
-          '. The use of $TABLE NOHEADER is not recommended!'), verbose = !header & verbose)
-    dplyr::data_frame(fun    = read_funs[fun],
-                      params = list(list(file = y, skip = skip, col_names = header, 
-                                         col_types = readr::cols(.default = 'd'), ...)))
-  }
-  
   file <- file[file.exists(file)]
-  
   tables <- file %>% 
     purrr::map(readLines, n = 3) %>% 
-    purrr::map2(file, read_args, ...) %>% 
+    purrr::map2(file, read_args, verbose, ...) %>% 
     dplyr::bind_rows() %>% 
     {purrr::invoke_map(.$fun, .$params)}
   
@@ -82,4 +62,28 @@ read_nm_tab <- function(file = NULL,
                    index = index_dat)
   }
   tables
+}
+
+read_funs <- function(fun) {
+  c(csv = readr::read_csv,
+    csv2 = readr::read_csv2,
+    table = readr::read_table,
+    table2 = readr::read_table2)[fun]
+}
+
+read_args <- function(x, y, verbose, col_types, ...) {
+  if (missing(col_types)) {
+    col_types <- readr::cols(.default = 'd')
+  }
+  fun <- dplyr::case_when(stringr::str_detect(x[3], '\\d,\\d+E[+-]\\d+\\s*;') ~ 'csv2',
+                          stringr::str_detect(x[3], '\\d.\\d+E[+-]\\d+\\s*,') ~ 'csv', 
+                          stringr::str_detect(x[3], '\\d,\\d+E[+-]\\d+\\s+') ~ 'table2',
+                          TRUE ~ 'table')
+  skip <- ifelse(stringr::str_detect(x[1], 'TABLE NO\\.\\s+\\d'), 1, 0)
+  header <- ifelse(stringr::str_detect(x[1 + skip], '[A-z]{2,}+'), TRUE, FALSE)
+  msg(c('No header detected in ', basename(y), 
+        '. The use of $TABLE NOHEADER is not recommended!'), verbose = !header & verbose)
+  dplyr::data_frame(fun    = read_funs(fun),
+                    params = list(list(file = y, skip = skip, col_names = header, 
+                                       col_types = col_types, ...)))
 }
