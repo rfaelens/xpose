@@ -60,8 +60,14 @@ xpose_data <- function(runno       = NULL,
   mod_file  <- read_nm_model(file = file_full)
 
   # Import estimation tables
-  tab_out  <- combine_nm_tab(mod_file, dir, verbose)
+  msg('Looking for NONMEM table files.', verbose)
+  tab_out <- mod_file %>% 
+    list_nm_tab(dir, verbose) %>%
+    read_nm_tab(rm_duplicates = TRUE, index = TRUE)
 
+  # Import simulation tables
+  msg('Looking for NONMEM table files.', verbose)
+  
   # Model file name
   mod_name <- gsub('\\.\\w+$', '', basename(file_full))
 
