@@ -11,7 +11,7 @@
 #' values (eg. OFV, shrinkage).
 #' @param gg_theme a ggplot2 complete theme object (eg. \code{theme_classic()})
 #' @param xp_theme a ggxpose theme or vector of modifications of the ggxpose theme#' \code{runno} and \code{ext}
-#' @param verbose if \code{TRUE} messages are printed to the console
+#' @param verbose Logical, if \code{TRUE} messages are printed to the console
 #'
 #' @examples
 #' \dontrun{
@@ -27,7 +27,7 @@ xpose_data <- function(runno       = NULL,
                        rounding    = NULL,
                        gg_theme    = theme_readable(),
                        xp_theme    = theme_xp_default(),
-                       verbose     = FALSE) {
+                       verbose     = TRUE) {
 
   # Check inputs ------------------------------------------------------------
   if (is.null(runno) & is.null(file)) {
@@ -54,6 +54,7 @@ xpose_data <- function(runno       = NULL,
     stop(paste('file', basename(file_full), 'not found.'), call. = FALSE)
   }
 
+  
   
   # Import model
   mod_file  <- read_nm_model(file = file_full)

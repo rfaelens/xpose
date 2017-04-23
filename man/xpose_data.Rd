@@ -6,7 +6,7 @@
 \usage{
 xpose_data(runno = NULL, dir = NULL, prefix = "run", ext = ".lst",
   file = NULL, rounding = NULL, gg_theme = theme_readable(),
-  xp_theme = theme_xp_default(), verbose = FALSE)
+  xp_theme = theme_xp_default(), verbose = TRUE)
 }
 \arguments{
 \item{runno}{run number to be evaluated}
@@ -26,7 +26,7 @@ values (eg. OFV, shrinkage).}
 
 \item{xp_theme}{a ggxpose theme or vector of modifications of the ggxpose theme#' \code{runno} and \code{ext}}
 
-\item{verbose}{if \code{TRUE} messages are printed to the console}
+\item{verbose}{Logical, if \code{TRUE} messages are printed to the console}
 }
 \description{
 Import NONMEM output into a R database
