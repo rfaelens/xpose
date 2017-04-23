@@ -8,6 +8,11 @@ is.xpdb <- function(x) {
   inherits(x, 'xpose_data')
 }
 
+# Reports whether x is a model_file object
+is.model.file <- function(x) {
+  inherits(x, 'mod_file')
+}
+
 # Check whether x is a formula
 is.formula <- function(x) {
   inherits(x, 'formula')

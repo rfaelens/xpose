@@ -86,6 +86,5 @@ read_nm_model <- function(dir    = NULL,
   # Sort columns
   mod_file <- mod_file[, c('LEVEL', 'SUB', 'ABREV', 'CODE', 'COMMENT')]
   
-  return(mod_file)
-  
+  structure(mod_file, class = c('mod_file', 'data.frame'))
 }
