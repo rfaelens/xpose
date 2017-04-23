@@ -66,11 +66,12 @@ read_nm_tab <- function(file = NULL,
     purrr::map(colnames) %>%
     purrr::set_names(basename(file))
   
-  # Combine data
+  # Combine data, ensure unique names and remove NA rows due to multiple headers
   tables <- dplyr::bind_cols(tables) %>% 
+    purrr::set_names(make.unique(names(.))) %>% 
     stats::na.omit()
   
-  # Remove duplicates
+  # Remove duplicated columns to decrease xpdb size
   if (rm_duplicates) {
     tables <- dplyr::select(tables, dplyr::one_of(unique(unlist(index_dat))))
   }
