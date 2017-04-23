@@ -9,24 +9,24 @@ xpose_data(runno = NULL, dir = NULL, prefix = "run", ext = ".lst",
   xp_theme = theme_xp_default(), verbose = TRUE)
 }
 \arguments{
-\item{runno}{run number to be evaluated}
+\item{runno}{Run number to be evaluated.}
 
-\item{dir}{location of the model files}
+\item{dir}{Location of the model files.}
 
-\item{prefix}{prefix of the model file name}
+\item{prefix}{Prefix of the model file name.}
 
-\item{ext}{model file extention}
+\item{ext}{Model file extention.}
 
-\item{file}{full file name as an alternative to \code{dir}, \code{prefix},}
+\item{file}{Full file name as an alternative to \code{dir}, \code{prefix}.}
 
-\item{rounding}{number of significant digits to be used on model info numerical
+\item{rounding}{Number of significant digits to be used on model info numerical
 values (eg. OFV, shrinkage).}
 
-\item{gg_theme}{a ggplot2 complete theme object (eg. \code{theme_classic()})}
+\item{gg_theme}{A ggplot2 complete theme object (eg. \code{theme_classic()}).}
 
-\item{xp_theme}{a ggxpose theme or vector of modifications of the ggxpose theme#' \code{runno} and \code{ext}}
+\item{xp_theme}{A ggxpose theme or vector of modifications of the ggxpose theme#' \code{runno} and \code{ext}.}
 
-\item{verbose}{Logical, if \code{TRUE} messages are printed to the console}
+\item{verbose}{Logical, if \code{TRUE} messages are printed to the console.}
 }
 \description{
 Import NONMEM output into a R database

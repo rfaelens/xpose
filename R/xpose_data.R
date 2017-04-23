@@ -2,16 +2,16 @@
 #'
 #' @description Import NONMEM output into a R database
 #'
-#' @param runno run number to be evaluated
-#' @param dir location of the model files
-#' @param prefix prefix of the model file name
-#' @param ext model file extention
-#' @param file full file name as an alternative to \code{dir}, \code{prefix},
-#' @param rounding number of significant digits to be used on model info numerical
+#' @param runno Run number to be evaluated.
+#' @param dir Location of the model files.
+#' @param prefix Prefix of the model file name.
+#' @param ext Model file extention.
+#' @param file Full file name as an alternative to \code{dir}, \code{prefix}.
+#' @param rounding Number of significant digits to be used on model info numerical
 #' values (eg. OFV, shrinkage).
-#' @param gg_theme a ggplot2 complete theme object (eg. \code{theme_classic()})
-#' @param xp_theme a ggxpose theme or vector of modifications of the ggxpose theme#' \code{runno} and \code{ext}
-#' @param verbose Logical, if \code{TRUE} messages are printed to the console
+#' @param gg_theme A ggplot2 complete theme object (eg. \code{theme_classic()}).
+#' @param xp_theme A ggxpose theme or vector of modifications of the ggxpose theme#' \code{runno} and \code{ext}.
+#' @param verbose Logical, if \code{TRUE} messages are printed to the console.
 #'
 #' @examples
 #' \dontrun{
@@ -54,15 +54,13 @@ xpose_data <- function(runno       = NULL,
     stop(paste('file', basename(file_full), 'not found.'), call. = FALSE)
   }
 
-  
-  
   # Import model
   mod_file  <- read_nm_model(file = file_full)
 
   # Import estimation tables
   msg('Looking for NONMEM table files.', verbose)
   tab_out <- mod_file %>% 
-    list_nm_tab(dir, verbose) %>%
+    list_nm_tab(dir) %>%
     read_nm_tab(rm_duplicates = TRUE, index = TRUE)
 
   # Import simulation tables
