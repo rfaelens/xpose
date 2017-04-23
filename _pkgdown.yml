@@ -39,8 +39,9 @@ reference:
   - title: Manual run import
     desc:  Manually import run output.
     contents:
-    - read_nm_tab
     - read_nm_model
+    - list_nm_tab
+    - read_nm_tab
 
 authors:
   Benjamin Guiastrennec:
