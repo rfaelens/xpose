@@ -25,17 +25,13 @@ read_nm_tab <- function(file = NULL,
                         verbose = TRUE,
                         ...) {
   
-  if (is.null(file)) {
-    stop('Argument `file` required.', call. = FALSE)
-  }
-  
-  if (!any(file.exists(file))) {
-    msg('No output table available.', verbose)
+  if (is.null(file) || !any(file.exists(file))) {
+    msg('No table read.', verbose)
     return()
   }
   
   file <- file[file.exists(file)]
-  msg(c('Reading:\n', file, collapse = '\n'), verbose)
+  msg(c('Reading:\n', paste('\t', file, collapse = '\n')), verbose)
   
   tables <- file %>% 
     purrr::map(readLines, n = 3) %>% 
