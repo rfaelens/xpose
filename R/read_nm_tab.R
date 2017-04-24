@@ -31,7 +31,7 @@ read_nm_tab <- function(file = NULL,
   }
   
   file <- file[file.exists(file)]
-  msg(c('Reading:\n', paste('\t', file, collapse = '\n')), verbose)
+  msg(c('Reading:\n', paste(' *', file, collapse = '\n')), verbose)
   
   tables <- file %>% 
     purrr::map(readLines, n = 3) %>% 
