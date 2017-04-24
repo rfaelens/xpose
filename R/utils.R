@@ -26,5 +26,8 @@ msg <- function(txt, verbose = FALSE) {
 # Generate file paths
 file_path <- function(dir, file) {
   if (is.null(dir)) return(file) 
+  
+  # Remove trailing forward slash
+  dir <- stringr::str_replace(dir, '\\/+$', '')
   file.path(dir, file)
 }

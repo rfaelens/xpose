@@ -30,4 +30,8 @@ test_that("msg works as expected", {
 test_that("file_path works as expected", {
   expect_equal(file_path(dir = NULL, file = 'file.csv'), 'file.csv')
   expect_equal(file_path(dir = 'dir', file = 'file.csv'), paste('dir', 'file.csv', sep = .Platform$file.sep))
+  
+  # Test clean trailing forward slashes
+  expect_equal(file_path(dir = 'inst/extdata/catab001//', file = 'test.csv'), "inst/extdata/catab001/test.csv")
+  expect_equal(file_path(dir = 'inst/extdata/catab001', file = 'test.csv'), "inst/extdata/catab001/test.csv")
 })
