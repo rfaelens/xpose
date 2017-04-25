@@ -39,7 +39,7 @@ Imports:
 Suggests:
   knitr,
   testthat
-License: GPL-3 + file LICENSE
+License: LGPL-3 + file LICENSE
 URL: https://github.com/guiastrennec/xpose
 BugReports: https://github.com/guiastrennec/xpose/issues
 Encoding: UTF-8
