@@ -2,7 +2,7 @@
 xpose <a href="https://guiastrennec.github.io/xpose/"><img src="logo.png" align="right" /></a>
 ==============================================================================================
 
-[![build\_status](https://travis-ci.org/guiastrennec/xpose.svg?branch=master)](https://travis-ci.org/guiastrennec/xpose) [![app\_veyor](https://ci.appveyor.com/api/projects/status/3w06ve94gne2xg91?svg=true)](https://ci.appveyor.com/project/guiastrennec/xpose) [![cran\_version](http://www.r-pkg.org/badges/version/xpose)]() [![codecov](https://codecov.io/gh/guiastrennec/xpose/branch/master/graph/badge.svg)](https://codecov.io/gh/guiastrennec/xpose)
+[![travis\_status](https://travis-ci.org/guiastrennec/xpose.svg?branch=master)](https://travis-ci.org/guiastrennec/xpose) [![appveyor status](https://ci.appveyor.com/api/projects/status/f6k09rf2cfi3vcs2?svg=true)](https://ci.appveyor.com/project/guiastrennec/xpose) [![cran\_version](http://www.r-pkg.org/badges/version/xpose)]() [![codecov](https://codecov.io/gh/guiastrennec/xpose/branch/master/graph/badge.svg)](https://codecov.io/gh/guiastrennec/xpose)
 
 ### Overview
 
