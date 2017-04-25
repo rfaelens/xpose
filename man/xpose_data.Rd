@@ -24,7 +24,7 @@ values (eg. OFV, shrinkage).}
 
 \item{gg_theme}{A ggplot2 complete theme object (eg. \code{theme_classic()}).}
 
-\item{xp_theme}{A ggxpose theme or vector of modifications of the ggxpose theme#' \code{runno} and \code{ext}.}
+\item{xp_theme}{A xpose theme or vector of modifications of the xpose theme#' \code{runno} and \code{ext}.}
 
 \item{verbose}{Logical, if \code{TRUE} messages are printed to the console.}
 }

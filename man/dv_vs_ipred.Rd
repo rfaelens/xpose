@@ -11,7 +11,7 @@ dv_vs_ipred(xpdb, aes = NULL, group = "ID", type = "pls", facets = NULL,
 \arguments{
 \item{xpdb}{An xpose database object.}
 
-\item{aes}{The ggxpose aesthetics (eg. \code{point_color}).}
+\item{aes}{The xpose aesthetics (eg. \code{point_color}).}
 
 \item{group}{Grouping variable to be used for lines.}
 

@@ -1,9 +1,9 @@
-#' Default ggxpose theme
+#' Default xpose theme
 #'
-#' @description The default ggxpose theme.
+#' @description The default xpose theme.
 #'
 #' @examples
-#' # Standard ggxpose theme
+#' # Standard xpose theme
 #' \dontrun{
 #'  xpose_data(dir = 'inst/models/', runno = '001') %>%
 #'    xpose_theme(gg_theme = theme_readable(),

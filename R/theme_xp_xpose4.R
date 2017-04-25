@@ -1,9 +1,9 @@
-#' Xpose4 theme for ggxpose
+#' Xpose4 theme for xpose
 #'
-#' @description An xp_theme that makes ggxpose look like xpose4.
+#' @description An xp_theme that makes xpose look like xpose4.
 #'
 #' @examples
-#' # Make ggxpose look like xpose4
+#' # Make xpose look like xpose4
 #' \dontrun{
 #'  xpose_data(dir = 'inst/models/', runno = '001') %>%
 #'    xpose_theme(gg_theme = theme_bw(),

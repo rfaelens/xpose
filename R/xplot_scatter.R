@@ -4,7 +4,7 @@
 #'
 #' @param xpdb an xpose database object.
 #' @param vars the variable mapping from an aes().
-#' @param aes ggxpose aesthetics (eg. \code{point_color}).
+#' @param aes xpose aesthetics (eg. \code{point_color}).
 #' @param group grouping variable to be used.
 #' @param type string setting the type of plot to be used points 'p',
 #' line 'l', smooth 's' and text 't' or any combination of the 4.

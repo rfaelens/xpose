@@ -8,7 +8,7 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
-library(ggxpose)
+library(xpose)
 
 xpdb <- xpdb_ex_pk
 
@@ -21,7 +21,7 @@ knitr::opts_chunk$set(fig.dpi = 96,
 
 
 ### Import model output
-To import the model output files (e.g. NONMEM tables). The function `xpose_data()` collects all model output files and table and organizes them into an R object commonly called `xpdb` for xpose data base. Note that ggxpose makes use of the [readr](http://readr.tidyverse.org) package to rapidly import big dataset into R.
+To import the model output files (e.g. NONMEM tables). The function `xpose_data()` collects all model output files and table and organizes them into an R object commonly called `xpdb` for xpose data base. Note that xpose makes use of the [readr](http://readr.tidyverse.org) package to rapidly import big dataset into R.
 
 ``` r
 xpdb <- xpose_data(runno = '001')
@@ -29,7 +29,7 @@ xpdb <- xpose_data(runno = '001')
 
 ### Required files
 #### NONMEM runs
-To make full use of the functionality offered by `ggxpose` the following NONMEM output files should be available:
+To make full use of the functionality offered by `xpose` the following NONMEM output files should be available:
 
 - .lst: for the template titles
 - .mod: for parameter labels and output table names

@@ -2,15 +2,15 @@
 output: github_document
 ---
 
-# ggxpose <a href="https://guiastrennec.github.io/ggxpose/"><img src="logo.png" align="right" /></a>
+# xpose <a href="https://guiastrennec.github.io/xpose/"><img src="logo.png" align="right" /></a>
 
-[![build_status](https://travis-ci.org/guiastrennec/ggxpose.svg?branch=master)](https://travis-ci.org/guiastrennec/ggxpose)
-[![app_veyor](https://ci.appveyor.com/api/projects/status/3w06ve94gne2xg91?svg=true)](https://ci.appveyor.com/project/guiastrennec/ggxpose)
-[![cran_version](http://www.r-pkg.org/badges/version/ggxpose)]()
-[![codecov](https://codecov.io/gh/guiastrennec/ggxpose/branch/master/graph/badge.svg)](https://codecov.io/gh/guiastrennec/ggxpose)
+[![build_status](https://travis-ci.org/guiastrennec/xpose.svg?branch=master)](https://travis-ci.org/guiastrennec/xpose)
+[![app_veyor](https://ci.appveyor.com/api/projects/status/3w06ve94gne2xg91?svg=true)](https://ci.appveyor.com/project/guiastrennec/xpose)
+[![cran_version](http://www.r-pkg.org/badges/version/xpose)]()
+[![codecov](https://codecov.io/gh/guiastrennec/xpose/branch/master/graph/badge.svg)](https://codecov.io/gh/guiastrennec/xpose)
 
 ```{r, include = FALSE}
-library(ggxpose)
+library(xpose)
 
 xpdb <- xpdb_ex_pk
 
@@ -23,22 +23,22 @@ knitr::opts_chunk$set(fig.path = 'inst/img/',
 ```
 
 ### Overview
-[ggxpose](https://guiastrennec.github.io/ggxpose/) was designed as a [ggplot2](https://github.com/tidyverse/ggplot2)-based alternative to [xpose4](http://xpose.sourceforge.net). ggxpose aims to reduce the post processing burden and improve diagnostics commonly associated the development of non-linear mixed effect models.
+[xpose](https://guiastrennec.github.io/xpose/) was designed as a [ggplot2](https://github.com/tidyverse/ggplot2)-based alternative to [xpose4](http://xpose.sourceforge.net). xpose aims to reduce the post processing burden and improve diagnostics commonly associated the development of non-linear mixed effect models.
 
 
 ### Installation
 Install the development version from github
 ``` r
 # install.packages('devtools')
-devtools::install_github('guiastrennec/ggxpose')
+devtools::install_github('guiastrennec/xpose')
 ```
 
 
 ### Getting started
 
-Load ggxpose
+Load xpose
 ``` r
-library(ggxpose)
+library(xpose)
 ```
 
 Import run output
@@ -57,9 +57,9 @@ cwres_vs_pred(xpdb)
 
 
 ### Recommended reading
-The [ggxpose website](https://guiastrennec.github.io/ggxpose/) contains several useful articles to make full use of ggxpose
+The [xpose website](https://guiastrennec.github.io/xpose/) contains several useful articles to make full use of xpose
 
-When working with ggxpose, a working knowledge of ggplot2 is recommended. Help for ggplot2 can be found in:
+When working with xpose, a working knowledge of ggplot2 is recommended. Help for ggplot2 can be found in:
 
 - The ggplot2 [documentation](http://docs.ggplot2.org/current/)
 - The ggplot2 [mailing list](https://groups.google.com/forum/?fromgroups#!forum/ggplot2)

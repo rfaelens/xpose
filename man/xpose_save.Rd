@@ -2,19 +2,19 @@
 % Please edit documentation in R/xpose_save.R
 \name{xpose_save}
 \alias{xpose_save}
-\title{Save ggxpose plot}
+\title{Save xpose plot}
 \usage{
 xpose_save(plot = last_plot(), filename = "@run_@plotfun.pdf",
   path = NULL, device = NULL, width = 7, height = 6, units = c("in",
   "cm", "mm"), dpi = 200, ...)
 }
 \arguments{
-\item{plot}{A ggxpose plot object.}
+\item{plot}{A xpose plot object.}
 
 \item{filename}{An optional name to be given to the file. Template variables such as @run 
 can be used to generate template names.}
 
-\item{path}{Path under which the ggxpose plot will be saved.}
+\item{path}{Path under which the xpose plot will be saved.}
 
 \item{device}{Graphical device to use. Can be either be a device function
 (e.g. \code{\link{png}}), or one of 'eps', 'ps', 'tex' (pictex),
@@ -29,7 +29,7 @@ can be used to generate template names.}
 \item{...}{Additional arguments passed on to \link[ggplot2]{ggsave} or graphics \code{device}.}
 }
 \description{
-Automatically save ggxpose plots to files.
+Automatically save xpose plots to files.
 
 This function was inspired by the \link[ggplot2]{ggsave}. If no arguments are provided, 
 the function will automatically name and save a plot after its run number and the plotting 

@@ -1,5 +1,5 @@
 ## ---- include = FALSE----------------------------------------------------
-library(ggxpose)
+library(xpose)
 
 xpdb <- xpdb_ex_pk
 

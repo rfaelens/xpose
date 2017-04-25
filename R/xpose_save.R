@@ -1,15 +1,15 @@
-#' Save ggxpose plot
+#' Save xpose plot
 #'
-#' @description Automatically save ggxpose plots to files.
+#' @description Automatically save xpose plots to files.
 #'
 #' This function was inspired by the \link[ggplot2]{ggsave}. If no arguments are provided, 
 #' the function will automatically name and save a plot after its run number and the plotting 
 #' function name by using the metadata attached to the plot.
 #'
-#' @param plot A ggxpose plot object.
+#' @param plot A xpose plot object.
 #' @param filename An optional name to be given to the file. Template variables such as @run 
 #' can be used to generate template names.
-#' @param path Path under which the ggxpose plot will be saved.
+#' @param path Path under which the xpose plot will be saved.
 #' @param device Graphical device to use. Can be either be a device function
 #'   (e.g. \code{\link{png}}), or one of 'eps', 'ps', 'tex' (pictex),
 #'   'pdf' (default), 'jpeg', 'tiff', 'png', 'bmp', 'svg' or 'wmf' (windows only).

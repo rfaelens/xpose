@@ -2,15 +2,15 @@
 % Please edit documentation in R/theme_xp_default.R
 \name{theme_xp_default}
 \alias{theme_xp_default}
-\title{Default ggxpose theme}
+\title{Default xpose theme}
 \usage{
 theme_xp_default()
 }
 \description{
-The default ggxpose theme.
+The default xpose theme.
 }
 \examples{
-# Standard ggxpose theme
+# Standard xpose theme
 \dontrun{
  xpose_data(dir = 'inst/models/', runno = '001') \%>\%
    xpose_theme(gg_theme = theme_readable(),

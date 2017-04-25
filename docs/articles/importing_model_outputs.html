@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Importing model outputs • ggxpose</title>
+<title>Importing model outputs • xpose</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
@@ -24,7 +24,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">ggxpose</a>
+      <a class="navbar-brand" href="../index.html">xpose</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -57,13 +57,13 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/guiastrennec/ggxpose">
+  <a href="https://github.com/guiastrennec/xpose">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://github.com/guiastrennec/ggxpose/releases">
+  <a href="https://github.com/guiastrennec/xpose/releases">
     <span class="fa fa-download"></span>
      
   </a>
@@ -90,7 +90,7 @@
 <div id="import-model-output" class="section level3">
 <h3 class="hasAnchor">
 <a href="#import-model-output" class="anchor"></a>Import model output</h3>
-<p>To import the model output files (e.g. NONMEM tables). The function <code><a href="../reference/xpose_data.html">xpose_data()</a></code> collects all model output files and table and organizes them into an R object commonly called <code>xpdb</code> for xpose data base. Note that ggxpose makes use of the <a href="http://readr.tidyverse.org">readr</a> package to rapidly import big dataset into R.</p>
+<p>To import the model output files (e.g. NONMEM tables). The function <code><a href="../reference/xpose_data.html">xpose_data()</a></code> collects all model output files and table and organizes them into an R object commonly called <code>xpdb</code> for xpose data base. Note that xpose makes use of the <a href="http://readr.tidyverse.org">readr</a> package to rapidly import big dataset into R.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xpdb &lt;-<span class="st"> </span><span class="kw"><a href="../reference/xpose_data.html">xpose_data</a></span>(<span class="dt">runno =</span> <span class="st">'001'</span>)</code></pre></div>
 </div>
 <div id="required-files" class="section level3">
@@ -99,7 +99,7 @@
 <div id="nonmem-runs" class="section level4">
 <h4 class="hasAnchor">
 <a href="#nonmem-runs" class="anchor"></a>NONMEM runs</h4>
-<p>To make full use of the functionality offered by <code>ggxpose</code> the following NONMEM output files should be available:</p>
+<p>To make full use of the functionality offered by <code>xpose</code> the following NONMEM output files should be available:</p>
 <ul>
 <li>.lst: for the template titles</li>
 <li>.mod: for parameter labels and output table names</li>
@@ -140,7 +140,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://github.com/guiastrennec/ggxpose">Benjamin Guiastrennec</a>, <a href="https://github.com/OlofssonA">Anna Olofsson</a>, <a href="https://github.com/andrewhooker">Andrew C. Hooker</a>.</p>
+  <p>Developed by <a href="https://github.com/guiastrennec/xpose">Benjamin Guiastrennec</a>, <a href="https://github.com/OlofssonA">Anna Olofsson</a>, <a href="https://github.com/andrewhooker">Andrew C. Hooker</a>.</p>
 </div>
 
 <div class="pkgdown">

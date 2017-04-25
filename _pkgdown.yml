@@ -45,7 +45,7 @@ reference:
 
 authors:
   Benjamin Guiastrennec:
-    href: https://github.com/guiastrennec/ggxpose
+    href: https://github.com/guiastrennec/xpose
   Andrew C. Hooker:
     href: https://github.com/andrewhooker
   Anna Olofsson:
@@ -80,6 +80,6 @@ navbar:
     href: news/index.html
   right:
   - icon: fa-github fa-lg
-    href: https://github.com/guiastrennec/ggxpose
+    href: https://github.com/guiastrennec/xpose
   - icon: fa-download
-    href: https://github.com/guiastrennec/ggxpose/releases
+    href: https://github.com/guiastrennec/xpose/releases

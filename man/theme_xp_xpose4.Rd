@@ -2,15 +2,15 @@
 % Please edit documentation in R/theme_xp_xpose4.R
 \name{theme_xp_xpose4}
 \alias{theme_xp_xpose4}
-\title{Xpose4 theme for ggxpose}
+\title{Xpose4 theme for xpose}
 \usage{
 theme_xp_xpose4()
 }
 \description{
-An xp_theme that makes ggxpose look like xpose4.
+An xp_theme that makes xpose look like xpose4.
 }
 \examples{
-# Make ggxpose look like xpose4
+# Make xpose look like xpose4
 \dontrun{
  xpose_data(dir = 'inst/models/', runno = '001') \%>\%
    xpose_theme(gg_theme = theme_bw(),

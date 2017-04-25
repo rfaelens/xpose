@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Customizing plots • ggxpose</title>
+<title>Customizing plots • xpose</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
@@ -24,7 +24,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">ggxpose</a>
+      <a class="navbar-brand" href="../index.html">xpose</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -57,13 +57,13 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/guiastrennec/ggxpose">
+  <a href="https://github.com/guiastrennec/xpose">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://github.com/guiastrennec/ggxpose/releases">
+  <a href="https://github.com/guiastrennec/xpose/releases">
     <span class="fa fa-download"></span>
      
   </a>
@@ -101,7 +101,7 @@
 <div id="titles" class="section level3">
 <h3 class="hasAnchor">
 <a href="#titles" class="anchor"></a>Titles</h3>
-<p>All ggxpose plots have by default an informative title, subtitle and caption. For example all plots using individual model predictions (IPRED) will display the shrinkage of the epsilons. These titles can easily be edited as templates using keywords which will be replaced by their actual value stored in the summary level of the <code>xpdb</code> object when rendering the plots. Keywords are defined by a word preceded by a <code>@</code> e.g. <code>'@ofv'</code>. A list of all available keyword can be accessed via <code>help('template_titles')</code>. Finally, the title, subtitle or caption can be disabled by setting them to <code>FALSE</code>.</p>
+<p>All xpose plots have by default an informative title, subtitle and caption. For example all plots using individual model predictions (IPRED) will display the shrinkage of the epsilons. These titles can easily be edited as templates using keywords which will be replaced by their actual value stored in the summary level of the <code>xpdb</code> object when rendering the plots. Keywords are defined by a word preceded by a <code>@</code> e.g. <code>'@ofv'</code>. A list of all available keyword can be accessed via <code>help('template_titles')</code>. Finally, the title, subtitle or caption can be disabled by setting them to <code>FALSE</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Using template titles</span>
 <span class="kw"><a href="../reference/dv_vs_ipred.html">dv_vs_ipred</a></span>(xpdb,
             <span class="dt">title    =</span> <span class="st">'DV vs. IPRED (@run, obj: @ofv)'</span>,
@@ -115,7 +115,7 @@
 <div id="modify-aesthetics" class="section level3">
 <h3 class="hasAnchor">
 <a href="#modify-aesthetics" class="anchor"></a>Modify aesthetics</h3>
-<p>By default the aesthetics are read from the <code>xp_theme</code> level in the xpdb object but these can be modified in any plot function. ggxpose makes use of the <code>ggplot2</code> functions mapping for any layer (e.g. points, lines, etc.) however to direct the mapping to a specific layer, a prefix appealing to the targeted layer should be used. The format is defined as <code>layer_aesthetic = value</code>. Hence to change the color of points in ggplot2 the argument <code>color = 'green'</code> could be used in <code>geom_point()</code>, while in ggxpose the same could be achieved with <code>point_color = 'green'</code>.</p>
+<p>By default the aesthetics are read from the <code>xp_theme</code> level in the xpdb object but these can be modified in any plot function. xpose makes use of the <code>ggplot2</code> functions mapping for any layer (e.g. points, lines, etc.) however to direct the mapping to a specific layer, a prefix appealing to the targeted layer should be used. The format is defined as <code>layer_aesthetic = value</code>. Hence to change the color of points in ggplot2 the argument <code>color = 'green'</code> could be used in <code>geom_point()</code>, while in xpose the same could be achieved with <code>point_color = 'green'</code>.</p>
 <p>In basic goodness-of-fit plots, the layers have been named as: <code>point_xxx</code>, <code>line_xxx</code>, <code>smooth_xxx</code>, <code>guide_xxx</code>, <code>panel_xxx</code>, <code>xscale_xxx</code>, <code>yscale_xxx</code> where <code>xxx</code> can be any option available in the <code>ggplot2</code> layers: <code>geom_point</code>, <code>geom_line</code>, <code>geom_smooth</code>, <code>geom_abline</code>, <code>facet_wrap</code>, <code>scale_x_continuous</code>, etc.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dv_vs_ipred.html">dv_vs_ipred</a></span>(xpdb, 
             <span class="co"># Change points aesthetics</span>
@@ -147,7 +147,7 @@
 <div id="additional-layers" class="section level3">
 <h3 class="hasAnchor">
 <a href="#additional-layers" class="anchor"></a>Additional layers</h3>
-<p><code>ggxpose</code> offers the opportunity to add any additional layers from <code>ggplot2</code>. Hence, a <code>ggplot2::geom_rug()</code> layer could be added to the <code><a href="../reference/dv_vs_ipred.html">dv_vs_ipred()</a></code> plot along with some annotations (<code>ggplot2::annotate()</code>). Note: the additional layers do not inherit from the ggxpose aesthetic mapping (i.e. colors or other options need to be defined in each layer as shown below).</p>
+<p><code>xpose</code> offers the opportunity to add any additional layers from <code>ggplot2</code>. Hence, a <code>ggplot2::geom_rug()</code> layer could be added to the <code><a href="../reference/dv_vs_ipred.html">dv_vs_ipred()</a></code> plot along with some annotations (<code>ggplot2::annotate()</code>). Note: the additional layers do not inherit from the xpose aesthetic mapping (i.e. colors or other options need to be defined in each layer as shown below).</p>
 <p>Layers can also be used to modify the aesthetics scales for example <code>ggplot2::scale_color_manual()</code>, or remove a legend <code>ggplot2::scale_fill_identity()</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dv_vs_ipred.html">dv_vs_ipred</a></span>(xpdb) +
 <span class="st">  </span><span class="kw">geom_rug</span>(<span class="dt">alpha =</span> <span class="fl">0.2</span>, <span class="dt">color =</span> <span class="st">'grey50'</span>,
@@ -175,7 +175,7 @@
 <div id="themes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#themes" class="anchor"></a>Themes</h3>
-<p>Theme in <code>ggxpose</code> are easily customizable. Themes are made up of two parts:</p>
+<p>Theme in <code>xpose</code> are easily customizable. Themes are made up of two parts:</p>
 <ul>
 <li>A <code>ggplot2</code> (<code>gg_theme</code>) theme controlling the aspect of the plot window<br>
 </li>
@@ -195,7 +195,7 @@ xpdb &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update
 <div id="examples-of-gg_theme-themes" class="section level4">
 <h4 class="hasAnchor">
 <a href="#examples-of-gg_theme-themes" class="anchor"></a>Examples of <code>gg_theme</code> themes:</h4>
-<p>ggxpose brings two additional themes (<code><a href="../reference/theme_readable.html">theme_readable()</a></code> and <code><a href="../reference/theme_bw2.html">theme_bw2()</a></code>), to those available in <code>ggplot2</code>.</p>
+<p>xpose brings two additional themes (<code><a href="../reference/theme_readable.html">theme_readable()</a></code> and <code><a href="../reference/theme_bw2.html">theme_bw2()</a></code>), to those available in <code>ggplot2</code>.</p>
 <p><img src="customizing_plots_files/figure-html/demo%20gg_theme-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="examples-of-xp_theme-themes" class="section level4">
@@ -214,7 +214,7 @@ xpdb &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://github.com/guiastrennec/ggxpose">Benjamin Guiastrennec</a>, <a href="https://github.com/OlofssonA">Anna Olofsson</a>, <a href="https://github.com/andrewhooker">Andrew C. Hooker</a>.</p>
+  <p>Developed by <a href="https://github.com/guiastrennec/xpose">Benjamin Guiastrennec</a>, <a href="https://github.com/OlofssonA">Anna Olofsson</a>, <a href="https://github.com/andrewhooker">Andrew C. Hooker</a>.</p>
 </div>
 
 <div class="pkgdown">

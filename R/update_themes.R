@@ -1,13 +1,13 @@
-#' Create ggxpose theme
+#' Create xpose theme
 #'
-#' @description Create a ggxpose theme.
+#' @description Create a xpose theme.
 #' This function will update the theme of an xpdb object.
 #' All plots generated with this xpdb will automatically use the
-#' defined ggxpose (\code{xp_theme}) and ggplot2 (\code{gg_theme}) themes.
+#' defined xpose (\code{xp_theme}) and ggplot2 (\code{gg_theme}) themes.
 #'
-#' @param xpdb a ggxpose database object
+#' @param xpdb a xpose database object
 #' @param gg_theme a ggplot2 complete theme object (eg. \code{theme_classic()})
-#' @param xp_theme a ggxpose theme or vector of modifications of the ggxpose theme
+#' @param xp_theme a xpose theme or vector of modifications of the xpose theme
 #' (eg. \code{c(point_color = 'red', line_linetype = 'dashed')})
 #'
 #' @return An xpdb object

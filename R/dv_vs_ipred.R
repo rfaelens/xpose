@@ -3,7 +3,7 @@
 #' @description Plot of observations (DV) vs individual predictions (IPRED).
 #'
 #' @param xpdb An xpose database object.
-#' @param aes The ggxpose aesthetics (eg. \code{point_color}).
+#' @param aes The xpose aesthetics (eg. \code{point_color}).
 #' @param group Grouping variable to be used for lines.
 #' @param type String setting the type of plot to be used points 'p',
 #' line 'l' and smooth 's' or any combination of the three.

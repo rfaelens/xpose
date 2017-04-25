@@ -5,7 +5,7 @@ context('Check model summary functions')
 # Tests start here --------------------------------------------------------
 
 test_that("descr can be found in model code", {
-  expect_equal(descr(xpdb_ex_pk$code), "ggxpose test run")
+  expect_equal(descr(xpdb_ex_pk$code), "xpose test run")
 })
 
 test_that("shrinkage can be found in model code", {

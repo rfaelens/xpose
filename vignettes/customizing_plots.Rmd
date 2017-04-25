@@ -8,7 +8,7 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
-library(ggxpose)
+library(xpose)
 
 xpdb <- xpdb_ex_pk
 
@@ -37,7 +37,7 @@ The option `guides` can enable (`TRUE`) or disable (`FALSE`) the visual guides o
 
 
 ### Titles
-All ggxpose plots have by default an informative title, subtitle and caption. For example all plots using individual model predictions (IPRED) will display the shrinkage of the epsilons. These titles can easily be edited as templates using keywords which will be replaced by their actual value stored in the summary level of the `xpdb` object when rendering the plots. Keywords are defined by a word preceded by a `@` e.g. `'@ofv'`. A list of all available keyword can be accessed via `help('template_titles')`. Finally, the title, subtitle or caption can be disabled by setting them to `FALSE`.
+All xpose plots have by default an informative title, subtitle and caption. For example all plots using individual model predictions (IPRED) will display the shrinkage of the epsilons. These titles can easily be edited as templates using keywords which will be replaced by their actual value stored in the summary level of the `xpdb` object when rendering the plots. Keywords are defined by a word preceded by a `@` e.g. `'@ofv'`. A list of all available keyword can be accessed via `help('template_titles')`. Finally, the title, subtitle or caption can be disabled by setting them to `FALSE`.
 
 ```{r demo titles}
 # Using template titles
@@ -52,7 +52,7 @@ dv_vs_ipred(xpdb, title = FALSE, subtitle = FALSE, caption = FALSE)
 
 
 ### Modify aesthetics
-By default the aesthetics are read from the `xp_theme` level in the xpdb object but these can be modified in any plot function. ggxpose makes use of the `ggplot2` functions mapping for any layer (e.g. points, lines, etc.) however to direct the mapping to a specific layer, a prefix appealing to the targeted layer should be used. The format is defined as `layer_aesthetic = value`. Hence to change the color of points in ggplot2 the argument `color = 'green'` could be used in `geom_point()`, while in ggxpose the same could be achieved with `point_color = 'green'`.
+By default the aesthetics are read from the `xp_theme` level in the xpdb object but these can be modified in any plot function. xpose makes use of the `ggplot2` functions mapping for any layer (e.g. points, lines, etc.) however to direct the mapping to a specific layer, a prefix appealing to the targeted layer should be used. The format is defined as `layer_aesthetic = value`. Hence to change the color of points in ggplot2 the argument `color = 'green'` could be used in `geom_point()`, while in xpose the same could be achieved with `point_color = 'green'`.
 
 In basic goodness-of-fit plots, the layers have been named as: `point_xxx`, `line_xxx`, `smooth_xxx`, `guide_xxx`, `panel_xxx`, `xscale_xxx`, `yscale_xxx` where `xxx` can be any option available in the `ggplot2` layers: `geom_point`, `geom_line`, `geom_smooth`, `geom_abline`, `facet_wrap`, `scale_x_continuous`, etc.
 
@@ -89,7 +89,7 @@ Additional arguments can be passed to the panel function using the `panel_xxx` n
 
 
 ### Additional layers
-`ggxpose` offers the opportunity to add any additional layers from `ggplot2`. Hence, a `ggplot2::geom_rug()` layer could be added to the `dv_vs_ipred()` plot along with some annotations (`ggplot2::annotate()`). Note: the additional layers do not inherit from the ggxpose aesthetic mapping (i.e. colors or other options need to be defined in each layer as shown below).
+`xpose` offers the opportunity to add any additional layers from `ggplot2`. Hence, a `ggplot2::geom_rug()` layer could be added to the `dv_vs_ipred()` plot along with some annotations (`ggplot2::annotate()`). Note: the additional layers do not inherit from the xpose aesthetic mapping (i.e. colors or other options need to be defined in each layer as shown below).
 
 Layers can also be used to modify the aesthetics scales for example  `ggplot2::scale_color_manual()`, or remove a legend `ggplot2::scale_fill_identity()`.
 
@@ -119,7 +119,7 @@ dv_vs_ipred(xpdb,
 
 
 ### Themes
-Theme in `ggxpose` are easily customizable. Themes are made up of two parts:
+Theme in `xpose` are easily customizable. Themes are made up of two parts:
 
  - A `ggplot2` (`gg_theme`) theme controlling the aspect of the plot window    
  - An `xpose` (`xp_theme`) theme controlling the aspect of the layers such as points or lines
@@ -141,7 +141,7 @@ xpdb <- update_themes(xpdb     = xpdb,
                                  
 #### Examples of `gg_theme` themes:
 
-ggxpose brings two additional themes (`theme_readable()` and `theme_bw2()`), to those available in `ggplot2`.
+xpose brings two additional themes (`theme_readable()` and `theme_bw2()`), to those available in `ggplot2`.
 
 ```{r demo gg_theme, echo = FALSE, fig.height = 6, fig.width = 6, out.width = '75%'}
 gridExtra::grid.arrange(

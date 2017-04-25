@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Graphical diagnostics for pharmacometric models • ggxpose</title>
+<title>Graphical diagnostics for pharmacometric models • xpose</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
@@ -24,7 +24,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">ggxpose</a>
+      <a class="navbar-brand" href="index.html">xpose</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -57,13 +57,13 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/guiastrennec/ggxpose">
+  <a href="https://github.com/guiastrennec/xpose">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://github.com/guiastrennec/ggxpose/releases">
+  <a href="https://github.com/guiastrennec/xpose/releases">
     <span class="fa fa-download"></span>
      
   </a>
@@ -84,28 +84,28 @@
     
     
 <div class="contents">
-<div id="ggxpose" class="section level1">
+<div id="xpose" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#ggxpose" class="anchor"></a>ggxpose <a href="https://guiastrennec.github.io/ggxpose/"><img src="logo.png" align="right"></a>
+<a href="#xpose" class="anchor"></a>xpose <a href="https://guiastrennec.github.io/xpose/"><img src="logo.png" align="right"></a>
 </h1></div>
 
 <div id="overview" class="section level3">
 <h3 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h3>
-<p><a href="https://guiastrennec.github.io/ggxpose/">ggxpose</a> was designed as a <a href="https://github.com/tidyverse/ggplot2">ggplot2</a>-based alternative to <a href="http://xpose.sourceforge.net">xpose4</a>. ggxpose aims to reduce the post processing burden and improve diagnostics commonly associated the development of non-linear mixed effect models.</p>
+<p><a href="https://guiastrennec.github.io/xpose/">xpose</a> was designed as a <a href="https://github.com/tidyverse/ggplot2">ggplot2</a>-based alternative to <a href="http://xpose.sourceforge.net">xpose4</a>. xpose aims to reduce the post processing burden and improve diagnostics commonly associated the development of non-linear mixed effect models.</p>
 </div>
 <div id="installation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h3>
 <p>Install the development version from github</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages('devtools')</span>
-devtools::<span class="kw">install_github</span>(<span class="st">'guiastrennec/ggxpose'</span>)</code></pre></div>
+devtools::<span class="kw">install_github</span>(<span class="st">'guiastrennec/xpose'</span>)</code></pre></div>
 </div>
 <div id="getting-started" class="section level3">
 <h3 class="hasAnchor">
 <a href="#getting-started" class="anchor"></a>Getting started</h3>
-<p>Load ggxpose</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggxpose)</code></pre></div>
+<p>Load xpose</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(xpose)</code></pre></div>
 <p>Import run output</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xpdb &lt;-<span class="st"> </span><span class="kw"><a href="reference/xpose_data.html">xpose_data</a></span>(<span class="dt">runno =</span> <span class="st">'001'</span>)</code></pre></div>
 <p>Generate diagnostics</p>
@@ -119,8 +119,8 @@ devtools::<span class="kw">install_github</span>(<span class="st">'guiastrennec/
 <div id="recommended-reading" class="section level3">
 <h3 class="hasAnchor">
 <a href="#recommended-reading" class="anchor"></a>Recommended reading</h3>
-<p>The <a href="https://guiastrennec.github.io/ggxpose/">ggxpose website</a> contains several useful articles to make full use of ggxpose</p>
-<p>When working with ggxpose, a working knowledge of ggplot2 is recommended. Help for ggplot2 can be found in:</p>
+<p>The <a href="https://guiastrennec.github.io/xpose/">xpose website</a> contains several useful articles to make full use of xpose</p>
+<p>When working with xpose, a working knowledge of ggplot2 is recommended. Help for ggplot2 can be found in:</p>
 <ul>
 <li>The ggplot2 <a href="http://docs.ggplot2.org/current/">documentation</a>
 </li>
@@ -136,9 +136,9 @@ devtools::<span class="kw">install_github</span>(<span class="st">'guiastrennec/
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/guiastrennec/ggxpose">https://​github.com/​guiastrennec/​ggxpose</a>
+<li>Browse source code at <br><a href="https://github.com/guiastrennec/xpose">https://​github.com/​guiastrennec/​xpose</a>
 </li>
-<li>Report a bug at <br><a href="https://github.com/guiastrennec/ggxpose/issues">https://​github.com/​guiastrennec/​ggxpose/​issues</a>
+<li>Report a bug at <br><a href="https://github.com/guiastrennec/xpose/issues">https://​github.com/​guiastrennec/​xpose/​issues</a>
 </li>
 </ul>
 <h2>License</h2>
@@ -146,7 +146,7 @@ devtools::<span class="kw">install_github</span>(<span class="st">'guiastrennec/
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>
-<a href="https://github.com/guiastrennec/ggxpose">Benjamin Guiastrennec</a> <br><small class="roles"> Author, maintainer, copyright holder </small> </li>
+<a href="https://github.com/guiastrennec/xpose">Benjamin Guiastrennec</a> <br><small class="roles"> Author, maintainer, copyright holder </small> </li>
 <li>
 <a href="https://github.com/OlofssonA">Anna Olofsson</a> <br><small class="roles"> Author </small> </li>
 <li>
@@ -156,10 +156,10 @@ devtools::<span class="kw">install_github</span>(<span class="st">'guiastrennec/
 <div>
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/guiastrennec/ggxpose"><img src="https://travis-ci.org/guiastrennec/ggxpose.svg?branch=master" alt="build_status"></a></li>
-<li><a href="https://ci.appveyor.com/project/guiastrennec/ggxpose"><img src="https://ci.appveyor.com/api/projects/status/3w06ve94gne2xg91?svg=true" alt="app_veyor"></a></li>
-<li><a href=""><img src="http://www.r-pkg.org/badges/version/ggxpose" alt="cran_version"></a></li>
-<li><a href="https://codecov.io/gh/guiastrennec/ggxpose"><img src="https://codecov.io/gh/guiastrennec/ggxpose/branch/master/graph/badge.svg" alt="codecov"></a></li>
+<li><a href="https://travis-ci.org/guiastrennec/xpose"><img src="https://travis-ci.org/guiastrennec/xpose.svg?branch=master" alt="build_status"></a></li>
+<li><a href="https://ci.appveyor.com/project/guiastrennec/xpose"><img src="https://ci.appveyor.com/api/projects/status/3w06ve94gne2xg91?svg=true" alt="app_veyor"></a></li>
+<li><a href=""><img src="http://www.r-pkg.org/badges/version/xpose" alt="cran_version"></a></li>
+<li><a href="https://codecov.io/gh/guiastrennec/xpose"><img src="https://codecov.io/gh/guiastrennec/xpose/branch/master/graph/badge.svg" alt="codecov"></a></li>
 </ul>
 </div>
 </div>
@@ -168,7 +168,7 @@ devtools::<span class="kw">install_github</span>(<span class="st">'guiastrennec/
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://github.com/guiastrennec/ggxpose">Benjamin Guiastrennec</a>, <a href="https://github.com/OlofssonA">Anna Olofsson</a>, <a href="https://github.com/andrewhooker">Andrew C. Hooker</a>.</p>
+  <p>Developed by <a href="https://github.com/guiastrennec/xpose">Benjamin Guiastrennec</a>, <a href="https://github.com/OlofssonA">Anna Olofsson</a>, <a href="https://github.com/andrewhooker">Andrew C. Hooker</a>.</p>
 </div>
 
 <div class="pkgdown">

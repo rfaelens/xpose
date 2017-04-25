@@ -14,7 +14,7 @@ xplot_scatter(xpdb, vars = NULL, aes = NULL, group = "ID", type = "pls",
 
 \item{vars}{the variable mapping from an aes().}
 
-\item{aes}{ggxpose aesthetics (eg. \code{point_color}).}
+\item{aes}{xpose aesthetics (eg. \code{point_color}).}
 
 \item{group}{grouping variable to be used.}
 

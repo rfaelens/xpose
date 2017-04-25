@@ -2,26 +2,26 @@
 % Please edit documentation in R/update_themes.R
 \name{update_themes}
 \alias{update_themes}
-\title{Create ggxpose theme}
+\title{Create xpose theme}
 \usage{
 update_themes(xpdb = NULL, gg_theme = NULL, xp_theme = NULL)
 }
 \arguments{
-\item{xpdb}{a ggxpose database object}
+\item{xpdb}{a xpose database object}
 
 \item{gg_theme}{a ggplot2 complete theme object (eg. \code{theme_classic()})}
 
-\item{xp_theme}{a ggxpose theme or vector of modifications of the ggxpose theme
+\item{xp_theme}{a xpose theme or vector of modifications of the xpose theme
 (eg. \code{c(point_color = 'red', line_linetype = 'dashed')})}
 }
 \value{
 An xpdb object
 }
 \description{
-Create a ggxpose theme.
+Create a xpose theme.
 This function will update the theme of an xpdb object.
 All plots generated with this xpdb will automatically use the
-defined ggxpose (\code{xp_theme}) and ggplot2 (\code{gg_theme}) themes.
+defined xpose (\code{xp_theme}) and ggplot2 (\code{gg_theme}) themes.
 }
 \examples{
 \dontrun{

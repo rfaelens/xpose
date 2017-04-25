@@ -1,4 +1,4 @@
 library(testthat)
-library(ggxpose)
+library(xpose)
 
-test_check("ggxpose")
+test_check("xpose")

@@ -19,7 +19,7 @@ test_that("errors are returned for missing xpdb", {
   expect_error(xplot_scatter())
 })
 
-test_that("ggxpose plot objects are returned with appropriate xpdb", {
+test_that("xpose plot objects are returned with appropriate xpdb", {
   # Check class
   expect_equal(class(p1), c('xpose_plot', 'gg', 'ggplot'))
   
