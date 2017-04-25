@@ -6,7 +6,6 @@
 ^logo\.png$
 ^README\.Rmd$
 ^temporary$
-^packrat/
 ^inst/models/
 ^\.Rprofile$
 ^docs$

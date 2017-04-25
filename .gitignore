@@ -8,7 +8,6 @@
 
 # Local directories
 temporary/
-packrat/
 inst/models
 
 # Built vignettes
