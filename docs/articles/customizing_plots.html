@@ -139,9 +139,9 @@
 <div id="panels" class="section level3">
 <h3 class="hasAnchor">
 <a href="#panels" class="anchor"></a>Panels</h3>
-<p>Panels (or faceting) can be created by using the <code>by</code> argument as follows.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dv_vs_ipred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">by =</span> <span class="st">'SEX'</span>)</code></pre></div>
-<p><img src="customizing_plots_files/figure-html/demo%20panels-1.png" width="50%" style="display: block; margin: auto;"></p>
+<p>Panels (or faceting) can be created by using the <code>facets</code> argument as follows.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dv_vs_ipred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">facets =</span> <span class="st">'SEX'</span>)</code></pre></div>
+<p><img src="customizing_plots_files/figure-html/demo%20panels-1.png" width="75%" style="display: block; margin: auto;"></p>
 <p>Additional arguments can be passed to the panel function using the <code>panel_xxx</code> notation (e.g. <code>panel_ncol = 2</code>, <code>panel_labeller = 'label_both'</code>). For more options read the help of <a href="http://docs.ggplot2.org/current/facet_wrap.html"><code>facet_wrap</code></a> from <code>ggplot2</code>.</p>
 </div>
 <div id="additional-layers" class="section level3">
@@ -181,7 +181,7 @@
 </li>
 <li>An <code>xpose</code> (<code>xp_theme</code>) theme controlling the aspect of the layers such as points or lines</li>
 </ul>
-<p>Themes can be attached to an <code>xpdb</code> when importing the data with <code><a href="../reference/xpose_data.html">xpose_data()</a></code>, using the function <code><a href="../reference/update_themes.html">update_themes()</a></code> on an xpdb object or when creating a graph.</p>
+<p>Themes can be attached to an <code>xpdb</code> when importing the data with <code><a href="../reference/xpose_data.html">xpose_data()</a></code> or using the function <code><a href="../reference/update_themes.html">update_themes()</a></code> on an xpdb object.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># While creating the xpdb</span>
 xpdb &lt;-<span class="st"> </span><span class="kw"><a href="../reference/xpose_data.html">xpose_data</a></span>(<span class="dt">runno =</span> <span class="st">'001'</span>, 
                    <span class="dt">gg_theme =</span> <span class="kw">theme_classic</span>(), 
@@ -189,9 +189,9 @@ xpdb &lt;-<span class="st"> </span><span class="kw"><a href="../reference/xpose_
 
 <span class="co"># Update a pre-existing xpdb</span>
 xpdb &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update_themes.html">update_themes</a></span>(<span class="dt">xpdb     =</span> xpdb,
-                     <span class="dt">gg_theme =</span> <span class="kw">theme_bw</span>(),
-                     <span class="dt">xp_theme =</span> <span class="kw">c</span>(<span class="dt">point_color =</span> <span class="st">'dodgerblue4'</span>,
-                                  <span class="dt">line_color  =</span> <span class="st">'dodgerblue4'</span>)) </code></pre></div>
+                      <span class="dt">gg_theme =</span> <span class="kw">theme_bw</span>(),
+                      <span class="dt">xp_theme =</span> <span class="kw">c</span>(<span class="dt">point_color =</span> <span class="st">'dodgerblue4'</span>,
+                                   <span class="dt">line_color  =</span> <span class="st">'dodgerblue4'</span>)) </code></pre></div>
 <div id="examples-of-gg_theme-themes" class="section level4">
 <h4 class="hasAnchor">
 <a href="#examples-of-gg_theme-themes" class="anchor"></a>Examples of <code>gg_theme</code> themes:</h4>

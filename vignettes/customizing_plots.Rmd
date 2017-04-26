@@ -79,10 +79,10 @@ The argument group defines the grouping variable to be used in the dataset __for
 
 
 ### Panels
-Panels (or faceting) can be created by using the `by` argument as follows.
+Panels (or faceting) can be created by using the `facets` argument as follows.
 
-```{r demo panels}
-dv_vs_ipred(xpdb, by = 'SEX')
+```{r demo panels, fig.width = 6, out.width = '75%'}
+dv_vs_ipred(xpdb, facets = 'SEX')
 ```
 
 Additional arguments can be passed to the panel function using the `panel_xxx` notation (e.g. `panel_ncol = 2`, `panel_labeller = 'label_both'`). For more options read the help of [`facet_wrap`](http://docs.ggplot2.org/current/facet_wrap.html) from `ggplot2`.
@@ -124,7 +124,7 @@ Theme in `xpose` are easily customizable. Themes are made up of two parts:
  - A `ggplot2` (`gg_theme`) theme controlling the aspect of the plot window    
  - An `xpose` (`xp_theme`) theme controlling the aspect of the layers such as points or lines
 
-Themes can be attached to an `xpdb` when importing the data with `xpose_data()`, using the function `update_themes()` on an xpdb object or when creating a graph.
+Themes can be attached to an `xpdb` when importing the data with `xpose_data()` or using the function `update_themes()` on an xpdb object.
 
 ```{r demo themes xpdb, eval = FALSE}
 # While creating the xpdb
@@ -134,9 +134,9 @@ xpdb <- xpose_data(runno = '001',
 
 # Update a pre-existing xpdb
 xpdb <- update_themes(xpdb     = xpdb,
-                     gg_theme = theme_bw(),
-                     xp_theme = c(point_color = 'dodgerblue4',
-                                  line_color  = 'dodgerblue4')) 
+                      gg_theme = theme_bw(),
+                      xp_theme = c(point_color = 'dodgerblue4',
+                                   line_color  = 'dodgerblue4')) 
 ```
                                  
 #### Examples of `gg_theme` themes:
@@ -145,10 +145,10 @@ xpose brings two additional themes (`theme_readable()` and `theme_bw2()`), to th
 
 ```{r demo gg_theme, echo = FALSE, fig.height = 6, fig.width = 6, out.width = '75%'}
 gridExtra::grid.arrange(
-  dv_vs_ipred(xpdb, subtitle = 'gg_theme = theme_readable()', title = FALSE, caption = '', gg_theme = theme_readable()),
-  dv_vs_ipred(xpdb, subtitle = 'gg_theme = theme_grey()', title = FALSE, caption = '', gg_theme = theme_grey()),
-  dv_vs_ipred(xpdb, subtitle = 'gg_theme = theme_bw2()', title = FALSE, caption = FALSE, gg_theme = theme_bw2()),
-  dv_vs_ipred(xpdb, subtitle = 'gg_theme = theme_dark()', title = FALSE, caption = FALSE, gg_theme = theme_dark()),
+  dv_vs_ipred(xpdb, subtitle = 'theme_grey() [default in ggplot2]', title = FALSE, caption = '') + theme_grey(),
+  dv_vs_ipred(xpdb, subtitle = 'theme_readable() [default in xpose]', title = FALSE, caption = '') + theme_readable(),
+  dv_vs_ipred(xpdb, subtitle = 'theme_bw2()', title = FALSE, caption = FALSE) + theme_bw2(),
+  dv_vs_ipred(xpdb, subtitle = 'theme_dark()', title = FALSE, caption = FALSE) + theme_dark(),
   ncol = 2)
 ```
 
@@ -158,8 +158,8 @@ gridExtra::grid.arrange(
 ```{r demo xp_theme, echo = FALSE, fig.height = 3.2, fig.width = 6, out.width = '75%'}
 gridExtra::grid.arrange(
   dv_vs_ipred(update_themes(xpdb = xpdb, xp_theme = theme_xp_default()),
-              subtitle = 'xp_theme = theme_xp_default()', title = FALSE, caption = ''),
+              subtitle = 'xp_theme = theme_xp_default()\nwith theme_bw2()', title = FALSE, caption = '') + theme_bw2(),
   dv_vs_ipred(update_themes(xpdb = xpdb, xp_theme = theme_xp_xpose4()),
-              subtitle = 'xp_theme = theme_xp_xpose4()\nwith gg_theme = theme_bw2()', title = FALSE, caption = '', gg_theme = theme_bw2()),
+              subtitle = 'xp_theme = theme_xp_xpose4()\nwith theme_bw2()', title = FALSE, caption = '') + theme_bw2(),
   ncol = 2)
 ```
