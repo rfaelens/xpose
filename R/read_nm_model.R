@@ -9,7 +9,7 @@
 #' @param file full file name as an alternative to \code{dir}, \code{prefix},
 #' \code{runno} and \code{ext}
 #'
-#' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_tab}}
+#' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_tables}}
 #' @return A \code{data.frame} containing the parsed model code (\code{CODE}) as well as a numeric
 #' (\code{LEVEL}) and character (\code{SUB}) indexing for subroutines.
 #' @examples
@@ -23,25 +23,20 @@ read_nm_model <- function(dir    = NULL,
                           ext    = '.mod',
                           file   = NULL) {
   
-  # Check inputs
-  if (is.null(runno) & is.null(file)) {
-    stop('Argument \"runno\" or \"file\" required.', call. = FALSE)
+  if (is.null(runno) && is.null(file)) {
+    stop('Argument `runno` or `file` required.', call. = FALSE)
   }
   
-  if (!is.null(dir) && !substr(dir, nchar(dir), nchar(dir)) == '/') {
-    dir <- paste0(dir, '/')
+  if (is.null(file)) {
+    file <- file_path(dir, paste0(prefix, runno, ext))
   }
   
-  if (!is.null(file)) {
-    file_full <- file
-  } else {
-    file_full <- paste0(dir, prefix, runno, ext)
+  if (!file.exists(file)) { 
+    stop('File ', basename(file), ' not found under ', dirname(file), '.', call. = FALSE) 
   }
-  
-  if (!file.exists(file_full)) { stop(paste('file', file_full, 'not found.'), call. = FALSE) }
   
   # Import mod_file
-  mod_file <- readLines(file_full)
+  mod_file <- readLines(file)
   
   # Clean-up code
   mod_file <- mod_file[!grepl('^;.+$|^$', mod_file)]

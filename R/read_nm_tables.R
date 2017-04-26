@@ -2,12 +2,12 @@
 #'
 #' @description Quickly import NONMEM output tables into R.
 #' When both \code{skip} and \code{header} are \code{NULL},
-#' \code{read_nm_tab} will automatically detect the optimal
+#' \code{read_nm_tables} will automatically detect the optimal
 #' settings to import the tables. When more than one files are
 #' provided for a same NONMEM run, they will be combined into
 #' a single \code{data.frame}.
 #'
-#' @param file Path to the file.
+#' @param files Path to the files.
 #' @param rm_duplicates Logical value indicating whether duplicated columns should be removed.
 #' @param index Logical value indiacating whether the data should be returned as a simple data.frame or 
 #' a list containing the data and an index of the colum names.
@@ -16,33 +16,33 @@
 #' @importFrom purrr %>%
 #' @examples
 #' \dontrun{
-#' data <- read_nm_tab(file = '../models/pk/sdtab101')
+#' data <- read_nm_tables(files = '../models/pk/sdtab101')
 #' }
 #' @export
-read_nm_tab <- function(file = NULL,
-                        rm_duplicates = TRUE,
-                        index = FALSE,
-                        verbose = TRUE,
-                        ...) {
+read_nm_tables <- function(files = NULL,
+                           rm_duplicates = TRUE,
+                           index = FALSE,
+                           verbose = TRUE,
+                           ...) {
   
-  if (is.null(file) || !any(file.exists(file))) {
+  if (is.null(files) || !any(file.exists(files))) {
     msg('No table read.', verbose)
     return()
   }
   
-  file <- file[file.exists(file)]
-  msg(c('Reading:\n', paste(' *', file, collapse = '\n')), verbose)
+  files <- files[file.exists(files)]
+  msg(c('Reading:\n', paste(' *', files, collapse = '\n')), verbose)
   
-  tables <- file %>% 
+  tables <- files %>% 
     purrr::map(readLines, n = 3) %>% 
-    purrr::map2(file, read_args, verbose, ...) %>% 
+    purrr::map2(files, read_args, verbose, ...) %>% 
     dplyr::bind_rows() %>% 
     {purrr::invoke_map(.$fun, .$params)}
   
   # Index datasets
   index_dat <- tables %>%
     purrr::map(colnames) %>%
-    purrr::set_names(basename(file))
+    purrr::set_names(basename(files))
   
   # Combine data, ensure unique names and remove NA rows due to multiple headers
   tables <- dplyr::bind_cols(tables) %>% 

@@ -40,8 +40,8 @@ reference:
     desc:  Manually import run output.
     contents:
     - read_nm_model
-    - list_nm_tab
-    - read_nm_tab
+    - list_nm_tables
+    - read_nm_tables
 
 authors:
   Benjamin Guiastrennec:

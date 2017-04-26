@@ -5,20 +5,20 @@
 #' @param mod_file A mod_file object generated with \code{\link{read_nm_model}}.
 #' @param dir Location of the model files.
 #'
-#' @seealso \code{\link{read_nm_model}}, \code{\link{read_nm_tab}}
+#' @seealso \code{\link{read_nm_model}}, \code{\link{read_nm_tables}}
 #' @examples
 #' \dontrun{
 #' file <- 'inst/extdata/run001.mod'
 #' read_nm_model(file = file) %>% 
-#'   list_nm_tab(dir = dirname(file)) %>%
-#'   read_nm_tab()
+#'   list_nm_tables(dir = dirname(file)) %>%
+#'   read_nm_tables()
 #'   }
 #' @export
-list_nm_tab <- function(mod_file = NULL,
+list_nm_tables <- function(mod_file = NULL,
                         dir      = NULL) {
   
   if (is.null(mod_file) || !is.model.file(mod_file)) {
-    stop('Proper `mod_file` required.', call. = FALSE)
+    stop('Object of class `mod_file` required.', call. = FALSE)
   }
   
   tab_code <- mod_file$CODE[mod_file$ABREV == 'TAB']

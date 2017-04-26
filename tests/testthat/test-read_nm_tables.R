@@ -1,8 +1,8 @@
-context('Check read_nm_tab')
+context('Check read_nm_tables')
 
 # Define files to be tested -----------------------------------------------
 
-test_tab <- read_nm_tab(file = 'sdtab001', verbose = FALSE)
+test_tab <- read_nm_tables(files = 'sdtab001', verbose = FALSE)
 ctrl_tab <- xpdb_ex_pk$data[, xpdb_ex_pk$tab_index$sdtab001]
 
 test_file <- c("TABLE NO.  4",
@@ -15,13 +15,13 @@ ctrl_file <- xpdb_ex_pk$data[1:2, xpdb_ex_pk$tab_index$patab001]
 # Tests start here --------------------------------------------------------
 
 test_that("message is returned when missing file argument", {
-  expect_null(read_nm_tab(verbose = FALSE))
-  expect_message(read_nm_tab(verbose = TRUE))
+  expect_null(read_nm_tables(verbose = FALSE))
+  expect_message(read_nm_tables(verbose = TRUE))
 })
 
 test_that("message is returned when all provided files are missing", {
-  expect_null(read_nm_tab(file = 'fake_table.tab', verbose = FALSE))
-  expect_message(read_nm_tab(file = 'fake_table.tab', verbose = TRUE))
+  expect_null(read_nm_tables(files = 'fake_table.tab', verbose = FALSE))
+  expect_message(read_nm_tables(files = 'fake_table.tab', verbose = TRUE))
 })
 
 test_that("returns a proper table when valid arguments are provided", {
@@ -34,9 +34,9 @@ test_that("auto mode properly assign skip and header arguments", {
   
   # Test with skip = 1 and header = TRUE
   writeLines(text = test_file[1:4], con = files[1])
-  expect_equal(read_nm_tab(file = files[1]),  ctrl_file)
+  expect_equal(read_nm_tables(files = files[1]),  ctrl_file)
   
   # Test with skip = 0 and header = TRUE
   writeLines(text = test_file[2:4], con = files[2])
-  expect_equal(read_nm_tab(file = files[2]),  ctrl_file)
+  expect_equal(read_nm_tables(files = files[2]),  ctrl_file)
 })

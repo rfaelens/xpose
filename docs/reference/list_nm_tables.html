@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>NONMEM model file parser — read_nm_model • xpose</title>
+<title>List NONMEM output tables — list_nm_tables • xpose</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -102,55 +102,40 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>NONMEM model file parser</h1>
+    <h1>List NONMEM output tables</h1>
     </div>
 
     
-    <p>Parse NONMEM model files in R format</p>
+    <p>List NONMEM output tables file names from a <code>mod_file</code> object.</p>
     
 
-    <pre class="usage"><span class='fu'>read_nm_model</span>(<span class='kw'>dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>runno</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"run"</span>, <span class='kw'>ext</span> <span class='kw'>=</span> <span class='st'>".mod"</span>,
-  <span class='kw'>file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>list_nm_tables</span>(<span class='kw'>mod_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>mod_file</th>
+      <td><p>A mod_file object generated with <code><a href='read_nm_model.html'>read_nm_model</a></code>.</p></td>
+    </tr>
+    <tr>
       <th>dir</th>
-      <td><p>location of the model files</p></td>
-    </tr>
-    <tr>
-      <th>runno</th>
-      <td><p>run number to be evaluated</p></td>
-    </tr>
-    <tr>
-      <th>prefix</th>
-      <td><p>prefix of the model file name</p></td>
-    </tr>
-    <tr>
-      <th>ext</th>
-      <td><p>model file extention</p></td>
-    </tr>
-    <tr>
-      <th>file</th>
-      <td><p>full file name as an alternative to <code>dir</code>, <code>prefix</code>,
-<code>runno</code> and <code>ext</code></p></td>
+      <td><p>Location of the model files.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A <code>data.frame</code> containing the parsed model code (<code>CODE</code>) as well as a numeric
-(<code>LEVEL</code>) and character (<code>SUB</code>) indexing for subroutines.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='xpose_data.html'>xpose_data</a></code>, <code><a href='read_nm_tables.html'>read_nm_tables</a></code></p>
+    <p><code><a href='read_nm_model.html'>read_nm_model</a></code>, <code><a href='read_nm_tables.html'>read_nm_tables</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
-  <span class='no'>mod_file</span> <span class='kw'>&lt;-</span> <span class='fu'>read_nm_model</span>(<span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>'../models/pk/'</span>, <span class='kw'>runno</span> <span class='kw'>=</span> <span class='st'>'001'</span>)
+  <span class='no'>file</span> <span class='kw'>&lt;-</span> <span class='st'>'inst/extdata/run001.mod'</span>
+  <span class='fu'><a href='read_nm_model.html'>read_nm_model</a></span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='no'>file</span>) <span class='kw'>%&gt;%</span>
+    <span class='fu'>list_nm_tables</span>(<span class='kw'>dir</span> <span class='kw'>=</span> <span class='fu'>dirname</span>(<span class='no'>file</span>)) <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='read_nm_tables.html'>read_nm_tables</a></span>()
+
 })</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -158,8 +143,6 @@
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
