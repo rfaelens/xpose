@@ -4,24 +4,33 @@
 \alias{read_nm_model}
 \title{NONMEM model file parser}
 \usage{
-read_nm_model(dir = NULL, runno = NULL, prefix = "run", ext = ".mod",
-  file = NULL)
+read_nm_model(file = NULL, dir = NULL, runno = NULL, prefix = "run",
+  ext = ".mod")
 }
 \arguments{
-\item{dir}{location of the model files}
-
-\item{runno}{run number to be evaluated}
-
-\item{prefix}{prefix of the model file name}
-
-\item{ext}{model file extention}
-
-\item{file}{full file name as an alternative to \code{dir}, \code{prefix},
+\item{file}{Full file name as an alternative to \code{dir}, \code{prefix},
 \code{runno} and \code{ext}}
+
+\item{dir}{Location of the model file.}
+
+\item{runno}{Run number to be evaluated.}
+
+\item{prefix}{Prefix of the model file name.}
+
+\item{ext}{Model file extention.}
 }
 \value{
-A \code{data.frame} containing the parsed model code (\code{CODE}) as well as a numeric
-(\code{LEVEL}) and character (\code{SUB}) indexing for subroutines.
+A \code{\link[dplyr]{tibble}} of class \code{mod_file} containing the following columns: 
+\itemize{
+ \item{\strong{problem}}{: a numeric identifier for the $PROBLEM associated with the code.}
+ \item{\strong{level}}{: a unique numeric identifier to each subroutine block associated with the code.}
+ \item{\strong{subroutine}}{: a character identifier named after the 3 first letters of the subroutine name e.g. "$THETA" and 
+ "$TABLE" will become "the" and "tab" respectively. In addtion all output from the .lst is labeled "lst", the general nonmem 
+ output e.g. NM-TRAN warnings are labeled "oth". With priors thp, tpv, omp, opd, sip, spd abreviations are given to the THETAP, 
+ etc.}
+ \item{\strong{code}}{: the code without comments or subroutine names e.g. "$THETA 0.5 ; TVCL" will return 0.5.}
+ \item{\strong{comment}}{: the last comment of a record e.g. "0.5 ; Clearance (L/h) ; TVCL" will return "TVCL".}
+}
 }
 \description{
 Parse NONMEM model files in R format

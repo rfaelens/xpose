@@ -4,21 +4,18 @@
 \alias{list_nm_tables}
 \title{List NONMEM output tables}
 \usage{
-list_nm_tables(mod_file = NULL, dir = NULL)
+list_nm_tables(mod_file = NULL)
 }
 \arguments{
 \item{mod_file}{A mod_file object generated with \code{\link{read_nm_model}}.}
-
-\item{dir}{Location of the model files.}
 }
 \description{
 List NONMEM output tables file names from a \code{mod_file} object.
 }
 \examples{
 \dontrun{
-file <- 'inst/extdata/run001.mod'
-read_nm_model(file = file) \%>\% 
-  list_nm_tables(dir = dirname(file)) \%>\%
+read_nm_model('inst/extdata/run001.mod') \%>\% 
+  list_nm_tables() \%>\%
   read_nm_tables()
   }
 }

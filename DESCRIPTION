@@ -29,6 +29,7 @@ Depends:
   ggplot2 (>= 2.2.1)
 Imports:
   dplyr,
+  tidyr,
   readr,
   stringr,
   purrr,

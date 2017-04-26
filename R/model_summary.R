@@ -1,6 +1,6 @@
 # Needs to handle MIXTURE + Multiple $PROBLEMS
 shrinkage <- function(model, type, rounding) {
-  string <- model$CODE[which.max(grepl(paste0(type, 'shrink'), model$CODE))]
+  string <- model$code[which.max(grepl(paste0(type, 'shrink'), model$code))]
   string <- suppressWarnings(as.numeric(unlist(strsplit(string, '(\\s+)'))))
   string <- round(string[!is.na(string)], rounding)
   names(string) <- seq_along(string)
@@ -11,13 +11,13 @@ shrinkage <- function(model, type, rounding) {
 
 
 descr <- function(model) {
-  string <- model$CODE[model$ABREV == 'PRO']
+  string <- model$code[model$subroutine == 'pro']
   paste(string, collapse = ', ')
 }
 
 
 ofv <- function(model) {
-  string <- model$CODE[which.max(grepl('#OBJV', model$CODE))]
+  string <- model$code[which.max(grepl('#OBJV', model$code))]
   if (!is.null(string)) {
     string <- gsub('[^\\d\\.-]+', '', string, perl = TRUE)
     string <- paste(string, collapse = ', ')
@@ -27,24 +27,24 @@ ofv <- function(model) {
 
 
 raw_dat <- function(model) {
-  gsub('\\s+.*$', '', model$CODE[model$ABREV == 'DAT'][1])
+  gsub('\\s+.*$', '', model$code[model$subroutine == 'dat'][1])
 }
 
 
 nobs <- function(model) {
-  gsub('\\D', '', model$CODE[grepl('TOT. NO. OF OBS RECS', model$CODE)])
+  gsub('\\D', '', model$code[grepl('TOT. NO. OF OBS RECS', model$code)])
 }
 
 
 nind <- function(model) {
-  gsub('\\D', '', model$CODE[grepl('TOT. NO. OF INDIVIDUALS', model$CODE)])
+  gsub('\\D', '', model$code[grepl('TOT. NO. OF INDIVIDUALS', model$code)])
 }
 
 
 method <- function(model) {
-  string <- gsub('.*METHOD=(\\w+)\\s+.*', '\\1', model$CODE[grepl('METHOD=', model$CODE)])
-  inter  <- ifelse(grepl('INTER', model$CODE[grepl('METHOD=', model$CODE)]), '-I', '')
-  lapl   <- ifelse(grepl('LAPL', model$CODE[grepl('METHOD=', model$CODE)]), ' Laplace', '')
+  string <- gsub('.*METHOD=(\\w+)\\s+.*', '\\1', model$code[grepl('METHOD=', model$code)])
+  inter  <- ifelse(grepl('INTER', model$code[grepl('METHOD=', model$code)]), '-I', '')
+  lapl   <- ifelse(grepl('LAPL', model$code[grepl('METHOD=', model$code)]), ' Laplace', '')
   
   if (any(grepl('\\d', string))) {
     string[grepl('\\d', string)] <- c('FO', 'FOCE')[as.numeric(string[grepl('\\d', string)]) + 1]

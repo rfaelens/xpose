@@ -2,26 +2,35 @@
 #'
 #' @description Parse NONMEM model files in R format
 #'
-#' @param dir location of the model files
-#' @param prefix prefix of the model file name
-#' @param runno run number to be evaluated
-#' @param ext model file extention
-#' @param file full file name as an alternative to \code{dir}, \code{prefix},
+#' @param file Full file name as an alternative to \code{dir}, \code{prefix},
 #' \code{runno} and \code{ext}
+#' @param dir Location of the model file.
+#' @param prefix Prefix of the model file name.
+#' @param runno Run number to be evaluated.
+#' @param ext Model file extention.
 #'
 #' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_tables}}
-#' @return A \code{data.frame} containing the parsed model code (\code{CODE}) as well as a numeric
-#' (\code{LEVEL}) and character (\code{SUB}) indexing for subroutines.
+#' @return A \code{\link[dplyr]{tibble}} of class \code{mod_file} containing the following columns: 
+#' \itemize{
+##'  \item{\strong{problem}}{: a numeric identifier for the $PROBLEM associated with the code.}
+##'  \item{\strong{level}}{: a unique numeric identifier to each subroutine block associated with the code.}
+##'  \item{\strong{subroutine}}{: a character identifier named after the 3 first letters of the subroutine name e.g. "$THETA" and 
+##'  "$TABLE" will become "the" and "tab" respectively. In addtion all output from the .lst is labeled "lst", the general nonmem 
+##'  output e.g. NM-TRAN warnings are labeled "oth". With priors thp, tpv, omp, opd, sip, spd abreviations are given to the THETAP, 
+##'  etc.}
+##'  \item{\strong{code}}{: the code without comments or subroutine names e.g. "$THETA 0.5 ; TVCL" will return 0.5.}
+##'  \item{\strong{comment}}{: the last comment of a record e.g. "0.5 ; Clearance (L/h) ; TVCL" will return "TVCL".}
+##' }
 #' @examples
 #' \dontrun{
 #' mod_file <- read_nm_model(dir = '../models/pk/', runno = '001')
 #' }
 #' @export
-read_nm_model <- function(dir    = NULL,
+read_nm_model <- function(file   = NULL,
+                          dir    = NULL,
                           runno  = NULL,
                           prefix = 'run',
-                          ext    = '.mod',
-                          file   = NULL) {
+                          ext    = '.mod') {
   
   if (is.null(runno) && is.null(file)) {
     stop('Argument `runno` or `file` required.', call. = FALSE)
@@ -32,54 +41,67 @@ read_nm_model <- function(dir    = NULL,
   }
   
   if (!file.exists(file)) { 
-    stop('File ', basename(file), ' not found under ', dirname(file), '.', call. = FALSE) 
+    stop('File ', basename(file), ' not found.', call. = FALSE) 
   }
   
-  # Import mod_file
-  mod_file <- readLines(file)
+  # Import and format model file
+  model <- readr::read_lines(file)
   
-  # Clean-up code
-  mod_file <- mod_file[!grepl('^;.+$|^$', mod_file)]
-  mod_file <- gsub('\\t+|\\s{2,}', ' ', mod_file)
-  
-  # Index mod_file
-  mod_file <- data.frame(CODE  = mod_file,
-                         LEVEL = findInterval(seq_along(mod_file),
-                                              grep('^\\s*\\$.+', mod_file)),
-                         stringsAsFactors = FALSE)
-  
-  mod_file <- by(data = mod_file,
-                 INDICES = mod_file$LEVEL,
-                 FUN  = function(x) {
-                   x$SUB <- gsub('^(\\s*\\$\\w+)\\s.+', '\\1', x[1,'CODE'])
-                   return(x)
-                 })
-  mod_file <- do.call('rbind', mod_file)
-  
-  # If lst file index lst rows
-  if (any(grepl('NM-TRAN MESSAGES', mod_file[, 1], fixed = TRUE))) {
-    lst <- grep('NM-TRAN MESSAGES', mod_file[, 1], fixed = TRUE):nrow(mod_file)
-    mod_file[lst, 'LEVEL'] <- mod_file[lst, 'LEVEL'] + 1
-    mod_file[c(1,lst), 'SUB']   <- '$LST'
+  if (!any(stringr::str_detect(model, '^\\s*\\$PROB.+'))) {
+    stop('Provided file is not a NONMEM model.', call. = FALSE)
   }
   
-  # Further format mod_file
-  mod_file$ABREV   <- substr(x = mod_file$SUB, start = 2,
-                             stop = ifelse(grepl('THETA|OMEGA|SIGMA', mod_file$SUB),
-                                           nchar(mod_file$SUB), 4)) # Handle priors
-  mod_file$ABREV   <- gsub('\\s+', '', mod_file$ABREV)
+  model <- model[!stringr::str_detect(model, '^;.*$|^$')]
+  model <- stringr::str_replace_all(model, '\\t+|\\s{2,}', ' ')
+  model <- dplyr::tibble(
+    problem  = findInterval(seq_along(model), which(stringr::str_detect(model, '^\\s*\\$PROB.+'))),
+    level = findInterval(seq_along(model), which(stringr::str_detect(model, '^\\s*\\$.+'))),
+    subroutine  = stringr::str_match(model, '^\\s*\\$(\\w+)')[, 2],
+    code  = model) %>% 
+    tidyr::fill(dplyr::one_of('subroutine'))
   
-  mod_file$CODE    <- gsub('^\\s*\\$\\w+\\s*', '', mod_file$CODE)
-  mod_file         <- mod_file[!grepl('^\\s*$', mod_file$CODE), ]
+  # Generate abreviated subroutine names
+  special <- c('THETAI', 'THETAR', 'THETAP', 'THETAPV', 
+               'OMEGAP', 'OMEGAPD', 'SIGMAP', 'SIGMAPD')
+  model$subroutine[model$subroutine %in% special] <-
+    c('thi', 'thr', 'thp', 'tpv', 
+      'omp', 'opd', 'sip', 'spd')[match(model$subroutine[model$subroutine %in% special], special)]
+  model$subroutine <- stringr::str_extract(tolower(model$subroutine), '[a-z]{1,3}')
+  
+  # Format lst part
+  if (any(stringr::str_detect(model$code, 'NM-TRAN MESSAGES'))) {
+    lst_rows <- which(stringr::str_detect(model$code, 'NM-TRAN MESSAGES')):nrow(model)
+    model[lst_rows, 'problem'] <- findInterval(seq_along(lst_rows), 
+                                               which(stringr::str_detect(model[lst_rows, ]$code, 
+                                                                         '^\\s*PROBLEM NO\\.:\\s*\\d+$')))
+    model[lst_rows, 'level'] <- model[lst_rows[1], ]$level + 1 + model[lst_rows, ]$problem
+    model[lst_rows, 'subroutine']  <- 'lst'
+  }
+  
+  if (any(stringr::str_detect(model$code, 'Stop Time'))) {
+    end_rows <- which(stringr::str_detect(model$code, 'Stop Time')):nrow(model)
+    model[end_rows, 'problem'] <- 0
+    model[end_rows, 'level'] <- model[end_rows[1], ]$level + 1
+  }
+  
+  model[model$problem == 0, 'subroutine'] <- 'oth'
+  
+  # Remove the subroutine names from the code
+  model$code <- stringr::str_replace(model$code, '^\\s*\\$\\w+\\s*', '')
+  
+  # Remove empty code lines
+  model <- model[!stringr::str_detect(model$code, '^(\\s|\\t)*$'), ]
   
   # Extract comments
-  mod_file$COMMENT[grepl(';', mod_file$CODE)] <- gsub('^.+;\\s*', '\\1',
-                                                      mod_file$CODE[grepl(';', mod_file$CODE)])
-  mod_file$COMMENT <- gsub('\\s+$|^\\s+', '', mod_file$COMMENT)
-  mod_file$CODE <- gsub('\\s*;.*', '', mod_file$CODE)
+  code_rows <- !model$subroutine %in% c('lst', 'oth')
+  model[code_rows, 'comment'] <- stringr::str_match(model[code_rows, ]$code, ';\\s*([^;]*)$')[, 2]
+  model[code_rows, 'code'] <- stringr::str_replace(model[code_rows, ]$code, '\\s*;.*$', '')
   
-  # Sort columns
-  mod_file <- mod_file[, c('LEVEL', 'SUB', 'ABREV', 'CODE', 'COMMENT')]
+  # Remove na values
+  model <- tidyr::replace_na(model, replace = list(code = '', comment = ''))
   
-  structure(mod_file, class = c('mod_file', 'data.frame'))
+  structure(model, 
+            file  = basename(file),
+            dir   = dirname(file),
+            class = c('mod_file', 'tbl_df', 'tbl', 'data.frame'))
 }
