@@ -34,7 +34,7 @@ read_nm_tables <- function(files = NULL,
   msg(c('Reading:\n', paste(' *', files, collapse = '\n')), verbose)
   
   tables <- files %>% 
-    purrr::map(readLines, n = 3) %>% 
+    purrr::map(readr::read_lines, n_max = 3) %>% 
     purrr::map2(files, read_args, verbose, ...) %>% 
     dplyr::bind_rows() %>% 
     {purrr::invoke_map(.$fun, .$params)}
