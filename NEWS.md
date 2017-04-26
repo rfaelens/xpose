@@ -1,5 +1,5 @@
-# ggxpose 0.1
-### Proof of concept
+# xpose 0.1
+### First commit
 * Proof of concept pre-release around simple goodness-of-fit functions like `dv_vs_ipred`
 
 ### Definition of core functions and workflow

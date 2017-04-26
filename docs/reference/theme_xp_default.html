@@ -25,7 +25,7 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -109,17 +109,17 @@
     <p>The default xpose theme.</p>
     
 
-    <pre><span class='fu'>theme_xp_default</span>()</pre>
+    <pre class="usage"><span class='fu'>theme_xp_default</span>()</pre>
         
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Standard xpose theme</span>
-<span class='co'>## Not run: ------------------------------------</span>
-<span class='co'>#  xpose_data(dir = 'inst/models/', runno = '001') %&gt;%</span>
-<span class='co'>#    xpose_theme(gg_theme = theme_readable(),</span>
-<span class='co'>#                xp_theme = theme_xp_default()) %&gt;%</span>
-<span class='co'>#    dv_vs_ipred()</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+<span class='fu'>not_run</span>({
+   <span class='fu'><a href='xpose_data.html'>xpose_data</a></span>(<span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>'inst/models/'</span>, <span class='kw'>runno</span> <span class='kw'>=</span> <span class='st'>'001'</span>) <span class='kw'>%&gt;%</span>
+     <span class='fu'>xpose_theme</span>(<span class='kw'>gg_theme</span> <span class='kw'>=</span> <span class='fu'><a href='theme_readable.html'>theme_readable</a></span>(),
+                 <span class='kw'>xp_theme</span> <span class='kw'>=</span> <span class='fu'>theme_xp_default</span>()) <span class='kw'>%&gt;%</span>
+     <span class='fu'><a href='dv_vs_ipred.html'>dv_vs_ipred</a></span>()
+})</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

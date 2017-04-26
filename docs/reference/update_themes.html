@@ -25,7 +25,7 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -112,7 +112,7 @@ All plots generated with this xpdb will automatically use the
 defined xpose (<code>xp_theme</code>) and ggplot2 (<code>gg_theme</code>) themes.</p>
     
 
-    <pre><span class='fu'>update_themes</span>(<span class='kw'>xpdb</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>gg_theme</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>xp_theme</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>update_themes</span>(<span class='kw'>xpdb</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>gg_theme</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>xp_theme</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -138,12 +138,12 @@ defined xpose (<code>xp_theme</code>) and ggplot2 (<code>gg_theme</code>) themes
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># xpdb &lt;- update_themes(xpdb     = xpdb,</span>
-<span class='co'>#                     gg_theme = theme_bw(),</span>
-<span class='co'>#                     xp_theme = c(point_color = 'blue',</span>
-<span class='co'>#                                  line_color  = 'blue'))</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
+  <span class='no'>xpdb</span> <span class='kw'>&lt;-</span> <span class='fu'>update_themes</span>(<span class='kw'>xpdb</span>     <span class='kw'>=</span> <span class='no'>xpdb</span>,
+                      <span class='kw'>gg_theme</span> <span class='kw'>=</span> <span class='fu'>theme_bw</span>(),
+                      <span class='kw'>xp_theme</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>point_color</span> <span class='kw'>=</span> <span class='st'>'blue'</span>,
+                                   <span class='kw'>line_color</span>  <span class='kw'>=</span> <span class='st'>'blue'</span>))
+})</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
