@@ -16,7 +16,7 @@
 ##'  \item{\strong{level}}{: a unique numeric identifier to each subroutine block associated with the code.}
 ##'  \item{\strong{subroutine}}{: a character identifier named after the 3 first letters of the subroutine name e.g. "$THETA" and 
 ##'  "$TABLE" will become "the" and "tab" respectively. In addtion all output from the .lst is labeled "lst", the general nonmem 
-##'  output e.g. NM-TRAN warnings are labeled "oth". With priors thp, tpv, omp, opd, sip, spd abreviations are given to the THETAP, 
+##'  output e.g. NM-TRAN messages are labeled "oth". With priors thp, tpv, omp, opd, sip, spd abreviations are given to the THETAP, 
 ##'  etc.}
 ##'  \item{\strong{code}}{: the code without comments or subroutine names e.g. "$THETA 0.5 ; TVCL" will return 0.5.}
 ##'  \item{\strong{comment}}{: the last comment of a record e.g. "0.5 ; Clearance (L/h) ; TVCL" will return "TVCL".}
@@ -78,19 +78,25 @@ read_nm_model <- function(file   = NULL,
     model[lst_rows, 'subroutine']  <- 'lst'
   }
   
+  if (any(stringr::str_detect(model$code, '#CPUT'))) {
+    cput_row <- which(stringr::str_detect(model$code, '#CPUT'))
+    model[cput_row, 'problem'] <- 0
+    model[cput_row:nrow(model), 'level'] <- model[cput_row:nrow(model), ]$level + 1
+  }
+  
   if (any(stringr::str_detect(model$code, 'Stop Time'))) {
     end_rows <- which(stringr::str_detect(model$code, 'Stop Time')):nrow(model)
     model[end_rows, 'problem'] <- 0
     model[end_rows, 'level'] <- model[end_rows[1], ]$level + 1
   }
   
-  model[model$problem == 0, 'subroutine'] <- 'oth'
+  model[is.na(model$subroutine) | (model$problem == 0 & model$subroutine == 'lst'), 'subroutine'] <- 'oth'
   
   # Remove the subroutine names from the code
   model$code <- stringr::str_replace(model$code, '^\\s*\\$\\w+\\s*', '')
   
   # Remove empty code lines
-  model <- model[!stringr::str_detect(model$code, '^(\\s|\\t)*$'), ]
+  model <- model[!stringr::str_detect(model$code, '^(\\s|\\t)*$') | model$subroutine == 'pro', ]
   
   # Extract comments
   code_rows <- !model$subroutine %in% c('lst', 'oth')
