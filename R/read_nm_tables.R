@@ -11,8 +11,8 @@
 #' @param rm_duplicates Logical value indicating whether duplicated columns should be removed.
 #' @param index Logical value indiacating whether the data should be returned as a simple data.frame or 
 #' a list containing the data and an index of the colum names.
-#' @param verbose Logical, if \code{TRUE} messages are printed to the console
-#' @param ... Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions
+#' @param verbose Logical, if \code{TRUE} messages are printed to the console.
+#' @param ... Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.
 #' @importFrom purrr %>%
 #' @examples
 #' \dontrun{

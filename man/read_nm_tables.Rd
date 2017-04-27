@@ -15,9 +15,9 @@ read_nm_tables(files = NULL, rm_duplicates = TRUE, index = FALSE,
 \item{index}{Logical value indiacating whether the data should be returned as a simple data.frame or 
 a list containing the data and an index of the colum names.}
 
-\item{verbose}{Logical, if \code{TRUE} messages are printed to the console}
+\item{verbose}{Logical, if \code{TRUE} messages are printed to the console.}
 
-\item{...}{Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions}
+\item{...}{Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.}
 }
 \description{
 Quickly import NONMEM output tables into R.
