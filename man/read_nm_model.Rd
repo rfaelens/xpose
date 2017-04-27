@@ -4,20 +4,22 @@
 \alias{read_nm_model}
 \title{NONMEM model file parser}
 \usage{
-read_nm_model(file = NULL, dir = NULL, runno = NULL, prefix = "run",
-  ext = ".mod")
+read_nm_model(file = NULL, runno = NULL, dir = NULL, prefix = "run",
+  ext = c(".lst", ".mod", ".ctl", ".txt"), verbose = TRUE)
 }
 \arguments{
-\item{file}{Full file name as an alternative to \code{dir}, \code{prefix},
-\code{runno} and \code{ext}}
-
-\item{dir}{Location of the model file.}
+\item{file}{Full file name preferably a `.lst` file. Alternative argument to \code{dir}, \code{prefix},
+\code{runno} and \code{ext}.}
 
 \item{runno}{Run number to be evaluated.}
 
+\item{dir}{Location of the model file.}
+
 \item{prefix}{Prefix of the model file name.}
 
-\item{ext}{Model file extention.}
+\item{ext}{Extension of the model file.}
+
+\item{verbose}{Logical, if \code{TRUE} messages are printed to the console.}
 }
 \value{
 A \code{\link[dplyr]{tibble}} of class \code{mod_file} containing the following columns: 

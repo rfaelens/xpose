@@ -2,12 +2,13 @@
 #'
 #' @description Parse NONMEM model files in R format
 #'
-#' @param file Full file name as an alternative to \code{dir}, \code{prefix},
-#' \code{runno} and \code{ext}
+#' @param file Full file name preferably a `.lst` file. Alternative argument to \code{dir}, \code{prefix},
+#' \code{runno} and \code{ext}.
+#' @param runno Run number to be evaluated.
 #' @param dir Location of the model file.
 #' @param prefix Prefix of the model file name.
-#' @param runno Run number to be evaluated.
-#' @param ext Model file extention.
+#' @param ext Extension of the model file.
+#' @param verbose Logical, if \code{TRUE} messages are printed to the console.
 #'
 #' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_tables}}
 #' @return A \code{\link[dplyr]{tibble}} of class \code{mod_file} containing the following columns: 
@@ -26,17 +27,19 @@
 #' mod_file <- read_nm_model(dir = '../models/pk/', runno = '001')
 #' }
 #' @export
-read_nm_model <- function(file   = NULL,
-                          dir    = NULL,
-                          runno  = NULL,
-                          prefix = 'run',
-                          ext    = '.mod') {
+read_nm_model <- function(file    = NULL,
+                          runno   = NULL,
+                          dir     = NULL,
+                          prefix  = 'run',
+                          ext     = c('.lst', '.mod', '.ctl', '.txt'),
+                          verbose = TRUE) {
   
   if (is.null(runno) && is.null(file)) {
     stop('Argument `runno` or `file` required.', call. = FALSE)
   }
   
   if (is.null(file)) {
+    ext  <- match.arg(ext)
     file <- file_path(dir, paste0(prefix, runno, ext))
   }
   
@@ -47,8 +50,19 @@ read_nm_model <- function(file   = NULL,
   # Import and format model file
   model <- readr::read_lines(file)
   
+  # Attempt to recover the model in .mod
+  if (!any(stringr::str_detect(model, '^\\s*\\$PROB.+')) && get_extension(file) == '.lst') {
+    file <- update_extension(file, '.mod')
+    
+    if (file.exists(file)) {
+      msg('No model code was found in `.lst` file using `.mod` instead.', verbose)
+      model <- readr::read_lines(file)
+    }
+  }
+  
+  # Return error if input is bad
   if (!any(stringr::str_detect(model, '^\\s*\\$PROB.+'))) {
-    stop('Provided file is not a NONMEM model.', call. = FALSE)
+    stop(basename(file), ' is not a NONMEM model.', call. = FALSE)
   }
   
   model <- model[!stringr::str_detect(model, '^;.*$|^$')]
