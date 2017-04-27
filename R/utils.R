@@ -31,3 +31,15 @@ file_path <- function(dir, file) {
   dir <- stringr::str_replace(dir, '\\/+$', '')
   file.path(dir, file)
 }
+
+# Get file extension
+get_extension <- function(x) {
+  tmp <- stringr::str_extract(x, '\\.[[:alnum:]]+$')
+  tmp[is.na(tmp)] <- ''
+  tmp
+}
+
+# Update file extension
+update_extension <- function(x, ext) {
+  stringr::str_replace(x, '\\.[[:alnum:]]+$', ext)
+}

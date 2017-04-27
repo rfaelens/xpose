@@ -35,3 +35,13 @@ test_that("file_path works as expected", {
   expect_equal(file_path(dir = 'inst/extdata/catab001//', file = 'test.csv'), "inst/extdata/catab001/test.csv")
   expect_equal(file_path(dir = 'inst/extdata/catab001', file = 'test.csv'), "inst/extdata/catab001/test.csv")
 })
+
+test_that("get_extension works as expected", {
+  expect_equal(get_extension('../parent/dir.dot/file.mod'), '.mod')
+  expect_equal(get_extension('../parent/dir.dot/file'), '')
+})
+
+test_that("update_extension works as expected", {
+  expect_equal(update_extension('../parent/dir.dot/file.mod', '.lst'), '../parent/dir.dot/file.lst')
+  expect_equal(update_extension('../parent/dir.dot/file', '.lst'), '../parent/dir.dot/file')
+})
