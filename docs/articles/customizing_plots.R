@@ -40,8 +40,8 @@ dv_vs_ipred(xpdb,
 ## ----demo mapping--------------------------------------------------------
 dv_vs_ipred(xpdb, type = 'p', aes(point_color = as.factor(SEX))) 
 
-## ----demo panels---------------------------------------------------------
-dv_vs_ipred(xpdb, by = 'SEX')
+## ----demo panels, fig.width = 6, out.width = '75%'-----------------------
+dv_vs_ipred(xpdb, facets = 'SEX')
 
 ## ----demo layers---------------------------------------------------------
 dv_vs_ipred(xpdb) +
@@ -70,23 +70,23 @@ dv_vs_ipred(xpdb,
 #  
 #  # Update a pre-existing xpdb
 #  xpdb <- update_themes(xpdb     = xpdb,
-#                       gg_theme = theme_bw(),
-#                       xp_theme = c(point_color = 'dodgerblue4',
-#                                    line_color  = 'dodgerblue4'))
+#                        gg_theme = theme_bw(),
+#                        xp_theme = c(point_color = 'dodgerblue4',
+#                                     line_color  = 'dodgerblue4'))
 
 ## ----demo gg_theme, echo = FALSE, fig.height = 6, fig.width = 6, out.width = '75%'----
 gridExtra::grid.arrange(
-  dv_vs_ipred(xpdb, subtitle = 'gg_theme = theme_readable()', title = FALSE, caption = '', gg_theme = theme_readable()),
-  dv_vs_ipred(xpdb, subtitle = 'gg_theme = theme_grey()', title = FALSE, caption = '', gg_theme = theme_grey()),
-  dv_vs_ipred(xpdb, subtitle = 'gg_theme = theme_bw2()', title = FALSE, caption = FALSE, gg_theme = theme_bw2()),
-  dv_vs_ipred(xpdb, subtitle = 'gg_theme = theme_dark()', title = FALSE, caption = FALSE, gg_theme = theme_dark()),
+  dv_vs_ipred(xpdb, subtitle = 'theme_grey() [default in ggplot2]', title = FALSE, caption = '') + theme_grey(),
+  dv_vs_ipred(xpdb, subtitle = 'theme_readable() [default in xpose]', title = FALSE, caption = '') + theme_readable(),
+  dv_vs_ipred(xpdb, subtitle = 'theme_bw2()', title = FALSE, caption = FALSE) + theme_bw2(),
+  dv_vs_ipred(xpdb, subtitle = 'theme_dark()', title = FALSE, caption = FALSE) + theme_dark(),
   ncol = 2)
 
 ## ----demo xp_theme, echo = FALSE, fig.height = 3.2, fig.width = 6, out.width = '75%'----
 gridExtra::grid.arrange(
   dv_vs_ipred(update_themes(xpdb = xpdb, xp_theme = theme_xp_default()),
-              subtitle = 'xp_theme = theme_xp_default()', title = FALSE, caption = ''),
+              subtitle = 'xp_theme = theme_xp_default()\nwith theme_bw2()', title = FALSE, caption = '') + theme_bw2(),
   dv_vs_ipred(update_themes(xpdb = xpdb, xp_theme = theme_xp_xpose4()),
-              subtitle = 'xp_theme = theme_xp_xpose4()\nwith gg_theme = theme_bw2()', title = FALSE, caption = '', gg_theme = theme_bw2()),
+              subtitle = 'xp_theme = theme_xp_xpose4()\nwith theme_bw2()', title = FALSE, caption = '') + theme_bw2(),
   ncol = 2)
 
