@@ -18,23 +18,29 @@ list_nm_tables <- function(nm_model = NULL) {
     stop('Object of class `nm_model` required.', call. = FALSE)
   }
   
+  # Get NM code associated with the tables
   table_list <- nm_model %>% 
-    
-    # Get NM code associated with each table
-    dplyr::filter(.$problem > 0, .$subroutine == 'tab') %>% 
+    dplyr::filter(.$problem > 0, .$subroutine == 'tab') 
+  
+  if (nrow(table_list) == 0) return()
+  
+  table_list <- table_list %>% 
     purrr::slice_rows(c('problem', 'level')) %>% 
     purrr::by_slice(~stringr::str_c(.$code, collapse = ' ')) %>% 
     purrr::set_names(c('problem', 'level', 'string')) %>% 
     tidyr::unnest() %>% 
-    
-    # Find table names and firstonly option
     dplyr::mutate(file = stringr::str_match(.$string, '\\s+FILE\\s*=\\s*([^\\s]+)')[, 2]) %>% 
-    dplyr::filter(!is.na(.$file)) %>% 
+    dplyr::filter(!is.na(.$file))
+  
+  if (nrow(table_list) == 0) return()
+  
+  # Find table names and firstonly option
+  table_list <- table_list %>% 
     dplyr::mutate(file = file_path(attr(nm_model, 'dir'), .$file),
                   firstonly = stringr::str_detect(.$string, 'FIRSTONLY')) %>% 
     dplyr::select(dplyr::one_of('problem', 'file', 'firstonly'))
   
-  # Add simtab flag
+  # Prep simtab flag
   sim_flag <- nm_model %>% 
     dplyr::filter(.$problem > 0) %>% 
     purrr::slice_rows('problem') %>% 
