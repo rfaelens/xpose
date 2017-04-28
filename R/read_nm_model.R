@@ -11,7 +11,7 @@
 #' @param verbose Logical, if \code{TRUE} messages are printed to the console.
 #'
 #' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_tables}}
-#' @return A \code{\link[dplyr]{tibble}} of class \code{mod_file} containing the following columns: 
+#' @return A \code{\link[dplyr]{tibble}} of class \code{model} containing the following columns: 
 #' \itemize{
 ##'  \item{\strong{problem}}{: a numeric identifier for the $PROBLEM associated with the code.}
 ##'  \item{\strong{level}}{: a unique numeric identifier to each subroutine block associated with the code.}
@@ -24,7 +24,7 @@
 ##' }
 #' @examples
 #' \dontrun{
-#' mod_file <- read_nm_model(dir = '../models/pk/', runno = '001')
+#' nm_model <- read_nm_model(dir = '../models/pk/', runno = '001')
 #' }
 #' @export
 read_nm_model <- function(file    = NULL,
@@ -121,7 +121,8 @@ read_nm_model <- function(file    = NULL,
   model <- tidyr::replace_na(model, replace = list(code = '', comment = ''))
   
   structure(model, 
-            file  = basename(file),
-            dir   = dirname(file),
-            class = c('mod_file', 'tbl_df', 'tbl', 'data.frame'))
+            file = basename(file),
+            dir = dirname(file),
+            software = 'nonmem',
+            class = c('model', 'tbl_df', 'tbl', 'data.frame'))
 }

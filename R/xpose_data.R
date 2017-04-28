@@ -10,7 +10,7 @@
 #' @param rounding Number of significant digits to be used on model info numerical
 #' values (eg. OFV, shrinkage).
 #' @param gg_theme A ggplot2 complete theme object (eg. \code{theme_classic()}).
-#' @param xp_theme A xpose theme or vector of modifications of the xpose theme#' \code{runno} and \code{ext}.
+#' @param xp_theme A xpose theme or vector of modifications of the xpose theme' \code{runno} and \code{ext}.
 #' @param verbose Logical, if \code{TRUE} messages are printed to the console.
 #'
 #' @examples
@@ -55,11 +55,11 @@ xpose_data <- function(runno       = NULL,
   }
 
   # Import model
-  mod_file  <- read_nm_model(file = file_full)
+  model  <- read_nm_model(file = file_full)
 
   # Import estimation tables
   msg('Looking for NONMEM table files.', verbose)
-  tab_out <- mod_file %>% 
+  tab_out <- model %>% 
     list_nm_tables() %>%
     read_nm_tables(rm_duplicates = TRUE, index = TRUE)
 
@@ -71,13 +71,13 @@ xpose_data <- function(runno       = NULL,
 
 
   # Model info 
-  mod_info  <- list(descr      = descr(mod_file),     # Model description
+  mod_info  <- list(descr      = descr(model),     # Model description
                     dir        = dir,                 # Model directory
                     run        = mod_name,            # Model file name
                     ref        = NULL,                # Reference model
-                    input_dat  = raw_dat(mod_file),   # Model input data used
-                    nobs       = nobs(mod_file),      # Number of observations
-                    nind       = nind(mod_file),      # Number of individuals
+                    input_dat  = raw_dat(model),   # Model input data used
+                    nobs       = nobs(model),      # Number of observations
+                    nind       = nind(model),      # Number of individuals
                     nsim       = NULL,                # Number of simulations
                     ssim       = NULL,                # Simulation seed
                     niter      = NULL,                # Number of iteration
@@ -92,17 +92,17 @@ xpose_data <- function(runno       = NULL,
                     condition  = NULL,                # Condition number
                     nnpde      = NULL,                # Number of NPDE
                     snpde      = NULL,                # NPDE seed number
-                    ofv        = ofv(mod_file),       # Objective function value
-                    method     = method(mod_file),    # Estimation method or sim
-                    eps_shrink = shrinkage(mod_file, 'EPS', # Epsilon shrinkage
+                    ofv        = ofv(model),       # Objective function value
+                    method     = method(model),    # Estimation method or sim
+                    eps_shrink = shrinkage(model, 'EPS', # Epsilon shrinkage
                                            ifelse(is.null(rounding), xp_theme$rounding, rounding)),
-                    eta_shrink = shrinkage(mod_file, 'ETA', # Eta shrinkage
+                    eta_shrink = shrinkage(model, 'ETA', # Eta shrinkage
                                            ifelse(is.null(rounding), xp_theme$rounding, rounding))
   )
 
   # Create the qmd_info object ----------------------------------------------
   out <- structure(list(
-    code      = mod_file,                               # Model code
+    code      = model,                                  # Model code
     summary   = mod_info,                               # Run summary
     data      = tab_out$data,                           # Output tables
     tab_index = tab_out$index,                          # Index of tab files
