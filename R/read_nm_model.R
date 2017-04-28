@@ -76,7 +76,6 @@ read_nm_model <- function(file    = NULL,
   # Generate abreviated subroutine names
   special <- c('THETAI', 'THETAR', 'THETAP', 'THETAPV', 'OMEGAP', 'OMEGAPD', 'SIGMAP', 'SIGMAPD')
   match_special <- match(model$subroutine[model$subroutine %in% special], special)
-  
   model$subroutine[model$subroutine %in% special] <- c('thi', 'thr', 'thp', 'tpv', 
                                                        'omp', 'opd', 'sip', 'spd')[match_special]
   model$subroutine <- stringr::str_extract(tolower(model$subroutine), '[a-z]{1,3}')
@@ -84,11 +83,12 @@ read_nm_model <- function(file    = NULL,
   # Format lst part
   if (any(stringr::str_detect(model$code, 'NM-TRAN MESSAGES'))) {
     lst_rows <- which(stringr::str_detect(model$code, 'NM-TRAN MESSAGES')):nrow(model)
-    model[lst_rows, 'problem'] <- findInterval(seq_along(lst_rows), 
-                                               which(stringr::str_detect(model[lst_rows, ]$code, 
-                                                                         '^\\s*PROBLEM NO\\.:\\s*\\d+$')))
-    model[lst_rows, 'level'] <- model[lst_rows[1], ]$level + 1 + model[lst_rows, ]$problem
-    model[lst_rows, 'subroutine']  <- 'lst'
+    model[lst_rows,] <- model %>% 
+      dplyr::slice(lst_rows) %>% 
+      dplyr::mutate(problem = findInterval(seq_along(.$problem), 
+                                           which(stringr::str_detect(.$code, '^\\s*PROBLEM NO\\.:\\s*\\d+$')))) %>% 
+      dplyr::mutate(level = 1 + .$level[1] + .$problem,
+                    subroutine = 'lst')
   }
   
   # Handle other special cases
@@ -119,6 +119,7 @@ read_nm_model <- function(file    = NULL,
   
   # Remove na values and output
   tidyr::replace_na(model, replace = list(code = '', comment = '')) %>% 
+    dplyr::select(dplyr::one_of('problem', 'level', 'subroutine', 'code', 'comment')) %>% 
     structure(file     = basename(file),
               dir      = dirname(file),
               software = 'nonmem',
