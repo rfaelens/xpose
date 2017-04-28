@@ -1,8 +1,8 @@
 #' List NONMEM output tables
 #'
-#' @description List NONMEM output tables file names from a \code{mod_file} object.
+#' @description List NONMEM output tables file names from a \code{nm_model} object.
 #'
-#' @param mod_file A mod_file object generated with \code{\link{read_nm_model}}.
+#' @param nm_model An xpose nm_model object generated with \code{\link{read_nm_model}}.
 #'
 #' @seealso \code{\link{read_nm_model}}, \code{\link{read_nm_tables}}
 #' @examples
@@ -12,20 +12,38 @@
 #'   read_nm_tables()
 #'   }
 #' @export
-list_nm_tables <- function(mod_file = NULL) {
+list_nm_tables <- function(nm_model = NULL) {
   
-  if (is.null(mod_file) || !is.model.file(mod_file)) {
-    stop('Object of class `mod_file` required.', call. = FALSE)
+  if (is.null(nm_model) || !is.nm.model(nm_model)) {
+    stop('Object of class `nm_model` required.', call. = FALSE)
   }
   
-  tab_code <- mod_file[mod_file$subroutine == 'tab', ]$code
+  table_list <- nm_model %>% 
+    
+    # Get NM code associated with each table
+    dplyr::filter(.$problem > 0, .$subroutine == 'tab') %>% 
+    purrr::slice_rows(c('problem', 'level')) %>% 
+    purrr::by_slice(~stringr::str_c(.$code, collapse = ' ')) %>% 
+    purrr::set_names(c('problem', 'level', 'string')) %>% 
+    tidyr::unnest() %>% 
+    
+    # Find table names and firstonly option
+    dplyr::mutate(file = stringr::str_match(.$string, '\\s+FILE\\s*=\\s*([^\\s]+)')[, 2]) %>% 
+    dplyr::filter(!is.na(.$file)) %>% 
+    dplyr::mutate(file = file_path(attr(nm_model, 'dir'), .$file),
+                  firstonly = stringr::str_detect(.$string, 'FIRSTONLY')) %>% 
+    dplyr::select(dplyr::one_of('problem', 'file', 'firstonly'))
   
-  if (length(tab_code) == 0) return()
+  # Add simtab flag
+  sim_flag <- nm_model %>% 
+    dplyr::filter(.$problem > 0) %>% 
+    purrr::slice_rows('problem') %>% 
+    purrr::by_slice(~!any(stringr::str_detect(.$subroutine, 'est'))) %>% 
+    tidyr::unnest() %>% 
+    purrr::set_names(c('problem', 'simtab'))
   
-  tab_file <- stringr::str_match(tab_code, '\\s+FILE\\s*=\\s*([^\\s]+)')[, 2]
-  tab_file <- tab_file[!is.na(tab_file)]
-  
-  if (length(tab_file) == 0) return()
-  
-  file_path(attr(mod_file, 'dir'), tab_file)
+  # Merge and output
+  table_list %>% 
+    dplyr::left_join(sim_flag, by = 'problem') %>% 
+    structure(class = c('nm_table_list', 'tbl_df', 'tbl', 'data.frame'))
 }
