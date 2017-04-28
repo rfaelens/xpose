@@ -8,9 +8,14 @@ is.xpdb <- function(x) {
   inherits(x, 'xpose_data')
 }
 
-# Reports whether x is a model_file object
-is.model.file <- function(x) {
-  inherits(x, 'mod_file')
+# Reports whether x is a nm_model object
+is.nm.model <- function(x) {
+  inherits(x, 'nm_model')
+}
+
+# Reports whether x is a nm.table.list object
+is.nm.table.list <- function(x) {
+  inherits(x, 'nm_table_list')
 }
 
 # Check whether x is a formula

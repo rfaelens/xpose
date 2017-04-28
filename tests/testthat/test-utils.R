@@ -12,9 +12,14 @@ test_that("is.xpdb works as expected", {
   expect_true(is.xpdb(xpdb_ex_pk))
 })
 
-test_that("is.model.file works as expected", {
-  expect_false(is.model.file(xpdb_ex_pk$data))
-  expect_true(is.model.file(xpdb_ex_pk$code))
+test_that("is.nm.model works as expected", {
+  expect_false(is.nm.model(xpdb_ex_pk$data))
+  expect_true(is.nm.model(xpdb_ex_pk$code))
+})
+
+test_that("is.nm.table.list works as expected", {
+  expect_false(is.nm.table.list(xpdb_ex_pk$code))
+  expect_true(is.nm.table.list(list_nm_tables(xpdb_ex_pk$code)))
 })
 
 test_that("is.formula works as expected", {

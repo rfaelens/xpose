@@ -12,15 +12,15 @@ test_mod <- structure(
                                'ID KA CL V ALAG1 ETAS(1:LAST) ONEHEADER NOPRINT FILE= some-tab_001.csv'),
                 comment = ''),
   file  = 'run001.mod', dir   = NULL,
-  class = c('mod_file', 'tbl_df', 'tbl', 'data.frame'))
+  class = c('nm_model', 'tbl_df', 'tbl', 'data.frame'))
 
 test2_mod <- structure(test_mod[1, ],
                        file  = 'run001.mod', dir   = NULL,
-                       class = c('mod_file', 'tbl_df', 'tbl', 'data.frame'))
+                       class = c('nm_model', 'tbl_df', 'tbl', 'data.frame'))
 
 test3_mod <- structure(test_mod[1:2, ],
                        file  = 'run001.mod', dir   = NULL,
-                       class = c('mod_file', 'tbl_df', 'tbl', 'data.frame'))
+                       class = c('nm_model', 'tbl_df', 'tbl', 'data.frame'))
 
 # Tests start here --------------------------------------------------------
 
