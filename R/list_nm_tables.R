@@ -26,8 +26,7 @@ list_nm_tables <- function(nm_model = NULL) {
   
   table_list <- table_list %>% 
     purrr::slice_rows(c('problem', 'level')) %>% 
-    purrr::by_slice(~stringr::str_c(.$code, collapse = ' ')) %>% 
-    purrr::set_names(c('problem', 'level', 'string')) %>% 
+    purrr::by_slice(~stringr::str_c(.$code, collapse = ' '), .to = 'string') %>% 
     tidyr::unnest() %>% 
     dplyr::mutate(file = stringr::str_match(.$string, '\\s+FILE\\s*=\\s*([^\\s]+)')[, 2]) %>% 
     dplyr::filter(!is.na(.$file))
@@ -44,9 +43,8 @@ list_nm_tables <- function(nm_model = NULL) {
   sim_flag <- nm_model %>% 
     dplyr::filter(.$problem > 0) %>% 
     purrr::slice_rows('problem') %>% 
-    purrr::by_slice(~!any(stringr::str_detect(.$subroutine, 'est'))) %>% 
-    tidyr::unnest() %>% 
-    purrr::set_names(c('problem', 'simtab'))
+    purrr::by_slice(~!any(stringr::str_detect(.$subroutine, 'est')), .to = 'simtab') %>% 
+    tidyr::unnest()
   
   # Merge and output
   table_list %>% 
