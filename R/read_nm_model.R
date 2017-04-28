@@ -47,11 +47,10 @@ read_nm_model <- function(file    = NULL,
     stop('File ', basename(file), ' not found.', call. = FALSE) 
   }
   
-  # Import and format model file
   model <- readr::read_lines(file)
   
-  # Attempt to recover the model in .mod
   if (!any(stringr::str_detect(model, '^\\s*\\$PROB.+')) && get_extension(file) == '.lst') {
+    # Attempt to recover the model in .mod if misssing from .lst
     file <- update_extension(file, '.mod')
     
     if (file.exists(file)) {
@@ -65,21 +64,21 @@ read_nm_model <- function(file    = NULL,
     stop(basename(file), ' is not a NONMEM model.', call. = FALSE)
   }
   
-  model <- model[!stringr::str_detect(model, '^;.*$|^$')]
-  model <- stringr::str_replace_all(model, '\\t+|\\s{2,}', ' ')
-  model <- dplyr::tibble(
-    problem  = findInterval(seq_along(model), which(stringr::str_detect(model, '^\\s*\\$PROB.+'))),
-    level = findInterval(seq_along(model), which(stringr::str_detect(model, '^\\s*\\$.+'))),
-    subroutine  = stringr::str_match(model, '^\\s*\\$(\\w+)')[, 2],
-    code  = model) %>% 
+  model <- dplyr::tibble(code = model) %>% 
+    dplyr::filter(!stringr::str_detect(.$code, '^;[^;]*$|^$')) %>% 
+    dplyr::mutate(code = stringr::str_replace_all(.$code, '\\t+|\\s{2,}', ' ')) %>% 
+    dplyr::mutate(
+      problem     = findInterval(seq_along(.$code), which(stringr::str_detect(.$code, '^\\s*\\$PROB.+'))),
+      level       = findInterval(seq_along(.$code), which(stringr::str_detect(.$code, '^\\s*\\$.+'))),
+      subroutine  = stringr::str_match(.$code, '^\\s*\\$(\\w+)')[, 2]) %>% 
     tidyr::fill(dplyr::one_of('subroutine'))
   
   # Generate abreviated subroutine names
-  special <- c('THETAI', 'THETAR', 'THETAP', 'THETAPV', 
-               'OMEGAP', 'OMEGAPD', 'SIGMAP', 'SIGMAPD')
-  model$subroutine[model$subroutine %in% special] <-
-    c('thi', 'thr', 'thp', 'tpv', 
-      'omp', 'opd', 'sip', 'spd')[match(model$subroutine[model$subroutine %in% special], special)]
+  special <- c('THETAI', 'THETAR', 'THETAP', 'THETAPV', 'OMEGAP', 'OMEGAPD', 'SIGMAP', 'SIGMAPD')
+  match_special <- match(model$subroutine[model$subroutine %in% special], special)
+  
+  model$subroutine[model$subroutine %in% special] <- c('thi', 'thr', 'thp', 'tpv', 
+                                                       'omp', 'opd', 'sip', 'spd')[match_special]
   model$subroutine <- stringr::str_extract(tolower(model$subroutine), '[a-z]{1,3}')
   
   # Format lst part
@@ -92,6 +91,7 @@ read_nm_model <- function(file    = NULL,
     model[lst_rows, 'subroutine']  <- 'lst'
   }
   
+  # Handle other special cases
   if (any(stringr::str_detect(model$code, '#CPUT'))) {
     cput_row <- which(stringr::str_detect(model$code, '#CPUT'))
     model[cput_row, 'problem'] <- 0
@@ -117,12 +117,10 @@ read_nm_model <- function(file    = NULL,
   model[code_rows, 'comment'] <- stringr::str_match(model[code_rows, ]$code, ';\\s*([^;]*)$')[, 2]
   model[code_rows, 'code'] <- stringr::str_replace(model[code_rows, ]$code, '\\s*;.*$', '')
   
-  # Remove na values
-  model <- tidyr::replace_na(model, replace = list(code = '', comment = ''))
-  
-  structure(model, 
-            file = basename(file),
-            dir = dirname(file),
-            software = 'nonmem',
-            class = c('model', 'tbl_df', 'tbl', 'data.frame'))
+  # Remove na values and output
+  tidyr::replace_na(model, replace = list(code = '', comment = '')) %>% 
+    structure(file     = basename(file),
+              dir      = dirname(file),
+              software = 'nonmem',
+              class    = c('nm_model', 'tbl_df', 'tbl', 'data.frame'))
 }

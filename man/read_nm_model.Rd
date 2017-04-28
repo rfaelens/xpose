@@ -22,7 +22,7 @@ read_nm_model(file = NULL, runno = NULL, dir = NULL, prefix = "run",
 \item{verbose}{Logical, if \code{TRUE} messages are printed to the console.}
 }
 \value{
-A \code{\link[dplyr]{tibble}} of class \code{mod_file} containing the following columns: 
+A \code{\link[dplyr]{tibble}} of class \code{model} containing the following columns: 
 \itemize{
  \item{\strong{problem}}{: a numeric identifier for the $PROBLEM associated with the code.}
  \item{\strong{level}}{: a unique numeric identifier to each subroutine block associated with the code.}
@@ -39,7 +39,7 @@ Parse NONMEM model files in R format
 }
 \examples{
 \dontrun{
-mod_file <- read_nm_model(dir = '../models/pk/', runno = '001')
+nm_model <- read_nm_model(dir = '../models/pk/', runno = '001')
 }
 }
 \seealso{
