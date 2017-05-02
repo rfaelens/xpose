@@ -15,6 +15,7 @@ reference:
     desc:  Add, customize themes or template titles.
     contents:
     - template_titles
+    - xpose_labs
     - update_themes
     - theme_xp_default
     - theme_xp_xpose4
