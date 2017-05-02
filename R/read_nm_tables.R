@@ -114,7 +114,7 @@ read_args <- function(x, verbose, col_types, ...) {
                           TRUE ~ 'table')
   skip <- dplyr::if_else(stringr::str_detect(top[1], 'TABLE NO\\.\\s+\\d'), 1, 0)
   header <- dplyr::if_else(stringr::str_detect(top[1 + skip], '[A-z]{2,}+'), TRUE, FALSE)
-  msg(c(basename(x$file), 'has no header. These tables are not supported in xpose'), verbose = !header & verbose)
+  msg(c(basename(x$file), ' has no header. Such tables are not supported by xpose'), verbose = !header & verbose)
   dplyr::tibble(fun = read_funs(fun),
                 params = list(list(file = x$file, skip = skip, 
                                    col_names = header, col_types = col_types, ...)))
