@@ -44,15 +44,22 @@ read_nm_tables <- function(files = NULL,
   user_mode <- !is.nm.table.list(files)
   
   tables <- files %>% 
-    dplyr::filter(file.exists(.$file)) %>% 
+    dplyr::filter(file.exists(.$file))
+  
+  msg(c('Reading:\n', paste0(' - $prob no.', tables$problem, ': ', basename(tables$file),
+                             dplyr::if_else(tables$firstonly, ' (firstonly)', ''),
+                             collapse = '\n'), '\n\nImport messages:'), verbose)
+  
+  tables <- tables %>% 
     purrr::by_row(~readr::read_lines(file = .$file, n_max = 3), .to = 'top') %>%
     purrr::by_row(read_args, verbose, .collate = 'rows', ...) %>%
     dplyr::mutate(name = basename(.$file)) %>% 
     dplyr::select(dplyr::one_of('problem', 'name', 'simtab', 'firstonly', 'fun', 'params'))
   
-  msg(c('Reading:\n', paste0(' - $prob no.', tables$problem, ': ', tables$name,
-                             dplyr::if_else(tables$firstonly, ' (firstonly)', ''),
-                             collapse = '\n'), '\n\nImport messages:'), verbose)
+  if (nrow(tables) == 0) {
+    msg('\nNo table imported.', verbose)
+    return() 
+  }
   
   tables <- tables %>% 
     dplyr::bind_cols(tables %>% 
@@ -73,12 +80,22 @@ read_nm_tables <- function(files = NULL,
     purrr::slice_rows(c('problem', 'simtab', 'firstonly')) %>%  
     purrr::by_slice(combine_tables, verbose, .collate = 'rows')
   
+  if (nrow(tables) == 0) {
+    msg('\nNo table imported.', verbose)
+    return() 
+  }
+  
   # Merge firsonly tables with main tables
   if (any(tables$firstonly)) {
     msg(' - Consolidating tables with `firstonly`', verbose)
     tables <- tables %>%
       purrr::slice_rows(c('problem', 'simtab')) %>%
       purrr::by_slice(merge_firstonly, verbose, .collate = 'rows')
+  }
+  
+  if (nrow(tables) == 0) {
+    msg('\nNo table imported.', verbose)
+    return() 
   }
   
   # Remove duplicated columns to decrease xpdb size
@@ -115,7 +132,7 @@ read_args <- function(x, verbose, col_types, ...) {
   header <- dplyr::if_else(stringr::str_detect(top[1 + skip], '[A-z]{2,}+'), TRUE, FALSE)
   
   if (!header) {
-    msg(c('Dropping: ', basename(x$file), ' due to absence of headers.'), verbose = !header & verbose)
+    msg(c(' - Dropped: ', basename(x$file), ' due to absence of headers.'), verbose = !header & verbose)
     return(dplyr::tibble(fun = list(), params = list()))
   }
   
@@ -126,7 +143,7 @@ read_args <- function(x, verbose, col_types, ...) {
 
 combine_tables <- function(x, verbose) {
   if (length(unique(x$nrow)) > 1) {
-    msg(c(' - Dropping: ', stringr::str_c(x$name, collapse = ', '), 
+    msg(c(' - Dropped: ', stringr::str_c(x$name, collapse = ', '), 
           ' due to missmatch in row number.'), verbose)
     return(dplyr::tibble(data = list(), index = list()))
     
