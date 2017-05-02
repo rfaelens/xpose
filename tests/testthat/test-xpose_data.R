@@ -19,7 +19,7 @@ test_that("properly creates the xpdb when using the file argument", {
   expect_true(inherits(xpdb_1, 'xpose_data'))
   
   xpdb_1$summary$dir <- "analysis/models/pk/" # Path has to be corrected for comparison
-  expect_equal(xpdb_1, xpdb_ex_pk)
+  expect_identical(xpdb_1, xpdb_ex_pk)
 })
 
 test_that("properly creates the xpdb when using the runno argument", {
@@ -27,5 +27,5 @@ test_that("properly creates the xpdb when using the runno argument", {
   expect_true(inherits(xpdb_2, 'xpose_data'))
   
   xpdb_2$summary$dir <- "analysis/models/pk/" # Path has to be corrected for comparison
-  expect_equal(xpdb_2, xpdb_ex_pk)
+  expect_identical(xpdb_2, xpdb_ex_pk)
 })

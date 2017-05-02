@@ -4,16 +4,16 @@
 \alias{read_nm_tables}
 \title{NONMEM output table import function}
 \usage{
-read_nm_tables(files = NULL, rm_duplicates = TRUE, index = FALSE,
+read_nm_tables(files = NULL, combined = TRUE, rm_duplicates = TRUE,
   verbose = TRUE, ...)
 }
 \arguments{
-\item{files}{Path to the files.}
+\item{files}{A character vector of path to the files or a \code{nm_table_list} file created with \code{list_nm_tables}.}
+
+\item{combined}{Logical value indicating whether multiple tables should be combined into a single one. If the number of rows 
+does not match an error will be returned.}
 
 \item{rm_duplicates}{Logical value indicating whether duplicated columns should be removed.}
-
-\item{index}{Logical value indiacating whether the data should be returned as a simple data.frame or 
-a list containing the data and an index of the colum names.}
 
 \item{verbose}{Logical, if \code{TRUE} messages are printed to the console.}
 
@@ -29,6 +29,6 @@ a single \code{data.frame}.
 }
 \examples{
 \dontrun{
-data <- read_nm_tables(files = '../models/pk/sdtab101')
+data <- read_nm_tables(files = 'inst/extdata/sdtab001')
 }
 }

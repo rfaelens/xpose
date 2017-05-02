@@ -18,6 +18,7 @@
 #' xpdb <- xpose_data(dir = '../models/pk/', runno = '001')
 #' }
 #' @import ggplot2
+#' @importFrom purrr %>%
 #' @export
 xpose_data <- function(runno       = NULL,
                        dir         = NULL,
@@ -61,8 +62,14 @@ xpose_data <- function(runno       = NULL,
   msg('Looking for NONMEM table files.', verbose)
   tab_out <- model %>% 
     list_nm_tables() %>%
-    read_nm_tables(rm_duplicates = TRUE, index = TRUE)
+    read_nm_tables()
 
+  ####### Temp ################
+  # Quick fix before rewriting xpose_data
+  data  <- tab_out$data[[1]]
+  index <- tab_out$index[[1]]
+  #############################
+  
   # Import simulation tables
   #msg('Looking for NONMEM simulation table files.', verbose)
   
@@ -104,8 +111,8 @@ xpose_data <- function(runno       = NULL,
   out <- structure(list(
     code      = model,                                  # Model code
     summary   = mod_info,                               # Run summary
-    data      = tab_out$data,                           # Output tables
-    tab_index = tab_out$index,                          # Index of tab files
+    data      = data,                                   # Output tables
+    tab_index = index,                                  # Index of tab files
     gg_theme  = gg_theme,                               # ggplot theme
     xp_theme  = xp_theme                                # xpose theme
   ), 
