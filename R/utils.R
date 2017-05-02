@@ -18,6 +18,11 @@ is.nm.table.list <- function(x) {
   inherits(x, 'nm_table_list')
 }
 
+# Adds nm_table_list attribute to an object
+as.nm.table.list <- function(x) {
+  structure(x, class = c('nm_table_list', class(x)))
+}
+
 # Check whether x is a formula
 is.formula <- function(x) {
   inherits(x, 'formula')
