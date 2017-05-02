@@ -46,14 +46,13 @@ read_nm_tables <- function(files = NULL,
   tables <- files %>% 
     dplyr::filter(file.exists(.$file)) %>% 
     purrr::by_row(~readr::read_lines(file = .$file, n_max = 3), .to = 'top') %>%
-    purrr::by_row(read_args, verbose, .collate = 'rows') %>% #, ...) %>%
+    purrr::by_row(read_args, verbose, .collate = 'rows', ...) %>%
     dplyr::mutate(name = basename(.$file)) %>% 
     dplyr::select(dplyr::one_of('problem', 'name', 'simtab', 'firstonly', 'fun', 'params'))
   
-  msg(c('Reading:\n', paste0(' - ', tables$name, '\t(prob no. ', tables$problem, 
-                             dplyr::if_else(tables$simtab, ', simtab', ''),
-                             dplyr::if_else(tables$firstonly, ', firstonly', ''),
-                             ')', collapse = '\n')), verbose)
+  msg(c('Reading:\n', paste0(' - $prob no.', tables$problem, ': ', tables$name,
+                             dplyr::if_else(tables$firstonly, ' (firstonly)', ''),
+                             collapse = '\n'), '\n\nImport messages:'), verbose)
   
   tables <- tables %>% 
     dplyr::bind_cols(tables %>% 
@@ -76,7 +75,7 @@ read_nm_tables <- function(files = NULL,
   
   # Merge firsonly tables with main tables
   if (any(tables$firstonly)) {
-    msg('Consolidating tables with `firstonly`', verbose)
+    msg(' - Consolidating tables with `firstonly`', verbose)
     tables <- tables %>%
       purrr::slice_rows(c('problem', 'simtab')) %>%
       purrr::by_slice(merge_firstonly, verbose, .collate = 'rows')
@@ -114,7 +113,12 @@ read_args <- function(x, verbose, col_types, ...) {
                           TRUE ~ 'table')
   skip <- dplyr::if_else(stringr::str_detect(top[1], 'TABLE NO\\.\\s+\\d'), 1, 0)
   header <- dplyr::if_else(stringr::str_detect(top[1 + skip], '[A-z]{2,}+'), TRUE, FALSE)
-  msg(c(basename(x$file), ' has no header. Such tables are not supported by xpose'), verbose = !header & verbose)
+  
+  if (!header) {
+    msg(c('Dropping: ', basename(x$file), ' due to absence of headers.'), verbose = !header & verbose)
+    return(dplyr::tibble(fun = list(), params = list()))
+  }
+  
   dplyr::tibble(fun = read_funs(fun),
                 params = list(list(file = x$file, skip = skip, 
                                    col_names = header, col_types = col_types, ...)))
@@ -122,9 +126,8 @@ read_args <- function(x, verbose, col_types, ...) {
 
 combine_tables <- function(x, verbose) {
   if (length(unique(x$nrow)) > 1) {
-    msg(c('Missmatch in the number of rows between: ', 
-          stringr::str_c(x$name, collapse = ', '), 
-          '. These tables were dropped.'), verbose)
+    msg(c(' - Dropping: ', stringr::str_c(x$name, collapse = ', '), 
+          ' due to missmatch in row number.'), verbose)
     return(dplyr::tibble(data = list(), index = list()))
     
   }
@@ -144,13 +147,18 @@ merge_firstonly <- function(x, verbose) {
     # No merge needed
     return(dplyr::tibble(data = x$data, index = x$index))
   } else if (nrow(x) != 2) {
-    msg(c('Something went wrong while consolidating : ', 
+    msg(c('   * Something went wrong while consolidating: ', 
           paste0(x[x$firstonly == TRUE, ]$index[[1]]$tables, 
                  collapse = ', ')), verbose) 
     return(dplyr::tibble(data = list(), index = list()))
   }
-  dplyr::tibble(data = list(dplyr::full_join(x = x$data[x$firstonly == FALSE][[1]], 
-                                             y = x$data[x$firstonly == TRUE][[1]])),
+  xdata   <- x$data[x$firstonly == FALSE][[1]]
+  ydata   <- x$data[x$firstonly == TRUE][[1]]
+  by_vars <- intersect(colnames(xdata), colnames(ydata))
+  msg(c('   * Joining by: ', paste0(by_vars, collapse = ', ')), verbose)
+  dplyr::tibble(data = list(dplyr::left_join(x  = xdata, 
+                                             y  = ydata,
+                                             by = by_vars)),
                 index = x$index %>% 
                   dplyr::bind_rows() %>% 
                   list())
