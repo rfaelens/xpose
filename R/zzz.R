@@ -2,9 +2,9 @@
 
   if (!interactive()) return()
   
-  text <- c('The xpose is under active development, for updates, checkout: https://guiastrennec.github.io/xpose',
-            'Need a new plot? Suggest ideas for the new xpose on github: https://github.com/guiastrennec/xpose',
-            'Do you like the new xpose? Give us some feedback on github: https://github.com/guiastrennec/xpose')
+  text <- c('The xpose is under active development, for updates checkout:\nhttps://guiastrennec.github.io/xpose',
+            'Need a new plot? Suggest ideas for the new xpose on github:\nhttps://github.com/guiastrennec/xpose',
+            'Do you like the new xpose? Give us some feedback on github:\nhttps://github.com/guiastrennec/xpose')
   
   packageStartupMessage(sample(text, size = 1))
 }
