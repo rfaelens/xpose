@@ -36,9 +36,10 @@ gridExtra::grid.arrange(
 The option `guides` can enable (`TRUE`) or disable (`FALSE`) the visual guides on the graphs such as unity line on the `dv_vs_ipred()` plot or horizontal lines on `cwres_vs_idv()`.
 
 
-### Titles
+### Labels
 All xpose plots have by default an informative title, subtitle and caption. For example all plots using individual model predictions (IPRED) will display the shrinkage of the epsilons. These titles can easily be edited as templates using keywords which will be replaced by their actual value stored in the summary level of the `xpdb` object when rendering the plots. Keywords are defined by a word preceded by a `@` e.g. `'@ofv'`. A list of all available keyword can be accessed via `help('template_titles')`. Finally, the title, subtitle or caption can be disabled by setting them to `FALSE`.
 
+#### From the plot functions
 ```{r demo titles}
 # Using template titles
 dv_vs_ipred(xpdb,
@@ -48,6 +49,18 @@ dv_vs_ipred(xpdb,
 
 # Disabling all titles
 dv_vs_ipred(xpdb, title = FALSE, subtitle = FALSE, caption = FALSE)
+```
+
+#### Using the `xpose_labs` function
+Labels can also modified after the plot creation using the `xpose_labs` function in combination with the ggplot2 `+` operator.
+```{r demo xpose_labs}
+dv_vs_ipred(xpdb) +
+  xpose_labs(title = 'This is @run',
+             subtitle = NULL,
+             caption = 'Based on @nobs observations and @nind subjects',
+             x = 'Individual model predictions (IPRED)',
+             y = 'Observations (DV)')
+
 ```
 
 
@@ -138,9 +151,9 @@ xpdb <- update_themes(xpdb     = xpdb,
                       xp_theme = c(point_color = 'dodgerblue4',
                                    line_color  = 'dodgerblue4')) 
 ```
+
                                  
 #### Examples of `gg_theme` themes:
-
 xpose brings two additional themes (`theme_readable()` and `theme_bw2()`), to those available in `ggplot2`.
 
 ```{r demo gg_theme, echo = FALSE, fig.height = 6, fig.width = 6, out.width = '75%'}
@@ -151,7 +164,6 @@ gridExtra::grid.arrange(
   dv_vs_ipred(xpdb, subtitle = 'theme_dark()', title = FALSE, caption = FALSE) + theme_dark(),
   ncol = 2)
 ```
-
 
 #### Examples of `xp_theme` themes:
 
