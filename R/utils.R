@@ -23,6 +23,11 @@ as.nm.table.list <- function(x) {
   structure(x, class = c('nm_table_list', class(x)))
 }
 
+# Reports whether x is an xpose_plot object
+is.xpose.plot <- function(x) {
+  inherits(x, 'xpose_plot')
+}
+
 # Check whether x is a formula
 is.formula <- function(x) {
   inherits(x, 'formula')
