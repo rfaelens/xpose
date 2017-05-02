@@ -114,6 +114,7 @@ read_nm_tables <- function(files = NULL,
   tables
 }
 
+
 read_funs <- function(fun) {
   c(csv = readr::read_csv,
     csv2 = readr::read_csv2,
@@ -124,15 +125,22 @@ read_funs <- function(fun) {
 read_args <- function(x, verbose, col_types, ...) {
   if (missing(col_types)) col_types <- readr::cols(.default = 'd')
   top <- x$top[[1]]
+  
+  if (is.na(top[3])) {
+    msg(c(' - Dropped: ', basename(x$file), ' due to unexpected data format'), verbose = verbose)
+    return(dplyr::tibble(fun = list(), params = list()))
+  }
+  
   fun <- dplyr::case_when(stringr::str_detect(top[3], '\\d,\\d+E[+-]\\d+\\s*;') ~ 'csv2',
                           stringr::str_detect(top[3], '\\d.\\d+E[+-]\\d+\\s*,') ~ 'csv', 
                           stringr::str_detect(top[3], '\\d,\\d+E[+-]\\d+\\s+') ~ 'table2',
                           TRUE ~ 'table')
+  
   skip <- dplyr::if_else(stringr::str_detect(top[1], 'TABLE NO\\.\\s+\\d'), 1, 0)
   header <- dplyr::if_else(stringr::str_detect(top[1 + skip], '[A-z]{2,}+'), TRUE, FALSE)
   
   if (!header) {
-    msg(c(' - Dropped: ', basename(x$file), ' due to absence of headers.'), verbose = !header & verbose)
+    msg(c(' - Dropped: ', basename(x$file), ' due to missing headers.'), verbose = !header & verbose)
     return(dplyr::tibble(fun = list(), params = list()))
   }
   

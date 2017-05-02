@@ -39,7 +39,11 @@ test_that("message is returned when missing table header", {
   
   # Test with skip = 1 and header = FALSE
   writeLines(text = test_file[c(1, 3:4)], con = files[1])
-  expect_message(read_nm_tables(files = files[1], verbose = TRUE), regexp = 'Dropped.+absence of headers')
+  expect_message(read_nm_tables(files = files[1], verbose = TRUE), regexp = 'Dropped.+missing headers')
+})
+
+test_that("dot arguments are properly passed to readr", {
+  expect_equal(nrow(read_nm_tables('sdtab001', n_max = 3, verbose = FALSE)), 3)
 })
 
 test_that("returns a tibble when user mode is used", {
