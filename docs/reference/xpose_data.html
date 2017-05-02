@@ -109,13 +109,17 @@
     <p>Import NONMEM output into a R database</p>
     
 
-    <pre class="usage"><span class='fu'>xpose_data</span>(<span class='kw'>runno</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"run"</span>, <span class='kw'>ext</span> <span class='kw'>=</span> <span class='st'>".lst"</span>,
-  <span class='kw'>file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rounding</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>gg_theme</span> <span class='kw'>=</span> <span class='fu'><a href='theme_readable.html'>theme_readable</a></span>(),
+    <pre class="usage"><span class='fu'>xpose_data</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>runno</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"run"</span>,
+  <span class='kw'>ext</span> <span class='kw'>=</span> <span class='st'>".lst"</span>, <span class='kw'>rounding</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>gg_theme</span> <span class='kw'>=</span> <span class='fu'><a href='theme_readable.html'>theme_readable</a></span>(),
   <span class='kw'>xp_theme</span> <span class='kw'>=</span> <span class='fu'><a href='theme_xp_default.html'>theme_xp_default</a></span>(), <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>file</th>
+      <td><p>Full file name as an alternative to <code>dir</code>, <code>prefix</code>.</p></td>
+    </tr>
     <tr>
       <th>runno</th>
       <td><p>Run number to be evaluated.</p></td>
@@ -131,10 +135,6 @@
     <tr>
       <th>ext</th>
       <td><p>Model file extention.</p></td>
-    </tr>
-    <tr>
-      <th>file</th>
-      <td><p>Full file name as an alternative to <code>dir</code>, <code>prefix</code>.</p></td>
     </tr>
     <tr>
       <th>rounding</th>

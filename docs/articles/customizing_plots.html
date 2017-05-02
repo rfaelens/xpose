@@ -98,10 +98,13 @@
 <a href="#visual-guides" class="anchor"></a>Visual guides</h3>
 <p>The option <code>guides</code> can enable (<code>TRUE</code>) or disable (<code>FALSE</code>) the visual guides on the graphs such as unity line on the <code><a href="../reference/dv_vs_ipred.html">dv_vs_ipred()</a></code> plot or horizontal lines on <code><a href="../reference/cwres_vs_idv.html">cwres_vs_idv()</a></code>.</p>
 </div>
-<div id="titles" class="section level3">
+<div id="labels" class="section level3">
 <h3 class="hasAnchor">
-<a href="#titles" class="anchor"></a>Titles</h3>
+<a href="#labels" class="anchor"></a>Labels</h3>
 <p>All xpose plots have by default an informative title, subtitle and caption. For example all plots using individual model predictions (IPRED) will display the shrinkage of the epsilons. These titles can easily be edited as templates using keywords which will be replaced by their actual value stored in the summary level of the <code>xpdb</code> object when rendering the plots. Keywords are defined by a word preceded by a <code>@</code> e.g. <code>'@ofv'</code>. A list of all available keyword can be accessed via <code>help('template_titles')</code>. Finally, the title, subtitle or caption can be disabled by setting them to <code>FALSE</code>.</p>
+<div id="from-the-plot-functions" class="section level4">
+<h4 class="hasAnchor">
+<a href="#from-the-plot-functions" class="anchor"></a>From the plot functions</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Using template titles</span>
 <span class="kw"><a href="../reference/dv_vs_ipred.html">dv_vs_ipred</a></span>(xpdb,
             <span class="dt">title    =</span> <span class="st">'DV vs. IPRED (@run, obj: @ofv)'</span>,
@@ -111,6 +114,19 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Disabling all titles</span>
 <span class="kw"><a href="../reference/dv_vs_ipred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">title =</span> <span class="ot">FALSE</span>, <span class="dt">subtitle =</span> <span class="ot">FALSE</span>, <span class="dt">caption =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <p><img src="customizing_plots_files/figure-html/demo%20titles-2.png" width="50%" style="display: block; margin: auto;"></p>
+</div>
+<div id="using-the-xpose_labs-function" class="section level4">
+<h4 class="hasAnchor">
+<a href="#using-the-xpose_labs-function" class="anchor"></a>Using the <code>xpose_labs</code> function</h4>
+<p>Labels can also modified after the plot creation using the <code>xpose_labs</code> function in combination with the ggplot2 <code>+</code> operator.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dv_vs_ipred.html">dv_vs_ipred</a></span>(xpdb) +
+<span class="st">  </span><span class="kw"><a href="../reference/xpose_labs.html">xpose_labs</a></span>(<span class="dt">title =</span> <span class="st">'This is @run'</span>,
+             <span class="dt">subtitle =</span> <span class="ot">NULL</span>,
+             <span class="dt">caption =</span> <span class="st">'Based on @nobs observations and @nind subjects'</span>,
+             <span class="dt">x =</span> <span class="st">'Individual model predictions (IPRED)'</span>,
+             <span class="dt">y =</span> <span class="st">'Observations (DV)'</span>)</code></pre></div>
+<p><img src="customizing_plots_files/figure-html/demo%20xpose_labs-1.png" width="50%" style="display: block; margin: auto;"></p>
+</div>
 </div>
 <div id="modify-aesthetics" class="section level3">
 <h3 class="hasAnchor">
