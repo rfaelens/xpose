@@ -2,11 +2,11 @@
 #'
 #' @description Import NONMEM output into a R database
 #'
+#' @param file Full file name as an alternative to \code{dir}, \code{prefix}.
 #' @param runno Run number to be evaluated.
 #' @param dir Location of the model files.
 #' @param prefix Prefix of the model file name.
 #' @param ext Model file extention.
-#' @param file Full file name as an alternative to \code{dir}, \code{prefix}.
 #' @param rounding Number of significant digits to be used on model info numerical
 #' values (eg. OFV, shrinkage).
 #' @param gg_theme A ggplot2 complete theme object (eg. \code{theme_classic()}).
@@ -20,11 +20,11 @@
 #' @import ggplot2
 #' @importFrom purrr %>%
 #' @export
-xpose_data <- function(runno       = NULL,
+xpose_data <- function(file        = NULL,
+                       runno       = NULL,
                        dir         = NULL,
                        prefix      = 'run',
                        ext         = '.lst',
-                       file        = NULL,
                        rounding    = NULL,
                        gg_theme    = theme_readable(),
                        xp_theme    = theme_xp_default(),
@@ -62,6 +62,8 @@ xpose_data <- function(runno       = NULL,
   msg('Looking for NONMEM table files.', verbose)
   tab_out <- model %>% 
     list_nm_tables() %>%
+    #filter(.$simtab == FALSE) %>% 
+    #as.nm.table.list() %>% 
     read_nm_tables()
 
   ####### Temp ################
@@ -71,7 +73,7 @@ xpose_data <- function(runno       = NULL,
   #############################
   
   # Import simulation tables
-  #msg('Looking for NONMEM simulation table files.', verbose)
+  msg('Looking for NONMEM simulation table files.', verbose)
   
   # Model file name
   mod_name <- gsub('\\.\\w+$', '', basename(file_full))

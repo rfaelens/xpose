@@ -4,11 +4,13 @@
 \alias{xpose_data}
 \title{Import NONMEM output into R}
 \usage{
-xpose_data(runno = NULL, dir = NULL, prefix = "run", ext = ".lst",
-  file = NULL, rounding = NULL, gg_theme = theme_readable(),
+xpose_data(file = NULL, runno = NULL, dir = NULL, prefix = "run",
+  ext = ".lst", rounding = NULL, gg_theme = theme_readable(),
   xp_theme = theme_xp_default(), verbose = TRUE)
 }
 \arguments{
+\item{file}{Full file name as an alternative to \code{dir}, \code{prefix}.}
+
 \item{runno}{Run number to be evaluated.}
 
 \item{dir}{Location of the model files.}
@@ -16,8 +18,6 @@ xpose_data(runno = NULL, dir = NULL, prefix = "run", ext = ".lst",
 \item{prefix}{Prefix of the model file name.}
 
 \item{ext}{Model file extention.}
-
-\item{file}{Full file name as an alternative to \code{dir}, \code{prefix}.}
 
 \item{rounding}{Number of significant digits to be used on model info numerical
 values (eg. OFV, shrinkage).}
