@@ -52,7 +52,7 @@ read_nm_tables <- function(files = NULL,
   
   tables <- tables %>% 
     purrr::by_row(~readr::read_lines(file = .$file, n_max = 3), .to = 'top') %>%
-    purrr::by_row(read_args, verbose, .collate = 'rows', ...) %>%
+    purrr::by_row(~read_args(x = . , verbose, ...), .collate = 'rows') %>%
     dplyr::mutate(name = basename(.$file)) %>% 
     dplyr::select(dplyr::one_of('problem', 'name', 'simtab', 'firstonly', 'fun', 'params'))
   
