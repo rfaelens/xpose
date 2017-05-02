@@ -22,6 +22,10 @@ test_that("is.nm.table.list works as expected", {
   expect_true(is.nm.table.list(list_nm_tables(xpdb_ex_pk$code)))
 })
 
+test_that("as.nm.table.list works as expected", {
+  expect_true(is.nm.table.list(as.nm.table.list(xpdb_ex_pk$code)))
+})
+
 test_that("is.formula works as expected", {
   expect_false(is.formula('x~y'))
   expect_true(is.formula(x~y))
