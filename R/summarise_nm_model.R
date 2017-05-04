@@ -1,10 +1,11 @@
-summarise_nm_model <- function(file, model_code, rounding) {
-  list(descr      = descr(model_code),                      # Model description
+summarise_nm_model <- function(file, model_code, software, rounding) {
+  list(software   = software,                               # Software name
+       descr      = descr(model_code),                      # Model description
        file       = basename(file),                         # Model file
        run        = update_extension(basename(file), ''),   # Model file name
        dir        = dirname(file),                          # Model directory
        ref        = NULL,                                   # Reference model
-       inpdat     = raw_dat(model_code),                    # Model input data used
+       indat      = raw_dat(model_code),                    # Model input data used
        nobs       = nobs(model_code),                       # Number of observations
        nind       = nind(model_code),                       # Number of individuals
        nsim       = NULL,                                   # Number of simulations
