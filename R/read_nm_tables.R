@@ -67,7 +67,7 @@ read_nm_tables <- function(files = NULL,
                        {purrr::invoke_map(.$fun, .$params)} %>%
                        dplyr::tibble(data = .))
   
-  if (!combined) return(purrr::set_names(x = purrr::map(tables$data, stats::na.omit), nm = tables$name))
+  if (!combined) return(purrr::set_names(x = purrr::map(tables$data, tidyr::drop_na()), nm = tables$name))
   
   # Index datasets
   tables <- dplyr::bind_cols(tables,
@@ -159,7 +159,7 @@ combine_tables <- function(x, verbose) {
   dplyr::tibble(data = x$data %>%
                   dplyr::bind_cols() %>%
                   purrr::set_names(make.unique(names(.))) %>%
-                  stats::na.omit() %>%
+                  tidyr::drop_na() %>%
                   list(),
                 
                 # Get around purrr droping list names
