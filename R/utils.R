@@ -58,3 +58,7 @@ get_extension <- function(x) {
 update_extension <- function(x, ext) {
   stringr::str_replace(x, '\\.[[:alnum:]]+$', ext)
 }
+
+#' @importFrom purrr %>%
+#' @export
+purrr::`%>%`
