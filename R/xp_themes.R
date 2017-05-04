@@ -9,11 +9,6 @@
 #' \item \code{theme_xp_xpose4}: An xp_theme that makes xpose look like xpose4.
 #' }
 #'
-#' @param base_size Base font size.
-#' @param base_family Base font family.
-#' @param legend_position The position of legends defined as 'none', 'left', 
-#' 'right', 'bottom', 'top', or a two-element numeric vector.
-#'
 #' @examples
 #' \dontrun{
 #'  xpose_data(dir = 'inst/models/', runno = '001') %>%

@@ -10,14 +10,6 @@ theme_xp_default()
 
 theme_xp_xpose4()
 }
-\arguments{
-\item{base_size}{Base font size.}
-
-\item{base_family}{Base font family.}
-
-\item{legend_position}{The position of legends defined as 'none', 'left', 
-'right', 'bottom', 'top', or a two-element numeric vector.}
-}
 \description{
 xpose themes are used to consistently apply a set of preference for the plot geoms 
 (e.g. color scales, point size, etc.) whereas ggplot2 theme focus on the plot background, axes, 

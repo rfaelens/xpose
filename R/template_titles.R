@@ -38,7 +38,7 @@
 #'  \item{@eta_shrink}{Eta shrinkage}
 #'  \item{@plotfun}{Name of the plot function. Can only be used in the filename argument of \code{\link{xpose_save}}}
 #' }
-#' 
+#' @seealso \link{xpose_labs}, \link{xpose_save}
 #' @examples
 #' \dontrun{
 #' dv_vs_ipred(xpdb, 
