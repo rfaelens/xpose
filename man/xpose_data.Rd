@@ -29,9 +29,6 @@ xpose_data(file = NULL, runno = NULL, dir = NULL, prefix = "run",
 
 \item{...}{Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.}
 }
-\value{
-An xpdb object
-}
 \description{
 Gather model outputs into a R database
 }

@@ -14,7 +14,6 @@
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' @param ... Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.
 #'
-#' @return An xpdb object
 #' @examples
 #' \dontrun{
 #' xpdb <- xpose_data(dir = '../models/pk/', runno = '001')
@@ -66,7 +65,7 @@ xpose_data <- function(file     = NULL,
   
   # Generate model summary
   if (software == 'nonmem') {
-  summary <- summarise_nm_model(file, model_code, rounding = xp_theme$rounding)
+  summary <- summarise_nm_model(file, model_code, software, rounding = xp_theme$rounding)
   }
   
   structure(list(code = model_code, summary = summary, cor = NULL,
