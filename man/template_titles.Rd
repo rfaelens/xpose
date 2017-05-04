@@ -52,3 +52,6 @@ dv_vs_ipred(xpdb,
 }
 
 }
+\seealso{
+\link{xpose_labs}, \link{xpose_save}
+}
