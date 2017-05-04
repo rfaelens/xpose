@@ -2,19 +2,31 @@
 % Please edit documentation in R/xpose_labs.R
 \name{xpose_labs}
 \alias{xpose_labs}
+\alias{+.gg}
 \title{Modify labels using template titles}
 \usage{
 xpose_labs(...)
+
+\method{+}{gg}(e1, e2)
 }
 \arguments{
 \item{...}{A list of new name-value pairs. The name should either be an aesthetic, 
 or one of "title", "subtitle", or "caption". The value should be a text containing 
 \code{\link{template_titles}} keywords for the axes, plot title, subtitle or caption.}
+
+\item{e1}{An object of class \code{\link{ggplot}}, \code{xpose_plot}, or a \code{\link{theme}}.}
+
+\item{e2}{A plot component.}
 }
 \description{
-Function based on \link[ggplot2]{labs} enabling the 
-use of \code{\link{template_titles}} using the ggplot2 \code{+} operator.
+Function based on ggplot2 \link[ggplot2]{labs} enabling the 
+use of \code{\link{template_titles}} along with the ggplot2 \code{+} operator.
 }
+\section{Methods (by generic)}{
+\itemize{
+\item \code{+}: add an \code{xpose_labs} layer to an xpose plot.
+}}
+
 \examples{
 \dontrun{
 dv_vs_ipred(xpdb_ex_pk) + 
@@ -24,5 +36,5 @@ dv_vs_ipred(xpdb_ex_pk) +
 }
 }
 \seealso{
-\link[ggplot2]{ggplot2}, \link[ggplot2]{labs}
+\link[ggplot2]{ggplot2}, \link[ggplot2]{labs}, \link[ggplot2]{+.gg}
 }

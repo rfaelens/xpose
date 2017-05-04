@@ -1,13 +1,13 @@
 #' Modify labels using template titles
 #'
-#' @description Function based on \link[ggplot2]{labs} enabling the 
-#' use of \code{\link{template_titles}} using the ggplot2 \code{+} operator.
+#' @description Function based on ggplot2 \link[ggplot2]{labs} enabling the 
+#' use of \code{\link{template_titles}} along with the ggplot2 \code{+} operator.
 #'
 #' @param ... A list of new name-value pairs. The name should either be an aesthetic, 
 #' or one of "title", "subtitle", or "caption". The value should be a text containing 
 #' \code{\link{template_titles}} keywords for the axes, plot title, subtitle or caption.
 #' @export
-#' @seealso \link[ggplot2]{ggplot2}, \link[ggplot2]{labs}
+#' @seealso \link[ggplot2]{ggplot2}, \link[ggplot2]{labs}, \link[ggplot2]{+.gg}
 #' @examples
 #' \dontrun{
 #' dv_vs_ipred(xpdb_ex_pk) + 
@@ -22,16 +22,10 @@ xpose_labs <- function(...) {
   structure(args, class = "xpose_labels")
 }
 
-#' Add components to a ggplot2 or an xpose plot
-#' 
-#' @description  Function based on \link[ggplot2]{+.gg} enabling the 
-#' use of \code{\link{template_titles}} using the ggplot2 \code{+} operator.
-#' @param e1 An object of class \code{\link{ggplot}}, xpose_plot,
-#' or a \code{\link{theme}}.
-#' @param e2 A plot component
+#' @describeIn xpose_labs add an \code{xpose_labs} layer to an xpose plot.
+#' @param e1 An object of class \code{\link{ggplot}}, \code{xpose_plot}, or a \code{\link{theme}}.
+#' @param e2 A plot component.
 #' @method + gg
-#' @rdname xp-add
-#' @seealso \link[ggplot2]{ggplot2}, \link[ggplot2]{+.gg}
 #' @export
 "+.gg" <- function(e1, e2) {
   # Import internal ggplot2 functions
