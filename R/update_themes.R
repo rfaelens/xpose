@@ -5,10 +5,10 @@
 #' All plots generated with this xpdb will automatically use the
 #' defined xpose (\code{xp_theme}) and ggplot2 (\code{gg_theme}) themes.
 #'
-#' @param xpdb a xpose database object
-#' @param gg_theme a ggplot2 complete theme object (eg. \code{\link[ggplot2]{theme_classic}})
-#' @param xp_theme a xpose theme or vector of modifications of the xpose theme
-#' (eg. \code{c(point_color = 'red', line_linetype = 'dashed')})
+#' @param xpdb An \code{xpose_data} object generated with \code{\link{xpose_data}}.
+#' @param gg_theme A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).
+#' @param xp_theme An xpose theme or vector of modifications to the xpose theme
+#' (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #'
 #' @return An xpdb object

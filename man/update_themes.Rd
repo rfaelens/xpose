@@ -7,12 +7,12 @@
 update_themes(xpdb = NULL, gg_theme = NULL, xp_theme = NULL, quiet)
 }
 \arguments{
-\item{xpdb}{a xpose database object}
+\item{xpdb}{An \code{xpose_data} object generated with \code{\link{xpose_data}}.}
 
-\item{gg_theme}{a ggplot2 complete theme object (eg. \code{\link[ggplot2]{theme_classic}})}
+\item{gg_theme}{A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).}
 
-\item{xp_theme}{a xpose theme or vector of modifications of the xpose theme
-(eg. \code{c(point_color = 'red', line_linetype = 'dashed')})}
+\item{xp_theme}{An xpose theme or vector of modifications to the xpose theme
+(eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 }
