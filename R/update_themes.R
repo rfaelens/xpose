@@ -11,7 +11,6 @@
 #' (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #'
-#' @return An xpdb object
 #' @examples
 #' \dontrun{
 #' xpdb <- update_themes(xpdb     = xpdb,
