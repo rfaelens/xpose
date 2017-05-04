@@ -17,8 +17,10 @@
 #' }
 xpose_labs <- function(...) {
   args <- list(...)
+  rename_aes <- utils::getFromNamespace('rename_aes', 'ggplot2')
   if (is.list(args[[1]])) 
     args <- args[[1]]
+  args <- rename_aes(args)
   structure(args, class = "xpose_labels")
 }
 
