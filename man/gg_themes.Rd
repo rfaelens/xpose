@@ -25,9 +25,9 @@ when used in presentation or publications. These themes also bring the \code{leg
 without having to call the ggplot2 theme() function to modify a complete theme.
 
 \itemize{
-\item \code{theme_bw2} Black and white theme inspired by a theme from Gunnar Yngman.
-\item \code{theme_readable} Light grey theme, with dimed background and grid lines to 
-bring the focus on the data.
+\item \code{theme_bw2}: Black and white theme inspired by a theme from Gunnar Yngman.
+\item \code{theme_readable}: Light grey theme, with dimed background and grid lines 
+intended to bring the focus on the data.
 }
 }
 \examples{
