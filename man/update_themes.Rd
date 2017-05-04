@@ -9,7 +9,7 @@ update_themes(xpdb = NULL, gg_theme = NULL, xp_theme = NULL, quiet)
 \arguments{
 \item{xpdb}{a xpose database object}
 
-\item{gg_theme}{a ggplot2 complete theme object (eg. \code{\link[ggplot2]{theme_classic()}})}
+\item{gg_theme}{a ggplot2 complete theme object (eg. \code{\link[ggplot2]{theme_classic}})}
 
 \item{xp_theme}{a xpose theme or vector of modifications of the xpose theme
 (eg. \code{c(point_color = 'red', line_linetype = 'dashed')})}
