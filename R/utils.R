@@ -1,3 +1,7 @@
+#' @importFrom purrr %>%
+#' @export
+purrr::`%>%`
+
 # Reports whether x is an xpose theme object
 is.xp.theme <- function(x) {
   inherits(x, 'xpose_theme')
@@ -58,7 +62,3 @@ get_extension <- function(x) {
 update_extension <- function(x, ext) {
   stringr::str_replace(x, '\\.[[:alnum:]]+$', ext)
 }
-
-#' @importFrom purrr %>%
-#' @export
-purrr::`%>%`
