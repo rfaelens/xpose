@@ -5,11 +5,12 @@
 \title{Import NONMEM output into R}
 \usage{
 xpose_data(file = NULL, runno = NULL, dir = NULL, prefix = "run",
-  ext = ".lst", rounding = NULL, gg_theme = theme_readable(),
-  xp_theme = theme_xp_default(), quiet = FALSE)
+  ext = ".lst", gg_theme = theme_readable(),
+  xp_theme = theme_xp_default(), quiet = FALSE, ...)
 }
 \arguments{
-\item{file}{Full file name as an alternative to \code{dir}, \code{prefix}.}
+\item{file}{Full file name preferably a `.lst` file. Alternative argument to \code{dir}, \code{prefix},
+\code{runno} and \code{ext}.}
 
 \item{runno}{Run number to be evaluated.}
 
@@ -17,19 +18,22 @@ xpose_data(file = NULL, runno = NULL, dir = NULL, prefix = "run",
 
 \item{prefix}{Prefix of the model file name.}
 
-\item{ext}{Model file extention.}
+\item{ext}{Extension of the model file.}
 
-\item{rounding}{Number of significant digits to be used on model info numerical
-values (eg. OFV, shrinkage).}
+\item{gg_theme}{A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).}
 
-\item{gg_theme}{A ggplot2 complete theme object (eg. \code{theme_classic()}).}
-
-\item{xp_theme}{A xpose theme or vector of modifications of the xpose theme' \code{runno} and \code{ext}.}
+\item{xp_theme}{An xpose theme or vector of modifications to the xpose theme
+(eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
+
+\item{...}{Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.}
+}
+\value{
+An xpdb object
 }
 \description{
-Import NONMEM output into a R database
+Gather model outputs into a R database
 }
 \examples{
 \dontrun{
