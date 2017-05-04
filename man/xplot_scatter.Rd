@@ -7,23 +7,23 @@
 xplot_scatter(xpdb, vars = NULL, aes = NULL, group = "ID", type = "pls",
   layers = NULL, title = "@run", subtitle = NULL, caption = NULL,
   guides = TRUE, xscale = "continuous", yscale = "continuous",
-  plot_name = "xplot_scatter", ...)
+  plot_name = "xplot_scatter", quiet, prob_n, ...)
 }
 \arguments{
-\item{xpdb}{an xpose database object.}
+\item{xpdb}{An \code{xpose_data} object generated with \code{\link{xpose_data}}.}
 
-\item{vars}{the variable mapping from an aes().}
+\item{vars}{Variable mapping using the \code{\link[ggplot2]{aes}} function.}
 
 \item{aes}{xpose aesthetics (eg. \code{point_color}).}
 
-\item{group}{grouping variable to be used.}
+\item{group}{Grouping variable to be used for lines.}
 
-\item{type}{string setting the type of plot to be used points 'p',
+\item{type}{String setting the type of plot to be used points 'p',
 line 'l', smooth 's' and text 't' or any combination of the 4.}
 
-\item{layers}{a list of additional ggplot layers to be used.}
+\item{layers}{A list of additional ggplot layers to be added to the plot.}
 
-\item{title}{the main title of the plot. If NULL automated title will be generated.
+\item{title}{The main title of the plot. If \code{NULL} automated title will be generated.
 Use FALSE to remove title and subtitle.}
 
 \item{subtitle}{the plot subtitle. If NULL automated subtitle will be generated.
@@ -40,10 +40,12 @@ Use FALSE to remove caption.}
 
 \item{plot_name}{name that will be used by \code{xpose_save()} to save the plot.}
 
+\item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
+
+\item{prob_n}{Numeric, the $problem number to use for ploting. By default the data 
+is taken from the estimation problem.}
+
 \item{...}{any additional aesthetics.}
-}
-\value{
-An \code{xpose_plot}
 }
 \description{
 Manually generate scatter plots from an xpdb object.
@@ -61,6 +63,6 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 
 \examples{
 \dontrun{
-xplot_scatter(xpdb, vars = aes(x = IPRED, y = DV))
+xplot_scatter(xpdb, mapping = aes(x = IPRED, y = DV))
 }
 }

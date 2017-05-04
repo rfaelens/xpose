@@ -2,14 +2,14 @@
 #'
 #' @description Manually generate scatter plots from an xpdb object.
 #'
-#' @param xpdb an xpose database object.
-#' @param vars the variable mapping from an aes().
+#' @param xpdb An \code{xpose_data} object generated with \code{\link{xpose_data}}.
+#' @param vars Variable mapping using the \code{\link[ggplot2]{aes}} function.
 #' @param aes xpose aesthetics (eg. \code{point_color}).
-#' @param group grouping variable to be used.
-#' @param type string setting the type of plot to be used points 'p',
+#' @param group Grouping variable to be used for lines.
+#' @param type String setting the type of plot to be used points 'p',
 #' line 'l', smooth 's' and text 't' or any combination of the 4.
-#' @param layers a list of additional ggplot layers to be used.
-#' @param title the main title of the plot. If NULL automated title will be generated.
+#' @param layers A list of additional ggplot layers to be added to the plot.
+#' @param title The main title of the plot. If \code{NULL} automated title will be generated.
 #' Use FALSE to remove title and subtitle.
 #' @param subtitle the plot subtitle. If NULL automated subtitle will be generated.
 #' Use FALSE to remove subtitle.
@@ -19,6 +19,9 @@
 #' @param xscale scale type for x axis (eg. 'continuous', 'discrete', 'log10').
 #' @param yscale scale type for y axis (eg. 'continuous', 'discrete', 'log10').
 #' @param plot_name name that will be used by \code{xpose_save()} to save the plot.
+#' @param quiet Logical, if \code{FALSE} messages are printed to the console.
+#' @param prob_n Numeric, the $problem number to use for ploting. By default the data 
+#' is taken from the estimation problem.
 #' @param ... any additional aesthetics.
 #'
 #' @section Template titles:
@@ -30,10 +33,9 @@
 #' 1022 observations in 74 subjects'. The available key variables are listed under 
 #' \code{\link{template_titles}}.
 #' 
-#' @return An \code{xpose_plot}
 #' @examples
 #' \dontrun{
-#' xplot_scatter(xpdb, vars = aes(x = IPRED, y = DV))
+#' xplot_scatter(xpdb, mapping = aes(x = IPRED, y = DV))
 #' }
 #' @export
 xplot_scatter <- function(xpdb,
@@ -49,24 +51,32 @@ xplot_scatter <- function(xpdb,
                           xscale   = 'continuous',
                           yscale   = 'continuous',
                           plot_name = 'xplot_scatter',
+                          quiet,
+                          prob_n,
                           ...) {
   
   if (!is.xpdb(xpdb)) { 
-    msg('Bad input to the argument`xpdb`', quiet = FALSE)
-    return(NULL)
+    msg('Bad input to the argument`xpdb`', 
+        dplyr::if_else(missing(quiet), TRUE, quiet))
+    return()
   }
   
+  if (missing(quiet)) quiet <- xpdb$options$quiet
+  
   # Format data
-  if ('MDV' %in% colnames(xpdb$data)) {
-    data <- dplyr::filter_(.data = xpdb$data, 'MDV == 0')
-  } else if ('EVID' %in% colnames(xpdb$data)) {
-    data <- dplyr::filter_(.data = xpdb$data, 'EVID == 0')
+  if (missing(prob_n)) prob_n <- max(xpdb$data$problem)
+  if (prob_n > 1) msg(c('Using data from $problem no.', prob_n), quiet)
+  
+  data   <- xpdb$data$data[[prob_n]]
+  
+  if ('MDV' %in% colnames(data)) {
+    data <- dplyr::filter(data, data$MDV == 0)
+  } else if ('EVID' %in% colnames(data)) {
+    data <- dplyr::filter(data, data$EVID == 0)
   }
   
   # Create ggplot base
-  xp   <- ggplot(data = data, ...) + 
-    xpdb$gg_theme + 
-    vars
+  xp   <- ggplot(data = data, ...) + xpdb$gg_theme + vars
   
   # Add unity line
   if (guides) {
@@ -150,7 +160,5 @@ xplot_scatter <- function(xpdb,
   xp$xpose <- list(fun     = plot_name,
                    summary = xpdb$summary)
   
-  xp <- structure(xp, class = c('xpose_plot', 'gg', 'ggplot'))
-  
-  return(xp)
+  structure(xp, class = c('xpose_plot', 'gg', 'ggplot'))
 }
