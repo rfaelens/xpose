@@ -15,7 +15,7 @@ theme_bw2(base_size = 11, base_family = "", legend_position = "right")
 "top", or two-element numeric vector)}
 }
 \description{
-Black and whithe theme intended to make ggplot2 more readable when used
+Black and white theme intended to make ggplot2 more readable when used
 in presentation or papers. Inspired by a theme from Gunnar Yngman.
 }
 \examples{
