@@ -28,13 +28,12 @@ Depends:
   R (>= 3.1.2),
   ggplot2 (>= 2.2.1)
 Imports:
-  dplyr,
+  dplyr (>= 0.4.3),
   tidyr,
   readr,
   stringr,
-  purrr,
+  purrr (>= 0.2.0),
   utils,
-  stats,
   grDevices,
   gridExtra
 Suggests:
