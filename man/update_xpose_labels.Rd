@@ -9,7 +9,8 @@ update_xpose_labels(p, labels)
 \arguments{
 \item{p}{xpose plot object to modify}
 
-\item{labels}{named list of new labels}
+\item{labels}{named list of new labels
+#@export}
 }
 \description{
 Function based on \link[ggplot2]{update_labels} enabling the 

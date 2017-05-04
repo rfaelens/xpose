@@ -36,9 +36,6 @@ Use \code{FALSE} to remove caption.}
 
 \item{...}{Any additional aesthetics to be passed on \code{xplot_scatter}.}
 }
-\value{
-An \code{xpose_plot}
-}
 \description{
 Plot of observations (DV) vs individual predictions (IPRED).
 }

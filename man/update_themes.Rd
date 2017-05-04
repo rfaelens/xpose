@@ -16,9 +16,6 @@ update_themes(xpdb = NULL, gg_theme = NULL, xp_theme = NULL, quiet)
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 }
-\value{
-An xpdb object
-}
 \description{
 Create an xpose theme.
 This function will update the theme of an xpdb object.

@@ -55,7 +55,7 @@ xpose_labs <- function(...) {
 #' use of \code{\link{template_titles}} using the ggplot2 \code{+} operator.
 #' @param p xpose plot object to modify
 #' @param labels named list of new labels
-#' 
+#' #@export
 update_xpose_labels <- function(p, labels) {
   plot_clone <- utils::getFromNamespace('plot_clone', 'ggplot2')
   p <- plot_clone(p)
