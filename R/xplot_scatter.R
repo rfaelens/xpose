@@ -52,7 +52,7 @@ xplot_scatter <- function(xpdb,
                           ...) {
   
   if (!is.xpdb(xpdb)) { 
-    msg('Bad input to the argument`xpdb`', verbose = TRUE)
+    msg('Bad input to the argument`xpdb`', quiet = FALSE)
     return(NULL)
   }
   

@@ -6,7 +6,7 @@
 \usage{
 xpose_data(file = NULL, runno = NULL, dir = NULL, prefix = "run",
   ext = ".lst", rounding = NULL, gg_theme = theme_readable(),
-  xp_theme = theme_xp_default(), verbose = TRUE)
+  xp_theme = theme_xp_default(), quiet = FALSE)
 }
 \arguments{
 \item{file}{Full file name as an alternative to \code{dir}, \code{prefix}.}
@@ -26,7 +26,7 @@ values (eg. OFV, shrinkage).}
 
 \item{xp_theme}{A xpose theme or vector of modifications of the xpose theme' \code{runno} and \code{ext}.}
 
-\item{verbose}{Logical, if \code{TRUE} messages are printed to the console.}
+\item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 }
 \description{
 Import NONMEM output into a R database

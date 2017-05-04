@@ -8,7 +8,7 @@
 #' @param dir Location of the model file.
 #' @param prefix Prefix of the model file name.
 #' @param ext Extension of the model file.
-#' @param verbose Logical, if \code{TRUE} messages are printed to the console.
+#' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #'
 #' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_tables}}
 #' @return A \code{\link[dplyr]{tibble}} of class \code{model} containing the following columns: 
@@ -18,7 +18,7 @@
 ##'  \item{\strong{subroutine}}{: a character identifier named after the 3 first letters of the subroutine name e.g. "$THETA" and 
 ##'  "$TABLE" will become "the" and "tab" respectively. In addtion all output from the .lst is labeled "lst", the general nonmem 
 ##'  output e.g. NM-TRAN messages are labeled "oth". With priors thp, tpv, omp, opd, sip, spd abreviations are given to the THETAP, 
-##'  etc.}
+##'  THETAPV, OMEGAP, etc.}
 ##'  \item{\strong{code}}{: the code without comments or subroutine names e.g. "$THETA 0.5 ; TVCL" will return 0.5.}
 ##'  \item{\strong{comment}}{: the last comment of a record e.g. "0.5 ; Clearance (L/h) ; TVCL" will return "TVCL".}
 ##' }
@@ -32,7 +32,7 @@ read_nm_model <- function(file    = NULL,
                           dir     = NULL,
                           prefix  = 'run',
                           ext     = c('.lst', '.mod', '.ctl', '.txt'),
-                          verbose = TRUE) {
+                          quiet   = FALSE) {
   
   if (is.null(runno) && is.null(file)) {
     stop('Argument `runno` or `file` required.', call. = FALSE)
@@ -50,11 +50,12 @@ read_nm_model <- function(file    = NULL,
   model <- readr::read_lines(file)
   
   if (!any(stringr::str_detect(model, '^\\s*\\$PROB.+')) && get_extension(file) == '.lst') {
-    # Attempt to recover the model in .mod if misssing from .lst
+    
+    # Attempts to recover the model in .mod if misssing from .lst
     file <- update_extension(file, '.mod')
     
     if (file.exists(file)) {
-      msg('No model code was found in `.lst` file using `.mod` instead.', verbose)
+      msg('No model code was found in `.lst` file using `.mod` instead.', quiet)
       model <- readr::read_lines(file)
     }
   }

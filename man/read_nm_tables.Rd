@@ -5,7 +5,7 @@
 \title{NONMEM output table import function}
 \usage{
 read_nm_tables(files = NULL, combined = TRUE, rm_duplicates = TRUE,
-  verbose = TRUE, ...)
+  quiet = FALSE, ...)
 }
 \arguments{
 \item{files}{A character vector of path to the files or a \code{nm_table_list} file created with \code{list_nm_tables}.}
@@ -15,7 +15,7 @@ does not match an error will be returned.}
 
 \item{rm_duplicates}{Logical value indicating whether duplicated columns should be removed.}
 
-\item{verbose}{Logical, if \code{TRUE} messages are printed to the console.}
+\item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 
 \item{...}{Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.}
 }

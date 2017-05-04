@@ -5,7 +5,7 @@
 \title{NONMEM model file parser}
 \usage{
 read_nm_model(file = NULL, runno = NULL, dir = NULL, prefix = "run",
-  ext = c(".lst", ".mod", ".ctl", ".txt"), verbose = TRUE)
+  ext = c(".lst", ".mod", ".ctl", ".txt"), quiet = FALSE)
 }
 \arguments{
 \item{file}{Full file name preferably a `.lst` file. Alternative argument to \code{dir}, \code{prefix},
@@ -19,7 +19,7 @@ read_nm_model(file = NULL, runno = NULL, dir = NULL, prefix = "run",
 
 \item{ext}{Extension of the model file.}
 
-\item{verbose}{Logical, if \code{TRUE} messages are printed to the console.}
+\item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 }
 \value{
 A \code{\link[dplyr]{tibble}} of class \code{model} containing the following columns: 
@@ -29,7 +29,7 @@ A \code{\link[dplyr]{tibble}} of class \code{model} containing the following col
  \item{\strong{subroutine}}{: a character identifier named after the 3 first letters of the subroutine name e.g. "$THETA" and 
  "$TABLE" will become "the" and "tab" respectively. In addtion all output from the .lst is labeled "lst", the general nonmem 
  output e.g. NM-TRAN messages are labeled "oth". With priors thp, tpv, omp, opd, sip, spd abreviations are given to the THETAP, 
- etc.}
+ THETAPV, OMEGAP, etc.}
  \item{\strong{code}}{: the code without comments or subroutine names e.g. "$THETA 0.5 ; TVCL" will return 0.5.}
  \item{\strong{comment}}{: the last comment of a record e.g. "0.5 ; Clearance (L/h) ; TVCL" will return "TVCL".}
 }

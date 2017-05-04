@@ -33,9 +33,9 @@ is.formula <- function(x) {
   inherits(x, 'formula')
 }
 
-# Message function with verbose option (from Ron Keizer)
-msg <- function(txt, verbose = FALSE) {
-  if (verbose) message(txt)
+# Message function with quiet option (from Ron Keizer)
+msg <- function(txt, quiet = TRUE) {
+  if (!quiet) message(txt)
 }
 
 # Generate file paths

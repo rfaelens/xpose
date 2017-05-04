@@ -38,8 +38,8 @@ test_that("is.formula works as expected", {
 })
 
 test_that("msg works as expected", {
-  expect_null(msg('Hello', verbose = FALSE))
-  expect_message(msg('Hello', verbose = TRUE))
+  expect_null(msg('Hello', quiet = TRUE))
+  expect_message(msg('Hello', quiet = FALSE))
 })
 
 test_that("file_path works as expected", {

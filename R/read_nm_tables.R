@@ -11,17 +11,17 @@
 #' @param combined Logical value indicating whether multiple tables should be combined into a single one. If the number of rows 
 #' does not match an error will be returned.
 #' @param rm_duplicates Logical value indicating whether duplicated columns should be removed.
-#' @param verbose Logical, if \code{TRUE} messages are printed to the console.
+#' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' @param ... Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.
 #' @examples
 #' \dontrun{
 #' data <- read_nm_tables(files = 'inst/extdata/sdtab001')
 #' }
 #' @export
-read_nm_tables <- function(files = NULL,
-                           combined = TRUE,
+read_nm_tables <- function(files         = NULL,
+                           combined      = TRUE,
                            rm_duplicates = TRUE,
-                           verbose = TRUE,
+                           quiet         = FALSE,
                            ...) {
   
   if (!is.null(files) && !is.nm.table.list(files)) {
@@ -32,12 +32,12 @@ read_nm_tables <- function(files = NULL,
   }
   
   if (is.null(files) || !any(file.exists(files$file))) {
-    msg('No table file could be found.', verbose)
+    msg('No table file could be found.', quiet)
     return()
   }
   
   if (any(duplicated(files$file))) {
-    msg('No tables imported due to duplicated names', verbose)
+    msg('No tables imported due to duplicated names', quiet)
     return()
   }
   
@@ -48,16 +48,16 @@ read_nm_tables <- function(files = NULL,
   
   msg(c('Reading:\n', paste0(' - $prob no.', tables$problem, ': ', basename(tables$file),
                              dplyr::if_else(tables$firstonly, ' (firstonly)', ''),
-                             collapse = '\n'), '\n\nImport messages:'), verbose)
+                             collapse = '\n'), '\n\nImport messages:'), quiet)
   
   tables <- tables %>% 
     purrr::by_row(~readr::read_lines(file = .$file, n_max = 3), .to = 'top') %>%
-    purrr::by_row(~read_args(x = . , verbose, ...), .collate = 'rows') %>%
+    purrr::by_row(~read_args(x = . , quiet, ...), .collate = 'rows') %>%
     dplyr::mutate(name = basename(.$file)) %>% 
     dplyr::select(dplyr::one_of('problem', 'name', 'simtab', 'firstonly', 'fun', 'params'))
   
   if (nrow(tables) == 0) {
-    msg('\nNo table imported.', verbose)
+    msg('\nNo table imported.', quiet)
     return() 
   }
   
@@ -78,23 +78,23 @@ read_nm_tables <- function(files = NULL,
   # Combine tables with same number of rows
   tables <- tables %>% 
     purrr::slice_rows(c('problem', 'simtab', 'firstonly')) %>%  
-    purrr::by_slice(combine_tables, verbose, .collate = 'rows')
+    purrr::by_slice(combine_tables, quiet, .collate = 'rows')
   
   if (nrow(tables) == 0) {
-    msg('\nNo table imported.', verbose)
+    msg('\nNo table imported.', quiet)
     return() 
   }
   
   # Merge firsonly tables with main tables
   if (any(tables$firstonly)) {
-    msg(' - Consolidating tables with `firstonly`', verbose)
+    msg(' - Consolidating tables with `firstonly`', quiet)
     tables <- tables %>%
       purrr::slice_rows(c('problem', 'simtab')) %>%
-      purrr::by_slice(merge_firstonly, verbose, .collate = 'rows')
+      purrr::by_slice(merge_firstonly, quiet, .collate = 'rows')
   }
   
   if (nrow(tables) == 0) {
-    msg('\nNo table imported.', verbose)
+    msg('\nNo table imported.', quiet)
     return() 
   }
   
@@ -122,12 +122,12 @@ read_funs <- function(fun) {
     table2 = readr::read_table2)[fun]
 }
 
-read_args <- function(x, verbose, col_types, ...) {
+read_args <- function(x, quiet, col_types, ...) {
   if (missing(col_types)) col_types <- readr::cols(.default = 'd')
   top <- x$top[[1]]
   
   if (is.na(top[3])) {
-    msg(c(' - Dropped: ', basename(x$file), ' due to unexpected data format'), verbose = verbose)
+    msg(c(' - Dropped: ', basename(x$file), ' due to unexpected data format'), quiet)
     return(dplyr::tibble(fun = list(), params = list()))
   }
   
@@ -140,7 +140,7 @@ read_args <- function(x, verbose, col_types, ...) {
   header <- dplyr::if_else(stringr::str_detect(top[1 + skip], '[A-z]{2,}+'), TRUE, FALSE)
   
   if (!header) {
-    msg(c(' - Dropped: ', basename(x$file), ' due to missing headers.'), verbose = !header & verbose)
+    msg(c(' - Dropped: ', basename(x$file), ' due to missing headers.'), quiet = !header & quiet)
     return(dplyr::tibble(fun = list(), params = list()))
   }
   
@@ -149,10 +149,10 @@ read_args <- function(x, verbose, col_types, ...) {
                                    col_names = header, col_types = col_types, ...)))
 }
 
-combine_tables <- function(x, verbose) {
+combine_tables <- function(x, quiet) {
   if (length(unique(x$nrow)) > 1) {
     msg(c(' - Dropped: ', stringr::str_c(x$name, collapse = ', '), 
-          ' due to missmatch in row number.'), verbose)
+          ' due to missmatch in row number.'), quiet)
     return(dplyr::tibble(data = list(), index = list()))
     
   }
@@ -167,20 +167,20 @@ combine_tables <- function(x, verbose) {
                                            colnames = x$index)))
 }
 
-merge_firstonly <- function(x, verbose) {
+merge_firstonly <- function(x, quiet) {
   if (nrow(x) == 1) {
     # No merge needed
     return(dplyr::tibble(data = x$data, index = x$index))
   } else if (nrow(x) != 2) {
     msg(c('   * Something went wrong while consolidating: ', 
           paste0(x[x$firstonly == TRUE, ]$index[[1]]$tables, 
-                 collapse = ', ')), verbose) 
+                 collapse = ', ')), quiet) 
     return(dplyr::tibble(data = list(), index = list()))
   }
   xdata   <- x$data[x$firstonly == FALSE][[1]]
   ydata   <- x$data[x$firstonly == TRUE][[1]]
   by_vars <- intersect(colnames(xdata), colnames(ydata))
-  msg(c('   * Joining by: ', paste0(by_vars, collapse = ', ')), verbose)
+  msg(c('   * Joining by: ', paste0(by_vars, collapse = ', ')), quiet)
   dplyr::tibble(data = list(dplyr::left_join(x  = xdata, 
                                              y  = ydata,
                                              by = by_vars)),

@@ -2,7 +2,7 @@ context('Check read_nm_tables')
 
 # Define files to be tested -----------------------------------------------
 
-test_tab <- read_nm_tables(files = 'sdtab001', verbose = FALSE)
+test_tab <- read_nm_tables(files = 'sdtab001', quiet = TRUE)
 ctrl_tab <- xpdb_ex_pk$data[, xpdb_ex_pk$tab_index[xpdb_ex_pk$tab_index$tables == 'sdtab001',]$colnames[[1]]]
 
 test_file <- c("TABLE NO.  4",
@@ -19,18 +19,18 @@ firstonly_test <- as.nm.table.list(dplyr::tibble(problem   = 1,
 # Tests start here --------------------------------------------------------
 
 test_that("message is returned when missing file argument", {
-  expect_null(read_nm_tables(verbose = FALSE))
-  expect_message(read_nm_tables(verbose = TRUE))
+  expect_null(read_nm_tables(quiet = TRUE))
+  expect_message(read_nm_tables(quiet = FALSE))
 })
 
 test_that("message is returned when all provided files are missing", {
-  expect_null(read_nm_tables(files = 'fake_table.tab', verbose = FALSE))
-  expect_message(read_nm_tables(files = 'fake_table.tab', verbose = TRUE), regexp = 'could be found')
+  expect_null(read_nm_tables(files = 'fake_table.tab', quiet = TRUE))
+  expect_message(read_nm_tables(files = 'fake_table.tab', quiet = FALSE), regexp = 'could be found')
 })
 
 test_that("message is returned when tables exist but are duplicated", {
-  expect_null(read_nm_tables(files = c('sdtab001', 'patab001', 'sdtab001'), verbose = FALSE))
-  expect_message(read_nm_tables(files = c('sdtab001', 'patab001', 'sdtab001'), verbose = TRUE), regexp = 'duplicated')
+  expect_null(read_nm_tables(files = c('sdtab001', 'patab001', 'sdtab001'), quiet = TRUE))
+  expect_message(read_nm_tables(files = c('sdtab001', 'patab001', 'sdtab001'), quiet = FALSE), regexp = 'duplicated')
 })
 
 test_that("message is returned when missing table header", {
@@ -39,11 +39,11 @@ test_that("message is returned when missing table header", {
   
   # Test with skip = 1 and header = FALSE
   writeLines(text = test_file[c(1, 3:4)], con = files[1])
-  expect_message(read_nm_tables(files = files[1], verbose = TRUE), regexp = 'Dropped.+missing headers')
+  expect_message(read_nm_tables(files = files[1], quiet = FALSE), regexp = 'Dropped.+missing headers')
 })
 
 test_that("dot arguments are properly passed to readr", {
-  expect_equal(nrow(read_nm_tables('sdtab001', n_max = 3, verbose = FALSE)), 3)
+  expect_equal(nrow(read_nm_tables('sdtab001', n_max = 3, quiet = TRUE)), 3)
 })
 
 test_that("returns a tibble when user mode is used", {
@@ -51,8 +51,8 @@ test_that("returns a tibble when user mode is used", {
 })
 
 test_that("tables with firstonly are properly handled", {
-  expect_message(read_nm_tables(firstonly_test, verbose = TRUE), regexp = 'Consolidating|Joining')
-  expect_equal(read_nm_tables(firstonly_test, verbose = FALSE)$data[[1]], 
+  expect_message(read_nm_tables(firstonly_test, quiet = FALSE), regexp = 'Consolidating|Joining')
+  expect_equal(read_nm_tables(firstonly_test, quiet = TRUE)$data[[1]], 
                xpdb_ex_pk$data[, unique(unlist(xpdb_ex_pk$tab_index[xpdb_ex_pk$tab_index$tables %in% c('sdtab001', 'patab001'), ]$colnames))])
 })
 

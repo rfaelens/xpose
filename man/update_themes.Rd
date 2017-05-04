@@ -4,21 +4,23 @@
 \alias{update_themes}
 \title{Create xpose theme}
 \usage{
-update_themes(xpdb = NULL, gg_theme = NULL, xp_theme = NULL)
+update_themes(xpdb = NULL, gg_theme = NULL, xp_theme = NULL, quiet)
 }
 \arguments{
 \item{xpdb}{a xpose database object}
 
-\item{gg_theme}{a ggplot2 complete theme object (eg. \code{theme_classic()})}
+\item{gg_theme}{a ggplot2 complete theme object (eg. \code{\link[ggplot2]{theme_classic()}})}
 
 \item{xp_theme}{a xpose theme or vector of modifications of the xpose theme
 (eg. \code{c(point_color = 'red', line_linetype = 'dashed')})}
+
+\item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 }
 \value{
 An xpdb object
 }
 \description{
-Create a xpose theme.
+Create an xpose theme.
 This function will update the theme of an xpdb object.
 All plots generated with this xpdb will automatically use the
 defined xpose (\code{xp_theme}) and ggplot2 (\code{gg_theme}) themes.
@@ -26,8 +28,8 @@ defined xpose (\code{xp_theme}) and ggplot2 (\code{gg_theme}) themes.
 \examples{
 \dontrun{
 xpdb <- update_themes(xpdb     = xpdb,
-                    gg_theme = theme_bw(),
-                    xp_theme = c(point_color = 'blue',
-                                 line_color  = 'blue'))
+                      gg_theme = theme_bw(),
+                      xp_theme = c(point_color = 'blue',
+                                   line_color  = 'blue'))
 }
 }

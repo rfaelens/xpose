@@ -11,7 +11,7 @@
 #' values (eg. OFV, shrinkage).
 #' @param gg_theme A ggplot2 complete theme object (eg. \code{theme_classic()}).
 #' @param xp_theme A xpose theme or vector of modifications of the xpose theme' \code{runno} and \code{ext}.
-#' @param verbose Logical, if \code{TRUE} messages are printed to the console.
+#' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #'
 #' @examples
 #' \dontrun{
@@ -26,7 +26,7 @@ xpose_data <- function(file        = NULL,
                        rounding    = NULL,
                        gg_theme    = theme_readable(),
                        xp_theme    = theme_xp_default(),
-                       verbose     = TRUE) {
+                       quiet       = FALSE) {
 
   # Check inputs ------------------------------------------------------------
   if (is.null(runno) & is.null(file)) {
@@ -54,10 +54,10 @@ xpose_data <- function(file        = NULL,
   }
 
   # Import model
-  model  <- read_nm_model(file = file_full)
+  model  <- read_nm_model(file = file_full, quiet = quiet)
 
   # Import estimation tables
-  msg('Looking for NONMEM table files.', verbose)
+  msg('Looking for NONMEM table files.', quiet)
   tab_out <- model %>% 
     list_nm_tables() %>%
     #filter(.$simtab == FALSE) %>% 
@@ -71,7 +71,7 @@ xpose_data <- function(file        = NULL,
   #############################
   
   # Import simulation tables
-  msg('Looking for NONMEM simulation table files.', verbose)
+  msg('Looking for NONMEM simulation table files.', quiet)
   
   # Model file name
   mod_name <- gsub('\\.\\w+$', '', basename(file_full))
@@ -114,7 +114,8 @@ xpose_data <- function(file        = NULL,
     data      = data,                                   # Output tables
     tab_index = index,                                  # Index of tab files
     gg_theme  = gg_theme,                               # ggplot theme
-    xp_theme  = xp_theme                                # xpose theme
+    xp_theme  = xp_theme,                               # xpose theme
+    options   = list(quiet = quiet)
   ), 
   class = c('xpose_data', 'uneval'))
 
