@@ -153,7 +153,7 @@ xpdb <- update_themes(xpdb     = xpdb,
 ```
 
                                  
-#### Examples of `gg_theme` themes:
+#### Examples of `gg_theme`:
 xpose brings two additional themes (`theme_readable()` and `theme_bw2()`), to those available in `ggplot2`.
 
 ```{r demo gg_theme, echo = FALSE, fig.height = 6, fig.width = 6, out.width = '75%'}
@@ -165,7 +165,7 @@ gridExtra::grid.arrange(
   ncol = 2)
 ```
 
-#### Examples of `xp_theme` themes:
+#### Examples of `xp_theme`:
 
 ```{r demo xp_theme, echo = FALSE, fig.height = 3.2, fig.width = 6, out.width = '75%'}
 gridExtra::grid.arrange(

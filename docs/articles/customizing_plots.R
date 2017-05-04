@@ -26,6 +26,15 @@ dv_vs_ipred(xpdb,
 # Disabling all titles
 dv_vs_ipred(xpdb, title = FALSE, subtitle = FALSE, caption = FALSE)
 
+## ----demo xpose_labs-----------------------------------------------------
+dv_vs_ipred(xpdb) +
+  xpose_labs(title = 'This is @run',
+             subtitle = NULL,
+             caption = 'Based on @nobs observations and @nind subjects',
+             x = 'Individual model predictions (IPRED)',
+             y = 'Observations (DV)')
+
+
 ## ----demo aesthetics-----------------------------------------------------
 dv_vs_ipred(xpdb, 
             # Change points aesthetics

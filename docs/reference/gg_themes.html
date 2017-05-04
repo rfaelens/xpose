@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create xpose theme — update_themes • xpose</title>
+<title>An additional set of themes for ggplot2 — gg_themes • xpose</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -102,60 +102,55 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create xpose theme</h1>
+    <h1>An additional set of themes for ggplot2</h1>
     </div>
 
     
-    <p>Create an xpose theme.
-This function will update the theme of an xpdb object.
-All plots generated with this xpdb will automatically use the
-defined xpose (<code>xp_theme</code>) and ggplot2 (<code>gg_theme</code>) themes.</p>
+    <p>An additional set of complete ggplot2 themes intended to make ggplot2 more readable 
+when used in presentation or publications. These themes also bring the <code>legend_position</code> option
+without having to call the ggplot2 theme() function to modify a complete theme.</p><ul>
+<li><p><code>theme_bw2</code>: Black and white theme inspired by a theme from Gunnar Yngman.</p></li>
+<li><p><code>theme_readable</code>: Light grey theme, with dimed background and grid lines 
+intended to bring the focus on the data.</p></li>
+</ul>
     
 
-    <pre class="usage"><span class='fu'>update_themes</span>(<span class='kw'>xpdb</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>gg_theme</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>xp_theme</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>quiet</span>)</pre>
+    <pre class="usage"><span class='fu'>theme_bw2</span>(<span class='kw'>base_size</span> <span class='kw'>=</span> <span class='fl'>11</span>, <span class='kw'>base_family</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>legend_position</span> <span class='kw'>=</span> <span class='st'>"right"</span>)
+
+<span class='fu'>theme_readable</span>(<span class='kw'>base_size</span> <span class='kw'>=</span> <span class='fl'>11</span>, <span class='kw'>base_family</span> <span class='kw'>=</span> <span class='st'>""</span>,
+  <span class='kw'>legend_position</span> <span class='kw'>=</span> <span class='st'>"right"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>xpdb</th>
-      <td><p>a xpose database object</p></td>
+      <th>base_size</th>
+      <td><p>Base font size.</p></td>
     </tr>
     <tr>
-      <th>gg_theme</th>
-      <td><p>a ggplot2 complete theme object (eg. <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_classic</a></code>)</p></td>
+      <th>base_family</th>
+      <td><p>Base font family.</p></td>
     </tr>
     <tr>
-      <th>xp_theme</th>
-      <td><p>a xpose theme or vector of modifications of the xpose theme
-(eg. <code>c(point_color = 'red', line_linetype = 'dashed')</code>)</p></td>
-    </tr>
-    <tr>
-      <th>quiet</th>
-      <td><p>Logical, if <code>FALSE</code> messages are printed to the console.</p></td>
+      <th>legend_position</th>
+      <td><p>The position of legends defined as 'none', 'left', 
+'right', 'bottom', 'top', or a two-element numeric vector.</p></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>An xpdb object</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
-  <span class='no'>xpdb</span> <span class='kw'>&lt;-</span> <span class='fu'>update_themes</span>(<span class='kw'>xpdb</span>     <span class='kw'>=</span> <span class='no'>xpdb</span>,
-                        <span class='kw'>gg_theme</span> <span class='kw'>=</span> <span class='fu'>theme_bw</span>(),
-                        <span class='kw'>xp_theme</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>point_color</span> <span class='kw'>=</span> <span class='st'>'blue'</span>,
-                                     <span class='kw'>line_color</span>  <span class='kw'>=</span> <span class='st'>'blue'</span>))
+  <span class='fu'>ggplot</span>(<span class='no'>diamonds</span>, <span class='fu'>aes</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>price</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>carat</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>cut</span>)) +
+   <span class='fu'>geom_point</span>(<span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.5</span>) +
+   <span class='fu'>theme_readable</span>(<span class='kw'>legend_position</span> <span class='kw'>=</span> <span class='st'>'top'</span>)
 })</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 

@@ -19,8 +19,8 @@ reference:
     - update_themes
     - theme_xp_default
     - theme_xp_xpose4
-    - theme_readable
     - theme_bw2
+    - theme_readable
   - title: Save plots
     desc:  Save plots to a file.
     contents:

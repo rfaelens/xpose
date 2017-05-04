@@ -115,7 +115,7 @@ a single <code>data.frame</code>.</p>
     
 
     <pre class="usage"><span class='fu'>read_nm_tables</span>(<span class='kw'>files</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>combined</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>rm_duplicates</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -134,8 +134,8 @@ does not match an error will be returned.</p></td>
       <td><p>Logical value indicating whether duplicated columns should be removed.</p></td>
     </tr>
     <tr>
-      <th>verbose</th>
-      <td><p>Logical, if <code>TRUE</code> messages are printed to the console.</p></td>
+      <th>quiet</th>
+      <td><p>Logical, if <code>FALSE</code> messages are printed to the console.</p></td>
     </tr>
     <tr>
       <th>...</th>

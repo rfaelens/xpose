@@ -201,22 +201,22 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># While creating the xpdb</span>
 xpdb &lt;-<span class="st"> </span><span class="kw"><a href="../reference/xpose_data.html">xpose_data</a></span>(<span class="dt">runno =</span> <span class="st">'001'</span>, 
                    <span class="dt">gg_theme =</span> <span class="kw">theme_classic</span>(), 
-                   <span class="dt">xp_theme =</span> <span class="kw"><a href="../reference/theme_xp_xpose4.html">theme_xp_xpose4</a></span>())
+                   <span class="dt">xp_theme =</span> <span class="kw"><a href="../reference/xp_themes.html">theme_xp_xpose4</a></span>())
 
 <span class="co"># Update a pre-existing xpdb</span>
 xpdb &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update_themes.html">update_themes</a></span>(<span class="dt">xpdb     =</span> xpdb,
                       <span class="dt">gg_theme =</span> <span class="kw">theme_bw</span>(),
                       <span class="dt">xp_theme =</span> <span class="kw">c</span>(<span class="dt">point_color =</span> <span class="st">'dodgerblue4'</span>,
                                    <span class="dt">line_color  =</span> <span class="st">'dodgerblue4'</span>)) </code></pre></div>
-<div id="examples-of-gg_theme-themes" class="section level4">
+<div id="examples-of-gg_theme" class="section level4">
 <h4 class="hasAnchor">
-<a href="#examples-of-gg_theme-themes" class="anchor"></a>Examples of <code>gg_theme</code> themes:</h4>
-<p>xpose brings two additional themes (<code><a href="../reference/theme_readable.html">theme_readable()</a></code> and <code><a href="../reference/theme_bw2.html">theme_bw2()</a></code>), to those available in <code>ggplot2</code>.</p>
+<a href="#examples-of-gg_theme" class="anchor"></a>Examples of <code>gg_theme</code>:</h4>
+<p>xpose brings two additional themes (<code><a href="../reference/gg_themes.html">theme_readable()</a></code> and <code><a href="../reference/gg_themes.html">theme_bw2()</a></code>), to those available in <code>ggplot2</code>.</p>
 <p><img src="customizing_plots_files/figure-html/demo%20gg_theme-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
-<div id="examples-of-xp_theme-themes" class="section level4">
+<div id="examples-of-xp_theme" class="section level4">
 <h4 class="hasAnchor">
-<a href="#examples-of-xp_theme-themes" class="anchor"></a>Examples of <code>xp_theme</code> themes:</h4>
+<a href="#examples-of-xp_theme" class="anchor"></a>Examples of <code>xp_theme</code>:</h4>
 <p><img src="customizing_plots_files/figure-html/demo%20xp_theme-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 </div>
