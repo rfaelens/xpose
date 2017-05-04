@@ -4,7 +4,6 @@
 #'
 #' @inheritParams dv_vs_ipred
 #' @inheritSection xplot_scatter Template titles
-#' @return An \code{xpose_plot}
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
 #' \dontrun{
@@ -41,7 +40,6 @@ cwres_vs_pred <- function(xpdb,
 #'
 #' @inheritParams dv_vs_ipred
 #' @inheritSection xplot_scatter Template titles
-#' @return An \code{xpose_plot}
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
 #' \dontrun{
@@ -78,7 +76,6 @@ cwres_vs_idv <- function(xpdb,
 #'
 #' @inheritParams dv_vs_ipred
 #' @inheritSection xplot_scatter Template titles
-#' @return An \code{xpose_plot}
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
 #' \dontrun{
