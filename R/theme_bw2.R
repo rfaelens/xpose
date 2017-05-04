@@ -1,6 +1,6 @@
 #' ggplot2 theme
 #'
-#' @description Black and whithe theme intended to make ggplot2 more readable when used
+#' @description Black and white theme intended to make ggplot2 more readable when used
 #' in presentation or papers. Inspired by a theme from Gunnar Yngman.
 #'
 #' @param base_size base font size
