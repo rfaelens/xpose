@@ -20,12 +20,8 @@ does not match an error will be returned.}
 \item{...}{Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.}
 }
 \description{
-Quickly import NONMEM output tables into R.
-When both \code{skip} and \code{header} are \code{NULL},
-\code{read_nm_tables} will automatically detect the optimal
-settings to import the tables. When more than one files are
-provided for a same NONMEM run, they will be combined into
-a single \code{data.frame}.
+Quickly import NONMEM output tables into R. This function automatically 
+detects the optimal settings to import the tables from nonmem.
 }
 \examples{
 \dontrun{
