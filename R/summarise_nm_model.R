@@ -1,5 +1,6 @@
 summarise_nm_model <- function(file, model_code, software, rounding) {
   list(software   = software,                               # Software name
+       version    = NULL,                                   # Software version (e.g. 7.3)
        descr      = descr(model_code),                      # Model description
        file       = basename(file),                         # Model file
        run        = update_extension(basename(file), ''),   # Model file name
@@ -11,8 +12,6 @@ summarise_nm_model <- function(file, model_code, software, rounding) {
        nsim       = NULL,                                   # Number of simulations
        ssim       = NULL,                                   # Simulation seed
        niter      = NULL,                                   # Number of iteration
-       software   = NULL,                                   # Software used (e.g. NONMEM)
-       version    = NULL,                                   # Software version (e.g. 7.3)
        subroutine = NULL,                                   # Des solver
        runtime    = NULL,                                   # Estimation/Sim runtime
        covtime    = NULL,                                   # Covariance matrix runtime
