@@ -2,41 +2,32 @@
 % Please edit documentation in R/read_nm_files.R
 \name{read_nm_files}
 \alias{read_nm_files}
-\title{NONMEM file parser}
+\title{NONMEM output file import function}
 \usage{
-read_nm_files(file = NULL, runno = NULL, dir = NULL, prefix = "run",
-  suff = c(".ext", ".cor", ".cov", ".phi", ".grd"), verbose = TRUE)
+read_nm_files(files = NULL, runno = NULL, dir = NULL, prefix = "run",
+  ext = c(".ext", ".cor", ".cov", ".phi", ".grd"), quiet = FALSE)
 }
 \arguments{
-\item{file}{Full file name, with either .ext, .phi. .grd, .cor or .cov extension. Alternative argument to \code{dir}, \code{prefix},
-\code{runno} and \code{suff}.}
+\item{files}{Full model file names. Alternative argument to \code{dir}, \code{prefix},
+\code{runno} and \code{ext}.}
 
 \item{runno}{Run number to be evaluated.}
 
-\item{dir}{Location of the model file.}
+\item{dir}{Location of the model files.}
 
-\item{prefix}{Prefix of the model file name.}
+\item{prefix}{Prefix of the model file names.}
 
-\item{suff}{Extension of the model file.}
+\item{ext}{A vector of the file extension to import. By default '.ext', '.cor', '.cov', '.phi' and '.grd' 
+files are listed.}
 
-\item{verbose}{Logical, if \code{TRUE} messages are printed to the console.}
-}
-\value{
-A list of \code{\link[dplyr]{tibble}} tables of class \code{} containing the following columns: 
-\itemize{
- \item{\strong{ext}}{: The .ext file}
- \item{\strong{phi}}{: The .phi file}
- \item{\strong{grd}}{: The .grd file}
- \item{\strong{cov}}{: The .cov file.}
- \item{\strong{cor}}{: The .cor file.}
-}
+\item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 }
 \description{
-Parse NONMEM files in R format
+Quickly import NONMEM output files into R.
 }
 \examples{
 \dontrun{
-nm_file <- read_nm_model(dir = '../models/pk/', runno = '001')
+out <- read_nm_files(files = 'inst/extdata/run001.ext')
 }
 }
 \seealso{
