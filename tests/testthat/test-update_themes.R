@@ -24,7 +24,8 @@ test_that("full gg_themes are properly added", {
 
 test_that("message returned on bad gg_theme input", {
   expect_message(update_themes(xpdb = xpdb_ex_pk, 
-                               gg_theme = theme_xp_default()))
+                               gg_theme = theme_xp_default(),
+                               quiet = FALSE))
 })
 
 test_that("full xp_themes are properly added", {
@@ -41,5 +42,6 @@ test_that("parial xp_themes are properly added", {
 
 test_that("message on unnamed xp_theme input", {
   expect_message(update_themes(xpdb = xpdb_ex_pk, 
-                               xp_theme = c('blue', 'dashed')))
+                               xp_theme = c('blue', 'dashed'), 
+                               quiet = FALSE))
 })

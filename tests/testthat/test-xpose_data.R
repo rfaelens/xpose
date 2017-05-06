@@ -15,7 +15,7 @@ test_that("error is returned for bad ext input", {
 })
 
 test_that("properly creates the xpdb when using the file argument", {
-  xpdb_1 <- xpose_data(file = 'run001.lst')
+  xpdb_1 <- xpose_data(file = 'run001.lst', quiet = TRUE)
   expect_true(inherits(xpdb_1, 'xpose_data'))
   
   xpdb_1$summary$dir <- "analysis/models/pk/" # Path has to be corrected for comparison
@@ -23,7 +23,7 @@ test_that("properly creates the xpdb when using the file argument", {
 })
 
 test_that("properly creates the xpdb when using the runno argument", {
-  xpdb_2 <- xpose_data(runno = '001', ext = '.lst')
+  xpdb_2 <- xpose_data(runno = '001', ext = '.lst', quiet = TRUE)
   expect_true(inherits(xpdb_2, 'xpose_data'))
   
   xpdb_2$summary$dir <- "analysis/models/pk/" # Path has to be corrected for comparison
