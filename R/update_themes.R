@@ -33,8 +33,10 @@ update_themes <- function(xpdb     = NULL,
   # Replace/Update gg_theme
   if (is.theme(gg_theme)) {
     if (attr(gg_theme, 'complete')) {
+      attr(gg_theme, 'theme') <- as.character(substitute(gg_theme)) 
       xpdb$gg_theme <- gg_theme
     } else {
+      attr(xpdb$gg_theme, 'theme') <- paste(attr(xpdb$gg_theme, 'theme'), '(modified)')
       xpdb$gg_theme <- xpdb$gg_theme + gg_theme
     }  
   } else if (!is.null(gg_theme) & !is.theme(gg_theme)) {
@@ -44,12 +46,14 @@ update_themes <- function(xpdb     = NULL,
   # Replace/Update xp_theme
   if (!is.null(xp_theme)) { 
     if (is.xp.theme(xp_theme)) {
+      attr(xp_theme, 'theme') <- as.character(substitute(xp_theme)) 
       xpdb$xp_theme <- xp_theme
       
     } else if (!is.null(names(xp_theme))) {
       for (x in seq_along(xp_theme)) {
         xpdb$xp_theme[[names(xp_theme[x])]] <- xp_theme[[x]] # Beware drops NULL elements
       }
+      attr(xpdb$xp_theme, 'theme') <- paste(attr(xpdb$xp_theme, 'theme'), '(modified)')
     } else {
       msg('`xp_theme` argument not used. Reason: invalid input.', quiet)
     }
