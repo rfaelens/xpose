@@ -7,13 +7,46 @@
 #' @method print xpose_data
 #' @export
 print.xpose_data <- function(xpdb) {
-  cat('xpose_data summary for', xpdb$summary$file , 'ran with', xpdb$summary$software, ':',
-      '\n - Code:', xpdb$summary$file, ', ' , length(unique(xpdb$code$problem)), '$problems',
-      '\n - data: ', paste0(purrr::map(xpdb$data$index, ~.$tables), collpase = ', '))
+  if (!is.null(xpdb$data)) {
+    tab_names <- xpdb$data %>% 
+      purrr::by_row(summarize_table_names, .to = 'string') %>%
+      {purrr::flatten_chr(.$string)} %>% 
+      stringr::str_c(collapse = '\n             ')
+  } else {
+    tab_names <- '<none>'
+  }
   
-  # code = model_code, 
-  #summary = summary, cor = NULL,
-  # cov = NULL, ext = NULL, prm = NULL, phi = NULL,
-  # grd = NULL, data = data, sim = sim, gg_theme = gg_theme,
-  # xp_theme = xp_theme, options = list(quiet = quiet)
+  if (!is.null(xpdb$sim)) {
+    sim_names <- xpdb$sim %>% 
+      purrr::by_row(summarize_table_names, .to = 'string') %>%
+      {purrr::flatten_chr(.$string)} %>% 
+      stringr::str_c(collapse = '\n                 ')
+  } else {
+    sim_names <- '<none>'
+  }
+  
+  if (!is.null(xpdb$files)) {
+    out_names <- unique(xpdb$files$name) %>% 
+      sort() %>% 
+      stringr::str_c(collapse = ', ')
+  } else {
+    out_names <- '<none>'
+  }
+  
+  cat(xpdb$summary$file, 'overview:',
+      '\n - Software:', xpdb$summary$software, xpdb$summary$version,
+      '\n - Attached files:', 
+      '\n   + tables:', tab_names,
+      '\n   + sim tables:', sim_names,
+      '\n   + output files:', out_names,
+      '\n - gg_theme:', attr(xpdb$gg_theme, 'theme'),
+      '\n - xp_theme:', attr(xpdb$xp_theme, 'theme'),
+      '\n - Options:', paste(names(xpdb$options), xpdb$options, sep = ' = ', collapse = ', '))
+}
+
+summarize_table_names <- function(dat) {
+  purrr::map(dat$index, ~.$tables) %>% 
+    purrr::flatten_chr() %>% 
+    stringr::str_c(collapse = ', ') %>% 
+    stringr::str_c('$prob no.',dat$problem,': ', ., sep = '')
 }
