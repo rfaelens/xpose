@@ -106,19 +106,20 @@
     </div>
 
     
-    <p>Import NONMEM output into a R database</p>
+    <p>Gather model outputs into a R database</p>
     
 
     <pre class="usage"><span class='fu'>xpose_data</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>runno</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"run"</span>,
-  <span class='kw'>ext</span> <span class='kw'>=</span> <span class='st'>".lst"</span>, <span class='kw'>rounding</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>gg_theme</span> <span class='kw'>=</span> <span class='fu'><a href='gg_themes.html'>theme_readable</a></span>(),
-  <span class='kw'>xp_theme</span> <span class='kw'>=</span> <span class='fu'><a href='xp_themes.html'>theme_xp_default</a></span>(), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>ext</span> <span class='kw'>=</span> <span class='st'>".lst"</span>, <span class='kw'>gg_theme</span> <span class='kw'>=</span> <span class='fu'><a href='gg_themes.html'>theme_readable</a></span>(),
+  <span class='kw'>xp_theme</span> <span class='kw'>=</span> <span class='fu'><a href='xp_themes.html'>theme_xp_default</a></span>(), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>file</th>
-      <td><p>Full file name as an alternative to <code>dir</code>, <code>prefix</code>.</p></td>
+      <td><p>Full file name preferably a `.lst` file. Alternative argument to <code>dir</code>, <code>prefix</code>,
+<code>runno</code> and <code>ext</code>.</p></td>
     </tr>
     <tr>
       <th>runno</th>
@@ -134,24 +135,24 @@
     </tr>
     <tr>
       <th>ext</th>
-      <td><p>Model file extention.</p></td>
-    </tr>
-    <tr>
-      <th>rounding</th>
-      <td><p>Number of significant digits to be used on model info numerical
-values (eg. OFV, shrinkage).</p></td>
+      <td><p>Extension of the model file.</p></td>
     </tr>
     <tr>
       <th>gg_theme</th>
-      <td><p>A ggplot2 complete theme object (eg. <code>theme_classic()</code>).</p></td>
+      <td><p>A ggplot2 theme object (eg. <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_classic</a></code>).</p></td>
     </tr>
     <tr>
       <th>xp_theme</th>
-      <td><p>A xpose theme or vector of modifications of the xpose theme' <code>runno</code> and <code>ext</code>.</p></td>
+      <td><p>An xpose theme or vector of modifications to the xpose theme
+(eg. <code>c(point_color = 'red', line_linetype = 'dashed')</code>).</p></td>
     </tr>
     <tr>
       <th>quiet</th>
       <td><p>Logical, if <code>FALSE</code> messages are printed to the console.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments to be passed to the <code><a href='http://www.rdocumentation.org/packages/readr/topics/read_delim'>read_delim</a></code> functions.</p></td>
     </tr>
     </table>
     
