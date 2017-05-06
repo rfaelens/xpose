@@ -76,6 +76,10 @@ xpose_data <- function(file     = NULL,
     read_nm_files(quiet = quiet)  
   }
   
+  # Label themes
+  attr(gg_theme, 'theme') <- as.character(substitute(gg_theme)) 
+  attr(xp_theme, 'theme') <- as.character(substitute(xp_theme)) 
+  
   # Output xpose_data
   structure(list(code = model_code, summary = summary, files = out_files, 
                  data = data, sim = sim, gg_theme = gg_theme,
