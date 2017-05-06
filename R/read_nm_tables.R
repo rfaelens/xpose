@@ -1,11 +1,7 @@
 #' NONMEM output table import function
 #'
-#' @description Quickly import NONMEM output tables into R.
-#' When both \code{skip} and \code{header} are \code{NULL},
-#' \code{read_nm_tables} will automatically detect the optimal
-#' settings to import the tables. When more than one files are
-#' provided for a same NONMEM run, they will be combined into
-#' a single \code{data.frame}.
+#' @description Quickly import NONMEM output tables into R. This function automatically 
+#' detects the optimal settings to import the tables from nonmem.
 #'
 #' @param files A character vector of path to the files or a \code{nm_table_list} file created with \code{list_nm_tables}.
 #' @param combined Logical value indicating whether multiple tables should be combined into a single one. If the number of rows 
@@ -46,9 +42,14 @@ read_nm_tables <- function(files         = NULL,
   tables <- files %>% 
     dplyr::filter(file.exists(.$file))
   
-  msg(c('Reading:\n', paste0(' - $prob no.', tables$problem, ': ', basename(tables$file),
-                             dplyr::if_else(tables$firstonly, ' (firstonly)', ''),
-                             collapse = '\n'), '\n\nImport messages:'), quiet)
+  if (length(unique(tables$problem)) > 1) {
+    msg(c('Reading:\n', paste0(' - $prob no.', tables$problem, ': ', basename(tables$file),
+                               dplyr::if_else(tables$firstonly, ' (firstonly)', ''),
+                               collapse = '\n')), quiet)
+  } else {
+    msg(c('Reading: ', paste0(basename(tables$file), dplyr::if_else(tables$firstonly, ' (firstonly)', ''),
+                              collapse = ', ')), quiet)
+  }
   
   tables <- tables %>% 
     purrr::by_row(~readr::read_lines(file = .$file, n_max = 3), .to = 'top') %>%
@@ -87,7 +88,7 @@ read_nm_tables <- function(files         = NULL,
   
   # Merge firsonly tables with main tables
   if (any(tables$firstonly)) {
-    msg(' - Consolidating tables with `firstonly`', quiet)
+    msg('Consolidating tables with `firstonly`', quiet)
     tables <- tables %>%
       purrr::slice_rows(c('problem', 'simtab')) %>%
       purrr::by_slice(merge_firstonly, quiet, .collate = 'rows')
@@ -127,7 +128,7 @@ read_args <- function(x, quiet, col_types, ...) {
   top <- x$top[[1]]
   
   if (is.na(top[3])) {
-    msg(c(' - Dropped: ', basename(x$file), ' due to unexpected data format'), quiet)
+    msg(c('Dropped: ', basename(x$file), ' due to unexpected data format'), quiet)
     return(dplyr::tibble(fun = list(), params = list()))
   }
   
@@ -140,7 +141,7 @@ read_args <- function(x, quiet, col_types, ...) {
   header <- dplyr::if_else(stringr::str_detect(top[1 + skip], '[A-z]{2,}+'), TRUE, FALSE)
   
   if (!header) {
-    msg(c(' - Dropped: ', basename(x$file), ' due to missing headers.'), quiet = !header & quiet)
+    msg(c('Dropped: ', basename(x$file), ' due to missing headers.'), quiet = !header & quiet)
     return(dplyr::tibble(fun = list(), params = list()))
   }
   
@@ -151,7 +152,7 @@ read_args <- function(x, quiet, col_types, ...) {
 
 combine_tables <- function(x, quiet) {
   if (length(unique(x$nrow)) > 1) {
-    msg(c(' - Dropped: ', stringr::str_c(x$name, collapse = ', '), 
+    msg(c('Dropped: ', stringr::str_c(x$name, collapse = ', '), 
           ' due to missmatch in row number.'), quiet)
     return(dplyr::tibble(data = list(), index = list()))
     
@@ -172,7 +173,7 @@ merge_firstonly <- function(x, quiet) {
     # No merge needed
     return(dplyr::tibble(data = x$data, index = x$index))
   } else if (nrow(x) != 2) {
-    msg(c('   * Something went wrong while consolidating: ', 
+    msg(c(' * Something went wrong while consolidating: ', 
           paste0(x[x$firstonly == TRUE, ]$index[[1]]$tables, 
                  collapse = ', ')), quiet) 
     return(dplyr::tibble(data = list(), index = list()))
@@ -180,7 +181,7 @@ merge_firstonly <- function(x, quiet) {
   xdata   <- x$data[x$firstonly == FALSE][[1]]
   ydata   <- x$data[x$firstonly == TRUE][[1]]
   by_vars <- intersect(colnames(xdata), colnames(ydata))
-  msg(c('   * Joining by: ', paste0(by_vars, collapse = ', ')), quiet)
+  msg(c(' * Joining by: ', paste0(by_vars, collapse = ', ')), quiet)
   dplyr::tibble(data = list(dplyr::left_join(x  = xdata, 
                                              y  = ydata,
                                              by = by_vars)),

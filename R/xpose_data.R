@@ -68,9 +68,17 @@ xpose_data <- function(file     = NULL,
   summary <- summarise_nm_model(file, model_code, software, rounding = xp_theme$rounding)
   }
   
-  structure(list(code = model_code, summary = summary, cor = NULL,
-                 cov = NULL, ext = NULL, prm = NULL, phi = NULL,
-                 grd = NULL, data = data, sim = sim, gg_theme = gg_theme,
+  # Import output files
+  msg(c('\nLooking for ', software, ' output files'), quiet)
+  if (software == 'nonmem') {
+  out_files <- update_extension(file, '') %>% 
+    paste0(c('.ext', '.cor', '.cov', '.phi', '.grd')) %>% 
+    read_nm_files(quiet = quiet)  
+  }
+  
+  # Output xpose_data
+  structure(list(code = model_code, summary = summary, files = out_files, 
+                 data = data, sim = sim, gg_theme = gg_theme,
                  xp_theme = xp_theme, options = list(quiet = quiet)), 
             class = c('xpose_data', 'uneval'))
 }
