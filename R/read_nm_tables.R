@@ -43,9 +43,13 @@ read_nm_tables <- function(files         = NULL,
     dplyr::filter(file.exists(.$file))
   
   if (length(unique(tables$problem)) > 1) {
-    msg(c('Reading:\n', paste0(' - $prob no.', tables$problem, ': ', basename(tables$file),
-                               dplyr::if_else(tables$firstonly, ' (firstonly)', ''),
-                               collapse = '\n')), quiet)
+    tables %>% 
+      dplyr::mutate(name = stringr::str_c(basename(.$file), dplyr::if_else(.$firstonly, ' (firstonly)', ''))) %>% 
+      purrr::slice_rows('problem') %>% 
+      purrr::by_slice(~stringr::str_c(.$name, collapse = ', '), 
+                      .collate = 'rows', .to = 'string') %>% 
+                      {stringr::str_c(' - $prob no.', .$problem, ': ', .$string, collapse = '\n')} %>% 
+    {msg(c('Reading:\n', .), quiet)}
   } else {
     msg(c('Reading: ', paste0(basename(tables$file), dplyr::if_else(tables$firstonly, ' (firstonly)', ''),
                               collapse = ', ')), quiet)
