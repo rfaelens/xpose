@@ -43,13 +43,25 @@ read_nm_files <- function(files  = NULL,
     msg(c('Reading: ', paste0(bases[file.exists(files)], collapse = ', ')), quiet)
   }
   
-  files %>% 
+  out <- files %>% 
     dplyr::tibble(path = ., name = basename(.)) %>% 
     dplyr::filter(file.exists(.$path)) %>% 
     purrr::by_row(~readr::read_lines(file = .$path), .to = 'raw') %>%
-    purrr::by_row(~parse_nm_files(dat = ., quiet), .collate = 'rows') %>% 
+    purrr::by_row(~parse_nm_files(dat = ., quiet), .to = 'tmp')
+  
+  out <- out %>% 
+    dplyr::bind_cols(dplyr::tibble(drop = purrr::map_lgl(out$tmp, purrr::is_null)))
+  
+  if (all(out$drop)) {
+    msg('\nNo output file imported.', quiet)
+    return()
+  }  
+  
+  out %>% 
+    dplyr::filter(!.$drop) %>% 
+    tidyr::unnest(quote(tmp)) %>% 
     dplyr::select(dplyr::one_of('name', 'prob', 'subprob', 'method', 'data'))
-}  
+}
 
 parse_nm_files <- function(dat, quiet) {
   x <- dplyr::tibble(raw = unlist(dat$raw), prob = NA, subprob = NA, method = NA, header = FALSE)
