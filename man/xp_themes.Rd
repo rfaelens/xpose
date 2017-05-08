@@ -21,10 +21,10 @@ titles etc.
 }
 }
 \examples{
-# With Default xp_theme
+# With the xp_theme theme_xp_default() (default)
 dv_vs_ipred(xpdb_ex_pk)
 
-# With modified xp_theme
+# With the xp_theme theme_xp_xpose4()
 xpdb_ex_pk \%>\%
   update_themes(xp_theme = theme_xp_xpose4()) \%>\%
   dv_vs_ipred()

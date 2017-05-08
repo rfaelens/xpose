@@ -34,7 +34,7 @@
 #' \code{\link{template_titles}}.
 #' 
 #' @examples
-#' xplot_scatter(xpdb_ex_pk, mapping = aes(x = IPRED, y = DV))
+#' xplot_scatter(xpdb_ex_pk, aes(x = IPRED, y = DV))
 #' 
 #' @export
 xplot_scatter <- function(xpdb,

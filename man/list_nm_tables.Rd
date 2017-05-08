@@ -14,7 +14,7 @@ List NONMEM output tables file names from a \code{nm_model} object.
 }
 \examples{
 \dontrun{
-read_nm_model('run001.lst') \%>\% 
+read_nm_model(file = 'run001.lst') \%>\% 
   list_nm_tables()
 }
 

@@ -44,10 +44,10 @@ Many key variables are available:
 }
 }
 \examples{
-dv_vs_ipred(xpdb, 
+dv_vs_ipred(xpdb_ex_pk, 
             title = 'DV vs. IPRED',
             subtitle = '@ofv, @nind subjects, @nobs obs.',
-            caption = '@run, ©descr')
+            caption = '@run, @descr')
 
 }
 \seealso{

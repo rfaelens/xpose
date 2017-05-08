@@ -40,10 +40,10 @@
 #' }
 #' @seealso \link{xpose_labs}, \link{xpose_save}
 #' @examples
-#' dv_vs_ipred(xpdb_pk_ex, 
+#' dv_vs_ipred(xpdb_ex_pk, 
 #'             title = 'DV vs. IPRED',
 #'             subtitle = '@ofv, @nind subjects, @nobs obs.',
-#'             caption = '@run, ©descr')
+#'             caption = '@run, @descr')
 #' 
 #' @name template_titles
 NULL

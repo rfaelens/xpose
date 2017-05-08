@@ -31,10 +31,10 @@ intended to bring the focus on the data.
 }
 }
 \examples{
-# With Default gg_theme
+# With the gg_theme theme_readable() (default)
 dv_vs_ipred(xpdb_ex_pk)
 
-# With modified gg_theme
+# With the gg_theme theme_bw2()
 xpdb_ex_pk \%>\% 
  update_themes(gg_theme = theme_bw2()) \%>\% 
  dv_vs_ipred()

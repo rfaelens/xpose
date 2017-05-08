@@ -28,8 +28,7 @@ dv_vs_ipred(xpdb_ex_pk)
 
 # Updating the gg_theme and xp_theme
 xpdb_ex_pk \%>\% 
-  update_themes(xpdb     = xpdb,
-                gg_theme = theme_bw(),
+  update_themes(gg_theme = theme_bw(),
                 xp_theme = c(point_color = 'blue',
                              line_color  = 'blue')) \%>\% 
   dv_vs_ipred()

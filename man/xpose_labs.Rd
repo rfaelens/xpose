@@ -33,9 +33,10 @@ p1 <- dv_vs_ipred(xpdb_ex_pk)
 print(p1)
 
 # Modified labels
-p1 + xpose_labs(title   = 'DV vs. IPRED | @run', 
-                caption = '@dir', 
-                x       = 'Individual Predictions (IPRED)')
+p1 + xpose_labs(title    = 'Hello world this is a plot for @run',
+                subtitle = NULL,
+                caption  = 'This run was taken from: @dir', 
+                x        = 'Individual Predictions (IPRED)')
 
 }
 \seealso{
