@@ -10,9 +10,7 @@
 #' Biopharmaceutics. 26(2):207–246 (1998).
 #'
 #' @examples
-#' \dontrun{
-#' dv_vs_ipred(xpdb_ex_pk)
-#' }
+#' print(xpdb_ex_pk)
 #'
 #' @name xpdb_ex_pk
 NULL

@@ -20,7 +20,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' xpdb %>% 
+#' xpdb_ex_pk %>% 
 #'  dv_vs_ipred() %>% 
 #'  xpose_save()
 #' }

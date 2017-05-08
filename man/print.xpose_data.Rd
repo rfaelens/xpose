@@ -12,3 +12,11 @@
 \description{
 This function will return a summary of the xpdb content to the console.
 }
+\examples{
+# Using the print function
+print(xpdb_ex_pk)
+
+# Or simply by writting the xpdb name
+xpdb_ex_pk
+
+}

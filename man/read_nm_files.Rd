@@ -27,7 +27,7 @@ Quickly import NONMEM output files into R.
 }
 \examples{
 \dontrun{
-out <- read_nm_files(files = 'inst/extdata/run001.ext')
+ext_file <- read_nm_files(files = 'run001.ext')
 }
 }
 \seealso{

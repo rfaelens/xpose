@@ -23,10 +23,15 @@ All plots generated with this xpdb will automatically use the
 defined xpose (\code{xp_theme}) and ggplot2 (\code{gg_theme}) themes.
 }
 \examples{
-\dontrun{
-xpdb <- update_themes(xpdb     = xpdb,
-                      gg_theme = theme_bw(),
-                      xp_theme = c(point_color = 'blue',
-                                   line_color  = 'blue'))
-}
+# Before default theme
+dv_vs_ipred(xpdb_ex_pk)
+
+# Updating the gg_theme and xp_theme
+xpdb_ex_pk \%>\% 
+  update_themes(xpdb     = xpdb,
+                gg_theme = theme_bw(),
+                xp_theme = c(point_color = 'blue',
+                             line_color  = 'blue')) \%>\% 
+  dv_vs_ipred()
+  
 }

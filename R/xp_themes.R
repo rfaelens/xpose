@@ -10,12 +10,14 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
-#'  xpose_data(dir = 'inst/models/', runno = '001') %>%
-#'    xpose_theme(gg_theme = theme_readable(),
-#'                xp_theme = theme_xp_default()) %>%
-#'    dv_vs_ipred()
-#' }
+#' # With the xp_theme theme_xp_default() (default)
+#' dv_vs_ipred(xpdb_ex_pk)
+#' 
+#' # With the xp_theme theme_xp_xpose4()
+#' xpdb_ex_pk %>%
+#'   update_themes(xp_theme = theme_xp_xpose4()) %>%
+#'   dv_vs_ipred()
+#'   
 #' @name xp_themes
 #' @export
 theme_xp_default <- function() {

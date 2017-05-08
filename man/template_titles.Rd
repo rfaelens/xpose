@@ -44,12 +44,10 @@ Many key variables are available:
 }
 }
 \examples{
-\dontrun{
 dv_vs_ipred(xpdb, 
             title = 'DV vs. IPRED',
             subtitle = '@ofv, @nind subjects, @nobs obs.',
             caption = '@run, ©descr')
-}
 
 }
 \seealso{

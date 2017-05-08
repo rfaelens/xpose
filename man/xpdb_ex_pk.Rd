@@ -14,8 +14,6 @@ Biopharmaceutics. 26(2):207–246 (1998).
 Moxonidine \code{xpose_data} example.
 }
 \examples{
-\dontrun{
-dv_vs_ipred(xpdb_ex_pk)
-}
+print(xpdb_ex_pk)
 
 }

@@ -28,12 +28,15 @@ use of \code{\link{template_titles}} along with the ggplot2 \code{+} operator.
 }}
 
 \examples{
-\dontrun{
-dv_vs_ipred(xpdb_ex_pk) + 
-  xpose_labs(title = 'DV vs. IPRED | @run', 
-             caption = '@dir', 
-             x = 'Individual Predictions (IPRED)')
-}
+# Default labels
+p1 <- dv_vs_ipred(xpdb_ex_pk)
+print(p1)
+
+# Modified labels
+p1 + xpose_labs(title   = 'DV vs. IPRED | @run', 
+                caption = '@dir', 
+                x       = 'Individual Predictions (IPRED)')
+
 }
 \seealso{
 \link[ggplot2]{ggplot2}, \link[ggplot2]{labs}, \link[ggplot2]{+.gg}

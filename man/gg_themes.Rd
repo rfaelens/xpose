@@ -31,9 +31,12 @@ intended to bring the focus on the data.
 }
 }
 \examples{
-\dontrun{
-ggplot(diamonds, aes(x = price, y = carat, color = cut)) +
- geom_point(alpha = 0.5) +
- theme_readable(legend_position = 'top')
-}
+# With Default gg_theme
+dv_vs_ipred(xpdb_ex_pk)
+
+# With modified gg_theme
+xpdb_ex_pk \%>\% 
+ update_themes(gg_theme = theme_bw2()) \%>\% 
+ dv_vs_ipred()
+ 
 }

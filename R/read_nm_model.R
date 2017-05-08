@@ -24,8 +24,9 @@
 ##' }
 #' @examples
 #' \dontrun{
-#' nm_model <- read_nm_model(dir = '../models/pk/', runno = '001')
+#' nm_model <- read_nm_model(file = 'run001.lst')
 #' }
+#' 
 #' @export
 read_nm_model <- function(file    = NULL,
                           runno   = NULL,

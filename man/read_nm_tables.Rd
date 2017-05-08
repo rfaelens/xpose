@@ -25,6 +25,6 @@ detects the optimal settings to import the tables from nonmem.
 }
 \examples{
 \dontrun{
-data <- read_nm_tables(files = 'inst/extdata/sdtab001')
+nm_tables <- read_nm_tables(files = c('sdtab001', 'patab001'))
 }
 }

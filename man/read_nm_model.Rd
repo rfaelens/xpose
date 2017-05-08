@@ -39,8 +39,9 @@ Parse NONMEM model files in R format
 }
 \examples{
 \dontrun{
-nm_model <- read_nm_model(dir = '../models/pk/', runno = '001')
+nm_model <- read_nm_model(file = 'run001.lst')
 }
+
 }
 \seealso{
 \code{\link{xpose_data}}, \code{\link{read_nm_tables}}

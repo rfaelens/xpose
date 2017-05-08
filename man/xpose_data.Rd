@@ -34,6 +34,7 @@ Gather model outputs into a R database
 }
 \examples{
 \dontrun{
-xpdb <- xpose_data(dir = '../models/pk/', runno = '001')
+xpdb <- xpose_data(file = 'run001.lst')
 }
+
 }

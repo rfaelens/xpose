@@ -22,9 +22,8 @@
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
-#' \dontrun{
 #' dv_vs_ipred(xpdb_ex_pk)
-#' }
+#' 
 #' @export
 dv_vs_ipred <- function(xpdb,
                         aes      = NULL,
@@ -58,9 +57,8 @@ dv_vs_ipred <- function(xpdb,
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
-#' \dontrun{
 #' dv_vs_pred(xpdb_ex_pk)
-#' }
+#' 
 #' @export
 dv_vs_pred <- function(xpdb,
                        aes      = NULL,

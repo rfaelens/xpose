@@ -34,9 +34,8 @@
 #' \code{\link{template_titles}}.
 #' 
 #' @examples
-#' \dontrun{
-#' xplot_scatter(xpdb, mapping = aes(x = IPRED, y = DV))
-#' }
+#' xplot_scatter(xpdb_ex_pk, mapping = aes(x = IPRED, y = DV))
+#' 
 #' @export
 xplot_scatter <- function(xpdb,
                           vars     = NULL,

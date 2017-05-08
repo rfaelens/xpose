@@ -11,7 +11,7 @@
 #' @param ... Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.
 #' @examples
 #' \dontrun{
-#' data <- read_nm_tables(files = 'inst/extdata/sdtab001')
+#' nm_tables <- read_nm_tables(files = c('sdtab001', 'patab001'))
 #' }
 #' @export
 read_nm_tables <- function(files         = NULL,

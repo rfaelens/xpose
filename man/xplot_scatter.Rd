@@ -62,7 +62,6 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 }
 
 \examples{
-\dontrun{
-xplot_scatter(xpdb, mapping = aes(x = IPRED, y = DV))
-}
+xplot_scatter(xpdb_ex_pk, mapping = aes(x = IPRED, y = DV))
+
 }

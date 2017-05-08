@@ -5,6 +5,13 @@
 #' @param xpdb An \code{xpose_data} object generated with \code{\link{xpose_data}}.
 #' 
 #' @method print xpose_data
+#' @examples 
+#' # Using the print function
+#' print(xpdb_ex_pk)
+#' 
+#' # Or simply by writting the xpdb name
+#' xpdb_ex_pk
+#' 
 #' @export
 print.xpose_data <- function(xpdb) {
   if (!is.null(xpdb$data)) {

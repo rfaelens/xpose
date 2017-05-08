@@ -16,11 +16,14 @@
 #' 'right', 'bottom', 'top', or a two-element numeric vector.
 #'
 #' @examples
-#' \dontrun{
-#' ggplot(diamonds, aes(x = price, y = carat, color = cut)) +
-#'  geom_point(alpha = 0.5) +
-#'  theme_readable(legend_position = 'top')
-#' }
+#' # With the gg_theme theme_readable() (default)
+#' dv_vs_ipred(xpdb_ex_pk)
+#' 
+#' # With the gg_theme theme_bw2()
+#' xpdb_ex_pk %>% 
+#'  update_themes(gg_theme = theme_bw2()) %>% 
+#'  dv_vs_ipred()
+#'  
 #' @name gg_themes
 #' @export
 theme_bw2 <- function(base_size = 11, base_family = '', legend_position = 'right') {

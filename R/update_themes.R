@@ -12,12 +12,16 @@
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #'
 #' @examples
-#' \dontrun{
-#' xpdb <- update_themes(xpdb     = xpdb,
-#'                       gg_theme = theme_bw(),
-#'                       xp_theme = c(point_color = 'blue',
-#'                                    line_color  = 'blue'))
-#' }
+#' # Before default theme
+#' dv_vs_ipred(xpdb_ex_pk)
+#' 
+#' # Updating the gg_theme and xp_theme
+#' xpdb_ex_pk %>% 
+#'   update_themes(gg_theme = theme_bw(),
+#'                 xp_theme = c(point_color = 'blue',
+#'                              line_color  = 'blue')) %>% 
+#'   dv_vs_ipred()
+#'   
 #' @export
 update_themes <- function(xpdb     = NULL,
                           gg_theme = NULL,

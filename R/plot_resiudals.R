@@ -6,9 +6,8 @@
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
-#' \dontrun{
 #' cwres_vs_pred(xpdb_ex_pk)
-#' }
+#' 
 #' @export
 cwres_vs_pred <- function(xpdb,
                          aes      = NULL,
@@ -42,9 +41,8 @@ cwres_vs_pred <- function(xpdb,
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
-#' \dontrun{
 #' cwres_vs_idv(xpdb_ex_pk)
-#' }
+#' 
 #' @export
 cwres_vs_idv <- function(xpdb,
                          aes      = NULL,
@@ -78,9 +76,8 @@ cwres_vs_idv <- function(xpdb,
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
-#' \dontrun{
 #' absval_iwres_vs_pred(xpdb_ex_pk)
-#' }
+#' 
 #' @export
 absval_iwres_vs_pred <- function(xpdb,
                                  aes      = NULL,

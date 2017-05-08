@@ -14,7 +14,7 @@
 #' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_tables}}
 #' @examples
 #' \dontrun{
-#' out <- read_nm_files(files = 'inst/extdata/run001.ext')
+#' ext_file <- read_nm_files(files = 'run001.ext')
 #' }
 #' @export
 

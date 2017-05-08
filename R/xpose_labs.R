@@ -6,15 +6,19 @@
 #' @param ... A list of new name-value pairs. The name should either be an aesthetic, 
 #' or one of "title", "subtitle", or "caption". The value should be a text containing 
 #' \code{\link{template_titles}} keywords for the axes, plot title, subtitle or caption.
-#' @export
 #' @seealso \link[ggplot2]{ggplot2}, \link[ggplot2]{labs}, \link[ggplot2]{+.gg}
 #' @examples
-#' \dontrun{
-#' dv_vs_ipred(xpdb_ex_pk) + 
-#'   xpose_labs(title = 'DV vs. IPRED | @run', 
-#'              caption = '@dir', 
-#'              x = 'Individual Predictions (IPRED)')
-#' }
+#' # Default labels
+#' p1 <- dv_vs_ipred(xpdb_ex_pk)
+#' print(p1)
+#' 
+#' # Modified labels
+#' p1 + xpose_labs(title    = 'Hello world this is a plot for @run',
+#'                 subtitle = NULL,
+#'                 caption  = 'This run was taken from: @dir', 
+#'                 x        = 'Individual Predictions (IPRED)')
+#' 
+#' @export
 xpose_labs <- function(...) {
   args <- list(...)
   rename_aes <- utils::getFromNamespace('rename_aes', 'ggplot2')

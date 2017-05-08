@@ -16,8 +16,9 @@
 #'
 #' @examples
 #' \dontrun{
-#' xpdb <- xpose_data(dir = '../models/pk/', runno = '001')
+#' xpdb <- xpose_data(file = 'run001.lst')
 #' }
+#' 
 #' @export
 xpose_data <- function(file     = NULL,
                        runno    = NULL,

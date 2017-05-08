@@ -51,9 +51,8 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 }
 
 \examples{
-\dontrun{
 absval_iwres_vs_pred(xpdb_ex_pk)
-}
+
 }
 \seealso{
 \code{\link{xplot_scatter}}

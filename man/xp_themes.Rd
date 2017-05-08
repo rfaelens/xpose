@@ -21,10 +21,12 @@ titles etc.
 }
 }
 \examples{
-\dontrun{
- xpose_data(dir = 'inst/models/', runno = '001') \%>\%
-   xpose_theme(gg_theme = theme_readable(),
-               xp_theme = theme_xp_default()) \%>\%
-   dv_vs_ipred()
-}
+# With Default xp_theme
+dv_vs_ipred(xpdb_ex_pk)
+
+# With modified xp_theme
+xpdb_ex_pk \%>\%
+  update_themes(xp_theme = theme_xp_xpose4()) \%>\%
+  dv_vs_ipred()
+  
 }

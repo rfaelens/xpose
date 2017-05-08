@@ -14,10 +14,10 @@ List NONMEM output tables file names from a \code{nm_model} object.
 }
 \examples{
 \dontrun{
-read_nm_model('inst/extdata/run001.mod') \%>\% 
-  list_nm_tables() \%>\%
-  read_nm_tables()
-  }
+read_nm_model('run001.lst') \%>\% 
+  list_nm_tables()
+}
+
 }
 \seealso{
 \code{\link{read_nm_model}}, \code{\link{read_nm_tables}}
