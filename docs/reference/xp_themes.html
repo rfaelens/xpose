@@ -80,13 +80,13 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/guiastrennec/xpose">
+  <a href="https://github.com/UUPharmacometrics/xpose">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://github.com/guiastrennec/xpose/releases">
+  <a href="https://github.com/UUPharmacometrics/xpose/releases">
     <span class="fa fa-download"></span>
      
   </a>
@@ -120,12 +120,13 @@ titles etc.</p><ul>
         
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
-   <span class='fu'><a href='xpose_data.html'>xpose_data</a></span>(<span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>'inst/models/'</span>, <span class='kw'>runno</span> <span class='kw'>=</span> <span class='st'>'001'</span>) <span class='kw'>%&gt;%</span>
-     <span class='fu'>xpose_theme</span>(<span class='kw'>gg_theme</span> <span class='kw'>=</span> <span class='fu'><a href='gg_themes.html'>theme_readable</a></span>(),
-                 <span class='kw'>xp_theme</span> <span class='kw'>=</span> <span class='fu'>theme_xp_default</span>()) <span class='kw'>%&gt;%</span>
-     <span class='fu'><a href='dv_vs_ipred.html'>dv_vs_ipred</a></span>()
-})</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># With Default xp_theme</span>
+<span class='fu'><a href='dv_vs_ipred.html'>dv_vs_ipred</a></span>(<span class='no'>xpdb_ex_pk</span>)</div><img src='xp_themes-2.png' alt='' width='540' height='400' /><div class='input'>
+<span class='co'># With modified xp_theme</span>
+<span class='no'>xpdb_ex_pk</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='update_themes.html'>update_themes</a></span>(<span class='kw'>xp_theme</span> <span class='kw'>=</span> <span class='fu'>theme_xp_xpose4</span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='dv_vs_ipred.html'>dv_vs_ipred</a></span>()</div><img src='xp_themes-4.png' alt='' width='540' height='400' /><div class='input'>  
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -139,7 +140,7 @@ titles etc.</p><ul>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/guiastrennec/xpose'>Benjamin Guiastrennec</a>, <a href='https://github.com/OlofssonA'>Anna Olofsson</a>, <a href='https://github.com/andrewhooker'>Andrew C. Hooker</a>.</p>
+  <p>Developed by <a href='https://github.com/guiastrennec'>Benjamin Guiastrennec</a>, <a href='https://github.com/OlofssonA'>Anna Olofsson</a>, <a href='https://github.com/andrewhooker'>Andrew C. Hooker</a>.</p>
 </div>
 
 <div class="pkgdown">

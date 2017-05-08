@@ -47,7 +47,7 @@ reference:
 
 authors:
   Benjamin Guiastrennec:
-    href: https://github.com/guiastrennec/xpose
+    href: https://github.com/guiastrennec
   Andrew C. Hooker:
     href: https://github.com/andrewhooker
   Anna Olofsson:
@@ -82,6 +82,6 @@ navbar:
     href: news/index.html
   right:
   - icon: fa-github fa-lg
-    href: https://github.com/guiastrennec/xpose
+    href: https://github.com/UUPharmacometrics/xpose
   - icon: fa-download
-    href: https://github.com/guiastrennec/xpose/releases
+    href: https://github.com/UUPharmacometrics/xpose/releases

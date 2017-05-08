@@ -80,13 +80,13 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/guiastrennec/xpose">
+  <a href="https://github.com/UUPharmacometrics/xpose">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://github.com/guiastrennec/xpose/releases">
+  <a href="https://github.com/UUPharmacometrics/xpose/releases">
     <span class="fa fa-download"></span>
      
   </a>
@@ -146,12 +146,14 @@ or one of "title", "subtitle", or "caption". The value should be a text containi
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
-  <span class='fu'><a href='dv_vs_ipred.html'>dv_vs_ipred</a></span>(<span class='no'>xpdb_ex_pk</span>) +
-    <span class='fu'>xpose_labs</span>(<span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>'DV vs. IPRED | @run'</span>,
-               <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>'@dir'</span>,
-               <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>'Individual Predictions (IPRED)'</span>)
-})</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># Default labels</span>
+<span class='no'>p1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='dv_vs_ipred.html'>dv_vs_ipred</a></span>(<span class='no'>xpdb_ex_pk</span>)
+<span class='fu'>print</span>(<span class='no'>p1</span>)</div><img src='xpose_labs-2.png' alt='' width='540' height='400' /><div class='input'>
+<span class='co'># Modified labels</span>
+<span class='no'>p1</span> + <span class='fu'>xpose_labs</span>(<span class='kw'>title</span>   <span class='kw'>=</span> <span class='st'>'DV vs. IPRED | @run'</span>,
+                <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>'@dir'</span>,
+                <span class='kw'>x</span>       <span class='kw'>=</span> <span class='st'>'Individual Predictions (IPRED)'</span>)</div><img src='xpose_labs-4.png' alt='' width='540' height='400' /><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -170,7 +172,7 @@ or one of "title", "subtitle", or "caption". The value should be a text containi
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/guiastrennec/xpose'>Benjamin Guiastrennec</a>, <a href='https://github.com/OlofssonA'>Anna Olofsson</a>, <a href='https://github.com/andrewhooker'>Andrew C. Hooker</a>.</p>
+  <p>Developed by <a href='https://github.com/guiastrennec'>Benjamin Guiastrennec</a>, <a href='https://github.com/OlofssonA'>Anna Olofsson</a>, <a href='https://github.com/andrewhooker'>Andrew C. Hooker</a>.</p>
 </div>
 
 <div class="pkgdown">

@@ -1,5 +1,7 @@
 ---
 title: "Workflow"
+author: "Benjamin Guiastrennec"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Workflow}

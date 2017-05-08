@@ -80,13 +80,13 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/guiastrennec/xpose">
+  <a href="https://github.com/UUPharmacometrics/xpose">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://github.com/guiastrennec/xpose/releases">
+  <a href="https://github.com/UUPharmacometrics/xpose/releases">
     <span class="fa fa-download"></span>
      
   </a>
@@ -140,11 +140,13 @@ intended to bring the focus on the data.</p></li>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
-  <span class='fu'>ggplot</span>(<span class='no'>diamonds</span>, <span class='fu'>aes</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>price</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>carat</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>cut</span>)) +
-   <span class='fu'>geom_point</span>(<span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.5</span>) +
-   <span class='fu'>theme_readable</span>(<span class='kw'>legend_position</span> <span class='kw'>=</span> <span class='st'>'top'</span>)
-})</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># With Default gg_theme</span>
+<span class='fu'><a href='dv_vs_ipred.html'>dv_vs_ipred</a></span>(<span class='no'>xpdb_ex_pk</span>)</div><img src='gg_themes-2.png' alt='' width='540' height='400' /><div class='input'>
+<span class='co'># With modified gg_theme</span>
+<span class='no'>xpdb_ex_pk</span> <span class='kw'>%&gt;%</span>
+ <span class='fu'><a href='update_themes.html'>update_themes</a></span>(<span class='kw'>gg_theme</span> <span class='kw'>=</span> <span class='fu'>theme_bw2</span>()) <span class='kw'>%&gt;%</span>
+ <span class='fu'><a href='dv_vs_ipred.html'>dv_vs_ipred</a></span>()</div><img src='gg_themes-4.png' alt='' width='540' height='400' /><div class='input'> 
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -159,7 +161,7 @@ intended to bring the focus on the data.</p></li>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/guiastrennec/xpose'>Benjamin Guiastrennec</a>, <a href='https://github.com/OlofssonA'>Anna Olofsson</a>, <a href='https://github.com/andrewhooker'>Andrew C. Hooker</a>.</p>
+  <p>Developed by <a href='https://github.com/guiastrennec'>Benjamin Guiastrennec</a>, <a href='https://github.com/OlofssonA'>Anna Olofsson</a>, <a href='https://github.com/andrewhooker'>Andrew C. Hooker</a>.</p>
 </div>
 
 <div class="pkgdown">
