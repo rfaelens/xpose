@@ -2,15 +2,17 @@
 % Please edit documentation in R/xpose_print.R
 \name{print.xpose_data}
 \alias{print.xpose_data}
-\title{Print an xpdb object}
+\title{Print an xpose_data object}
 \usage{
-\method{print}{xpose_data}(xpdb)
+\method{print}{xpose_data}(x, ...)
 }
 \arguments{
-\item{xpdb}{An \code{xpose_data} object generated with \code{\link{xpose_data}}.}
+\item{x}{An \code{xpose_data} object generated with \code{\link{xpose_data}}.}
+
+\item{...}{Ignored in this function}
 }
 \description{
-This function will return a summary of the xpdb content to the console.
+This function will return a summary of the xpose_data content to the console.
 }
 \examples{
 # Using the print function
