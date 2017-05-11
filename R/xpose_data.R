@@ -59,7 +59,9 @@ xpose_data <- function(runno         = NULL,
   if (ext %in% c('.lst', '.out', '.res', '.mod', '.ctl')) {
     software <- 'nonmem'
     model_code <- read_nm_model(file, runno, dir, prefix, ext, quiet)
-    if (manual_import) {
+    if (!manual_import) {
+      tbl_names  <- list_nm_tables(model_code)
+    } else {
       if (missing(tab_suffix)) tab_suffix <- ''
       if (missing(sim_suffix)) sim_suffix <- 'sim'
       if (missing(tab_names)) {
@@ -72,8 +74,6 @@ xpose_data <- function(runno         = NULL,
         dplyr::mutate(file = dplyr::if_else(.$simtab, stringr::str_c(.$file, sim_suffix),
                                             stringr::str_c(.$file, tab_suffix))) %>% 
         dplyr::filter(file.exists(.$file))
-    } else {
-      tbl_names  <- list_nm_tables(model_code)
     }
   } else {
     stop('Model file currently not supported by xpose.', call. = FALSE)
