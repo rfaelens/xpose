@@ -41,8 +41,7 @@ Imports:
   gridExtra
 Suggests:
   knitr,
-  testthat,
-  plotly
+  testthat
 License: LGPL-3 + file LICENSE
 URL: https://github.com/UUPharmacometrics/xpose
 BugReports: https://github.com/UUPharmacometrics/xpose/issues
