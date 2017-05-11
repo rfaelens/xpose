@@ -7,7 +7,7 @@
 #' @param runno Run number to be evaluated.
 #' @param dir Location of the model file.
 #' @param prefix Prefix of the model file name.
-#' @param ext Extension of the model file.
+#' @param ext Extension of the model file. Should be one of ".lst", ".out", ".res", ".mod" or ".ctl".
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #'
 #' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_tables}}
@@ -32,7 +32,7 @@ read_nm_model <- function(file    = NULL,
                           runno   = NULL,
                           dir     = NULL,
                           prefix  = 'run',
-                          ext     = c('.lst', '.mod', '.ctl', '.txt'),
+                          ext     = c('.lst', '.out', '.res', '.mod', '.ctl'),
                           quiet   = FALSE) {
   
   if (is.null(runno) && is.null(file)) {
@@ -40,6 +40,7 @@ read_nm_model <- function(file    = NULL,
   }
   
   if (is.null(file)) {
+    ext  <- make_extension(ext)
     ext  <- match.arg(ext)
     file <- file_path(dir, paste0(prefix, runno, ext))
   }
@@ -50,14 +51,15 @@ read_nm_model <- function(file    = NULL,
   
   model <- readr::read_lines(file)
   
-  if (!any(stringr::str_detect(model, '^\\s*\\$PROB.+')) && get_extension(file) == '.lst') {
+  if (!any(stringr::str_detect(model, '^\\s*\\$PROB.+')) && get_extension(file) %in% c('.lst', '.out', '.res')) {
+    # Attempts to recover the model code from model file rather than in the nonmem output file
+    orig_ext <- get_extension(file)
+    file     <- update_extension(file, c('.mod', '.ctl'))
+    file     <- file[file.exists(file)]
     
-    # Attempts to recover the model in .mod if misssing from .lst
-    file <- update_extension(file, '.mod')
-    
-    if (file.exists(file)) {
-      msg('No model code was found in `.lst` file using `.mod` instead.', quiet)
-      model <- readr::read_lines(file)
+    if (any(file.exists(file))) {
+      msg(c('No model code was found in `', orig_ext, '` file using `', get_extension(file)[1], '` instead.'), quiet)
+      model <- readr::read_lines(file[1])
     }
   }
   
@@ -125,5 +127,5 @@ read_nm_model <- function(file    = NULL,
     structure(file     = basename(file),
               dir      = dirname(file),
               software = 'nonmem',
-              class    = c('nm_model', 'tbl_df', 'tbl', 'data.frame'))
+              class    = c('nm_model', class(.)))
 }
