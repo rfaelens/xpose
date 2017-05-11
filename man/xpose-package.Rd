@@ -26,6 +26,7 @@ Authors:
 \itemize{
   \item Anna Olofsson
   \item Andrew C. Hooker \email{andrew.hooker@farmbio.uu.se}
+  \item Mats O. Karlsson \email{mats.karlsson@farmbio.uu.se}
 }
 
 Other contributors:

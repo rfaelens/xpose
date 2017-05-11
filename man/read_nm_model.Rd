@@ -5,7 +5,7 @@
 \title{NONMEM model file parser}
 \usage{
 read_nm_model(file = NULL, runno = NULL, dir = NULL, prefix = "run",
-  ext = c(".lst", ".mod", ".ctl", ".txt"), quiet = FALSE)
+  ext = c(".lst", ".out", ".res", ".mod", ".ctl"), quiet = FALSE)
 }
 \arguments{
 \item{file}{Full file name preferably a `.lst` file. Alternative argument to \code{dir}, \code{prefix},
@@ -17,7 +17,7 @@ read_nm_model(file = NULL, runno = NULL, dir = NULL, prefix = "run",
 
 \item{prefix}{Prefix of the model file name.}
 
-\item{ext}{Extension of the model file.}
+\item{ext}{Extension of the model file. Should be one of ".lst", ".out", ".res", ".mod" or ".ctl".}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 }

@@ -12,7 +12,7 @@
 \item{...}{Ignored in this function}
 }
 \description{
-This function will return a summary of the xpose_data content to the console.
+This function returns a summary of an xpose_data to the console.
 }
 \examples{
 # Using the print function
