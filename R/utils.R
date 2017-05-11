@@ -53,9 +53,14 @@ file_path <- function(dir, file) {
 
 # Get file extension
 get_extension <- function(x) {
-  tmp <- stringr::str_extract(x, '\\.[[:alnum:]]+$')
-  tmp[is.na(tmp)] <- ''
-  tmp
+  x <- stringr::str_extract(x, '\\.[[:alnum:]]+$')
+  x[is.na(x)] <- ''
+  x
+}
+
+# Get file extension
+make_extension <- function(x) {
+  dplyr::if_else(!stringr::str_detect(x, '^\\..+'), stringr::str_c('.', x), x)
 }
 
 # Update file extension
