@@ -159,5 +159,5 @@ xplot_scatter <- function(xpdb,
   xp$xpose <- list(fun     = plot_name,
                    summary = xpdb$summary)
   
-  structure(xp, class = c('xpose_plot', 'gg', 'ggplot'))
+  structure(xp, class = c('xpose_plot', class(xp)))
 }
