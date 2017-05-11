@@ -64,8 +64,12 @@ read_nm_files <- function(files  = NULL,
 }
 
 parse_nm_files <- function(dat, quiet) {
+  if (length(unlist(dat$raw)) == 0) {
+   tab_rows <- NULL 
+  } else {
   x <- dplyr::tibble(raw = unlist(dat$raw), prob = NA, subprob = NA, method = NA, header = FALSE)
   tab_rows <- which(stringr::str_detect(x$raw, '^\\s*TABLE NO'))
+  }
   
   if (length(tab_rows) == 0) {
     msg(c('Dropping ', dat$name, ' due to inappropriate format.'), quiet)
