@@ -65,3 +65,7 @@ test_that("update_extension works as expected", {
   expect_equal(update_extension('../parent/dir.dot/file.mod', '.lst'), '../parent/dir.dot/file.lst')
   expect_equal(update_extension('../parent/dir.dot/file', '.lst'), '../parent/dir.dot/file')
 })
+
+test_that("get_runno works as expected", {
+  expect_equal(get_runno('run001b.mod', 'run'), '001b')
+})

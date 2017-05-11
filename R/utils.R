@@ -67,3 +67,9 @@ make_extension <- function(x) {
 update_extension <- function(x, ext) {
   stringr::str_replace(x, '\\.[[:alnum:]]+$', ext)
 }
+
+# Get run number
+get_runno <- function(x, prefix) {
+  x <- update_extension(basename(x), '')
+  stringr::str_replace(x, prefix, '')
+}
