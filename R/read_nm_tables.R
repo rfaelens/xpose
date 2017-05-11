@@ -21,7 +21,7 @@ read_nm_tables <- function(files         = NULL,
                            ...) {
   
   if (!is.null(files) && !is.nm.table.list(files)) {
-    files <- dplyr::tibble(problem   = 1, 
+    files <- dplyr::tibble(problem   = -1, 
                            file      = files,
                            firstonly = FALSE,
                            simtab    = FALSE)
@@ -44,12 +44,12 @@ read_nm_tables <- function(files         = NULL,
   
   # Print reading messages
   tables %>% 
-      dplyr::mutate(name = stringr::str_c(basename(.$file), dplyr::if_else(.$firstonly, ' (firstonly)', ''))) %>% 
-      purrr::slice_rows('problem') %>% 
-      purrr::by_slice(~stringr::str_c(.$name, collapse = ', '), 
-                      .collate = 'rows', .to = 'string') %>% 
-                      {stringr::str_c(.$string, ' [$prob no.', .$problem, ']', collapse = '\n         ')} %>% 
-    {msg(c('Reading: ', .), quiet)}
+    dplyr::mutate(name = stringr::str_c(basename(.$file), dplyr::if_else(.$firstonly, ' (firstonly)', ''))) %>% 
+    purrr::slice_rows('problem') %>% 
+    purrr::by_slice(~stringr::str_c(.$name, collapse = ', '), 
+                    .collate = 'rows', .to = 'string') %>% 
+                    {stringr::str_c(.$string, ' [$prob no.', .$problem, ']', collapse = '\n         ')} %>% 
+                    {msg(c('Reading: ', .), quiet)}
   
   # Start reading the data
   tables <- tables %>% 
@@ -69,7 +69,10 @@ read_nm_tables <- function(files         = NULL,
                        {purrr::invoke_map(.$fun, .$params)} %>%
                        dplyr::tibble(data = .))
   
-  if (!combined) return(purrr::set_names(x = purrr::map(tables$data, tidyr::drop_na()), nm = tables$name))
+  if (!combined) {
+    return(purrr::set_names(x = purrr::map(tables$data, tidyr::drop_na(dplyr::one_of('ID'))),
+                            nm = tables$name))
+  }
   
   # Index datasets
   tables <- dplyr::bind_cols(tables,
@@ -137,18 +140,23 @@ read_args <- function(x, quiet, col_types, ...) {
                           stringr::str_detect(top[3], '\\d.\\d+E[+-]\\d+\\s*,') ~ 'csv', 
                           stringr::str_detect(top[3], '\\d,\\d+E[+-]\\d+\\s+') ~ 'table2',
                           TRUE ~ 'table')
-  
   skip <- dplyr::if_else(stringr::str_detect(top[1], 'TABLE NO\\.\\s+\\d'), 1, 0)
-  header <- dplyr::if_else(stringr::str_detect(top[1 + skip], '[A-z]{2,}+'), TRUE, FALSE)
   
-  if (!header) {
-    msg(c('Dropped: ', basename(x$file), ' due to missing headers.'), quiet = !header & quiet)
+  if (!stringr::str_detect(top[1 + skip], '[A-z]{2,}+')) {
+    msg(c('Dropped: ', basename(x$file), ' due to missing headers.'), quiet = quiet)
     return(dplyr::tibble(fun = list(), params = list()))
   }
   
+  col_names <- top[1 + skip] %>% 
+    stringr::str_trim(side = 'both') %>% 
+    stringr::str_split(pattern = dplyr::case_when(fun %in% c('table', 'table2') ~ '\\s+',
+                                                  fun == 'csv' ~ ',', 
+                                                  fun == 'csv2' ~ ';')) %>% 
+    purrr::flatten_chr()
+  
   dplyr::tibble(fun = read_funs(fun),
-                params = list(list(file = x$file, skip = skip, 
-                                   col_names = header, col_types = col_types, ...)))
+                params = list(list(file = x$file, skip = skip + 1,
+                                   col_names = col_names, col_types = col_types, ...)))
 }
 
 combine_tables <- function(x, quiet) {
@@ -161,7 +169,7 @@ combine_tables <- function(x, quiet) {
   dplyr::tibble(data = x$data %>%
                   dplyr::bind_cols() %>%
                   purrr::set_names(make.unique(names(.))) %>%
-                  tidyr::drop_na() %>%
+                  tidyr::drop_na(dplyr::one_of('ID')) %>%
                   list(),
                 
                 # Get around purrr droping list names
