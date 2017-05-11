@@ -68,7 +68,7 @@ xpose_data <- function(runno         = NULL,
       }
       tbl_names  <- file_path(dirname(file), stringr::str_c(tab_names, get_runno(file, prefix))) %>% 
         dplyr::tibble(problem = -1, file = ., firstonly = FALSE, simtab = NA) %>% 
-        tidyr::expand(problem, file, firstonly, simtab = c(FALSE, TRUE)) %>% 
+        tidyr::expand(problem = .$problem, file = .$file, firstonly = .$firstonly, simtab = c(FALSE, TRUE)) %>% 
         dplyr::mutate(file = dplyr::if_else(.$simtab, stringr::str_c(.$file, sim_suffix),
                                             stringr::str_c(.$file, tab_suffix))) %>% 
         dplyr::filter(file.exists(.$file))
