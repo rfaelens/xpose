@@ -1,16 +1,6 @@
 context('Check read_nm_model')
 
 # Define files to be tested -----------------------------------------------
-
-ctrl_mod <- dplyr::tibble(problem    = 1,
-                          level      = c(19, 20, 20, 21),
-                          subroutine = c('cov', rep('tab', 3)),
-                          code       = c('PRINT=E', 
-                                         'ID OCC DOSE AMT SS II TIME TAD IPRED CWRES CPRED IWRES',
-                                         'EVID ONEHEADER NOPRINT FILE=fake_sdtab.tab',
-                                         'ID KA CL V ALAG1 ETAS(1:LAST) ONEHEADER NOPRINT FILE=fake_patab.tab'),
-                          comment = '')
-
 ctrl_mod   <- xpdb_ex_pk$code
 
 
