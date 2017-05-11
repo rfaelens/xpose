@@ -7,7 +7,7 @@
 #' @param runno Run number to be evaluated.
 #' @param dir Location of the model files.
 #' @param prefix Prefix of the model file names.
-#' @param ext A vector of the file extension to import. By default '.ext', '.cor', '.cov', '.phi' and '.grd' 
+#' @param ext A vector of the file extension to import. By default '.ext', '.cor', '.cov', '.phi', '.grd', '.shr'
 #' files are listed.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #'
@@ -22,7 +22,7 @@ read_nm_files <- function(files  = NULL,
                           runno  = NULL,
                           dir    = NULL,
                           prefix = 'run',
-                          ext    = c('.ext', '.cor', '.cov', '.phi', '.grd'),
+                          ext    = c('.ext', '.cor', '.cov', '.phi', '.grd', '.shr'),
                           quiet  = FALSE) {
   
   if (is.null(runno) && is.null(files)) {
@@ -30,7 +30,7 @@ read_nm_files <- function(files  = NULL,
   }
   
   if (is.null(files)) {
-    files <- file_path(dir, paste0(prefix, runno, ext))
+    files <- file_path(dir, paste0(prefix, runno, make_extension(ext)))
   }
   
   files <- sort(unique(files))
