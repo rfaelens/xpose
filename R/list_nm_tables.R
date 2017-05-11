@@ -18,11 +18,15 @@ list_nm_tables <- function(nm_model = NULL) {
     stop('Object of class `nm_model` required.', call. = FALSE)
   }
   
+  # Prepare null object to be returned if no $table is found
+  null_object <- as.nm.table.list(dplyr::tibble(problem = -1, file = '', 
+                                                firstonly = NA, simtab = NA))
+    
   # Get NM code associated with the tables
   table_list <- nm_model %>% 
     dplyr::filter(.$problem > 0, .$subroutine == 'tab') 
   
-  if (nrow(table_list) == 0) return()
+  if (nrow(table_list) == 0) return(null_object)
   
   table_list <- table_list %>% 
     purrr::slice_rows(c('problem', 'level')) %>% 
@@ -31,7 +35,7 @@ list_nm_tables <- function(nm_model = NULL) {
     dplyr::mutate(file = stringr::str_match(.$string, '\\s+FILE\\s*=\\s*([^\\s]+)')[, 2]) %>% 
     dplyr::filter(!is.na(.$file))
   
-  if (nrow(table_list) == 0) return()
+  if (nrow(table_list) == 0) return(null_object)
   
   # Find table names and firstonly option
   table_list <- table_list %>% 
@@ -49,5 +53,5 @@ list_nm_tables <- function(nm_model = NULL) {
   # Merge and output
   table_list %>% 
     dplyr::left_join(sim_flag, by = 'problem') %>% 
-    structure(class = c('nm_table_list', 'tbl_df', 'tbl', 'data.frame'))
+    as.nm.table.list()
 }

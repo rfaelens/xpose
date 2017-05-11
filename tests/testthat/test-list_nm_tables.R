@@ -23,6 +23,8 @@ fail_test2 <- structure(simtab_test[1:2, ],
 
 sdtab_test <- read_nm_model(file = 'run001.lst')
 
+null_object <- as.nm.table.list(dplyr::tibble(problem = -1, file = '', 
+                                              firstonly = NA, simtab = NA))
 
 # Tests start here --------------------------------------------------------
 
@@ -36,12 +38,12 @@ test_that("error is returned when input is not a nm_model", {
                                                        comment = '')))
 })
 
-test_that("null is returned no $TABLE are listed in the code", {
-  expect_null(list_nm_tables(nm_model = fail_test1))
+test_that("null object is returned no $TABLE are listed in the code", {
+  expect_equal(list_nm_tables(nm_model = fail_test1), null_object)
 })
 
-test_that("null is returned no valid file names are found under $TABLE", {
-  expect_null(list_nm_tables(nm_model = fail_test2))
+test_that("null object is returned no valid file names are found under $TABLE", {
+  expect_equal(list_nm_tables(nm_model = fail_test2), null_object)
 })
 
 test_that("works with simulation problems", {
