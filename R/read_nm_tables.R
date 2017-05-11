@@ -129,9 +129,10 @@ read_funs <- function(fun) {
 
 read_args <- function(x, quiet, col_types, ...) {
   if (missing(col_types)) col_types <- readr::cols(.default = 'd')
+  
   top <- x$top[[1]]
   
-  if (is.na(top[3])) {
+  if (is.na(top[3]) || !stringr::str_detect(top[3], '\\d+E[+-]\\d+\\s*')) {
     msg(c('Dropped: ', basename(x$file), ' due to unexpected data format'), quiet)
     return(dplyr::tibble(fun = list(), params = list()))
   }
@@ -149,9 +150,9 @@ read_args <- function(x, quiet, col_types, ...) {
   
   col_names <- top[1 + skip] %>% 
     stringr::str_trim(side = 'both') %>% 
-    stringr::str_split(pattern = dplyr::case_when(fun %in% c('table', 'table2') ~ '\\s+',
-                                                  fun == 'csv' ~ ',', 
-                                                  fun == 'csv2' ~ ';')) %>% 
+    stringr::str_split(pattern = dplyr::case_when(fun == 'csv' ~ ',', 
+                                                  fun == 'csv2' ~ ';',
+                                                  fun %in% c('table', 'table2') ~ '\\s+')) %>% 
     purrr::flatten_chr()
   
   dplyr::tibble(fun = read_funs(fun),
