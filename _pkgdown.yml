@@ -76,6 +76,8 @@ navbar:
           href: articles/importing_model_outputs.html
         - text: Customizing plots
           href: articles/customizing_plots.html
+        - text: Creating interactive plots (beta)
+          href: articles/interactive_plots.html
   - text: Reference
     href: reference/index.html
   - text: News

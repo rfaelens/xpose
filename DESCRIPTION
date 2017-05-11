@@ -11,6 +11,9 @@ Authors@R: c(
       person('Andrew C.', 'Hooker', 
              role = 'aut',
              email='andrew.hooker@farmbio.uu.se'),
+      person('Mats O.', 'Karlsson',
+             role = 'aut',
+             email='mats.karlsson@farmbio.uu.se'),
       person('Sebastian', 'Ueckert'
              , role = 'ctb'),
       person('Kajsa', 'Harling'
@@ -38,7 +41,8 @@ Imports:
   gridExtra
 Suggests:
   knitr,
-  testthat
+  testthat,
+  plotly
 License: LGPL-3 + file LICENSE
 URL: https://github.com/UUPharmacometrics/xpose
 BugReports: https://github.com/UUPharmacometrics/xpose/issues
