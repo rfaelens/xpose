@@ -27,12 +27,7 @@ manual_nm_import <- function(tab_names = c('sdtab', 'mutab', 'patab', 'catab', '
 }
 
 
-#' Creates an nm_table_list from manually defined table name patterns
-#'
-#' @param file String defining the model file path that will be used to guess the \code{runno} and \code{dir}.
-#' @param prefix Prefix used to name runs.
-#' @param tab_list A table pattern list created with e.g. \code{manual_nm_import}
-#'
+# Creates an nm_table_list from manually defined table name patterns
 list_nm_tables_manual <- function(file, prefix, tab_list) {
   file_path(dirname(file), stringr::str_c(tab_list$tab_names, get_runno(file, prefix))) %>% 
     dplyr::tibble(problem = 1, file = ., firstonly = FALSE, simtab = NA) %>% 
