@@ -86,12 +86,15 @@ sum_reference <- function(model, software) {
 # Problem no.
 sum_probn <- function(model, software) {
   if (software == 'nonmem') {
-    unique(model$problem[model$problem != 0]) %>% 
-      dplyr::tibble(
-        problem = .,
-        subp    = 1,
-        label   = 'probn',
-        value   = as.character(.))
+    x <- unique(model$problem[model$problem != 0]) 
+      
+    if (length(x) == 0) return(sum_tpl('probn', 'na'))
+    
+    dplyr::tibble(
+      problem = x,
+      subp    = 1,
+      label   = 'probn',
+      value   = as.character(x))
   }
 }
 
