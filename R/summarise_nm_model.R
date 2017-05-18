@@ -12,14 +12,14 @@ summarise_nm_model <- function(file, model, software, rounding) {
     sum_nobs(model, software),                        # Number of observations
     sum_nind(model, software),                        # Number of individuals
     sum_nsim(model, software),                        # Number of simulations
-    sum_ssim(model, software),                        # Simulation seed
-    sum_sub(model, software),                         # Des solver
+    sum_simseed(model, software),                     # Simulation seed
+    sum_subroutine(model, software),                  # Des solver
     sum_runtime(model, software),                     # Estimation/Sim runtime
     sum_covtime(model, software),                     # Covariance matrix runtime
     sum_warnings(model, software),                    # Run warnings (e.g. boundary)
     sum_errors(model, software),                      # Run errors (e.g termination error)
     sum_nsig(model, software),                        # Number of significant digits
-    sum_condition(model, software),                   # Condition number
+    sum_condnum(model, software),                     # Condition number
     sum_nnpde(model, software),                       # Number of NPDE
     sum_snpde(model, software),                       # NPDE seed number
     sum_ofv(model, software),                         # Objective function value
@@ -164,66 +164,77 @@ sum_nind <- function(model, software) {
 # Simulation number
 sum_nsim <- function(model, software) {
   if (software == 'nonmem') {
+    sum_tpl('nsim', 'na') # To be added
   }
 }
 
 # Simulation seed
-sum_ssim <- function(model, software) {
+sum_simseed <- function(model, software) {
   if (software == 'nonmem') {
+    sum_tpl('simseed', 'na') # To be added
   }
 }
 
-# Des solver
-sum_sub <- function(model, software) {
+# DES solver
+sum_subroutine <- function(model, software) {
   if (software == 'nonmem') {
+    sum_tpl('subroutine', 'na') # To be added
   }
 }
 
 # Estimation/Sim runtime
 sum_runtime <- function(model, software) {
   if (software == 'nonmem') {
+    sum_tpl('runtime', 'na') # To be added
   }
 }
 
 # Covariance matrix runtime
 sum_covtime <- function(model, software) {
   if (software == 'nonmem') {
+    sum_tpl('covtime', 'na') # To be added
   }
 }
 
 # Run warnings (e.g. boundary)
 sum_warnings <- function(model, software) {
   if (software == 'nonmem') {
+    sum_tpl('warnings', 'na') # To be added
   }
 }
 
 # Run errors (e.g termination error)
 sum_errors <- function(model, software) {
   if (software == 'nonmem') {
+    sum_tpl('errors', 'na') # To be added
   }
 }
 
 # Number of significant digits
 sum_nsig <- function(model, software) {
   if (software == 'nonmem') {
+    sum_tpl('nsig', 'na') # To be added
   }
 }
 
 # Condition number
-sum_condition <- function(model, software) {
+sum_condnum <- function(model, software) {
   if (software == 'nonmem') {
+    sum_tpl('condnum', 'na') # To be added
   }
 }
 
 # Number of NPDE
 sum_nnpde <- function(model, software) {
   if (software == 'nonmem') {
+    sum_tpl('nnpde', 'na') # To be added
   }
 }
 
 # NPDE seed number
 sum_snpde <- function(model, software) {
   if (software == 'nonmem') {
+    sum_tpl('snpde', 'na') # To be added
   }
 }
 
