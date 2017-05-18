@@ -76,7 +76,7 @@ xpose_data <- function(runno         = NULL,
   # Import output files
   if (software == 'nonmem') {
     if (missing(extra_files)) {
-      extra_files <- c('.ext', '.cor', '.cov', '.phi', '.grd')
+      extra_files <- c('.ext', '.cor', '.cov', '.phi', '.grd', '.shk')
     }
     out_files <- update_extension(file, '') %>% 
       stringr::str_c(make_extension(extra_files)) %>% 
