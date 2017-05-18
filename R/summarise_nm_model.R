@@ -1,32 +1,45 @@
 summarise_nm_model <- function(file, model, software, rounding) {
-  dplyr::bind_rows(
-    sum_software(software),                           # Software name
-    sum_version(model, software),                     # Software version
-    sum_file(file),                                   # Model file
-    sum_run(file),                                    # Model run (model file without extension)
-    sum_directory(file),                              # Model directory
-    sum_reference(model, software),                   # Reference model
-    sum_probn(model, software),                       # Problem no.
-    sum_description(model, software),                 # Model description
-    sum_input_data(model, software),                  # Model input data used
-    sum_nobs(model, software),                        # Number of observations
-    sum_nind(model, software),                        # Number of individuals
-    sum_nsim(model, software),                        # Number of simulations
-    sum_simseed(model, software),                     # Simulation seed
-    sum_subroutine(model, software),                  # Des solver
-    sum_runtime(model, software),                     # Estimation/Sim runtime
-    sum_covtime(model, software),                     # Covariance matrix runtime
-    sum_warnings(model, software),                    # Run warnings (e.g. boundary)
-    sum_errors(model, software),                      # Run errors (e.g termination error)
-    sum_nsig(model, software),                        # Number of significant digits
-    sum_condnum(model, software),                     # Condition number
-    sum_nnpde(model, software),                       # Number of NPDE
-    sum_snpde(model, software),                       # NPDE seed number
-    sum_ofv(model, software),                         # Objective function value
-    sum_method(model, software),                      # Estimation method or sim
-    sum_shk(model, software, 'eps', rounding),        # Epsilon shrinkage
-    sum_shk(model, software, 'eta', rounding)         # Eta shrinkage
+  sum <- dplyr::bind_rows(
+    sum_software(software),                    # Software name
+    sum_version(model, software),              # Software version
+    sum_file(file),                            # Model file
+    sum_run(file),                             # Model run (model file without extension)
+    sum_directory(file),                       # Model directory
+    sum_reference(model, software),            # Reference model
+    sum_probn(model, software),                # Problem no.
+    sum_description(model, software),          # Model description
+    sum_input_data(model, software),           # Model input data used
+    sum_nobs(model, software),                 # Number of observations
+    sum_nind(model, software),                 # Number of individuals
+    sum_nsim(model, software),                 # Number of simulations
+    sum_simseed(model, software),              # Simulation seed
+    sum_subroutine(model, software),           # Des solver
+    sum_runtime(model, software),              # Estimation/Sim runtime
+    sum_covtime(model, software),              # Covariance matrix runtime
+    sum_warnings(model, software),             # Run warnings (e.g. boundary)
+    sum_errors(model, software),               # Run errors (e.g termination error)
+    sum_nsig(model, software),                 # Number of significant digits
+    sum_condnum(model, software),              # Condition number
+    sum_nnpde(model, software),                # Number of NPDE
+    sum_snpde(model, software),                # NPDE seed number
+    sum_ofv(model, software),                  # Objective function value
+    sum_method(model, software),               # Estimation method or sim
+    sum_shk(model, software, 'eps', rounding), # Epsilon shrinkage
+    sum_shk(model, software, 'eta', rounding)  # Eta shrinkage
   )
+  
+  # Complete missing cases for consistency
+  tmp <- sum %>% 
+    dplyr::filter(.$problem != 0)
+  
+  if (nrow(tmp) == 0) return(sum)
+  
+  tmp %>% 
+    tidyr::complete_(cols = c(quote(problem), quote(label)), 
+                     fill = list(subp = 1, value = 'na')) %>% 
+    dplyr::bind_rows(dplyr::filter(sum, sum$problem == 0)) %>%
+    dplyr::arrange_(.dots = c('problem', 'label', 'subp')) %>%
+    dplyr::select(dplyr::one_of('problem', 'subp', 'label', 'value'))
 }
 
 # Default template for function output
@@ -87,7 +100,7 @@ sum_reference <- function(model, software) {
 sum_probn <- function(model, software) {
   if (software == 'nonmem') {
     x <- unique(model$problem[model$problem != 0]) 
-      
+    
     if (length(x) == 0) return(sum_tpl('probn', 'na'))
     
     dplyr::tibble(
@@ -252,7 +265,7 @@ sum_ofv <- function(model, software) {
     
     x %>% 
       dplyr::mutate(value = stringr::str_match(.$code, '\\*\\s+(.+)\\s+\\*')[, 2]) %>% 
-      dplyr::group_by_(quote(problem)) %>% 
+      dplyr::group_by_(.dots =  'problem') %>% 
       dplyr::mutate(subp = 1:n(),
                     label = 'ofv') %>% 
       dplyr::select(one_of('problem', 'subp', 'label', 'value')) %>% 
@@ -276,7 +289,7 @@ sum_method <- function(model, software) {
                                              .$value == '1' ~ 'FOCE',
                                              TRUE ~ .$value)) %>% 
       dplyr::mutate(value = stringr::str_c(stringr::str_to_lower(.$value), dplyr::if_else(.$inter, '-i', ''))) %>% 
-      dplyr::group_by_(quote(problem)) %>% 
+      dplyr::group_by_(.dots = 'problem') %>% 
       dplyr::mutate(subp = 1:n(),
                     label = 'method') %>% 
       dplyr::select(one_of('problem', 'subp', 'label', 'value')) %>% 
@@ -301,13 +314,13 @@ sum_shk <- function(model, software, type, rounding) {
       dplyr::mutate(code = stringr::str_split(.$code, '\\s+')) %>% 
       dplyr::mutate(value = purrr::map(.$code, ~round(as.numeric(.), digits = rounding)),
                     index = purrr::map(.$code, ~stringr::str_c(' [', 1:length(.), ']', sep = ''))) %>% 
-      dplyr::group_by_(quote(problem)) %>% 
+      dplyr::group_by_(.dots = 'problem') %>% 
       dplyr::mutate(subp = 1:n()) %>% 
       dplyr::ungroup() %>% 
       tidyr::unnest_(unnest_cols = c(quote(value), quote(index))) %>% 
       dplyr::filter(.$value != 100) %>% 
       dplyr::mutate(value = stringr::str_c(.$value, .$index)) %>% 
-      dplyr::group_by_(quote(problem), quote(subp)) %>% 
+      dplyr::group_by_(.dots = c('problem', 'subp')) %>% 
       tidyr::nest() %>% 
       dplyr::mutate(label = stringr::str_c(type, 'shk'),
                     value = purrr::map_chr(.$data, ~stringr::str_c(.$value, collapse = ', '))) %>% 
