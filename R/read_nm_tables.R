@@ -37,7 +37,7 @@ read_nm_tables <- function(files         = NULL,
   msg(c('\nLooking for nonmem', dplyr::if_else(!is.null(simtab) && simtab, 
                                                ' simulation', ' output'), ' tables'), quiet)
   
-  # Check the files
+  # Check that file exists
   if (is.null(files) || !any(file.exists(files$file))) {
     msg('No table file could be found.', quiet)
     return()
