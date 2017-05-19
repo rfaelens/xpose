@@ -85,7 +85,8 @@ parse_nm_files <- function(dat, quiet) {
                                             stringr::str_detect(x[tab_rows, ]$raw, 'Iterative Two Stage') ~ 'ITS',
                                             stringr::str_detect(x[tab_rows, ]$raw, 'Importance Sampling') ~ 'IMP',
                                             stringr::str_detect(x[tab_rows, ]$raw, 'Stochastic Approximation') ~ 'SAEM',
-                                            TRUE ~ 'BAYES')
+                                            stringr::str_detect(x[tab_rows, ]$raw, 'Markov-Chain') ~ 'BAYES',
+                                            TRUE ~ 'NA')
   
   # Assumes that header are always present
   x[tab_rows + 1, ]$header <- TRUE
