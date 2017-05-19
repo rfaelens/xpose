@@ -16,31 +16,51 @@ check_title <- function(x, default) {
   ifelse(is.null(x), default, x)
 }
 
-# Get key values in template titles
-parse_title <- function(string, xpdb, extra_key = NULL, extra_value = NULL) {
-  keys   <- unlist(regmatches(string, gregexpr('@[[:alnum:]]+_?[[:alnum:]]+', string)))
-  values <- xpdb$summary[substring(keys, 2)]
+# Add keyword values in template titles
+parse_title <- function(string, xpdb, problem, quiet, extra_key = NULL, extra_value = NULL) {
+  # Extract keywords from the string
+  keyword <- string %>% 
+    stringr::str_extract_all('@[[:alnum:]]+') %>% 
+    purrr::flatten_chr() %>% 
+    stringr::str_replace(stringr::fixed('@'), '')
   
-  if (!is.null(extra_key) && any(keys == extra_key)) {
-    values[keys == extra_key] <- extra_value
+  # Get the associated values in the summart
+  values <- xpdb$summary[xpdb$summary$problem %in% c(0, problem) & 
+                           xpdb$summary$label %in% keyword, ]
+  values <- values[!duplicated(values$label, fromLast = TRUE), ]
+  
+  # If needed add extra values e.g. in xpose_save
+  if (!is.null(extra_key) && any(extra_key %in% keyword)) {
+    values <- dplyr::bind_rows(values,
+                               dplyr::tibble(problem = 0,
+                                             subp  = 0,
+                                             label = extra_key,
+                                             value = extra_value))
   }
   
-  for (s in seq_along(keys)) {
-    if (is.null(values[[s]])) { 
-      warning(keys[s], ' not part of the available keywords for titles', call. = FALSE)
-    } else {
-      string <- gsub(keys[s], values[[s]], string) 
-    }
+  # Remove unmatched keywords from the list
+  if (!all(keyword %in% values$label)) {
+    keyword[!keyword %in% values$label] %>% 
+      unique() %>% 
+      stringr::str_c(collapse = ', ') %>%   
+      {msg(c(., ' is not part of the available keywords. Check ?template_titles for a full list.'), quiet)}
+    keyword <- keyword[keyword %in% values$label]
   }
-  string
+  
+  if (length(keyword) == 0) return(string)
+  
+  # Replaces values in the string
+  string %>% 
+    stringr::str_replace_all(stringr::str_c('@', keyword, collapse = '|'), 
+                             '${values$value[values$label == \"\\0\"]}') %>% 
+    stringr::str_replace_all('\\"@', '\\"') %>% 
+    stringr::str_interp()
 }
 
 # Generate template title
-write_title <- function(x, xpdb) {
+write_title <- function(x, xpdb, problem, quiet) {
   if (!is.null(x) && x != FALSE) {
-    parse_title(x, xpdb)
-  } else { 
-    return(NULL)
+    parse_title(string = x, xpdb, problem, quiet)
   }
 }
 

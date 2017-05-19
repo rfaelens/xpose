@@ -124,10 +124,9 @@ xplot_scatter <- function(xpdb,
   
   
   # Add title and subtitle
-  xp <- xp + labs(title    = write_title(title, xpdb),
-                  subtitle = write_title(subtitle, xpdb),
-                  caption  = write_title(caption, xpdb))
-  
+  xp <- xp + labs(title    = write_title(title, xpdb, prob_n, quiet),
+                  subtitle = write_title(subtitle, xpdb, prob_n, quiet),
+                  caption  = write_title(caption, xpdb, prob_n, quiet))
   
   # Define scales
   xp <- xp + xp_geoms(mapping  = aes,
@@ -157,7 +156,9 @@ xplot_scatter <- function(xpdb,
   
   # Add metadata to plots
   xp$xpose <- list(fun     = plot_name,
-                   summary = xpdb$summary)
+                   summary = xpdb$summary,
+                   problem = prob_n,
+                   quiet   = quiet)
   
   structure(xp, class = c('xpose_plot', class(xp)))
 }

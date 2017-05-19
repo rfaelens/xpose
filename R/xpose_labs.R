@@ -63,8 +63,12 @@ xpose_labs <- function(...) {
 update_xpose_labels <- function(p, labels) {
   plot_clone <- utils::getFromNamespace('plot_clone', 'ggplot2')
   p <- plot_clone(p)
+  
   if (!is.xpose.plot(p)) stop('This function is dedicated to xpose plots')
-  labels <- purrr::map(labels, ~parse_title(., list(summary = p$xpose$summary)))
+  
+  labels <- purrr::map(labels, ~parse_title(string = ., xpdb = p$xpose, 
+                                            problem = p$xpose$problem, 
+                                            quiet = p$xpose$quiet))
   p$labels <- c(labels,  p$labels[setdiff(names(p$labels), names(labels))])
   p
 }
