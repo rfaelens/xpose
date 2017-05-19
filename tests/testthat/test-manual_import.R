@@ -14,5 +14,6 @@ test_that('manual_nm_import function works properly', {
 
 test_that('list_nm_tables_manual function works properly', {
   test <- xpose_data(file = 'run001.lst', manual_import = manual_nm_import(), quiet = FALSE)$data$index[[1]]
+  test <- dplyr::arrange_(.data = test, .dots = 'tables')
   expect_identical(test, ctrl_data)
 })

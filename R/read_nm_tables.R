@@ -52,17 +52,23 @@ read_nm_tables <- function(files         = NULL,
   
   # Print reading messages
   tables %>% 
-    dplyr::mutate(name = stringr::str_c(basename(.$file), dplyr::if_else(.$firstonly, ' (firstonly)', ''))) %>% 
-    purrr::slice_rows('problem') %>% 
-    purrr::by_slice(~stringr::str_c(.$name, collapse = ', '), 
-                    .collate = 'rows', .to = 'string') %>% 
-                    {stringr::str_c(.$string, ' [$prob no.', .$problem, ']', collapse = '\n         ')} %>% 
-                    {msg(c('Reading: ', .), quiet)}
+    dplyr::mutate(grouping = 1:n(),
+                  name = stringr::str_c(basename(.$file), dplyr::if_else(.$firstonly, ' (firstonly)', ''))) %>% 
+    dplyr::group_by_(.dots = 'problem') %>% 
+    tidyr::nest() %>% 
+    dplyr::mutate(string = purrr::map_chr(.$data, ~stringr::str_c(.$name, collapse = ', '))) %>% 
+    {stringr::str_c(.$string, ' [$prob no.', .$problem, ']', collapse = '\n         ')} %>% 
+    {msg(c('Reading: ', .), quiet)}
   
-  # Start reading the data
+  # Collect options for table import
   tables <- tables %>% 
-    purrr::by_row(~readr::read_lines(file = .$file, n_max = 3), .to = 'top') %>%
-    purrr::by_row(~read_args(x = . , quiet, ...), .collate = 'rows') %>%
+    dplyr::mutate(top = purrr::map(.$file, ~readr::read_lines(file = ., n_max = 3)),
+                  grouping = 1:n()) %>% 
+    dplyr::group_by_(.dots = 'grouping') %>% 
+    tidyr::nest() %>% 
+    dplyr::mutate(args = purrr::map(.$data, ~read_args(x = . , quiet, ...))) %>% 
+    tidyr::unnest_(unnest_cols = 'data') %>% 
+    tidyr::unnest_(unnest_cols = 'args') %>% 
     dplyr::mutate(name = basename(.$file)) %>% 
     dplyr::select(dplyr::one_of('problem', 'name', 'simtab', 'firstonly', 'fun', 'params'))
   
@@ -71,6 +77,7 @@ read_nm_tables <- function(files         = NULL,
     return() 
   }
   
+  # Read in data
   tables <- tables %>% 
     dplyr::bind_cols(tables %>% 
                        dplyr::select(dplyr::one_of(c('fun', 'params'))) %>% 
@@ -78,7 +85,7 @@ read_nm_tables <- function(files         = NULL,
                        dplyr::tibble(data = .))
   
   if (!combined) {
-    return(purrr::set_names(x = purrr::map(tables$data, tidyr::drop_na(dplyr::one_of('ID'))),
+    return(purrr::set_names(x = purrr::map(tables$data, ~tidyr::drop_na(., dplyr::one_of('ID'))),
                             nm = tables$name))
   }
   
@@ -90,8 +97,11 @@ read_nm_tables <- function(files         = NULL,
   
   # Combine tables with same number of rows
   tables <- tables %>% 
-    purrr::slice_rows(c('problem', 'simtab', 'firstonly')) %>%  
-    purrr::by_slice(combine_tables, quiet, .collate = 'rows')
+    dplyr::group_by_(.dots = c('problem', 'simtab', 'firstonly')) %>% 
+    tidyr::nest(.key = 'tmp') %>% 
+    dplyr::mutate(out = purrr::map(.$tmp, combine_tables, quiet)) %>% 
+    tidyr::unnest_(unnest_cols = 'out') %>% 
+    dplyr::select(dplyr::one_of('problem', 'simtab', 'firstonly', 'data', 'index'))
   
   if (nrow(tables) == 0) {
     msg('\nNo table imported.', quiet)
@@ -102,8 +112,11 @@ read_nm_tables <- function(files         = NULL,
   if (any(tables$firstonly)) {
     msg('Consolidating tables with `firstonly`', quiet)
     tables <- tables %>%
-      purrr::slice_rows(c('problem', 'simtab')) %>%
-      purrr::by_slice(merge_firstonly, quiet, .collate = 'rows')
+      dplyr::group_by_(.dots = c('problem', 'simtab')) %>%
+      tidyr::nest(.key = 'tmp') %>% 
+      dplyr::mutate(out = purrr::map(.$tmp, merge_firstonly, quiet)) %>% 
+      tidyr::unnest_(unnest_cols = 'out') %>% 
+      dplyr::select(dplyr::one_of('problem', 'simtab', 'data', 'index'))
   }
   
   if (nrow(tables) == 0) {
@@ -113,15 +126,18 @@ read_nm_tables <- function(files         = NULL,
   
   # Remove duplicated columns to decrease xpdb size
   if (rm_duplicates) {
-    tables <- dplyr::bind_cols(
-      dplyr::select(.data = tables, dplyr::one_of(c('problem', 'simtab', 'index'))),
-      purrr::by_row(.d = tables, .labels = FALSE, .to = 'data', 
-                    ..f = ~ dplyr::select(.data = .$data[[1]], 
-                                          dplyr::one_of(unique(unlist(.$index[[1]]$colnames)))))
-    )
+      tables <- tables %>% 
+        dplyr::mutate(grouping = 1:n()) %>% 
+        dplyr::group_by_(.dots = 'grouping') %>% 
+        tidyr::nest(.key = 'tmp') %>% 
+        dplyr::mutate(out = purrr::map(.$tmp, ~dplyr::select(.$data[[1]], 
+                                                            dplyr::one_of(unique(unlist(.$index[[1]]$colnames)))))) %>% 
+        tidyr::unnest_(unnest_cols = 'tmp') %>% 
+        dplyr::select(dplyr::one_of('problem', 'simtab', 'index', 'out')) %>% 
+        dplyr::rename_(.dots = c('data' = 'out'))
   }
   
-  # If user mode return simple tibble
+  # If user mode return simple tibble as only 1 problem should be used
   if (user_mode) return(tables$data[[1]])
   
   tables
