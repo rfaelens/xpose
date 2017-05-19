@@ -1,32 +1,32 @@
-context('Check xpose_helpers')
-
-# Define objects to be tested -----------------------------------------------
-
-xpdb <- xpdb_ex_pk
+context('Check xplot_helpers')
 
 # Tests start here --------------------------------------------------------
-
-test_that("Check plot input vars", {
-  expect_null(check_vars(NULL,xpdb))
-  expect_null(check_vars(c("problem","simtab", "index","data"),xpdb))
+test_that('Check check_vars', {
+  expect_null(check_vars(NULL, xpdb_ex_pk))
+  expect_null(check_vars(c('problem', 'simtab', 'index', 'data'), xpdb_ex_pk))
 })
 
-test_that("Check plot input scales", {
-  expect_that(check_scales('x',NULL), matches('continuous'))
-  expect_that(check_scales(c('log10', 'continuous'), NULL),matches('continuous'))
-  expect_equivalent(check_scales(c('log10', 'continuous'), 'log10'),c('log10','continuous'))
+test_that('Check check_scales', {
+  expect_equal(check_scales('x', NULL), 'continuous')
+  expect_equal(check_scales(c('log10', 'continuous'), NULL), 'continuous')
+  expect_equal(check_scales(c('log10', 'continuous'), 'log10'), c('log10','continuous'))
   
 })
 
-test_that("Check title check", {
-  expect_error(check_title(NULL))
+test_that('Check check_title', {
+  expect_equal(check_title(NULL, default = 'default'), 'default')
+  expect_equal(check_title('string', default = 'default'), 'string')
 })
 
-
-test_that("Check parse title", {
-  expect_match(parse_title('OFV: @ofv', xpdb), "OFV: -656.869")
-  expect_warning(parse_title('OFV: @fake', xpdb),regexp = 'not part of' )
-  expect_null(parse_title(NULL, xpdb))
+test_that('Check parse_title', {
+  expect_equal(parse_title('OFV: @ofv', xpdb_ex_pk, problem = 1, quiet = TRUE), 'OFV: -656.869')
+  expect_message(parse_title('OFV: @fake', xpdb_ex_pk, problem = 1, quiet = FALSE), regexp = 'not part of')
+  expect_equal(parse_title('OFV: @fake', xpdb_ex_pk, problem = 1, quiet = TRUE), 'OFV: @fake')
+  expect_equal(parse_title('OFV: @fake', xpdb_ex_pk, problem = 1, quiet = TRUE, extra_key = 'fake', extra_value = '1987'), 'OFV: 1987')
 })
 
+test_that('Check write_title', {
+  expect_null(write_title(NULL, xpdb_ex_pk, problem = 1, quiet = TRUE))
+  expect_equal(write_title('OFV: @ofv', xpdb_ex_pk, problem = 1, quiet = TRUE), 'OFV: -656.869')
+})
 

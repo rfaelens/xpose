@@ -26,6 +26,8 @@ test_that("xpose plot objects are returned with appropriate xpdb", {
   # Check metadata
   expect_equal(p1$xpose$fun, 'xplot_scatter')
   expect_equal(p1$xpose$summary, xpdb_ex_pk$summary)
+  expect_equal(p1$xpose$problem, 1)
+  expect_true(p1$xpose$quiet)
 })
 
 test_that('template titles work properly', {
