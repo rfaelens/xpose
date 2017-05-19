@@ -19,9 +19,9 @@ summarise_nm_model <- function(file, model, software, rounding) {
     sum_warnings(model, software),             # Run warnings (e.g. boundary)
     sum_errors(model, software),               # Run errors (e.g termination error)
     sum_nsig(model, software),                 # Number of significant digits
-    sum_condnum(model, software),              # Condition number
+    sum_condn(model, software),                # Condition number
     sum_nnpde(model, software),                # Number of NPDE
-    sum_snpde(model, software),                # NPDE seed number
+    sum_npdeseed(model, software),             # NPDE seed number
     sum_ofv(model, software),                  # Objective function value
     sum_method(model, software),               # Estimation method or sim
     sum_shk(model, software, 'eps', rounding), # Epsilon shrinkage
@@ -234,9 +234,9 @@ sum_nsig <- function(model, software) {
 }
 
 # Condition number
-sum_condnum <- function(model, software) {
+sum_condn <- function(model, software) {
   if (software == 'nonmem') {
-    sum_tpl('condnum', 'na') # To be added
+    sum_tpl('condn', 'na') # To be added
   }
 }
 
@@ -248,9 +248,9 @@ sum_nnpde <- function(model, software) {
 }
 
 # NPDE seed number
-sum_snpde <- function(model, software) {
+sum_npdeseed <- function(model, software) {
   if (software == 'nonmem') {
-    sum_tpl('snpde', 'na') # To be added
+    sum_tpl('npdeseed', 'na') # To be added
   }
 }
 
@@ -268,7 +268,7 @@ sum_ofv <- function(model, software) {
       dplyr::group_by_(.dots =  'problem') %>% 
       dplyr::mutate(subp = 1:n(),
                     label = 'ofv') %>% 
-      dplyr::select(one_of('problem', 'subp', 'label', 'value')) %>% 
+      dplyr::select(dplyr::one_of('problem', 'subp', 'label', 'value')) %>% 
       dplyr::ungroup()
   }
 }
@@ -277,14 +277,15 @@ sum_ofv <- function(model, software) {
 sum_method <- function(model, software) {
   if (software == 'nonmem') {
     x <- model %>% 
-      dplyr::filter(.$subroutine == 'est') %>% 
-      dplyr::filter(stringr::str_detect(.$code, stringr::fixed('METHOD')))
+      dplyr::filter(.$subroutine %in% c('sim', 'est')) %>% 
+      dplyr::filter(stringr::str_detect(.$code, 'METHOD|NSUB'))
     
     if (nrow(x) == 0) return(sum_tpl('method', 'na'))
     
     x %>% 
       dplyr::mutate(value = stringr::str_match(.$code, 'METHOD\\s*=\\s*([^\\s]+)')[, 2],
                     inter = stringr::str_detect(.$code, 'INTER')) %>% 
+      dplyr::mutate(value = dplyr::if_else(.$subroutine == 'sim', 'sim', .$value)) %>% 
       dplyr::mutate(value = dplyr::case_when(.$value == '0' ~ 'FO',
                                              .$value == '1' ~ 'FOCE',
                                              TRUE ~ .$value)) %>% 
@@ -292,7 +293,7 @@ sum_method <- function(model, software) {
       dplyr::group_by_(.dots = 'problem') %>% 
       dplyr::mutate(subp = 1:n(),
                     label = 'method') %>% 
-      dplyr::select(one_of('problem', 'subp', 'label', 'value')) %>% 
+      dplyr::select(dplyr::one_of('problem', 'subp', 'label', 'value')) %>% 
       dplyr::ungroup()
   }
 }

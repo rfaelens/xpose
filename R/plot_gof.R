@@ -43,7 +43,7 @@ dv_vs_ipred <- function(xpdb,
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = check_title(title, 'DV vs. IPRED | @run'), 
-                subtitle = check_title(subtitle, 'Ofv: @ofv, @epsshr'),
+                subtitle = check_title(subtitle, 'Ofv: @ofv, Eps shrink: @epsshk'),
                 caption = check_title(caption, '@dir'),
                 plot_name = as.character(match.call()[[1]]),
                 guides_slope = 1, ...)

@@ -43,7 +43,8 @@ xpose_save <- function(plot     = last_plot(),
   
   # Parse the filename for keywords
   filename <- parse_title(string = filename, xpdb = plot$xpose,
-                          extra_key = '@plotfun', extra_value = plot$xpose$fun)
+                          problem = plot$xpose$problem, quiet = plot$xpose$quiet,
+                          extra_key = 'plotfun', extra_value = plot$xpose$fun)
   
   
   # Add device to filename

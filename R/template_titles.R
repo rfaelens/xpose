@@ -11,32 +11,34 @@
 #' 
 #' Many key variables are available:
 #' \describe{
+#'  \item{@condn}{Condition number}
+#'  \item{@covtime}{Covariance matrix runtime}
+#'  \item{@data}{Model input data used}
 #'  \item{@descr}{Model description}
 #'  \item{@dir}{Model directory}
-#'  \item{@run}{Model file name}
-#'  \item{@ref}{Reference model}
-#'  \item{@input_dat}{Model input data used}
-#'  \item{@nobs}{Number of observations}
-#'  \item{@nind}{Number of individuals}
-#'  \item{@nsim}{Number of simulations}
-#'  \item{@ssim}{Simulation seed}
-#'  \item{@niter}{Number of iteration}
-#'  \item{@software}{Software used (e.g. NONMEM)}
-#'  \item{@version}{Software version (e.g. 7.3)}
-#'  \item{@subroutine}{Differencial equation solver}
-#'  \item{@runtime}{Estimation/Sim runtime}
-#'  \item{@covtime}{Covariance matrix runtime}
-#'  \item{@warnings}{Run warnings (e.g. boundary)}
+#'  \item{@epsshk}{Epsilon shrinkage}
 #'  \item{@errors}{Run errors (e.g termination error)}
-#'  \item{@nsig}{Number of significant digits}
-#'  \item{@condition}{Condition number}
-#'  \item{@nnpde}{Number of NPDE}
-#'  \item{@snpde}{NPDE seed number}
-#'  \item{@ofv}{Objective function value}
+#'  \item{@etashk}{Eta shrinkage}
+#'  \item{@file}{Model file name}
 #'  \item{@method}{Estimation method or sim}
-#'  \item{@eps_shrink}{Epsilon shrinkage}
-#'  \item{@eta_shrink}{Eta shrinkage}
+#'  \item{@nind}{Number of individuals}
+#'  \item{@niter}{Number of iteration}
+#'  \item{@nnpde}{Number of NPDE}
+#'  \item{@nobs}{Number of observations}
+#'  \item{@npdeseed}{NPDE seed number}
+#'  \item{@nsig}{Number of significant digits}
+#'  \item{@nsim}{Number of simulations}
+#'  \item{@ofv}{Objective function value}
+#'  \item{@probn}{Problem number}
 #'  \item{@plotfun}{Name of the plot function. Can only be used in the filename argument of \code{\link{xpose_save}}}
+#'  \item{@ref}{Reference model}
+#'  \item{@run}{Model run name}
+#'  \item{@runtime}{Estimation/Sim runtime}
+#'  \item{@software}{Software used (e.g. NONMEM)}
+#'  \item{@simseed}{Simulation seed}
+#'  \item{@subroutine}{Differencial equation solver}
+#'  \item{@version}{Software version (e.g. 7.3)}
+#'  \item{@warnings}{Run warnings (e.g. boundary)}
 #' }
 #' @seealso \link{xpose_labs}, \link{xpose_save}
 #' @examples
