@@ -17,18 +17,22 @@
 print.xpose_data <- function(x, ...) {
   if (!is.null(x$data)) {
     tab_names <- x$data %>% 
-      purrr::by_row(summarize_table_names, .to = 'string') %>%
-      {purrr::flatten_chr(.$string)} %>% 
-      stringr::str_c(collapse = '\n             ')
+      dplyr::mutate(grouping = 1:n()) %>% 
+      dplyr::group_by_(.dots = 'grouping') %>% 
+      tidyr::nest() %>% 
+      dplyr::mutate(string = purrr::map_chr(.$data, summarize_table_names)) %>% 
+      {stringr::str_c(.$string, collapse = '\n             ')}
   } else {
     tab_names <- '<none>'
   }
   
   if (!is.null(x$sim)) {
     sim_names <- x$sim %>% 
-      purrr::by_row(summarize_table_names, .to = 'string') %>%
-      {purrr::flatten_chr(.$string)} %>% 
-      stringr::str_c(collapse = '\n                 ')
+      dplyr::mutate(grouping = 1:n()) %>% 
+      dplyr::group_by_(.dots = 'grouping') %>% 
+      tidyr::nest() %>% 
+      dplyr::mutate(string = purrr::map_chr(.$data, summarize_table_names)) %>% 
+      {stringr::str_c(.$string, collapse = '\n               ')}
   } else {
     sim_names <- '<none>'
   }
@@ -41,20 +45,20 @@ print.xpose_data <- function(x, ...) {
     out_names <- '<none>'
   }
   
-  cat(x$summary$file, 'overview:',
-      '\n - Software:', x$summary$software, x$summary$version,
+  cat(x$summary$value[x$summary$label == 'file'], 'overview:',
+      '\n - Software:', x$summary$value[x$summary$label %in% c('software', 'version')],
       '\n - Attached files:', 
       '\n   + tables:', tab_names,
-      '\n   + sim tables:', sim_names,
+      '\n   + sim tabs:', sim_names,
       '\n   + output files:', out_names,
       '\n - gg_theme:', attr(x$gg_theme, 'theme'),
       '\n - xp_theme:', attr(x$xp_theme, 'theme'),
-      '\n - Options:', paste(names(x$options), x$options, sep = ' = ', collapse = ', '))
+      '\n - Options:', stringr::str_c(names(x$options), x$options, sep = ' = ', collapse = ', '))
 }
 
 summarize_table_names <- function(dat) {
   purrr::map(dat$index, ~.$tables) %>% 
     purrr::flatten_chr() %>% 
     stringr::str_c(collapse = ', ') %>% 
-    stringr::str_c('$prob no.',dat$problem,': ', ., sep = '')
+    {stringr::str_c('$prob no.',dat$problem,': ', ., sep = '')}
 }
