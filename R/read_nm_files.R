@@ -48,11 +48,12 @@ read_nm_files <- function(files  = NULL,
   out <- files %>% 
     dplyr::tibble(path = ., name = basename(.)) %>% 
     dplyr::filter(file.exists(.$path)) %>% 
-    purrr::by_row(~readr::read_lines(file = .$path), .to = 'raw') %>%
-    purrr::by_row(~parse_nm_files(dat = ., quiet), .to = 'tmp')
-  
-  out <- out %>% 
-    dplyr::bind_cols(dplyr::tibble(drop = purrr::map_lgl(out$tmp, purrr::is_null)))
+    dplyr::mutate(grouping = 1:n(),
+                  raw = purrr::map(.$path, ~readr::read_lines(file = .))) %>% 
+    dplyr::group_by_(.dots = 'grouping') %>% 
+    tidyr::nest() %>% 
+    dplyr::mutate(tmp = purrr::map(.$data, ~parse_nm_files(dat = ., quiet))) %>% 
+    dplyr::mutate(drop = purrr::map_lgl(.$tmp, is.null)) 
   
   if (all(out$drop)) {
     msg('\nNo output file imported.', quiet)
@@ -61,16 +62,17 @@ read_nm_files <- function(files  = NULL,
   
   out %>% 
     dplyr::filter(!.$drop) %>% 
-    tidyr::unnest(quote(tmp)) %>% 
+    tidyr::unnest_(unnest_cols = 'data') %>% 
+    tidyr::unnest_(unnest_cols = 'tmp') %>% 
     dplyr::select(dplyr::one_of('name', 'prob', 'subprob', 'method', 'data'))
 }
 
 parse_nm_files <- function(dat, quiet) {
   if (length(unlist(dat$raw)) == 0) {
-   tab_rows <- NULL 
+    tab_rows <- NULL 
   } else {
-  x <- dplyr::tibble(raw = unlist(dat$raw), prob = NA, subprob = NA, method = NA, header = FALSE)
-  tab_rows <- which(stringr::str_detect(x$raw, '^\\s*TABLE NO'))
+    x <- dplyr::tibble(raw = unlist(dat$raw), prob = NA, subprob = NA, method = NA, header = FALSE)
+    tab_rows <- which(stringr::str_detect(x$raw, '^\\s*TABLE NO'))
   }
   
   if (length(tab_rows) == 0) {
@@ -101,8 +103,9 @@ parse_nm_files <- function(dat, quiet) {
     tidyr::fill(dplyr::one_of('prob', 'subprob', 'method')) %>% 
     dplyr::slice(-tab_rows) %>%
     dplyr::mutate(raw = stringr::str_trim(.$raw, side = 'both')) %>% 
-    purrr::slice_rows(c('prob', 'subprob', 'method')) %>% 
-    purrr::by_slice(raw_to_tibble, sep, quiet, file = dat$name, .to = 'data')
+    dplyr::group_by_(.dots = c('prob', 'subprob', 'method')) %>% 
+    tidyr::nest() %>% 
+    dplyr::mutate(data = purrr::map(.$data, ~raw_to_tibble(., sep, quiet, file = dat$name)))
 }  
 
 raw_to_tibble <- function(x, sep, quiet, file) {
