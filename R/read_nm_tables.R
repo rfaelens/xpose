@@ -8,6 +8,8 @@
 #' does not match an error will be returned.
 #' @param rm_duplicates Logical value indicating whether duplicated columns should be removed.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
+#' @param simtab If \code{TRUE} only reads in simulation tables, if \code{FALSE} only reads estimation tables. 
+#' Default \code{NULL} reads all tables.
 #' @param ... Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.
 #' @examples
 #' \dontrun{
@@ -18,15 +20,24 @@ read_nm_tables <- function(files         = NULL,
                            combined      = TRUE,
                            rm_duplicates = TRUE,
                            quiet         = FALSE,
+                           simtab        = NULL,
                            ...) {
   
   if (!is.null(files) && !is.nm.table.list(files)) {
-    files <- dplyr::tibble(problem   = -1, 
+    files <- dplyr::tibble(problem   = 1, 
                            file      = files,
                            firstonly = FALSE,
                            simtab    = FALSE)
   }
   
+  user_mode <- !is.nm.table.list(files)
+  
+  # Filter tables if needed
+  if (!is.null(simtab)) files <- files[files$simtab == simtab, ]
+  msg(c('\nLooking for nonmem', dplyr::if_else(!is.null(simtab) && simtab, 
+                                               ' simulation', ' output'), ' tables'), quiet)
+  
+  # Check that file exists
   if (is.null(files) || !any(file.exists(files$file))) {
     msg('No table file could be found.', quiet)
     return()
@@ -37,10 +48,7 @@ read_nm_tables <- function(files         = NULL,
     return()
   }
   
-  user_mode <- !is.nm.table.list(files)
-  
-  tables <- files %>% 
-    dplyr::filter(file.exists(.$file))
+  tables <- files[file.exists(files$file), ]
   
   # Print reading messages
   tables %>% 

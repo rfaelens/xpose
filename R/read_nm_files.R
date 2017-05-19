@@ -36,6 +36,8 @@ read_nm_files <- function(files  = NULL,
   files <- sort(unique(files))
   bases <- basename(files)
   
+  msg('\nLooking for nonmem output files', quiet)
+  
   if (!any(file.exists(files))) {
     msg('No output file could be found.', quiet)
     return()

@@ -5,4 +5,5 @@
 #' 
 #' To learn more about xpose, visit our website: \url{https://UUPharmacometrics.github.io/xpose/}.
 #' @import ggplot2
+#' @importFrom dplyr n
 "_PACKAGE"
