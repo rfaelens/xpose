@@ -314,13 +314,13 @@ sum_shk <- function(model, software, type, rounding) {
       dplyr::mutate(code = stringr::str_match(.$code, '\\Q(%):\\E\\s*(.+)')[, 2]) %>% 
       dplyr::mutate(code = stringr::str_split(.$code, '\\s+')) %>% 
       dplyr::mutate(value = purrr::map(.$code, ~round(as.numeric(.), digits = rounding)),
-                    index = purrr::map(.$code, ~stringr::str_c(' [', 1:length(.), ']', sep = ''))) %>% 
+                    grouping = purrr::map(.$code, ~stringr::str_c(' [', 1:length(.), ']', sep = ''))) %>% 
       dplyr::group_by_(.dots = 'problem') %>% 
       dplyr::mutate(subp = 1:n()) %>% 
       dplyr::ungroup() %>% 
-      tidyr::unnest_(unnest_cols = c(quote(value), quote(index))) %>% 
+      tidyr::unnest_(unnest_cols = c('value', 'grouping')) %>% 
       dplyr::filter(.$value != 100) %>% 
-      dplyr::mutate(value = stringr::str_c(.$value, .$index)) %>% 
+      dplyr::mutate(value = stringr::str_c(.$value, .$grouping)) %>% 
       dplyr::group_by_(.dots = c('problem', 'subp')) %>% 
       tidyr::nest() %>% 
       dplyr::mutate(label = stringr::str_c(type, 'shk'),
