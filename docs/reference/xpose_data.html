@@ -115,7 +115,7 @@
     <pre class="usage"><span class='fu'>xpose_data</span>(<span class='kw'>runno</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"run"</span>,
   <span class='kw'>ext</span> <span class='kw'>=</span> <span class='st'>".lst"</span>, <span class='kw'>gg_theme</span> <span class='kw'>=</span> <span class='fu'><a href='gg_themes.html'>theme_readable</a></span>(),
   <span class='kw'>xp_theme</span> <span class='kw'>=</span> <span class='fu'><a href='xp_themes.html'>theme_xp_default</a></span>(), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>extra_files</span>,
-  <span class='kw'>manual_import</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>simtab</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>manual_import</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -158,6 +158,11 @@
       <th>extra_files</th>
       <td><p>A vector of additional output file extensions to be imported. Default is ".ext", ".cov", ".cor", ".phi", 
 ".grd" for NONMEM.</p></td>
+    </tr>
+    <tr>
+      <th>simtab</th>
+      <td><p>If <code>TRUE</code> only reads in simulation tables, if <code>FALSE</code> only reads estimation tables. 
+Default <code>NULL</code> reads all tables. Option not compatible with manual_import.</p></td>
     </tr>
     <tr>
       <th>manual_import</th>

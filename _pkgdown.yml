@@ -3,11 +3,18 @@ template:
     bootswatch: paper
 
 reference:
-  - title: Run import
+  - title: Automatic import of run output
     desc:  Import tables and output files from a NLME run to R.
     contents:
     - xpose_data
+  - title: Manual import of run output
+    desc:  Manually import tables and output files from a NLME run to R.
+    contents:
+    - read_nm_files
+    - read_nm_model
     - manual_nm_import
+    - list_nm_tables
+    - read_nm_tables
   - title: Example
     desc: Example of xpose_data
     contents:
@@ -22,10 +29,10 @@ reference:
     - theme_readable
     - theme_xp_default
     - theme_xp_xpose4
-  - title: Save plots
-    desc:  Save plots to a file.
+  - title: General plotting functions
+    desc:  Functions to manually create customized plots from an xpose_data object.
     contents:
-    - xpose_save
+    - xplot_scatter
   - title: Basic gof
     desc:  Basic goodness-of-fit plots.
     contents:
@@ -34,18 +41,11 @@ reference:
     - cwres_vs_pred
     - dv_vs_ipred
     - dv_vs_pred
-  - title: General plotting functions
-    desc:  Functions to manually create customized plots from an xpose_data object.
+  - title: Save plots
+    desc:  Save plots to a file.
     contents:
-    - xplot_scatter
-  - title: Manual import run output
-    desc:  Manually import tables, or output files into R.
-    contents:
-    - read_nm_files
-    - read_nm_model
-    - list_nm_tables
-    - read_nm_tables
-
+    - xpose_save
+    
 authors:
   Benjamin Guiastrennec:
     href: https://github.com/guiastrennec

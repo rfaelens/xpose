@@ -86,7 +86,7 @@
       <h1>Importing model outputs</h1>
                         <h4 class="author">Benjamin Guiastrennec</h4>
             
-            <h4 class="date">27 May, 2017</h4>
+            <h4 class="date">28 May, 2017</h4>
           </div>
 
     
@@ -98,22 +98,40 @@
 <p>To import the model output files (e.g. NONMEM tables). The function <code><a href="../reference/xpose_data.html">xpose_data()</a></code> collects all model output files and table and organizes them into an R object commonly called <code>xpdb</code> for xpose data base. Note that xpose makes use of the <a href="http://readr.tidyverse.org">readr</a> package to rapidly import big dataset into R.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xpdb &lt;-<span class="st"> </span><span class="kw"><a href="../reference/xpose_data.html">xpose_data</a></span>(<span class="dt">runno =</span> <span class="st">'001'</span>)</code></pre></div>
 </div>
-<div id="required-files" class="section level3">
+<div id="imported-files" class="section level3">
 <h3 class="hasAnchor">
-<a href="#required-files" class="anchor"></a>Required files</h3>
+<a href="#imported-files" class="anchor"></a>Imported files</h3>
 <div id="nonmem-runs" class="section level4">
 <h4 class="hasAnchor">
 <a href="#nonmem-runs" class="anchor"></a>NONMEM runs</h4>
 <p>To make full use of the functionality offered by <code>xpose</code> the following NONMEM output files should be available:</p>
 <ul>
-<li>.lst: for the template titles</li>
-<li>.mod: for parameter labels and output table names</li>
-<li>.ext: for final parameter estimates and RSE</li>
-<li>.phi: for random effects and iOFV</li>
-<li>.cor: for correlation matrix</li>
-<li>.grd: for estimation gradients</li>
-<li>output tables: for the actual data</li>
+<li>
+<code>.lst/.out/.res</code>: used to collect information on the run (<code>template_titles</code>) as well as the output table names. Alternatively a model file (<code>.mod/.ctl</code>) can be used but some of the information in <code>template_titles</code> may not be available.</li>
+<li>
+<code>.ext</code>: used to collect final parameter estimates and residual standard error (RSE)</li>
+<li>
+<code>.phi</code>: used for the random effects and iOFV</li>
+<li>
+<code>.cov</code>: used for the covariance matrix</li>
+<li>
+<code>.cor</code>: used for the correlation matrix</li>
+<li>
+<code>.grd</code>: used for the estimation gradients</li>
+<li>
+<code>.shk</code>: used to compute random effect shrinkage <code>template_titles</code>
+</li>
+<li>output and simulation tables: for the actual data</li>
 </ul>
+<p>When importing the files, xpose will return messages to the console and inform of any issue encountered during the import.</p>
+<pre><code>xpdb &lt;- xpose_data(runno = '001')
+
+Looking for nonmem output tables
+Reading: sdtab001, catab001, cotab001, patab001 [$prob no.1]
+
+Looking for nonmem output files
+Reading: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi</code></pre>
+<p>These messages can be silenced with the option <code>quiet = TRUE</code>.</p>
 </div>
 <div id="others-nlme-tools" class="section level4">
 <h4 class="hasAnchor">
@@ -126,14 +144,35 @@
 <a href="#structure-of-the-xpdb-object" class="anchor"></a>Structure of the <code>xpdb</code> object</h3>
 <p>A typical <code>xpdb</code> object contains 7 levels namely:</p>
 <ul>
-<li>code: the parsed model code</li>
-<li>summary: contains key information regarding the model. All the information contained in the summary can be used as part of the template titles (<code>help('R/template_titles')</code>).</li>
-<li>data: an aggregated dataset of all output tables</li>
-<li>tab_index: the names and column names of all original tables</li>
-<li>simtab: an aggregated dataset of all simulated output tables</li>
-<li>gg_theme: a ggplot2 theme</li>
-<li>xp_theme: an xpose theme</li>
+<li>
+<code>code</code>: the parsed model code</li>
+<li>
+<code>summary</code>: contains key information regarding the model. All the information contained in the summary can be used as part of the <code>template_titles</code>.</li>
+<li>
+<code>data</code>: contains all output and simulation tables as well as the column indexing</li>
+<li>
+<code>files</code>: contains all output files</li>
+<li>
+<code>gg_theme</code>: an attached ggplot2 theme</li>
+<li>
+<code>xp_theme</code>: an attached xpose theme</li>
+<li>
+<code>options</code>: attached global options</li>
 </ul>
+</div>
+<div id="glimpse-at-the-xpdb-object" class="section level3">
+<h3 class="hasAnchor">
+<a href="#glimpse-at-the-xpdb-object" class="anchor"></a>Glimpse at the <code>xpdb</code> object</h3>
+<p>To quickly get information about an <code>xpdb</code> object simply write its name or <code>print(&lt;xpdb name&gt;)</code> into the R console press Enter and a summary will be returned.</p>
+<pre><code>run001.lst overview: 
+ - Software: nonmem 7.3.0 
+ - Attached files: 
+   + tables: $prob no.1: sdtab001, catab001, cotab001, patab001 
+   + sim tabs: &lt;none&gt; 
+   + output files: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi 
+ - gg_theme: theme_readable 
+ - xp_theme: theme_xp_default 
+ - Options: dir = analysis/models/pk/, quiet = TRUE, manual_import = NULL</code></pre>
 </div>
 </div>
   </div>
