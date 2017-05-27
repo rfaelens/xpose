@@ -37,6 +37,15 @@ is.formula <- function(x) {
   inherits(x, 'formula')
 }
 
+# Convert seconds to hh:mm:ss
+as.ctime <- function(x) {
+  x <- round(as.numeric(x), 0)
+  sprintf("%02d:%02d:%02d", 
+          x %/% 3600,
+          x %% 3600 %/% 60,
+          x %% 60)
+}
+
 # Message function with quiet option (from Ron Keizer)
 msg <- function(txt, quiet = TRUE) {
   if (!quiet) message(txt)

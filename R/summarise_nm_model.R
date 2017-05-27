@@ -19,7 +19,7 @@ summarise_nm_model <- function(file, model, software, rounding) {
     sum_warnings(model, software),             # Run warnings (e.g. boundary)
     sum_errors(model, software),               # Run errors (e.g termination error)
     sum_nsig(model, software),                 # Number of significant digits
-    sum_condn(model, software),                # Condition number
+    sum_condn(model, software, rounding),      # Condition number
     sum_nnpde(model, software),                # Number of NPDE
     sum_npdeseed(model, software),             # NPDE seed number
     sum_ofv(model, software),                  # Objective function value
@@ -180,35 +180,85 @@ sum_nind <- function(model, software) {
 # Simulation number
 sum_nsim <- function(model, software) {
   if (software == 'nonmem') {
-    sum_tpl('nsim', 'na') # To be added
+    x <- model %>% 
+      dplyr::filter(.$subroutine == 'sim') %>% 
+      dplyr::filter(stringr::str_detect(.$code, stringr::fixed('NSUB')))
+    
+    if (nrow(x) == 0) return(sum_tpl('nsim', 'na'))
+    
+    dplyr::transmute(.data = x, 
+                     problem = quote(problem), 
+                     subp = 1,
+                     label = 'nsim',
+                     value = stringr::str_match(quote(code), 'NSUB.*=\\s*(\\d+)')[, 2])
   }
 }
 
 # Simulation seed
 sum_simseed <- function(model, software) {
   if (software == 'nonmem') {
-    sum_tpl('simseed', 'na') # To be added
+    x <- model %>% 
+      dplyr::filter(.$subroutine == 'sim') %>% 
+      dplyr::filter(stringr::str_detect(.$code, '\\(\\d+\\)'))
+    
+    if (nrow(x) == 0) return(sum_tpl('simseed', 'na'))
+    
+    dplyr::transmute(.data = x, 
+                     problem = quote(problem), 
+                     subp = 1,
+                     label = 'simseed',
+                     value = stringr::str_match(quote(code), '\\((\\d+)\\)')[, 2])
   }
 }
 
 # DES solver
 sum_subroutine <- function(model, software) {
   if (software == 'nonmem') {
-    sum_tpl('subroutine', 'na') # To be added
+    x <- model %>% 
+      dplyr::filter(.$subroutine == 'sub') %>% 
+      dplyr::filter(stringr::str_detect(.$code, stringr::fixed('ADVAN')))
+    
+    if (nrow(x) == 0) return(sum_tpl('subroutine', 'na'))
+    
+    dplyr::transmute(.data = x, 
+                     problem = quote(problem), 
+                     subp  = 1,
+                     label = 'subroutine',
+                     value = stringr::str_match(quote(code), 'ADVAN(\\d+)')[, 2])
   }
 }
 
 # Estimation/Sim runtime
 sum_runtime <- function(model, software) {
   if (software == 'nonmem') {
-    sum_tpl('runtime', 'na') # To be added
+    x <- model %>% 
+      dplyr::filter(.$subroutine == 'lst') %>% 
+      dplyr::filter(stringr::str_detect(.$code, stringr::fixed('Elapsed estimation time')))
+    
+    if (nrow(x) == 0) return(sum_tpl('runtime', 'na'))
+    
+    dplyr::transmute(.data = x, 
+                     problem = quote(problem), 
+                     subp  = 1,
+                     label = 'runtime',
+                     value = as.ctime(stringr::str_match(quote(code), '([\\.\\d]+)')[, 2]))
   }
 }
 
 # Covariance matrix runtime
 sum_covtime <- function(model, software) {
   if (software == 'nonmem') {
-    sum_tpl('covtime', 'na') # To be added
+    x <- model %>% 
+      dplyr::filter(.$subroutine == 'lst') %>% 
+      dplyr::filter(stringr::str_detect(.$code, stringr::fixed('Elapsed covariance time')))
+    
+    if (nrow(x) == 0) return(sum_tpl('covtime', 'na'))
+    
+    dplyr::transmute(.data = x, 
+                     problem = quote(problem), 
+                     subp  = 1,
+                     label = 'covtime',
+                     value = as.ctime(stringr::str_match(quote(code), '([\\.\\d]+)')[, 2]))
   }
 }
 
@@ -229,28 +279,77 @@ sum_errors <- function(model, software) {
 # Number of significant digits
 sum_nsig <- function(model, software) {
   if (software == 'nonmem') {
-    sum_tpl('nsig', 'na') # To be added
+    x <- model %>% 
+      dplyr::filter(.$subroutine == 'lst') %>% 
+      dplyr::filter(stringr::str_detect(.$code, stringr::fixed('NO. OF SIG. DIGITS')))
+    
+    if (nrow(x) == 0) return(sum_tpl('nsig', 'na'))
+    
+    dplyr::transmute(.data = x, 
+                     problem = quote(problem), 
+                     subp  = 1,
+                     label = 'nsig',
+                     value = stringr::str_match(quote(code), ':\\s+([\\.\\d]+)')[, 2])
   }
 }
 
 # Condition number
-sum_condn <- function(model, software) {
+sum_condn <- function(model, software, rounding) {
   if (software == 'nonmem') {
-    sum_tpl('condn', 'na') # To be added
+    x <- model %>% 
+      dplyr::filter(.$subroutine == 'lst') %>% 
+      dplyr::slice(which(stringr::str_detect(.$code, stringr::fixed('EIGENVALUES OF COR'))) + 4)
+    
+    if (nrow(x) == 0) return(sum_tpl('condn', 'na'))
+    
+    x %>% 
+      dplyr::group_by_(.dots = 'problem') %>% 
+      tidyr::nest() %>% 
+      dplyr::mutate(subp  = 1,
+                    label = 'condn',
+                    value = purrr::map_chr(.$data, function(x) {
+                      stringr::str_trim(x$code, side = 'both') %>%  
+                        stringr::str_split(pattern = '\\s+') %>% 
+                        purrr::flatten_chr() %>% 
+                        as.numeric() %>% 
+                        {max(.)/min(.)} %>% 
+                        round(digits = rounding) %>% 
+                        as.character()})) %>% 
+      dplyr::select(dplyr::one_of('problem', 'subp', 'label', 'value'))
   }
 }
 
 # Number of NPDE
 sum_nnpde <- function(model, software) {
   if (software == 'nonmem') {
-    sum_tpl('nnpde', 'na') # To be added
+    x <- model %>% 
+      dplyr::filter(.$subroutine == 'tab') %>% 
+      dplyr::filter(stringr::str_detect(.$code, stringr::fixed('ESAMPLE')))
+    
+    if (nrow(x) == 0) return(sum_tpl('nnpde', 'na'))
+    
+    dplyr::transmute(.data = x, 
+                     problem = quote(problem), 
+                     subp  = 1,
+                     label = 'nnpde',
+                     value = stringr::str_match(quote(code), 'ESAMPLE\\s*=\\s*(\\d+)')[, 2])
   }
 }
 
 # NPDE seed number
 sum_npdeseed <- function(model, software) {
   if (software == 'nonmem') {
-    sum_tpl('npdeseed', 'na') # To be added
+    x <- model %>% 
+      dplyr::filter(.$subroutine == 'tab') %>% 
+      dplyr::filter(stringr::str_detect(.$code, stringr::fixed('SEED')))
+    
+    if (nrow(x) == 0) return(sum_tpl('npdeseed', 'na'))
+    
+    dplyr::transmute(.data = x, 
+                     problem = quote(problem), 
+                     subp  = 1,
+                     label = 'npdeseed',
+                     value = stringr::str_match(quote(code), 'SEED\\s*=\\s*(\\d+)')[, 2])
   }
 }
 
