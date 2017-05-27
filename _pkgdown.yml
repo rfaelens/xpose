@@ -7,6 +7,7 @@ reference:
     desc:  Import tables and output files from a NLME run to R.
     contents:
     - xpose_data
+    - manual_nm_import
   - title: Example
     desc: Example of xpose_data
     contents:
@@ -17,10 +18,10 @@ reference:
     - template_titles
     - xpose_labs
     - update_themes
-    - theme_xp_default
-    - theme_xp_xpose4
     - theme_bw2
     - theme_readable
+    - theme_xp_default
+    - theme_xp_xpose4
   - title: Save plots
     desc:  Save plots to a file.
     contents:
@@ -40,18 +41,20 @@ reference:
   - title: Manual import run output
     desc:  Manually import tables, or output files into R.
     contents:
-    - read_nm_model
     - read_nm_files
+    - read_nm_model
     - list_nm_tables
     - read_nm_tables
 
 authors:
   Benjamin Guiastrennec:
     href: https://github.com/guiastrennec
-  Andrew C. Hooker:
-    href: https://github.com/andrewhooker
   Anna Olofsson:
     href: https://github.com/OlofssonA
+  Andrew C. Hooker:
+    href: https://github.com/andrewhooker
+  Mats O. Karlsson:
+    href: https://katalog.uu.se/profile/?id=XX3384
   Sebastian Ueckert:
     href: https://github.com/sebastianueckert
   Kajsa Harling:
