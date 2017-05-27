@@ -16,26 +16,30 @@
 #' @export
 print.xpose_data <- function(x, ...) {
   if (!is.null(x$data)) {
-    tab_names <- x$data %>% 
-      dplyr::mutate(grouping = 1:n()) %>% 
-      dplyr::group_by_(.dots = 'grouping') %>% 
-      tidyr::nest() %>% 
-      dplyr::mutate(string = purrr::map_chr(.$data, summarize_table_names)) %>% 
-      {stringr::str_c(.$string, collapse = '\n             ')}
-  } else {
-    tab_names <- '<none>'
-  }
+    if (any(!x$data$simtab)) {
+      tab_names <- x$data %>% 
+        dplyr::filter(.$simtab == FALSE) %>% 
+        dplyr::mutate(grouping = 1:n()) %>% 
+        dplyr::group_by_(.dots = 'grouping') %>% 
+        tidyr::nest() %>% 
+        dplyr::mutate(string = purrr::map_chr(.$data, summarize_table_names)) %>% 
+        {stringr::str_c(.$string, collapse = '\n             ')}
+    } else {
+      tab_names <- '<none>'
+    }
   
-  if (!is.null(x$sim)) {
-    sim_names <- x$sim %>% 
-      dplyr::mutate(grouping = 1:n()) %>% 
-      dplyr::group_by_(.dots = 'grouping') %>% 
-      tidyr::nest() %>% 
-      dplyr::mutate(string = purrr::map_chr(.$data, summarize_table_names)) %>% 
-      {stringr::str_c(.$string, collapse = '\n               ')}
-  } else {
-    sim_names <- '<none>'
-  }
+    if (any(x$data$simtab)) {
+      sim_names <- x$data %>% 
+        dplyr::filter(.$simtab == TRUE) %>% 
+        dplyr::mutate(grouping = 1:n()) %>% 
+        dplyr::group_by_(.dots = 'grouping') %>% 
+        tidyr::nest() %>% 
+        dplyr::mutate(string = purrr::map_chr(.$data, summarize_table_names)) %>% 
+        {stringr::str_c(.$string, collapse = '\n               ')}
+    } else {
+      sim_names <- '<none>'
+    }
+  }  
   
   if (!is.null(x$files)) {
     out_names <- unique(x$files$name) %>% 

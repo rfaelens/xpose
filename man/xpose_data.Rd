@@ -7,7 +7,7 @@
 xpose_data(runno = NULL, dir = NULL, file = NULL, prefix = "run",
   ext = ".lst", gg_theme = theme_readable(),
   xp_theme = theme_xp_default(), quiet = FALSE, extra_files,
-  manual_import = NULL, ...)
+  simtab = NULL, manual_import = NULL, ...)
 }
 \arguments{
 \item{runno}{Run number to be evaluated.}
@@ -30,6 +30,9 @@ xpose_data(runno = NULL, dir = NULL, file = NULL, prefix = "run",
 
 \item{extra_files}{A vector of additional output file extensions to be imported. Default is ".ext", ".cov", ".cor", ".phi", 
 ".grd" for NONMEM.}
+
+\item{simtab}{If \code{TRUE} only reads in simulation tables, if \code{FALSE} only reads estimation tables. 
+Default \code{NULL} reads all tables. Option not compatible with manual_import.}
 
 \item{manual_import}{If \code{NULL} (default) the names of the output tables to import will be obtained from the model file. 
 To manually import files as in pervious versions of xpose, the check the function \code{\link{manual_nm_import}}.}

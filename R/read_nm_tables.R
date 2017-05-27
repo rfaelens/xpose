@@ -34,8 +34,7 @@ read_nm_tables <- function(files         = NULL,
   
   # Filter tables if needed
   if (!is.null(simtab)) files <- files[files$simtab == simtab, ]
-  msg(c('\nLooking for nonmem', dplyr::if_else(!is.null(simtab) && simtab, 
-                                               ' simulation', ' output'), ' tables'), quiet)
+  msg('\nLooking for nonmem output tables', quiet)
   
   # Check that file exists
   if (is.null(files) || !any(file.exists(files$file))) {
@@ -54,10 +53,11 @@ read_nm_tables <- function(files         = NULL,
   tables %>% 
     dplyr::mutate(grouping = 1:n(),
                   name = stringr::str_c(basename(.$file), dplyr::if_else(.$firstonly, ' (firstonly)', ''))) %>% 
-    dplyr::group_by_(.dots = 'problem') %>% 
+    dplyr::group_by_(.dots = c('problem', 'simtab')) %>% 
     tidyr::nest() %>% 
     dplyr::mutate(string = purrr::map_chr(.$data, ~stringr::str_c(.$name, collapse = ', '))) %>% 
-    {stringr::str_c(.$string, ' [$prob no.', .$problem, ']', collapse = '\n         ')} %>% 
+    {stringr::str_c(.$string, ' [$prob no.', .$problem, dplyr::if_else(.$simtab, ', simulation', ''), 
+                    ']', collapse = '\n         ')} %>% 
     {msg(c('Reading: ', .), quiet)}
   
   # Collect options for table import

@@ -14,6 +14,8 @@
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' @param extra_files A vector of additional output file extensions to be imported. Default is ".ext", ".cov", ".cor", ".phi", 
 #' ".grd" for NONMEM.
+#' @param simtab If \code{TRUE} only reads in simulation tables, if \code{FALSE} only reads estimation tables. 
+#' Default \code{NULL} reads all tables. Option not compatible with manual_import.
 #' @param manual_import If \code{NULL} (default) the names of the output tables to import will be obtained from the model file. 
 #' To manually import files as in pervious versions of xpose, the check the function \code{\link{manual_nm_import}}.
 #' @param ... Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.
@@ -33,6 +35,7 @@ xpose_data <- function(runno         = NULL,
                        xp_theme      = theme_xp_default(),
                        quiet         = FALSE,
                        extra_files,
+                       simtab         = NULL,
                        manual_import  = NULL,
                        ...) {
   
@@ -60,12 +63,7 @@ xpose_data <- function(runno         = NULL,
   
   # Import estimation tables
   if (software == 'nonmem') {
-    data <- read_nm_tables(files = tbl_names, quiet = quiet, simtab = FALSE, ...)
-  }
-  
-  # Import simulation tables
-  if (software == 'nonmem') {
-    sim <- read_nm_tables(files = tbl_names, quiet = quiet, simtab = TRUE, ...)
+    data <- read_nm_tables(files = tbl_names, quiet = quiet, simtab = simtab, ...)
   }
   
   # Generate model summary
@@ -88,7 +86,7 @@ xpose_data <- function(runno         = NULL,
   attr(xp_theme, 'theme') <- as.character(substitute(xp_theme)) 
   
   # Output xpose_data
-  list(code = model_code, summary = summary, data = data, sim = sim,
+  list(code = model_code, summary = summary, data = data,
        files = out_files, gg_theme = gg_theme, xp_theme = xp_theme,
        options = list(dir = dirname(file), quiet = quiet, 
                       manual_import = manual_import)) %>% 
