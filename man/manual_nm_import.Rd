@@ -26,7 +26,7 @@ Manually provide names of the table files to be imported by \code{xpose_data}.
 xpose_data(runno = '001', manual_import = manual_nm_import())
 
 # Import a specific table name
-xpose_data(runno = '001', manual_import = manual_nm_import(tab_names = 'mytab')
+xpose_data(runno = '001', manual_import = manual_nm_import(tab_names = 'mytab'))
 }
 }
 \seealso{
