@@ -19,6 +19,10 @@ reference:
     desc: Example of xpose_data
     contents:
     - xpdb_ex_pk
+  - title: Extract data from xpdb
+    desc:  Extract code, data, files or summary from an xpdb object
+    contents:
+    - get_file
   - title: Customize plots
     desc:  Add, customize themes or template titles.
     contents:
