@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Print an xpose_data object — print.xpose_data • xpose</title>
+<title>Extract model code — get_code • xpose</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -105,58 +105,51 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Print an xpose_data object</h1>
+    <h1>Extract model code</h1>
     </div>
 
     
-    <p>This function returns a summary of an xpose_data to the console.</p>
+    <p>Extract model code from an xpdb object.</p>
     
 
-    <pre class="usage"><span class='co'># S3 method for xpose_data</span>
-<span class='fu'>print</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>get_code</span>(<span class='no'>xpdb</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>An <code>xpose_data</code> object generated with <code><a href='xpose_data.html'>xpose_data</a></code>.</p></td>
+      <th>xpdb</th>
+      <td><p>An <code>xpose_data</code> object from which the model code will be extracted.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Ignored in this function</p></td>
+      <th>problem</th>
+      <td><p>The problem to be used, in addition, problem 0 is attributed to 
+general output (e.g. NM-TRAN warnings in NONMEM). By default returns the 
+entire code.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A tibble of the parsed model.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <p><code><a href='xpose_data.html'>xpose_data</a></code>, <code><a href='read_nm_model.html'>read_nm_model</a></code></p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Using the print function</span>
-<span class='fu'>print</span>(<span class='no'>xpdb_ex_pk</span>)</div><div class='output co'>#&gt; run001.lst overview: 
-#&gt;  - Software: nonmem 7.3.0 
-#&gt;  - Attached files: 
-#&gt;    + tables: $prob no.1: catab001, cotab001, patab001, sdtab001 
-#&gt;    + sim tabs: &lt;none&gt; 
-#&gt;    + output files: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi 
-#&gt;  - gg_theme: theme_readable 
-#&gt;  - xp_theme: theme_xp_default 
-#&gt;  - Options: dir = analysis/models/pk/, quiet = TRUE, manual_import = NULL</div><div class='input'>
-<span class='co'># Or simply by writting the xpdb name</span>
-<span class='no'>xpdb_ex_pk</span></div><div class='output co'>#&gt; run001.lst overview: 
-#&gt;  - Software: nonmem 7.3.0 
-#&gt;  - Attached files: 
-#&gt;    + tables: $prob no.1: catab001, cotab001, patab001, sdtab001 
-#&gt;    + sim tabs: &lt;none&gt; 
-#&gt;    + output files: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi 
-#&gt;  - gg_theme: theme_readable 
-#&gt;  - xp_theme: theme_xp_default 
-#&gt;  - Options: dir = analysis/models/pk/, quiet = TRUE, manual_import = NULL</div><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='no'>parsed_model</span> <span class='kw'>&lt;-</span> <span class='fu'>get_code</span>(<span class='no'>xpdb_ex_pk</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#see-also">See also</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
