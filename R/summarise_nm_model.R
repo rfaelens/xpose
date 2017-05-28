@@ -122,7 +122,7 @@ sum_description <- function(model, software) {
     x %>% 
       dplyr::mutate(subp = 1,
                     label = 'descr',
-                    value = .$code) %>% 
+                    value = as.character(.$code)) %>% 
       dplyr::select(dplyr::one_of('problem', 'subp', 'label', 'value'))
   }
 }
