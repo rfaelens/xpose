@@ -2,26 +2,24 @@
 % Please edit documentation in R/extract_data.R
 \name{get_file}
 \alias{get_file}
-\title{Extract output file data}
+\title{Extract model output file data}
 \usage{
 get_file(xpdb, file = NULL, problem = NULL, subprob = NULL)
 }
 \arguments{
-\item{xpdb}{An \code{xpose_data} object from which data will be extracted.}
+\item{xpdb}{An \code{xpose_data} object from which the model output file data will be extracted.}
 
-\item{file}{Output file(s) to be extracted from the xpdb e.g. 'run001.ext'.}
+\item{file}{Name of the file to be extracted from the xpdb e.g. 'run001.ext'.}
 
-\item{problem}{The problem to be used if multiple problem are available. By default 
-returns the last problem for each file.}
+\item{problem}{The problem to be used, by default returns the last one for each file.}
 
-\item{subprob}{The subproblem to be used if multiple subproblem are available. By default 
-returns the last subproblem for each file.}
+\item{subprob}{The subproblem to be used, by default returns the last one for each file.}
 }
 \value{
 A tibble for single file or a named list for multiple files.
 }
 \description{
-Extract output file data from an xpdb object.
+Extract model output file data from an xpdb object.
 }
 \examples{
 # Single file (returns a tibble)
@@ -33,4 +31,7 @@ files <- get_file(xpdb_ex_pk, c('run001.ext', 'run001.phi'))
 # Tip to list available files in the xpdb
 print(xpdb_ex_pk)
 
+}
+\seealso{
+\code{\link{xpose_data}}, \code{\link{read_nm_files}}
 }

@@ -1,15 +1,125 @@
-#' Extract output file data
+#' Extract model code
 #'
-#' @description Extract output file data from an xpdb object.
+#' @description Extract model code from an xpdb object.
 #' 
-#' @param xpdb An \code{xpose_data} object from which data will be extracted.
-#' @param file Output file(s) to be extracted from the xpdb e.g. 'run001.ext'.
-#' @param problem The problem to be used if multiple problem are available. By default 
-#' returns the last problem for each file.
-#' @param subprob The subproblem to be used if multiple subproblem are available. By default 
-#' returns the last subproblem for each file.
+#' @param xpdb An \code{xpose_data} object from which the model code will be extracted.
+#' @param problem The problem to be used, in addition, problem 0 is attributed to 
+#' general output (e.g. NM-TRAN warnings in NONMEM). By default returns the 
+#' entire code.
+#' @return A tibble of the parsed model.
+#' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_model}}
+#' @examples
+#' parsed_model <- get_code(xpdb_ex_pk)
+#' 
+#' @export
+get_code <- function(xpdb, problem = NULL) {
+  if (!is.xpdb(xpdb)) {
+    stop('Valid `xpdb` input required.', call. = FALSE)
+  }
+  
+  x <- xpdb$code
+  
+  if (!is.null(problem)) {
+    if (!all(problem %in% x$problem)) {
+      stop('Problem no.', problem, ' not found in model code.', call. = FALSE)
+    }
+    x <- x[x$problem %in% problem, ]
+  }
+  x
+}
+
+
+#' Extract model output table data
+#'
+#' @description Extract model output table data from an xpdb object.
+#' 
+#' @param xpdb An \code{xpose_data} object from which the model output file data will be extracted.
+#' @param table Name of the output table to be extracted from the xpdb e.g. 'sdtab001'. Alternative to 
+#' the "problem" argument.
+#' @param problem Extracts all tables from the specified problem. Alternative to the "table" argument.
 #' 
 #' @return A tibble for single file or a named list for multiple files.
+#' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_table}}
+#' @examples
+#' # By table name
+#' sdtab <- get_data(xpdb_ex_pk, 'sdtab001')
+#' 
+#' # By problem
+#' tables <- get_data(xpdb_ex_pk, problem = 1)
+#' 
+#' # Tip to list available tables in the xpdb
+#' print(xpdb_ex_pk)
+#' 
+#' @export
+get_data <- function(xpdb, table = NULL, problem = NULL) {
+  if (!is.xpdb(xpdb)) {
+    stop('Valid `xpdb` input required.', call. = FALSE)
+  }
+  
+  if (is.null(table) && is.null(problem)) {
+    stop('Argument `table` or `problem` required.', call. = FALSE) 
+  }
+  
+  if (!is.null(table) && !is.null(problem)) {
+    stop('Arguments `table` and `problem` cannot be used together.', call. = FALSE) 
+  }
+  
+  x <- xpdb$data
+  
+  if (!is.null(problem)) {
+    # When selecting tables based on problem level
+    if (!all(problem %in% x$problem)) {
+      stop('Problem no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
+           ' not found in model output data.', call. = FALSE)
+    }
+    x <- x$data[x$problem %in% problem]
+    
+    if (length(problem) > 1) {
+      purrr::set_names(x, stringr::str_c('problem_', sort(problem), sep = ''))
+    } else {
+      x[[1]]
+    }
+    
+  } else {
+    # When selecting tables based on their name
+    full_index <- x %>% 
+      dplyr::select(dplyr::one_of('problem', 'index')) %>% 
+      tidyr::unnest_(unnest_cols = 'index')
+    
+    if (any(!table %in% full_index$table)) {
+      stop(stringr::str_c(table[!table %in% full_index$table], collapse = ', '), 
+           ' not found in model output data.', call. = FALSE) 
+    }
+    x <- full_index[full_index$table %in% table, ] %>% 
+      dplyr::group_by_(.dots = c('problem', 'table')) %>% 
+      tidyr::nest(.key = 'tmp') %>% 
+      dplyr::mutate(cols = purrr::map(.$tmp, ~.$col)) %>% 
+      dplyr::group_by_(.dots = 'table') %>% 
+      tidyr::nest(.key = 'tmp') %>% 
+      dplyr::mutate(out = purrr::map(.$tmp, function(y) {
+        x[x$problem == y$problem, ]$data[[1]][, y$cols[[1]]]
+      }))
+    
+    if (length(table) > 1) {
+      purrr::set_names(x$out, x$table)
+    } else {
+      x$out[[1]]
+    }
+  }
+}
+
+
+#' Extract model output file data
+#'
+#' @description Extract model output file data from an xpdb object.
+#' 
+#' @param xpdb An \code{xpose_data} object from which the model output file data will be extracted.
+#' @param file Name of the file to be extracted from the xpdb e.g. 'run001.ext'.
+#' @param problem The problem to be used, by default returns the last one for each file.
+#' @param subprob The subproblem to be used, by default returns the last one for each file.
+#' 
+#' @return A tibble for single file or a named list for multiple files.
+#' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_files}}
 #' @examples
 #' # Single file (returns a tibble)
 #' ext_file <- get_file(xpdb_ex_pk, 'run001.ext')
@@ -32,16 +142,15 @@ get_file <- function(xpdb, file = NULL, problem = NULL, subprob = NULL) {
   
   # Filter by file
   if (any(!file %in% xpdb$files$name)) {
-   stop(stringr::str_c(file[!file %in% xpdb$files$name], collapse = ', '), 
-        ' not found.', call. = FALSE) 
+    stop(stringr::str_c(file[!file %in% xpdb$files$name], collapse = ', '), 
+         ' not found in model output files.', call. = FALSE) 
   }
   x <- xpdb$files[xpdb$files$name %in% file, ]
   
   # Filter by $problem
   if (!is.null(problem)) {
     if (!all(problem %in% x$prob)) {
-      stop('Problem no.', problem, ' not found for ', 
-           stringr::str_c(file, collapse = ', '), '.', call. = FALSE)
+      stop('Problem no.', problem, ' not found in model output files.', call. = FALSE)
     }
     x <- x[x$prob %in% problem, ]
   }
@@ -49,8 +158,7 @@ get_file <- function(xpdb, file = NULL, problem = NULL, subprob = NULL) {
   # Filter by sub-problem
   if (!is.null(subprob)) {
     if (!all(subprob %in% x$subprob)) {
-      stop('Sub-problem no.', subprob, ' not found for ', 
-           stringr::str_c(file, collapse = ', '), '.', call. = FALSE)
+      stop('Sub-problem no.', subprob, ' not found in model output files.', call. = FALSE)
     }
     x <- x[x$subprob %in% subprob, ]
   }
@@ -64,7 +172,42 @@ get_file <- function(xpdb, file = NULL, problem = NULL, subprob = NULL) {
   }
 }
 
-#get_data()
-#get_code()
-#get_summary()
 
+#' Extract model summary data
+#'
+#' @description Extract model summary data from an xpdb object.
+#' 
+#' @param xpdb An \code{xpose_data} object from which the summary data will be extracted.
+#' @param problem The problem to be used, by default returns the last one for each label.
+#' @param subprob The subproblem to be used, by default returns the last one for each label.
+#' 
+#' @return A tibble of model summary.
+#' @seealso \code{\link{xpose_data}}, \code{\link{template_titles}}
+#' @examples
+#' run_summary <- get_summary(xpdb_ex_pk)
+#' 
+#' @export
+get_summary <- function(xpdb, problem = NULL, subprob = NULL) {
+  if (!is.xpdb(xpdb)) {
+    stop('Valid `xpdb` input required.', call. = FALSE)
+  }
+  
+  x <- xpdb$summary
+  
+  # Filter by $problem
+  if (!is.null(problem)) {
+    if (!all(problem %in% x$problem)) {
+      stop('Problem no.', problem, ' not found in model summary.', call. = FALSE)
+    }
+    x <- x[x$problem %in% problem, ]
+  }
+  
+  # Filter by sub-problem
+  if (!is.null(subprob)) {
+    if (!all(subprob %in% x$subp)) {
+      stop('Sub-problem no.', subprob, ' not found in model summary.', call. = FALSE)
+    }
+    x <- x[x$subp %in% subprob, ]
+  }
+  x[!duplicated(x$label, fromLast = TRUE), ]
+}
