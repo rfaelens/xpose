@@ -18,14 +18,14 @@
 #'  \item{@dir}{Model directory}
 #'  \item{@epsshk}{Epsilon shrinkage}
 #'  \item{@errors}{Run errors (e.g termination error)}
+#'  \item{@esampleseed}{ESAMPLE seed number (used in NPDE)}
 #'  \item{@etashk}{Eta shrinkage}
 #'  \item{@file}{Model file name}
 #'  \item{@method}{Estimation method or sim}
+#'  \item{@nesample}{Number of ESAMPLE (used in NPDE)}
 #'  \item{@nind}{Number of individuals}
 #'  \item{@niter}{Number of iteration}
-#'  \item{@nnpde}{Number of NPDE}
 #'  \item{@nobs}{Number of observations}
-#'  \item{@npdeseed}{NPDE seed number}
 #'  \item{@nsig}{Number of significant digits}
 #'  \item{@nsim}{Number of simulations}
 #'  \item{@ofv}{Objective function value}

@@ -14,14 +14,14 @@ summarise_nm_model <- function(file, model, software, rounding) {
     sum_nsim(model, software),                 # Number of simulations
     sum_simseed(model, software),              # Simulation seed
     sum_subroutine(model, software),           # Des solver
-    sum_runtime(model, software),              # Estimation/Sim runtime
+    sum_runtime(model, software),              # Estimation runtime
     sum_covtime(model, software),              # Covariance matrix runtime
     sum_warnings(model, software),             # Run warnings (e.g. boundary)
     sum_errors(model, software),               # Run errors (e.g termination error)
     sum_nsig(model, software),                 # Number of significant digits
     sum_condn(model, software, rounding),      # Condition number
-    sum_nnpde(model, software),                # Number of NPDE
-    sum_npdeseed(model, software),             # NPDE seed number
+    sum_nesample(model, software),             # Number of esample
+    sum_esampleseed(model, software),          # esample seed number
     sum_ofv(model, software),                  # Objective function value
     sum_method(model, software),               # Estimation method or sim
     sum_shk(model, software, 'eps', rounding), # Epsilon shrinkage
@@ -119,11 +119,11 @@ sum_description <- function(model, software) {
     
     if (nrow(x) == 0) return(sum_tpl('descr', 'na'))
     
-    dplyr::transmute(.data = x, 
-                     problem = quote(problem),
-                     subp = 1,
-                     label = 'descr',
-                     value = quote(code))
+    x %>% 
+      dplyr::mutate(subp = 1,
+                    label = 'descr',
+                    value = .$code) %>% 
+      dplyr::select(dplyr::one_of('problem', 'subp', 'label', 'value'))
   }
 }
 
@@ -135,11 +135,11 @@ sum_input_data <- function(model, software) {
     
     if (nrow(x) == 0) return(sum_tpl('data', 'na'))
     
-    dplyr::transmute(.data = x, 
-                     problem = quote(problem), 
-                     subp = 1,
-                     label = 'data',
-                     value = stringr::str_match(quote(code), '^\\s*([^\\s]+)\\s+')[, 2])
+    x %>% 
+      dplyr::mutate(subp = 1,
+                    label = 'data',
+                    value = stringr::str_match(.$code, '^\\s*([^\\s]+)\\s+')[, 2]) %>% 
+      dplyr::select(dplyr::one_of('problem', 'subp', 'label', 'value'))
   }
 }
 
@@ -152,11 +152,11 @@ sum_nobs <- function(model, software) {
     
     if (nrow(x) == 0) return(sum_tpl('nobs', 'na'))
     
-    dplyr::transmute(.data = x, 
-                     problem = quote(problem), 
-                     subp = 1,
-                     label = 'nobs',
-                     value = stringr::str_match(quote(code), '\\d+'))
+    x %>% 
+      dplyr::mutate(subp = 1,
+                    label = 'nobs',
+                    value = stringr::str_match(.$code, '\\d+')) %>% 
+      dplyr::select(dplyr::one_of('problem', 'subp', 'label', 'value'))
   }
 }
 
@@ -169,11 +169,11 @@ sum_nind <- function(model, software) {
     
     if (nrow(x) == 0) return(sum_tpl('nind', 'na'))
     
-    dplyr::transmute(.data = x, 
-                     problem = quote(problem), 
-                     subp = 1,
-                     label = 'nind',
-                     value = stringr::str_match(quote(code), '\\d+'))
+    x %>% 
+      dplyr::mutate(subp = 1,
+                    label = 'nind',
+                    value = stringr::str_match(.$code, '\\d+')) %>% 
+      dplyr::select(dplyr::one_of('problem', 'subp', 'label', 'value'))
   }
 }
 
@@ -186,11 +186,11 @@ sum_nsim <- function(model, software) {
     
     if (nrow(x) == 0) return(sum_tpl('nsim', 'na'))
     
-    dplyr::transmute(.data = x, 
-                     problem = quote(problem), 
-                     subp = 1,
-                     label = 'nsim',
-                     value = stringr::str_match(quote(code), 'NSUB.*=\\s*(\\d+)')[, 2])
+    x %>% 
+      dplyr::mutate(subp = 1,
+                    label = 'nsim',
+                    value = stringr::str_match(.$code, 'NSUB.*=\\s*(\\d+)')[, 2]) %>% 
+      dplyr::select(dplyr::one_of('problem', 'subp', 'label', 'value'))
   }
 }
 
@@ -203,11 +203,11 @@ sum_simseed <- function(model, software) {
     
     if (nrow(x) == 0) return(sum_tpl('simseed', 'na'))
     
-    dplyr::transmute(.data = x, 
-                     problem = quote(problem), 
-                     subp = 1,
-                     label = 'simseed',
-                     value = stringr::str_match(quote(code), '\\((\\d+)\\)')[, 2])
+    x %>% 
+      dplyr::mutate(subp = 1,
+                    label = 'simseed',
+                    value = stringr::str_match(.$code, '\\((\\d+)\\)')[, 2]) %>% 
+      dplyr::select(dplyr::one_of('problem', 'subp', 'label', 'value'))
   }
 }
 
@@ -220,15 +220,15 @@ sum_subroutine <- function(model, software) {
     
     if (nrow(x) == 0) return(sum_tpl('subroutine', 'na'))
     
-    dplyr::transmute(.data = x, 
-                     problem = quote(problem), 
-                     subp  = 1,
-                     label = 'subroutine',
-                     value = stringr::str_match(quote(code), 'ADVAN(\\d+)')[, 2])
+    x %>% 
+      dplyr::mutate(subp = 1,
+                    label = 'subroutine',
+                    value = stringr::str_match(.$code, 'ADVAN(\\d+)')[, 2]) %>% 
+      dplyr::select(dplyr::one_of('problem', 'subp', 'label', 'value'))
   }
 }
 
-# Estimation/Sim runtime
+# Estimation runtime
 sum_runtime <- function(model, software) {
   if (software == 'nonmem') {
     x <- model %>% 
@@ -237,11 +237,11 @@ sum_runtime <- function(model, software) {
     
     if (nrow(x) == 0) return(sum_tpl('runtime', 'na'))
     
-    dplyr::transmute(.data = x, 
-                     problem = quote(problem), 
-                     subp  = 1,
-                     label = 'runtime',
-                     value = as.ctime(stringr::str_match(quote(code), '([\\.\\d]+)')[, 2]))
+    x %>% 
+      dplyr::mutate(subp = 1,
+                    label = 'runtime',
+                    value = as.ctime(stringr::str_match(.$code, '([\\.\\d]+)')[, 2])) %>% 
+      dplyr::select(dplyr::one_of('problem', 'subp', 'label', 'value'))
   }
 }
 
@@ -254,11 +254,11 @@ sum_covtime <- function(model, software) {
     
     if (nrow(x) == 0) return(sum_tpl('covtime', 'na'))
     
-    dplyr::transmute(.data = x, 
-                     problem = quote(problem), 
-                     subp  = 1,
-                     label = 'covtime',
-                     value = as.ctime(stringr::str_match(quote(code), '([\\.\\d]+)')[, 2]))
+    x %>% 
+      dplyr::mutate(subp = 1,
+                    label = 'covtime',
+                    value = as.ctime(stringr::str_match(.$code, '([\\.\\d]+)')[, 2])) %>% 
+      dplyr::select(dplyr::one_of('problem', 'subp', 'label', 'value'))
   }
 }
 
@@ -285,11 +285,11 @@ sum_nsig <- function(model, software) {
     
     if (nrow(x) == 0) return(sum_tpl('nsig', 'na'))
     
-    dplyr::transmute(.data = x, 
-                     problem = quote(problem), 
-                     subp  = 1,
-                     label = 'nsig',
-                     value = stringr::str_match(quote(code), ':\\s+([\\.\\d]+)')[, 2])
+    x %>% 
+      dplyr::mutate(subp = 1,
+                    label = 'nsig',
+                    value = stringr::str_match(.$code, ':\\s+([\\.\\d]+)')[, 2]) %>% 
+      dplyr::select(dplyr::one_of('problem', 'subp', 'label', 'value'))
   }
 }
 
@@ -319,37 +319,37 @@ sum_condn <- function(model, software, rounding) {
   }
 }
 
-# Number of NPDE
-sum_nnpde <- function(model, software) {
+# Number of ESAMPLE (i.e. NPDE)
+sum_nesample <- function(model, software) {
   if (software == 'nonmem') {
     x <- model %>% 
       dplyr::filter(.$subroutine == 'tab') %>% 
       dplyr::filter(stringr::str_detect(.$code, stringr::fixed('ESAMPLE')))
     
-    if (nrow(x) == 0) return(sum_tpl('nnpde', 'na'))
+    if (nrow(x) == 0) return(sum_tpl('nesample', 'na'))
     
-    dplyr::transmute(.data = x, 
-                     problem = quote(problem), 
-                     subp  = 1,
-                     label = 'nnpde',
-                     value = stringr::str_match(quote(code), 'ESAMPLE\\s*=\\s*(\\d+)')[, 2])
+    x %>% 
+      dplyr::mutate(subp = 1,
+                    label = 'nesample',
+                    value = stringr::str_match(.$code, 'ESAMPLE\\s*=\\s*(\\d+)')[, 2]) %>% 
+      dplyr::select(dplyr::one_of('problem', 'subp', 'label', 'value'))
   }
 }
 
-# NPDE seed number
-sum_npdeseed <- function(model, software) {
+# ESAMPLE seed number
+sum_esampleseed <- function(model, software) {
   if (software == 'nonmem') {
     x <- model %>% 
       dplyr::filter(.$subroutine == 'tab') %>% 
       dplyr::filter(stringr::str_detect(.$code, stringr::fixed('SEED')))
     
-    if (nrow(x) == 0) return(sum_tpl('npdeseed', 'na'))
+    if (nrow(x) == 0) return(sum_tpl('esampleseed', 'na'))
     
-    dplyr::transmute(.data = x, 
-                     problem = quote(problem), 
-                     subp  = 1,
-                     label = 'npdeseed',
-                     value = stringr::str_match(quote(code), 'SEED\\s*=\\s*(\\d+)')[, 2])
+    x %>% 
+      dplyr::mutate(subp = 1,
+                    label = 'esampleseed',
+                    value = stringr::str_match(.$code, 'SEED\\s*=\\s*(\\d+)')[, 2]) %>% 
+      dplyr::select(dplyr::one_of('problem', 'subp', 'label', 'value'))
   }
 }
 
