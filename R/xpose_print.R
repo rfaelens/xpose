@@ -61,8 +61,10 @@ print.xpose_data <- function(x, ...) {
 }
 
 summarize_table_names <- function(dat) {
-  purrr::map(dat$index, ~.$tables) %>% 
+  purrr::map(dat$index, ~.$table) %>% 
     purrr::flatten_chr() %>% 
+    sort() %>% 
+    unique() %>% 
     stringr::str_c(collapse = ', ') %>% 
     {stringr::str_c('$prob no.',dat$problem,': ', ., sep = '')}
 }

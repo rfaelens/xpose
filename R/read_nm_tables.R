@@ -58,7 +58,7 @@ read_nm_tables <- function(files         = NULL,
     dplyr::mutate(string = purrr::map_chr(.$data, ~stringr::str_c(.$name, collapse = ', '))) %>% 
     {stringr::str_c(.$string, ' [$prob no.', .$problem, dplyr::if_else(.$simtab, ', simulation', ''), 
                     ']', collapse = '\n         ')} %>% 
-    {msg(c('Reading: ', .), quiet)}
+                    {msg(c('Reading: ', .), quiet)}
   
   # Collect options for table import
   tables <- tables %>% 
@@ -90,10 +90,15 @@ read_nm_tables <- function(files         = NULL,
   }
   
   # Index datasets
-  tables <- dplyr::bind_cols(tables,
-                             dplyr::tibble(index = purrr::map(tables$data, colnames) %>% 
-                                             purrr::set_names(tables$name),
-                                           nrow  = purrr::map_dbl(tables$data, nrow)))
+  tables <- tables %>% 
+    dplyr::mutate(grouping = 1:n()) %>% 
+    dplyr::group_by_(.dots = 'grouping') %>% 
+    tidyr::nest(.key = 'tmp') %>% 
+    dplyr::mutate(index = purrr::map(.$tmp, index_table),
+                  nrow =  purrr::map_dbl(.$tmp, ~nrow(.$data[[1]]))) %>% 
+    tidyr::unnest_(unnest_cols = 'tmp') %>% 
+    dplyr::ungroup()
+  
   
   # Combine tables with same number of rows
   tables <- tables %>% 
@@ -126,15 +131,15 @@ read_nm_tables <- function(files         = NULL,
   
   # Remove duplicated columns to decrease xpdb size
   if (rm_duplicates) {
-      tables <- tables %>% 
-        dplyr::mutate(grouping = 1:n()) %>% 
-        dplyr::group_by_(.dots = 'grouping') %>% 
-        tidyr::nest(.key = 'tmp') %>% 
-        dplyr::mutate(out = purrr::map(.$tmp, ~dplyr::select(.$data[[1]], 
-                                                            dplyr::one_of(unique(unlist(.$index[[1]]$colnames)))))) %>% 
-        tidyr::unnest_(unnest_cols = 'tmp') %>% 
-        dplyr::select(dplyr::one_of('problem', 'simtab', 'index', 'out')) %>% 
-        dplyr::rename_(.dots = c('data' = 'out'))
+    tables <- tables %>% 
+      dplyr::mutate(grouping = 1:n()) %>% 
+      dplyr::group_by_(.dots = 'grouping') %>% 
+      tidyr::nest(.key = 'tmp') %>% 
+      dplyr::mutate(out = purrr::map(.$tmp, ~dplyr::select(.$data[[1]], 
+                                                           dplyr::one_of(unique(unlist(.$index[[1]]$col)))))) %>% 
+      tidyr::unnest_(unnest_cols = 'tmp') %>% 
+      dplyr::select(dplyr::one_of('problem', 'simtab', 'index', 'out')) %>% 
+      dplyr::rename_(.dots = c('data' = 'out'))
   }
   
   # If user mode return simple tibble as only 1 problem should be used
@@ -196,10 +201,7 @@ combine_tables <- function(x, quiet) {
                   purrr::set_names(make.unique(names(.))) %>%
                   tidyr::drop_na(dplyr::one_of('ID')) %>%
                   list(),
-                
-                # Get around purrr droping list names
-                index = list(dplyr::tibble(tables = x$name, 
-                                           colnames = x$index)))
+                index = list(dplyr::bind_rows(x$index)))
 }
 
 merge_firstonly <- function(x, quiet) {
@@ -222,4 +224,34 @@ merge_firstonly <- function(x, quiet) {
                 index = x$index %>% 
                   dplyr::bind_rows() %>% 
                   list())
+}
+
+index_table <- function(x) {
+  tab_type <- dplyr::case_when(
+    stringr::str_detect(x$name, 'patab') ~ 'param',   # model parameters
+    stringr::str_detect(x$name, 'catab') ~ 'catcov',  # categorical covariate
+    stringr::str_detect(x$name, 'cotab') ~ 'contcov', # continuous covariate
+    TRUE ~ 'na')
+  
+  x$data[[1]] %>% 
+    colnames() %>% 
+    dplyr::tibble(table = x$name,
+                  col   = ., 
+                  type  = NA_character_, 
+                  label = NA_character_,     # Feature to be added in future release
+                  units = NA_character_) %>% # Feature to be added in future release
+    dplyr::mutate(type = dplyr::case_when(
+      .$col == 'ID' ~ 'id',
+      .$col == 'DV' ~ 'dv',
+      .$col == 'TIME' ~ 'idv',
+      .$col == 'OCC' ~ 'occ',
+      .$col == 'DVID' ~ 'dvid',
+      .$col == 'AMT' ~ 'amt',
+      .$col == 'MDV' ~ 'mdv',
+      .$col == 'EVID' ~ 'evid',
+      .$col %in% c('PRED', 'CPRED', 'IPRED') ~ 'pred',
+      .$col %in% c('RES', 'WRES', 'CWRES', 'IWRES', 'EWRES', 'NPDE') ~ 'res',
+      stringr::str_detect(.$col, 'ETA\\d+|ET\\d+') ~ 'eta',
+      stringr::str_detect(.$col, 'EPS\\d+|EP\\d+') ~ 'eps',
+      TRUE ~ tab_type))
 }
