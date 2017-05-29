@@ -38,11 +38,11 @@ xpdb <- xpose_data(runno = '001', dir = 'analysis/model/pk/')
 ### Generating plots
 Many functions will be made available in the next release of xpose. Currently available functions are:
 
- - DV vs. PRED (`dv_vs_pred()`)   
- - DV vs. IPRED (`dv_vs_ipred()`)   
- - CWRES vs. IDV (`cwres_vs_idv()`)   
- - CWRES vs. PRED (`cwres_vs_pred()`)   
- - |IWRES| vs. PRED (`absval_iwres_vs_pred()`)   
+ - DV vs. PRED (`dv_vs_pred()`, `dv_vs_ipred()`, `dv_vs_cpred()`)   
+ - RES vs. IDV (`res_vs_idv(res = 'CWRES')`)   
+ - RES vs. PRED (`res_vs_pred(res = 'CWRES')`)   
+ - |RES| vs. IDV (`absval_res_vs_idv(res = 'CWRES')`)   
+ - |RES| vs. PRED (`absval_res_vs_pred(res = 'CWRES')`)   
  
 These functions are used as follow:
 ``` {r demo basic gof}
@@ -50,7 +50,7 @@ These functions are used as follow:
 dv_vs_ipred(xpdb)
 
 # CWRES vs. PRED plot
-cwres_vs_pred(xpdb)
+res_vs_pred(xpdb, res = 'CWRES')
 ```
 
 

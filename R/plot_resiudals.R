@@ -1,104 +1,177 @@
-#' Conditional residuals (CWRES) plotted against population predictions (PRED)
+#' Residuals plotted against population predictions
 #'
-#' @description Plot of conditional residuals (CWRES) plotted against population predictions (PRED).
-#'
-#' @inheritParams dv_vs_ipred
+#' @description Model residuals plotted against population predictions (PRED). 
+#' 
+#' The residuals can be one of:
+#' \itemize{
+#'   \item RES: model residuals
+#'   \item WRES: weighted model residuals
+#'   \item CWRES: conditional weighted model residuals
+#'   \item EWRES/ECWRES: Monte Carlo based model residuals
+#'   \item NPDE: Normalized prediction distribution error 
+#' }
+#' 
+#' @inheritParams dv_vs_pred
+#' @param res Type of residual to be used. Default is "CWRES".
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
-#' cwres_vs_pred(xpdb_ex_pk)
+#' res_vs_pred(xpdb_ex_pk, res = 'CWRES')
 #' 
 #' @export
-cwres_vs_pred <- function(xpdb,
-                         aes      = NULL,
-                         group    = 'ID',
-                         type     = 'pls',
-                         facets   = NULL,
-                         title    = NULL,
-                         subtitle = NULL,
-                         caption  = NULL,
-                         log      = NULL,
-                         guides   = TRUE,
-                         ...) {
+res_vs_pred <- function(xpdb,
+                        aes      = NULL,
+                        res      = 'CWRES',
+                        group    = 'ID',
+                        type     = 'pls',
+                        facets   = NULL,
+                        title    = 'CWRES vs. PRED | @run',
+                        subtitle = 'Ofv: @ofv',
+                        caption  = '@dir',
+                        log      = NULL,
+                        guides   = TRUE,
+                        ...) {
   
   xplot_scatter(xpdb = xpdb, aes = aes, group = group,
                 vars = aes_(x = quote(PRED), y = quote(CWRES)), 
                 type = type, guides = guides, panel_facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
-                title = check_title(title, 'CWRES vs. PRED | @run'), 
-                subtitle = check_title(subtitle, 'Ofv: @ofv'),
-                caption = check_title(caption, '@dir'),
+                title = title, subtitle = subtitle, caption = caption,
                 plot_name = as.character(match.call()[[1]]),
                 guides_slope = 0, ...)
 }
 
-#' Conditional residuals (CWRES) plotted against independent variable (IDV)
+#' Residuals plotted against the independent variable
 #'
-#' @description Plot of conditional residuals (CWRES) plotted against independent variable (IDV).
+#' @description Model residuals plotted against the independent variable (IDV).
+#' 
+#' The residuals can be one of:
+#' \itemize{
+#'   \item RES: model residuals
+#'   \item WRES: weighted model residuals
+#'   \item CWRES: conditional weighted model residuals
+#'   \item EWRES/ECWRES: Monte Carlo based model residuals
+#'   \item NPDE: Normalized prediction distribution error 
+#' }
 #'
-#' @inheritParams dv_vs_ipred
+#' @inheritParams dv_vs_pred
+#' @param res Type of residual to be used. Default is "CWRES".
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
-#' cwres_vs_idv(xpdb_ex_pk)
+#' res_vs_idv(xpdb_ex_pk, res = 'CWRES')
 #' 
 #' @export
-cwres_vs_idv <- function(xpdb,
-                         aes      = NULL,
-                         group    = 'ID',
-                         type     = 'pls',
-                         facets   = NULL,
-                         title    = NULL,
-                         subtitle = NULL,
-                         caption  = NULL,
-                         log      = NULL,
-                         guides   = TRUE,
-                         ...) {
+res_vs_idv <- function(xpdb,
+                       aes      = NULL,
+                       res      = 'CWRES',
+                       group    = 'ID',
+                       type     = 'pls',
+                       facets   = NULL,
+                       title    = 'CWRES vs. TIME | @run',
+                       subtitle = 'Ofv: @ofv',
+                       caption  = '@dir',
+                       log      = NULL,
+                       guides   = TRUE,
+                       ...) {
   
   xplot_scatter(xpdb = xpdb, aes = aes, group = group,
                 vars = aes_(x = quote(TIME), y = quote(CWRES)),
                 type = type, guides = guides, panel_facets = facets, 
                 xscale = check_scales('x', log),
                 yscale = check_scales('y', log),
-                title = check_title(title, 'CWRES vs. TIME | @run'),
-                subtitle = check_title(subtitle, 'Ofv: @ofv'),
-                caption = check_title(caption, '@dir'),
+                title = title, subtitle = subtitle, caption = caption,
                 plot_name = as.character(match.call()[[1]]),
                 guides_slope = 0, ...)
 }
 
-#' Absolute value of individual weighted residuals (IWRES) plotted against population predictions (PRED)
+#' Absolute value of residuals plotted against population predictions
 #'
-#' @description Plot of absolute value of individual weighted residuals (IWRES) plotted against population predictions (PRED).
+#' @description Absolute value of the model residuals plotted against the population predictions (PRED).
+#' 
+#' The residuals can be one of:
+#' \itemize{
+#'   \item RES: model residuals
+#'   \item WRES: weighted model residuals
+#'   \item CWRES: conditional weighted model residuals
+#'   \item EWRES/ECWRES: Monte Carlo based model residuals
+#'   \item NPDE: Normalized prediction distribution error 
+#' }
 #'
-#' @inheritParams dv_vs_ipred
+#' @inheritParams dv_vs_pred
+#' @param res Type of residual to be used. Default is "CWRES".
+#' 
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
-#' absval_iwres_vs_pred(xpdb_ex_pk)
+#' absval_res_vs_pred(xpdb_ex_pk, res = 'CWRES')
 #' 
 #' @export
-absval_iwres_vs_pred <- function(xpdb,
-                                 aes      = NULL,
-                                 group    = 'ID',
-                                 type     = 'pls',
-                                 facets   = NULL,
-                                 title    = NULL,
-                                 subtitle = NULL,
-                                 caption  = NULL,
-                                 log      = NULL,
-                                 guides   = TRUE,
-                                 ...) {
+absval_res_vs_pred <- function(xpdb,
+                               aes      = NULL,
+                               res      = "CWRES",
+                               group    = 'ID',
+                               type     = 'pls',
+                               facets   = NULL,
+                               title    = '|CWRES| vs. PRED | @run',
+                               subtitle = 'Ofv: @ofv',
+                               caption  = '@dir',
+                               log      = NULL,
+                               guides   = FALSE,
+                               ...) {
   
   xplot_scatter(xpdb = xpdb, aes = aes, group = group,
-                vars = aes_(x = quote(PRED), y = quote(abs(IWRES))), 
+                vars = aes_(x = quote(PRED), y = quote(abs(CWRES))), 
                 type = type, guides = guides, panel_facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
-                title = check_title(title, '|IWRES| vs. PRED | @run'), 
-                subtitle = check_title(subtitle, 'Ofv: @ofv'),
-                caption = check_title(caption, '@dir'),
+                title = title, subtitle = subtitle, caption = caption,
+                plot_name = as.character(match.call()[[1]]),
+                guides_slope = 0, ...)
+}
+
+#' Absolute value of residuals plotted against independent variable
+#'
+#' @description Absolute value of the model residuals plotted against the independent variable (IDV).
+#' 
+#' The residuals can be one of:
+#' \itemize{
+#'   \item RES: model residuals
+#'   \item WRES: weighted model residuals
+#'   \item CWRES: conditional weighted model residuals
+#'   \item EWRES/ECWRES: Monte Carlo based model residuals
+#'   \item NPDE: Normalized prediction distribution error 
+#' }
+#'
+#' @inheritParams dv_vs_pred
+#' @param res Type of residual to be used. Default is "CWRES".
+#' 
+#' @inheritSection xplot_scatter Template titles
+#' @seealso \code{\link{xplot_scatter}}
+#' @examples
+#' absval_res_vs_idv(xpdb_ex_pk, res = 'CWRES')
+#' 
+#' @export
+absval_res_vs_idv <- function(xpdb,
+                              aes      = NULL,
+                              res      = "CWRES",
+                              group    = 'ID',
+                              type     = 'pls',
+                              facets   = NULL,
+                              title    = '|CWRES| vs. TIME | @run',
+                              subtitle = 'Ofv: @ofv',
+                              caption  = '@dir',
+                              log      = NULL,
+                              guides   = FALSE,
+                              ...) {
+  
+  xplot_scatter(xpdb = xpdb, aes = aes, group = group,
+                vars = aes_(x = quote(TIME), y = quote(abs(CWRES))), 
+                type = type, guides = guides, panel_facets = facets, 
+                xscale = check_scales('x', log), 
+                yscale = check_scales('y', log), 
+                title = title, subtitle = subtitle, caption = caption,
                 plot_name = as.character(match.call()[[1]]),
                 guides_slope = 0, ...)
 }

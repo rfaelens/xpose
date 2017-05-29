@@ -1,6 +1,7 @@
-#' Observations (DV) plotted against individual predictions (IPRED)
+#' Observations plotted against model predictions
 #'
-#' @description Plot of observations (DV) vs individual predictions (IPRED).
+#' @description Plot of observations (DV) vs population predictions (PRED), individual predictions (IPRED) 
+#' or conditional population predictions (CPRED).
 #'
 #' @param xpdb An xpose database object.
 #' @param aes The xpose aesthetics (eg. \code{point_color}).
@@ -22,17 +23,22 @@
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
+#' dv_vs_pred(xpdb_ex_pk)
+#' 
 #' dv_vs_ipred(xpdb_ex_pk)
 #' 
+#' dv_vs_cpred(xpdb_ex_pk)
+#' 
+#' @name dv_vs_pred
 #' @export
 dv_vs_ipred <- function(xpdb,
                         aes      = NULL,
                         group    = 'ID',
                         type     = 'pls',
                         facets   = NULL,
-                        title    = NULL,
-                        subtitle = NULL,
-                        caption  = NULL,
+                        title    = 'DV vs. IPRED | @run',
+                        subtitle = 'Ofv: @ofv, Eps shrink: @epsshk',
+                        caption  = '@dir',
                         log      = NULL,
                         guides   = TRUE,
                         ...) {
@@ -42,32 +48,21 @@ dv_vs_ipred <- function(xpdb,
                 type = type, guides = guides, panel_facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
-                title = check_title(title, 'DV vs. IPRED | @run'), 
-                subtitle = check_title(subtitle, 'Ofv: @ofv, Eps shrink: @epsshk'),
-                caption = check_title(caption, '@dir'),
+                title = title, subtitle = subtitle, caption = caption,
                 plot_name = as.character(match.call()[[1]]),
                 guides_slope = 1, ...)
 }
 
-#' Observations (DV) plotted against population predictions (PRED)
-#'
-#' @description Plot of observations (DV) vs population predictions (PRED).
-#'
-#' @inheritParams dv_vs_ipred
-#' @inheritSection xplot_scatter Template titles
-#' @seealso \code{\link{xplot_scatter}}
-#' @examples
-#' dv_vs_pred(xpdb_ex_pk)
-#' 
+#' @rdname dv_vs_pred
 #' @export
 dv_vs_pred <- function(xpdb,
                        aes      = NULL,
                        group    = 'ID',
                        type     = 'pls',
                        facets   = NULL,
-                       title    = NULL,
-                       subtitle = NULL,
-                       caption  = NULL,
+                       title    = 'DV vs. PRED | @run',
+                       subtitle = 'Ofv: @ofv',
+                       caption  = '@dir',
                        log      = NULL,
                        guides   = TRUE,
                        ...) {
@@ -77,9 +72,32 @@ dv_vs_pred <- function(xpdb,
                 type = type, guides = guides, panel_facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
-                title = check_title(title, 'DV vs. PRED | @run'), 
-                subtitle = check_title(subtitle, 'Ofv: @ofv'),
-                caption = check_title(caption, '@dir'),
+                title = title, subtitle = subtitle, caption = caption,
+                plot_name = as.character(match.call()[[1]]),
+                guides_slope = 1, ...)
+}
+
+
+#' @rdname dv_vs_pred
+#' @export
+dv_vs_cpred <- function(xpdb,
+                        aes      = NULL,
+                        group    = 'ID',
+                        type     = 'pls',
+                        facets   = NULL,
+                        title    = 'DV vs. CPRED | @run',
+                        subtitle = 'Ofv: @ofv',
+                        caption  = '@dir',
+                        log      = NULL,
+                        guides   = TRUE,
+                        ...) {
+  
+  xplot_scatter(xpdb = xpdb, aes = aes, group = group,
+                vars = aes_(x = quote(CPRED), y = quote(DV)), 
+                type = type, guides = guides, panel_facets = facets, 
+                xscale = check_scales('x', log), 
+                yscale = check_scales('y', log), 
+                title = title, subtitle = subtitle, caption = caption,
                 plot_name = as.character(match.call()[[1]]),
                 guides_slope = 1, ...)
 }

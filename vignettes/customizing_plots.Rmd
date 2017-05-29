@@ -35,7 +35,7 @@ gridExtra::grid.arrange(
 
 
 ### Visual guides
-The option `guides` can enable (`TRUE`) or disable (`FALSE`) the visual guides on the graphs such as unity line on the `dv_vs_ipred()` plot or horizontal lines on `cwres_vs_idv()`.
+The option `guides` can enable (`TRUE`) or disable (`FALSE`) the visual guides on the graphs such as unity line on the `dv_vs_ipred()` plot or horizontal lines on `res_vs_idv()`.
 
 
 ### Labels

@@ -42,7 +42,7 @@ dv_vs_ipred(xpdb)
 
 ``` r
 # CWRES vs. PRED plot
-cwres_vs_pred(xpdb)
+res_vs_pred(xpdb, res = 'CWRES')
 ```
 
 <img src="inst/img/readme_example_figure-2.png" width="50%" style="display: block; margin: auto;" />

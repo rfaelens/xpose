@@ -2,11 +2,23 @@
 % Please edit documentation in R/plot_gof.R
 \name{dv_vs_pred}
 \alias{dv_vs_pred}
-\title{Observations (DV) plotted against population predictions (PRED)}
+\alias{dv_vs_ipred}
+\alias{dv_vs_pred}
+\alias{dv_vs_cpred}
+\title{Observations plotted against model predictions}
 \usage{
+dv_vs_ipred(xpdb, aes = NULL, group = "ID", type = "pls", facets = NULL,
+  title = "DV vs. IPRED | @run",
+  subtitle = "Ofv: @ofv, Eps shrink: @epsshk", caption = "@dir",
+  log = NULL, guides = TRUE, ...)
+
 dv_vs_pred(xpdb, aes = NULL, group = "ID", type = "pls", facets = NULL,
-  title = NULL, subtitle = NULL, caption = NULL, log = NULL,
-  guides = TRUE, ...)
+  title = "DV vs. PRED | @run", subtitle = "Ofv: @ofv", caption = "@dir",
+  log = NULL, guides = TRUE, ...)
+
+dv_vs_cpred(xpdb, aes = NULL, group = "ID", type = "pls", facets = NULL,
+  title = "DV vs. CPRED | @run", subtitle = "Ofv: @ofv", caption = "@dir",
+  log = NULL, guides = TRUE, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -37,7 +49,8 @@ Use \code{FALSE} to remove caption.}
 \item{...}{Any additional aesthetics to be passed on \code{xplot_scatter}.}
 }
 \description{
-Plot of observations (DV) vs population predictions (PRED).
+Plot of observations (DV) vs population predictions (PRED), individual predictions (IPRED) 
+or conditional population predictions (CPRED).
 }
 \section{Template titles}{
 
@@ -52,6 +65,10 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 
 \examples{
 dv_vs_pred(xpdb_ex_pk)
+
+dv_vs_ipred(xpdb_ex_pk)
+
+dv_vs_cpred(xpdb_ex_pk)
 
 }
 \seealso{
