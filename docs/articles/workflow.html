@@ -86,7 +86,7 @@
       <h1>Workflow</h1>
                         <h4 class="author">Benjamin Guiastrennec</h4>
             
-            <h4 class="date">28 May, 2017</h4>
+            <h4 class="date">29 May, 2017</h4>
           </div>
 
     
@@ -109,22 +109,22 @@
 <a href="#generating-plots" class="anchor"></a>Generating plots</h3>
 <p>Many functions will be made available in the next release of xpose. Currently available functions are:</p>
 <ul>
-<li>DV vs. PRED (<code><a href="../reference/dv_vs_pred.html">dv_vs_pred()</a></code>)<br>
+<li>DV vs. PRED (<code><a href="../reference/dv_vs_pred.html">dv_vs_pred()</a></code>, <code><a href="../reference/dv_vs_pred.html">dv_vs_ipred()</a></code>, <code><a href="../reference/dv_vs_pred.html">dv_vs_cpred()</a></code>)<br>
 </li>
-<li>DV vs. IPRED (<code><a href="../reference/dv_vs_ipred.html">dv_vs_ipred()</a></code>)<br>
+<li>RES vs. IDV (<code><a href="../reference/res_vs_idv.html">res_vs_idv(res = 'CWRES')</a></code>)<br>
 </li>
-<li>CWRES vs. IDV (<code><a href="../reference/cwres_vs_idv.html">cwres_vs_idv()</a></code>)<br>
+<li>RES vs. PRED (<code><a href="../reference/res_vs_pred.html">res_vs_pred(res = 'CWRES')</a></code>)<br>
 </li>
-<li>CWRES vs. PRED (<code><a href="../reference/cwres_vs_pred.html">cwres_vs_pred()</a></code>)<br>
+<li>|RES| vs. IDV (<code><a href="../reference/absval_res_vs_idv.html">absval_res_vs_idv(res = 'CWRES')</a></code>)<br>
 </li>
-<li>|IWRES| vs. PRED (<code><a href="../reference/absval_iwres_vs_pred.html">absval_iwres_vs_pred()</a></code>)</li>
+<li>|RES| vs. PRED (<code><a href="../reference/absval_res_vs_pred.html">absval_res_vs_pred(res = 'CWRES')</a></code>)</li>
 </ul>
 <p>These functions are used as follow:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># DV vs. IPRED plot</span>
-<span class="kw"><a href="../reference/dv_vs_ipred.html">dv_vs_ipred</a></span>(xpdb)</code></pre></div>
+<span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb)</code></pre></div>
 <p><img src="workflow_files/figure-html/demo%20basic%20gof-1.png" width="50%" style="display: block; margin: auto;"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># CWRES vs. PRED plot</span>
-<span class="kw"><a href="../reference/cwres_vs_pred.html">cwres_vs_pred</a></span>(xpdb)</code></pre></div>
+<span class="kw"><a href="../reference/res_vs_pred.html">res_vs_pred</a></span>(xpdb, <span class="dt">res =</span> <span class="st">'CWRES'</span>)</code></pre></div>
 <p><img src="workflow_files/figure-html/demo%20basic%20gof-2.png" width="50%" style="display: block; margin: auto;"></p>
 </div>
 <div id="exporting-plots" class="section level3">
@@ -142,7 +142,7 @@
 <a href="#the-pipes" class="anchor"></a>The pipes</h3>
 <p><code>xpose</code> makes use of the pipe operator <code>%&gt;%</code> from the package <a href="http://dplyr.tidyverse.org">dplyr</a>. Pipes can be used to generate clear workflow.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/xpose_data.html">xpose_data</a></span>(<span class="dt">runno =</span> <span class="st">'001'</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/dv_vs_ipred.html">dv_vs_ipred</a></span>() %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>() %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/xpose_save.html">xpose_save</a></span>()</code></pre></div>
 </div>
 </div>

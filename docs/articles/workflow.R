@@ -14,7 +14,7 @@ knitr::opts_chunk$set(fig.dpi = 96,
 dv_vs_ipred(xpdb)
 
 # CWRES vs. PRED plot
-cwres_vs_pred(xpdb)
+res_vs_pred(xpdb, res = 'CWRES')
 
 ## ---- eval = FALSE-------------------------------------------------------
 #  # Save the last plot
