@@ -11,11 +11,6 @@ check_scales <- function(scale, log) {
   ifelse(stringr::str_detect(string = log, pattern = scale), 'log10', 'continuous')
 }
 
-# Check plot titles
-check_title <- function(x, default) {
-  ifelse(is.null(x), default, x)
-}
-
 # Add keyword values in template titles
 parse_title <- function(string, xpdb, problem, quiet, extra_key = NULL, extra_value = NULL) {
   # Extract keywords from the string
@@ -56,11 +51,3 @@ parse_title <- function(string, xpdb, problem, quiet, extra_key = NULL, extra_va
     stringr::str_replace_all('\\"@', '\\"') %>% 
     stringr::str_interp()
 }
-
-# Generate template title
-write_title <- function(x, xpdb, problem, quiet) {
-  if (!is.null(x) && x != FALSE) {
-    parse_title(string = x, xpdb, problem, quiet)
-  }
-}
-

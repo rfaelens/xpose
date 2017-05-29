@@ -27,7 +27,7 @@ print.xpose_data <- function(x, ...) {
     } else {
       tab_names <- '<none>'
     }
-  
+    
     if (any(x$data$simtab)) {
       sim_names <- x$data %>% 
         dplyr::filter(.$simtab == TRUE) %>% 
