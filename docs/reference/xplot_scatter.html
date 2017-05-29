@@ -113,9 +113,9 @@
     
 
     <pre class="usage"><span class='fu'>xplot_scatter</span>(<span class='no'>xpdb</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>aes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pls"</span>,
-  <span class='kw'>layers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"@run"</span>, <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>guides</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>xscale</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>, <span class='kw'>yscale</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>,
-  <span class='kw'>plot_name</span> <span class='kw'>=</span> <span class='st'>"xplot_scatter"</span>, <span class='no'>quiet</span>, <span class='no'>prob_n</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>layers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guides</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>xscale</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>,
+  <span class='kw'>yscale</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>plot_name</span> <span class='kw'>=</span> <span class='st'>"scatter_plot"</span>, <span class='no'>xp_theme</span>, <span class='no'>quiet</span>, <span class='no'>problem</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -146,21 +146,6 @@ line 'l', smooth 's' and text 't' or any combination of the 4.</p></td>
       <td><p>A list of additional ggplot layers to be added to the plot.</p></td>
     </tr>
     <tr>
-      <th>title</th>
-      <td><p>The main title of the plot. If <code>NULL</code> automated title will be generated.
-Use FALSE to remove title and subtitle.</p></td>
-    </tr>
-    <tr>
-      <th>subtitle</th>
-      <td><p>the plot subtitle. If NULL automated subtitle will be generated.
-Use FALSE to remove subtitle.</p></td>
-    </tr>
-    <tr>
-      <th>caption</th>
-      <td><p>page caption. If NULL automated caption will be generated.
-Use FALSE to remove caption.</p></td>
-    </tr>
-    <tr>
       <th>guides</th>
       <td><p>should the guides (eg. unity line) be displayed.</p></td>
     </tr>
@@ -173,15 +158,32 @@ Use FALSE to remove caption.</p></td>
       <td><p>scale type for y axis (eg. 'continuous', 'discrete', 'log10').</p></td>
     </tr>
     <tr>
+      <th>title</th>
+      <td><p>Plot title. Use <code>NULL</code> to remove.</p></td>
+    </tr>
+    <tr>
+      <th>subtitle</th>
+      <td><p>Plot subtitle. Use <code>NULL</code> to remove.</p></td>
+    </tr>
+    <tr>
+      <th>caption</th>
+      <td><p>Page caption. Use <code>NULL</code> to remove.</p></td>
+    </tr>
+    <tr>
       <th>plot_name</th>
       <td><p>name that will be used by <code>xpose_save()</code> to save the plot.</p></td>
+    </tr>
+    <tr>
+      <th>xp_theme</th>
+      <td><p>An xpose theme or vector of modifications to the xpose theme
+(eg. <code>c(point_color = 'red', line_linetype = 'dashed')</code>).</p></td>
     </tr>
     <tr>
       <th>quiet</th>
       <td><p>Logical, if <code>FALSE</code> messages are printed to the console.</p></td>
     </tr>
     <tr>
-      <th>prob_n</th>
+      <th>problem</th>
       <td><p>Numeric, the $problem number to use for ploting. By default the data 
 is taken from the estimation problem.</p></td>
     </tr>

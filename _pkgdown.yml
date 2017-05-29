@@ -15,7 +15,7 @@ reference:
     - manual_nm_import
     - list_nm_tables
     - read_nm_tables
-  - title: Example
+  - title: Examples
     desc: Example of xpose_data
     contents:
     - xpdb_ex_pk

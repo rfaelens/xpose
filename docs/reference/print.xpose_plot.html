@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Absolute value of residuals plotted against population predictions — absval_res_vs_pred • xpose</title>
+<title>Draw an xpose_plot object — print.xpose_plot • xpose</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -105,109 +105,45 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Absolute value of residuals plotted against population predictions</h1>
+    <h1>Draw an xpose_plot object</h1>
     </div>
 
     
-    <p>Absolute value of the model residuals plotted against the population predictions (PRED).</p>
-<p>The residuals can be one of:</p><ul>
-<li><p>RES: model residuals</p></li>
-<li><p>WRES: weighted model residuals</p></li>
-<li><p>CWRES: conditional weighted model residuals</p></li>
-<li><p>EWRES/ECWRES: Monte Carlo based model residuals</p></li>
-<li><p>NPDE: Normalized prediction distribution error</p></li>
-</ul>
+    <p>This function explicitly draw an xpose_plot and interprets keywords 
+contained in labels.</p>
     
 
-    <pre class="usage"><span class='fu'>absval_res_vs_pred</span>(<span class='no'>xpdb</span>, <span class='kw'>aes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='st'>"CWRES"</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>,
-  <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pls"</span>, <span class='kw'>facets</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"|CWRES| vs. PRED | @run"</span>,
-  <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Ofv: @ofv"</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guides</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for xpose_plot</span>
+<span class='fu'>print</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>xpdb</th>
-      <td><p>An xpose database object.</p></td>
-    </tr>
-    <tr>
-      <th>aes</th>
-      <td><p>The xpose aesthetics (eg. <code>point_color</code>).</p></td>
-    </tr>
-    <tr>
-      <th>res</th>
-      <td><p>Type of residual to be used. Default is "CWRES".</p></td>
-    </tr>
-    <tr>
-      <th>group</th>
-      <td><p>Grouping variable to be used for lines.</p></td>
-    </tr>
-    <tr>
-      <th>type</th>
-      <td><p>String setting the type of plot to be used points 'p',
-line 'l' and smooth 's' or any combination of the three.</p></td>
-    </tr>
-    <tr>
-      <th>facets</th>
-      <td><p>Either a character string to use <a href='http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap'>facet_wrap</a> or a formula 
-to use <a href='http://www.rdocumentation.org/packages/ggplot2/topics/facet_grid'>facet_grid</a>.</p></td>
-    </tr>
-    <tr>
-      <th>title</th>
-      <td><p>Plot title. Use <code>NULL</code> to remove.</p></td>
-    </tr>
-    <tr>
-      <th>subtitle</th>
-      <td><p>Plot subtitle. Use <code>NULL</code> to remove.</p></td>
-    </tr>
-    <tr>
-      <th>caption</th>
-      <td><p>Page caption. Use <code>NULL</code> to remove.</p></td>
-    </tr>
-    <tr>
-      <th>log</th>
-      <td><p>String assigning logarithmic scale to axes, can be either '', 'x', y' or 'xy'.</p></td>
-    </tr>
-    <tr>
-      <th>guides</th>
-      <td><p>Enable guides display (e.g. unity line).</p></td>
+      <th>x</th>
+      <td><p>An <code>xpose_plot</code> object.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Any additional aesthetics to be passed on <code>xplot_scatter</code>.</p></td>
+      <td><p>Options to be passed on to the ggplot2 print method.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="template-titles"><a class="anchor" href="#template-titles"></a>Template titles</h2>
-
-    
-    <p>Template titles can be used to create highly informative diagnostics plots. 
-They can be applied to any plot title, subtitle and caption. Template titles 
-are defined via a single string containing key variables staring with a @ (e.g. @ofv)
-which will be replaced by their actual value when rendering the plot.
-For example '@run, @nobs observations in @nind subjects' would become 'run001, 
-1022 observations in 74 subjects'. The available key variables are listed under 
-<code><a href='template_titles.html'>template_titles</a></code>.</p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <p><code><a href='xplot_scatter.html'>xplot_scatter</a></code></p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>absval_res_vs_pred</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='st'>'CWRES'</span>)</div><img src='absval_res_vs_pred-2.png' alt='' width='540' height='400' /><div class='input'>
+    <pre class="examples"><div class='input'><span class='no'>my_plot</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='dv_vs_pred.html'>dv_vs_ipred</a></span>(<span class='no'>xpdb_ex_pk</span>) +
+            <span class='fu'>labs</span>(<span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>'A label with keywords @nind, @nobs'</span>)
+<span class='co'># Using the print function</span>
+<span class='fu'>print</span>(<span class='no'>my_plot</span>)</div><img src='print.xpose_plot-2.png' alt='' width='540' height='400' /><div class='input'>
+<span class='co'># Or simply by writting the plot object name</span>
+<span class='no'>my_plot</span></div><img src='print.xpose_plot-4.png' alt='' width='540' height='400' /><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#template-titles">Template titles</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 

@@ -11,9 +11,9 @@ knitr::opts_chunk$set(fig.dpi = 96,
 
 ## ----demo type, echo = FALSE, fig.height = 2.5, fig.width = 6, out.width = '75%'----
 gridExtra::grid.arrange(
-  dv_vs_ipred(xpdb, title = "type = \'p\'", subtitle = FALSE, caption = FALSE, type = 'p'),
-  dv_vs_ipred(xpdb, title = "type = \'l\'", subtitle = FALSE, caption = FALSE, type = 'l'),
-  dv_vs_ipred(xpdb, title = "type = \'s\'", subtitle = FALSE, caption = FALSE, type = 's'),
+  dv_vs_ipred(xpdb, title = "type = \'p\'", subtitle = NULL, caption = NULL, type = 'p'),
+  dv_vs_ipred(xpdb, title = "type = \'l\'", subtitle = NULL, caption = NULL, type = 'l'),
+  dv_vs_ipred(xpdb, title = "type = \'s\'", subtitle = NULL, caption = NULL, type = 's'),
   ncol = 3)
 
 ## ----demo titles---------------------------------------------------------
@@ -24,15 +24,15 @@ dv_vs_ipred(xpdb,
             caption  = 'Dir: @dir')
 
 # Disabling all titles
-dv_vs_ipred(xpdb, title = FALSE, subtitle = FALSE, caption = FALSE)
+dv_vs_ipred(xpdb, title = NULL, subtitle = NULL, caption = NULL)
 
 ## ----demo xpose_labs-----------------------------------------------------
 dv_vs_ipred(xpdb) +
-  xpose_labs(title = 'This is @run',
-             subtitle = NULL,
-             caption = 'Based on @nobs observations and @nind subjects',
-             x = 'Individual model predictions (IPRED)',
-             y = 'Observations (DV)')
+  labs(title    = '@descr',
+       subtitle = NULL,
+       caption  = 'Based on @nobs observations',
+       x        = 'Individual model predictions (IPRED)',
+       y        = 'Observations (DV) for @nind subjects')
 
 
 ## ----demo aesthetics-----------------------------------------------------
@@ -85,17 +85,17 @@ dv_vs_ipred(xpdb,
 
 ## ----demo gg_theme, echo = FALSE, fig.height = 6, fig.width = 6, out.width = '75%'----
 gridExtra::grid.arrange(
-  dv_vs_ipred(xpdb, subtitle = 'theme_grey() [default in ggplot2]', title = FALSE, caption = '') + theme_grey(),
-  dv_vs_ipred(xpdb, subtitle = 'theme_readable() [default in xpose]', title = FALSE, caption = '') + theme_readable(),
-  dv_vs_ipred(xpdb, subtitle = 'theme_bw2()', title = FALSE, caption = FALSE) + theme_bw2(),
-  dv_vs_ipred(xpdb, subtitle = 'theme_dark()', title = FALSE, caption = FALSE) + theme_dark(),
+  dv_vs_ipred(xpdb, subtitle = 'theme_grey() [default in ggplot2]', title = NULL, caption = '') + theme_grey(),
+  dv_vs_ipred(xpdb, subtitle = 'theme_readable() [default in xpose]', title = NULL, caption = '') + theme_readable(),
+  dv_vs_ipred(xpdb, subtitle = 'theme_bw2()', title = NULL, caption = NULL) + theme_bw2(),
+  dv_vs_ipred(xpdb, subtitle = 'theme_dark()', title = NULL, caption = NULL) + theme_dark(),
   ncol = 2)
 
 ## ----demo xp_theme, echo = FALSE, fig.height = 3.2, fig.width = 6, out.width = '75%'----
 gridExtra::grid.arrange(
   dv_vs_ipred(update_themes(xpdb = xpdb, xp_theme = theme_xp_default()),
-              subtitle = 'xp_theme = theme_xp_default()\nwith theme_bw2()', title = FALSE, caption = '') + theme_bw2(),
+              subtitle = 'xp_theme = theme_xp_default()\nwith theme_bw2()', title = NULL, caption = '') + theme_bw2(),
   dv_vs_ipred(update_themes(xpdb = xpdb, xp_theme = theme_xp_xpose4()),
-              subtitle = 'xp_theme = theme_xp_xpose4()\nwith theme_bw2()', title = FALSE, caption = '') + theme_bw2(),
+              subtitle = 'xp_theme = theme_xp_xpose4()\nwith theme_bw2()', title = NULL, caption = '') + theme_bw2(),
   ncol = 2)
 

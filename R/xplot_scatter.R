@@ -12,7 +12,12 @@
 #' @param guides should the guides (eg. unity line) be displayed.
 #' @param xscale scale type for x axis (eg. 'continuous', 'discrete', 'log10').
 #' @param yscale scale type for y axis (eg. 'continuous', 'discrete', 'log10').
+#' @param title Plot title. Use \code{NULL} to remove.
+#' @param subtitle Plot subtitle. Use \code{NULL} to remove.
+#' @param caption Page caption. Use \code{NULL} to remove.
 #' @param plot_name name that will be used by \code{xpose_save()} to save the plot.
+#' @param xp_theme An xpose theme or vector of modifications to the xpose theme
+#' (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' @param problem Numeric, the $problem number to use for ploting. By default the data 
 #' is taken from the estimation problem.
@@ -32,19 +37,24 @@
 #' 
 #' @export
 xplot_scatter <- function(xpdb,
-                          vars     = NULL,
-                          aes      = NULL,
-                          group    = 'ID',
-                          type     = 'pls',
-                          layers   = NULL,
-                          guides   = TRUE,
-                          xscale   = 'continuous',
-                          yscale   = 'continuous',
+                          vars      = NULL,
+                          aes       = NULL,
+                          group     = 'ID',
+                          type      = 'pls',
+                          layers    = NULL,
+                          guides    = TRUE,
+                          xscale    = 'continuous',
+                          yscale    = 'continuous',
+                          title     = NULL,
+                          subtitle  = NULL,
+                          caption   = NULL,
                           plot_name = 'scatter_plot',
+                          xp_theme,
                           quiet,
                           problem,
                           ...) {
   
+  # Check input
   if (!is.xpdb(xpdb)) { 
     msg('Bad input to the argument`xpdb`', 
         dplyr::if_else(missing(quiet), TRUE, quiet))
@@ -53,21 +63,23 @@ xplot_scatter <- function(xpdb,
   
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
-  # Format data
-  if (missing(problem)) problem <- max(xpdb$data$problem)
-  if (problem > 1) msg(c('Using data from $problem no.', problem), quiet)
+  # Get data
+  if (missing(problem)) problem <- max(xpdb$data$problem[!xpdb$data$simtab])
+  data   <- get_data(xpdb, problem = problem)
+  msg(c('Using data from $problem no.', problem), quiet)
   
-  data   <- xpdb$data$data[[problem]]
-  
+  # Filter observations
   if ('MDV' %in% colnames(data)) {
     data <- dplyr::filter(data, data$MDV == 0)
   } else if ('EVID' %in% colnames(data)) {
     data <- dplyr::filter(data, data$EVID == 0)
   }
   
+  # Update xp_theme if needed
+  if (!missing(xp_theme)) xpdb <- update_themes(xpdb = xpdb, xp_theme = xp_theme)
+  
   # Create ggplot base
   xp   <- ggplot(data = data, ...) + 
-    labs(...) + 
     xpdb$gg_theme + 
     vars
   
@@ -131,13 +143,24 @@ xplot_scatter <- function(xpdb,
   
   # Define panels
   if (!is.null(list(...)[['panel_facets']])) {
-    xp <- xp + xp_geoms(mapping  = aes,
-                        xp_theme = xpdb$xp_theme,
-                        name     = 'panel',
-                        ggfun    = ifelse(is.formula(list(...)[['panel_facets']]), 
-                                          'facet_grid', 'facet_wrap'),
-                        ...)
+    if (!is.formula(list(...)[['panel_facets']])) {
+      xp <- xp + xp_geoms(mapping  = aes,
+                          xp_theme = xpdb$xp_theme,
+                          name     = 'panel',
+                          ggfun    = 'facet_wrap',
+                          ...)
+    } else {
+      #tmp_xp_theme <- xpdb$xp_theme[!xpdb$xp_theme %in% stringr::str_c('panel_', 'ncol', sep = '')]
+      xp <- xp + xp_geoms(mapping  = aes,
+                          xp_theme = xpdb$xp_theme,
+                          name     = 'panel',
+                          ggfun    = 'facet_grid',
+                          ...)
+    }
   }
+  
+  # Add labels
+  xp <- xp + labs(title = title, subtitle = subtitle, caption = caption)
   
   # Add users defined layers
   if (!is.null(layers)) { xp <- xp + layers }

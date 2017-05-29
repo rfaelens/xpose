@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{An \code{xpose_plot} object.}
 
-\item{...}{Options to be passed on to \code{\link[ggplot2]{print.ggplot2}}}
+\item{...}{Options to be passed on to the ggplot2 print method.}
 }
 \description{
 This function explicitly draw an xpose_plot and interprets keywords 

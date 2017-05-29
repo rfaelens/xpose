@@ -40,7 +40,7 @@
 #'  \item{@version}{Software version (e.g. 7.3)}
 #'  \item{@warnings}{Run warnings (e.g. boundary)}
 #' }
-#' @seealso \link{xpose_labs}, \link{xpose_save}
+#' @seealso \link{xpose_save}
 #' @examples
 #' # Defined when creating a plot
 #' dv_vs_ipred(xpdb_ex_pk, 

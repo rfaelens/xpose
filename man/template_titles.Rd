@@ -62,5 +62,5 @@ dv_vs_ipred(xpdb_ex_pk, aes(point_color = SEX,
 
 }
 \seealso{
-\link{xpose_labs}, \link{xpose_save}
+\link{xpose_save}
 }

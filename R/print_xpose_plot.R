@@ -4,7 +4,7 @@
 #' contained in labels.
 #' 
 #' @param x An \code{xpose_plot} object.
-#' @param ... Options to be passed on to \code{\link[ggplot2]{print.ggplot2}}
+#' @param ... Options to be passed on to the ggplot2 print method.
 #' 
 #' @method print xpose_plot
 #' @examples

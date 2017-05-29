@@ -6,7 +6,8 @@
 \usage{
 xplot_scatter(xpdb, vars = NULL, aes = NULL, group = "ID", type = "pls",
   layers = NULL, guides = TRUE, xscale = "continuous",
-  yscale = "continuous", plot_name = "scatter_plot", quiet, problem, ...)
+  yscale = "continuous", title = NULL, subtitle = NULL, caption = NULL,
+  plot_name = "scatter_plot", xp_theme, quiet, problem, ...)
 }
 \arguments{
 \item{xpdb}{An \code{xpose_data} object generated with \code{\link{xpose_data}}.}
@@ -28,7 +29,16 @@ line 'l', smooth 's' and text 't' or any combination of the 4.}
 
 \item{yscale}{scale type for y axis (eg. 'continuous', 'discrete', 'log10').}
 
+\item{title}{Plot title. Use \code{NULL} to remove.}
+
+\item{subtitle}{Plot subtitle. Use \code{NULL} to remove.}
+
+\item{caption}{Page caption. Use \code{NULL} to remove.}
+
 \item{plot_name}{name that will be used by \code{xpose_save()} to save the plot.}
+
+\item{xp_theme}{An xpose theme or vector of modifications to the xpose theme
+(eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 
