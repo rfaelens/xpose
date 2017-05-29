@@ -39,7 +39,7 @@ get_code <- function(xpdb, problem = NULL) {
 #' @param problem Extracts all tables from the specified problem. Alternative to the "table" argument.
 #' 
 #' @return A tibble for single file or a named list for multiple files.
-#' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_table}}
+#' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_tables}}
 #' @examples
 #' # By table name
 #' sdtab <- get_data(xpdb_ex_pk, 'sdtab001')
