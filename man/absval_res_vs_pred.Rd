@@ -24,14 +24,11 @@ line 'l' and smooth 's' or any combination of the three.}
 \item{facets}{Either a character string to use \link[ggplot2]{facet_wrap} or a formula 
 to use \link[ggplot2]{facet_grid}.}
 
-\item{title}{Main title of the plot. If NULL automated title will be generated.
-Use \code{FALSE} to remove title and subtitle.}
+\item{title}{Plot title. Use \code{NULL} to remove.}
 
-\item{subtitle}{the plot subtitle. If NULL automated subtitle will be generated.
-Use \code{FALSE} to remove subtitle.}
+\item{subtitle}{Plot subtitle. Use \code{NULL} to remove.}
 
-\item{caption}{page caption. If NULL automated caption will be generated.
-Use \code{FALSE} to remove caption.}
+\item{caption}{Page caption. Use \code{NULL} to remove.}
 
 \item{log}{String assigning logarithmic scale to axes, can be either '', 'x', y' or 'xy'.}
 

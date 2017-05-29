@@ -10,12 +10,9 @@
 #' line 'l' and smooth 's' or any combination of the three.
 #' @param facets Either a character string to use \link[ggplot2]{facet_wrap} or a formula 
 #' to use \link[ggplot2]{facet_grid}.
-#' @param title Main title of the plot. If NULL automated title will be generated.
-#' Use \code{FALSE} to remove title and subtitle.
-#' @param subtitle the plot subtitle. If NULL automated subtitle will be generated.
-#' Use \code{FALSE} to remove subtitle.
-#' @param caption page caption. If NULL automated caption will be generated.
-#' Use \code{FALSE} to remove caption.
+#' @param title Plot title. Use \code{NULL} to remove.
+#' @param subtitle Plot subtitle. Use \code{NULL} to remove.
+#' @param caption Page caption. Use \code{NULL} to remove.
 #' @param log String assigning logarithmic scale to axes, can be either '', 'x', y' or 'xy'.
 #' @param guides Enable guides display (e.g. unity line).
 #' @param ... Any additional aesthetics to be passed on \code{xplot_scatter}.

@@ -30,7 +30,6 @@ reference:
     desc:  Add, customize themes or template titles.
     contents:
     - template_titles
-    - xpose_labs
     - update_themes
     - theme_bw2
     - theme_readable

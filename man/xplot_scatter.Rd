@@ -5,9 +5,8 @@
 \title{Default xpose scatter plot function}
 \usage{
 xplot_scatter(xpdb, vars = NULL, aes = NULL, group = "ID", type = "pls",
-  layers = NULL, title = "@run", subtitle = NULL, caption = NULL,
-  guides = TRUE, xscale = "continuous", yscale = "continuous",
-  plot_name = "xplot_scatter", quiet, prob_n, ...)
+  layers = NULL, guides = TRUE, xscale = "continuous",
+  yscale = "continuous", plot_name = "scatter_plot", quiet, problem, ...)
 }
 \arguments{
 \item{xpdb}{An \code{xpose_data} object generated with \code{\link{xpose_data}}.}
@@ -23,15 +22,6 @@ line 'l', smooth 's' and text 't' or any combination of the 4.}
 
 \item{layers}{A list of additional ggplot layers to be added to the plot.}
 
-\item{title}{The main title of the plot. If \code{NULL} automated title will be generated.
-Use FALSE to remove title and subtitle.}
-
-\item{subtitle}{the plot subtitle. If NULL automated subtitle will be generated.
-Use FALSE to remove subtitle.}
-
-\item{caption}{page caption. If NULL automated caption will be generated.
-Use FALSE to remove caption.}
-
 \item{guides}{should the guides (eg. unity line) be displayed.}
 
 \item{xscale}{scale type for x axis (eg. 'continuous', 'discrete', 'log10').}
@@ -42,7 +32,7 @@ Use FALSE to remove caption.}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 
-\item{prob_n}{Numeric, the $problem number to use for ploting. By default the data 
+\item{problem}{Numeric, the $problem number to use for ploting. By default the data 
 is taken from the estimation problem.}
 
 \item{...}{any additional aesthetics.}

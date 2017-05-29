@@ -27,19 +27,19 @@ The option `type` allows to control how the data should be represented i.e. whet
 
 ```{r demo type, echo = FALSE, fig.height = 2.5, fig.width = 6, out.width = '75%'}
 gridExtra::grid.arrange(
-  dv_vs_ipred(xpdb, title = "type = \'p\'", subtitle = FALSE, caption = FALSE, type = 'p'),
-  dv_vs_ipred(xpdb, title = "type = \'l\'", subtitle = FALSE, caption = FALSE, type = 'l'),
-  dv_vs_ipred(xpdb, title = "type = \'s\'", subtitle = FALSE, caption = FALSE, type = 's'),
+  dv_vs_ipred(xpdb, title = "type = \'p\'", subtitle = NULL, caption = NULL, type = 'p'),
+  dv_vs_ipred(xpdb, title = "type = \'l\'", subtitle = NULL, caption = NULL, type = 'l'),
+  dv_vs_ipred(xpdb, title = "type = \'s\'", subtitle = NULL, caption = NULL, type = 's'),
   ncol = 3)
 ```
 
 
 ### Visual guides
-The option `guides` can enable (`TRUE`) or disable (`FALSE`) the visual guides on the graphs such as unity line on the `dv_vs_ipred()` plot or horizontal lines on `res_vs_idv()`.
+The option `guides` can enable (`TRUE`) or disable (`FALSE`) the visual guides on the graphs such as unity line on the `dv_vs_ipred()` type plot or horizontal lines on residual plots (e.g. `res_vs_idv()`).
 
 
 ### Labels
-All xpose plots have by default an informative title, subtitle and caption. For example all plots using individual model predictions (IPRED) will display the shrinkage of the epsilons. These titles can easily be edited as templates using keywords which will be replaced by their actual value stored in the summary level of the `xpdb` object when rendering the plots. Keywords are defined by a word preceded by a `@` e.g. `'@ofv'`. A list of all available keyword can be accessed via `help('template_titles')`. Finally, the title, subtitle or caption can be disabled by setting them to `FALSE`.
+All xpose plots have by default an informative title, subtitle and caption. For example all plots using individual model predictions (IPRED) will display the epsilons' shrinkage. These titles can easily be edited as templates using @keywords which will be replaced by their actual value stored in the summary level of the `xpdb` object when rendering the plots. Keywords are defined by a word preceded by a `@` e.g. `'@ofv'`. A list of all available keyword can be accessed via `help('template_titles')`. Finally, title, subtitle or caption can be disabled by setting them to `NULL`.
 
 #### From the plot functions
 ```{r demo titles}
@@ -50,18 +50,18 @@ dv_vs_ipred(xpdb,
             caption  = 'Dir: @dir')
 
 # Disabling all titles
-dv_vs_ipred(xpdb, title = FALSE, subtitle = FALSE, caption = FALSE)
+dv_vs_ipred(xpdb, title = NULL, subtitle = NULL, caption = NULL)
 ```
 
-#### Using the `xpose_labs` function
-Labels can also modified after the plot creation using the `xpose_labs` function in combination with the ggplot2 `+` operator.
+#### Using the `labs` function
+Labels can also modified later on by using the `ggplot2::labs()` function in combination with the ggplot2 `+` operator.
 ```{r demo xpose_labs}
 dv_vs_ipred(xpdb) +
-  xpose_labs(title = 'This is @run',
-             subtitle = NULL,
-             caption = 'Based on @nobs observations and @nind subjects',
-             x = 'Individual model predictions (IPRED)',
-             y = 'Observations (DV)')
+  labs(title    = '@descr',
+       subtitle = NULL,
+       caption  = 'Based on @nobs observations',
+       x        = 'Individual model predictions (IPRED)',
+       y        = 'Observations (DV) for @nind subjects')
 
 ```
 
@@ -160,10 +160,10 @@ xpose brings two additional themes (`theme_readable()` and `theme_bw2()`), to th
 
 ```{r demo gg_theme, echo = FALSE, fig.height = 6, fig.width = 6, out.width = '75%'}
 gridExtra::grid.arrange(
-  dv_vs_ipred(xpdb, subtitle = 'theme_grey() [default in ggplot2]', title = FALSE, caption = '') + theme_grey(),
-  dv_vs_ipred(xpdb, subtitle = 'theme_readable() [default in xpose]', title = FALSE, caption = '') + theme_readable(),
-  dv_vs_ipred(xpdb, subtitle = 'theme_bw2()', title = FALSE, caption = FALSE) + theme_bw2(),
-  dv_vs_ipred(xpdb, subtitle = 'theme_dark()', title = FALSE, caption = FALSE) + theme_dark(),
+  dv_vs_ipred(xpdb, subtitle = 'theme_grey() [default in ggplot2]', title = NULL, caption = '') + theme_grey(),
+  dv_vs_ipred(xpdb, subtitle = 'theme_readable() [default in xpose]', title = NULL, caption = '') + theme_readable(),
+  dv_vs_ipred(xpdb, subtitle = 'theme_bw2()', title = NULL, caption = NULL) + theme_bw2(),
+  dv_vs_ipred(xpdb, subtitle = 'theme_dark()', title = NULL, caption = NULL) + theme_dark(),
   ncol = 2)
 ```
 
@@ -172,8 +172,8 @@ gridExtra::grid.arrange(
 ```{r demo xp_theme, echo = FALSE, fig.height = 3.2, fig.width = 6, out.width = '75%'}
 gridExtra::grid.arrange(
   dv_vs_ipred(update_themes(xpdb = xpdb, xp_theme = theme_xp_default()),
-              subtitle = 'xp_theme = theme_xp_default()\nwith theme_bw2()', title = FALSE, caption = '') + theme_bw2(),
+              subtitle = 'xp_theme = theme_xp_default()\nwith theme_bw2()', title = NULL, caption = '') + theme_bw2(),
   dv_vs_ipred(update_themes(xpdb = xpdb, xp_theme = theme_xp_xpose4()),
-              subtitle = 'xp_theme = theme_xp_xpose4()\nwith theme_bw2()', title = FALSE, caption = '') + theme_bw2(),
+              subtitle = 'xp_theme = theme_xp_xpose4()\nwith theme_bw2()', title = NULL, caption = '') + theme_bw2(),
   ncol = 2)
 ```

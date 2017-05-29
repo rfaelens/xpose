@@ -17,7 +17,7 @@ contained in labels.
 }
 \examples{
 my_plot <- dv_vs_ipred(xpdb_ex_pk) +
-            labs(title = 'A label with keywords @nind, @sub')
+            labs(title = 'A label with keywords @nind, @nobs')
 # Using the print function
 print(my_plot)
 

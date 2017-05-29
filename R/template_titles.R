@@ -42,10 +42,19 @@
 #' }
 #' @seealso \link{xpose_labs}, \link{xpose_save}
 #' @examples
+#' # Defined when creating a plot
 #' dv_vs_ipred(xpdb_ex_pk, 
 #'             title = 'DV vs. IPRED',
 #'             subtitle = '@ofv, @nind subjects, @nobs obs.',
 #'             caption = '@run, @descr')
+#'             
+#' # Any label can be modified later on
+#' dv_vs_ipred(xpdb_ex_pk, aes(point_color = SEX, 
+#'                             line_color = SEX)) + 
+#'  labs(title = 'This runs is: @descr', 
+#'       color = 'Color scale for @run',
+#'       x = 'IPRED for @nind subjects',
+#'       subtitle = NULL)
 #' 
 #' @name template_titles
 NULL

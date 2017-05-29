@@ -9,18 +9,12 @@
 #' @param type String setting the type of plot to be used points 'p',
 #' line 'l', smooth 's' and text 't' or any combination of the 4.
 #' @param layers A list of additional ggplot layers to be added to the plot.
-#' @param title The main title of the plot. If \code{NULL} automated title will be generated.
-#' Use FALSE to remove title and subtitle.
-#' @param subtitle the plot subtitle. If NULL automated subtitle will be generated.
-#' Use FALSE to remove subtitle.
-#' @param caption page caption. If NULL automated caption will be generated.
-#' Use FALSE to remove caption.
 #' @param guides should the guides (eg. unity line) be displayed.
 #' @param xscale scale type for x axis (eg. 'continuous', 'discrete', 'log10').
 #' @param yscale scale type for y axis (eg. 'continuous', 'discrete', 'log10').
 #' @param plot_name name that will be used by \code{xpose_save()} to save the plot.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
-#' @param prob_n Numeric, the $problem number to use for ploting. By default the data 
+#' @param problem Numeric, the $problem number to use for ploting. By default the data 
 #' is taken from the estimation problem.
 #' @param ... any additional aesthetics.
 #'
@@ -43,15 +37,12 @@ xplot_scatter <- function(xpdb,
                           group    = 'ID',
                           type     = 'pls',
                           layers   = NULL,
-                          title    = '@run',
-                          subtitle = NULL,
-                          caption  = NULL,
                           guides   = TRUE,
                           xscale   = 'continuous',
                           yscale   = 'continuous',
-                          plot_name = 'xplot_scatter',
+                          plot_name = 'scatter_plot',
                           quiet,
-                          prob_n,
+                          problem,
                           ...) {
   
   if (!is.xpdb(xpdb)) { 
@@ -63,10 +54,10 @@ xplot_scatter <- function(xpdb,
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   # Format data
-  if (missing(prob_n)) prob_n <- max(xpdb$data$problem)
-  if (prob_n > 1) msg(c('Using data from $problem no.', prob_n), quiet)
+  if (missing(problem)) problem <- max(xpdb$data$problem)
+  if (problem > 1) msg(c('Using data from $problem no.', problem), quiet)
   
-  data   <- xpdb$data$data[[prob_n]]
+  data   <- xpdb$data$data[[problem]]
   
   if ('MDV' %in% colnames(data)) {
     data <- dplyr::filter(data, data$MDV == 0)
@@ -75,7 +66,10 @@ xplot_scatter <- function(xpdb,
   }
   
   # Create ggplot base
-  xp   <- ggplot(data = data, ...) + xpdb$gg_theme + vars
+  xp   <- ggplot(data = data, ...) + 
+    labs(...) + 
+    xpdb$gg_theme + 
+    vars
   
   # Add unity line
   if (guides) {
@@ -122,12 +116,6 @@ xplot_scatter <- function(xpdb,
                         ...)
   }
   
-  
-  # Add title and subtitle
-  xp <- xp + labs(title    = write_title(title, xpdb, prob_n, quiet),
-                  subtitle = write_title(subtitle, xpdb, prob_n, quiet),
-                  caption  = write_title(caption, xpdb, prob_n, quiet))
-  
   # Define scales
   xp <- xp + xp_geoms(mapping  = aes,
                       xp_theme = xpdb$xp_theme,
@@ -157,7 +145,7 @@ xplot_scatter <- function(xpdb,
   # Add metadata to plots
   xp$xpose <- list(fun     = plot_name,
                    summary = xpdb$summary,
-                   problem = prob_n,
+                   problem = problem,
                    quiet   = quiet)
   
   structure(xp, class = c('xpose_plot', class(xp)))

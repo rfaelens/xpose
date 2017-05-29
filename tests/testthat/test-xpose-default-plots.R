@@ -24,16 +24,10 @@ test_that("xpose plot objects are returned with appropriate xpdb", {
   expect_true(is.xpose.plot(p1))
   
   # Check metadata
-  expect_equal(p1$xpose$fun, 'xplot_scatter')
+  expect_equal(p1$xpose$fun, 'scatter_plot')
   expect_equal(p1$xpose$summary, xpdb_ex_pk$summary)
   expect_equal(p1$xpose$problem, 1)
   expect_true(p1$xpose$quiet)
-})
-
-test_that('template titles work properly', {
-  expect_equal(p1$labels$title, 'run001-title')
-  expect_equal(p1$labels$subtitle, 'run001-subtitle')
-  expect_equal(p1$labels$caption, 'run001-caption')
 })
 
 test_that('geom_abline layer is present', {
