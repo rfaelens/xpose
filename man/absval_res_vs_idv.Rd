@@ -5,7 +5,7 @@
 \title{Absolute value of residuals plotted against independent variable}
 \usage{
 absval_res_vs_idv(xpdb, aes = NULL, res = "CWRES", group = "ID",
-  type = "pls", facets = NULL, title = "|CWRES| vs. TIME | @run",
+  type = "pls", facets = NULL, title = "|<res>| vs. TIME | @run",
   subtitle = "Ofv: @ofv", caption = "@dir", log = NULL, guides = FALSE,
   ...)
 }

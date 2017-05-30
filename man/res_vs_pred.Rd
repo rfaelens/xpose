@@ -5,7 +5,7 @@
 \title{Residuals plotted against population predictions}
 \usage{
 res_vs_pred(xpdb, aes = NULL, res = "CWRES", group = "ID", type = "pls",
-  facets = NULL, title = "CWRES vs. PRED | @run", subtitle = "Ofv: @ofv",
+  facets = NULL, title = "<res> vs. PRED | @run", subtitle = "Ofv: @ofv",
   caption = "@dir", log = NULL, guides = TRUE, ...)
 }
 \arguments{

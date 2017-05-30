@@ -5,7 +5,7 @@
 \title{Residuals plotted against the independent variable}
 \usage{
 res_vs_idv(xpdb, aes = NULL, res = "CWRES", group = "ID", type = "pls",
-  facets = NULL, title = "CWRES vs. TIME | @run", subtitle = "Ofv: @ofv",
+  facets = NULL, title = "<res> vs. TIME | @run", subtitle = "Ofv: @ofv",
   caption = "@dir", log = NULL, guides = TRUE, ...)
 }
 \arguments{

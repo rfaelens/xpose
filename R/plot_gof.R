@@ -41,7 +41,7 @@ dv_vs_ipred <- function(xpdb,
                         ...) {
   
   xplot_scatter(xpdb = xpdb, aes = aes, group = group,
-                vars = aes_(x = quote(IPRED), y = quote(DV)), 
+                vars = aes_string(x = 'IPRED', y = 'DV'), 
                 type = type, guides = guides, panel_facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
@@ -65,7 +65,7 @@ dv_vs_pred <- function(xpdb,
                        ...) {
   
   xplot_scatter(xpdb = xpdb, aes = aes, group = group,
-                vars = aes_(x = quote(PRED), y = quote(DV)), 
+                vars = aes_string(x = 'PRED', y = 'DV'), 
                 type = type, guides = guides, panel_facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
@@ -90,7 +90,7 @@ dv_vs_cpred <- function(xpdb,
                         ...) {
   
   xplot_scatter(xpdb = xpdb, aes = aes, group = group,
-                vars = aes_(x = quote(CPRED), y = quote(DV)), 
+                vars = aes_string(x = 'CPRED', y = 'DV'), 
                 type = type, guides = guides, panel_facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 

@@ -5,7 +5,7 @@
 \title{Absolute value of residuals plotted against population predictions}
 \usage{
 absval_res_vs_pred(xpdb, aes = NULL, res = "CWRES", group = "ID",
-  type = "pls", facets = NULL, title = "|CWRES| vs. PRED | @run",
+  type = "pls", facets = NULL, title = "|<res>| vs. PRED | @run",
   subtitle = "Ofv: @ofv", caption = "@dir", log = NULL, guides = FALSE,
   ...)
 }
