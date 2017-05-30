@@ -150,9 +150,12 @@ xplot_scatter <- function(xpdb,
                           ggfun    = 'facet_wrap',
                           ...)
     } else {
-      #tmp_xp_theme <- xpdb$xp_theme[!xpdb$xp_theme %in% stringr::str_c('panel_', 'ncol', sep = '')]
+      tmp_xtheme <- xpdb$xp_theme[which(!names(xpdb$xp_theme) %in%
+                                          stringr::str_c('panel_', 
+                                                         c('ncol', 'nrow', 'dir'), 
+                                                         sep = ''))]
       xp <- xp + xp_geoms(mapping  = aes,
-                          xp_theme = xpdb$xp_theme,
+                          xp_theme = tmp_xtheme,
                           name     = 'panel',
                           ggfun    = 'facet_grid',
                           ...)
