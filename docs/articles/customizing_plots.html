@@ -160,10 +160,18 @@
 <div id="panels" class="section level3">
 <h3 class="hasAnchor">
 <a href="#panels" class="anchor"></a>Panels</h3>
-<p>Panels (or faceting) can be created by using the <code>facets</code> argument as follows.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">facets =</span> <span class="st">'SEX'</span>)</code></pre></div>
+<p>Panels (or faceting) can be created by using the <code>facets</code> argument as follows:</p>
+<ul>
+<li>If <code>facets</code> is a string e.g <code>facets = "OCC"</code>, <code>ggplot2::facet_wrap</code> will be used</li>
+<li>If <code>facets</code> is a formula e.g <code>facets = SEX~OCC</code>, <code>ggplot2::facet_grid</code> will be used</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Example with a string</span>
+<span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">facets =</span> <span class="kw">c</span>(<span class="st">'SEX'</span>, <span class="st">'OCC'</span>))</code></pre></div>
 <p><img src="customizing_plots_files/figure-html/demo%20panels-1.png" width="75%" style="display: block; margin: auto;"></p>
-<p>Additional arguments can be passed to the panel function using the <code>panel_xxx</code> notation (e.g. <code>panel_ncol = 2</code>, <code>panel_labeller = 'label_both'</code>). For more options read the help of <a href="http://docs.ggplot2.org/current/facet_wrap.html"><code>facet_wrap</code></a> from <code>ggplot2</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Example with a formula</span>
+<span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">facets =</span> SEX~OCC)</code></pre></div>
+<p><img src="customizing_plots_files/figure-html/demo%20panels-2.png" width="75%" style="display: block; margin: auto;"></p>
+<p>Additional arguments can be passed to the panel function using the <code>panel_xxx</code> notation (e.g. <code>panel_ncol = 2</code>, <code>panel_labeller = 'label_both'</code>). For more options read the help of <a href="http://ggplot2.tidyverse.org/reference/facet_wrap.html"><code>facet_wrap</code></a> and <a href="http://ggplot2.tidyverse.org/reference/facet_grid.html"><code>facet_grid</code></a> from <code>ggplot2</code>.</p>
 </div>
 <div id="additional-layers" class="section level3">
 <h3 class="hasAnchor">

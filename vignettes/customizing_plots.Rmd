@@ -94,13 +94,20 @@ The argument group defines the grouping variable to be used in the dataset __for
 
 
 ### Panels
-Panels (or faceting) can be created by using the `facets` argument as follows.
+Panels (or faceting) can be created by using the `facets` argument as follows:
+
+* If `facets` is a string e.g `facets = "OCC"`, `ggplot2::facet_wrap` will be used
+* If `facets` is a formula e.g `facets = SEX~OCC`, `ggplot2::facet_grid` will be used
 
 ```{r demo panels, fig.width = 6, out.width = '75%'}
-dv_vs_ipred(xpdb, facets = 'SEX')
+# Example with a string
+dv_vs_ipred(xpdb, facets = c('SEX', 'OCC'))
+
+# Example with a formula
+dv_vs_ipred(xpdb, facets = SEX~OCC)
 ```
 
-Additional arguments can be passed to the panel function using the `panel_xxx` notation (e.g. `panel_ncol = 2`, `panel_labeller = 'label_both'`). For more options read the help of [`facet_wrap`](http://docs.ggplot2.org/current/facet_wrap.html) from `ggplot2`.
+Additional arguments can be passed to the panel function using the `panel_xxx` notation (e.g. `panel_ncol = 2`, `panel_labeller = 'label_both'`). For more options read the help of [`facet_wrap`](http://ggplot2.tidyverse.org/reference/facet_wrap.html) and [`facet_grid`](http://ggplot2.tidyverse.org/reference/facet_grid.html) from `ggplot2`.
 
 
 ### Additional layers
