@@ -12,7 +12,8 @@
 \item{...}{Ignored in this function}
 }
 \description{
-This function returns a summary of an xpose_data to the console.
+This function returns to the console a list of the files and options 
+attached to an \code{\link{xpose_data}} object.
 }
 \examples{
 # Using the print function

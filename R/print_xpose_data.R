@@ -1,6 +1,7 @@
 #' Print an xpose_data object
 #' 
-#' @description This function returns a summary of an xpose_data to the console.
+#' @description This function returns to the console a list of the files and options 
+#' attached to an \code{\link{xpose_data}} object.
 #' 
 #' @param x An \code{xpose_data} object generated with \code{\link{xpose_data}}.
 #' @param ... Ignored in this function

@@ -39,7 +39,34 @@ summarise_nm_model <- function(file, model, software, rounding) {
                      fill = list(subp = 1, value = 'na')) %>% 
     dplyr::bind_rows(dplyr::filter(sum, sum$problem == 0)) %>%
     dplyr::arrange_(.dots = c('problem', 'label', 'subp')) %>%
-    dplyr::select(dplyr::one_of('problem', 'subp', 'label', 'value'))
+    dplyr::mutate(descr = dplyr::case_when(
+      .$label == 'software' ~ 'Software',
+      .$label == 'version' ~ 'Software version',
+      .$label == 'file' ~ 'Run file',
+      .$label == 'run' ~ 'Run number',
+      .$label == 'dir' ~ 'Run directory',
+      .$label == 'ref' ~ 'Reference model',
+      .$label == 'probn' ~ 'Problem number',
+      .$label == 'descr' ~ 'Run description',
+      .$label == 'data' ~ 'Input data',
+      .$label == 'nobs' ~ 'Number of observations',
+      .$label == 'nind' ~ 'Number of individuals',
+      .$label == 'nsim' ~ 'Number of simulations',
+      .$label == 'simseed' ~ 'Simulation seed',
+      .$label == 'subroutine' ~ 'ADVAN',
+      .$label == 'runtime' ~ 'Estimation runtime',
+      .$label == 'covtime' ~ 'Covariance matrix runtime',
+      .$label == 'warnings' ~ 'Run warnings',
+      .$label == 'errors' ~ 'Run errors',
+      .$label == 'nsig' ~ 'Number of significant digits',
+      .$label == 'condn' ~ 'Condition number',
+      .$label == 'nesample' ~ 'Number of ESAMPLE',
+      .$label == 'esampleseed' ~ 'ESAMPLE seed number',
+      .$label == 'ofv' ~ 'Objective function value',
+      .$label == 'method' ~ 'Estimation method',
+      .$label == 'epsshk' ~ 'Epsilon shrinkage',
+      .$label == 'etashk' ~ 'Eta shrinkage')) %>% 
+    dplyr::select(dplyr::one_of('problem', 'subp', 'descr', 'label', 'value'))
 }
 
 # Default template for function output
@@ -265,7 +292,26 @@ sum_covtime <- function(model, software) {
 # Run warnings (e.g. boundary)
 sum_warnings <- function(model, software) {
   if (software == 'nonmem') {
-    sum_tpl('warnings', 'na') # To be added
+    x <- model %>% 
+      dplyr::filter(.$subroutine == 'oth') %>% 
+      dplyr::filter(stringr::str_detect(.$code, 'WARNING'))
+    
+    if (nrow(x) == 0) return(sum_tpl('warnings', 'na'))
+    
+    x %>% 
+      dplyr::mutate(problem = stringr::str_match(.$code, 'FOR PROBLEM\\s+(\\d+)')[,2]) %>% 
+      tidyr::fill_(fill_cols = 'problem') %>% 
+      dplyr::mutate(problem = as.numeric(.$problem)) %>% 
+      dplyr::filter(!stringr::str_detect(.$code, 'FOR PROBLEM\\s+(\\d+)')) %>% 
+      dplyr::mutate(code = stringr::str_trim(.$code)) %>% 
+      dplyr::mutate(code = stringr::str_replace(.$code, '\\(.+\\)\\s+', '')) %>% 
+      #dplyr::group_by_(.dots = 'problem') %>% 
+      #tidyr::nest() %>% 
+      #dplyr::mutate(value = purrr::map_chr(.$data, ~stringr::str_c(.$code, collapse = '\n'))) %>% 
+      dplyr::mutate(subp = 1,
+                    value = as.character(.$code),
+                    label = 'warnings') %>% 
+      dplyr::select(dplyr::one_of('problem', 'subp', 'label', 'value'))
   }
 }
 

@@ -2,6 +2,7 @@
 
 S3method(print,xpose_data)
 S3method(print,xpose_plot)
+S3method(summary,xpose_data)
 export("%>%")
 export(absval_res_vs_idv)
 export(absval_res_vs_pred)
