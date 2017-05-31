@@ -45,7 +45,11 @@ xpose_data <- function(runno         = NULL,
   
   if (is.null(file)) {
     ext  <- make_extension(ext)
-    file <- file_path(dir, stringr::str_c(prefix, runno, ext))
+    if (is.null(dir)) {
+      file <- stringr::str_c(prefix, runno, ext)
+    } else {
+      file <- file_path(dir, stringr::str_c(prefix, runno, ext))
+    }
   }
   
   if (ext %in% c('.lst', '.out', '.res', '.mod', '.ctl')) {
