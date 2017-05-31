@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Print an xpose_data object — print.xpose_data • xpose</title>
+<title>Summarizing xpose_data — summary.xpose_data • xpose</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -105,23 +105,27 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Print an xpose_data object</h1>
+    <h1>Summarizing xpose_data</h1>
     </div>
 
     
-    <p>This function returns to the console a list of the files and options 
-attached to an <code><a href='xpose_data.html'>xpose_data</a></code> object.</p>
+    <p>This function returns a summary of an <code><a href='xpose_data.html'>xpose_data</a></code> 
+to the console.</p>
     
 
     <pre class="usage"><span class='co'># S3 method for xpose_data</span>
-<span class='fu'>print</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>summary</span>(<span class='no'>object</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
+      <th>object</th>
       <td><p>An <code>xpose_data</code> object generated with <code><a href='xpose_data.html'>xpose_data</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>problem</th>
+      <td><p>The problem to be used, by default returns the last one for each label.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -131,26 +135,30 @@ attached to an <code><a href='xpose_data.html'>xpose_data</a></code> object.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Using the print function</span>
-<span class='fu'>print</span>(<span class='no'>xpdb_ex_pk</span>)</div><div class='output co'>#&gt; run001.lst overview: 
-#&gt;  - Software: nonmem 7.3.0 
-#&gt;  - Attached files: 
-#&gt;    + tables: $prob no.1: catab001, cotab001, patab001, sdtab001 
-#&gt;    + sim tabs: &lt;none&gt; 
-#&gt;    + output files: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi 
-#&gt;  - gg_theme: theme_readable 
-#&gt;  - xp_theme: theme_xp_default 
-#&gt;  - Options: dir = analysis/models/pk/, quiet = TRUE, manual_import = NULL</div><div class='input'>
-<span class='co'># Or simply by writting the xpdb name</span>
-<span class='no'>xpdb_ex_pk</span></div><div class='output co'>#&gt; run001.lst overview: 
-#&gt;  - Software: nonmem 7.3.0 
-#&gt;  - Attached files: 
-#&gt;    + tables: $prob no.1: catab001, cotab001, patab001, sdtab001 
-#&gt;    + sim tabs: &lt;none&gt; 
-#&gt;    + output files: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi 
-#&gt;  - gg_theme: theme_readable 
-#&gt;  - xp_theme: theme_xp_default 
-#&gt;  - Options: dir = analysis/models/pk/, quiet = TRUE, manual_import = NULL</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>summary</span>(<span class='no'>xpdb_ex_pk</span>)</div><div class='output co'>#&gt; 
+#&gt; Summary for problem no. 0                                     
+#&gt;  Run directory    analysis/models/pk/
+#&gt;  Run file         run001.lst         
+#&gt;  Run number       run001             
+#&gt;  Software         nonmem             
+#&gt;  Software version 7.3.0              
+#&gt; 
+#&gt; Summary for problem no. 1                                                                          
+#&gt;  Condition number             31.3                                        
+#&gt;  Covariance matrix runtime    00:00:04                                    
+#&gt;  Input data                   mx19_1.csv                                  
+#&gt;  Run description              xpose test run                              
+#&gt;  Epsilon shrinkage            6.7 [1]                                     
+#&gt;  Eta shrinkage                10.2 [1], 48.2 [2], 14.7 [3]                
+#&gt;  Estimation method            foce-i                                      
+#&gt;  Number of individuals        74                                          
+#&gt;  Number of observations       1022                                        
+#&gt;  Number of significant digits 3.6                                         
+#&gt;  Objective function value     -656.869                                    
+#&gt;  Problem number               1                                           
+#&gt;  Estimation runtime           00:00:04                                    
+#&gt;  ADVAN                        2                                           
+#&gt;  Run warnings                 NM-TRAN INFERS THAT THE DATA ARE POPULATION.</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

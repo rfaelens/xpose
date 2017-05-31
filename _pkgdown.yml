@@ -3,6 +3,10 @@ template:
     bootswatch: paper
 
 reference:
+  - title: xpdb examples
+    desc: Example of xpose_data
+    contents:
+    - xpdb_ex_pk
   - title: Automatic import of run output
     desc:  Import tables and output files from a NLME run to R.
     contents:
@@ -15,10 +19,11 @@ reference:
     - manual_nm_import
     - list_nm_tables
     - read_nm_tables
-  - title: Examples
-    desc: Example of xpose_data
+  - title: Data summary
+    desc:  Summarize the xpdb content or the run
     contents:
-    - xpdb_ex_pk
+    - print.xpose_data
+    - summary.xpose_data
   - title: Extract data from an xpdb
     desc:  Extract code, data, files or summary from an xpdb object
     contents:
