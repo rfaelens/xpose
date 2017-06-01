@@ -30,8 +30,8 @@ summary.xpose_data <- function(object, problem = NULL, ...) {
     })) %>% 
     dplyr::mutate(descr = stringr::str_pad(.$descr, width = padding, 'right'),
                   value = stringr::str_replace_all(.$value, '\n', 
-                                                   stringr::str_pad('\n', padding + 2, 'right'))) %>% 
-    dplyr::mutate(string = stringr::str_c(.$descr, .$value, sep = ': '),
+                                                   stringr::str_pad('\n', padding + 6, 'right'))) %>% 
+    dplyr::mutate(string = stringr::str_c(' -', .$descr, ':', .$value, sep = ' '),
                   grouping = as.character(.$problem)) %>% 
     dplyr::group_by_(.dots = 'grouping') %>% 
     tidyr::nest() %>% 
