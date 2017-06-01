@@ -180,6 +180,8 @@ get_file <- function(xpdb, file = NULL, problem = NULL, subprob = NULL) {
 #' @param xpdb An \code{xpose_data} object from which the summary data will be extracted.
 #' @param problem The problem to be used, by default returns the last one for each label.
 #' @param subprob The subproblem to be used, by default returns the last one for each label.
+#' @param only_last Logical, if \code{TRUE} only the last record for each label is returned in case 
+#' of multiple problem and/or subproblem. If \code{FALSE} all values are returned.
 #' 
 #' @return A tibble of model summary.
 #' @seealso \code{\link{xpose_data}}, \code{\link{template_titles}}
@@ -187,7 +189,7 @@ get_file <- function(xpdb, file = NULL, problem = NULL, subprob = NULL) {
 #' run_summary <- get_summary(xpdb_ex_pk)
 #' 
 #' @export
-get_summary <- function(xpdb, problem = NULL, subprob = NULL) {
+get_summary <- function(xpdb, problem = NULL, subprob = NULL, only_last = FALSE) {
   if (!is.xpdb(xpdb)) {
     stop('Valid `xpdb` input required.', call. = FALSE)
   }
@@ -209,5 +211,9 @@ get_summary <- function(xpdb, problem = NULL, subprob = NULL) {
     }
     x <- x[x$subp %in% subprob, ]
   }
-  x[!duplicated(x$label, fromLast = TRUE), ]
+  
+  # Remove duplicates
+  if (only_last) x <- x[!duplicated(x$label, fromLast = TRUE), ]
+  
+  x
 }
