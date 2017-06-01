@@ -14,6 +14,9 @@ Authors@R: c(
       person('Mats O.', 'Karlsson',
              role = 'aut',
              email='mats.karlsson@farmbio.uu.se'),
+      person('Ron', 'Keizer', 
+             role = 'aut',
+             email='ronkeizer@gmail.com'),
       person('Sebastian', 'Ueckert'
              , role = 'ctb'),
       person('Kajsa', 'Harling'
@@ -38,10 +41,13 @@ Imports:
   purrr (>= 0.2.0),
   utils,
   grDevices,
-  gridExtra
+  gridExtra,
+  vpc
 Suggests:
   knitr,
   testthat
+Remotes:
+ ronkeizer/vpc
 License: LGPL-3 + file LICENSE
 URL: https://github.com/UUPharmacometrics/xpose
 BugReports: https://github.com/UUPharmacometrics/xpose/issues
