@@ -9,7 +9,18 @@
 #' list_vars(xpdb_ex_pk)
 #' @export
 list_vars <- function(xpdb, problem = NULL) {
-  x <- xpdb$data[xpdb$data$problem %in% problem, ] %>% 
+  if (!is.xpdb(xpdb)) {
+    stop('Valid `xpdb` input required.', call. = FALSE)
+  }
+  
+  x <- xpdb$data
+  
+  if (!all(problem %in% x$problem)) {
+    stop('Problem no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
+         ' not found in the data.', call. = FALSE)
+  }
+  
+  x <- x[x$problem %in% problem, ] %>% 
     dplyr::mutate(grouping = as.integer(.$problem)) %>% 
     dplyr::group_by_(.dots = 'grouping') %>% 
     tidyr::nest() %>% 
