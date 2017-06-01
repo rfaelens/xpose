@@ -118,7 +118,7 @@ read_nm_model <- function(file    = NULL,
   
   # Create comment column
   code_rows <- !model$subroutine %in% c('lst', 'oth') | model$level == 0
-  model[code_rows, 'comment'] <- stringr::str_match(model[code_rows, ]$code, ';\\s*([^;]*)$')[, 2]
+  model[code_rows, 'comment'] <- stringr::str_match(model[code_rows, ]$code, ';\\s*(.*)\\s*$')[, 2]
   model[code_rows, 'code'] <- stringr::str_replace(model[code_rows, ]$code, '\\s*;.*$', '')
   
   # Remove na values and output
