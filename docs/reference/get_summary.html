@@ -112,7 +112,7 @@
     <p>Extract model summary data from an xpdb object.</p>
     
 
-    <pre class="usage"><span class='fu'>get_summary</span>(<span class='no'>xpdb</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subprob</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>get_summary</span>(<span class='no'>xpdb</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subprob</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>only_last</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -128,6 +128,11 @@
     <tr>
       <th>subprob</th>
       <td><p>The subproblem to be used, by default returns the last one for each label.</p></td>
+    </tr>
+    <tr>
+      <th>only_last</th>
+      <td><p>Logical, if <code>TRUE</code> only the last record for each label is returned in case 
+of multiple problem and/or subproblem. If <code>FALSE</code> all values are returned.</p></td>
     </tr>
     </table>
     
@@ -160,7 +165,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/guiastrennec'>Benjamin Guiastrennec</a>, <a href='https://github.com/OlofssonA'>Anna Olofsson</a>, <a href='https://github.com/andrewhooker'>Andrew C. Hooker</a>, <a href='https://katalog.uu.se/profile/?id=XX3384'>Mats O. Karlsson</a>.</p>
+  <p>Developed by <a href='https://github.com/guiastrennec'>Benjamin Guiastrennec</a>, <a href='https://github.com/OlofssonA'>Anna Olofsson</a>, <a href='https://github.com/andrewhooker'>Andrew C. Hooker</a>, <a href='https://katalog.uu.se/profile/?id=XX3384'>Mats O. Karlsson</a>, Ron Keizer.</p>
 </div>
 
 <div class="pkgdown">

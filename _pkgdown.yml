@@ -24,6 +24,7 @@ reference:
     contents:
     - print.xpose_data
     - summary.xpose_data
+    - list_vars
   - title: Extract data from an xpdb
     desc:  Extract code, data, files or summary from an xpdb object
     contents:
