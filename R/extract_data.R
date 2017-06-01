@@ -21,7 +21,8 @@ get_code <- function(xpdb, problem = NULL) {
   
   if (!is.null(problem)) {
     if (!all(problem %in% x$problem)) {
-      stop('Problem no.', problem, ' not found in model code.', call. = FALSE)
+      stop('Problem no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
+           ' not found in model code.', call. = FALSE)
     }
     x <- x[x$problem %in% problem, ]
   }
@@ -150,7 +151,8 @@ get_file <- function(xpdb, file = NULL, problem = NULL, subprob = NULL) {
   # Filter by $problem
   if (!is.null(problem)) {
     if (!all(problem %in% x$prob)) {
-      stop('Problem no.', problem, ' not found in model output files.', call. = FALSE)
+      stop('Problem no.', stringr::str_c(problem[!problem %in% x$prob], collapse = ', '), 
+           ' not found in model output files.', call. = FALSE)
     }
     x <- x[x$prob %in% problem, ]
   }
@@ -158,7 +160,8 @@ get_file <- function(xpdb, file = NULL, problem = NULL, subprob = NULL) {
   # Filter by sub-problem
   if (!is.null(subprob)) {
     if (!all(subprob %in% x$subprob)) {
-      stop('Sub-problem no.', subprob, ' not found in model output files.', call. = FALSE)
+      stop('Sub-problem no.', stringr::str_c(subprob[!subprob %in% x$subprob], collapse = ', '), 
+           ' not found in model output files.', call. = FALSE)
     }
     x <- x[x$subprob %in% subprob, ]
   }
@@ -199,7 +202,8 @@ get_summary <- function(xpdb, problem = NULL, subprob = NULL, only_last = FALSE)
   # Filter by $problem
   if (!is.null(problem)) {
     if (!all(problem %in% x$problem)) {
-      stop('Problem no.', problem, ' not found in model summary.', call. = FALSE)
+      stop('Problem no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
+           ' not found in model summary.', call. = FALSE)
     }
     x <- x[x$problem %in% problem, ]
   }
@@ -207,7 +211,8 @@ get_summary <- function(xpdb, problem = NULL, subprob = NULL, only_last = FALSE)
   # Filter by sub-problem
   if (!is.null(subprob)) {
     if (!all(subprob %in% x$subp)) {
-      stop('Sub-problem no.', subprob, ' not found in model summary.', call. = FALSE)
+      stop('Sub-problem no.', stringr::str_c(subprob[!subprob %in% x$subp], collapse = ', '), 
+           ' not found in model summary.', call. = FALSE)
     }
     x <- x[x$subp %in% subprob, ]
   }
