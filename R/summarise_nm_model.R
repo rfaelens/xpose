@@ -17,6 +17,7 @@ summarise_nm_model <- function(file, model, software, rounding) {
     sum_subroutine(model, software),           # Des solver
     sum_runtime(model, software),              # Estimation runtime
     sum_covtime(model, software),              # Covariance matrix runtime
+    sum_term(model, software),                 # Run termination message
     sum_warnings(model, software),             # Run warnings (e.g. boundary)
     sum_errors(model, software),               # Run errors (e.g termination error)
     sum_nsig(model, software),                 # Number of significant digits
@@ -37,7 +38,7 @@ summarise_nm_model <- function(file, model, software, rounding) {
   
   tmp %>% 
     tidyr::complete_(cols = c(quote(problem), quote(label)), 
-                     fill = list(subp = 1, value = 'na')) %>% 
+                     fill = list(subp = 1, value = 'na')) %>%
     dplyr::bind_rows(dplyr::filter(sum, sum$problem == 0)) %>%
     dplyr::arrange_(.dots = c('problem', 'label', 'subp')) %>%
     dplyr::mutate(descr = dplyr::case_when(
@@ -57,7 +58,8 @@ summarise_nm_model <- function(file, model, software, rounding) {
       .$label == 'simseed' ~ 'Simulation seed',
       .$label == 'subroutine' ~ 'ADVAN',
       .$label == 'runtime' ~ 'Estimation runtime',
-      .$label == 'covtime' ~ 'Covariance matrix runtime',
+      .$label == 'covtime' ~ 'Covariance step runtime',
+      .$label == 'term' ~ 'Termination message',
       .$label == 'warnings' ~ 'Run warnings',
       .$label == 'errors' ~ 'Run errors',
       .$label == 'nsig' ~ 'Number of significant digits',
@@ -171,7 +173,7 @@ sum_description <- function(model, software) {
       x <- dplyr::slice(.data = x, seq(start, end)) %>% 
       {stringr::str_replace(.$comment, '^\\s*;\\s*', '')} %>% 
         stringr::str_c(collapse = ' ') %>% 
-        {sum_tpl('descr', stringr::str_match(., ':\\s*(.+)$')[1, 2])}
+        {sum_tpl('descr', stringr::str_match(., ':\\s*(.+)$')[, 2])}
       return(value = x)
     }
     sum_tpl('descr', 'na')
@@ -182,14 +184,15 @@ sum_description <- function(model, software) {
 sum_input_data <- function(model, software) {
   if (software == 'nonmem') {
     x <- model %>% 
-      dplyr::filter(.$subroutine == 'dat')
+      dplyr::filter(.$subroutine == 'dat') %>% 
+      dplyr::distinct_(.dots = 'level', .keep_all = TRUE) # Assumes that the data is on the first row
     
     if (nrow(x) == 0) return(sum_tpl('data', 'na'))
     
     x %>% 
       dplyr::mutate(subp = 1,
                     label = 'data',
-                    value = stringr::str_match(.$code, '^\\s*([^\\s]+)\\s+')[, 2]) %>% 
+                    value = stringr::str_match(.$code, '^\\s*?([^\\s]+)\\s+')[, 2]) %>% # Note: only take the first match
       dplyr::select(dplyr::one_of('problem', 'subp', 'label', 'value'))
   }
 }
@@ -313,27 +316,52 @@ sum_covtime <- function(model, software) {
   }
 }
 
+# Run termination
+sum_term <- function(model, software) {
+  if (software == 'nonmem') {
+    x <- dplyr::filter(model, model$subroutine == 'lst')
+    start <- which(stringr::str_detect(x$code, stringr::fixed('0MINIMIZATION')))
+    
+    if (length(start) == 0) return(sum_tpl('term', 'na'))
+
+    x %>% 
+      dplyr::slice(purrr::map(start, ~.:(.+5)) %>% purrr::flatten_int()) %>% 
+      dplyr::group_by_(.dots = 'problem') %>% 
+      tidyr::nest() %>% 
+      dplyr::mutate(value = purrr::map_chr(.$data, function(y) {
+        drop <- min(which(stringr::str_detect(y$code, 'NO. OF')))
+        dplyr::slice(.data = y, seq(1, (drop - 1))) %>% 
+        {stringr::str_trim(.$code)} %>% 
+        stringr::str_c(collapse = '\n') %>% 
+        stringr::str_replace('0MINIM', 'MINIM')})) %>% 
+      dplyr::mutate(subp = 1,
+                    label = 'term') %>% 
+      dplyr::select(dplyr::one_of('problem', 'subp', 'label', 'value'))
+  }
+}
+
+
 # Run warnings (e.g. boundary)
 sum_warnings <- function(model, software) {
   if (software == 'nonmem') {
     x <- model %>% 
       dplyr::filter(.$subroutine == 'oth') %>% 
-      dplyr::filter(stringr::str_detect(.$code, 'WARNING'))
+      dplyr::filter(stringr::str_detect(.$code, 'WARNINGS AND ERRORS|\\(WARNING'))
     
     if (nrow(x) == 0) return(sum_tpl('warnings', 'na'))
     
     x %>% 
-      dplyr::mutate(problem = stringr::str_match(.$code, 'FOR PROBLEM\\s+(\\d+)')[,2]) %>% 
+      dplyr::mutate(problem = stringr::str_match(.$code, 'FOR PROBLEM\\s+(\\d+)')[, 2]) %>% 
       tidyr::fill_(fill_cols = 'problem') %>% 
       dplyr::mutate(problem = as.numeric(.$problem)) %>% 
       dplyr::filter(!stringr::str_detect(.$code, 'FOR PROBLEM\\s+(\\d+)')) %>% 
       dplyr::mutate(code = stringr::str_trim(.$code)) %>% 
-      dplyr::mutate(code = stringr::str_replace(.$code, '\\(.+\\)\\s+', '')) %>% 
-      #dplyr::group_by_(.dots = 'problem') %>% 
-      #tidyr::nest() %>% 
-      #dplyr::mutate(value = purrr::map_chr(.$data, ~stringr::str_c(.$code, collapse = '\n'))) %>% 
+      dplyr::mutate(code = stringr::str_trunc(.$code, 56)) %>% 
+      dplyr::distinct_(.dots = c('problem', 'code')) %>%
+      dplyr::group_by_(.dots = 'problem') %>% 
+      tidyr::nest() %>% 
+      dplyr::mutate(value = purrr::map_chr(.$data, ~stringr::str_c(.$code, collapse = '\n'))) %>% 
       dplyr::mutate(subp = 1,
-                    value = as.character(.$code),
                     label = 'warnings') %>% 
       dplyr::select(dplyr::one_of('problem', 'subp', 'label', 'value'))
   }

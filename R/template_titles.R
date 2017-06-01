@@ -38,6 +38,7 @@
 #'  \item{@software}{Software used (e.g. NONMEM)}
 #'  \item{@simseed}{Simulation seed}
 #'  \item{@subroutine}{Differencial equation solver}
+#'  \item{@term}{Termination message}
 #'  \item{@version}{Software version (e.g. 7.3)}
 #'  \item{@warnings}{Run warnings (e.g. boundary)}
 #' }
