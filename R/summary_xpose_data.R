@@ -23,12 +23,11 @@ summary.xpose_data <- function(object, problem = NULL, ...) {
     dplyr::slice(order(match(.$label, order))) %>% 
     dplyr::group_by_(.dots = c('problem', 'label', 'descr')) %>% 
     tidyr::nest() %>% 
-    dplyr::mutate(value = purrr::map_chr(.$data, 
-                                         function(x) {
-                                           if (nrow(x) == 1) return(x$value)
-                                           value <- stringr::str_c(x$value, ' (subp no.', x$subp, ')', sep = '')
-                                           stringr::str_c(value, collapse = '\n')
-                                         })) %>% 
+    dplyr::mutate(value = purrr::map_chr(.$data, function(x) {
+      if (nrow(x) == 1) return(x$value)
+      value <- stringr::str_c(x$value, ' (subp no.', x$subp, ')', sep = '')
+      stringr::str_c(value, collapse = '\n')
+    })) %>% 
     dplyr::mutate(descr = stringr::str_pad(.$descr, width = padding, 'right'),
                   value = stringr::str_replace_all(.$value, '\n', 
                                                    stringr::str_pad('\n', padding + 2, 'right'))) %>% 
