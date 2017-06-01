@@ -7,6 +7,7 @@ summarise_nm_model <- function(file, model, software, rounding) {
     sum_directory(file),                       # Model directory
     sum_reference(model, software),            # Reference model
     sum_probn(model, software),                # Problem no.
+    sum_label(model, software),                # Model label
     sum_description(model, software),          # Model description
     sum_input_data(model, software),           # Model input data used
     sum_nobs(model, software),                 # Number of observations
@@ -48,6 +49,7 @@ summarise_nm_model <- function(file, model, software, rounding) {
       .$label == 'ref' ~ 'Reference model',
       .$label == 'probn' ~ 'Problem number',
       .$label == 'descr' ~ 'Run description',
+      .$label == 'label' ~ 'Run label',
       .$label == 'data' ~ 'Input data',
       .$label == 'nobs' ~ 'Number of observations',
       .$label == 'nind' ~ 'Number of individuals',
@@ -138,19 +140,41 @@ sum_probn <- function(model, software) {
   }
 }
 
-# Model description
-sum_description <- function(model, software) {
+# Model Label
+sum_label <- function(model, software) {
   if (software == 'nonmem') {
     x <- model %>% 
       dplyr::filter(.$subroutine == 'pro')
     
-    if (nrow(x) == 0) return(sum_tpl('descr', 'na'))
+    if (nrow(x) == 0) return(sum_tpl('label', 'na'))
     
     x %>% 
       dplyr::mutate(subp = 1,
-                    label = 'descr',
+                    label = 'label',
                     value = as.character(.$code)) %>% 
       dplyr::select(dplyr::one_of('problem', 'subp', 'label', 'value'))
+  }
+}
+
+# Model description
+sum_description <- function(model, software) {
+  if (software == 'nonmem') {
+    x <- dplyr::filter(.data = model, model$level == 0)
+    start <- which(stringr::str_detect(tolower(x$comment), 
+                                       stringr::regex('2.\\s*description\\s*:', 
+                                                      ignore_case = TRUE)))
+    if (length(start) == 1) {
+      end <- which(stringr::str_detect(tolower(x$comment), '3.\\s*\\w+')) - 1
+      
+      if (length(end) == 0) end <- nrow(x)
+      
+      x <- dplyr::slice(.data = x, seq(start, end)) %>% 
+      {stringr::str_replace(.$comment, '^\\s*;\\s*', '')} %>% 
+        stringr::str_c(collapse = ' ') %>% 
+        {sum_tpl('descr', stringr::str_match(., ':\\s*(.+)$')[1, 2])}
+      return(value = x)
+    }
+    sum_tpl('descr', 'na')
   }
 }
 

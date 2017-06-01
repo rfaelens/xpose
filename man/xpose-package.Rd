@@ -27,6 +27,7 @@ Authors:
   \item Anna Olofsson
   \item Andrew C. Hooker \email{andrew.hooker@farmbio.uu.se}
   \item Mats O. Karlsson \email{mats.karlsson@farmbio.uu.se}
+  \item Ron Keizer \email{ronkeizer@gmail.com}
 }
 
 Other contributors:

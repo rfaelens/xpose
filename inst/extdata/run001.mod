@@ -1,3 +1,6 @@
+;; 1. Based on:          000
+;; 2. Description:       
+;;    Run for testthat
 $PROBLEM    xpose test run
 $INPUT      ID OCC XAT2=DROP DGRP=DROP DOSE FLAG=DROP ONO=DROP
             XIME=DROP DVO=DROP NEUY=DROP SCR AGE SEX CLASS WT DROP ACE

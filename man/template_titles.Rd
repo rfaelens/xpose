@@ -25,6 +25,7 @@ Many key variables are available:
  \item{@esampleseed}{ESAMPLE seed number (used in NPDE)}
  \item{@etashk}{Eta shrinkage}
  \item{@file}{Model file name}
+ \item{@label}{Model label}
  \item{@method}{Estimation method or sim}
  \item{@nesample}{Number of ESAMPLE (used in NPDE)}
  \item{@nind}{Number of individuals}
