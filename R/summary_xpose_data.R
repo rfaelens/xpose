@@ -12,17 +12,41 @@
 #'
 #' @export
 summary.xpose_data <- function(object, problem = NULL, ...) {
-  x <- get_summary(object, problem) %>% 
-    dplyr::filter(.$value != 'na', !.$label %in% c()) %>% 
-    dplyr::select(dplyr::one_of('problem', 'descr', 'value')) %>%
-    dplyr::ungroup() %>% 
-    dplyr::mutate(grouping = as.character(.$problem)) %>% 
+  padding <- 28 # Characters
+  order <- c('software', 'version', 'dir', 'file', 'run', 'ref', 'descr',
+             'probn', 'label', 'data', 'nind', 'nobs', 'subroutine', 'method',
+             'term', 'runtime', 'ofv', 'nsig', 'covtime', 'condn','etashk', 'epsshk', 
+             'nsim', 'simseed', 'nesample', 'esampleseed', 'errors', 'warnings')
+  
+  out <- get_summary(object, problem, only_last = FALSE) %>% 
+    dplyr::filter(.$value != 'na') %>% 
+    dplyr::slice(order(match(.$label, order))) %>% 
+    dplyr::group_by_(.dots = c('problem', 'label', 'descr')) %>% 
+    tidyr::nest() %>% 
+    dplyr::mutate(value = purrr::map_chr(.$data, 
+                                         function(x) {
+                                           if (nrow(x) == 1) return(x$value)
+                                           value <- stringr::str_c(x$value, ' (subp no.', x$subp, ')', sep = '')
+                                           stringr::str_c(value, collapse = '\n')
+                                         })) %>% 
+    dplyr::mutate(descr = stringr::str_pad(.$descr, width = padding, 'right'),
+                  value = stringr::str_replace_all(.$value, '\n', 
+                                                   stringr::str_pad('\n', padding + 2, 'right'))) %>% 
+    dplyr::mutate(string = stringr::str_c(.$descr, .$value, sep = ': '),
+                  grouping = as.character(.$problem)) %>% 
     dplyr::group_by_(.dots = 'grouping') %>% 
     tidyr::nest() %>% 
     {purrr::map(.$data, function(x) {
-      cat('\nSummary for problem no.', x$problem[1])
-      as.data.frame(x[, c('descr', 'value')]) %>%
-        purrr::set_names(rep('', 2)) %>%
-        print(row.names = FALSE, right = FALSE)
-      })}
+      x <- dplyr::filter(.data = x, !stringr::str_detect(x$descr, 'Problem number|Run number'))
+      if (x$problem[1] == 0) {
+        lab <- '[Global information]'
+      } else {
+        lab_row <- which(stringr::str_detect(x$descr, stringr::fixed('Run label')))
+        lab <- stringr::str_c('[', x$value[lab_row], ']', sep = '')
+        x <- x[-lab_row, ]
+      }
+      
+      cat('\nSummary for problem no.', x$problem[1], lab, '\n')
+      cat(x$string, sep = '\n')
+    })}
 }
