@@ -15,7 +15,6 @@
 #' @param subtitle Plot subtitle. Use \code{NULL} to remove.
 #' @param caption Page caption. Use \code{NULL} to remove.
 #' @param plot_name name that will be used by \code{xpose_save()} to save the plot.
-#' @param gg_layers A list of additional ggplot2 layers to be added to the plot.
 #' @param gg_theme A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).
 #' @param xp_theme An xpose theme or vector of modifications to the xpose theme
 #' (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).
@@ -49,7 +48,6 @@ xplot_scatter <- function(xpdb,
                           subtitle  = NULL,
                           caption   = NULL,
                           plot_name = 'scatter_plot',
-                          gg_layers,
                           gg_theme,
                           xp_theme,
                           quiet,
@@ -93,7 +91,7 @@ xplot_scatter <- function(xpdb,
   
   # Add lines
   if (grepl('l', tolower(type))) {
-    xp <- xp + xp_geoms(mapping  = aes,
+    xp <- xp + xp_geoms(mapping  = c(aes, aes_string(line_group = group)),
                         xp_theme = xpdb$xp_theme,
                         group    = group,
                         name     = 'line',
@@ -154,8 +152,7 @@ xplot_scatter <- function(xpdb,
                           xp_theme = filter_xp_theme(xpdb$xp_theme,
                                                      stringr::str_c('panel_', 
                                                                     c('ncol', 'nrow', 'dir'), 
-                                                                    collapse = '|'), 
-                                                     'drop'),
+                                                                    collapse = '|'), 'drop'),
                           name     = 'panel',
                           ggfun    = 'facet_grid',
                           ...)
@@ -166,9 +163,6 @@ xplot_scatter <- function(xpdb,
   xp <- xp + labs(title = append_suffix(xpdb, title, 'title'),
                   subtitle = append_suffix(xpdb, subtitle, 'subtitle'), 
                   caption = append_suffix(xpdb, caption, 'caption'))
-  
-  # Add users defined layers
-  if (!missing(gg_layers)) xp <- xp + gg_layers
   
   # Add metadata to plots
   xp$xpose <- list(fun     = plot_name,
