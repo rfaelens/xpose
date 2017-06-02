@@ -1,9 +1,9 @@
 # Check plot input variables
-check_vars <- function(vars, xpdb) {
-  if (!all(vars %in% colnames(xpdb$data))) {
-    vars[!vars %in% colnames(xpdb$data)]
-  }
-}
+# check_vars <- function(vars, xpdb) {
+#   if (!all(vars %in% colnames(xpdb$data))) {
+#     vars[!vars %in% colnames(xpdb$data)]
+#   }
+# }
 
 # Check plot scales
 check_scales <- function(scale, log) {

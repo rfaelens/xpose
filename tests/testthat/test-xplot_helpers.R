@@ -1,10 +1,10 @@
 context('Check xplot_helpers')
 
 # Tests start here --------------------------------------------------------
-test_that('Check check_vars', {
-  expect_null(check_vars(NULL, xpdb_ex_pk))
-  expect_null(check_vars(c('problem', 'simtab', 'index', 'data'), xpdb_ex_pk))
-})
+# test_that('Check check_vars', {
+#   expect_null(check_vars(NULL, xpdb_ex_pk))
+#   expect_null(check_vars(c('problem', 'simtab', 'index', 'data'), xpdb_ex_pk))
+# })
 
 test_that('Check check_scales', {
   expect_equal(check_scales('x', NULL), 'continuous')
