@@ -150,11 +150,11 @@ get_file <- function(xpdb, file = NULL, problem = NULL, subprob = NULL) {
   
   # Filter by $problem
   if (!is.null(problem)) {
-    if (!all(problem %in% x$prob)) {
-      stop('Problem no.', stringr::str_c(problem[!problem %in% x$prob], collapse = ', '), 
+    if (!all(problem %in% x$problem)) {
+      stop('Problem no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
            ' not found in model output files.', call. = FALSE)
     }
-    x <- x[x$prob %in% problem, ]
+    x <- x[x$problem %in% problem, ]
   }
   
   # Filter by sub-problem

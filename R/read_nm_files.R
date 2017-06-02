@@ -42,7 +42,7 @@ read_nm_files <- function(files  = NULL,
     msg('No output file could be found.', quiet)
     return()
   } else if (any(file.exists(files))) {
-    msg(c('Reading: ', paste0(bases[file.exists(files)], collapse = ', ')), quiet)
+    msg(c('Reading: ', stringr::str_c(bases[file.exists(files)], collapse = ', ')), quiet)
   }
   
   out <- files %>% 
@@ -64,14 +64,14 @@ read_nm_files <- function(files  = NULL,
     dplyr::filter(!.$drop) %>% 
     tidyr::unnest_(unnest_cols = 'data') %>% 
     tidyr::unnest_(unnest_cols = 'tmp') %>% 
-    dplyr::select(dplyr::one_of('name', 'prob', 'subprob', 'method', 'data'))
+    dplyr::select(dplyr::one_of('name', 'problem', 'subprob', 'method', 'data'))
 }
 
 parse_nm_files <- function(dat, quiet) {
   if (length(unlist(dat$raw)) == 0) {
     tab_rows <- NULL 
   } else {
-    x <- dplyr::tibble(raw = unlist(dat$raw), prob = NA, subprob = NA, method = NA, header = FALSE)
+    x <- dplyr::tibble(raw = unlist(dat$raw), problem = NA, subprob = NA, method = NA, header = FALSE)
     tab_rows <- which(stringr::str_detect(x$raw, '^\\s*TABLE NO'))
   }
   
@@ -80,7 +80,7 @@ parse_nm_files <- function(dat, quiet) {
     return()
   }
   
-  x[tab_rows, ]$prob <- stringr::str_match(x[tab_rows, ]$raw, '\\s+Problem=(\\d+)')[,2]
+  x[tab_rows, ]$problem <- stringr::str_match(x[tab_rows, ]$raw, '\\s+Problem=(\\d+)')[,2]
   x[tab_rows, ]$subprob <- stringr::str_match(x[tab_rows, ]$raw, '\\s+Subproblem=(\\d+)')[,2]
   x[tab_rows, ]$method  <- dplyr::case_when(stringr::str_detect(x[tab_rows, ]$raw, 'First Order Conditional') ~ 'FOCE',
                                             stringr::str_detect(x[tab_rows, ]$raw, 'Laplace Conditional') ~ 'LCE', 
@@ -100,10 +100,10 @@ parse_nm_files <- function(dat, quiet) {
     TRUE ~ '\\s+')
   
   x %>% 
-    tidyr::fill(dplyr::one_of('prob', 'subprob', 'method')) %>% 
+    tidyr::fill(dplyr::one_of('problem', 'subprob', 'method')) %>% 
     dplyr::slice(-tab_rows) %>%
     dplyr::mutate(raw = stringr::str_trim(.$raw, side = 'both')) %>% 
-    dplyr::group_by_(.dots = c('prob', 'subprob', 'method')) %>% 
+    dplyr::group_by_(.dots = c('problem', 'subprob', 'method')) %>% 
     tidyr::nest() %>% 
     dplyr::mutate(data = purrr::map(.$data, ~raw_to_tibble(., sep, quiet, file = dat$name)))
 }  
