@@ -24,6 +24,9 @@ theme_xp_default <- function() {
   structure(list(
     # General
     rounding        = 1,
+    title_suffix    = '',
+    subtitle_suffix = '',
+    caption_suffix  = '',
     
     # Guide
     guides_alpha    = 1,
@@ -87,6 +90,9 @@ theme_xp_xpose4 <- function() {
     
     # General
     rounding        = 1,
+    title_suffix    = '',
+    subtitle_suffix = '',
+    caption_suffix  = '',
     
     # Guide
     guides_alpha    = 1,

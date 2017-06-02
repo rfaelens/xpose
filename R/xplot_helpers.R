@@ -11,6 +11,12 @@ check_scales <- function(scale, log) {
   ifelse(stringr::str_detect(string = log, pattern = scale), 'log10', 'continuous')
 }
 
+# Add suffix contained in the theme the labs
+append_suffix <- function(xpdb, string = NULL, type = NULL) {
+  if (is.null(string)) return()
+  stringr::str_c(string, xpdb$xp_theme[stringr::str_c(type, '_suffix')], sep = ' ')
+}
+
 # Add keyword values in template titles
 parse_title <- function(string, xpdb, problem, quiet, extra_key = NULL, extra_value = NULL) {
   # Extract keywords from the string
