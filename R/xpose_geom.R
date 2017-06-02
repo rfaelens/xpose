@@ -1,45 +1,31 @@
+# Transform arguments from xpose to ggplot2 (e.g. point_color = to color = )
 parse_arg <- function(x = NULL, name) {
-  
-  if (is.null(x)) return(NULL)
-  
-  x <- x[grepl(paste0('^', name, '_'), names(x))]
-  names(x) <- gsub(paste0(name, '_'), '', names(x))
-  names(x) <- gsub('color', 'colour', names(x))
-  x
+  if (is.null(x)) return()
+  x[stringr::str_detect(names(x), stringr::str_c('^', name, '_'))] %>% 
+    purrr::set_names(nm = stringr::str_replace(names(.), stringr::str_c(name, '_'), '')) %>% 
+    purrr::set_names(nm = stringr::str_replace(names(.), 'color', 'colour'))
 }
 
-update_args <- function(arg, name, ...) {
-  arg     <- parse_arg(x = arg, name = name)
+# Combine the arguments from the user and xp_theme
+update_args <- function(thm_arg, name, ...) {
+  thm_arg <- parse_arg(x = thm_arg, name = name)
   usr_arg <- parse_arg(x = list(...), name = name)
-  usr_changes <- intersect(names(arg), names(usr_arg))
-  arg[usr_changes] <- usr_arg[usr_changes]
-  arg <- append(arg, usr_arg[setdiff(names(usr_arg), names(arg))])
-  arg
+  usr_changes <- intersect(names(thm_arg), names(usr_arg))
+  thm_arg[usr_changes] <- usr_arg[usr_changes]
+  c(thm_arg, usr_arg[!names(usr_arg) %in% names(thm_arg)])
 }
 
+# Call the ggplot2 function with its arguments
 xp_map <- function(arg, mapping, ggfun) {
-  arg  <- arg[!names(arg) %in% names(mapping)]
-  x    <- do.call(ggfun, arg)
-  if (!is.null(mapping)) { 
-    x$mapping <- mapping
-  }
+  x <- do.call(ggfun, arg[!names(arg) %in% names(mapping)])
+  if (!is.null(mapping)) x$mapping <- mapping
   x
 }
 
-xp_geoms <- function(mapping = NULL, xp_theme, group = NULL, name, ggfun, ...) {
-  
-  if (!is.null(mapping)) {
-    mapping <- parse_arg(mapping, name)
-  }
-  
-  arg <- xp_theme[grepl(paste0('^', name, '_'), names(xp_theme))]
-  arg <- update_args(arg, name, ...)
-  out <- xp_map(arg, mapping, ggfun)
-  
-  # Add grouping
-  if (ggfun == 'geom_line' && !is.null(group) && !'group' %in% names(out$mapping)) {
-    out$mapping <- structure(append(out$mapping, aes_string(group = group)),
-                             class = 'uneval')
-  }
-  out
+# Generic ggplot2 layer for xpose_plots
+xp_geoms <- function(mapping = NULL, xp_theme, name, ggfun, ...) {
+  if (!is.null(mapping)) mapping <- parse_arg(mapping, name)
+  thm_arg <- filter_xp_theme(xp_theme, stringr::str_c('^', name, '_')) 
+  arg     <- update_args(thm_arg, name, ...)
+  xp_map(arg, mapping, ggfun)
 }

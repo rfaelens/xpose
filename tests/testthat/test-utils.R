@@ -1,4 +1,4 @@
-context('Test utils functions')
+context('Check utils functions')
 
 # Tests start here --------------------------------------------------------
 
