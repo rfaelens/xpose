@@ -51,3 +51,10 @@ parse_title <- function(string, xpdb, problem, quiet, extra_key = NULL, extra_va
     stringr::str_replace_all('\\"@', '\\"') %>% 
     stringr::str_interp()
 }
+
+# Subset an xp_theme
+filter_xp_theme <- function(xp_theme, regex = NULL, action = 'keep') {
+  match <- stringr::str_detect(names(xp_theme), regex)
+  if (action == 'drop') match <- !match
+  xp_theme[match]
+}

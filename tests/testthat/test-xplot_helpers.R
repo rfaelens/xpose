@@ -19,3 +19,12 @@ test_that('Check parse_title', {
   expect_equal(parse_title('OFV: @fake', xpdb_ex_pk, problem = 1, quiet = TRUE), 'OFV: @fake')
   expect_equal(parse_title('OFV: @fake', xpdb_ex_pk, problem = 1, quiet = TRUE, extra_key = 'fake', extra_value = '1987'), 'OFV: 1987')
 })
+
+test_that('Check filter_xp_theme', {
+  # Keep matches
+  expect_equal(filter_xp_theme(xpdb_ex_pk$xp_theme, 'point_', action = 'keep'),
+               xpdb_ex_pk$xp_theme[grepl('point_', names(xpdb_ex_pk$xp_theme))])
+  # Drop matches
+  expect_equal(filter_xp_theme(xpdb_ex_pk$xp_theme, 'point_', action = 'drop'),
+               xpdb_ex_pk$xp_theme[!grepl('point_', names(xpdb_ex_pk$xp_theme))])
+})
