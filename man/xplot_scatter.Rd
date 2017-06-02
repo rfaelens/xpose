@@ -7,8 +7,7 @@
 xplot_scatter(xpdb, vars = NULL, aes = NULL, group = "ID", type = "pls",
   guides = TRUE, xscale = "continuous", yscale = "continuous",
   title = NULL, subtitle = NULL, caption = NULL,
-  plot_name = "scatter_plot", gg_layers, gg_theme, xp_theme, quiet, problem,
-  ...)
+  plot_name = "scatter_plot", gg_theme, xp_theme, quiet, problem, ...)
 }
 \arguments{
 \item{xpdb}{An \code{xpose_data} object generated with \code{\link{xpose_data}}.}
@@ -35,8 +34,6 @@ line 'l', smooth 's' and text 't' or any combination of the 4.}
 \item{caption}{Page caption. Use \code{NULL} to remove.}
 
 \item{plot_name}{name that will be used by \code{xpose_save()} to save the plot.}
-
-\item{gg_layers}{A list of additional ggplot2 layers to be added to the plot.}
 
 \item{gg_theme}{A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).}
 
