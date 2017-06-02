@@ -8,7 +8,6 @@
 #' @param group Grouping variable to be used for lines.
 #' @param type String setting the type of plot to be used points 'p',
 #' line 'l', smooth 's' and text 't' or any combination of the 4.
-#' @param layers A list of additional ggplot layers to be added to the plot.
 #' @param guides should the guides (eg. unity line) be displayed.
 #' @param xscale scale type for x axis (eg. 'continuous', 'discrete', 'log10').
 #' @param yscale scale type for y axis (eg. 'continuous', 'discrete', 'log10').
@@ -16,6 +15,8 @@
 #' @param subtitle Plot subtitle. Use \code{NULL} to remove.
 #' @param caption Page caption. Use \code{NULL} to remove.
 #' @param plot_name name that will be used by \code{xpose_save()} to save the plot.
+#' @param gg_layers A list of additional ggplot2 layers to be added to the plot.
+#' @param gg_theme A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).
 #' @param xp_theme An xpose theme or vector of modifications to the xpose theme
 #' (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
@@ -41,7 +42,6 @@ xplot_scatter <- function(xpdb,
                           aes       = NULL,
                           group     = 'ID',
                           type      = 'pls',
-                          layers    = NULL,
                           guides    = TRUE,
                           xscale    = 'continuous',
                           yscale    = 'continuous',
@@ -49,6 +49,8 @@ xplot_scatter <- function(xpdb,
                           subtitle  = NULL,
                           caption   = NULL,
                           plot_name = 'scatter_plot',
+                          gg_layers,
+                          gg_theme,
                           xp_theme,
                           quiet,
                           problem,
@@ -56,8 +58,7 @@ xplot_scatter <- function(xpdb,
   
   # Check input
   if (!is.xpdb(xpdb)) { 
-    msg('Bad input to the argument`xpdb`', 
-        dplyr::if_else(missing(quiet), TRUE, quiet))
+    msg('Bad input to the argument`xpdb`', dplyr::if_else(missing(quiet), TRUE, quiet))
     return()
   }
   
@@ -65,7 +66,7 @@ xplot_scatter <- function(xpdb,
   
   # Get data
   if (missing(problem)) problem <- max(xpdb$data$problem[!xpdb$data$simtab])
-  data   <- get_data(xpdb, problem = problem)
+  data <- get_data(xpdb, problem = problem)
   msg(c('Using data from $problem no.', problem), quiet)
   
   # Filter observations
@@ -75,13 +76,12 @@ xplot_scatter <- function(xpdb,
     data <- dplyr::filter(data, data$EVID == 0)
   }
   
-  # Update xp_theme if needed
+  # Update and get xp_theme
   if (!missing(xp_theme)) xpdb <- update_themes(xpdb = xpdb, xp_theme = xp_theme)
+  if (missing(gg_theme)) gg_theme <- xpdb$gg_theme
   
   # Create ggplot base
-  xp   <- ggplot(data = data, ...) + 
-    xpdb$gg_theme + 
-    vars
+  xp <- ggplot(data = data, vars, ...) + gg_theme 
   
   # Add unity line
   if (guides) {
@@ -150,12 +150,12 @@ xplot_scatter <- function(xpdb,
                           ggfun    = 'facet_wrap',
                           ...)
     } else {
-      tmp_xtheme <- xpdb$xp_theme[which(!names(xpdb$xp_theme) %in%
-                                          stringr::str_c('panel_', 
-                                                         c('ncol', 'nrow', 'dir'), 
-                                                         sep = ''))]
       xp <- xp + xp_geoms(mapping  = aes,
-                          xp_theme = tmp_xtheme,
+                          xp_theme = filter_xp_theme(xpdb$xp_theme,
+                                                     stringr::str_c('panel_', 
+                                                                    c('ncol', 'nrow', 'dir'), 
+                                                                    collapse = '|'), 
+                                                     'drop'),
                           name     = 'panel',
                           ggfun    = 'facet_grid',
                           ...)
@@ -163,10 +163,12 @@ xplot_scatter <- function(xpdb,
   }
   
   # Add labels
-  xp <- xp + labs(title = title, subtitle = subtitle, caption = caption)
+  xp <- xp + labs(title = append_suffix(xpdb, title, 'title'),
+                  subtitle = append_suffix(xpdb, subtitle, 'subtitle'), 
+                  caption = append_suffix(xpdb, caption, 'caption'))
   
   # Add users defined layers
-  if (!is.null(layers)) { xp <- xp + layers }
+  if (!missing(gg_layers)) xp <- xp + gg_layers
   
   # Add metadata to plots
   xp$xpose <- list(fun     = plot_name,
