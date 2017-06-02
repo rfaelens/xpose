@@ -25,7 +25,7 @@ summary.xpose_data <- function(object, problem = NULL, ...) {
     tidyr::nest() %>% 
     dplyr::mutate(value = purrr::map_chr(.$data, function(x) {
       if (nrow(x) == 1) return(x$value)
-      value <- stringr::str_c(x$value, ' (subp no.', x$subp, ')', sep = '')
+      value <- stringr::str_c(x$value, ' (subprob no.', x$subprob, ')', sep = '')
       stringr::str_c(value, collapse = '\n')
     })) %>% 
     dplyr::mutate(descr = stringr::str_pad(.$descr, width = padding, 'right'),

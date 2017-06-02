@@ -210,11 +210,11 @@ get_summary <- function(xpdb, problem = NULL, subprob = NULL, only_last = FALSE)
   
   # Filter by sub-problem
   if (!is.null(subprob)) {
-    if (!all(subprob %in% x$subp)) {
-      stop('Sub-problem no.', stringr::str_c(subprob[!subprob %in% x$subp], collapse = ', '), 
+    if (!all(subprob %in% x$subprob)) {
+      stop('Sub-problem no.', stringr::str_c(subprob[!subprob %in% x$subprob], collapse = ', '), 
            ' not found in model summary.', call. = FALSE)
     }
-    x <- x[x$subp %in% subprob, ]
+    x <- x[x$subprob %in% subprob, ]
   }
   
   # Remove duplicates
