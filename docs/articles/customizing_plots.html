@@ -106,7 +106,7 @@
 <div id="labels" class="section level3">
 <h3 class="hasAnchor">
 <a href="#labels" class="anchor"></a>Labels</h3>
-<p>All xpose plots have by default an informative title, subtitle and caption. For example all plots using individual model predictions (IPRED) will display the epsilons’ shrinkage. These titles can easily be edited as templates using <span class="citation">@keywords</span> which will be replaced by their actual value stored in the summary level of the <code>xpdb</code> object when rendering the plots. Keywords are defined by a word preceded by a <code>@</code> e.g. <code>'@ofv'</code>. A list of all available keyword can be accessed via <code>help('template_titles')</code>. Finally, title, subtitle or caption can be disabled by setting them to <code>NULL</code>.</p>
+<p>All xpose plots have by default an informative title, subtitle and caption. For example all plots using individual model predictions (IPRED) will display the epsilons’ shrinkage. These titles can easily be edited as templates using <span class="citation">@keywords</span> which will be replaced by their actual value stored in the summary level of the <code>xpdb</code> object when rendering the plots. Keywords are defined by a word preceded by a <code>@</code> e.g. <code>'@ofv'</code>. A list of all available keyword can be accessed via <code>help('template_titles')</code>. The title, subtitle or caption can be disabled by setting them to <code>NULL</code>. Suffix can be automatically added to title, subtitle and caption of all plots. The suffixes can be defined in the <code>xp_theme</code>.</p>
 <div id="from-the-plot-functions" class="section level4">
 <h4 class="hasAnchor">
 <a href="#from-the-plot-functions" class="anchor"></a>From the plot functions</h4>
@@ -130,7 +130,7 @@
        <span class="dt">caption  =</span> <span class="st">'Based on @nobs observations'</span>,
        <span class="dt">x        =</span> <span class="st">'Individual model predictions (IPRED)'</span>,
        <span class="dt">y        =</span> <span class="st">'Observations (DV) for @nind subjects'</span>)</code></pre></div>
-<p><img src="customizing_plots_files/figure-html/demo%20xpose_labs-1.png" width="50%" style="display: block; margin: auto;"></p>
+<p><img src="customizing_plots_files/figure-html/demo%20xpose_labs-1.png" width="50%" style="display: block; margin: auto;"> Note: suffixes from <code>xp_theme</code> will not be automatically added to the title, subtitle and caption when defined in the lab function.</p>
 </div>
 </div>
 <div id="modify-aesthetics" class="section level3">
