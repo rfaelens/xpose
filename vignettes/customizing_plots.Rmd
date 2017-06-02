@@ -51,6 +51,9 @@ dv_vs_ipred(xpdb,
 
 # Disabling all titles
 dv_vs_ipred(xpdb, title = NULL, subtitle = NULL, caption = NULL)
+
+# Edit title suffix from the xp_theme for a specific plot
+dv_vs_ipred(xpdb, title = 'A title', xp_theme = c(title_suffix = ' | a suffix for @run'))
 ```
 
 #### Using the `labs` function
@@ -64,7 +67,7 @@ dv_vs_ipred(xpdb) +
        y        = 'Observations (DV) for @nind subjects')
 
 ```
-Note: suffixes from `xp_theme` will not be automatically added to the title, subtitle and caption when defined in the lab function.
+
 
 ### Modify aesthetics
 By default the aesthetics are read from the `xp_theme` level in the xpdb object but these can be modified in any plot function. xpose makes use of the `ggplot2` functions mapping for any layer (e.g. points, lines, etc.) however to direct the mapping to a specific layer, a prefix appealing to the targeted layer should be used. The format is defined as `layer_aesthetic = value`. Hence to change the color of points in ggplot2 the argument `color = 'green'` could be used in `geom_point()`, while in xpose the same could be achieved with `point_color = 'green'`.

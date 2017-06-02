@@ -14,7 +14,7 @@ check_scales <- function(scale, log) {
 # Add suffix contained in the theme the labs
 append_suffix <- function(xpdb, string = NULL, type = NULL) {
   if (is.null(string)) return()
-  stringr::str_c(string, xpdb$xp_theme[stringr::str_c(type, '_suffix')], sep = ' ')
+  stringr::str_c(string, xpdb$xp_theme[stringr::str_c(type, '_suffix')], sep = '')
 }
 
 # Add keyword values in template titles

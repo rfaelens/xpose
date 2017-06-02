@@ -20,6 +20,9 @@
 #' @export
 print.xpose_plot <- function(x, ...) {
   if (is.xpose.plot(x)) {
+    x$labels$title <- append_suffix(x$xpose, x$labels$title, 'title')
+    x$labels$subtitle <- append_suffix(x$xpose, x$labels$subtitle, 'subtitle')
+    x$labels$caption  <- append_suffix(x$xpose, x$labels$caption, 'caption')
     x$labels <- x$labels %>% 
       purrr::map_if(stringr::str_detect(., '@'),
                     ~parse_title(string = ., xpdb = x$xpose,

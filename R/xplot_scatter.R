@@ -160,15 +160,15 @@ xplot_scatter <- function(xpdb,
   }
   
   # Add labels
-  xp <- xp + labs(title = append_suffix(xpdb, title, 'title'),
-                  subtitle = append_suffix(xpdb, subtitle, 'subtitle'), 
-                  caption = append_suffix(xpdb, caption, 'caption'))
+  xp <- xp + labs(title = title, subtitle = subtitle, caption = caption)
   
   # Add metadata to plots
-  xp$xpose <- list(fun     = plot_name,
-                   summary = xpdb$summary,
-                   problem = problem,
-                   quiet   = quiet)
+  xp$xpose <- list(fun      = plot_name,
+                   summary  = xpdb$summary,
+                   problem  = problem,
+                   quiet    = quiet,
+                   xp_theme = xpdb$xp_theme[stringr::str_c(c('title', 'subtitle', 'caption'), 
+                                                           '_suffix')])
   
   structure(xp, class = c('xpose_plot', class(xp)))
 }
