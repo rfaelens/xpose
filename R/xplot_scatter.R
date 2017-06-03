@@ -3,11 +3,13 @@
 #' @description Manually generate scatter plots from an xpdb object.
 #'
 #' @param xpdb An \code{xpose_data} object generated with \code{\link{xpose_data}}.
+#' @param data_opt A list of options in order to create appropriate data input for 
+#' ggplot2. For more information see \code{\link{data_opt}}.
 #' @param vars Variable mapping using the \code{\link[ggplot2]{aes}} function.
 #' @param aes xpose aesthetics (eg. \code{point_color}).
 #' @param group Grouping variable to be used for lines.
 #' @param type String setting the type of plot to be used points 'p',
-#' line 'l', smooth 's' and text 't' or any combination of the 4.
+#' line 'l', smooth 's' and text 't' or any combination of the four.
 #' @param guides should the guides (eg. unity line) be displayed.
 #' @param xscale scale type for x axis (eg. 'continuous', 'discrete', 'log10').
 #' @param yscale scale type for y axis (eg. 'continuous', 'discrete', 'log10').
@@ -19,8 +21,6 @@
 #' @param xp_theme An xpose theme or vector of modifications to the xpose theme
 #' (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
-#' @param problem The $problem number to use for ploting. By default the data 
-#' is taken from the estimation problem.
 #' @param ... any additional aesthetics.
 #' 
 #' @section Layers mapping:
@@ -53,6 +53,7 @@
 #' 
 #' @export
 xplot_scatter <- function(xpdb,
+                          data_opt  = data_opt(),
                           vars      = NULL,
                           aes       = NULL,
                           group     = 'ID',
@@ -67,7 +68,6 @@ xplot_scatter <- function(xpdb,
                           gg_theme,
                           xp_theme,
                           quiet,
-                          problem,
                           ...) {
   
   # Check input
@@ -76,21 +76,20 @@ xplot_scatter <- function(xpdb,
     return()
   }
   
+  # Fetch data
   if (missing(quiet)) quiet <- xpdb$options$quiet
-  
-  # Get data
-  if (missing(problem)) problem <- last_problem(xpdb, simtab = FALSE)
-  data <- get_data(xpdb, problem = problem)
-  msg(c('Using data from $problem no.', problem), quiet)
+  data <- fetch_data(xpdb, data_opt$problem, data_opt$subprob, data_opt$source, 
+                     data_opt$simtab, data_opt$tidy, data_opt$index_col, quiet)
+  if (is.null(data)) return()
   
   # Filter observations
   mdv_var <- xp_var(xpdb, problem, type = c('evid', 'mdv'))$col[1]
   if (!is.null(mdv_var)) {
-    msg(c('Filter data by ', mdv_var, ' == 0'), quiet)
+    msg(c('Filtering data by ', mdv_var, ' == 0'), quiet)
     data <- dplyr::filter(data, data[, mdv_var] == 0)
   }
   
-  # Update and get xp_theme
+  # Assing xp_theme and gg_theme
   if (!missing(xp_theme)) xpdb <- update_themes(xpdb = xpdb, xp_theme = xp_theme)
   if (missing(gg_theme)) gg_theme <- xpdb$gg_theme
   
@@ -166,10 +165,8 @@ xplot_scatter <- function(xpdb,
                           ...)
     } else {
       xp <- xp + xp_geoms(mapping  = aes,
-                          xp_theme = filter_xp_theme(xpdb$xp_theme,
-                                                     stringr::str_c('panel_', 
-                                                                    c('ncol', 'nrow', 'dir'), 
-                                                                    collapse = '|'), 'drop'),
+                          xp_theme = filter_xp_theme(xpdb$xp_theme, stringr::str_c('panel_', c('ncol', 'nrow', 'dir'), 
+                                                                                   collapse = '|'), 'drop'),
                           name     = 'panel',
                           ggfun    = 'facet_grid',
                           ...)
@@ -187,5 +184,6 @@ xplot_scatter <- function(xpdb,
                    xp_theme = xpdb$xp_theme[stringr::str_c(c('title', 'subtitle', 'caption'), 
                                                            '_suffix')])
   
+  # Ouptut the plot
   structure(xp, class = c('xpose_plot', class(xp)))
 }
