@@ -60,16 +60,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/workflow.html">Workflow</a>
+      <a href="../articles/introduction.html">1. Introduction</a>
     </li>
     <li>
-      <a href="../articles/importing_model_outputs.html">Importing model outputs</a>
+      <a href="../articles/importing_model_outputs.html">2. Importing, exporting data</a>
     </li>
     <li>
-      <a href="../articles/customizing_plots.html">Customizing plots</a>
+      <a href="../articles/customizing_plots.html">3. Customizing plots</a>
     </li>
     <li>
-      <a href="../articles/interactive_plots.html">Creating interactive plots (beta)</a>
+      <a href="../articles/interactive_plots.html">4. Creating interactive plots (beta)</a>
     </li>
   </ul>
 </li>
@@ -131,19 +131,21 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>list_vars</span>(<span class='no'>xpdb_ex_pk</span>)</div><div class='output co'>#&gt; 
 #&gt; List of available variables for problem no. 1 
-#&gt;  - Subject identifier (id)           : ID
-#&gt;  - Occasion flag (occ)               : OCC
-#&gt;  - Unknown (na)                      : DOSE, SS, II, TAD
-#&gt;  - Dose amount (amt)                 : AMT
-#&gt;  - Independent variable (idv)        : TIME
-#&gt;  - Model predictions (pred)          : IPRED, CPRED, PRED
-#&gt;  - Residuals (res)                   : CWRES, IWRES, RES, WRES
-#&gt;  - Event identifier (evid)           : EVID
-#&gt;  - Dependent variable (dv)           : DV
-#&gt;  - Categorical covariates (catcov)   : SEX, MED1, MED2
-#&gt;  - Continuous covariates (contcov)   : CLCR, AGE, WT
-#&gt;  - Model parameter (param)           : KA, CL, V, ALAG1
-#&gt;  - Eta (eta)                         : ETA1, ETA2, ETA3</div></pre>
+#&gt;  - Subject identifier (id)               : ID
+#&gt;  - Dependent variable (dv)               : DV
+#&gt;  - Independent variable (idv)            : TIME
+#&gt;  - Occasion flag (occ)                   : OCC
+#&gt;  - Dose amount (amt)                     : AMT
+#&gt;  - Event identifier (evid)               : EVID
+#&gt;  - Model typical predictions (pred)      : PRED
+#&gt;  - Model individual predictions (ipred)  : IPRED
+#&gt;  - Model conditional predictions (cpred) : CPRED
+#&gt;  - Model parameter (param)               : KA, CL, V, ALAG1
+#&gt;  - Eta (eta)                             : ETA1, ETA2, ETA3
+#&gt;  - Residuals (res)                       : CWRES, IWRES, RES, WRES
+#&gt;  - Categorical covariates (catcov)       : SEX, MED1, MED2
+#&gt;  - Continuous covariates (contcov)       : CLCR, AGE, WT
+#&gt;  - Not attributed (na)                   : DOSE, SS, II, TAD</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

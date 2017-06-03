@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Importing model outputs • xpose</title>
+<title>Importing and exporting data • xpose</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
@@ -38,16 +38,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/workflow.html">Workflow</a>
+      <a href="../articles/introduction.html">1. Introduction</a>
     </li>
     <li>
-      <a href="../articles/importing_model_outputs.html">Importing model outputs</a>
+      <a href="../articles/importing_model_outputs.html">2. Importing, exporting data</a>
     </li>
     <li>
-      <a href="../articles/customizing_plots.html">Customizing plots</a>
+      <a href="../articles/customizing_plots.html">3. Customizing plots</a>
     </li>
     <li>
-      <a href="../articles/interactive_plots.html">Creating interactive plots (beta)</a>
+      <a href="../articles/interactive_plots.html">4. Creating interactive plots (beta)</a>
     </li>
   </ul>
 </li>
@@ -83,7 +83,7 @@
       </header><div class="row">
   <div class="col-md-9">
     <div class="page-header toc-ignore">
-      <h1>Importing model outputs</h1>
+      <h1>Importing and exporting data</h1>
                         <h4 class="author">Benjamin Guiastrennec</h4>
             
             <h4 class="date">03 June, 2017</h4>
@@ -92,6 +92,9 @@
     
     
 <div class="contents">
+<div id="import" class="section level2">
+<h2 class="hasAnchor">
+<a href="#import" class="anchor"></a>Import</h2>
 <div id="import-model-output" class="section level3">
 <h3 class="hasAnchor">
 <a href="#import-model-output" class="anchor"></a>Import model output</h3>
@@ -124,13 +127,13 @@
 <li>output and simulation tables: for the actual data</li>
 </ul>
 <p>When importing the files, xpose will return messages to the console and inform of any issue encountered during the import.</p>
-<pre><code>xpdb &lt;- xpose_data(runno = '001')
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xpdb &lt;-<span class="st"> </span><span class="kw"><a href="../reference/xpose_data.html">xpose_data</a></span>(<span class="dt">runno =</span> <span class="st">'001'</span>)
 
 Looking for nonmem output tables
-Reading: sdtab001, catab001, cotab001, patab001 [$prob no.1]
+Reading:<span class="st"> </span>sdtab001, catab001, cotab001, patab001 [$prob no<span class="fl">.1</span>]
 
 Looking for nonmem output files
-Reading: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi</code></pre>
+Reading:<span class="st"> </span>run001.cor, run001.cov, run001.ext, run001.grd, run001.phi</code></pre></div>
 <p>These messages can be silenced with the option <code>quiet = TRUE</code>.</p>
 </div>
 <div id="others-nlme-tools" class="section level4">
@@ -160,14 +163,15 @@ Reading: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi</code></pre>
 <code>options</code>: attached global options</li>
 </ul>
 </div>
-<div id="glimpse-at-the-xpdb-object" class="section level3">
+<div id="glimpse-at-the-xpdb" class="section level3">
 <h3 class="hasAnchor">
-<a href="#glimpse-at-the-xpdb-object" class="anchor"></a>Glimpse at the <code>xpdb</code> object</h3>
-<p>To quickly get information about an <code>xpdb</code> object simply write its name or <code>print(&lt;xpdb name&gt;)</code> into the R console press Enter and a summary will be returned.</p>
+<a href="#glimpse-at-the-xpdb" class="anchor"></a>Glimpse at the xpdb</h3>
+<p>The files attached to an xpdb object can be displayed to the console simply by writing its name to the console or by using the <code>print()</code> function. Any of these files can be extracted from the xpdb using one of the functions listed below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xpdb <span class="co"># or print(xpdb)</span></code></pre></div>
 <pre><code>run001.lst overview: 
  - Software: nonmem 7.3.0 
  - Attached files: 
-   + tables: $prob no.1: sdtab001, catab001, cotab001, patab001 
+   + tables: $prob no.1: catab001, cotab001, patab001, sdtab001 
    + sim tabs: &lt;none&gt; 
    + output files: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi 
  - gg_theme: theme_readable 
@@ -175,9 +179,114 @@ Reading: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi</code></pre>
  - Options: dir = analysis/models/pk/, quiet = TRUE, manual_import = NULL</code></pre>
 </div>
 </div>
+<div id="export" class="section level2">
+<h2 class="hasAnchor">
+<a href="#export" class="anchor"></a>Export</h2>
+<div id="export-code" class="section level3">
+<h3 class="hasAnchor">
+<a href="#export-code" class="anchor"></a>Export code</h3>
+<p>The <code><a href="../reference/get_code.html">get_code()</a></code> function can be used to extract the parsed model code from the xpdb. This code was used to create the summary and find table names and can be used to get additional information regarding the run. If the argument <code>problem</code> is specified a subset of the code can be returned based on <code>$PROBLEM</code>.</p>
+<p><em>Note that general code warnings and PsN outputs appended are listed as problem 0.</em></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">code &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_code.html">get_code</a></span>(xpdb)
+code</code></pre></div>
+<pre><code># A tibble: 477 x 5
+   problem level subroutine                                                        code
+ *   &lt;dbl&gt; &lt;dbl&gt;      &lt;chr&gt;                                                       &lt;chr&gt;
+ 1       0     0        oth                                Wed Apr 5 16:19:26 CEST 2017
+ 2       0     0        oth                                                            
+ 3       0     0        oth                                                            
+ 4       0     0        oth                                                            
+ 5       1     1        pro                                              xpose test run
+ 6       1     2        inp          ID OCC XAT2=DROP DGRP=DROP DOSE FLAG=DROP ONO=DROP
+ 7       1     2        inp  XIME=DROP DVO=DROP NEUY=DROP SCR AGE SEX CLASS WT DROP ACE
+ 8       1     2        inp  MED1 MED2 NUMB=DROP TAD TIME VIDD=DROP CLCR AMT SS II DROP
+ 9       1     2        inp    CMT=DROP CONO=DROP DV EVID=DROP OVID=DROP DROP SHR2=DROP
+10       1     3        dat                                         mx19_1.csv IGNORE=@
+# ... with 467 more rows, and 1 more variables: comment &lt;chr&gt;</code></pre>
+</div>
+<div id="export-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#export-data" class="anchor"></a>Export data</h3>
+<p>The <code><a href="../reference/get_data.html">get_data()</a></code> function can be used to extract the imported table files. Tables can be extracted by <code>table</code> name or by <code>problem</code>. In the latter a single dataset containing all aggregated tables is returned. If more than one <code>table</code> name or <code>problem</code> number is provided a named list is returned.</p>
+<p><em>Note when providing a table name it is not garanteed that the table will be identical to its file e.g. the order of the columns may have been changed and tables with <code>FIRSTONLY</code> will no longer be deduplicated.</em></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_data.html">get_data</a></span>(xpdb, <span class="dt">table =</span> <span class="st">'cotab001'</span>)
+data</code></pre></div>
+<pre><code># A tibble: 1,166 x 8
+      ID  CLCR   AGE    WT       DV        PRED       RES      WRES
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1   110    66    68   105  0.00000 -3.68890000  0.000000  0.000000
+ 2   110    66    68   105 -2.48410 -0.56877000 -1.915300 -3.885300
+ 3   110    66    68   105 -1.50280 -0.59202000 -0.910810 -2.134900
+ 4   110    66    68   105 -0.71539 -0.66915000 -0.046239 -0.128600
+ 5   110    66    68   105 -0.75375 -1.02280000  0.269070  0.460450
+ 6   110    66    68   105 -1.12390 -1.37920000  0.255310  0.262090
+ 7   110    66    68   105 -1.39270 -1.73570000  0.342950  0.336620
+ 8   110    67    68    99  0.00000 -1.72680000  0.000000  0.000000
+ 9   110    67    68    99 -0.98591 -1.72680000  0.740930  0.883170
+10   110    67    68    99 -1.05730  0.00024372 -1.057500  0.093179
+# ... with 1,156 more rows</code></pre>
+</div>
+<div id="export-file" class="section level3">
+<h3 class="hasAnchor">
+<a href="#export-file" class="anchor"></a>Export file</h3>
+<p>The <code><a href="../reference/get_file.html">get_file()</a></code> function can be used to extract the imported output files. Files can be extracted by <code>file</code> name, by <code>problem</code> and/or <code>subprob</code>. If more than one <code>file</code> name, <code>problem</code> or subproblem number is provided a named list is returned.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">file &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_file.html">get_file</a></span>(xpdb, <span class="dt">file =</span> <span class="st">'run001.ext'</span>)
+file</code></pre></div>
+<pre><code># A tibble: 14 x 15
+     ITERATION      THETA1      THETA2      THETA3      THETA4      THETA5      THETA6 `SIGMA(1,1)`
+ *       &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;
+ 1           0 2.75000E+01 1.56500E+00 2.10000E+00 2.54000E-01 2.30000E-01 8.00000E-03  1.00000E+00
+ 2           5 2.83703E+01 1.47870E+00 2.67525E+00 3.85315E-01 4.28860E-01 7.46121E-03  1.00000E+00
+ 3          10 2.80583E+01 1.63234E+00 7.25085E+00 2.34736E-01 4.34389E-01 6.50974E-03  1.00000E+00
+ 4          15 2.60069E+01 1.41469E+00 3.48751E+00 2.31555E-01 3.72166E-01 6.43059E-03  1.00000E+00
+ 5          20 2.64911E+01 1.42475E+00 3.47189E+00 2.32082E-01 3.71869E-01 6.51609E-03  1.00000E+00
+ 6          25 2.65053E+01 1.42569E+00 3.51032E+00 2.32225E-01 3.71951E-01 6.51698E-03  1.00000E+00
+ 7          26 2.65053E+01 1.42569E+00 3.51032E+00 2.32225E-01 3.71951E-01 6.51698E-03  1.00000E+00
+ 8 -1000000000 2.65053E+01 1.42569E+00 3.51032E+00 2.32225E-01 3.71951E-01 6.51698E-03  1.00000E+00
+ 9 -1000000001 8.06067E-01 4.28168E-02 9.66085E-01 9.16968E-03 2.75754E-02 2.09978E-03  1.00000E+10
+10 -1000000002 1.04829E-01 2.90505E-01 3.81557E-01 4.58062E-01 6.09785E-01 6.56834E-01  1.34108E+00
+11 -1000000003 3.13809E+01 1.04829E-01 3.28962E+00 0.00000E+00 0.00000E+00 0.00000E+00  0.00000E+00
+12 -1000000004 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00  1.00000E+00
+13 -1000000005 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00  1.00000E+10
+14 -1000000006 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00  1.00000E+00
+# ... with 7 more variables: `OMEGA(1,1)` &lt;chr&gt;, `OMEGA(2,1)` &lt;chr&gt;, `OMEGA(2,2)` &lt;chr&gt;,
+#   `OMEGA(3,1)` &lt;chr&gt;, `OMEGA(3,2)` &lt;chr&gt;, `OMEGA(3,3)` &lt;chr&gt;, OBJ &lt;chr&gt;</code></pre>
+</div>
+<div id="export-summary" class="section level3">
+<h3 class="hasAnchor">
+<a href="#export-summary" class="anchor"></a>Export summary</h3>
+<p>The <code><a href="../reference/get_summary.html">get_summary()</a></code> function can be used to extract the generated run summary from which the <code>template_titles</code>. If the argument <code>problem</code> is specified a subset of the summary can be returned based on <code>$PROBLEM</code>.</p>
+<p><em>Note that general summary information are listed as problem 0.</em></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">run_sum &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_summary.html">get_summary</a></span>(xpdb, <span class="dt">problem =</span> <span class="dv">0</span>)
+run_sum</code></pre></div>
+<pre><code># A tibble: 12 x 5
+   problem subprob                 descr       label               value
+     &lt;dbl&gt;   &lt;dbl&gt;                 &lt;chr&gt;       &lt;chr&gt;               &lt;chr&gt;
+ 1       0       1       Run description       descr    Run for testthat
+ 2       0       1         Run directory         dir analysis/models/pk/
+ 3       0       1            Run errors      errors                  na
+ 4       0       1   ESAMPLE seed number esampleseed                  na
+ 5       0       1              Run file        file          run001.lst
+ 6       0       1     Number of ESAMPLE    nesample                  na
+ 7       0       1 Number of simulations        nsim                  na
+ 8       0       1       Reference model         ref                 000
+ 9       0       1            Run number         run              run001
+10       0       1       Simulation seed     simseed                  na
+11       0       1              Software    software              nonmem
+12       0       1      Software version     version               7.3.0</code></pre>
+</div>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+        <div id="tocnav">
+      <h2>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+<li><a href="#import">Import</a></li>
+      <li><a href="#export">Export</a></li>
+      </ul>
+</div>
       </div>
 
 </div>

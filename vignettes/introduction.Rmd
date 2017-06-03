@@ -1,5 +1,5 @@
 ---
-title: "Workflow"
+title: "Introduction"
 author: "Benjamin Guiastrennec"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: rmarkdown::html_vignette
@@ -18,7 +18,8 @@ knitr::opts_chunk$set(fig.dpi = 96,
                       fig.align = 'center', 
                       fig.height = 4, 
                       fig.width = 4,
-                      out.width = '50%')
+                      out.width = '50%',
+                      comment = '')
 ```
 
 
@@ -35,8 +36,30 @@ The function `xpose_data()` collects all model output files and table and organi
 xpdb <- xpose_data(runno = '001', dir = 'analysis/model/pk/')
 ```
 
+### Glimpse at the xpdb
+The files attached to an xpdb object can be displayed to the console simply by writing its name to the console or by using the `print()` function.
+
+```{r demo print xpose_data}
+xpdb # or print(xpdb)
+```
+
+### Model summary
+A summary of a model run can be displayed to the console by using the `summary()` function on an xpdb object.
+
+```{r demo xpose summary}
+summary(xpdb)
+```
+
+### Listing variables
+A list of available variables for plotting can be displayed to the console by using the `list_vars()` function on an xpdb object.
+
+```{r demo list_vars}
+list_vars(xpdb)
+```
+
+
 ### Generating plots
-Many functions will be made available in the next release of xpose. Currently available functions are:
+Many functions will be made available in the next release of xpose. Available functions feature:
 
  - DV vs. PRED (`dv_vs_pred()`, `dv_vs_ipred()`, `dv_vs_cpred()`)   
  - RES vs. IDV (`res_vs_idv(res = 'CWRES')`)   
@@ -66,7 +89,7 @@ xpose_save(filename = '@run_@plotfun_[@ofv].jpeg')
 ```
 
 
-### The pipes
+### Pipes
 `xpose` makes use of the pipe operator `%>%` from the package [dplyr](http://dplyr.tidyverse.org). Pipes can be used to generate clear workflow.
 
 ```{r, eval = FALSE}

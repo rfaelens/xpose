@@ -18,7 +18,8 @@ knitr::opts_chunk$set(fig.dpi = 96,
                       fig.align = 'center', 
                       fig.height = 4, 
                       fig.width = 4,
-                      out.width = '50%')
+                      out.width = '50%',
+                      comment = '')
 ```
 
 
@@ -46,7 +47,7 @@ All xpose plots have by default an informative title, subtitle and caption. For 
 ```{r demo titles}
 # Using template titles
 dv_vs_ipred(xpdb,
-            title    = 'DV vs. IPRED (@run, obj: @ofv)',
+            title    = '@y vs. @x (@run, obj: @ofv)',
             subtitle = 'Based on: @nind subjects and @nobs records',
             caption  = 'Dir: @dir')
 
@@ -64,8 +65,8 @@ dv_vs_ipred(xpdb) +
   labs(title    = '@descr',
        subtitle = NULL,
        caption  = 'Based on @nobs observations',
-       x        = 'Individual model predictions (IPRED)',
-       y        = 'Observations (DV) for @nind subjects')
+       x        = 'Individual model predictions (@x)',
+       y        = 'Observations (@y) for @nind subjects')
 
 ```
 
@@ -103,7 +104,7 @@ Panels (or faceting) can be created by using the `facets` argument as follows:
 * If `facets` is a string e.g `facets = "OCC"`, `ggplot2::facet_wrap` will be used
 * If `facets` is a formula e.g `facets = SEX~OCC`, `ggplot2::facet_grid` will be used
 
-```{r demo panels, fig.width = 6, out.width = '75%'}
+```{r demo panels, fig.width = 6, fig.height = 6, out.width = '75%'}
 # Example with a string
 dv_vs_ipred(xpdb, facets = c('SEX', 'OCC'))
 
@@ -140,7 +141,7 @@ dv_vs_ipred(xpdb,
             xscale_breaks = c(-4, -2, 0),
             xscale_labels = c('Low', 'Med', 'High'),
             xscale_expand = c(0.2, 0),
-            xscale_name = 'Individual model prediction')
+            xscale_name = 'Individual model predictions')
 ```
 
 

@@ -7,7 +7,8 @@ knitr::opts_chunk$set(fig.dpi = 96,
                       fig.align = 'center', 
                       fig.height = 4, 
                       fig.width = 4,
-                      out.width = '50%')
+                      out.width = '50%',
+                      comment = '')
 
 ## ----demo type, echo = FALSE, fig.height = 6, fig.width = 6, out.width = '75%'----
 gridExtra::grid.arrange(
@@ -20,7 +21,7 @@ gridExtra::grid.arrange(
 ## ----demo titles---------------------------------------------------------
 # Using template titles
 dv_vs_ipred(xpdb,
-            title    = 'DV vs. IPRED (@run, obj: @ofv)',
+            title    = '@y vs. @x (@run, obj: @ofv)',
             subtitle = 'Based on: @nind subjects and @nobs records',
             caption  = 'Dir: @dir')
 
@@ -35,8 +36,8 @@ dv_vs_ipred(xpdb) +
   labs(title    = '@descr',
        subtitle = NULL,
        caption  = 'Based on @nobs observations',
-       x        = 'Individual model predictions (IPRED)',
-       y        = 'Observations (DV) for @nind subjects')
+       x        = 'Individual model predictions (@x)',
+       y        = 'Observations (@y) for @nind subjects')
 
 
 ## ----demo aesthetics-----------------------------------------------------
@@ -53,7 +54,7 @@ dv_vs_ipred(xpdb,
 ## ----demo mapping--------------------------------------------------------
 dv_vs_ipred(xpdb, type = 'p', aes(point_color = as.factor(SEX))) 
 
-## ----demo panels, fig.width = 6, out.width = '75%'-----------------------
+## ----demo panels, fig.width = 6, fig.height = 6, out.width = '75%'-------
 # Example with a string
 dv_vs_ipred(xpdb, facets = c('SEX', 'OCC'))
 
@@ -77,7 +78,7 @@ dv_vs_ipred(xpdb,
             xscale_breaks = c(-4, -2, 0),
             xscale_labels = c('Low', 'Med', 'High'),
             xscale_expand = c(0.2, 0),
-            xscale_name = 'Individual model prediction')
+            xscale_name = 'Individual model predictions')
 
 ## ----demo themes xpdb, eval = FALSE--------------------------------------
 #  # While creating the xpdb

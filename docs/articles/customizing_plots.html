@@ -38,16 +38,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/workflow.html">Workflow</a>
+      <a href="../articles/introduction.html">1. Introduction</a>
     </li>
     <li>
-      <a href="../articles/importing_model_outputs.html">Importing model outputs</a>
+      <a href="../articles/importing_model_outputs.html">2. Importing, exporting data</a>
     </li>
     <li>
-      <a href="../articles/customizing_plots.html">Customizing plots</a>
+      <a href="../articles/customizing_plots.html">3. Customizing plots</a>
     </li>
     <li>
-      <a href="../articles/interactive_plots.html">Creating interactive plots (beta)</a>
+      <a href="../articles/interactive_plots.html">4. Creating interactive plots (beta)</a>
     </li>
   </ul>
 </li>
@@ -112,7 +112,7 @@
 <a href="#from-the-plot-functions" class="anchor"></a>From the plot functions</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Using template titles</span>
 <span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb,
-            <span class="dt">title    =</span> <span class="st">'DV vs. IPRED (@run, obj: @ofv)'</span>,
+            <span class="dt">title    =</span> <span class="st">'@y vs. @x (@run, obj: @ofv)'</span>,
             <span class="dt">subtitle =</span> <span class="st">'Based on: @nind subjects and @nobs records'</span>,
             <span class="dt">caption  =</span> <span class="st">'Dir: @dir'</span>)</code></pre></div>
 <p><img src="customizing_plots_files/figure-html/demo%20titles-1.png" width="50%" style="display: block; margin: auto;"></p>
@@ -131,8 +131,8 @@
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">title    =</span> <span class="st">'@descr'</span>,
        <span class="dt">subtitle =</span> <span class="ot">NULL</span>,
        <span class="dt">caption  =</span> <span class="st">'Based on @nobs observations'</span>,
-       <span class="dt">x        =</span> <span class="st">'Individual model predictions (IPRED)'</span>,
-       <span class="dt">y        =</span> <span class="st">'Observations (DV) for @nind subjects'</span>)</code></pre></div>
+       <span class="dt">x        =</span> <span class="st">'Individual model predictions (@x)'</span>,
+       <span class="dt">y        =</span> <span class="st">'Observations (@y) for @nind subjects'</span>)</code></pre></div>
 <p><img src="customizing_plots_files/figure-html/demo%20xpose_labs-1.png" width="50%" style="display: block; margin: auto;"></p>
 </div>
 </div>
@@ -201,7 +201,7 @@
             <span class="dt">xscale_breaks =</span> <span class="kw">c</span>(-<span class="dv">4</span>, -<span class="dv">2</span>, <span class="dv">0</span>),
             <span class="dt">xscale_labels =</span> <span class="kw">c</span>(<span class="st">'Low'</span>, <span class="st">'Med'</span>, <span class="st">'High'</span>),
             <span class="dt">xscale_expand =</span> <span class="kw">c</span>(<span class="fl">0.2</span>, <span class="dv">0</span>),
-            <span class="dt">xscale_name =</span> <span class="st">'Individual model prediction'</span>)</code></pre></div>
+            <span class="dt">xscale_name =</span> <span class="st">'Individual model predictions'</span>)</code></pre></div>
 <p><img src="customizing_plots_files/figure-html/scales%20demo-1.png" width="50%" style="display: block; margin: auto;"></p>
 </div>
 <div id="themes" class="section level3">
