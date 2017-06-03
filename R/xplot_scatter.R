@@ -19,7 +19,7 @@
 #' @param xp_theme An xpose theme or vector of modifications to the xpose theme
 #' (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
-#' @param problem Numeric, the $problem number to use for ploting. By default the data 
+#' @param problem The $problem number to use for ploting. By default the data 
 #' is taken from the estimation problem.
 #' @param ... any additional aesthetics.
 #' 

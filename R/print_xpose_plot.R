@@ -20,13 +20,16 @@
 #' @export
 print.xpose_plot <- function(x, ...) {
   if (is.xpose.plot(x)) {
+    var_map <- as.character(x$mapping)
     x$labels$title <- append_suffix(x$xpose, x$labels$title, 'title')
     x$labels$subtitle <- append_suffix(x$xpose, x$labels$subtitle, 'subtitle')
     x$labels$caption  <- append_suffix(x$xpose, x$labels$caption, 'caption')
     x$labels <- x$labels %>% 
       purrr::map_if(stringr::str_detect(., '@'),
                     ~parse_title(string = ., xpdb = x$xpose,
-                                 problem = x$xpose$problem, quiet = x$xpose$quiet))
+                                 problem = x$xpose$problem, quiet = x$xpose$quiet,
+                                 extra_key = c('plotfun', names(var_map)), 
+                                 extra_value = c(x$xpose$fun, var_map)))
   }
   print.ggplot(x, ...)
 }

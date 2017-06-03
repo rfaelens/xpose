@@ -5,8 +5,8 @@
 \title{Residuals plotted against population predictions}
 \usage{
 res_vs_pred(xpdb, aes = NULL, res = "CWRES", group = "ID", type = "pls",
-  facets = NULL, title = "<res> vs. PRED | @run", subtitle = "Ofv: @ofv",
-  caption = "@dir", log = NULL, guides = TRUE, ...)
+  facets = NULL, title = "@y vs. @x | @run", subtitle = "Ofv: @ofv",
+  caption = "@dir", log = NULL, guides = TRUE, problem, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -32,6 +32,9 @@ to use \link[ggplot2]{facet_grid}.}
 \item{log}{String assigning logarithmic scale to axes, can be either '', 'x', y' or 'xy'.}
 
 \item{guides}{Enable guides display (e.g. unity line).}
+
+\item{problem}{The $problem number to use for ploting. By default the data 
+is taken from the estimation problem.}
 
 \item{...}{Any additional aesthetics to be passed on \code{xplot_scatter}.}
 }

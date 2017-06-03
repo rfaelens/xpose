@@ -8,17 +8,16 @@
 \title{Observations plotted against model predictions}
 \usage{
 dv_vs_ipred(xpdb, aes = NULL, group = "ID", type = "pls", facets = NULL,
-  title = "DV vs. IPRED | @run",
-  subtitle = "Ofv: @ofv, Eps shrink: @epsshk", caption = "@dir",
-  log = NULL, guides = TRUE, ...)
+  title = "@y vs. @x | @run", subtitle = "Ofv: @ofv, Eps shrink: @epsshk",
+  caption = "@dir", log = NULL, guides = TRUE, problem, ...)
 
 dv_vs_pred(xpdb, aes = NULL, group = "ID", type = "pls", facets = NULL,
-  title = "DV vs. PRED | @run", subtitle = "Ofv: @ofv", caption = "@dir",
-  log = NULL, guides = TRUE, ...)
+  title = "@y vs. @x | @run", subtitle = "Ofv: @ofv", caption = "@dir",
+  log = NULL, guides = TRUE, problem, ...)
 
 dv_vs_cpred(xpdb, aes = NULL, group = "ID", type = "pls", facets = NULL,
-  title = "DV vs. CPRED | @run", subtitle = "Ofv: @ofv", caption = "@dir",
-  log = NULL, guides = TRUE, ...)
+  title = "@y vs. @x | @run", subtitle = "Ofv: @ofv", caption = "@dir",
+  log = NULL, guides = TRUE, problem, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -42,6 +41,9 @@ to use \link[ggplot2]{facet_grid}.}
 \item{log}{String assigning logarithmic scale to axes, can be either '', 'x', y' or 'xy'.}
 
 \item{guides}{Enable guides display (e.g. unity line).}
+
+\item{problem}{The $problem number to use for ploting. By default the data 
+is taken from the estimation problem.}
 
 \item{...}{Any additional aesthetics to be passed on \code{xplot_scatter}.}
 }

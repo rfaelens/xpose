@@ -31,7 +31,7 @@
 #'  \item{@nsim}{Number of simulations}
 #'  \item{@ofv}{Objective function value}
 #'  \item{@probn}{Problem number}
-#'  \item{@plotfun}{Name of the plot function. Can only be used in the filename argument of \code{\link{xpose_save}}}
+#'  \item{@plotfun}{Name of the plot function}}
 #'  \item{@ref}{Reference model}
 #'  \item{@run}{Model run name}
 #'  \item{@runtime}{Estimation/Sim runtime}
@@ -41,6 +41,8 @@
 #'  \item{@term}{Termination message}
 #'  \item{@version}{Software version (e.g. 7.3)}
 #'  \item{@warnings}{Run warnings (e.g. boundary)}
+#'  \item{@x}{Name of the main X variable}
+#'  \item{@y}{Name of the main Y variable}
 #' }
 #' @seealso \link{xpose_save}
 #' @examples

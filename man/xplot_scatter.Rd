@@ -42,7 +42,7 @@ line 'l', smooth 's' and text 't' or any combination of the 4.}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 
-\item{problem}{Numeric, the $problem number to use for ploting. By default the data 
+\item{problem}{The $problem number to use for ploting. By default the data 
 is taken from the estimation problem.}
 
 \item{...}{any additional aesthetics.}

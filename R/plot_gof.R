@@ -15,6 +15,8 @@
 #' @param caption Page caption. Use \code{NULL} to remove.
 #' @param log String assigning logarithmic scale to axes, can be either '', 'x', y' or 'xy'.
 #' @param guides Enable guides display (e.g. unity line).
+#' @param problem The $problem number to use for ploting. By default the data 
+#' is taken from the estimation problem.
 #' @param ... Any additional aesthetics to be passed on \code{xplot_scatter}.
 #' 
 #' @inheritSection xplot_scatter Layers mapping
@@ -34,15 +36,17 @@ dv_vs_ipred <- function(xpdb,
                         group    = 'ID',
                         type     = 'pls',
                         facets   = NULL,
-                        title    = 'DV vs. IPRED | @run',
+                        title    = '@y vs. @x | @run',
                         subtitle = 'Ofv: @ofv, Eps shrink: @epsshk',
                         caption  = '@dir',
                         log      = NULL,
                         guides   = TRUE,
+                        problem,
                         ...) {
-  
+  if (missing(problem)) problem <- last_problem(xpdb, simtab = FALSE)
   xplot_scatter(xpdb = xpdb, aes = aes, group = group,
-                vars = aes_string(x = 'IPRED', y = 'DV'), 
+                vars = aes_string(x = xp_var(xpdb, problem, type = 'ipred')$col, 
+                                  y = xp_var(xpdb, problem, type = 'dv')$col), 
                 type = type, guides = guides, panel_facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
@@ -58,15 +62,17 @@ dv_vs_pred <- function(xpdb,
                        group    = 'ID',
                        type     = 'pls',
                        facets   = NULL,
-                       title    = 'DV vs. PRED | @run',
+                       title    = '@y vs. @x | @run',
                        subtitle = 'Ofv: @ofv',
                        caption  = '@dir',
                        log      = NULL,
                        guides   = TRUE,
+                       problem,
                        ...) {
-  
+  if (missing(problem)) problem <- last_problem(xpdb, simtab = FALSE)
   xplot_scatter(xpdb = xpdb, aes = aes, group = group,
-                vars = aes_string(x = 'PRED', y = 'DV'), 
+                vars = aes_string(x = xp_var(xpdb, problem, type = 'pred')$col, 
+                                  y = xp_var(xpdb, problem, type = 'dv')$col), 
                 type = type, guides = guides, panel_facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
@@ -83,15 +89,17 @@ dv_vs_cpred <- function(xpdb,
                         group    = 'ID',
                         type     = 'pls',
                         facets   = NULL,
-                        title    = 'DV vs. CPRED | @run',
+                        title    = '@y vs. @x | @run',
                         subtitle = 'Ofv: @ofv',
                         caption  = '@dir',
                         log      = NULL,
                         guides   = TRUE,
+                        problem,
                         ...) {
-  
+  if (missing(problem)) problem <- last_problem(xpdb, simtab = FALSE)
   xplot_scatter(xpdb = xpdb, aes = aes, group = group,
-                vars = aes_string(x = 'CPRED', y = 'DV'), 
+                vars = aes_string(x = xp_var(xpdb, problem, type = 'cpred')$col, 
+                                  y = xp_var(xpdb, problem, type = 'dv')$col),
                 type = type, guides = guides, panel_facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
