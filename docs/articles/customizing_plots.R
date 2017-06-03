@@ -9,12 +9,13 @@ knitr::opts_chunk$set(fig.dpi = 96,
                       fig.width = 4,
                       out.width = '50%')
 
-## ----demo type, echo = FALSE, fig.height = 2.5, fig.width = 6, out.width = '75%'----
+## ----demo type, echo = FALSE, fig.height = 6, fig.width = 6, out.width = '75%'----
 gridExtra::grid.arrange(
   dv_vs_ipred(xpdb, title = "type = \'p\'", subtitle = NULL, caption = NULL, type = 'p'),
   dv_vs_ipred(xpdb, title = "type = \'l\'", subtitle = NULL, caption = NULL, type = 'l'),
   dv_vs_ipred(xpdb, title = "type = \'s\'", subtitle = NULL, caption = NULL, type = 's'),
-  ncol = 3)
+  dv_vs_ipred(xpdb, title = "type = \'t\'", subtitle = NULL, caption = NULL, type = 't'),
+  ncol = 2)
 
 ## ----demo titles---------------------------------------------------------
 # Using template titles
@@ -25,6 +26,9 @@ dv_vs_ipred(xpdb,
 
 # Disabling all titles
 dv_vs_ipred(xpdb, title = NULL, subtitle = NULL, caption = NULL)
+
+# Edit title suffix from the xp_theme for a specific plot
+dv_vs_ipred(xpdb, title = 'A title', xp_theme = c(title_suffix = ' | a suffix for @run'))
 
 ## ----demo xpose_labs-----------------------------------------------------
 dv_vs_ipred(xpdb) +

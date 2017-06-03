@@ -31,7 +31,7 @@ gridExtra::grid.arrange(
   dv_vs_ipred(xpdb, title = "type = \'l\'", subtitle = NULL, caption = NULL, type = 'l'),
   dv_vs_ipred(xpdb, title = "type = \'s\'", subtitle = NULL, caption = NULL, type = 's'),
   dv_vs_ipred(xpdb, title = "type = \'t\'", subtitle = NULL, caption = NULL, type = 't'),
-  ncol = 3)
+  ncol = 2)
 ```
 
 

@@ -177,6 +177,23 @@ to use <a href='http://www.rdocumentation.org/packages/ggplot2/topics/facet_grid
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="layers-mapping"><a class="anchor" href="#layers-mapping"></a>Layers mapping</h2>
+
+    
+    <p>Plots can be customized by mapping arguments to specific layers. The naming convention is 
+layer_option where layer is one of the names defined in the list below and option is 
+any option supported by this layer e.g. point_color = 'blue', smooth_method = 'lm', etc.</p><ul>
+<li><p>point: options to <code>geom_point</code></p></li>
+<li><p>line: options to <code>geom_line</code></p></li>
+<li><p>guide: options to <code>geom_abline</code></p></li>
+<li><p>panel: options to <code>facet_wrap</code> (facets is character) or <code>facet_grid</code> 
+  (facets is a formula)</p></li>
+<li><p>smooth: options to <code>geom_smooth</code></p></li>
+<li><p>text: options to <code>geom_text</code></p></li>
+<li><p>xscale: options to <code>scale_x_continuous</code> or <code>scale_x_log10</code></p></li>
+<li><p>yscale: options to <code>scale_y_continuous</code> or <code>scale_y_log10</code></p></li>
+</ul>
+    
     <h2 class="hasAnchor" id="template-titles"><a class="anchor" href="#template-titles"></a>Template titles</h2>
 
     
@@ -204,6 +221,8 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#layers-mapping">Layers mapping</a></li>
+
       <li><a href="#template-titles">Template titles</a></li>
 
       <li><a href="#see-also">See also</a></li>

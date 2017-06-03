@@ -86,7 +86,7 @@
       <h1>Customizing plots</h1>
                         <h4 class="author">Benjamin Guiastrennec</h4>
             
-            <h4 class="date">02 June, 2017</h4>
+            <h4 class="date">03 June, 2017</h4>
           </div>
 
     
@@ -95,7 +95,7 @@
 <div id="plot-type" class="section level3">
 <h3 class="hasAnchor">
 <a href="#plot-type" class="anchor"></a>Plot type</h3>
-<p>The option <code>type</code> allows to control how the data should be represented i.e. whether to use points <code>'p'</code>, lines <code>'l'</code>, smooth <code>'s'</code> or any combination of the three (e.g. <code>type = 'pl'</code>).</p>
+<p>The option <code>type</code> allows to control how the data should be represented i.e. whether to use points <code>'p'</code>, lines <code>'l'</code>, smooth <code>'s'</code>, text <code>'t'</code> or any combination of the three (e.g. <code>type = 'pl'</code>).</p>
 <p><img src="customizing_plots_files/figure-html/demo%20type-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="visual-guides" class="section level3">
@@ -119,6 +119,9 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Disabling all titles</span>
 <span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">title =</span> <span class="ot">NULL</span>, <span class="dt">subtitle =</span> <span class="ot">NULL</span>, <span class="dt">caption =</span> <span class="ot">NULL</span>)</code></pre></div>
 <p><img src="customizing_plots_files/figure-html/demo%20titles-2.png" width="50%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Edit title suffix from the xp_theme for a specific plot</span>
+<span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">title =</span> <span class="st">'A title'</span>, <span class="dt">xp_theme =</span> <span class="kw">c</span>(<span class="dt">title_suffix =</span> <span class="st">' | a suffix for @run'</span>))</code></pre></div>
+<p><img src="customizing_plots_files/figure-html/demo%20titles-3.png" width="50%" style="display: block; margin: auto;"></p>
 </div>
 <div id="using-the-labs-function" class="section level4">
 <h4 class="hasAnchor">
@@ -130,7 +133,7 @@
        <span class="dt">caption  =</span> <span class="st">'Based on @nobs observations'</span>,
        <span class="dt">x        =</span> <span class="st">'Individual model predictions (IPRED)'</span>,
        <span class="dt">y        =</span> <span class="st">'Observations (DV) for @nind subjects'</span>)</code></pre></div>
-<p><img src="customizing_plots_files/figure-html/demo%20xpose_labs-1.png" width="50%" style="display: block; margin: auto;"> Note: suffixes from <code>xp_theme</code> will not be automatically added to the title, subtitle and caption when defined in the lab function.</p>
+<p><img src="customizing_plots_files/figure-html/demo%20xpose_labs-1.png" width="50%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="modify-aesthetics" class="section level3">
