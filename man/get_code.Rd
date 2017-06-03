@@ -21,6 +21,7 @@ Extract model code from an xpdb object.
 }
 \examples{
 parsed_model <- get_code(xpdb_ex_pk)
+parsed_model
 
 }
 \seealso{

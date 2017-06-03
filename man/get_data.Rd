@@ -23,9 +23,11 @@ Extract model output table data from an xpdb object.
 \examples{
 # By table name
 sdtab <- get_data(xpdb_ex_pk, 'sdtab001')
+sdtab
 
 # By problem
 tables <- get_data(xpdb_ex_pk, problem = 1)
+tables
 
 # Tip to list available tables in the xpdb
 print(xpdb_ex_pk)

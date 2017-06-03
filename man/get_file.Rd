@@ -24,9 +24,11 @@ Extract model output file data from an xpdb object.
 \examples{
 # Single file (returns a tibble)
 ext_file <- get_file(xpdb_ex_pk, 'run001.ext')
+ext_file
 
 # Multiple files (returns a list)
 files <- get_file(xpdb_ex_pk, c('run001.ext', 'run001.phi'))
+files
 
 # Tip to list available files in the xpdb
 print(xpdb_ex_pk)

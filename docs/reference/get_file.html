@@ -147,10 +147,68 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Single file (returns a tibble)</span>
 <span class='no'>ext_file</span> <span class='kw'>&lt;-</span> <span class='fu'>get_file</span>(<span class='no'>xpdb_ex_pk</span>, <span class='st'>'run001.ext'</span>)
-
+<span class='no'>ext_file</span></div><div class='output co'>#&gt; # A tibble: 14 x 15
+#&gt;      ITERATION      THETA1      THETA2      THETA3      THETA4      THETA5
+#&gt;  *       &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;
+#&gt;  1           0 2.75000E+01 1.56500E+00 2.10000E+00 2.54000E-01 2.30000E-01
+#&gt;  2           5 2.83703E+01 1.47870E+00 2.67525E+00 3.85315E-01 4.28860E-01
+#&gt;  3          10 2.80583E+01 1.63234E+00 7.25085E+00 2.34736E-01 4.34389E-01
+#&gt;  4          15 2.60069E+01 1.41469E+00 3.48751E+00 2.31555E-01 3.72166E-01
+#&gt;  5          20 2.64911E+01 1.42475E+00 3.47189E+00 2.32082E-01 3.71869E-01
+#&gt;  6          25 2.65053E+01 1.42569E+00 3.51032E+00 2.32225E-01 3.71951E-01
+#&gt;  7          26 2.65053E+01 1.42569E+00 3.51032E+00 2.32225E-01 3.71951E-01
+#&gt;  8 -1000000000 2.65053E+01 1.42569E+00 3.51032E+00 2.32225E-01 3.71951E-01
+#&gt;  9 -1000000001 8.06067E-01 4.28168E-02 9.66085E-01 9.16968E-03 2.75754E-02
+#&gt; 10 -1000000002 1.04829E-01 2.90505E-01 3.81557E-01 4.58062E-01 6.09785E-01
+#&gt; 11 -1000000003 3.13809E+01 1.04829E-01 3.28962E+00 0.00000E+00 0.00000E+00
+#&gt; 12 -1000000004 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00
+#&gt; 13 -1000000005 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00
+#&gt; 14 -1000000006 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00
+#&gt; # ... with 9 more variables: THETA6 &lt;chr&gt;, `SIGMA(1,1)` &lt;chr&gt;,
+#&gt; #   `OMEGA(1,1)` &lt;chr&gt;, `OMEGA(2,1)` &lt;chr&gt;, `OMEGA(2,2)` &lt;chr&gt;,
+#&gt; #   `OMEGA(3,1)` &lt;chr&gt;, `OMEGA(3,2)` &lt;chr&gt;, `OMEGA(3,3)` &lt;chr&gt;, OBJ &lt;chr&gt;</div><div class='input'>
 <span class='co'># Multiple files (returns a list)</span>
 <span class='no'>files</span> <span class='kw'>&lt;-</span> <span class='fu'>get_file</span>(<span class='no'>xpdb_ex_pk</span>, <span class='fu'>c</span>(<span class='st'>'run001.ext'</span>, <span class='st'>'run001.phi'</span>))
-
+<span class='no'>files</span></div><div class='output co'>#&gt; $run001.ext
+#&gt; # A tibble: 14 x 15
+#&gt;      ITERATION      THETA1      THETA2      THETA3      THETA4      THETA5
+#&gt;  *       &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;
+#&gt;  1           0 2.75000E+01 1.56500E+00 2.10000E+00 2.54000E-01 2.30000E-01
+#&gt;  2           5 2.83703E+01 1.47870E+00 2.67525E+00 3.85315E-01 4.28860E-01
+#&gt;  3          10 2.80583E+01 1.63234E+00 7.25085E+00 2.34736E-01 4.34389E-01
+#&gt;  4          15 2.60069E+01 1.41469E+00 3.48751E+00 2.31555E-01 3.72166E-01
+#&gt;  5          20 2.64911E+01 1.42475E+00 3.47189E+00 2.32082E-01 3.71869E-01
+#&gt;  6          25 2.65053E+01 1.42569E+00 3.51032E+00 2.32225E-01 3.71951E-01
+#&gt;  7          26 2.65053E+01 1.42569E+00 3.51032E+00 2.32225E-01 3.71951E-01
+#&gt;  8 -1000000000 2.65053E+01 1.42569E+00 3.51032E+00 2.32225E-01 3.71951E-01
+#&gt;  9 -1000000001 8.06067E-01 4.28168E-02 9.66085E-01 9.16968E-03 2.75754E-02
+#&gt; 10 -1000000002 1.04829E-01 2.90505E-01 3.81557E-01 4.58062E-01 6.09785E-01
+#&gt; 11 -1000000003 3.13809E+01 1.04829E-01 3.28962E+00 0.00000E+00 0.00000E+00
+#&gt; 12 -1000000004 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00
+#&gt; 13 -1000000005 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00
+#&gt; 14 -1000000006 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00
+#&gt; # ... with 9 more variables: THETA6 &lt;chr&gt;, `SIGMA(1,1)` &lt;chr&gt;,
+#&gt; #   `OMEGA(1,1)` &lt;chr&gt;, `OMEGA(2,1)` &lt;chr&gt;, `OMEGA(2,2)` &lt;chr&gt;,
+#&gt; #   `OMEGA(3,1)` &lt;chr&gt;, `OMEGA(3,2)` &lt;chr&gt;, `OMEGA(3,3)` &lt;chr&gt;, OBJ &lt;chr&gt;
+#&gt; 
+#&gt; $run001.phi
+#&gt; # A tibble: 74 x 12
+#&gt;    SUBJECT_NO    ID     `ETA(1)`     `ETA(2)`     `ETA(3)`  `ETC(1,1)`
+#&gt;  *      &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;        &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;
+#&gt;  1          1   110 -4.58450E-02 -3.53128E-03 -2.14604E+00 9.89773E-03
+#&gt;  2          2   112 -1.05162E-01  2.01295E-02 -1.62595E-01 7.10118E-03
+#&gt;  3          3   113 -4.61785E-02  6.74183E-02  2.48843E+00 7.13534E-03
+#&gt;  4          4   121  1.65385E-01  8.54260E-02  2.70756E+00 5.66912E-03
+#&gt;  5          5   123  1.06041E-02 -4.11879E-02  2.15087E+00 1.40441E-02
+#&gt;  6          6   124  2.02537E-01  4.06404E-03 -1.17232E+00 6.20707E-03
+#&gt;  7          7   126  3.85193E-02  2.42571E-02  3.26532E+00 6.75844E-03
+#&gt;  8          8   127  1.90137E-01 -3.11486E-02  3.10718E+00 5.88325E-03
+#&gt;  9          9   128  2.68498E-02  9.84491E-03 -1.38247E+00 6.56982E-03
+#&gt; 10         10   210 -3.11115E-01 -3.70174E-02 -3.66683E-01 7.96322E-03
+#&gt; # ... with 64 more rows, and 6 more variables: `ETC(2,1)` &lt;chr&gt;,
+#&gt; #   `ETC(2,2)` &lt;chr&gt;, `ETC(3,1)` &lt;chr&gt;, `ETC(3,2)` &lt;chr&gt;, `ETC(3,3)` &lt;chr&gt;,
+#&gt; #   OBJ &lt;chr&gt;
+#&gt; </div><div class='input'>
 <span class='co'># Tip to list available files in the xpdb</span>
 <span class='fu'>print</span>(<span class='no'>xpdb_ex_pk</span>)</div><div class='output co'>#&gt; run001.lst overview: 
 #&gt;  - Software: nonmem 7.3.0 
