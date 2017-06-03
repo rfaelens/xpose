@@ -22,7 +22,23 @@
 #' @param problem Numeric, the $problem number to use for ploting. By default the data 
 #' is taken from the estimation problem.
 #' @param ... any additional aesthetics.
-#'
+#' 
+#' @section Layers mapping:
+#' Plots can be customized by mapping arguments to specific layers. The naming convention is 
+#' layer_option where layer is one of the names defined in the list below and option is 
+#' any option supported by this layer e.g. point_color = 'blue', smooth_method = 'lm', etc.
+#' \itemize{
+#'   \item point: options to \code{geom_point}
+#'   \item line: options to \code{geom_line}
+#'   \item guide: options to \code{geom_abline}
+#'   \item panel: options to \code{facet_wrap} (facets is character) or \code{facet_grid} 
+#'   (facets is a formula)
+#'   \item smooth: options to \code{geom_smooth}
+#'   \item text: options to \code{geom_text}
+#'   \item xscale: options to \code{scale_x_continuous} or \code{scale_x_log10}
+#'   \item yscale: options to \code{scale_y_continuous} or \code{scale_y_log10}
+#' }
+#' 
 #' @section Template titles:
 #' Template titles can be used to create highly informative diagnostics plots. 
 #' They can be applied to any plot title, subtitle and caption. Template titles 
@@ -63,15 +79,15 @@ xplot_scatter <- function(xpdb,
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   # Get data
-  if (missing(problem)) problem <- max(xpdb$data$problem[!xpdb$data$simtab])
+  if (missing(problem)) problem <- last_problem(xpdb, simtab = FALSE)
   data <- get_data(xpdb, problem = problem)
   msg(c('Using data from $problem no.', problem), quiet)
   
   # Filter observations
-  if ('MDV' %in% colnames(data)) {
-    data <- dplyr::filter(data, data$MDV == 0)
-  } else if ('EVID' %in% colnames(data)) {
-    data <- dplyr::filter(data, data$EVID == 0)
+  mdv_var <- xp_var(xpdb, problem, type = c('evid', 'mdv'))$col[1]
+  if (!is.null(mdv_var)) {
+    msg(c('Filter data by ', mdv_var, ' == 0'), quiet)
+    data <- dplyr::filter(data, data[, mdv_var] == 0)
   }
   
   # Update and get xp_theme
@@ -79,7 +95,7 @@ xplot_scatter <- function(xpdb,
   if (missing(gg_theme)) gg_theme <- xpdb$gg_theme
   
   # Create ggplot base
-  xp <- ggplot(data = data, vars, ...) + gg_theme 
+  xp <- ggplot(data = data, mapping = vars, ...) + gg_theme 
   
   # Add unity line
   if (guides) {
@@ -90,7 +106,7 @@ xplot_scatter <- function(xpdb,
   }
   
   # Add lines
-  if (grepl('l', tolower(type))) {
+  if (stringr::str_detect(type, stringr::fixed('l', ignore_case = TRUE))) {
     xp <- xp + xp_geoms(mapping  = c(aes, aes_string(line_group = group)),
                         xp_theme = xpdb$xp_theme,
                         group    = group,
@@ -100,7 +116,7 @@ xplot_scatter <- function(xpdb,
   }
   
   # Add points
-  if (grepl('p', tolower(type))) {
+  if (stringr::str_detect(type, stringr::fixed('p', ignore_case = TRUE))) {
     xp <- xp + xp_geoms(mapping  = aes,
                         xp_theme = xpdb$xp_theme,
                         name     = 'point',
@@ -108,17 +124,18 @@ xplot_scatter <- function(xpdb,
                         ...)
   }
   
-  # Add text (need a way to link labels = )
-  # if (grepl('t', tolower(type))) {
-  #   xp <- xp + xp_geoms(mapping  = aes,
-  #                       xp_theme = xpdb$xp_theme,
-  #                       name     = 'text',
-  #                       ggfun    = 'geom_text',
-  #                       ...)
-  # }
+  # Add text
+  if (stringr::str_detect(type, stringr::fixed('t', ignore_case = TRUE))) {
+    xp <- xp + xp_geoms(mapping  = c(aes, aes_string(text_label = xp_var(xpdb, problem, 
+                                                                         type = 'id')$col)),
+                        xp_theme = xpdb$xp_theme,
+                        name     = 'text',
+                        ggfun    = 'geom_text',
+                        ...)
+  }
   
   # Add smooth
-  if (grepl('s', tolower(type))) {
+  if (stringr::str_detect(type, stringr::fixed('s', ignore_case = TRUE))) {
     xp <- xp + xp_geoms(mapping  = aes,
                         xp_theme = xpdb$xp_theme,
                         name     = 'smooth',
@@ -127,17 +144,17 @@ xplot_scatter <- function(xpdb,
   }
   
   # Define scales
-  xp <- xp + xp_geoms(mapping  = aes,
-                      xp_theme = xpdb$xp_theme,
-                      name     = 'xscale',
-                      ggfun    = paste0('scale_x_', xscale),
-                      ...)
-  
-  xp <- xp + xp_geoms(mapping  = aes,
-                      xp_theme = xpdb$xp_theme,
-                      name     = 'yscale',
-                      ggfun    = paste0('scale_y_', yscale),
-                      ...)
+  xp <- xp + 
+    xp_geoms(mapping  = aes,
+             xp_theme = xpdb$xp_theme,
+             name     = 'xscale',
+             ggfun    = paste0('scale_x_', xscale),
+             ...) +
+    xp_geoms(mapping  = aes,
+             xp_theme = xpdb$xp_theme,
+             name     = 'yscale',
+             ggfun    = paste0('scale_y_', yscale),
+             ...)
   
   # Define panels
   if (!is.null(list(...)[['panel_facets']])) {
