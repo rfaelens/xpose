@@ -31,7 +31,7 @@
 #'  \item{@nsim}{Number of simulations}
 #'  \item{@ofv}{Objective function value}
 #'  \item{@probn}{Problem number}
-#'  \item{@plotfun}{Name of the plot function}}
+#'  \item{@plotfun}{Name of the plot function}
 #'  \item{@ref}{Reference model}
 #'  \item{@run}{Model run name}
 #'  \item{@runtime}{Estimation/Sim runtime}
