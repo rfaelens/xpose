@@ -66,12 +66,28 @@ filter_xp_theme <- function(xp_theme, regex = NULL, action = 'keep') {
 }
 
 # Get last problem
-last_problem <- function(xpdb, simtab = FALSE) {
+last_data_problem <- function(xpdb, simtab = FALSE) {
   prob_n <- xpdb$data$simtab
   if (!simtab) prob_n <- !prob_n
   prob_n <- xpdb$data$problem[prob_n]
   if (length(prob_n) == 0) return(NA_integer_)
   max(prob_n)
+}
+
+# Get file problem
+last_file_problem <- function(xpdb, file) {
+  prob_n <- xpdb$files$problem[xpdb$files$name == file]
+  prob_n <- unique(prob_n)
+  if (length(prob_n) == 0) return(NA_character_)
+  max(prob_n)
+}
+
+# Get file subproblem
+last_file_subprob <- function(xpdb, file, problem) {
+  subprob_n <- xpdb$files$subprob[xpdb$files$name == file & xpdb$files$problem == problem]
+  subprob_n <- unique(subprob_n)
+  if (length(subprob_n) == 0) return(NA_character_)
+  max(subprob_n)
 }
 
 # Get a variable name from xpose
