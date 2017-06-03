@@ -17,6 +17,7 @@
 #' @param guides Enable guides display (e.g. unity line).
 #' @param ... Any additional aesthetics to be passed on \code{xplot_scatter}.
 #' 
+#' @inheritSection xplot_scatter Layers mapping
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples

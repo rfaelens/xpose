@@ -47,6 +47,24 @@ The residuals can be one of:
   \item NPDE: Normalized prediction distribution error 
 }
 }
+\section{Layers mapping}{
+
+Plots can be customized by mapping arguments to specific layers. The naming convention is 
+layer_option where layer is one of the names defined in the list below and option is 
+any option supported by this layer e.g. point_color = 'blue', smooth_method = 'lm', etc.
+\itemize{
+  \item point: options to \code{geom_point}
+  \item line: options to \code{geom_line}
+  \item guide: options to \code{geom_abline}
+  \item panel: options to \code{facet_wrap} (facets is character) or \code{facet_grid} 
+  (facets is a formula)
+  \item smooth: options to \code{geom_smooth}
+  \item text: options to \code{geom_text}
+  \item xscale: options to \code{scale_x_continuous} or \code{scale_x_log10}
+  \item yscale: options to \code{scale_y_continuous} or \code{scale_y_log10}
+}
+}
+
 \section{Template titles}{
 
 Template titles can be used to create highly informative diagnostics plots. 

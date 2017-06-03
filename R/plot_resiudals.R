@@ -13,6 +13,7 @@
 #' 
 #' @inheritParams dv_vs_pred
 #' @param res Type of residual to be used. Default is "CWRES".
+#' @inheritSection xplot_scatter Layers mapping
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
@@ -58,6 +59,7 @@ res_vs_pred <- function(xpdb,
 #'
 #' @inheritParams dv_vs_pred
 #' @param res Type of residual to be used. Default is "CWRES".
+#' @inheritSection xplot_scatter Layers mapping
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
@@ -104,6 +106,7 @@ res_vs_idv <- function(xpdb,
 #' @inheritParams dv_vs_pred
 #' @param res Type of residual to be used. Default is "CWRES".
 #' 
+#' @inheritSection xplot_scatter Layers mapping
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
@@ -152,6 +155,7 @@ absval_res_vs_pred <- function(xpdb,
 #' @inheritParams dv_vs_pred
 #' @param res Type of residual to be used. Default is "CWRES".
 #' 
+#' @inheritSection xplot_scatter Layers mapping
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
