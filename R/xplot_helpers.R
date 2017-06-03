@@ -64,3 +64,25 @@ filter_xp_theme <- function(xp_theme, regex = NULL, action = 'keep') {
   if (action == 'drop') match <- !match
   xp_theme[match]
 }
+
+# Get last problem
+last_problem <- function(xpdb, simtab = FALSE) {
+  prob_n <- xpdb$data$simtab
+  if (!simtab) prob_n <- !prob_n
+  prob_n <- xpdb$data$problem[prob_n]
+  if (length(prob_n) == 0) return(NA_integer_)
+  max(prob_n)
+}
+
+# Get a variable name from xpose
+xp_var <- function(xpdb, problem, col = NULL, type = NULL) {
+  index <- xpdb$data[xpdb$data$problem == problem, ]$index[[1]]
+  if (!is.null(type)) index <- index[index$type %in% type, ]
+  if (!is.null(col)) index <- index[index$col %in% col, ]
+  if (nrow(index) == 0) return()
+  
+  index %>% 
+    dplyr::distinct_(.dots = 'col', .keep_all = TRUE) %>% 
+    dplyr::select(dplyr::one_of('col', 'type', 'label', 'units')) %>% 
+    dplyr::arrange_(.dots = c('type', 'col'))
+}

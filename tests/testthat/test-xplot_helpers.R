@@ -28,3 +28,14 @@ test_that('Check filter_xp_theme', {
   expect_equal(filter_xp_theme(xpdb_ex_pk$xp_theme, 'point_', action = 'drop'),
                xpdb_ex_pk$xp_theme[!grepl('point_', names(xpdb_ex_pk$xp_theme))])
 })
+
+test_that('Check last_problem', {
+  expect_equal(last_problem(xpdb_ex_pk, simtab = FALSE), 1)
+  expect_equal(last_problem(xpdb_ex_pk, simtab = TRUE), NA_integer_)
+})
+
+test_that('Check xp_var', {
+  expect_equal(xp_var(xpdb_ex_pk, 1, col = 'TIME')$type, 'idv')
+  expect_equal(xp_var(xpdb_ex_pk, 1, type = 'idv')$col, 'TIME')
+  expect_null(xp_var(xpdb_ex_pk, 1, col = 'FAKE_COL'))
+})
