@@ -23,6 +23,9 @@ list_vars <- function(xpdb, problem = NULL) {
     x <- x[x$problem %in% problem, ]
   }
   
+  order <- c('id', 'dv', 'idv', 'dvid', 'occ', 'amt', 'evid', 'mdv', 'pred', 'ipred', 
+             'cpred', 'param', 'eta', 'eps', 'res', 'catcov', 'contcov', 'na')
+  
   x <- x %>% 
     dplyr::mutate(grouping = as.integer(.$problem)) %>% 
     dplyr::group_by_(.dots = 'grouping') %>% 
@@ -35,10 +38,12 @@ list_vars <- function(xpdb, problem = NULL) {
         dplyr::mutate(string = purrr::map_chr(.$data, ~stringr::str_c(unique(.$col), collapse = ', ')),
                       descr = dplyr::case_when(.$type == 'id' ~ 'Subject identifier (id)',
                                                .$type == 'occ' ~ 'Occasion flag (occ)',
-                                               .$type == 'na' ~ 'Unknown (na)',
+                                               .$type == 'na' ~ 'Not attributed (na)',
                                                .$type == 'amt' ~ 'Dose amount (amt)',
                                                .$type == 'idv' ~ 'Independent variable (idv)',
-                                               .$type == 'pred' ~ 'Model predictions (pred)',
+                                               .$type == 'cpred' ~ 'Model conditional predictions (cpred)',
+                                               .$type == 'ipred' ~ 'Model individual predictions (ipred)',
+                                               .$type == 'pred' ~ 'Model typical predictions (pred)',
                                                .$type == 'res' ~ 'Residuals (res)',
                                                .$type == 'evid' ~ 'Event identifier (evid)',
                                                .$type == 'dv' ~ 'Dependent variable (dv)',
@@ -49,7 +54,8 @@ list_vars <- function(xpdb, problem = NULL) {
                                                .$type == 'eps' ~ 'Epsilon (eps)',
                                                .$type == 'dvid' ~ 'DV identifier (dvid)',
                                                .$type == 'mdv' ~ 'Missing dependent variable (mdv)')) %>% 
-        dplyr::mutate(descr = stringr::str_pad(.$descr, 33, 'right')) %>% 
+        dplyr::mutate(descr = stringr::str_pad(.$descr, 37, 'right')) %>% 
+        dplyr::slice(order(match(.$type, order))) %>% 
         {stringr::str_c(' -', .$descr, ':', .$string, sep = ' ')} %>% 
         cat(sep = '\n')})}
 }
