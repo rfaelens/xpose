@@ -70,15 +70,15 @@ theme_xp_default <- function() {
     panel_dir       = 'h',
     
     # Text
-    text_alpha      = 1,
+    text_alpha      = 0.7,
     text_angle      = 0,
     text_color      = 'grey20',
     text_family     = '',
     text_fontface   = 'bold',
-    text_hjust      = -0.07,
     text_lineheight = 1.2,
-    text_size       = 3.88,
-    text_vjust      = 2.5
+    text_size       = 3.1,
+    text_hjust      = 0.5, # Change not recommended if type = 't' is used
+    text_vjust      = 0.5  # Change not recommended if type = 't' is used
     
   ), class = c('xpose_theme', 'uneval'))
 }
@@ -141,10 +141,10 @@ theme_xp_xpose4 <- function() {
     text_color      = 'grey20',
     text_family     = '',
     text_fontface   = 'bold',
-    text_hjust      = -0.07,
     text_lineheight = 1.2,
-    text_size       = 3.88,
-    text_vjust      = 2.5
+    text_size       = 3.1,
+    text_hjust      = 0.5, # Change not recommended if type = 't' is used
+    text_vjust      = 0.5  # Change not recommended if type = 't' is used
     
   ), class = c('xpose_theme', 'uneval'))
 }
