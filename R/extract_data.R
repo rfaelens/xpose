@@ -10,6 +10,7 @@
 #' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_model}}
 #' @examples
 #' parsed_model <- get_code(xpdb_ex_pk)
+#' parsed_model
 #' 
 #' @export
 get_code <- function(xpdb, problem = NULL) {
@@ -44,9 +45,11 @@ get_code <- function(xpdb, problem = NULL) {
 #' @examples
 #' # By table name
 #' sdtab <- get_data(xpdb_ex_pk, 'sdtab001')
+#' sdtab
 #' 
 #' # By problem
 #' tables <- get_data(xpdb_ex_pk, problem = 1)
+#' tables
 #' 
 #' # Tip to list available tables in the xpdb
 #' print(xpdb_ex_pk)
@@ -101,10 +104,10 @@ get_data <- function(xpdb, table = NULL, problem = NULL) {
         x[x$problem == y$problem, ]$data[[1]][, y$cols[[1]]]
       }))
     
-    if (length(table) > 1) {
+    if (length(unique(x$table)) > 1) {
       purrr::set_names(x$out, x$table)
     } else {
-      x$out[[1]]
+      x$out[[nrow(x)]]
     }
   }
 }
@@ -124,9 +127,11 @@ get_data <- function(xpdb, table = NULL, problem = NULL) {
 #' @examples
 #' # Single file (returns a tibble)
 #' ext_file <- get_file(xpdb_ex_pk, 'run001.ext')
+#' ext_file
 #' 
 #' # Multiple files (returns a list)
 #' files <- get_file(xpdb_ex_pk, c('run001.ext', 'run001.phi'))
+#' files
 #' 
 #' # Tip to list available files in the xpdb
 #' print(xpdb_ex_pk)
@@ -167,12 +172,11 @@ get_file <- function(xpdb, file = NULL, problem = NULL, subprob = NULL) {
   }
   
   # Select final record
-  if (length(file) > 1) {
+  if (length(unique(x$name)) > 1) {
     x <- x[!duplicated(x$name, fromLast = TRUE), ]
     purrr::set_names(x$data, x$name)
-  } else {
-    x$data[[1]]
   }
+  x$data[[nrow(x)]]
 }
 
 
@@ -190,6 +194,7 @@ get_file <- function(xpdb, file = NULL, problem = NULL, subprob = NULL) {
 #' @seealso \code{\link{xpose_data}}, \code{\link{template_titles}}
 #' @examples
 #' run_summary <- get_summary(xpdb_ex_pk)
+#' run_summary
 #' 
 #' @export
 get_summary <- function(xpdb, problem = NULL, subprob = NULL, only_last = FALSE) {
