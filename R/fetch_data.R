@@ -27,7 +27,8 @@ data_opt <- function(problem   = NULL,
                      index_col = NULL) {
   list(problem = problem, subprob = subprob,
        source = source, simtab = simtab,
-       filter = filter, tidy = tidy, index_col = NULL)
+       filter = filter, tidy = tidy, 
+       index_col = index_col)
 }
 
 # Create shortcut functions on the fly to filter observations
