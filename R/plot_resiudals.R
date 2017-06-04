@@ -33,8 +33,10 @@ res_vs_pred <- function(xpdb,
                         guides   = TRUE,
                         problem,
                         ...) {
-  if (missing(problem)) problem <- last_problem(xpdb, simtab = FALSE)
+  if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   xplot_scatter(xpdb = xpdb, aes = aes, group = group,
+                data_opt = data_opt(problem = problem, 
+                                    filter = filter_obs(xpdb, problem)),
                 vars = aes_string(x = xp_var(xpdb, problem, type = 'pred')$col, 
                                   y = toupper(res)), 
                 type = type, guides = guides, panel_facets = facets, 
@@ -80,8 +82,10 @@ res_vs_idv <- function(xpdb,
                        guides   = TRUE,
                        problem,
                        ...) {
-  if (missing(problem)) problem <- last_problem(xpdb, simtab = FALSE)
+  if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   xplot_scatter(xpdb = xpdb, aes = aes, group = group,
+                data_opt = data_opt(problem = problem, 
+                                    filter = filter_obs(xpdb, problem)),
                 vars = aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
                                   y = toupper(res)),
                 type = type, guides = guides, panel_facets = facets, 
@@ -128,8 +132,10 @@ absval_res_vs_pred <- function(xpdb,
                                guides   = FALSE,
                                problem,
                                ...) {
-  if (missing(problem)) problem <- last_problem(xpdb, simtab = FALSE)
+  if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   xplot_scatter(xpdb = xpdb, aes = aes, group = group,
+                data_opt = data_opt(problem = problem, 
+                                    filter = filter_obs(xpdb, problem)),
                 vars = aes_string(x = xp_var(xpdb, problem, type = 'pred')$col, 
                                   y = stringr::str_c('abs(', toupper(res), 
                                                      ')', sep = '')),
@@ -177,8 +183,10 @@ absval_res_vs_idv <- function(xpdb,
                               guides   = FALSE,
                               problem,
                               ...) {
-  if (missing(problem)) problem <- last_problem(xpdb, simtab = FALSE)
+  if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   xplot_scatter(xpdb = xpdb, aes = aes, group = group,
+                data_opt = data_opt(problem = problem, 
+                                    filter = filter_obs(xpdb, problem)),
                 vars = aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
                                   y = stringr::str_c('abs(', toupper(res), 
                                                      ')', sep = '')), 

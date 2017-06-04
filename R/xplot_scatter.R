@@ -78,16 +78,10 @@ xplot_scatter <- function(xpdb,
   
   # Fetch data
   if (missing(quiet)) quiet <- xpdb$options$quiet
-  data <- fetch_data(xpdb, data_opt$problem, data_opt$subprob, data_opt$source, 
-                     data_opt$simtab, data_opt$tidy, data_opt$index_col, quiet)
+  data <- fetch_data(xpdb, problem = data_opt$problem, subprob = data_opt$subprob, 
+                     source = data_opt$source, simtab = data_opt$simtab, filter = data_opt$filter, 
+                     tidy = data_opt$tidy, index_col = data_opt$index_col, quiet)
   if (is.null(data)) return()
-  
-  # Filter observations
-  mdv_var <- xp_var(xpdb, problem, type = c('evid', 'mdv'))$col[1]
-  if (!is.null(mdv_var)) {
-    msg(c('Filtering data by ', mdv_var, ' == 0'), quiet)
-    data <- dplyr::filter(data, data[, mdv_var] == 0)
-  }
   
   # Assing xp_theme and gg_theme
   if (!missing(xp_theme)) xpdb <- update_themes(xpdb = xpdb, xp_theme = xp_theme)
@@ -125,7 +119,7 @@ xplot_scatter <- function(xpdb,
   
   # Add text
   if (stringr::str_detect(type, stringr::fixed('t', ignore_case = TRUE))) {
-    xp <- xp + xp_geoms(mapping  = c(aes, aes_string(text_label = xp_var(xpdb, problem, 
+    xp <- xp + xp_geoms(mapping  = c(aes, aes_string(text_label = xp_var(xpdb, data_opt$problem, 
                                                                          type = 'id')$col)),
                         xp_theme = xpdb$xp_theme,
                         name     = 'text',
@@ -179,7 +173,7 @@ xplot_scatter <- function(xpdb,
   # Add metadata to plots
   xp$xpose <- list(fun      = plot_name,
                    summary  = xpdb$summary,
-                   problem  = problem,
+                   problem  = data_opt$problem,
                    quiet    = quiet,
                    xp_theme = xpdb$xp_theme[stringr::str_c(c('title', 'subtitle', 'caption'), 
                                                            '_suffix')])

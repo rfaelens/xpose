@@ -4,13 +4,16 @@
 \alias{xplot_scatter}
 \title{Default xpose scatter plot function}
 \usage{
-xplot_scatter(xpdb, vars = NULL, aes = NULL, group = "ID", type = "pls",
-  guides = TRUE, xscale = "continuous", yscale = "continuous",
-  title = NULL, subtitle = NULL, caption = NULL,
-  plot_name = "scatter_plot", gg_theme, xp_theme, quiet, problem, ...)
+xplot_scatter(xpdb, data_opt = data_opt(), vars = NULL, aes = NULL,
+  group = "ID", type = "pls", guides = TRUE, xscale = "continuous",
+  yscale = "continuous", title = NULL, subtitle = NULL, caption = NULL,
+  plot_name = "scatter_plot", gg_theme, xp_theme, quiet, ...)
 }
 \arguments{
 \item{xpdb}{An \code{xpose_data} object generated with \code{\link{xpose_data}}.}
+
+\item{data_opt}{A list of options in order to create appropriate data input for 
+ggplot2. For more information see \code{\link{data_opt}}.}
 
 \item{vars}{Variable mapping using the \code{\link[ggplot2]{aes}} function.}
 
@@ -19,7 +22,7 @@ xplot_scatter(xpdb, vars = NULL, aes = NULL, group = "ID", type = "pls",
 \item{group}{Grouping variable to be used for lines.}
 
 \item{type}{String setting the type of plot to be used points 'p',
-line 'l', smooth 's' and text 't' or any combination of the 4.}
+line 'l', smooth 's' and text 't' or any combination of the four.}
 
 \item{guides}{should the guides (eg. unity line) be displayed.}
 
@@ -41,9 +44,6 @@ line 'l', smooth 's' and text 't' or any combination of the 4.}
 (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
-
-\item{problem}{The $problem number to use for ploting. By default the data 
-is taken from the estimation problem.}
 
 \item{...}{any additional aesthetics.}
 }
