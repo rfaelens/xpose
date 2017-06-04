@@ -29,9 +29,19 @@ test_that('Check filter_xp_theme', {
                xpdb_ex_pk$xp_theme[!grepl('point_', names(xpdb_ex_pk$xp_theme))])
 })
 
-test_that('Check last_problem', {
-  expect_equal(last_problem(xpdb_ex_pk, simtab = FALSE), 1)
-  expect_equal(last_problem(xpdb_ex_pk, simtab = TRUE), NA_integer_)
+test_that('Check last_data_problem', {
+  expect_equal(last_data_problem(xpdb_ex_pk, simtab = FALSE), 1)
+  expect_equal(last_data_problem(xpdb_ex_pk, simtab = TRUE), NA_integer_)
+})
+
+test_that('Check last_file_problem', {
+  expect_equal(last_file_problem(xpdb_ex_pk, file = 'run001.ext'), '1')
+  expect_equal(last_file_problem(xpdb_ex_pk, file = 'fake.file'), NA_character_)
+})
+
+test_that('Check last_file_subprob', {
+  expect_equal(last_file_subprob(xpdb_ex_pk, file = 'run001.ext', problem = 1), '0')
+  expect_equal(last_file_subprob(xpdb_ex_pk, file = 'fake.file', problem = 1), NA_character_)
 })
 
 test_that('Check xp_var', {

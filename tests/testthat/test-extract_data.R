@@ -49,7 +49,7 @@ test_that("get_data works properly", {
                xpdb_ex_pk$data$data[[1]][xpdb_ex_pk$data$problem == 1, 
                                          xpdb_ex_pk$data$index[[1]]$col[xpdb_ex_pk$data$index[[1]]$table == 'sdtab001']])
   # Return multiple tables
-  expect_equal(get_data(xpdb_ex_pk, table = c('sdtab001','patab001')), 
+  expect_equal(get_data(xpdb_ex_pk, table = c('sdtab001', 'patab001')), 
                list(sdtab001 = xpdb_ex_pk$data$data[[1]][xpdb_ex_pk$data$problem == 1, 
                                                          xpdb_ex_pk$data$index[[1]]$col[xpdb_ex_pk$data$index[[1]]$table == 'sdtab001']],
                     patab001 = xpdb_ex_pk$data$data[[1]][xpdb_ex_pk$data$problem == 1, 

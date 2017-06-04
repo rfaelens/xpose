@@ -175,8 +175,9 @@ get_file <- function(xpdb, file = NULL, problem = NULL, subprob = NULL) {
   if (length(unique(x$name)) > 1) {
     x <- x[!duplicated(x$name, fromLast = TRUE), ]
     purrr::set_names(x$data, x$name)
+  } else {
+    x$data[[nrow(x)]]
   }
-  x$data[[nrow(x)]]
 }
 
 
