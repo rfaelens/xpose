@@ -102,7 +102,9 @@ parse_nm_files <- function(dat, quiet) {
   x %>% 
     tidyr::fill(dplyr::one_of('problem', 'subprob', 'method')) %>% 
     dplyr::slice(-tab_rows) %>%
-    dplyr::mutate(raw = stringr::str_trim(.$raw, side = 'both')) %>% 
+    dplyr::mutate(problem = as.numeric(.$problem),
+                  subprob = as.numeric(.$subprob),
+                  raw = stringr::str_trim(.$raw, side = 'both')) %>% 
     dplyr::group_by_(.dots = c('problem', 'subprob', 'method')) %>% 
     tidyr::nest() %>% 
     dplyr::mutate(data = purrr::map(.$data, ~raw_to_tibble(., sep, quiet, file = dat$name)))
