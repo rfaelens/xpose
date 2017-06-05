@@ -3,8 +3,8 @@
 #' @description Manually generate scatter plots from an xpdb object.
 #'
 #' @param xpdb An \code{xpose_data} object generated with \code{\link{xpose_data}}.
-#' @param vars Variable mapping using the \code{\link[ggplot2]{aes}} function.
-#' @param aes xpose aesthetics (eg. \code{point_color}).
+#' @param mapping List of aesthetics mappings to be used for the xpose plot 
+#' (e.g. \code{point_color}).
 #' @param group Grouping variable to be used for lines.
 #' @param type String setting the type of plot to be used points 'p',
 #' line 'l', smooth 's' and text 't' or any combination of the four.
@@ -53,8 +53,7 @@
 #' 
 #' @export
 xplot_scatter <- function(xpdb,
-                          vars      = NULL,
-                          aes       = NULL,
+                          mapping   = NULL,
                           group     = 'ID',
                           type      = 'pls',
                           guides    = TRUE,
@@ -90,7 +89,7 @@ xplot_scatter <- function(xpdb,
   if (missing(gg_theme)) gg_theme <- xpdb$gg_theme
   
   # Create ggplot base
-  xp <- ggplot(data = data, mapping = vars, ...) + gg_theme 
+  xp <- ggplot(data = data, mapping, ...) + gg_theme 
   
   # Add unity line
   if (guides) {
@@ -102,7 +101,7 @@ xplot_scatter <- function(xpdb,
   
   # Add lines
   if (stringr::str_detect(type, stringr::fixed('l', ignore_case = TRUE))) {
-    xp <- xp + xp_geoms(mapping  = c(aes, aes_string(line_group = group)),
+    xp <- xp + xp_geoms(mapping  = c(mapping, aes_string(line_group = group)),
                         xp_theme = xpdb$xp_theme,
                         group    = group,
                         name     = 'line',
@@ -112,7 +111,7 @@ xplot_scatter <- function(xpdb,
   
   # Add points
   if (stringr::str_detect(type, stringr::fixed('p', ignore_case = TRUE))) {
-    xp <- xp + xp_geoms(mapping  = aes,
+    xp <- xp + xp_geoms(mapping  = mapping,
                         xp_theme = xpdb$xp_theme,
                         name     = 'point',
                         ggfun    = 'geom_point',
@@ -121,7 +120,7 @@ xplot_scatter <- function(xpdb,
   
   # Add text
   if (stringr::str_detect(type, stringr::fixed('t', ignore_case = TRUE))) {
-    xp <- xp + xp_geoms(mapping  = c(aes, aes_string(text_label = xp_var(xpdb, attr(data, 'problem'), 
+    xp <- xp + xp_geoms(mapping  = c(mapping, aes_string(text_label = xp_var(xpdb, attr(data, 'problem'), 
                                                                          type = 'id')$col)),
                         xp_theme = xpdb$xp_theme,
                         name     = 'text',
@@ -131,7 +130,7 @@ xplot_scatter <- function(xpdb,
   
   # Add smooth
   if (stringr::str_detect(type, stringr::fixed('s', ignore_case = TRUE))) {
-    xp <- xp + xp_geoms(mapping  = aes,
+    xp <- xp + xp_geoms(mapping  = mapping,
                         xp_theme = xpdb$xp_theme,
                         name     = 'smooth',
                         ggfun    = 'geom_smooth',
@@ -140,12 +139,12 @@ xplot_scatter <- function(xpdb,
   
   # Define scales
   xp <- xp + 
-    xp_geoms(mapping  = aes,
+    xp_geoms(mapping  = mapping,
              xp_theme = xpdb$xp_theme,
              name     = 'xscale',
              ggfun    = paste0('scale_x_', xscale),
              ...) +
-    xp_geoms(mapping  = aes,
+    xp_geoms(mapping  = mapping,
              xp_theme = xpdb$xp_theme,
              name     = 'yscale',
              ggfun    = paste0('scale_y_', yscale),
@@ -154,13 +153,13 @@ xplot_scatter <- function(xpdb,
   # Define panels
   if (!is.null(list(...)[['panel_facets']])) {
     if (!is.formula(list(...)[['panel_facets']])) {
-      xp <- xp + xp_geoms(mapping  = aes,
+      xp <- xp + xp_geoms(mapping  = mapping,
                           xp_theme = xpdb$xp_theme,
                           name     = 'panel',
                           ggfun    = 'facet_wrap',
                           ...)
     } else {
-      xp <- xp + xp_geoms(mapping  = aes,
+      xp <- xp + xp_geoms(mapping  = mapping,
                           xp_theme = filter_xp_theme(xpdb$xp_theme, stringr::str_c('panel_', c('ncol', 'nrow', 'dir'), 
                                                                                    collapse = '|'), 'drop'),
                           name     = 'panel',

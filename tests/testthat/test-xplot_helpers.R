@@ -49,3 +49,11 @@ test_that('Check xp_var', {
   expect_equal(xp_var(xpdb_ex_pk, 1, type = 'idv')$col, 'TIME')
   expect_null(xp_var(xpdb_ex_pk, 1, col = 'FAKE_COL'))
 })
+
+test_that('Check append_aes', {
+  expect_equal(aes_c(aes_string(x = 'IPRED', y = 'DV'), NULL), 
+               aes_string(x = 'IPRED', y = 'DV'))
+  expect_equal(aes_c(aes_string(x = 'IPRED', y = 'DV'), 
+                     aes_string(y = 'PRED')), 
+               aes_string(x = 'IPRED', y = 'PRED'))
+})

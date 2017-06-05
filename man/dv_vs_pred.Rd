@@ -7,30 +7,32 @@
 \alias{dv_vs_cpred}
 \title{Observations plotted against model predictions}
 \usage{
-dv_vs_ipred(xpdb, aes = NULL, group = "ID", type = "pls", facets = NULL,
-  title = "@y vs. @x | @run", subtitle = "Ofv: @ofv, Eps shrink: @epsshk",
+dv_vs_ipred(xpdb, mapping = NULL, group = "ID", type = "pls",
+  facets = NULL, title = "@y vs. @x | @run",
+  subtitle = "Ofv: @ofv, Eps shrink: @epsshk", caption = "@dir",
+  log = NULL, guides = TRUE, problem, ...)
+
+dv_vs_pred(xpdb, mapping = NULL, group = "ID", type = "pls",
+  facets = NULL, title = "@y vs. @x | @run", subtitle = "Ofv: @ofv",
   caption = "@dir", log = NULL, guides = TRUE, problem, ...)
 
-dv_vs_pred(xpdb, aes = NULL, group = "ID", type = "pls", facets = NULL,
-  title = "@y vs. @x | @run", subtitle = "Ofv: @ofv", caption = "@dir",
-  log = NULL, guides = TRUE, problem, ...)
-
-dv_vs_cpred(xpdb, aes = NULL, group = "ID", type = "pls", facets = NULL,
-  title = "@y vs. @x | @run", subtitle = "Ofv: @ofv", caption = "@dir",
-  log = NULL, guides = TRUE, problem, ...)
+dv_vs_cpred(xpdb, mapping = NULL, group = "ID", type = "pls",
+  facets = NULL, title = "@y vs. @x | @run", subtitle = "Ofv: @ofv",
+  caption = "@dir", log = NULL, guides = TRUE, problem, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
 
-\item{aes}{The xpose aesthetics (eg. \code{point_color}).}
+\item{mapping}{List of aesthetics mappings to be used for the xpose plot 
+(e.g. \code{point_color}).}
 
 \item{group}{Grouping variable to be used for lines.}
 
 \item{type}{String setting the type of plot to be used points 'p',
 line 'l' and smooth 's' or any combination of the three.}
 
-\item{facets}{Either a character string to use \link[ggplot2]{facet_wrap} or a formula 
-to use \link[ggplot2]{facet_grid}.}
+\item{facets}{Either a character string to use \link[ggplot2]{facet_wrap} 
+or a formula to use \link[ggplot2]{facet_grid}.}
 
 \item{title}{Plot title. Use \code{NULL} to remove.}
 
@@ -38,7 +40,8 @@ to use \link[ggplot2]{facet_grid}.}
 
 \item{caption}{Page caption. Use \code{NULL} to remove.}
 
-\item{log}{String assigning logarithmic scale to axes, can be either '', 'x', y' or 'xy'.}
+\item{log}{String assigning logarithmic scale to axes, can be either '', 
+'x', y' or 'xy'.}
 
 \item{guides}{Enable guides display (e.g. unity line).}
 
@@ -48,8 +51,8 @@ is taken from the estimation problem.}
 \item{...}{Any additional aesthetics to be passed on \code{xplot_scatter}.}
 }
 \description{
-Plot of observations (DV) vs population predictions (PRED), individual predictions (IPRED) 
-or conditional population predictions (CPRED).
+Plot of observations (DV) vs population predictions (PRED), 
+individual predictions (IPRED) or conditional population predictions (CPRED).
 }
 \section{Layers mapping}{
 

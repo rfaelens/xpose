@@ -4,7 +4,7 @@
 \alias{xplot_scatter}
 \title{Default xpose scatter plot function}
 \usage{
-xplot_scatter(xpdb, vars = NULL, aes = NULL, group = "ID", type = "pls",
+xplot_scatter(xpdb, mapping = NULL, group = "ID", type = "pls",
   guides = TRUE, xscale = "continuous", yscale = "continuous",
   title = NULL, subtitle = NULL, caption = NULL,
   plot_name = "scatter_plot", gg_theme, xp_theme, data_opt, quiet, ...)
@@ -12,9 +12,8 @@ xplot_scatter(xpdb, vars = NULL, aes = NULL, group = "ID", type = "pls",
 \arguments{
 \item{xpdb}{An \code{xpose_data} object generated with \code{\link{xpose_data}}.}
 
-\item{vars}{Variable mapping using the \code{\link[ggplot2]{aes}} function.}
-
-\item{aes}{xpose aesthetics (eg. \code{point_color}).}
+\item{mapping}{List of aesthetics mappings to be used for the xpose plot 
+(e.g. \code{point_color}).}
 
 \item{group}{Grouping variable to be used for lines.}
 

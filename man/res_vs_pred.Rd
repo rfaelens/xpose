@@ -4,14 +4,16 @@
 \alias{res_vs_pred}
 \title{Residuals plotted against population predictions}
 \usage{
-res_vs_pred(xpdb, aes = NULL, res = "CWRES", group = "ID", type = "pls",
-  facets = NULL, title = "@y vs. @x | @run", subtitle = "Ofv: @ofv",
-  caption = "@dir", log = NULL, guides = TRUE, problem, ...)
+res_vs_pred(xpdb, mapping = NULL, res = "CWRES", group = "ID",
+  type = "pls", facets = NULL, title = "@y vs. @x | @run",
+  subtitle = "Ofv: @ofv", caption = "@dir", log = NULL, guides = TRUE,
+  problem, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
 
-\item{aes}{The xpose aesthetics (eg. \code{point_color}).}
+\item{mapping}{List of aesthetics mappings to be used for the xpose plot 
+(e.g. \code{point_color}).}
 
 \item{res}{Type of residual to be used. Default is "CWRES".}
 
@@ -20,8 +22,8 @@ res_vs_pred(xpdb, aes = NULL, res = "CWRES", group = "ID", type = "pls",
 \item{type}{String setting the type of plot to be used points 'p',
 line 'l' and smooth 's' or any combination of the three.}
 
-\item{facets}{Either a character string to use \link[ggplot2]{facet_wrap} or a formula 
-to use \link[ggplot2]{facet_grid}.}
+\item{facets}{Either a character string to use \link[ggplot2]{facet_wrap} 
+or a formula to use \link[ggplot2]{facet_grid}.}
 
 \item{title}{Plot title. Use \code{NULL} to remove.}
 
@@ -29,7 +31,8 @@ to use \link[ggplot2]{facet_grid}.}
 
 \item{caption}{Page caption. Use \code{NULL} to remove.}
 
-\item{log}{String assigning logarithmic scale to axes, can be either '', 'x', y' or 'xy'.}
+\item{log}{String assigning logarithmic scale to axes, can be either '', 
+'x', y' or 'xy'.}
 
 \item{guides}{Enable guides display (e.g. unity line).}
 

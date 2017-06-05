@@ -102,3 +102,10 @@ xp_var <- function(xpdb, problem, col = NULL, type = NULL) {
     dplyr::select(dplyr::one_of('col', 'type', 'label', 'units')) %>% 
     dplyr::arrange_(.dots = c('type', 'col'))
 }
+
+# Append aes
+aes_c <- function(fun_aes, user_aes) {
+  if (is.null(user_aes)) return(fun_aes)
+  aes <- c(fun_aes[!names(fun_aes) %in% names(user_aes)], user_aes)
+  structure(aes, class = 'uneval')
+}
