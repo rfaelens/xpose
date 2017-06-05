@@ -35,13 +35,13 @@ test_that('Check last_data_problem', {
 })
 
 test_that('Check last_file_problem', {
-  expect_equal(last_file_problem(xpdb_ex_pk, file = 'run001.ext'), '1')
-  expect_equal(last_file_problem(xpdb_ex_pk, file = 'fake.file'), NA_character_)
+  expect_equal(last_file_problem(xpdb_ex_pk, file = 'run001.ext'), 1)
+  expect_equal(last_file_problem(xpdb_ex_pk, file = 'fake.file'), NA_integer_)
 })
 
 test_that('Check last_file_subprob', {
-  expect_equal(last_file_subprob(xpdb_ex_pk, file = 'run001.ext', problem = 1), '0')
-  expect_equal(last_file_subprob(xpdb_ex_pk, file = 'fake.file', problem = 1), NA_character_)
+  expect_equal(last_file_subprob(xpdb_ex_pk, file = 'run001.ext', problem = 1), 0)
+  expect_equal(last_file_subprob(xpdb_ex_pk, file = 'fake.file', problem = 1), NA_integer_)
 })
 
 test_that('Check xp_var', {

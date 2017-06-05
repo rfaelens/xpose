@@ -3,8 +3,6 @@
 #' @description Manually generate scatter plots from an xpdb object.
 #'
 #' @param xpdb An \code{xpose_data} object generated with \code{\link{xpose_data}}.
-#' @param data_opt A list of options in order to create appropriate data input for 
-#' ggplot2. For more information see \code{\link{data_opt}}.
 #' @param vars Variable mapping using the \code{\link[ggplot2]{aes}} function.
 #' @param aes xpose aesthetics (eg. \code{point_color}).
 #' @param group Grouping variable to be used for lines.
@@ -20,6 +18,8 @@
 #' @param gg_theme A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).
 #' @param xp_theme An xpose theme or vector of modifications to the xpose theme
 #' (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).
+#' @param data_opt A list of options in order to create appropriate data input for 
+#' ggplot2. For more information see \code{\link{data_opt}}.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' @param ... any additional aesthetics.
 #' 
@@ -53,7 +53,6 @@
 #' 
 #' @export
 xplot_scatter <- function(xpdb,
-                          data_opt  = data_opt(),
                           vars      = NULL,
                           aes       = NULL,
                           group     = 'ID',
@@ -67,6 +66,7 @@ xplot_scatter <- function(xpdb,
                           plot_name = 'scatter_plot',
                           gg_theme,
                           xp_theme,
+                          data_opt,
                           quiet,
                           ...) {
   
@@ -76,8 +76,10 @@ xplot_scatter <- function(xpdb,
     return()
   }
   
-  # Fetch data
   if (missing(quiet)) quiet <- xpdb$options$quiet
+  
+  # Fetch data
+  if (missing(data_opt)) data_opt <- data_opt_set()
   data <- fetch_data(xpdb, problem = data_opt$problem, subprob = data_opt$subprob, 
                      source = data_opt$source, simtab = data_opt$simtab, filter = data_opt$filter, 
                      tidy = data_opt$tidy, index_col = data_opt$index_col, quiet)
@@ -119,7 +121,7 @@ xplot_scatter <- function(xpdb,
   
   # Add text
   if (stringr::str_detect(type, stringr::fixed('t', ignore_case = TRUE))) {
-    xp <- xp + xp_geoms(mapping  = c(aes, aes_string(text_label = xp_var(xpdb, data_opt$problem, 
+    xp <- xp + xp_geoms(mapping  = c(aes, aes_string(text_label = xp_var(xpdb, attr(data, 'problem'), 
                                                                          type = 'id')$col)),
                         xp_theme = xpdb$xp_theme,
                         name     = 'text',
@@ -173,7 +175,7 @@ xplot_scatter <- function(xpdb,
   # Add metadata to plots
   xp$xpose <- list(fun      = plot_name,
                    summary  = xpdb$summary,
-                   problem  = data_opt$problem,
+                   problem  = attr(data, 'problem'),
                    quiet    = quiet,
                    xp_theme = xpdb$xp_theme[stringr::str_c(c('title', 'subtitle', 'caption'), 
                                                            '_suffix')])

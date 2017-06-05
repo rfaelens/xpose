@@ -46,8 +46,8 @@ dv_vs_ipred <- function(xpdb,
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   
   xplot_scatter(xpdb = xpdb, aes = aes, group = group,
-                data_opt = data_opt(problem = problem, 
-                                    filter = filter_obs(xpdb, problem)),
+                data_opt = data_opt_set(problem = problem, 
+                                        filter = only_obs(xpdb, problem)),
                 vars = aes_string(x = xp_var(xpdb, problem, type = 'ipred')$col, 
                                   y = xp_var(xpdb, problem, type = 'dv')$col), 
                 type = type, guides = guides, panel_facets = facets, 
@@ -74,8 +74,8 @@ dv_vs_pred <- function(xpdb,
                        ...) {
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   xplot_scatter(xpdb = xpdb, aes = aes, group = group,
-                data_opt = data_opt(problem = problem, 
-                                    filter = filter_obs(xpdb, problem)),
+                data_opt = data_opt_set(problem = problem, 
+                                        filter = only_obs(xpdb, problem)),
                 vars = aes_string(x = xp_var(xpdb, problem, type = 'pred')$col, 
                                   y = xp_var(xpdb, problem, type = 'dv')$col), 
                 type = type, guides = guides, panel_facets = facets, 
@@ -103,8 +103,8 @@ dv_vs_cpred <- function(xpdb,
                         ...) {
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   xplot_scatter(xpdb = xpdb, aes = aes, group = group,
-                data_opt = data_opt(problem = problem, 
-                                    filter = filter_obs(xpdb, problem)),
+                data_opt = data_opt_set(problem = problem, 
+                                        filter = only_obs(xpdb, problem)),
                 vars = aes_string(x = xp_var(xpdb, problem, type = 'cpred')$col, 
                                   y = xp_var(xpdb, problem, type = 'dv')$col),
                 type = type, guides = guides, panel_facets = facets, 

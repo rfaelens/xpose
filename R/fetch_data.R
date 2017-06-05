@@ -14,17 +14,19 @@
 #' @param index_col Only used when 'tidy' is defined a \code{TRUE}. Data to use as index 
 #' when tidying the data.
 #'
+#' @seealso \code{{xplot_scatter}}
+#' 
 #' @examples
-#' data_opt(problem = 1, source = 'data', simtab = TRUE)
+#' data_opt_set(problem = 1, source = 'data', simtab = TRUE)
 #' 
 #' @export
-data_opt <- function(problem   = NULL, 
-                     subprob   = NULL, 
-                     source    = 'data', 
-                     simtab    = FALSE,
-                     filter    = NULL,
-                     tidy      = FALSE,
-                     index_col = NULL) {
+data_opt_set <- function(problem   = NULL, 
+                         subprob   = NULL, 
+                         source    = 'data', 
+                         simtab    = FALSE,
+                         filter    = NULL,
+                         tidy      = FALSE,
+                         index_col = NULL) {
   list(problem = problem, subprob = subprob,
        source = source, simtab = simtab,
        filter = filter, tidy = tidy, 
@@ -32,7 +34,7 @@ data_opt <- function(problem   = NULL,
 }
 
 # Create shortcut functions on the fly to filter observations
-filter_obs <- function(xpdb, problem) {
+only_obs <- function(xpdb, problem) {
   mdv_var <- xp_var(xpdb, problem, type = c('evid', 'mdv'))$col[1]
   fun <- function(x) {}
   body(fun) <- bquote(x[x[, .(mdv_var)] == 0, ])
@@ -76,5 +78,10 @@ fetch_data <- function(xpdb,
     data <- tidyr::gather_(data = data, key_col = 'variable', value_col = 'value',
                            gather_cols = colnames(data)[!colnames(data) %in% index_col])
   }
+  
+  # Attach metadata to output
+  attributes(data) <- c(attributes(data), 
+                        list(problem = problem, simtab = simtab,
+                             subprob = subprob, source = source))
   data
 }
