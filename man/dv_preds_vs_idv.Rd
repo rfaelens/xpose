@@ -5,7 +5,7 @@
 \title{Observations, individual model predictions and model prediction 
 plotted against the independent variable}
 \usage{
-dv_preds_vs_idv(xpdb, aes = NULL, group = "ID", type = "pls",
+dv_preds_vs_idv(xpdb, mapping = NULL, group = "ID", type = "pls",
   facets = NULL,
   title = "Observations, Individual predictions and Population predictions vs. @x | @run",
   subtitle = "Ofv: @ofv, Eps shrink: @epsshk", caption = "@dir",
@@ -13,6 +13,9 @@ dv_preds_vs_idv(xpdb, aes = NULL, group = "ID", type = "pls",
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
+
+\item{mapping}{List of aesthetics mappings to be used for the xpose plot 
+(e.g. \code{point_color}).}
 
 \item{group}{Grouping variable to be used for lines.}
 

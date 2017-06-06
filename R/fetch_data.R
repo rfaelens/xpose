@@ -11,8 +11,10 @@
 #' from an estimation or a simulation table.
 #' @param filter A function used to filter the data e.g. filter = function(x) x[x$TIME > 20, ] where x is the data.
 #' @param tidy Logical, whether the data should be transformed to tidy data.
-#' @param index_col Only used when 'tidy' is defined a \code{TRUE}. Data to use as index 
-#' when tidying the data.
+#' @param index_col Only used when 'tidy' is defined a \code{TRUE} and \code{value_col} is \code{NULL}. 
+#' Column names to use as index when tidying the data.
+#' @param value_col Only used when 'tidy' is defined a \code{TRUE} and \code{index_col} is \code{NULL}. 
+#' Column names to be stacked when tidying the data.
 #'
 #' @seealso \code{{xplot_scatter}}
 #' 
@@ -26,11 +28,11 @@ data_opt_set <- function(problem   = NULL,
                          simtab    = FALSE,
                          filter    = NULL,
                          tidy      = FALSE,
-                         index_col = NULL) {
-  list(problem = problem, subprob = subprob,
-       source = source, simtab = simtab,
-       filter = filter, tidy = tidy, 
-       index_col = index_col)
+                         index_col = NULL,
+                         value_col = NULL) {
+  list(problem = problem, subprob = subprob, source = source, 
+       simtab = simtab, filter = filter, tidy = tidy, 
+       index_col = index_col, value_col = value_col)
 }
 
 # Create shortcut functions on the fly to filter observations
@@ -49,7 +51,8 @@ fetch_data <- function(xpdb,
                        simtab    = FALSE,
                        filter    = NULL,
                        tidy      = FALSE, 
-                       index_col = 'ID',
+                       index_col = NULL,
+                       value_col = NULL,
                        quiet     = FALSE) {
   
   if (source == 'data') {
@@ -74,12 +77,19 @@ fetch_data <- function(xpdb,
   if (is.function(filter)) data <- filter(data)
   
   if (tidy) {
-    msg(c('Tidying data by ', stringr::str_c(index_col, collapse = ', ')), quiet)
+    if (!is.null(value_col)) { 
+      index_col <- colnames(data)[!colnames(data) %in% value_col]
+    }
+    
+    dplyr::if_else(length(index_col) > 5, 
+                   stringr::str_c(stringr::str_c(index_col[1:5], collapse = ', '), '... and', length(index_col) - 5 , 'more variables', sep = ' '),
+                   stringr::str_c(index_col , collapse = ', ')) %>%
+                   {msg(c('Tidying data by ', .), quiet)}
     data <- tidyr::gather_(data = data, key_col = 'variable', value_col = 'value',
                            gather_cols = colnames(data)[!colnames(data) %in% index_col])
   }
   
-  # Attach metadata to output
+  # Add metadata to output
   attributes(data) <- c(attributes(data), 
                         list(problem = problem, simtab = simtab,
                              subprob = subprob, source = source))

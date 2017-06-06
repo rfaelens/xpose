@@ -13,7 +13,7 @@
 #' 
 #' @export
 dv_preds_vs_idv <- function(xpdb,
-                            aes      = NULL,
+                            mapping  = NULL,
                             group    = 'ID',
                             type     = 'pls',
                             facets   = NULL,
@@ -24,14 +24,16 @@ dv_preds_vs_idv <- function(xpdb,
                             problem,
                             ...) {
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
+  if (missing(facets)) facets <- 'variable'
   
-  xplot_scatter(xpdb = xpdb, aes = aes, group = group,
-                data_opt = data_opt(problem = problem, 
-                                    filter = function(x) x[x[, 'EVID'] == 0, c('ID', 'TAD', 'DV', 'IPRED', 'PRED')],
-                                    tidy = TRUE, index_col = c('ID', 'TAD')),
-                vars = aes_string(x = 'TAD',#xp_var(xpdb, problem, type = 'idv')$col, 
-                                  y = 'value'), 
-                type = type, guides = FALSE, panel_facets = 'variable', 
+  xplot_scatter(xpdb = xpdb, group = group,
+                data_opt = data_opt_set(problem = problem, tidy = TRUE, 
+                                        filter = only_obs(xpdb, problem),
+                                        value_col = xp_var(xpdb, problem, 
+                                                           type = c('dv', 'pred', 'ipred'))$col),
+                mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
+                                           y = 'value'), mapping), 
+                type = type, guides = FALSE, panel_facets = facets,
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,

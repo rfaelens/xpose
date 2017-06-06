@@ -5,7 +5,7 @@
 \title{Default xpose scatter plot function}
 \usage{
 xplot_scatter(xpdb, mapping = NULL, group = "ID", type = "pls",
-  guides = TRUE, xscale = "continuous", yscale = "continuous",
+  guides = FALSE, xscale = "continuous", yscale = "continuous",
   title = NULL, subtitle = NULL, caption = NULL,
   plot_name = "scatter_plot", gg_theme, xp_theme, data_opt, quiet, ...)
 }
@@ -40,7 +40,7 @@ line 'l', smooth 's' and text 't' or any combination of the four.}
 (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).}
 
 \item{data_opt}{A list of options in order to create appropriate data input for 
-ggplot2. For more information see \code{\link{data_opt}}.}
+ggplot2. For more information see \code{\link{data_opt_set}}.}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 

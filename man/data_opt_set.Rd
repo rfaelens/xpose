@@ -5,7 +5,8 @@
 \title{Create options for data import}
 \usage{
 data_opt_set(problem = NULL, subprob = NULL, source = "data",
-  simtab = FALSE, filter = NULL, tidy = FALSE, index_col = NULL)
+  simtab = FALSE, filter = NULL, tidy = FALSE, index_col = NULL,
+  value_col = NULL)
 }
 \arguments{
 \item{problem}{The problem to be used, by default returns the last one.}
@@ -22,8 +23,11 @@ from an estimation or a simulation table.}
 
 \item{tidy}{Logical, whether the data should be transformed to tidy data.}
 
-\item{index_col}{Only used when 'tidy' is defined a \code{TRUE}. Data to use as index 
-when tidying the data.}
+\item{index_col}{Only used when 'tidy' is defined a \code{TRUE} and \code{value_col} is \code{NULL}. 
+Column names to use as index when tidying the data.}
+
+\item{value_col}{Only used when 'tidy' is defined a \code{TRUE} and \code{index_col} is \code{NULL}. 
+Column names to be stacked when tidying the data.}
 }
 \description{
 Provide a list of options to the general plotting functions such as 

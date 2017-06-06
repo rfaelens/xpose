@@ -19,7 +19,7 @@
 #' @param xp_theme An xpose theme or vector of modifications to the xpose theme
 #' (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).
 #' @param data_opt A list of options in order to create appropriate data input for 
-#' ggplot2. For more information see \code{\link{data_opt}}.
+#' ggplot2. For more information see \code{\link{data_opt_set}}.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' @param ... any additional aesthetics.
 #' 
@@ -56,7 +56,7 @@ xplot_scatter <- function(xpdb,
                           mapping   = NULL,
                           group     = 'ID',
                           type      = 'pls',
-                          guides    = TRUE,
+                          guides    = FALSE,
                           xscale    = 'continuous',
                           yscale    = 'continuous',
                           title     = NULL,
@@ -79,9 +79,9 @@ xplot_scatter <- function(xpdb,
   
   # Fetch data
   if (missing(data_opt)) data_opt <- data_opt_set()
-  data <- fetch_data(xpdb, problem = data_opt$problem, subprob = data_opt$subprob, 
+  data <- fetch_data(xpdb, quiet = quiet, problem = data_opt$problem, subprob = data_opt$subprob, 
                      source = data_opt$source, simtab = data_opt$simtab, filter = data_opt$filter, 
-                     tidy = data_opt$tidy, index_col = data_opt$index_col, quiet)
+                     tidy = data_opt$tidy, index_col = data_opt$index_col, value_col = data_opt$value_col)
   if (is.null(data)) return()
   
   # Assing xp_theme and gg_theme
