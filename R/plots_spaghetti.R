@@ -1,16 +1,112 @@
-#' Observations, individual model predictions and model prediction 
-#' plotted against the independent variable
+#' Observations and model predictions plotted against the independent variable
 #'
 #' @description Plot of observations (DV), individual model predictions (IPRED) 
-#' and population predictions (PRED) plotted against the independent variable (IDV).
+#' and/or population predictions (PRED) plotted against the independent variable (IDV).
 #'
 #' @inheritParams dv_vs_pred
 #' @inheritSection xplot_scatter Layers mapping
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
-#' dv_preds_vs_idv(xpdb_ex_pk)
+#' dv_vs_idv(xpdb_ex_pk, aes(x = TAD))
 #' 
+#' ipred_vs_idv(xpdb_ex_pk, aes(x = TAD))
+#' 
+#' pred_vs_idv(xpdb_ex_pk, aes(x = TAD))
+#' 
+#' dv_preds_vs_idv(xpdb_ex_pk, aes(x = TAD))
+#' 
+#' @name pred_vs_idv
+#' @export
+dv_vs_idv <- function(xpdb,
+                      mapping  = NULL,
+                      group    = 'ID',
+                      type     = 'pls',
+                      facets   = NULL,
+                      title    = '@y vs. @x | @run',
+                      subtitle = 'Ofv: @ofv',
+                      caption  = '@dir',
+                      log      = NULL,
+                      problem,
+                      ...) {
+  if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
+  
+  xplot_scatter(xpdb = xpdb, group = group,
+                data_opt = data_opt_set(problem = problem, 
+                                        filter = only_obs(xpdb, problem)),
+                mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
+                                           y = xp_var(xpdb, problem, type = 'dv')$col), mapping),
+                type = type, panel_facets = facets, 
+                xscale = check_scales('x', log), 
+                yscale = check_scales('y', log), 
+                title = title, subtitle = subtitle, caption = caption,
+                plot_name = as.character(match.call()[[1]]),
+                guides_slope = 0, ...)
+}
+
+
+#' @name pred_vs_idv
+#' @export
+ipred_vs_idv <- function(xpdb,
+                         mapping  = NULL,
+                         group    = 'ID',
+                         type     = 'pls',
+                         facets   = NULL,
+                         title    = '@y vs. @x | @run',
+                         subtitle = 'Ofv: @ofv, Eps shrink: @epsshk',
+                         caption  = '@dir',
+                         log      = NULL,
+                         problem,
+                         ...) {
+  if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
+  
+  xplot_scatter(xpdb = xpdb, group = group,
+                data_opt = data_opt_set(problem = problem, 
+                                        filter = only_obs(xpdb, problem)),
+                mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
+                                           y = xp_var(xpdb, problem, type = 'ipred')$col), mapping),
+                type = type, panel_facets = facets, 
+                xscale = check_scales('x', log), 
+                yscale = check_scales('y', log), 
+                title = title, subtitle = subtitle, caption = caption,
+                plot_name = as.character(match.call()[[1]]),
+                guides_slope = 0, ...)
+}
+
+
+#' @name pred_vs_idv
+#' @export
+pred_vs_idv <- function(xpdb,
+                        mapping  = NULL,
+                        group    = 'ID',
+                        type     = 'pls',
+                        facets   = NULL,
+                        title    = '@y vs. @x | @run',
+                        subtitle = 'Ofv: @ofv',
+                        caption  = '@dir',
+                        log      = NULL,
+                        problem,
+                        ...) {
+  if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
+  
+  xplot_scatter(xpdb = xpdb, group = group,
+                data_opt = data_opt_set(problem = problem, 
+                                        filter = only_obs(xpdb, problem)),
+                mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
+                                           y = xp_var(xpdb, problem, type = 'pred')$col), mapping),
+                type = type, panel_facets = facets, 
+                xscale = check_scales('x', log), 
+                yscale = check_scales('y', log), 
+                title = title, subtitle = subtitle, caption = caption,
+                plot_name = as.character(match.call()[[1]]),
+                guides_slope = 0, ...)
+}
+
+
+#' Observations, individual model predictions and model prediction 
+#' plotted against the independent variable
+#'
+#' @rdname pred_vs_idv
 #' @export
 dv_preds_vs_idv <- function(xpdb,
                             mapping  = NULL,
