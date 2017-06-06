@@ -66,7 +66,7 @@ res_vs_pred <- function(xpdb,
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
-#' res_vs_idv(xpdb_ex_pk, res = 'CWRES')
+#' res_vs_idv(xpdb_ex_pk, res = 'CWRES', aes(x = TAD))
 #' 
 #' @export
 res_vs_idv <- function(xpdb,
@@ -166,7 +166,7 @@ absval_res_vs_pred <- function(xpdb,
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
-#' absval_res_vs_idv(xpdb_ex_pk, res = 'CWRES')
+#' absval_res_vs_idv(xpdb_ex_pk, res = 'CWRES', aes(x = TAD))
 #' 
 #' @export
 absval_res_vs_idv <- function(xpdb,

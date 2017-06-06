@@ -112,10 +112,10 @@
     <p>Manually generate scatter plots from an xpdb object.</p>
     
 
-    <pre class="usage"><span class='fu'>xplot_scatter</span>(<span class='no'>xpdb</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>aes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pls"</span>,
-  <span class='kw'>guides</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>xscale</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>, <span class='kw'>yscale</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>,
+    <pre class="usage"><span class='fu'>xplot_scatter</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pls"</span>,
+  <span class='kw'>guides</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>xscale</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>, <span class='kw'>yscale</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>plot_name</span> <span class='kw'>=</span> <span class='st'>"scatter_plot"</span>, <span class='no'>gg_theme</span>, <span class='no'>xp_theme</span>, <span class='no'>quiet</span>, <span class='no'>problem</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>plot_name</span> <span class='kw'>=</span> <span class='st'>"scatter_plot"</span>, <span class='no'>gg_theme</span>, <span class='no'>xp_theme</span>, <span class='no'>data_opt</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -125,12 +125,9 @@
       <td><p>An <code>xpose_data</code> object generated with <code><a href='xpose_data.html'>xpose_data</a></code>.</p></td>
     </tr>
     <tr>
-      <th>vars</th>
-      <td><p>Variable mapping using the <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></code> function.</p></td>
-    </tr>
-    <tr>
-      <th>aes</th>
-      <td><p>xpose aesthetics (eg. <code>point_color</code>).</p></td>
+      <th>mapping</th>
+      <td><p>List of aesthetics mappings to be used for the xpose plot 
+(e.g. <code>point_color</code>).</p></td>
     </tr>
     <tr>
       <th>group</th>
@@ -139,7 +136,7 @@
     <tr>
       <th>type</th>
       <td><p>String setting the type of plot to be used points 'p',
-line 'l', smooth 's' and text 't' or any combination of the 4.</p></td>
+line 'l', smooth 's' and text 't' or any combination of the four.</p></td>
     </tr>
     <tr>
       <th>guides</th>
@@ -179,13 +176,13 @@ line 'l', smooth 's' and text 't' or any combination of the 4.</p></td>
 (eg. <code>c(point_color = 'red', line_linetype = 'dashed')</code>).</p></td>
     </tr>
     <tr>
-      <th>quiet</th>
-      <td><p>Logical, if <code>FALSE</code> messages are printed to the console.</p></td>
+      <th>data_opt</th>
+      <td><p>A list of options in order to create appropriate data input for 
+ggplot2. For more information see <code><a href='data_opt_set.html'>data_opt_set</a></code>.</p></td>
     </tr>
     <tr>
-      <th>problem</th>
-      <td><p>The $problem number to use for ploting. By default the data 
-is taken from the estimation problem.</p></td>
+      <th>quiet</th>
+      <td><p>Logical, if <code>FALSE</code> messages are printed to the console.</p></td>
     </tr>
     <tr>
       <th>...</th>

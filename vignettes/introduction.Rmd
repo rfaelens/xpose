@@ -66,6 +66,7 @@ Many functions will be made available in the next release of xpose. Available fu
  - RES vs. PRED (`res_vs_pred(res = 'CWRES')`)   
  - |RES| vs. IDV (`absval_res_vs_idv(res = 'CWRES')`)   
  - |RES| vs. PRED (`absval_res_vs_pred(res = 'CWRES')`)   
+ - DV and PRED vs. IDV (`dv_vs_idv()`, `ipred_vs_idv()`, `pred_vs_idv()`, `dv_pred_vs_idv()`)
  
 These functions are used as follow:
 ``` {r demo basic gof}

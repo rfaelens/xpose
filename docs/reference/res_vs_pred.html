@@ -119,9 +119,10 @@
 </ul>
     
 
-    <pre class="usage"><span class='fu'>res_vs_pred</span>(<span class='no'>xpdb</span>, <span class='kw'>aes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='st'>"CWRES"</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pls"</span>,
-  <span class='kw'>facets</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"@y vs. @x | @run"</span>, <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Ofv: @ofv"</span>,
-  <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guides</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>problem</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>res_vs_pred</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='st'>"CWRES"</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>,
+  <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pls"</span>, <span class='kw'>facets</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"@y vs. @x | @run"</span>,
+  <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Ofv: @ofv"</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guides</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>problem</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -131,8 +132,9 @@
       <td><p>An xpose database object.</p></td>
     </tr>
     <tr>
-      <th>aes</th>
-      <td><p>The xpose aesthetics (eg. <code>point_color</code>).</p></td>
+      <th>mapping</th>
+      <td><p>List of aesthetics mappings to be used for the xpose plot 
+(e.g. <code>point_color</code>).</p></td>
     </tr>
     <tr>
       <th>res</th>
@@ -149,8 +151,8 @@ line 'l' and smooth 's' or any combination of the three.</p></td>
     </tr>
     <tr>
       <th>facets</th>
-      <td><p>Either a character string to use <a href='http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap'>facet_wrap</a> or a formula 
-to use <a href='http://www.rdocumentation.org/packages/ggplot2/topics/facet_grid'>facet_grid</a>.</p></td>
+      <td><p>Either a character string to use <a href='http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap'>facet_wrap</a> 
+or a formula to use <a href='http://www.rdocumentation.org/packages/ggplot2/topics/facet_grid'>facet_grid</a>.</p></td>
     </tr>
     <tr>
       <th>title</th>
@@ -166,7 +168,8 @@ to use <a href='http://www.rdocumentation.org/packages/ggplot2/topics/facet_grid
     </tr>
     <tr>
       <th>log</th>
-      <td><p>String assigning logarithmic scale to axes, can be either '', 'x', y' or 'xy'.</p></td>
+      <td><p>String assigning logarithmic scale to axes, can be either '', 
+'x', y' or 'xy'.</p></td>
     </tr>
     <tr>
       <th>guides</th>

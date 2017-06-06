@@ -83,7 +83,7 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 }
 
 \examples{
-res_vs_idv(xpdb_ex_pk, res = 'CWRES')
+res_vs_idv(xpdb_ex_pk, res = 'CWRES', aes(x = TAD))
 
 }
 \seealso{

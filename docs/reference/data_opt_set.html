@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract model summary data — get_summary • xpose</title>
+<title>Create options for data import — data_opt_set • xpose</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -105,62 +105,89 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract model summary data</h1>
+    <h1>Create options for data import</h1>
     </div>
 
     
-    <p>Extract model summary data from an xpdb object.</p>
+    <p>Provide a list of options to the general plotting functions such as 
+<code>xplot_scatter</code> in order to create appropriate data input for ggplot2.</p>
     
 
-    <pre class="usage"><span class='fu'>get_summary</span>(<span class='no'>xpdb</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subprob</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>only_last</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>data_opt_set</span>(<span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subprob</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>source</span> <span class='kw'>=</span> <span class='st'>"data"</span>,
+  <span class='kw'>simtab</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>filter</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tidy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>index_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>value_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>xpdb</th>
-      <td><p>An <code>xpose_data</code> object from which the summary data will be extracted.</p></td>
-    </tr>
-    <tr>
       <th>problem</th>
-      <td><p>The problem to be used, by default returns the last one for each label.</p></td>
+      <td><p>The problem to be used, by default returns the last one.</p></td>
     </tr>
     <tr>
       <th>subprob</th>
-      <td><p>The subproblem to be used, by default returns the last one for each label.</p></td>
+      <td><p>The subproblem to be used, by default returns the last one.</p></td>
     </tr>
     <tr>
-      <th>only_last</th>
-      <td><p>Logical, if <code>TRUE</code> only the last record for each label is returned in case 
-of multiple problem and/or subproblem. If <code>FALSE</code> all values are returned.</p></td>
+      <th>source</th>
+      <td><p>Define the location of the data in the xpdb. Should be either 'data' 
+to use the output tables or the name of an output file attached to the xpdb.</p></td>
+    </tr>
+    <tr>
+      <th>simtab</th>
+      <td><p>Only used when 'data' is defined as the source and `problem` is default. Should the data be coming 
+from an estimation or a simulation table.</p></td>
+    </tr>
+    <tr>
+      <th>filter</th>
+      <td><p>A function used to filter the data e.g. filter = function(x) x[x$TIME &gt; 20, ] where x is the data.</p></td>
+    </tr>
+    <tr>
+      <th>tidy</th>
+      <td><p>Logical, whether the data should be transformed to tidy data.</p></td>
+    </tr>
+    <tr>
+      <th>index_col</th>
+      <td><p>Only used when 'tidy' is defined a <code>TRUE</code> and <code>value_col</code> is <code>NULL</code>. 
+Column names to use as index when tidying the data.</p></td>
+    </tr>
+    <tr>
+      <th>value_col</th>
+      <td><p>Only used when 'tidy' is defined a <code>TRUE</code> and <code>index_col</code> is <code>NULL</code>. 
+Column names to be stacked when tidying the data.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A tibble of model summary.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='xpose_data.html'>xpose_data</a></code>, <code><a href='template_titles.html'>template_titles</a></code></p>
+    <p><code>{xplot_scatter}</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>run_summary</span> <span class='kw'>&lt;-</span> <span class='fu'>get_summary</span>(<span class='no'>xpdb_ex_pk</span>)
-<span class='no'>run_summary</span></div><div class='output co'>#&gt; # A tibble: 28 x 5
-#&gt;    problem subprob                 descr       label               value
-#&gt;      &lt;dbl&gt;   &lt;dbl&gt;                 &lt;chr&gt;       &lt;chr&gt;               &lt;chr&gt;
-#&gt;  1       0       0       Run description       descr    Run for testthat
-#&gt;  2       0       0         Run directory         dir analysis/models/pk/
-#&gt;  3       0       0            Run errors      errors                  na
-#&gt;  4       0       0   ESAMPLE seed number esampleseed                  na
-#&gt;  5       0       0              Run file        file          run001.lst
-#&gt;  6       0       0     Number of ESAMPLE    nesample                  na
-#&gt;  7       0       0 Number of simulations        nsim                  na
-#&gt;  8       0       0       Reference model         ref                 000
-#&gt;  9       0       0            Run number         run              run001
-#&gt; 10       0       0       Simulation seed     simseed                  na
-#&gt; # ... with 18 more rows</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>data_opt_set</span>(<span class='kw'>problem</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>source</span> <span class='kw'>=</span> <span class='st'>'data'</span>, <span class='kw'>simtab</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; $problem
+#&gt; [1] 1
+#&gt; 
+#&gt; $subprob
+#&gt; NULL
+#&gt; 
+#&gt; $source
+#&gt; [1] "data"
+#&gt; 
+#&gt; $simtab
+#&gt; [1] TRUE
+#&gt; 
+#&gt; $filter
+#&gt; NULL
+#&gt; 
+#&gt; $tidy
+#&gt; [1] FALSE
+#&gt; 
+#&gt; $index_col
+#&gt; NULL
+#&gt; 
+#&gt; $value_col
+#&gt; NULL
+#&gt; </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -168,8 +195,6 @@ of multiple problem and/or subproblem. If <code>FALSE</code> all values are retu
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>

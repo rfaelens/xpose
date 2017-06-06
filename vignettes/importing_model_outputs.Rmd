@@ -1,5 +1,5 @@
 ---
-title: "Importing and exporting data"
+title: "Importing and extracting data"
 author: "Benjamin Guiastrennec"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: rmarkdown::html_vignette
@@ -81,8 +81,8 @@ The files attached to an xpdb object can be displayed to the console simply by w
 xpdb # or print(xpdb)
 ```
 
-## Export 
-### Export code
+## Extract 
+### Extract code
 The `get_code()` function can be used to extract the parsed model code from the xpdb. This code was used to create the summary and find table names and can be used to get additional information regarding the run. If the argument `problem` is specified a subset of the code can be returned based on `$PROBLEM`. 
 
 *Note that general code warnings and PsN outputs appended are listed as problem 0.*
@@ -92,7 +92,7 @@ code <- get_code(xpdb)
 code
 ```
 
-### Export data
+### Extract data
 The `get_data()` function can be used to extract the imported table files. Tables can be extracted by `table` name or by `problem`. In the latter a single dataset containing all aggregated tables is returned. If more than one `table` name or `problem` number is provided a named list is returned. 
 
 *Note when providing a table name it is not garanteed that the table will be identical to its file e.g. the order of the columns may have been changed and tables with `FIRSTONLY` will no longer be deduplicated.*
@@ -102,7 +102,7 @@ data <- get_data(xpdb, table = 'cotab001')
 data
 ```
 
-### Export file
+### Extract file
 The `get_file()` function can be used to extract the imported output files. Files can be extracted by `file` name, by `problem` and/or `subprob`. If more than one `file` name, `problem` or subproblem number is provided a named list is returned. 
 
 ```{r demo get_file}
@@ -110,7 +110,7 @@ file <- get_file(xpdb, file = 'run001.ext')
 file
 ```
 
-### Export summary
+### Extract summary
 The `get_summary()` function can be used to extract the generated run summary from which the `template_titles`. If the argument `problem` is specified a subset of the summary can be returned based on `$PROBLEM`. 
 
 *Note that general summary information are listed as problem 0.*
