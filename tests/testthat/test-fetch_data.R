@@ -44,3 +44,7 @@ test_that("fetch_data can tidy data", {
   )
 })
 
+test_that("fetch_data can get file data", {
+  expect_equal(fetch_data(xpdb_ex_pk, problem = 1, source = 'run001.ext', quiet = TRUE), 
+               xpdb_ex_pk$files[xpdb_ex_pk$files$name == 'run001.ext',]$data[[1]])
+})
