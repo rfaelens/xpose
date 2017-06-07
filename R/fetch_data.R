@@ -82,7 +82,8 @@ fetch_data <- function(xpdb,
     }
     
     dplyr::if_else(length(index_col) > 5, 
-                   stringr::str_c(stringr::str_c(index_col[1:5], collapse = ', '), '... and', length(index_col) - 5 , 'more variables', sep = ' '),
+                   stringr::str_c(stringr::str_c(index_col[1:5], collapse = ', '), 
+                                  '... and', length(index_col) - 5 , 'more variables', sep = ' '),
                    stringr::str_c(index_col , collapse = ', ')) %>%
                    {msg(c('Tidying data by ', .), quiet)}
     data <- tidyr::gather_(data = data, key_col = 'variable', value_col = 'value',
