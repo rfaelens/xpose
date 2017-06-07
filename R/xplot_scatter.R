@@ -71,7 +71,7 @@ xplot_scatter <- function(xpdb,
   
   # Check input
   if (!is.xpdb(xpdb)) { 
-    msg('Bad input to the argument`xpdb`', dplyr::if_else(missing(quiet), TRUE, quiet))
+    msg('Bad input to the argument`xpdb`', ifelse(missing(quiet), TRUE, quiet))
     return()
   }
   
