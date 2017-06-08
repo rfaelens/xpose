@@ -96,11 +96,13 @@ navbar:
     menu:
         - text: 1. Introduction
           href: articles/introduction.html
-        - text: 2. Importing, exporting data
+        - text: 2. Importing model outputs
           href: articles/importing_model_outputs.html
-        - text: 3. Customizing plots
+        - text: 3. Access xpdb data
+          href: articles/access_xpdb_data.html
+        - text: 4. Customizing plots
           href: articles/customizing_plots.html
-        - text: 4. Creating interactive plots (beta)
+        - text: 5. Creating interactive plots (beta)
           href: articles/interactive_plots.html
   - text: Reference
     href: reference/index.html
