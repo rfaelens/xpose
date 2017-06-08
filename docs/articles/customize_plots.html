@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Customizing plots • xpose</title>
+<title>Customize plots • xpose</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
@@ -41,16 +41,16 @@
       <a href="../articles/introduction.html">1. Introduction</a>
     </li>
     <li>
-      <a href="../articles/importing_model_outputs.html">2. Importing model outputs</a>
+      <a href="../articles/import_model_outputs.html">2. Import model outputs</a>
     </li>
     <li>
       <a href="../articles/access_xpdb_data.html">3. Access xpdb data</a>
     </li>
     <li>
-      <a href="../articles/customizing_plots.html">4. Customizing plots</a>
+      <a href="../articles/customize_plots.html">4. Customize plots</a>
     </li>
     <li>
-      <a href="../articles/interactive_plots.html">5. Creating interactive plots (beta)</a>
+      <a href="../articles/interactive_plots.html">5. Create interactive plots (beta)</a>
     </li>
   </ul>
 </li>
@@ -86,7 +86,7 @@
       </header><div class="row">
   <div class="col-md-9">
     <div class="page-header toc-ignore">
-      <h1>Customizing plots</h1>
+      <h1>Customize plots</h1>
                         <h4 class="author">Benjamin Guiastrennec</h4>
             
             <h4 class="date">08 June, 2017</h4>
@@ -99,7 +99,7 @@
 <h3 class="hasAnchor">
 <a href="#plot-type" class="anchor"></a>Plot type</h3>
 <p>The option <code>type</code> allows to control how the data should be represented i.e. whether to use points <code>'p'</code>, lines <code>'l'</code>, smooth <code>'s'</code>, text <code>'t'</code> or any combination of the three (e.g. <code>type = 'pl'</code>).</p>
-<p><img src="customizing_plots_files/figure-html/demo%20type-1.png" width="75%" style="display: block; margin: auto;"></p>
+<p><img src="customize_plots_files/figure-html/demo%20type-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="visual-guides" class="section level3">
 <h3 class="hasAnchor">
@@ -118,13 +118,13 @@
             <span class="dt">title    =</span> <span class="st">'@y vs. @x (@run, obj: @ofv)'</span>,
             <span class="dt">subtitle =</span> <span class="st">'Based on: @nind subjects and @nobs records'</span>,
             <span class="dt">caption  =</span> <span class="st">'Dir: @dir'</span>)</code></pre></div>
-<p><img src="customizing_plots_files/figure-html/demo%20titles-1.png" width="50%" style="display: block; margin: auto;"></p>
+<p><img src="customize_plots_files/figure-html/demo%20titles-1.png" width="50%" style="display: block; margin: auto;"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Disabling all titles</span>
 <span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">title =</span> <span class="ot">NULL</span>, <span class="dt">subtitle =</span> <span class="ot">NULL</span>, <span class="dt">caption =</span> <span class="ot">NULL</span>)</code></pre></div>
-<p><img src="customizing_plots_files/figure-html/demo%20titles-2.png" width="50%" style="display: block; margin: auto;"></p>
+<p><img src="customize_plots_files/figure-html/demo%20titles-2.png" width="50%" style="display: block; margin: auto;"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Edit title suffix from the xp_theme for a specific plot</span>
 <span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">title =</span> <span class="st">'A title'</span>, <span class="dt">xp_theme =</span> <span class="kw">c</span>(<span class="dt">title_suffix =</span> <span class="st">' | a suffix for @run'</span>))</code></pre></div>
-<p><img src="customizing_plots_files/figure-html/demo%20titles-3.png" width="50%" style="display: block; margin: auto;"></p>
+<p><img src="customize_plots_files/figure-html/demo%20titles-3.png" width="50%" style="display: block; margin: auto;"></p>
 </div>
 <div id="using-the-labs-function" class="section level4">
 <h4 class="hasAnchor">
@@ -136,7 +136,7 @@
        <span class="dt">caption  =</span> <span class="st">'Based on @nobs observations'</span>,
        <span class="dt">x        =</span> <span class="st">'Individual model predictions (@x)'</span>,
        <span class="dt">y        =</span> <span class="st">'Observations (@y) for @nind subjects'</span>)</code></pre></div>
-<p><img src="customizing_plots_files/figure-html/demo%20xpose_labs-1.png" width="50%" style="display: block; margin: auto;"></p>
+<p><img src="customize_plots_files/figure-html/demo%20xpose_labs-1.png" width="50%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="modify-aesthetics" class="section level3">
@@ -153,10 +153,10 @@
             <span class="dt">line_color =</span> <span class="st">'orange'</span>, <span class="dt">line_linetype =</span> <span class="st">'solid'</span>, 
             <span class="co"># Change smooth aesthetics</span>
             <span class="dt">smooth_method =</span> <span class="st">'lm'</span>)</code></pre></div>
-<p><img src="customizing_plots_files/figure-html/demo%20aesthetics-1.png" width="50%" style="display: block; margin: auto;"></p>
+<p><img src="customize_plots_files/figure-html/demo%20aesthetics-1.png" width="50%" style="display: block; margin: auto;"></p>
 <p>Aesthetics can also be defined mapped to a variable using the ggplot2 <code>aes()</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">type =</span> <span class="st">'p'</span>, <span class="kw">aes</span>(<span class="dt">point_color =</span> <span class="kw">as.factor</span>(SEX))) </code></pre></div>
-<p><img src="customizing_plots_files/figure-html/demo%20mapping-1.png" width="50%" style="display: block; margin: auto;"></p>
+<p><img src="customize_plots_files/figure-html/demo%20mapping-1.png" width="50%" style="display: block; margin: auto;"></p>
 </div>
 <div id="grouping-variable" class="section level3">
 <h3 class="hasAnchor">
@@ -173,10 +173,10 @@
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Example with a string</span>
 <span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">facets =</span> <span class="kw">c</span>(<span class="st">'SEX'</span>, <span class="st">'OCC'</span>))</code></pre></div>
-<p><img src="customizing_plots_files/figure-html/demo%20panels-1.png" width="75%" style="display: block; margin: auto;"></p>
+<p><img src="customize_plots_files/figure-html/demo%20panels-1.png" width="75%" style="display: block; margin: auto;"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Example with a formula</span>
 <span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">facets =</span> SEX~OCC)</code></pre></div>
-<p><img src="customizing_plots_files/figure-html/demo%20panels-2.png" width="75%" style="display: block; margin: auto;"></p>
+<p><img src="customize_plots_files/figure-html/demo%20panels-2.png" width="75%" style="display: block; margin: auto;"></p>
 <p>Additional arguments can be passed to the panel function using the <code>panel_xxx</code> notation (e.g. <code>panel_ncol = 2</code>, <code>panel_labeller = 'label_both'</code>). For more options read the help of <a href="http://ggplot2.tidyverse.org/reference/facet_wrap.html"><code>facet_wrap</code></a> and <a href="http://ggplot2.tidyverse.org/reference/facet_grid.html"><code>facet_grid</code></a> from <code>ggplot2</code>.</p>
 </div>
 <div id="additional-layers" class="section level3">
@@ -194,7 +194,7 @@
            <span class="dt">alpha =</span> <span class="fl">0.2</span>, <span class="dt">fill =</span> <span class="st">'red'</span>,
            <span class="dt">xmin =</span> -<span class="ot">Inf</span>, <span class="dt">xmax =</span> -<span class="dv">3</span>,
            <span class="dt">ymin =</span> -<span class="ot">Inf</span>, <span class="dt">ymax =</span> -<span class="dv">3</span>)</code></pre></div>
-<p><img src="customizing_plots_files/figure-html/demo%20layers-1.png" width="50%" style="display: block; margin: auto;"></p>
+<p><img src="customize_plots_files/figure-html/demo%20layers-1.png" width="50%" style="display: block; margin: auto;"></p>
 </div>
 <div id="scales-options" class="section level3">
 <h3 class="hasAnchor">
@@ -205,7 +205,7 @@
             <span class="dt">xscale_labels =</span> <span class="kw">c</span>(<span class="st">'Low'</span>, <span class="st">'Med'</span>, <span class="st">'High'</span>),
             <span class="dt">xscale_expand =</span> <span class="kw">c</span>(<span class="fl">0.2</span>, <span class="dv">0</span>),
             <span class="dt">xscale_name =</span> <span class="st">'Individual model predictions'</span>)</code></pre></div>
-<p><img src="customizing_plots_files/figure-html/scales%20demo-1.png" width="50%" style="display: block; margin: auto;"></p>
+<p><img src="customize_plots_files/figure-html/scales%20demo-1.png" width="50%" style="display: block; margin: auto;"></p>
 </div>
 <div id="themes" class="section level3">
 <h3 class="hasAnchor">
@@ -231,12 +231,12 @@ xpdb &lt;-<span class="st"> </span><span class="kw"><a href="../reference/update
 <h4 class="hasAnchor">
 <a href="#examples-of-gg_theme" class="anchor"></a>Examples of <code>gg_theme</code>:</h4>
 <p>xpose brings two additional themes (<code><a href="../reference/gg_themes.html">theme_readable()</a></code> and <code><a href="../reference/gg_themes.html">theme_bw2()</a></code>), to those available in <code>ggplot2</code>.</p>
-<p><img src="customizing_plots_files/figure-html/demo%20gg_theme-1.png" width="75%" style="display: block; margin: auto;"></p>
+<p><img src="customize_plots_files/figure-html/demo%20gg_theme-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="examples-of-xp_theme" class="section level4">
 <h4 class="hasAnchor">
 <a href="#examples-of-xp_theme" class="anchor"></a>Examples of <code>xp_theme</code>:</h4>
-<p><img src="customizing_plots_files/figure-html/demo%20xp_theme-1.png" width="75%" style="display: block; margin: auto;"></p>
+<p><img src="customize_plots_files/figure-html/demo%20xp_theme-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 </div>

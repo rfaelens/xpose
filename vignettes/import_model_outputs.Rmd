@@ -1,10 +1,10 @@
 ---
-title: "Importing model outputs"
+title: "Import model outputs"
 author: "Benjamin Guiastrennec"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Importing model outputs}
+  %\VignetteIndexEntry{Import model outputs}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -23,8 +23,8 @@ knitr::opts_chunk$set(fig.dpi = 96,
                       comment = '')
 ```
 
-### Import model output
-To import the model output files (e.g. NONMEM tables). The function `xpose_data()` collects all model output files and table and organizes them into an R object commonly called `xpdb` for xpose data base. Note that xpose makes use of the [readr](http://readr.tidyverse.org) package to rapidly import big dataset into R.
+### The `xpose_data` function
+The function `xpose_data()` collects all model output files and table and organizes them into an R object commonly called `xpdb` for xpose data base. Note that xpose makes use of the [readr](http://readr.tidyverse.org) package to rapidly import big dataset into R.
 
 ``` r
 xpdb <- xpose_data(runno = '001')

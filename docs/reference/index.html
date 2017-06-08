@@ -63,13 +63,16 @@
       <a href="../articles/introduction.html">1. Introduction</a>
     </li>
     <li>
-      <a href="../articles/importing_model_outputs.html">2. Importing, exporting data</a>
+      <a href="../articles/import_model_outputs.html">2. Import model outputs</a>
     </li>
     <li>
-      <a href="../articles/customizing_plots.html">3. Customizing plots</a>
+      <a href="../articles/access_xpdb_data.html">3. Access xpdb data</a>
     </li>
     <li>
-      <a href="../articles/interactive_plots.html">4. Creating interactive plots (beta)</a>
+      <a href="../articles/customize_plots.html">4. Customize plots</a>
+    </li>
+    <li>
+      <a href="../articles/interactive_plots.html">5. Create interactive plots (beta)</a>
     </li>
   </ul>
 </li>
@@ -120,20 +123,6 @@
       </colgroup>
 
       <tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-xpdb-examples" class="hasAnchor"><a href="#section-xpdb-examples" class="anchor"></a>xpdb examples</h2>
-            <p class="section-desc"><p>Example of xpose_data</p></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="xpdb_ex_pk.html">xpdb_ex_pk</a></code> </p>
-          </td>
-          <td><p><code>xpose_data</code> examples</p></td>
-        </tr>
-      </tbody><tbody>
         <tr>
           <th colspan="2">
             <h2 id="section-automatic-import-of-run-output" class="hasAnchor"><a href="#section-automatic-import-of-run-output" class="anchor"></a>Automatic import of run output</h2>
@@ -188,6 +177,20 @@
       </tbody><tbody>
         <tr>
           <th colspan="2">
+            <h2 id="section-xpdb-examples" class="hasAnchor"><a href="#section-xpdb-examples" class="anchor"></a>xpdb examples</h2>
+            <p class="section-desc"><p>Example of xpose_data</p></p>
+          </th>
+        </tr>
+        <tr>
+          <!--  -->
+          <td>
+            <p><code><a href="xpdb_ex_pk.html">xpdb_ex_pk</a></code> </p>
+          </td>
+          <td><p><code>xpose_data</code> examples</p></td>
+        </tr>
+      </tbody><tbody>
+        <tr>
+          <th colspan="2">
             <h2 id="section-data-summary" class="hasAnchor"><a href="#section-data-summary" class="anchor"></a>Data summary</h2>
             <p class="section-desc"><p>Summarize the xpdb content or the run</p></p>
           </th>
@@ -214,8 +217,8 @@
       </tbody><tbody>
         <tr>
           <th colspan="2">
-            <h2 id="section-extract-data-from-an-xpdb" class="hasAnchor"><a href="#section-extract-data-from-an-xpdb" class="anchor"></a>Extract data from an xpdb</h2>
-            <p class="section-desc"><p>Extract code, data, files or summary from an xpdb object</p></p>
+            <h2 id="section-access-data-from-an-xpdb" class="hasAnchor"><a href="#section-access-data-from-an-xpdb" class="anchor"></a>Access data from an xpdb</h2>
+            <p class="section-desc"><p>Access code, data, files or summary from an xpdb object</p></p>
           </th>
         </tr>
         <tr>
@@ -242,6 +245,58 @@
             <p><code><a href="get_summary.html">get_summary</a></code> </p>
           </td>
           <td><p>Extract model summary data</p></td>
+        </tr>
+      </tbody><tbody>
+        <tr>
+          <th colspan="2">
+            <h2 id="section-basic-gof" class="hasAnchor"><a href="#section-basic-gof" class="anchor"></a>Basic gof</h2>
+            <p class="section-desc"><p>Basic goodness-of-fit plots.</p></p>
+          </th>
+        </tr>
+        <tr>
+          <!--  -->
+          <td>
+            <p><code><a href="res_vs_idv.html">res_vs_idv</a></code> <code><a href="res_vs_idv.html">absval_res_vs_idv</a></code> </p>
+          </td>
+          <td><p>Residuals plotted against the independent variable</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="res_vs_pred.html">res_vs_pred</a></code> <code><a href="res_vs_pred.html">absval_res_vs_pred</a></code> </p>
+          </td>
+          <td><p>Residuals plotted against population predictions</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="dv_vs_pred.html">dv_vs_ipred</a></code> <code><a href="dv_vs_pred.html">dv_vs_pred</a></code> <code><a href="dv_vs_pred.html">dv_vs_cpred</a></code> </p>
+          </td>
+          <td><p>Observations plotted against model predictions</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="pred_vs_idv.html">dv_vs_idv</a></code> <code><a href="pred_vs_idv.html">ipred_vs_idv</a></code> <code><a href="pred_vs_idv.html">pred_vs_idv</a></code> <code><a href="pred_vs_idv.html">dv_preds_vs_idv</a></code> </p>
+          </td>
+          <td><p>Observations and model predictions plotted against the independent variable</p></td>
+        </tr>
+      </tbody><tbody>
+        <tr>
+          <th colspan="2">
+            <h2 id="section-general-plotting-functions" class="hasAnchor"><a href="#section-general-plotting-functions" class="anchor"></a>General plotting functions</h2>
+            <p class="section-desc"><p>Functions to manually create customized plots from an xpose_data object.</p></p>
+          </th>
+        </tr>
+        <tr>
+          <!--  -->
+          <td>
+            <p><code><a href="xplot_scatter.html">xplot_scatter</a></code> </p>
+          </td>
+          <td><p>Default xpose scatter plot function</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="data_opt_set.html">data_opt_set</a></code> </p>
+          </td>
+          <td><p>Create options for data import</p></td>
         </tr>
       </tbody><tbody>
         <tr>
@@ -278,70 +333,6 @@
       </tbody><tbody>
         <tr>
           <th colspan="2">
-            <h2 id="section-general-plotting-functions" class="hasAnchor"><a href="#section-general-plotting-functions" class="anchor"></a>General plotting functions</h2>
-            <p class="section-desc"><p>Functions to manually create customized plots from an xpose_data object.</p></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="xplot_scatter.html">xplot_scatter</a></code> </p>
-          </td>
-          <td><p>Default xpose scatter plot function</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="data_opt_set.html">data_opt_set</a></code> </p>
-          </td>
-          <td><p>Create options for data import</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-basic-gof" class="hasAnchor"><a href="#section-basic-gof" class="anchor"></a>Basic gof</h2>
-            <p class="section-desc"><p>Basic goodness-of-fit plots.</p></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="absval_res_vs_idv.html">absval_res_vs_idv</a></code> </p>
-          </td>
-          <td><p>Absolute value of residuals plotted against independent variable</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="absval_res_vs_pred.html">absval_res_vs_pred</a></code> </p>
-          </td>
-          <td><p>Absolute value of residuals plotted against population predictions</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="res_vs_idv.html">res_vs_idv</a></code> </p>
-          </td>
-          <td><p>Residuals plotted against the independent variable</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="res_vs_pred.html">res_vs_pred</a></code> </p>
-          </td>
-          <td><p>Residuals plotted against population predictions</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="dv_vs_pred.html">dv_vs_ipred</a></code> <code><a href="dv_vs_pred.html">dv_vs_pred</a></code> <code><a href="dv_vs_pred.html">dv_vs_cpred</a></code> </p>
-          </td>
-          <td><p>Observations plotted against model predictions</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="pred_vs_idv.html">dv_vs_idv</a></code> <code><a href="pred_vs_idv.html">ipred_vs_idv</a></code> <code><a href="pred_vs_idv.html">pred_vs_idv</a></code> <code><a href="pred_vs_idv.html">dv_preds_vs_idv</a></code> </p>
-          </td>
-          <td><p>Observations and model predictions plotted against the independent variable</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
             <h2 id="section-save-plots" class="hasAnchor"><a href="#section-save-plots" class="anchor"></a>Save plots</h2>
             <p class="section-desc"><p>Save plots to a file.</p></p>
           </th>
@@ -361,14 +352,14 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-xpdb-examples">xpdb examples</a></li>
       <li><a href="#section-automatic-import-of-run-output">Automatic import of run output</a></li>
       <li><a href="#section-manual-import-of-run-output">Manual import of run output</a></li>
+      <li><a href="#section-xpdb-examples">xpdb examples</a></li>
       <li><a href="#section-data-summary">Data summary</a></li>
-      <li><a href="#section-extract-data-from-an-xpdb">Extract data from an xpdb</a></li>
-      <li><a href="#section-customize-plots">Customize plots</a></li>
-      <li><a href="#section-general-plotting-functions">General plotting functions</a></li>
+      <li><a href="#section-access-data-from-an-xpdb">Access data from an xpdb</a></li>
       <li><a href="#section-basic-gof">Basic gof</a></li>
+      <li><a href="#section-general-plotting-functions">General plotting functions</a></li>
+      <li><a href="#section-customize-plots">Customize plots</a></li>
       <li><a href="#section-save-plots">Save plots</a></li>
     </ul>
   </div>

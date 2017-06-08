@@ -3,10 +3,6 @@ template:
     bootswatch: paper
 
 reference:
-  - title: xpdb examples
-    desc: Example of xpose_data
-    contents:
-    - xpdb_ex_pk
   - title: Automatic import of run output
     desc:  Import tables and output files from a NLME run to R.
     contents:
@@ -19,33 +15,23 @@ reference:
     - manual_nm_import
     - list_nm_tables
     - read_nm_tables
+  - title: xpdb examples
+    desc: Example of xpose_data
+    contents:
+    - xpdb_ex_pk
   - title: Data summary
     desc:  Summarize the xpdb content or the run
     contents:
     - print.xpose_data
     - summary.xpose_data
     - list_vars
-  - title: Extract data from an xpdb
-    desc:  Extract code, data, files or summary from an xpdb object
+  - title: Access data from an xpdb
+    desc:  Access code, data, files or summary from an xpdb object
     contents:
     - get_code
     - get_data
     - get_file
     - get_summary
-  - title: Customize plots
-    desc:  Add, customize themes or template titles.
-    contents:
-    - template_titles
-    - update_themes
-    - theme_bw2
-    - theme_readable
-    - theme_xp_default
-    - theme_xp_xpose4
-  - title: General plotting functions
-    desc:  Functions to manually create customized plots from an xpose_data object.
-    contents:
-    - xplot_scatter
-    - data_opt_set
   - title: Basic gof
     desc:  Basic goodness-of-fit plots.
     contents:
@@ -60,6 +46,20 @@ reference:
     - ipred_vs_idv
     - pred_vs_idv
     - dv_preds_vs_idv
+  - title: General plotting functions
+    desc:  Functions to manually create customized plots from an xpose_data object.
+    contents:
+    - xplot_scatter
+    - data_opt_set
+  - title: Customize plots
+    desc:  Add, customize themes or template titles.
+    contents:
+    - template_titles
+    - update_themes
+    - theme_bw2
+    - theme_readable
+    - theme_xp_default
+    - theme_xp_xpose4
   - title: Save plots
     desc:  Save plots to a file.
     contents:
@@ -96,13 +96,13 @@ navbar:
     menu:
         - text: 1. Introduction
           href: articles/introduction.html
-        - text: 2. Importing model outputs
-          href: articles/importing_model_outputs.html
+        - text: 2. Import model outputs
+          href: articles/import_model_outputs.html
         - text: 3. Access xpdb data
           href: articles/access_xpdb_data.html
-        - text: 4. Customizing plots
-          href: articles/customizing_plots.html
-        - text: 5. Creating interactive plots (beta)
+        - text: 4. Customize plots
+          href: articles/customize_plots.html
+        - text: 5. Create interactive plots (beta)
           href: articles/interactive_plots.html
   - text: Reference
     href: reference/index.html
