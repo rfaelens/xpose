@@ -2,11 +2,17 @@
 % Please edit documentation in R/plot_resiudals.R
 \name{res_vs_idv}
 \alias{res_vs_idv}
+\alias{absval_res_vs_idv}
 \title{Residuals plotted against the independent variable}
 \usage{
 res_vs_idv(xpdb, mapping = NULL, res = "CWRES", group = "ID",
   type = "pls", facets = NULL, title = "@y vs. @x | @run",
   subtitle = "Ofv: @ofv", caption = "@dir", log = NULL, guides = TRUE,
+  problem, ...)
+
+absval_res_vs_idv(xpdb, mapping = NULL, res = "CWRES", group = "ID",
+  type = "pls", facets = NULL, title = "@y vs. @x  | @run",
+  subtitle = "Ofv: @ofv", caption = "@dir", log = NULL, guides = FALSE,
   problem, ...)
 }
 \arguments{
@@ -83,7 +89,11 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 }
 
 \examples{
+# Standard residual
 res_vs_idv(xpdb_ex_pk, res = 'CWRES', aes(x = TAD))
+
+# Absolute value of the residuals
+absval_res_vs_idv(xpdb_ex_pk, res = 'CWRES', aes(x = TAD))
 
 }
 \seealso{
