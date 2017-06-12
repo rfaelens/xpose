@@ -122,5 +122,8 @@ raw_to_tibble <- function(x, sep, quiet, file) {
   
   x[!x$header, ] %>%   
     tidyr::separate(col  = 'raw', sep  = sep, into = header) %>% 
-    dplyr::select(-ncol(.))
+    dplyr::select(-ncol(.)) %>% 
+    purrr::set_names(stringr::str_replace_all(colnames(.), '[\\s\\(\\),]', '.')) %>% 
+    dplyr::mutate_if(colnames(.) == 'NAME', function(x) stringr::str_replace_all(x, '[\\s\\(\\),]', '.')) %>% 
+    dplyr::mutate_if(colnames(.) != 'NAME', as.numeric)
 }
