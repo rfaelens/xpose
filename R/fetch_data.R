@@ -65,7 +65,7 @@ fetch_data <- function(xpdb,
     data <- get_data(xpdb, problem = problem)
   } else {
     if (!any(xpdb$files$extension == source)) {
-      msg(c('Extension ', source, ' not found in model output files.'), quiet) 
+      msg(c('File extension ', source, ' not found in model output files.'), quiet) 
       return()
     }
     if (is.null(problem)) problem <- last_file_problem(xpdb, source)

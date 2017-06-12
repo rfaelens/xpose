@@ -154,11 +154,10 @@ get_file <- function(xpdb, file = NULL, ext = NULL, problem = NULL, subprob = NU
   
   # Get file name from extension
   if (!is.null(ext)) {
-    ext_match <- stringr::str_detect(xpdb$files$extension, ext)
-    if (!any(ext_match)) {
-      stop('Extension ', stringr::str_c(ext, collapse = ', '), ' not found in model output files.', call. = FALSE) 
+    file <- unique(xpdb$files$name[xpdb$files$extension %in% ext])
+    if (length(file) == 0) {
+      stop('File extension ', stringr::str_c(ext[!ext %in% xpdb$files$extension], collapse = ', '), ' not found in model output files.', call. = FALSE) 
     }
-    file <- unique(xpdb$files$name[ext_match])
   }
   
   # Filter by file
