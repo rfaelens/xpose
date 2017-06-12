@@ -46,6 +46,15 @@ reference:
     - ipred_vs_idv
     - pred_vs_idv
     - dv_preds_vs_idv
+  - title: Indiviudal plots
+    desc:  Indiviudal plots
+    contents:
+    - ind_plots
+  - title: Minimization diagnostics
+    desc: Graphics to evaluate the estimation step
+    contents:
+    - prm_vs_iteration
+    - grd_vs_iteration
   - title: General plotting functions
     desc:  Functions to manually create customized plots from an xpose_data object.
     contents:

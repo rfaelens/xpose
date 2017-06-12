@@ -89,7 +89,7 @@
       <h1>Access the xpdb data</h1>
                         <h4 class="author">Benjamin Guiastrennec</h4>
             
-            <h4 class="date">08 June, 2017</h4>
+            <h4 class="date">12 June, 2017</h4>
           </div>
 
     
@@ -159,27 +159,28 @@ data</code></pre></div>
 <h3 class="hasAnchor">
 <a href="#access-the-run-files" class="anchor"></a>Access the run files</h3>
 <p>The <code><a href="../reference/get_file.html">get_file()</a></code> function can be used to access the imported output files. Files can be accessed by <code>file</code> name, by <code>problem</code> and/or <code>subprob</code>. If more than one <code>file</code> name, <code>problem</code> or subproblem number is provided a named list is returned.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">file &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_file.html">get_file</a></span>(xpdb, <span class="dt">file =</span> <span class="st">'run001.ext'</span>)
-file</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">file &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_file.html">get_file</a></span>(xpdb, <span class="dt">file =</span> <span class="st">'run001.ext'</span>)</code></pre></div>
+<pre><code>Returning data from problem no.1 sub-problem no.0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">file</code></pre></div>
 <pre><code># A tibble: 14 x 15
-     ITERATION      THETA1      THETA2      THETA3      THETA4      THETA5      THETA6 `SIGMA(1,1)`
- *       &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;
- 1           0 2.75000E+01 1.56500E+00 2.10000E+00 2.54000E-01 2.30000E-01 8.00000E-03  1.00000E+00
- 2           5 2.83703E+01 1.47870E+00 2.67525E+00 3.85315E-01 4.28860E-01 7.46121E-03  1.00000E+00
- 3          10 2.80583E+01 1.63234E+00 7.25085E+00 2.34736E-01 4.34389E-01 6.50974E-03  1.00000E+00
- 4          15 2.60069E+01 1.41469E+00 3.48751E+00 2.31555E-01 3.72166E-01 6.43059E-03  1.00000E+00
- 5          20 2.64911E+01 1.42475E+00 3.47189E+00 2.32082E-01 3.71869E-01 6.51609E-03  1.00000E+00
- 6          25 2.65053E+01 1.42569E+00 3.51032E+00 2.32225E-01 3.71951E-01 6.51698E-03  1.00000E+00
- 7          26 2.65053E+01 1.42569E+00 3.51032E+00 2.32225E-01 3.71951E-01 6.51698E-03  1.00000E+00
- 8 -1000000000 2.65053E+01 1.42569E+00 3.51032E+00 2.32225E-01 3.71951E-01 6.51698E-03  1.00000E+00
- 9 -1000000001 8.06067E-01 4.28168E-02 9.66085E-01 9.16968E-03 2.75754E-02 2.09978E-03  1.00000E+10
-10 -1000000002 1.04829E-01 2.90505E-01 3.81557E-01 4.58062E-01 6.09785E-01 6.56834E-01  1.34108E+00
-11 -1000000003 3.13809E+01 1.04829E-01 3.28962E+00 0.00000E+00 0.00000E+00 0.00000E+00  0.00000E+00
-12 -1000000004 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00  1.00000E+00
-13 -1000000005 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00  1.00000E+10
-14 -1000000006 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00 0.00000E+00  1.00000E+00
-# ... with 7 more variables: `OMEGA(1,1)` &lt;chr&gt;, `OMEGA(2,1)` &lt;chr&gt;, `OMEGA(2,2)` &lt;chr&gt;,
-#   `OMEGA(3,1)` &lt;chr&gt;, `OMEGA(3,2)` &lt;chr&gt;, `OMEGA(3,3)` &lt;chr&gt;, OBJ &lt;chr&gt;</code></pre>
+   ITERATION    THETA1    THETA2   THETA3     THETA4    THETA5     THETA6  SIGMA.1.1. OMEGA.1.1.
+       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt;
+ 1   0.0e+00 27.500000 1.5650000 2.100000 0.25400000 0.2300000 0.00800000 1.00000e+00  0.3000000
+ 2   5.0e+00 28.370300 1.4787000 2.675250 0.38531500 0.4288600 0.00746121 1.00000e+00  0.0212882
+ 3   1.0e+01 28.058300 1.6323400 7.250850 0.23473600 0.4343890 0.00650974 1.00000e+00  0.0278744
+ 4   1.5e+01 26.006900 1.4146900 3.487510 0.23155500 0.3721660 0.00643059 1.00000e+00  0.0468884
+ 5   2.0e+01 26.491100 1.4247500 3.471890 0.23208200 0.3718690 0.00651609 1.00000e+00  0.0418873
+ 6   2.5e+01 26.505300 1.4256900 3.510320 0.23222500 0.3719510 0.00651698 1.00000e+00  0.0419298
+ 7   2.6e+01 26.505300 1.4256900 3.510320 0.23222500 0.3719510 0.00651698 1.00000e+00  0.0419298
+ 8  -1.0e+09 26.505300 1.4256900 3.510320 0.23222500 0.3719510 0.00651698 1.00000e+00  0.0419298
+ 9  -1.0e+09  0.806067 0.0428168 0.966085 0.00916968 0.0275754 0.00209978 1.00000e+10  0.0105397
+10  -1.0e+09  0.104829 0.2905050 0.381557 0.45806200 0.6097850 0.65683400 1.34108e+00  1.8677200
+11  -1.0e+09 31.380900 0.1048290 3.289620 0.00000000 0.0000000 0.00000000 0.00000e+00  0.0000000
+12  -1.0e+09  0.000000 0.0000000 0.000000 0.00000000 0.0000000 0.00000000 1.00000e+00  0.2047680
+13  -1.0e+09  0.000000 0.0000000 0.000000 0.00000000 0.0000000 0.00000000 1.00000e+10  0.0257356
+14  -1.0e+09  0.000000 0.0000000 0.000000 0.00000000 0.0000000 0.00000000 1.00000e+00  0.0000000
+# ... with 6 more variables: OMEGA.2.1. &lt;dbl&gt;, OMEGA.2.2. &lt;dbl&gt;, OMEGA.3.1. &lt;dbl&gt;,
+#   OMEGA.3.2. &lt;dbl&gt;, OMEGA.3.3. &lt;dbl&gt;, OBJ &lt;dbl&gt;</code></pre>
 </div>
 <div id="access-the-run-summary" class="section level3">
 <h3 class="hasAnchor">
