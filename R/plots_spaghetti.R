@@ -40,8 +40,7 @@ dv_vs_idv <- function(xpdb,
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
-                plot_name = as.character(match.call()[[1]]),
-                guides_slope = 0, ...)
+                plot_name = as.character(match.call()[[1]]), ...)
 }
 
 
@@ -69,8 +68,7 @@ ipred_vs_idv <- function(xpdb,
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
-                plot_name = as.character(match.call()[[1]]),
-                guides_slope = 0, ...)
+                plot_name = as.character(match.call()[[1]]), ...)
 }
 
 
@@ -98,8 +96,7 @@ pred_vs_idv <- function(xpdb,
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
-                plot_name = as.character(match.call()[[1]]),
-                guides_slope = 0, ...)
+                plot_name = as.character(match.call()[[1]]), ...)
 }
 
 
