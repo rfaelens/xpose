@@ -63,7 +63,7 @@ test_that("get_file checks input properly", {
   expect_error(get_file(), regexp = '\"xpdb\" is missing')
   
   # Error with missing file
-  expect_error(get_file(xpdb_ex_pk), regexp = '`file` required')
+  expect_error(get_file(xpdb_ex_pk), regexp = '`file` or `ext` required')
   
   # Error with bad file input
   expect_error(get_file(xpdb_ex_pk, file = 'fakefile'), regexp = 'fakefile not found')
