@@ -160,8 +160,7 @@ xplot_scatter <- function(xpdb,
                           ...)
     } else {
       xp <- xp + xp_geoms(mapping  = mapping,
-                          xp_theme = filter_xp_theme(xpdb$xp_theme, stringr::str_c('panel_', c('ncol', 'nrow', 'dir'), 
-                                                                                   collapse = '|'), 'drop'),
+                          xp_theme = filter_xp_theme(xpdb$xp_theme, 'panel_dir', 'drop'),
                           name     = 'panel',
                           ggfun    = 'facet_grid_paginate',
                           ...)
