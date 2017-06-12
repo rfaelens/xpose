@@ -122,6 +122,7 @@ get_data <- function(xpdb, table = NULL, problem = NULL) {
 #' @param ext Extension of the file to be extracted from the xpdb e.g. 'phi'. Alternative to the 'file' argument.
 #' @param problem The problem to be used, by default returns the last one for each file.
 #' @param subprob The subproblem to be used, by default returns the last one for each file.
+#' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' 
 #' @return A tibble for single file or a named list for multiple files.
 #' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_files}}
@@ -138,7 +139,7 @@ get_data <- function(xpdb, table = NULL, problem = NULL) {
 #' print(xpdb_ex_pk)
 #' 
 #' @export
-get_file <- function(xpdb, file = NULL, ext = NULL, problem = NULL, subprob = NULL) {
+get_file <- function(xpdb, file = NULL, ext = NULL, problem = NULL, subprob = NULL, quiet = FALSE) {
   if (!is.xpdb(xpdb)) {
     stop('Valid `xpdb` input required.', call. = FALSE)
   }
@@ -153,11 +154,11 @@ get_file <- function(xpdb, file = NULL, ext = NULL, problem = NULL, subprob = NU
   
   # Get file name from extension
   if (!is.null(ext)) {
-    file <- stringr::str_detect(xpdb$files$name, stringr::str_c('(', stringr::str_c(ext, collapse = '|'), ')$'))
-    if (!any(file)) {
+    ext_match <- stringr::str_detect(xpdb$files$extension, ext)
+    if (!any(ext_match)) {
       stop('Extension ', stringr::str_c(ext, collapse = ', '), ' not found in model output files.', call. = FALSE) 
     }
-    file <- xpdb$files$name[file]
+    file <- unique(xpdb$files$name[ext_match])
   }
   
   # Filter by file
@@ -190,7 +191,9 @@ get_file <- function(xpdb, file = NULL, ext = NULL, problem = NULL, subprob = NU
     x <- x[!duplicated(x$name, fromLast = TRUE), ]
     purrr::set_names(x$data, x$name)
   } else {
-    x$data[[nrow(x)]]
+    last_row <- nrow(x)
+    msg(c('Returning data from problem no.', x$problem[last_row] , ' sub-problem no.', x$subprob[last_row]), quiet)
+    x$data[[last_row]]
   }
 }
 
