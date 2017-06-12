@@ -118,8 +118,8 @@ get_data <- function(xpdb, table = NULL, problem = NULL) {
 #' @description Access model output file data from an xpdb object.
 #' 
 #' @param xpdb An \code{xpose_data} object from which the model output file data will be extracted.
-#' @param file Full name of the file to be extracted from the xpdb e.g. 'run001.ext'. Alternative to the 'ext' argument.
-#' @param ext Extension of the file to be extracted from the xpdb e.g. 'ext'. Alternative to the 'file' argument.
+#' @param file Full name of the file to be extracted from the xpdb e.g. 'run001.phi'. Alternative to the 'ext' argument.
+#' @param ext Extension of the file to be extracted from the xpdb e.g. 'phi'. Alternative to the 'file' argument.
 #' @param problem The problem to be used, by default returns the last one for each file.
 #' @param subprob The subproblem to be used, by default returns the last one for each file.
 #' 
