@@ -17,8 +17,8 @@
 #' @param log String assigning logarithmic scale to axes, can be either '', 
 #' 'x', y' or 'xy'.
 #' @param guides Enable guides display (e.g. unity line).
-#' @param problem The $problem number to use for ploting. By default the data 
-#' is taken from the estimation problem.
+#' @param problem The $problem number to be used. By default returns 
+#' the last estimation problem.
 #' @param ... Any additional aesthetics to be passed on \code{xplot_scatter}.
 #' 
 #' @inheritSection xplot_scatter Layers mapping

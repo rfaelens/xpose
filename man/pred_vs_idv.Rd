@@ -51,8 +51,8 @@ or a formula to use \link[ggplot2]{facet_grid}.}
 \item{log}{String assigning logarithmic scale to axes, can be either '', 
 'x', y' or 'xy'.}
 
-\item{problem}{The $problem number to use for ploting. By default the data 
-is taken from the estimation problem.}
+\item{problem}{The $problem number to be used. By default returns 
+the last estimation problem.}
 
 \item{...}{Any additional aesthetics to be passed on \code{xplot_scatter}.}
 }
