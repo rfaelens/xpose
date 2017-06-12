@@ -1,6 +1,6 @@
-#' Extract model code
+#' Access model code
 #'
-#' @description Extract model code from an xpdb object.
+#' @description Access model code from an xpdb object.
 #' 
 #' @param xpdb An \code{xpose_data} object from which the model code will be extracted.
 #' @param problem The problem to be used, in addition, problem 0 is attributed to 
@@ -31,14 +31,14 @@ get_code <- function(xpdb, problem = NULL) {
 }
 
 
-#' Extract model output table data
+#' Access model output table data
 #'
-#' @description Extract model output table data from an xpdb object.
+#' @description Access model output table data from an xpdb object.
 #' 
 #' @param xpdb An \code{xpose_data} object from which the model output file data will be extracted.
 #' @param table Name of the output table to be extracted from the xpdb e.g. 'sdtab001'. Alternative to 
 #' the "problem" argument.
-#' @param problem Extracts all tables from the specified problem. Alternative to the "table" argument.
+#' @param problem Accesses all tables from the specified problem. Alternative to the "table" argument.
 #' 
 #' @return A tibble for single file or a named list for multiple files.
 #' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_tables}}
@@ -113,12 +113,13 @@ get_data <- function(xpdb, table = NULL, problem = NULL) {
 }
 
 
-#' Extract model output file data
+#' Access model output file data
 #'
-#' @description Extract model output file data from an xpdb object.
+#' @description Access model output file data from an xpdb object.
 #' 
 #' @param xpdb An \code{xpose_data} object from which the model output file data will be extracted.
-#' @param file Name of the file to be extracted from the xpdb e.g. 'run001.ext'.
+#' @param file Full name of the file to be extracted from the xpdb e.g. 'run001.ext'. Alternative to the 'ext' argument.
+#' @param ext Extension of the file to be extracted from the xpdb e.g. 'ext'. Alternative to the 'file' argument.
 #' @param problem The problem to be used, by default returns the last one for each file.
 #' @param subprob The subproblem to be used, by default returns the last one for each file.
 #' 
@@ -126,24 +127,37 @@ get_data <- function(xpdb, table = NULL, problem = NULL) {
 #' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_files}}
 #' @examples
 #' # Single file (returns a tibble)
-#' ext_file <- get_file(xpdb_ex_pk, 'run001.ext')
+#' ext_file <- get_file(xpdb_ex_pk, file = 'run001.ext')
 #' ext_file
 #' 
 #' # Multiple files (returns a list)
-#' files <- get_file(xpdb_ex_pk, c('run001.ext', 'run001.phi'))
+#' files <- get_file(xpdb_ex_pk, file = c('run001.ext', 'run001.phi'))
 #' files
 #' 
 #' # Tip to list available files in the xpdb
 #' print(xpdb_ex_pk)
 #' 
 #' @export
-get_file <- function(xpdb, file = NULL, problem = NULL, subprob = NULL) {
+get_file <- function(xpdb, file = NULL, ext = NULL, problem = NULL, subprob = NULL) {
   if (!is.xpdb(xpdb)) {
     stop('Valid `xpdb` input required.', call. = FALSE)
   }
   
-  if (is.null(file)) {
-    stop('Argument `file` required.', call. = FALSE) 
+  if (is.null(file) && is.null(ext)) {
+    stop('Argument `file` or `ext` required.', call. = FALSE) 
+  }
+  
+  if (!is.null(file) && !is.null(ext)) {
+    stop('Argument `file` and `ext` should not be used simultaneously.', call. = FALSE) 
+  }
+  
+  # Get file name from extension
+  if (!is.null(ext)) {
+    file <- stringr::str_detect(xpdb$files$name, stringr::str_c('(', stringr::str_c(ext, collapse = '|'), ')$'))
+    if (!any(file)) {
+      stop('Extension ', stringr::str_c(ext, collapse = ', '), ' not found in model output files.', call. = FALSE) 
+    }
+    file <- xpdb$files$name[file]
   }
   
   # Filter by file
@@ -181,9 +195,9 @@ get_file <- function(xpdb, file = NULL, problem = NULL, subprob = NULL) {
 }
 
 
-#' Extract model summary data
+#' Access model summary data
 #'
-#' @description Extract model summary data from an xpdb object.
+#' @description Access model summary data from an xpdb object.
 #' 
 #' @param xpdb An \code{xpose_data} object from which the summary data will be extracted.
 #' @param problem The problem to be used, by default returns the last one for each label.
