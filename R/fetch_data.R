@@ -64,14 +64,14 @@ fetch_data <- function(xpdb,
     msg(c('Using data from $prob no.', problem), quiet)
     data <- get_data(xpdb, problem = problem)
   } else {
-    if (!source %in% xpdb$files$name) {
-      msg(c('File ', source, ' not found in the xpdb.'), quiet)
+    if (!any(xpdb$files$extension == source)) {
+      msg(c('Extension ', source, ' not found in model output files.'), quiet) 
       return()
     }
     if (is.null(problem)) problem <- last_file_problem(xpdb, source)
     if (is.null(subprob)) subprob <- last_file_subprob(xpdb, source, problem)
-    msg(c('Using ', source , ' $prob no.', problem, ' subprob no.', subprob, '.'), quiet)
-    data <- get_file(xpdb, source, problem, subprob)
+    msg(c('Using ', xpdb$files$name[xpdb$files$extension == source] , ' $prob no.', problem, ' subprob no.', subprob, '.'), quiet)
+    data <- get_file(xpdb, file = NULL, ext = source, problem = problem, subprob = subprob, quiet = TRUE)
   }
   
   if (is.function(filter)) data <- filter(data)
