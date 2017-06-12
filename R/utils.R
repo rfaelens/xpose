@@ -61,9 +61,10 @@ file_path <- function(dir, file) {
 }
 
 # Get file extension
-get_extension <- function(x) {
+get_extension <- function(x, dot = TRUE) {
   x <- stringr::str_extract(x, '\\.[[:alnum:]]+$')
   x[is.na(x)] <- ''
+  if (!dot) x <- stringr::str_replace_all(x, '\\.', '')
   x
 }
 

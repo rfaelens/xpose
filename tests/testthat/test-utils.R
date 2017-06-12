@@ -52,7 +52,8 @@ test_that("file_path works as expected", {
 })
 
 test_that("get_extension works as expected", {
-  expect_equal(get_extension('../parent/dir.dot/file.mod'), '.mod')
+  expect_equal(get_extension('../parent/dir.dot/file.mod', dot = TRUE), '.mod')
+  expect_equal(get_extension('../parent/dir.dot/file.mod', dot = FALSE), 'mod')
   expect_equal(get_extension('../parent/dir.dot/file'), '')
 })
 
