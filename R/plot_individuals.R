@@ -9,7 +9,11 @@
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
-#' ind_plot(xpdb_ex_pk, aes(x = TAD))
+#' # Basic example
+#' ind_plot(xpdb_ex_pk)
+#' 
+#' # Example with mapping and facetting
+#' ind_plots(xpdb_ex_pk, aes(x = TAD), facets = OCC~ID)
 #' 
 #' @export
 ind_plots <- function(xpdb,
