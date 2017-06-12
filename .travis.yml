@@ -2,9 +2,9 @@ language: r
 sudo: false
 cache: packages
 warnings_are_errors: false
-
+apt_packages:
+  - libudunits2-dev
 r_packages:
   - covr
-
 after_success:
   - Rscript -e 'library(covr); codecov()'
