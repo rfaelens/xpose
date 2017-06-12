@@ -6,7 +6,7 @@
 the independent variable for every individual}
 \usage{
 ind_plots(xpdb, mapping = NULL, group = "variable", type = "l",
-  facets = NULL, title = "Individual plots vs. @x | @run",
+  facets = NULL, title = "Individual plots | @run",
   subtitle = "Ofv: @ofv, Eps shrink: @epsshk", caption = "@dir",
   log = NULL, problem, ...)
 }
@@ -73,7 +73,7 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 
 \examples{
 # Basic example
-ind_plot(xpdb_ex_pk)
+ind_plots(xpdb_ex_pk)
 
 # Example with mapping and facetting
 ind_plots(xpdb_ex_pk, aes(x = TAD), facets = OCC~ID)

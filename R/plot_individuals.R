@@ -10,7 +10,7 @@
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
 #' # Basic example
-#' ind_plot(xpdb_ex_pk)
+#' ind_plots(xpdb_ex_pk)
 #' 
 #' # Example with mapping and facetting
 #' ind_plots(xpdb_ex_pk, aes(x = TAD), facets = OCC~ID)
@@ -21,7 +21,7 @@ ind_plots <- function(xpdb,
                       group    = 'variable',
                       type     = 'l',
                       facets   = NULL,
-                      title    = 'Individual plots vs. @x | @run',
+                      title    = 'Individual plots | @run',
                       subtitle = 'Ofv: @ofv, Eps shrink: @epsshk',
                       caption  = '@dir',
                       log      = NULL,
