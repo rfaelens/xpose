@@ -26,7 +26,7 @@
 #'  
 #' @name gg_themes
 #' @export
-theme_bw2 <- function(base_size = 11, base_family = '', legend_position = 'top') {
+theme_bw2 <- function(base_size = 11, base_family = '', legend_position = 'right') {
   theme_bw(base_size = base_size, base_family = base_family) %+replace% 
     theme(plot.title = element_text(face = 'bold', size = rel(1.2), hjust = 0, 
                                     vjust = 1, margin = margin(b = base_size/2 * 1.2)),
@@ -43,7 +43,7 @@ theme_bw2 <- function(base_size = 11, base_family = '', legend_position = 'top')
 
 #' @rdname gg_themes
 #' @export
-theme_readable <- function(base_size = 11, base_family = '', legend_position = 'top') {
+theme_readable <- function(base_size = 11, base_family = '', legend_position = 'right') {
   theme_gray(base_size = base_size, base_family = base_family) %+replace% 
     theme(plot.title = element_text(face = 'bold', size = rel(1.2), hjust = 0, 
                                     vjust = 1, margin = margin(b = base_size/2 * 1.2)),
