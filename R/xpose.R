@@ -6,4 +6,6 @@
 #' To learn more about xpose, visit our website: \url{https://UUPharmacometrics.github.io/xpose/}.
 #' @import ggplot2
 #' @importFrom dplyr n
+#' @importFrom ggforce facet_wrap_paginate
+#' @importFrom ggforce facet_grid_paginate
 "_PACKAGE"
