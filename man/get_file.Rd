@@ -4,7 +4,8 @@
 \alias{get_file}
 \title{Access model output file data}
 \usage{
-get_file(xpdb, file = NULL, ext = NULL, problem = NULL, subprob = NULL)
+get_file(xpdb, file = NULL, ext = NULL, problem = NULL, subprob = NULL,
+  quiet = FALSE)
 }
 \arguments{
 \item{xpdb}{An \code{xpose_data} object from which the model output file data will be extracted.}
@@ -16,6 +17,8 @@ get_file(xpdb, file = NULL, ext = NULL, problem = NULL, subprob = NULL)
 \item{problem}{The problem to be used, by default returns the last one for each file.}
 
 \item{subprob}{The subproblem to be used, by default returns the last one for each file.}
+
+\item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 }
 \value{
 A tibble for single file or a named list for multiple files.
