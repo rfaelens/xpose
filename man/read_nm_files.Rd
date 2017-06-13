@@ -5,7 +5,7 @@
 \title{NONMEM output file import function}
 \usage{
 read_nm_files(files = NULL, runno = NULL, dir = NULL, prefix = "run",
-  ext = c(".ext", ".cor", ".cov", ".phi", ".grd", ".shr"), quiet = FALSE)
+  ext = c(".ext", ".cor", ".cov", ".phi", ".grd", ".shk"), quiet = FALSE)
 }
 \arguments{
 \item{files}{Full model file names. Alternative argument to \code{dir}, \code{prefix},
@@ -17,7 +17,7 @@ read_nm_files(files = NULL, runno = NULL, dir = NULL, prefix = "run",
 
 \item{prefix}{Prefix of the model file names.}
 
-\item{ext}{A vector of the file extension to import. By default '.ext', '.cor', '.cov', '.phi', '.grd', '.shr'
+\item{ext}{A vector of the file extension to import. By default '.ext', '.cor', '.cov', '.phi', '.grd', '.shk'
 files are listed.}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
