@@ -6,6 +6,8 @@ summarise_nm_model <- function(file, model, software, rounding) {
     sum_run(file),                             # Model run (model file without extension)
     sum_directory(file),                       # Model directory
     sum_reference(model, software),            # Reference model
+    sum_timestart(model, software),            # Run start time
+    sum_timestop(model, software),             # Run stop time
     sum_probn(model, software),                # Problem no.
     sum_label(model, software),                # Model label
     sum_description(model, software),          # Model description
@@ -49,6 +51,8 @@ summarise_nm_model <- function(file, model, software, rounding) {
       .$label == 'dir' ~ 'Run directory',
       .$label == 'ref' ~ 'Reference model',
       .$label == 'probn' ~ 'Problem number',
+      .$label == 'timestart' ~ 'Run start time',
+      .$label == 'timestop' ~ 'Run stop time',
       .$label == 'descr' ~ 'Run description',
       .$label == 'label' ~ 'Run label',
       .$label == 'data' ~ 'Input data',
@@ -124,6 +128,32 @@ sum_reference <- function(model, software) {
     if (nrow(x) == 0) return(sum_tpl('ref', 'na'))
     
     sum_tpl('ref', stringr::str_match(x$comment, ':\\s*(.+)$')[1, 2]) # Note: only take the first match
+  }
+}
+
+# Run start time 
+sum_timestart <- function(model, software) {
+  if (software == 'nonmem') {
+    x <- model %>% 
+      dplyr::slice(1) %>%
+      dplyr::filter(stringr::str_detect(.$code, '\\s+\\d{2}:\\d{2}:\\d{2}\\s+'))
+    
+    if (nrow(x) == 0) return(sum_tpl('timestart', 'na'))
+    
+    sum_tpl('timestart', x$code)
+  }
+}
+
+# Run stop time
+sum_timestop <- function(model, software) {
+  if (software == 'nonmem') {
+    x <- model %>% 
+      dplyr::slice(nrow(model)) %>%
+      dplyr::filter(stringr::str_detect(.$code, '\\s+\\d{2}:\\d{2}:\\d{2}\\s+'))
+    
+    if (nrow(x) == 0) return(sum_tpl('timestop', 'na'))
+    
+    sum_tpl('timestop', x$code)
   }
 }
 

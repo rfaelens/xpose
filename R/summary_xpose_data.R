@@ -13,8 +13,8 @@
 #' @export
 summary.xpose_data <- function(object, problem = NULL, ...) {
   padding <- 28 # Characters
-  order <- c('software', 'version', 'dir', 'file', 'run', 'ref', 'descr',
-             'probn', 'label', 'data', 'nind', 'nobs', 'subroutine', 'method',
+  order <- c('software', 'version', 'dir', 'file', 'run', 'ref', 'descr', 'timestart', 
+             'timestop', 'probn', 'label', 'data', 'nind', 'nobs', 'subroutine', 'method',
              'term', 'runtime', 'ofv', 'nsig', 'covtime', 'condn','etashk', 'epsshk', 
              'nsim', 'simseed', 'nesample', 'esampleseed', 'errors', 'warnings')
   
