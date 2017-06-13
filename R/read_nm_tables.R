@@ -182,7 +182,8 @@ read_args <- function(x, quiet, col_types, ...) {
     stringr::str_split(pattern = dplyr::case_when(fun == 'csv' ~ ',', 
                                                   fun == 'csv2' ~ ';',
                                                   fun %in% c('table', 'table2') ~ '\\s+')) %>% 
-    purrr::flatten_chr()
+    purrr::flatten_chr() %>% 
+    stringr::str_trim()
   
   dplyr::tibble(fun = read_funs(fun),
                 params = list(list(file = x$file, skip = skip + 1,
