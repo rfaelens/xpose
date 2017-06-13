@@ -68,6 +68,8 @@ get_data <- function(xpdb, table = NULL, problem = NULL) {
     stop('Arguments `table` and `problem` cannot be used together.', call. = FALSE) 
   }
   
+  if (!is.null(problem) && is.na(problem)) return() # For internal use
+  
   x <- xpdb$data
   
   if (!is.null(problem)) {
