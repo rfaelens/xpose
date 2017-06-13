@@ -4,6 +4,10 @@
 \name{reexports}
 \alias{reexports}
 \alias{\%>\%}
+\alias{reexports}
+\alias{facet_wrap_paginate}
+\alias{reexports}
+\alias{facet_grid_paginate}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -11,6 +15,8 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
+  \item{ggforce}{\code{\link[ggforce]{facet_wrap_paginate}}, \code{\link[ggforce]{facet_grid_paginate}}}
+
   \item{purrr}{\code{\link[purrr]{\%>\%}}}
 }}
 

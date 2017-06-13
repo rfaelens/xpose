@@ -29,7 +29,7 @@ dv_vs_cpred(xpdb, mapping = NULL, group = "ID", type = "pls",
 \item{group}{Grouping variable to be used for lines.}
 
 \item{type}{String setting the type of plot to be used points 'p',
-line 'l' and smooth 's' or any combination of the three.}
+line 'l', smooth 's' and text 't' or any combination of the four.}
 
 \item{facets}{Either a character string to use \link[ggplot2]{facet_wrap} 
 or a formula to use \link[ggplot2]{facet_grid}.}
