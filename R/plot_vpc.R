@@ -35,19 +35,19 @@
 #' }
 #' @export
 vpc <- function(xpdb,
-                vpc_opt    = NULL, 
-                mapping    = NULL,
-                #group     = 'variable',
-                type       = 'alp',
-                smooth     = TRUE,
-                facets     = NULL,
-                title      = 'Visual predictive checks | @run',
-                subtitle   = 'Nsim: @nsim, PI: @vpcpi',
-                caption    = '@dir',
-                log        = NULL,
-                psn_folder = NULL,
-                obs_problem,
-                sim_problem,
+                vpc_opt     = NULL, 
+                mapping     = NULL,
+                #group      = 'variable',
+                type        = 'alp',
+                smooth      = TRUE,
+                facets      = NULL,
+                title       = 'Visual predictive checks | @run',
+                subtitle    = 'Nsim: @nsim, PI: @vpcpi',
+                caption     = '@dir',
+                log         = NULL,
+                psn_folder  = NULL,
+                obs_problem = NULL,
+                sim_problem = NULL,
                 quiet,
                 ...) {
   
@@ -60,20 +60,24 @@ vpc <- function(xpdb,
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   if (is.null(psn_folder)) {
-    if (missing(obs_problem)) obs_problem <- last_data_problem(xpdb, simtab = FALSE)
-    if (missing(sim_problem)) sim_problem <- last_data_problem(xpdb, simtab = TRUE)
-    if (is.na(sim_problem) || is.na(obs_problem)) {
-      msg('Both simulation and estimation problems are required. Alternatively a `psn_folder` can be specified.', quiet)
-      return()
-    }
-    msg(c('Using prob no.', sim_problem, ' for simulations and prob no.', obs_problem, ' for observations.'), quiet) 
+    if (is.null(obs_problem)) obs_problem <- last_data_problem(xpdb, simtab = FALSE)
+    if (is.null(sim_problem)) sim_problem <- last_data_problem(xpdb, simtab = TRUE)
+    msg(c('Using simulation problem ', ifelse(is.na(sim_problem), '<na>', sim_problem), 
+          ' and observation problem ', ifelse(is.na(obs_problem), '<na>', obs_problem), '.'), quiet)
     obs_data   <- get_data(xpdb, problem = obs_problem) 
     sim_data   <- get_data(xpdb, problem = sim_problem)
   } else {
-    msg(c('Using psn data from: ', psn_folder), quiet) 
-    obs_data <- NULL
-    sim_data <- NULL
+    msg('Importing PsN generated data', quiet)
+    obs_data <- read_nm_tables(files = file.path(psn_folder, 'm1', dir(stringr::str_c(psn_folder, 'm1', sep = .Platform$file.sep), 
+                                                                       pattern = 'original.npctab')[1]), quiet = TRUE)
+    sim_data <- read_nm_tables(files = file.path(psn_folder, 'm1', dir(stringr::str_c(psn_folder, 'm1', sep = .Platform$file.sep), 
+                                                                       pattern = 'simulation.1.npctab')[1]), quiet = TRUE)
   } 
+  
+  if (is.null(obs_data) && is.null(sim_data)) {
+    msg('At least a simulation or an observation dataset are required to create the VPC.', quiet)
+    return()
+  }
   
   if (is.null(vpc_opt)) vpc_opt <- vpc_opt_set()
   

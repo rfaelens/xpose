@@ -7,7 +7,7 @@
 vpc(xpdb, vpc_opt = NULL, mapping = NULL, type = "alp", smooth = TRUE,
   facets = NULL, title = "Visual predictive checks | @run",
   subtitle = "Nsim: @nsim, PI: @vpcpi", caption = "@dir", log = NULL,
-  psn_folder = NULL, obs_problem, sim_problem, quiet, ...)
+  psn_folder = NULL, obs_problem = NULL, sim_problem = NULL, quiet, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
