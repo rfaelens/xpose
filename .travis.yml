@@ -1,5 +1,5 @@
 language: r
-sudo: true
+sudo: required
 cache: packages
 warnings_are_errors: false
 apt_packages:
