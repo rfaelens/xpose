@@ -2,6 +2,14 @@
 #' @export
 purrr::`%>%`
 
+#' @importFrom ggforce facet_wrap_paginate
+#' @export
+ggforce::facet_wrap_paginate
+
+#' @importFrom ggforce facet_grid_paginate
+#' @export
+ggforce::facet_grid_paginate
+
 # Reports whether x is an xpose theme object
 is.xp.theme <- function(x) {
   inherits(x, 'xpose_theme')
