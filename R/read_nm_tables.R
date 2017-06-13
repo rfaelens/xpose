@@ -113,6 +113,19 @@ read_nm_tables <- function(files         = NULL,
     return() 
   }
   
+  # Remove duplicated columns to decrease xpdb size
+  if (rm_duplicates) {
+    tables <- tables %>% 
+      dplyr::mutate(grouping = 1:n()) %>% 
+      dplyr::group_by_(.dots = 'grouping') %>% 
+      tidyr::nest(.key = 'tmp') %>% 
+      dplyr::mutate(out = purrr::map(.$tmp, ~dplyr::select(.$data[[1]], 
+                                                           dplyr::one_of(unique(unlist(.$index[[1]]$col)))))) %>% 
+      tidyr::unnest_(unnest_cols = 'tmp') %>% 
+      dplyr::select(dplyr::one_of('problem', 'simtab', 'firstonly', 'index', 'out')) %>% 
+      dplyr::rename_(.dots = c('data' = 'out'))
+  }
+  
   # Merge firsonly tables with main tables
   if (any(tables$firstonly)) {
     msg('Consolidating tables with `firstonly`', quiet)
@@ -129,22 +142,8 @@ read_nm_tables <- function(files         = NULL,
     return() 
   }
   
-  # Remove duplicated columns to decrease xpdb size
-  if (rm_duplicates) {
-    tables <- tables %>% 
-      dplyr::mutate(grouping = 1:n()) %>% 
-      dplyr::group_by_(.dots = 'grouping') %>% 
-      tidyr::nest(.key = 'tmp') %>% 
-      dplyr::mutate(out = purrr::map(.$tmp, ~dplyr::select(.$data[[1]], 
-                                                           dplyr::one_of(unique(unlist(.$index[[1]]$col)))))) %>% 
-      tidyr::unnest_(unnest_cols = 'tmp') %>% 
-      dplyr::select(dplyr::one_of('problem', 'simtab', 'index', 'out')) %>% 
-      dplyr::rename_(.dots = c('data' = 'out'))
-  }
-  
   # If user mode return simple tibble as only 1 problem should be used
   if (user_mode) return(tables$data[[1]])
-  
   tables
 }
 
