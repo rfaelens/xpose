@@ -59,7 +59,7 @@ test_that("works with estimation problems", {
   sdtab_out <- list_nm_tables(nm_model = sdtab_test)
   
   expect_true(is.nm.table.list(sdtab_out))
-  expect_false(any(sdtab_out$firstonly))
-  expect_false(any(sdtab_out$simtab))
-  expect_equal(sdtab_out$file, paste0('./', c('sd', 'ca', 'co', 'pa'), 'tab001'))
+  expect_equal(sdtab_out$firstonly, c(FALSE, FALSE, TRUE, TRUE, FALSE))
+  expect_equal(sdtab_out$simtab, c(FALSE, FALSE, FALSE, FALSE, TRUE))
+  expect_equal(sdtab_out$file, c('./sdtab001', './catab001.csv', './cotab001', './patab001', './simtab001.zip'))
 })
