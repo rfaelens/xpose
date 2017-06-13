@@ -3,13 +3,15 @@ context('Check read_nm_tables')
 # Define files to be tested -----------------------------------------------
 
 test_tab <- read_nm_tables(files = 'sdtab001', quiet = TRUE)
-ctrl_tab <- xpdb_ex_pk$data$data[[1]][, xpdb_ex_pk$data$index[[1]][xpdb_ex_pk$data$index[[1]]$table == 'sdtab001',]$col ]
+ctrl_tab <- get_data(xpdb_ex_pk, table = 'sdtab001')
 
 test_file <- c("TABLE NO.  4",
-               " ID          KA          CL          V           ALAG1       ETA1        ETA2        ETA3        DV          PRED        RES         WRES",
-               "  1.1000E+02  4.1052E-01  2.5483E+01  1.4917E+02  2.3223E-01 -4.5845E-02 -3.5313E-03 -2.1460E+00  0.0000E+00 -3.6889E+00  0.0000E+00  0.0000E+00",
-               "  1.1000E+02  4.1052E-01  2.5483E+01  1.4917E+02  2.3223E-01 -4.5845E-02 -3.5313E-03 -2.1460E+00 -2.4841E+00 -5.6877E-01 -1.9153E+00 -3.8853E+00")
-ctrl_file <- xpdb_ex_pk$data$data[[1]][1:2, xpdb_ex_pk$data$index[[1]][xpdb_ex_pk$data$index[[1]]$table == 'patab001',]$col ]
+               " ID         ,KA         ,CL         ,V          ,ALAG1      ,ETA1       ,ETA2       ,ETA3",
+               "  1.1000E+02, 4.1052E-01, 2.5483E+01, 1.4917E+02, 2.3223E-01,-4.5845E-02,-3.5313E-03,-2.1460E+00",
+               "  1.1200E+02, 2.9835E+00, 2.1061E+01, 1.1637E+02, 2.3223E-01,-1.0516E-01, 2.0130E-02,-1.6260E-01")
+ctrl_file <- get_data(xpdb_ex_pk, table = 'patab001') %>% 
+  dplyr::distinct_(.dots = 'ID', .keep_all = TRUE) %>% 
+  dplyr::slice(1:2)
 
 firstonly_test <- as.nm.table.list(dplyr::tibble(problem   = 1, 
                                                  file      = c('sdtab001', 'patab001'),

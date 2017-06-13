@@ -31,7 +31,7 @@ test_that('Check filter_xp_theme', {
 
 test_that('Check last_data_problem', {
   expect_equal(last_data_problem(xpdb_ex_pk, simtab = FALSE), 1)
-  expect_equal(last_data_problem(xpdb_ex_pk, simtab = TRUE), NA_integer_)
+  expect_equal(last_data_problem(xpdb_ex_pk, simtab = TRUE), 2)
 })
 
 test_that('Check last_file_problem', {

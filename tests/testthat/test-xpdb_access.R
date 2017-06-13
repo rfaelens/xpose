@@ -1,4 +1,4 @@
-context('Check extract_data functions')
+context('Check xpdb_access functions')
 
 # Tests for get_code ------------------------------------------------------
 
@@ -42,18 +42,15 @@ test_that("get_data checks input properly", {
 
 test_that("get_data works properly", {
   # Return single problem
-  expect_equal(get_data(xpdb_ex_pk, problem = 1), xpdb_ex_pk$data$data[[1]][xpdb_ex_pk$data$problem == 1, ])
+  expect_equal(get_data(xpdb_ex_pk, problem = 1), xpdb_ex_pk$data$data[[1]])
   
   # Return single table
   expect_equal(get_data(xpdb_ex_pk, table = 'sdtab001'), 
-               xpdb_ex_pk$data$data[[1]][xpdb_ex_pk$data$problem == 1, 
-                                         xpdb_ex_pk$data$index[[1]]$col[xpdb_ex_pk$data$index[[1]]$table == 'sdtab001']])
+               xpdb_ex_pk$data$data[[1]][, xpdb_ex_pk$data$index[[1]]$col[xpdb_ex_pk$data$index[[1]]$table == 'sdtab001']])
   # Return multiple tables
   expect_equal(get_data(xpdb_ex_pk, table = c('sdtab001', 'patab001')), 
-               list(sdtab001 = xpdb_ex_pk$data$data[[1]][xpdb_ex_pk$data$problem == 1, 
-                                                         xpdb_ex_pk$data$index[[1]]$col[xpdb_ex_pk$data$index[[1]]$table == 'sdtab001']],
-                    patab001 = xpdb_ex_pk$data$data[[1]][xpdb_ex_pk$data$problem == 1, 
-                                                         xpdb_ex_pk$data$index[[1]]$col[xpdb_ex_pk$data$index[[1]]$table == 'patab001']]))
+               list(sdtab001 = xpdb_ex_pk$data$data[[1]][xpdb_ex_pk$data$index[[1]]$col[xpdb_ex_pk$data$index[[1]]$table == 'sdtab001']],
+                    patab001 = xpdb_ex_pk$data$data[[1]][xpdb_ex_pk$data$index[[1]]$col[xpdb_ex_pk$data$index[[1]]$table == 'patab001']]))
 })
 
 

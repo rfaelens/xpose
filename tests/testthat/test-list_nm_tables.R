@@ -61,5 +61,5 @@ test_that("works with estimation problems", {
   expect_true(is.nm.table.list(sdtab_out))
   expect_equal(sdtab_out$firstonly, c(FALSE, FALSE, TRUE, TRUE, FALSE))
   expect_equal(sdtab_out$simtab, c(FALSE, FALSE, FALSE, FALSE, TRUE))
-  expect_equal(sdtab_out$file, c('./sdtab001', './catab001.csv', './cotab001', './patab001', './simtab001.zip'))
+  expect_equal(sdtab_out$file, c('./sdtab001', './catab001.csv', './cotab001', './patab001', './simtab001'))
 })

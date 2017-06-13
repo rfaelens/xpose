@@ -3,7 +3,7 @@ context('Check xpose_save')
 
 # Define plots to be tested -----------------------------------------------
 
-plot <- dv_vs_ipred(xpdb = xpdb_ex_pk)
+plot <- dv_vs_ipred(xpdb = xpdb_ex_pk, quiet = TRUE)
 
 
 # Tests start here --------------------------------------------------------

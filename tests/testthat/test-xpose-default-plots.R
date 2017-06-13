@@ -7,14 +7,14 @@ context('Check default plot functions')
 p1 <- xplot_scatter(xpdb = xpdb_ex_pk, aes_string(x = 'PRED', y = 'DV'), guides = TRUE, type = 'plst',
                     title = '@run-title', subtitle = '@run-subtitle', caption = '@run-caption',
                     point_color = 'red', line_color = 'blue', 
-                    smooth_color = 'green', text_color = 'yellow')
+                    smooth_color = 'green', text_color = 'yellow', quiet = TRUE)
 
 # Faceting test
 p2 <- xplot_scatter(xpdb = xpdb_ex_pk, aes_string(x = 'PRED', y = 'DV'), 
-                    panel_facets = 'SEX')
+                    panel_facets = 'SEX', quiet = TRUE)
 
 p3 <- xplot_scatter(xpdb = xpdb_ex_pk, aes_string(x = 'PRED', y = 'DV'), 
-                    panel_facets = OCC~SEX)
+                    panel_facets = OCC~SEX, quiet = TRUE)
 
 
 # Tests start here --------------------------------------------------------

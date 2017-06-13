@@ -62,7 +62,7 @@ $DATA      mx19_1.csv IGNORE=@ REWIND
 $MSFI      msf001
 $SIMULATION (221287) ONLYSIM NSUB=20 ; Small sim for illustration only
 $TABLE      ID OCC DV IPRED DOSE AMT TIME TAD EVID SEX CLCR AGE WT
-            ONEHEADER NOPRINT NOAPPEND FILE=simtab001.zip ; Simulation table
+            ONEHEADER NOPRINT NOAPPEND FILE=simtab001 ; Simulation table
 
 
 NM-TRAN MESSAGES
