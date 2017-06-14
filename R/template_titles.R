@@ -25,7 +25,6 @@
 #'  \item{@method}{Estimation method or sim}
 #'  \item{@nesample}{Number of ESAMPLE (used in NPDE)}
 #'  \item{@nind}{Number of individuals}
-#'  \item{@niter}{Number of iteration}
 #'  \item{@nobs}{Number of observations}
 #'  \item{@nsig}{Number of significant digits}
 #'  \item{@nsim}{Number of simulations}
@@ -38,6 +37,8 @@
 #'  \item{@software}{Software used (e.g. NONMEM)}
 #'  \item{@simseed}{Simulation seed}
 #'  \item{@subroutine}{Differencial equation solver}
+#'  \item{@timestart}{Run start time}
+#'  \item{@timestop}{Run stop time}
 #'  \item{@term}{Termination message}
 #'  \item{@version}{Software version (e.g. 7.3)}
 #'  \item{@warnings}{Run warnings (e.g. boundary)}
