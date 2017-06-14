@@ -89,7 +89,7 @@
       <h1>Access the xpdb data</h1>
                         <h4 class="author">Benjamin Guiastrennec</h4>
             
-            <h4 class="date">12 June, 2017</h4>
+            <h4 class="date">14 June, 2017</h4>
           </div>
 
     
@@ -104,9 +104,9 @@
 <pre><code>run001.lst overview: 
  - Software: nonmem 7.3.0 
  - Attached files: 
-   + tables: $prob no.1: catab001, cotab001, patab001, sdtab001 
-   + sim tabs: &lt;none&gt; 
-   + output files: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi 
+   + tables: $prob no.1: catab001.csv, cotab001, patab001, sdtab001 
+   + sim tabs: $prob no.2: simtab001.zip 
+   + output files: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi, run001.shk 
  - gg_theme: theme_readable 
  - xp_theme: theme_xp_default 
  - Options: dir = analysis/models/pk/, quiet = TRUE, manual_import = NULL</code></pre>
@@ -118,20 +118,20 @@
 <p><em>Note that general code warnings and PsN outputs appended are listed as problem 0.</em></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">code &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_code.html">get_code</a></span>(xpdb)
 code</code></pre></div>
-<pre><code># A tibble: 477 x 5
+<pre><code># A tibble: 787 x 5
    problem level subroutine                                                        code
  *   &lt;dbl&gt; &lt;dbl&gt;      &lt;chr&gt;                                                       &lt;chr&gt;
- 1       0     0        oth                                Wed Apr 5 16:19:26 CEST 2017
+ 1       0     0        oth                               Tue Jun 13 14:48:35 CEST 2017
  2       0     0        oth                                                            
  3       0     0        oth                                                            
  4       0     0        oth                                                            
- 5       1     1        pro                                              xpose test run
+ 5       1     1        pro                                        Parameter estimation
  6       1     2        inp          ID OCC XAT2=DROP DGRP=DROP DOSE FLAG=DROP ONO=DROP
  7       1     2        inp  XIME=DROP DVO=DROP NEUY=DROP SCR AGE SEX CLASS WT DROP ACE
  8       1     2        inp  MED1 MED2 NUMB=DROP TAD TIME VIDD=DROP CLCR AMT SS II DROP
  9       1     2        inp    CMT=DROP CONO=DROP DV EVID=DROP OVID=DROP DROP SHR2=DROP
 10       1     3        dat                                         mx19_1.csv IGNORE=@
-# ... with 467 more rows, and 1 more variables: comment &lt;chr&gt;</code></pre>
+# ... with 777 more rows, and 1 more variables: comment &lt;chr&gt;</code></pre>
 </div>
 <div id="access-the-output-data" class="section level3">
 <h3 class="hasAnchor">
@@ -140,19 +140,19 @@ code</code></pre></div>
 <p><em>Note when providing a table name it is not garanteed that the table will be identical to its file e.g. the order of the columns may have been changed and tables with <code>FIRSTONLY</code> will no longer be deduplicated.</em></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_data.html">get_data</a></span>(xpdb, <span class="dt">table =</span> <span class="st">'cotab001'</span>)
 data</code></pre></div>
-<pre><code># A tibble: 1,166 x 8
-      ID  CLCR   AGE    WT       DV        PRED       RES      WRES
-   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
- 1   110    66    68   105  0.00000 -3.68890000  0.000000  0.000000
- 2   110    66    68   105 -2.48410 -0.56877000 -1.915300 -3.885300
- 3   110    66    68   105 -1.50280 -0.59202000 -0.910810 -2.134900
- 4   110    66    68   105 -0.71539 -0.66915000 -0.046239 -0.128600
- 5   110    66    68   105 -0.75375 -1.02280000  0.269070  0.460450
- 6   110    66    68   105 -1.12390 -1.37920000  0.255310  0.262090
- 7   110    66    68   105 -1.39270 -1.73570000  0.342950  0.336620
- 8   110    67    68    99  0.00000 -1.72680000  0.000000  0.000000
- 9   110    67    68    99 -0.98591 -1.72680000  0.740930  0.883170
-10   110    67    68    99 -1.05730  0.00024372 -1.057500  0.093179
+<pre><code># A tibble: 1,166 x 4
+      ID  CLCR   AGE    WT
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1   110    66    68   105
+ 2   110    66    68   105
+ 3   110    66    68   105
+ 4   110    66    68   105
+ 5   110    66    68   105
+ 6   110    66    68   105
+ 7   110    66    68   105
+ 8   110    66    68   105
+ 9   110    66    68   105
+10   110    66    68   105
 # ... with 1,156 more rows</code></pre>
 </div>
 <div id="access-the-run-files" class="section level3">
@@ -162,24 +162,20 @@ data</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">file &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_file.html">get_file</a></span>(xpdb, <span class="dt">file =</span> <span class="st">'run001.ext'</span>)</code></pre></div>
 <pre><code>Returning data from problem no.1 sub-problem no.0</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">file</code></pre></div>
-<pre><code># A tibble: 14 x 15
-   ITERATION    THETA1    THETA2   THETA3     THETA4    THETA5     THETA6  SIGMA.1.1. OMEGA.1.1.
-       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt;
- 1   0.0e+00 27.500000 1.5650000 2.100000 0.25400000 0.2300000 0.00800000 1.00000e+00  0.3000000
- 2   5.0e+00 28.370300 1.4787000 2.675250 0.38531500 0.4288600 0.00746121 1.00000e+00  0.0212882
- 3   1.0e+01 28.058300 1.6323400 7.250850 0.23473600 0.4343890 0.00650974 1.00000e+00  0.0278744
- 4   1.5e+01 26.006900 1.4146900 3.487510 0.23155500 0.3721660 0.00643059 1.00000e+00  0.0468884
- 5   2.0e+01 26.491100 1.4247500 3.471890 0.23208200 0.3718690 0.00651609 1.00000e+00  0.0418873
- 6   2.5e+01 26.505300 1.4256900 3.510320 0.23222500 0.3719510 0.00651698 1.00000e+00  0.0419298
- 7   2.6e+01 26.505300 1.4256900 3.510320 0.23222500 0.3719510 0.00651698 1.00000e+00  0.0419298
- 8  -1.0e+09 26.505300 1.4256900 3.510320 0.23222500 0.3719510 0.00651698 1.00000e+00  0.0419298
- 9  -1.0e+09  0.806067 0.0428168 0.966085 0.00916968 0.0275754 0.00209978 1.00000e+10  0.0105397
-10  -1.0e+09  0.104829 0.2905050 0.381557 0.45806200 0.6097850 0.65683400 1.34108e+00  1.8677200
-11  -1.0e+09 31.380900 0.1048290 3.289620 0.00000000 0.0000000 0.00000000 0.00000e+00  0.0000000
-12  -1.0e+09  0.000000 0.0000000 0.000000 0.00000000 0.0000000 0.00000000 1.00000e+00  0.2047680
-13  -1.0e+09  0.000000 0.0000000 0.000000 0.00000000 0.0000000 0.00000000 1.00000e+10  0.0257356
-14  -1.0e+09  0.000000 0.0000000 0.000000 0.00000000 0.0000000 0.00000000 1.00000e+00  0.0000000
-# ... with 6 more variables: OMEGA.2.1. &lt;dbl&gt;, OMEGA.2.2. &lt;dbl&gt;, OMEGA.3.1. &lt;dbl&gt;,
+<pre><code># A tibble: 34 x 15
+   ITERATION  THETA1  THETA2  THETA3   THETA4   THETA5     THETA6 SIGMA.1.1. OMEGA.1.1. OMEGA.2.1.
+       &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+ 1         0 27.5000 1.56500 2.10000 0.254000 0.230000 0.00800000          1  0.3000000          0
+ 2         1 27.4212 1.56156 2.10527 0.259727 0.419087 0.00797891          1  0.2929510          0
+ 3         2 27.3474 1.56221 2.10859 0.261258 0.451587 0.00797180          1  0.2853090          0
+ 4         3 23.1413 1.67880 2.33794 0.335797 0.436782 0.00763214          1  0.0472800          0
+ 5         4 28.7697 1.54124 2.53932 0.381648 0.429614 0.00745381          1  0.0208101          0
+ 6         5 28.3703 1.47870 2.67525 0.385315 0.428860 0.00746121          1  0.0212882          0
+ 7         6 28.5457 1.53846 3.54898 0.401145 0.426591 0.00750659          1  0.0258004          0
+ 8         7 29.2138 1.67721 8.44612 0.206586 0.432386 0.00739348          1  0.0284159          0
+ 9         8 28.5851 1.64530 9.55926 0.228455 0.433989 0.00652994          1  0.0217724          0
+10         9 28.1226 1.63433 8.01904 0.228860 0.432755 0.00634526          1  0.0250947          0
+# ... with 24 more rows, and 5 more variables: OMEGA.2.2. &lt;dbl&gt;, OMEGA.3.1. &lt;dbl&gt;,
 #   OMEGA.3.2. &lt;dbl&gt;, OMEGA.3.3. &lt;dbl&gt;, OBJ &lt;dbl&gt;</code></pre>
 </div>
 <div id="access-the-run-summary" class="section level3">
@@ -190,20 +186,20 @@ data</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">run_sum &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_summary.html">get_summary</a></span>(xpdb, <span class="dt">problem =</span> <span class="dv">0</span>)
 run_sum</code></pre></div>
 <pre><code># A tibble: 12 x 5
-   problem subprob                 descr       label               value
-     &lt;dbl&gt;   &lt;dbl&gt;                 &lt;chr&gt;       &lt;chr&gt;               &lt;chr&gt;
- 1       0       0       Run description       descr    Run for testthat
- 2       0       0         Run directory         dir analysis/models/pk/
- 3       0       0            Run errors      errors                  na
- 4       0       0   ESAMPLE seed number esampleseed                  na
- 5       0       0              Run file        file          run001.lst
- 6       0       0     Number of ESAMPLE    nesample                  na
- 7       0       0 Number of simulations        nsim                  na
- 8       0       0       Reference model         ref                 000
- 9       0       0            Run number         run              run001
-10       0       0       Simulation seed     simseed                  na
-11       0       0              Software    software              nonmem
-12       0       0      Software version     version               7.3.0</code></pre>
+   problem subprob               descr       label                         value
+     &lt;dbl&gt;   &lt;dbl&gt;               &lt;chr&gt;       &lt;chr&gt;                         &lt;chr&gt;
+ 1       0       0     Run description       descr   NONMEM PK example for xpose
+ 2       0       0       Run directory         dir           analysis/models/pk/
+ 3       0       0          Run errors      errors                            na
+ 4       0       0 ESAMPLE seed number esampleseed                            na
+ 5       0       0            Run file        file                    run001.lst
+ 6       0       0   Number of ESAMPLE    nesample                            na
+ 7       0       0     Reference model         ref                           000
+ 8       0       0          Run number         run                        run001
+ 9       0       0            Software    software                        nonmem
+10       0       0      Run start time   timestart Tue Jun 13 14:48:35 CEST 2017
+11       0       0       Run stop time    timestop Tue Jun 13 14:48:50 CEST 2017
+12       0       0    Software version     version                         7.3.0</code></pre>
 </div>
 </div>
   </div>

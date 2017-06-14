@@ -88,6 +88,9 @@ prm_distrib(xpdb_ex_pk, type = 'h')
 # Density plot of etas with a rug
 eta_distrib(xpdb_ex_pk, type = 'dr')
 
+# Histogram of residuals by occasion
+res_distrib(xpdb_ex_pk, type = 'hr', res = 'CWRES', facets = 'OCC')
+
 }
 \seealso{
 \code{\link{xplot_distrib}}

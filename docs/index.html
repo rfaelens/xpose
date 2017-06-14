@@ -110,17 +110,38 @@ devtools::<span class="kw">install_github</span>(<span class="st">'UUPharmacomet
 <div id="getting-started" class="section level3">
 <h3 class="hasAnchor">
 <a href="#getting-started" class="anchor"></a>Getting started</h3>
-<p>Load xpose</p>
+<div id="load-xpose" class="section level4">
+<h4 class="hasAnchor">
+<a href="#load-xpose" class="anchor"></a>Load xpose</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(xpose)</code></pre></div>
-<p>Import run output</p>
+</div>
+<div id="import-run-output" class="section level4">
+<h4 class="hasAnchor">
+<a href="#import-run-output" class="anchor"></a>Import run output</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xpdb &lt;-<span class="st"> </span><span class="kw"><a href="reference/xpose_data.html">xpose_data</a></span>(<span class="dt">runno =</span> <span class="st">'001'</span>)</code></pre></div>
-<p>Generate diagnostics</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># DV vs. IPRED plot</span>
-<span class="kw"><a href="reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb)</code></pre></div>
-<p><img src="inst/img/readme_example_figure-1.png" width="50%" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># CWRES vs. PRED plot</span>
-<span class="kw"><a href="reference/res_vs_pred.html">res_vs_pred</a></span>(xpdb, <span class="dt">res =</span> <span class="st">'CWRES'</span>)</code></pre></div>
-<p><img src="inst/img/readme_example_figure-2.png" width="50%" style="display: block; margin: auto;"></p>
+</div>
+<div id="glance-at-the-data-object" class="section level4">
+<h4 class="hasAnchor">
+<a href="#glance-at-the-data-object" class="anchor"></a>Glance at the data object</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xpdb</code></pre></div>
+<pre><code>run001.lst overview: 
+ - Software: nonmem 7.3.0 
+ - Attached files: 
+   + tables: $prob no.1: catab001.csv, cotab001, patab001, sdtab001 
+   + sim tabs: $prob no.2: simtab001.zip 
+   + output files: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi, run001.shk 
+ - gg_theme: theme_readable 
+ - xp_theme: theme_xp_default 
+ - Options: dir = analysis/models/pk/, quiet = TRUE, manual_import = NULL</code></pre>
+</div>
+<div id="generate-diagnostics" class="section level4">
+<h4 class="hasAnchor">
+<a href="#generate-diagnostics" class="anchor"></a>Generate diagnostics</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb)</code></pre></div>
+<p><img src="inst/img/readme_example_figure_1-1.png" width="50%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/prm_distrib.html">eta_distrib</a></span>(xpdb)</code></pre></div>
+<p><img src="inst/img/readme_example_figure_2-1.png" width="75%" style="display: block; margin: auto;"></p>
+</div>
 </div>
 <div id="recommended-reading" class="section level3">
 <h3 class="hasAnchor">

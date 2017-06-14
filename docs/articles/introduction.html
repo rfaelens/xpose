@@ -89,7 +89,7 @@
       <h1>Introduction</h1>
                         <h4 class="author">Benjamin Guiastrennec</h4>
             
-            <h4 class="date">12 June, 2017</h4>
+            <h4 class="date">14 June, 2017</h4>
           </div>
 
     
@@ -115,9 +115,9 @@
 <pre><code>run001.lst overview: 
  - Software: nonmem 7.3.0 
  - Attached files: 
-   + tables: $prob no.1: catab001, cotab001, patab001, sdtab001 
-   + sim tabs: &lt;none&gt; 
-   + output files: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi 
+   + tables: $prob no.1: catab001.csv, cotab001, patab001, sdtab001 
+   + sim tabs: $prob no.2: simtab001.zip 
+   + output files: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi, run001.shk 
  - gg_theme: theme_readable 
  - xp_theme: theme_xp_default 
  - Options: dir = analysis/models/pk/, quiet = TRUE, manual_import = NULL</code></pre>
@@ -134,23 +134,35 @@ Summary for problem no. 0 [Global information]
  - Run directory                : analysis/models/pk/
  - Run file                     : run001.lst
  - Reference model              : 000
- - Run description              : Run for testthat
+ - Run description              : NONMEM PK example for xpose
+ - Run start time               : Tue Jun 13 14:48:35 CEST 2017
+ - Run stop time                : Tue Jun 13 14:48:50 CEST 2017
 
-Summary for problem no. 1 [xpose test run] 
+Summary for problem no. 1 [Parameter estimation] 
  - Input data                   : mx19_1.csv
  - Number of individuals        : 74
  - Number of observations       : 1022
  - ADVAN                        : 2
  - Estimation method            : foce-i
  - Termination message          : MINIMIZATION SUCCESSFUL
- - Estimation runtime           : 00:00:04
+ - Estimation runtime           : 00:00:06
  - Objective function value     : -656.869
  - Number of significant digits : 3.6
  - Covariance step runtime      : 00:00:04
  - Condition number             : 31.3
  - Eta shrinkage                : 10.2 [1], 48.2 [2], 14.7 [3]
  - Epsilon shrinkage            : 6.7 [1]
- - Run warnings                 : (WARNING 2) NM-TRAN INFERS THAT THE DATA ARE POPULATION.</code></pre>
+ - Run warnings                 : (WARNING 2) NM-TRAN INFERS THAT THE DATA ARE POPULATION.
+
+Summary for problem no. 2 [Model simulations] 
+ - Input data                   : mx19_1.csv
+ - Number of individuals        : 74
+ - Number of observations       : 1022
+ - Estimation method            : sim
+ - Number of simulations        : 20
+ - Simulation seed              : 221287
+ - Run warnings                 : (WARNING 2) NM-TRAN INFERS THAT THE DATA ARE POPULATION.
+                                  (WARNING 22) WITH $MSFI AND "SUBPROBS", "TRUE=FINAL" ...</code></pre>
 </div>
 <div id="listing-variables" class="section level3">
 <h3 class="hasAnchor">
@@ -173,7 +185,17 @@ List of available variables for problem no. 1
  - Residuals (res)                       : CWRES, IWRES, RES, WRES
  - Categorical covariates (catcov)       : SEX, MED1, MED2
  - Continuous covariates (contcov)       : CLCR, AGE, WT
- - Not attributed (na)                   : DOSE, SS, II, TAD</code></pre>
+ - Not attributed (na)                   : DOSE, SS, II, TAD
+
+List of available variables for problem no. 2 
+ - Subject identifier (id)               : ID
+ - Dependent variable (dv)               : DV
+ - Independent variable (idv)            : TIME
+ - Occasion flag (occ)                   : OCC
+ - Dose amount (amt)                     : AMT
+ - Event identifier (evid)               : EVID
+ - Model individual predictions (ipred)  : IPRED
+ - Not attributed (na)                   : DOSE, TAD, SEX, CLCR, AGE, WT</code></pre>
 </div>
 <div id="generating-plots" class="section level3">
 <h3 class="hasAnchor">

@@ -47,9 +47,15 @@ reference:
     - pred_vs_idv
     - dv_preds_vs_idv
   - title: Indiviudal plots
-    desc:  Indiviudal plots
+    desc:  Indiviudal observations and model predictions profiles by the independent variable
     contents:
     - ind_plots
+  - title: Distribution plots
+    desc:  Parameters, etas and residuals distribution plots
+    contents:
+    - eta_distrib
+    - prm_distrib
+    - res_distrib
   - title: Minimization diagnostics
     desc: Graphics to evaluate the estimation step
     contents:
@@ -58,6 +64,7 @@ reference:
   - title: General plotting functions
     desc:  Functions to manually create customized plots from an xpose_data object.
     contents:
+    - xplot_distrib
     - xplot_scatter
     - data_opt_set
   - title: Customize plots

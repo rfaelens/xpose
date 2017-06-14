@@ -158,47 +158,39 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Single file (returns a tibble)</span>
-<span class='no'>ext_file</span> <span class='kw'>&lt;-</span> <span class='fu'>get_file</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>'run001.ext'</span>)</div><div class='output co'>#&gt; <span class='message'>Returning data from problem no.1 sub-problem no.0</span></div><div class='input'><span class='no'>ext_file</span></div><div class='output co'>#&gt; # A tibble: 14 x 15
-#&gt;    ITERATION    THETA1    THETA2   THETA3     THETA4    THETA5     THETA6
-#&gt;        &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
-#&gt;  1   0.0e+00 27.500000 1.5650000 2.100000 0.25400000 0.2300000 0.00800000
-#&gt;  2   5.0e+00 28.370300 1.4787000 2.675250 0.38531500 0.4288600 0.00746121
-#&gt;  3   1.0e+01 28.058300 1.6323400 7.250850 0.23473600 0.4343890 0.00650974
-#&gt;  4   1.5e+01 26.006900 1.4146900 3.487510 0.23155500 0.3721660 0.00643059
-#&gt;  5   2.0e+01 26.491100 1.4247500 3.471890 0.23208200 0.3718690 0.00651609
-#&gt;  6   2.5e+01 26.505300 1.4256900 3.510320 0.23222500 0.3719510 0.00651698
-#&gt;  7   2.6e+01 26.505300 1.4256900 3.510320 0.23222500 0.3719510 0.00651698
-#&gt;  8  -1.0e+09 26.505300 1.4256900 3.510320 0.23222500 0.3719510 0.00651698
-#&gt;  9  -1.0e+09  0.806067 0.0428168 0.966085 0.00916968 0.0275754 0.00209978
-#&gt; 10  -1.0e+09  0.104829 0.2905050 0.381557 0.45806200 0.6097850 0.65683400
-#&gt; 11  -1.0e+09 31.380900 0.1048290 3.289620 0.00000000 0.0000000 0.00000000
-#&gt; 12  -1.0e+09  0.000000 0.0000000 0.000000 0.00000000 0.0000000 0.00000000
-#&gt; 13  -1.0e+09  0.000000 0.0000000 0.000000 0.00000000 0.0000000 0.00000000
-#&gt; 14  -1.0e+09  0.000000 0.0000000 0.000000 0.00000000 0.0000000 0.00000000
-#&gt; # ... with 8 more variables: SIGMA.1.1. &lt;dbl&gt;, OMEGA.1.1. &lt;dbl&gt;,
+<span class='no'>ext_file</span> <span class='kw'>&lt;-</span> <span class='fu'>get_file</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>'run001.ext'</span>)</div><div class='output co'>#&gt; <span class='message'>Returning data from problem no.1 sub-problem no.0</span></div><div class='input'><span class='no'>ext_file</span></div><div class='output co'>#&gt; # A tibble: 34 x 15
+#&gt;    ITERATION  THETA1  THETA2  THETA3   THETA4   THETA5     THETA6 SIGMA.1.1.
+#&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+#&gt;  1         0 27.5000 1.56500 2.10000 0.254000 0.230000 0.00800000          1
+#&gt;  2         1 27.4212 1.56156 2.10527 0.259727 0.419087 0.00797891          1
+#&gt;  3         2 27.3474 1.56221 2.10859 0.261258 0.451587 0.00797180          1
+#&gt;  4         3 23.1413 1.67880 2.33794 0.335797 0.436782 0.00763214          1
+#&gt;  5         4 28.7697 1.54124 2.53932 0.381648 0.429614 0.00745381          1
+#&gt;  6         5 28.3703 1.47870 2.67525 0.385315 0.428860 0.00746121          1
+#&gt;  7         6 28.5457 1.53846 3.54898 0.401145 0.426591 0.00750659          1
+#&gt;  8         7 29.2138 1.67721 8.44612 0.206586 0.432386 0.00739348          1
+#&gt;  9         8 28.5851 1.64530 9.55926 0.228455 0.433989 0.00652994          1
+#&gt; 10         9 28.1226 1.63433 8.01904 0.228860 0.432755 0.00634526          1
+#&gt; # ... with 24 more rows, and 7 more variables: OMEGA.1.1. &lt;dbl&gt;,
 #&gt; #   OMEGA.2.1. &lt;dbl&gt;, OMEGA.2.2. &lt;dbl&gt;, OMEGA.3.1. &lt;dbl&gt;, OMEGA.3.2. &lt;dbl&gt;,
 #&gt; #   OMEGA.3.3. &lt;dbl&gt;, OBJ &lt;dbl&gt;</div><div class='input'>
 <span class='co'># Multiple files (returns a list)</span>
 <span class='no'>files</span> <span class='kw'>&lt;-</span> <span class='fu'>get_file</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>'run001.ext'</span>, <span class='st'>'run001.phi'</span>))
 <span class='no'>files</span></div><div class='output co'>#&gt; $run001.ext
-#&gt; # A tibble: 14 x 15
-#&gt;    ITERATION    THETA1    THETA2   THETA3     THETA4    THETA5     THETA6
-#&gt;        &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
-#&gt;  1   0.0e+00 27.500000 1.5650000 2.100000 0.25400000 0.2300000 0.00800000
-#&gt;  2   5.0e+00 28.370300 1.4787000 2.675250 0.38531500 0.4288600 0.00746121
-#&gt;  3   1.0e+01 28.058300 1.6323400 7.250850 0.23473600 0.4343890 0.00650974
-#&gt;  4   1.5e+01 26.006900 1.4146900 3.487510 0.23155500 0.3721660 0.00643059
-#&gt;  5   2.0e+01 26.491100 1.4247500 3.471890 0.23208200 0.3718690 0.00651609
-#&gt;  6   2.5e+01 26.505300 1.4256900 3.510320 0.23222500 0.3719510 0.00651698
-#&gt;  7   2.6e+01 26.505300 1.4256900 3.510320 0.23222500 0.3719510 0.00651698
-#&gt;  8  -1.0e+09 26.505300 1.4256900 3.510320 0.23222500 0.3719510 0.00651698
-#&gt;  9  -1.0e+09  0.806067 0.0428168 0.966085 0.00916968 0.0275754 0.00209978
-#&gt; 10  -1.0e+09  0.104829 0.2905050 0.381557 0.45806200 0.6097850 0.65683400
-#&gt; 11  -1.0e+09 31.380900 0.1048290 3.289620 0.00000000 0.0000000 0.00000000
-#&gt; 12  -1.0e+09  0.000000 0.0000000 0.000000 0.00000000 0.0000000 0.00000000
-#&gt; 13  -1.0e+09  0.000000 0.0000000 0.000000 0.00000000 0.0000000 0.00000000
-#&gt; 14  -1.0e+09  0.000000 0.0000000 0.000000 0.00000000 0.0000000 0.00000000
-#&gt; # ... with 8 more variables: SIGMA.1.1. &lt;dbl&gt;, OMEGA.1.1. &lt;dbl&gt;,
+#&gt; # A tibble: 34 x 15
+#&gt;    ITERATION  THETA1  THETA2  THETA3   THETA4   THETA5     THETA6 SIGMA.1.1.
+#&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+#&gt;  1         0 27.5000 1.56500 2.10000 0.254000 0.230000 0.00800000          1
+#&gt;  2         1 27.4212 1.56156 2.10527 0.259727 0.419087 0.00797891          1
+#&gt;  3         2 27.3474 1.56221 2.10859 0.261258 0.451587 0.00797180          1
+#&gt;  4         3 23.1413 1.67880 2.33794 0.335797 0.436782 0.00763214          1
+#&gt;  5         4 28.7697 1.54124 2.53932 0.381648 0.429614 0.00745381          1
+#&gt;  6         5 28.3703 1.47870 2.67525 0.385315 0.428860 0.00746121          1
+#&gt;  7         6 28.5457 1.53846 3.54898 0.401145 0.426591 0.00750659          1
+#&gt;  8         7 29.2138 1.67721 8.44612 0.206586 0.432386 0.00739348          1
+#&gt;  9         8 28.5851 1.64530 9.55926 0.228455 0.433989 0.00652994          1
+#&gt; 10         9 28.1226 1.63433 8.01904 0.228860 0.432755 0.00634526          1
+#&gt; # ... with 24 more rows, and 7 more variables: OMEGA.1.1. &lt;dbl&gt;,
 #&gt; #   OMEGA.2.1. &lt;dbl&gt;, OMEGA.2.2. &lt;dbl&gt;, OMEGA.3.1. &lt;dbl&gt;, OMEGA.3.2. &lt;dbl&gt;,
 #&gt; #   OMEGA.3.3. &lt;dbl&gt;, OBJ &lt;dbl&gt;
 #&gt; 
@@ -223,9 +215,9 @@
 <span class='fu'>print</span>(<span class='no'>xpdb_ex_pk</span>)</div><div class='output co'>#&gt; run001.lst overview: 
 #&gt;  - Software: nonmem 7.3.0 
 #&gt;  - Attached files: 
-#&gt;    + tables: $prob no.1: catab001, cotab001, patab001, sdtab001 
-#&gt;    + sim tabs: &lt;none&gt; 
-#&gt;    + output files: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi 
+#&gt;    + tables: $prob no.1: catab001.csv, cotab001, patab001, sdtab001 
+#&gt;    + sim tabs: $prob no.2: simtab001.zip 
+#&gt;    + output files: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi, run001.shk 
 #&gt;  - gg_theme: theme_readable 
 #&gt;  - xp_theme: theme_xp_default 
 #&gt;  - Options: dir = analysis/models/pk/, quiet = TRUE, manual_import = NULL</div><div class='input'>

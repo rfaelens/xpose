@@ -19,33 +19,47 @@ devtools::install_github('UUPharmacometrics/xpose')
 
 ### Getting started
 
-Load xpose
+#### Load xpose
 
 ``` r
 library(xpose)
 ```
 
-Import run output
+#### Import run output
 
 ``` r
 xpdb <- xpose_data(runno = '001')
 ```
 
-Generate diagnostics
+#### Glance at the data object
 
 ``` r
-# DV vs. IPRED plot
+xpdb
+```
+
+    run001.lst overview: 
+     - Software: nonmem 7.3.0 
+     - Attached files: 
+       + tables: $prob no.1: catab001.csv, cotab001, patab001, sdtab001 
+       + sim tabs: $prob no.2: simtab001.zip 
+       + output files: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi, run001.shk 
+     - gg_theme: theme_readable 
+     - xp_theme: theme_xp_default 
+     - Options: dir = analysis/models/pk/, quiet = TRUE, manual_import = NULL
+
+#### Generate diagnostics
+
+``` r
 dv_vs_ipred(xpdb)
 ```
 
-<img src="inst/img/readme_example_figure-1.png" width="50%" style="display: block; margin: auto;" />
+<img src="inst/img/readme_example_figure_1-1.png" width="50%" style="display: block; margin: auto;" />
 
 ``` r
-# CWRES vs. PRED plot
-res_vs_pred(xpdb, res = 'CWRES')
+eta_distrib(xpdb)
 ```
 
-<img src="inst/img/readme_example_figure-2.png" width="50%" style="display: block; margin: auto;" />
+<img src="inst/img/readme_example_figure_2-1.png" width="75%" style="display: block; margin: auto;" />
 
 ### Recommended reading
 
