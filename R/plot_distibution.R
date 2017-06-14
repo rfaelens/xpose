@@ -13,6 +13,9 @@
 #' # Density plot of etas with a rug
 #' eta_distrib(xpdb_ex_pk, type = 'dr')
 #' 
+#' # Histogram of residuals by occasion
+#' res_distrib(xpdb_ex_pk, type = 'hr', res = 'CWRES', facets = 'OCC')
+#' 
 #' @export
 prm_distrib <- function(xpdb,
                         mapping  = NULL,
