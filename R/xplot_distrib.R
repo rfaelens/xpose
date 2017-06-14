@@ -21,7 +21,7 @@
 #'   \item yscale: options to \code{scale_y_continuous} or \code{scale_y_log10}
 #' }
 #' @inheritSection xplot_scatter Template titles
-#' @seealso \code{\link{xplot_scatter}}
+#' @seealso \code{\link{xplot_scatter}} \code{\link{xplot_qq}}
 #' 
 #' @examples
 #' # A simple histogram

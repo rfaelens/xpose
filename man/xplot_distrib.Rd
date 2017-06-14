@@ -83,5 +83,5 @@ xplot_distrib(xpdb_ex_pk, aes(x = CWRES))
 
 }
 \seealso{
-\code{\link{xplot_scatter}}
+\code{\link{xplot_scatter}} \code{\link{xplot_qq}}
 }

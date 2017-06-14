@@ -83,5 +83,5 @@ xplot_scatter(xpdb_ex_pk, aes(x = IPRED, y = DV))
 
 }
 \seealso{
-\code{\link{xplot_distrib}}
+\code{\link{xplot_distrib}} \code{\link{xplot_qq}}
 }

@@ -48,7 +48,7 @@
 #' 1022 observations in 74 subjects'. The available key variables are listed under 
 #' \code{\link{template_titles}}.
 #' 
-#' @seealso \code{\link{xplot_distrib}}
+#' @seealso \code{\link{xplot_distrib}} \code{\link{xplot_qq}}
 #' @examples
 #' xplot_scatter(xpdb_ex_pk, aes(x = IPRED, y = DV))
 #' 
