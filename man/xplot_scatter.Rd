@@ -20,11 +20,11 @@ xplot_scatter(xpdb, mapping = NULL, group = "ID", type = "pls",
 \item{type}{String setting the type of plot to be used points 'p',
 line 'l', smooth 's' and text 't' or any combination of the four.}
 
-\item{guides}{should the guides (eg. unity line) be displayed.}
+\item{guides}{Should the guides (eg. unity line) be displayed.}
 
-\item{xscale}{scale type for x axis (eg. 'continuous', 'discrete', 'log10').}
+\item{xscale}{Scale type for x axis (eg. 'continuous', 'discrete', 'log10').}
 
-\item{yscale}{scale type for y axis (eg. 'continuous', 'discrete', 'log10').}
+\item{yscale}{Scale type for y axis (eg. 'continuous', 'discrete', 'log10').}
 
 \item{title}{Plot title. Use \code{NULL} to remove.}
 
@@ -32,7 +32,7 @@ line 'l', smooth 's' and text 't' or any combination of the four.}
 
 \item{caption}{Page caption. Use \code{NULL} to remove.}
 
-\item{plot_name}{name that will be used by \code{xpose_save()} to save the plot.}
+\item{plot_name}{Name to be used by \code{xpose_save()} when saving the plot.}
 
 \item{gg_theme}{A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).}
 
@@ -44,7 +44,7 @@ ggplot2. For more information see \code{\link{data_opt_set}}.}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 
-\item{...}{any additional aesthetics.}
+\item{...}{Any additional aesthetics.}
 }
 \description{
 Manually generate scatter plots from an xpdb object.

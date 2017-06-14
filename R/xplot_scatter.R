@@ -8,20 +8,20 @@
 #' @param group Grouping variable to be used for lines.
 #' @param type String setting the type of plot to be used points 'p',
 #' line 'l', smooth 's' and text 't' or any combination of the four.
-#' @param guides should the guides (eg. unity line) be displayed.
-#' @param xscale scale type for x axis (eg. 'continuous', 'discrete', 'log10').
-#' @param yscale scale type for y axis (eg. 'continuous', 'discrete', 'log10').
+#' @param guides Should the guides (eg. unity line) be displayed.
+#' @param xscale Scale type for x axis (eg. 'continuous', 'discrete', 'log10').
+#' @param yscale Scale type for y axis (eg. 'continuous', 'discrete', 'log10').
 #' @param title Plot title. Use \code{NULL} to remove.
 #' @param subtitle Plot subtitle. Use \code{NULL} to remove.
 #' @param caption Page caption. Use \code{NULL} to remove.
-#' @param plot_name name that will be used by \code{xpose_save()} to save the plot.
+#' @param plot_name Name to be used by \code{xpose_save()} when saving the plot.
 #' @param gg_theme A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).
 #' @param xp_theme An xpose theme or vector of modifications to the xpose theme
 #' (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).
 #' @param data_opt A list of options in order to create appropriate data input for 
 #' ggplot2. For more information see \code{\link{data_opt_set}}.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
-#' @param ... any additional aesthetics.
+#' @param ... Any additional aesthetics.
 #' 
 #' @section Layers mapping:
 #' Plots can be customized by mapping arguments to specific layers. The naming convention is 
@@ -103,7 +103,6 @@ xplot_scatter <- function(xpdb,
   if (stringr::str_detect(type, stringr::fixed('l', ignore_case = TRUE))) {
     xp <- xp + xp_geoms(mapping  = c(mapping, aes_string(line_group = group)),
                         xp_theme = xpdb$xp_theme,
-                        group    = group,
                         name     = 'line',
                         ggfun    = 'geom_line',
                         ...)
