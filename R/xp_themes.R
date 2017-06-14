@@ -99,7 +99,7 @@ theme_xp_default <- function() {
     rug_alpha        = 0.6,
     rug_color        = 'grey35',
     rug_linetype     = 1,
-    rug_size         = 0.5
+    rug_size         = 0.3
     
   ), class = c('xpose_theme', 'uneval'))
 }
@@ -186,7 +186,7 @@ theme_xp_xpose4 <- function() {
     rug_alpha        = NA,
     rug_color        = 'black',
     rug_linetype     = 1,
-    rug_size         = 0.5
+    rug_size         = 0.3
     
   ), class = c('xpose_theme', 'uneval'))
 }
