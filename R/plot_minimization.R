@@ -31,7 +31,7 @@ prm_vs_iteration <- function(xpdb,
                              ...) {
   if (missing(problem)) problem <- last_file_problem(xpdb, 'ext')
   if (missing(subprob)) subprob <- last_file_subprob(xpdb, 'ext', problem)
-  if (missing(facets)) facets <- 'variable'
+  if (is.null(facets)) facets <- 'variable'
   x_var <- 'ITERATION'
   
   xplot_scatter(xpdb = xpdb, group = group,
@@ -70,7 +70,7 @@ grd_vs_iteration <- function(xpdb,
                              ...) {
   if (missing(problem)) problem <- last_file_problem(xpdb, 'grd')
   if (missing(subprob)) subprob <- last_file_subprob(xpdb, 'grd', problem)
-  if (missing(facets)) facets <- 'variable'
+  if (is.null(facets)) facets <- 'variable'
   x_var <- 'ITERATION'
   
   xplot_scatter(xpdb = xpdb, group = group,

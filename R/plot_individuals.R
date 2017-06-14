@@ -28,7 +28,7 @@ ind_plots <- function(xpdb,
                       problem,
                       ...) {
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
-  if (missing(facets)) facets <- xp_var(xpdb, problem, type = 'id')$col
+  if (is.null(facets)) facets <- xp_var(xpdb, problem, type = 'id')$col
   
   xplot_scatter(xpdb = xpdb, group = group,
                 data_opt = data_opt_set(problem = problem, 

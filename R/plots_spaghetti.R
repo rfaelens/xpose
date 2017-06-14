@@ -117,7 +117,7 @@ dv_preds_vs_idv <- function(xpdb,
                             problem,
                             ...) {
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
-  if (missing(facets)) facets <- 'variable'
+  if (is.null(facets)) facets <- 'variable'
   
   xplot_scatter(xpdb = xpdb, group = group,
                 data_opt = data_opt_set(problem = problem, tidy = TRUE, 
