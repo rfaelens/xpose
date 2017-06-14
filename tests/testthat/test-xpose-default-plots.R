@@ -8,71 +8,113 @@ p1 <- xplot_scatter(xpdb = xpdb_ex_pk, aes_string(x = 'PRED', y = 'DV'), guides 
                     title = '@run-title', subtitle = '@run-subtitle', caption = '@run-caption',
                     point_color = 'red', line_color = 'blue', 
                     smooth_color = 'green', text_color = 'yellow', quiet = TRUE)
+d1 <- xplot_distrib(xpdb = xpdb_ex_pk, aes_string(x = 'PRED'), guides = FALSE, type = 'dhr',
+                    title = '@run-title', subtitle = '@run-subtitle', caption = '@run-caption',
+                    histogram_color = 'red', density_color = 'blue', rug_color = 'yellow', 
+                    quiet = TRUE)
+q1 <- xplot_qq(xpdb = xpdb_ex_pk, aes_string(sample = 'PRED'), guides = TRUE, type = 'p',
+               title = '@run-title', subtitle = '@run-subtitle', caption = '@run-caption',
+               point_color = 'red', guides_color = 'blue', quiet = TRUE)
 
-# Faceting test
+# Facet wrap
 p2 <- xplot_scatter(xpdb = xpdb_ex_pk, aes_string(x = 'PRED', y = 'DV'), 
                     panel_facets = 'SEX', quiet = TRUE)
+d2 <- xplot_distrib(xpdb = xpdb_ex_pk, aes_string(x = 'PRED'), 
+                    panel_facets = 'SEX', quiet = TRUE)
+q2 <- xplot_qq(xpdb = xpdb_ex_pk, aes_string(sample = 'PRED'), 
+               panel_facets = 'SEX', quiet = TRUE)
 
+# Facet grid
 p3 <- xplot_scatter(xpdb = xpdb_ex_pk, aes_string(x = 'PRED', y = 'DV'), 
                     panel_facets = OCC~SEX, quiet = TRUE)
+d3 <- xplot_distrib(xpdb = xpdb_ex_pk, aes_string(x = 'PRED'), 
+                    panel_facets = OCC~SEX, quiet = TRUE)
+q3 <- xplot_qq(xpdb = xpdb_ex_pk, aes_string(sample = 'PRED'), 
+               panel_facets = OCC~SEX, quiet = TRUE)
 
 
 # Tests start here --------------------------------------------------------
 
 test_that("errors are returned for missing or bad xpdb", {
   expect_error(xplot_scatter())
+  expect_error(xplot_distrib())
+  expect_error(xplot_qq())
+  
   expect_null(xplot_scatter(xpdb = 1))
+  expect_null(xplot_distrib(xpdb = 1))
+  expect_null(xplot_qq(xpdb = 1))
 })
 
 test_that("xpose plot objects are returned with appropriate xpdb", {
   # Check class
   expect_true(is.xpose.plot(p1))
+  expect_true(is.xpose.plot(d1))
+  expect_true(is.xpose.plot(q1))
   
   # Check metadata
   expect_equal(p1$xpose$fun, 'scatter_plot')
   expect_equal(p1$xpose$summary, xpdb_ex_pk$summary)
   expect_equal(p1$xpose$problem, 1)
   expect_true(p1$xpose$quiet)
+  
+  expect_equal(d1$xpose$fun, 'density_plot')
+  expect_equal(d1$xpose$summary, xpdb_ex_pk$summary)
+  expect_equal(d1$xpose$problem, 1)
+  expect_true(d1$xpose$quiet)
+  
+  expect_equal(q1$xpose$fun, 'qq_plot')
+  expect_equal(q1$xpose$summary, xpdb_ex_pk$summary)
+  expect_equal(q1$xpose$problem, 1)
+  expect_true(q1$xpose$quiet)
 })
 
-test_that('geom_abline layer is present', {
+test_that('layers of xplot_scatter', {
   expect_equal(class(p1$layers[[1]]$geom)[1], 'GeomAbline')
-})
-
-test_that('geom_line layer is present', {
   expect_equal(class(p1$layers[[2]]$geom)[1], 'GeomLine')
-})
-
-test_that('geom_point layer is present', {
   expect_equal(class(p1$layers[[3]]$geom)[1], 'GeomPoint')
-})
-
-test_that('geom_text layer is present', {
   expect_equal(class(p1$layers[[4]]$geom)[1], 'GeomText')
+  expect_equal(class(p1$layers[[5]]$geom)[1], 'GeomSmooth')
 })
 
-test_that('geom_smooth layer is present', {
-  expect_equal(class(p1$layers[[5]]$geom)[1], 'GeomSmooth')
+test_that('layers of xplot_density', {
+  expect_equal(class(d1$layers[[1]]$geom)[1], 'GeomBar')
+  expect_equal(class(d1$layers[[2]]$geom)[1], 'GeomDensity')
+  expect_equal(class(d1$layers[[3]]$geom)[1], 'GeomRug')
+})
+
+test_that('layers of xplot_qq', {
+  expect_equal(class(q1$layers[[1]]$geom)[1], 'GeomPath')
+  expect_equal(class(q1$layers[[2]]$geom)[1], 'GeomPoint')
 })
 
 
 test_that('faceting works properly', {
   expect_true(is.null(p1$facet$params$facets))
+  expect_true(is.null(d1$facet$params$facets))
+  expect_true(is.null(q1$facet$params$facets))
+  
   expect_true(is.list(p2$facet$params$facets))
+  expect_true(is.list(d2$facet$params$facets))
+  expect_true(is.list(q2$facet$params$facets))
+  
   expect_equal(as.character(p3$facet$params$cols[[1]]), 'SEX')
   expect_equal(as.character(p3$facet$params$rows[[1]]), 'OCC')
+  expect_equal(as.character(d3$facet$params$cols[[1]]), 'SEX')
+  expect_equal(as.character(d3$facet$params$rows[[1]]), 'OCC')
+  expect_equal(as.character(q3$facet$params$cols[[1]]), 'SEX')
+  expect_equal(as.character(q3$facet$params$rows[[1]]), 'OCC')
 })
 
 test_that('xpose_geom mapping works properly', {
-  # Check that the color of lines is blue
   expect_equal(p1$layers[[2]]$aes_params$colour, 'blue')
-  
-  # Check that the color of point is red
   expect_equal(p1$layers[[3]]$aes_params$colour, 'red')
-
-  # Check that the color of smooth is yellow
   expect_equal(p1$layers[[4]]$aes_params$colour, 'yellow')
-    
-  # Check that the color of smooth is green
   expect_equal(p1$layers[[5]]$aes_params$colour, 'green')
+  
+  expect_equal(d1$layers[[1]]$aes_params$colour, 'red')
+  expect_equal(d1$layers[[2]]$aes_params$colour, 'blue')
+  expect_equal(d1$layers[[3]]$aes_params$colour, 'yellow')
+  
+  expect_equal(q1$layers[[1]]$aes_params$colour, 'blue')
+  expect_equal(q1$layers[[2]]$aes_params$colour, 'red')
 })
