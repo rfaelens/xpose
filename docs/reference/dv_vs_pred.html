@@ -119,15 +119,15 @@ individual predictions (IPRED) or conditional population predictions (CPRED).</p
     <pre class="usage"><span class='fu'>dv_vs_ipred</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pls"</span>,
   <span class='kw'>facets</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"@y vs. @x | @run"</span>,
   <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Ofv: @ofv, Eps shrink: @epsshk"</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>,
-  <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guides</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>problem</span>, <span class='no'>...</span>)
+  <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guides</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>problem</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)
 
 <span class='fu'>dv_vs_pred</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pls"</span>,
   <span class='kw'>facets</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"@y vs. @x | @run"</span>, <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Ofv: @ofv"</span>,
-  <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guides</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>problem</span>, <span class='no'>...</span>)
+  <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guides</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>problem</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)
 
 <span class='fu'>dv_vs_cpred</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pls"</span>,
   <span class='kw'>facets</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"@y vs. @x | @run"</span>, <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Ofv: @ofv"</span>,
-  <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guides</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>problem</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guides</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>problem</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -180,6 +180,10 @@ or a formula to use <a href='http://www.rdocumentation.org/packages/ggplot2/topi
       <th>problem</th>
       <td><p>The $problem number to be used. By default returns 
 the last estimation problem.</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Logical, if <code>FALSE</code> messages are printed to the console.</p></td>
     </tr>
     <tr>
       <th>...</th>

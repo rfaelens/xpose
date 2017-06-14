@@ -51,11 +51,19 @@ reference:
     contents:
     - ind_plots
   - title: Distribution plots
-    desc:  Parameters, etas and residuals distribution plots
+    desc:  Covariate, parameters, etas and residuals distribution plots
     contents:
+    - cov_distrib
     - eta_distrib
     - prm_distrib
     - res_distrib
+  - title: QQ plots
+    desc:  Covariate, parameters, etas and residuals QQ plots
+    contents:
+    - cov_qq
+    - eta_qq
+    - prm_qq
+    - res_qq
   - title: Minimization diagnostics
     desc: Graphics to evaluate the estimation step
     contents:
@@ -65,6 +73,7 @@ reference:
     desc:  Functions to manually create customized plots from an xpose_data object.
     contents:
     - xplot_distrib
+    - xplot_qq
     - xplot_scatter
     - data_opt_set
   - title: Customize plots
