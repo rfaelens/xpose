@@ -27,6 +27,12 @@ eta_distrib <- function(xpdb,
                         ...) {
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   if (is.null(facets)) facets <- 'variable'
+  eta_prm <- xp_var(xpdb, problem, type = 'eta')$col
+  
+  if (is.null(eta_prm)) {
+    msg('No eta value found in the xpdb.', FALSE)
+    return()
+  }
   
   xplot_distrib(xpdb = xpdb, 
                 data_opt = data_opt_set(problem = problem, 

@@ -175,8 +175,7 @@ xplot_scatter <- function(xpdb,
                    summary  = xpdb$summary,
                    problem  = attr(data, 'problem'),
                    quiet    = quiet,
-                   xp_theme = xpdb$xp_theme[stringr::str_c(c('title', 'subtitle', 'caption'), 
-                                                           '_suffix')])
+                   xp_theme = xpdb$xp_theme[stringr::str_c(c('title', 'subtitle', 'caption'), '_suffix')])
   
   # Ouptut the plot
   structure(xp, class = c('xpose_plot', class(xp)))
