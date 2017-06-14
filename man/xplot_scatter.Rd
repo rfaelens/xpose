@@ -82,3 +82,6 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 xplot_scatter(xpdb_ex_pk, aes(x = IPRED, y = DV))
 
 }
+\seealso{
+\code{\link{xplot_distrib}}
+}
