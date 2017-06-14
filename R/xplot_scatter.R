@@ -83,7 +83,10 @@ xplot_scatter <- function(xpdb,
   data <- fetch_data(xpdb, quiet = quiet, problem = data_opt$problem, subprob = data_opt$subprob, 
                      source = data_opt$source, simtab = data_opt$simtab, filter = data_opt$filter, 
                      tidy = data_opt$tidy, index_col = data_opt$index_col, value_col = data_opt$value_col)
-  if (is.null(data)) return()
+  if (is.null(data)) {
+    msg('No data available for plotting. Please check the variable mapping and filering options.', quiet)
+    return()
+  }
   
   # Assing xp_theme and gg_theme
   if (!missing(xp_theme)) xpdb <- update_themes(xpdb = xpdb, xp_theme = xp_theme)
