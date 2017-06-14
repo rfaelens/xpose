@@ -17,6 +17,9 @@ test_that("errors are returned for missing xpdb_ex_pk", {
   expect_error(prm_vs_iteration())
   expect_error(grd_vs_iteration())
   expect_error(ind_plots())
+  expect_error(eta_distrib())
+  expect_error(prm_distrib())
+  expect_error(res_distrib())
 })
 
 test_that("xpose plot objects are returned with appropriate xpdb_ex_pk", {
@@ -34,5 +37,7 @@ test_that("xpose plot objects are returned with appropriate xpdb_ex_pk", {
   expect_true(is.xpose.plot(prm_vs_iteration(xpdb_ex_pk)))
   expect_true(is.xpose.plot(grd_vs_iteration(xpdb_ex_pk)))
   expect_true(is.xpose.plot(ind_plots(xpdb_ex_pk)))
+  expect_true(is.xpose.plot(eta_distrib(xpdb_ex_pk)))
+  expect_true(is.xpose.plot(prm_distrib(xpdb_ex_pk)))
+  expect_true(is.xpose.plot(res_distrib(xpdb_ex_pk)))
 })
-
