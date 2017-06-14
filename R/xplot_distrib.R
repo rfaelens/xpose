@@ -27,7 +27,7 @@
 #' # A simple histogram
 #' xplot_distrib(xpdb_ex_pk, aes(x = WT))
 #' 
-#' #' # A simple density plot
+#' # A simple density plot
 #' xplot_distrib(xpdb_ex_pk, aes(x = CWRES))
 #' 
 #' @export
