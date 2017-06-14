@@ -28,12 +28,14 @@ dv_vs_idv <- function(xpdb,
                       caption  = '@dir',
                       log      = NULL,
                       problem,
+                      quiet,
                       ...) {
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
+  if (missing(quiet)) quiet <- xpdb$options$quiet
   
-  xplot_scatter(xpdb = xpdb, group = group,
+  xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
                 data_opt = data_opt_set(problem = problem, 
-                                        filter = only_obs(xpdb, problem)),
+                                        filter = only_obs(xpdb, problem, quiet)),
                 mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
                                            y = xp_var(xpdb, problem, type = 'dv')$col), mapping),
                 type = type, panel_facets = facets, 
@@ -56,12 +58,14 @@ ipred_vs_idv <- function(xpdb,
                          caption  = '@dir',
                          log      = NULL,
                          problem,
+                         quiet,
                          ...) {
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
+  if (missing(quiet)) quiet <- xpdb$options$quiet
   
-  xplot_scatter(xpdb = xpdb, group = group,
+  xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
                 data_opt = data_opt_set(problem = problem, 
-                                        filter = only_obs(xpdb, problem)),
+                                        filter = only_obs(xpdb, problem, quiet)),
                 mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
                                            y = xp_var(xpdb, problem, type = 'ipred')$col), mapping),
                 type = type, panel_facets = facets, 
@@ -84,12 +88,14 @@ pred_vs_idv <- function(xpdb,
                         caption  = '@dir',
                         log      = NULL,
                         problem,
+                        quiet,
                         ...) {
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
+  if (missing(quiet)) quiet <- xpdb$options$quiet
   
-  xplot_scatter(xpdb = xpdb, group = group,
+  xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
                 data_opt = data_opt_set(problem = problem, 
-                                        filter = only_obs(xpdb, problem)),
+                                        filter = only_obs(xpdb, problem, quiet)),
                 mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
                                            y = xp_var(xpdb, problem, type = 'pred')$col), mapping),
                 type = type, panel_facets = facets, 
@@ -115,13 +121,15 @@ dv_preds_vs_idv <- function(xpdb,
                             caption  = '@dir',
                             log      = NULL,
                             problem,
+                            quiet,
                             ...) {
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
+  if (missing(quiet)) quiet <- xpdb$options$quiet
   if (is.null(facets)) facets <- 'variable'
   
-  xplot_scatter(xpdb = xpdb, group = group,
+  xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
                 data_opt = data_opt_set(problem = problem, tidy = TRUE, 
-                                        filter = only_obs(xpdb, problem),
+                                        filter = only_obs(xpdb, problem, quiet),
                                         value_col = xp_var(xpdb, problem, 
                                                            type = c('dv', 'pred', 'ipred'))$col),
                 mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 

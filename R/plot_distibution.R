@@ -22,24 +22,26 @@ prm_distrib <- function(xpdb,
                         type     = 'hr',
                         facets   = NULL,
                         title    = 'Parameter distribution | @run',
-                        subtitle = '@nind individuals, @nobs observations',
+                        subtitle = 'Based on @nind individuals',
                         caption  = '@dir',
                         log      = NULL,
                         guides   = FALSE,
                         problem,
+                        quiet,
                         ...) {
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
+  if (missing(quiet)) quiet <- xpdb$options$quiet
   if (is.null(facets)) facets <- 'variable'
-  prm_col <- xp_var(xpdb, problem, type = 'param')$col
   
+  prm_col <- xp_var(xpdb, problem, type = 'param')$col
   if (is.null(prm_col)) {
     msg('No parameter column found in the xpdb data index.', FALSE)
     return()
   }
   
-  xplot_distrib(xpdb = xpdb, 
+  xplot_distrib(xpdb = xpdb, quiet = quiet,
                 data_opt = data_opt_set(problem = problem, 
-                                        filter = only_obs(xpdb, problem), 
+                                        filter = only_distinct(xpdb, problem, facets, quiet),
                                         tidy = TRUE, value_col = prm_col),
                 mapping = aes_c(aes_string(x = 'value'), mapping), 
                 type = type, guides = guides, panel_facets = facets,
@@ -56,13 +58,15 @@ eta_distrib <- function(xpdb,
                         type     = 'hr',
                         facets   = NULL,
                         title    = 'Eta distribution | @run',
-                        subtitle = '@nind individuals, @nobs observations',
+                        subtitle = 'Based on @nind individuals',
                         caption  = '@dir',
                         log      = NULL,
                         guides   = FALSE,
                         problem,
+                        quiet,
                         ...) {
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
+  if (missing(quiet)) quiet <- xpdb$options$quiet
   if (is.null(facets)) facets <- 'variable'
   eta_col <- xp_var(xpdb, problem, type = 'eta')$col
   
@@ -71,9 +75,9 @@ eta_distrib <- function(xpdb,
     return()
   }
   
-  xplot_distrib(xpdb = xpdb, 
+  xplot_distrib(xpdb = xpdb, quiet = quiet,
                 data_opt = data_opt_set(problem = problem, 
-                                        filter = only_obs(xpdb, problem), 
+                                        filter = only_distinct(xpdb, problem, facets, quiet), 
                                         tidy = TRUE, value_col = eta_col),
                 mapping = aes_c(aes_string(x = 'value'), mapping), 
                 type = type, guides = guides, panel_facets = facets,
@@ -92,17 +96,19 @@ res_distrib <- function(xpdb,
                         type     = 'hr',
                         facets   = NULL,
                         title    = '@x distribution | @run',
-                        subtitle = '@nind individuals, @nobs observations',
+                        subtitle = 'Based on @nobs observations',
                         caption  = '@dir',
                         log      = NULL,
                         guides   = FALSE,
                         problem,
+                        quiet,
                         ...) {
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
+  if (missing(quiet)) quiet <- xpdb$options$quiet
   
-  xplot_distrib(xpdb = xpdb, 
+  xplot_distrib(xpdb = xpdb, quiet = quiet,
                 data_opt = data_opt_set(problem = problem, 
-                                        filter = only_obs(xpdb, problem)),
+                                        filter = only_obs(xpdb, problem, quiet)),
                 mapping = aes_c(aes_string(x = toupper(res)), mapping), 
                 type = type, guides = guides, panel_facets = facets,
                 xscale = check_scales('x', log), 

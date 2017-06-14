@@ -26,15 +26,16 @@ ind_plots <- function(xpdb,
                       caption  = '@dir',
                       log      = NULL,
                       problem,
+                      quiet,
                       ...) {
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
+  if (missing(quiet)) quiet <- xpdb$options$quiet
   if (is.null(facets)) facets <- xp_var(xpdb, problem, type = 'id')$col
   
-  xplot_scatter(xpdb = xpdb, group = group,
-                data_opt = data_opt_set(problem = problem, 
-                                        source = 'data',
-                                        filter = only_obs(xpdb, problem),
-                                        tidy   = TRUE,
+  xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
+                data_opt = data_opt_set(problem = problem, source = 'data',
+                                        filter = only_obs(xpdb, problem, quiet),
+                                        tidy = TRUE,
                                         value_col = xp_var(xpdb, problem, 
                                                            type = c('dv', 'pred', 'ipred'))$col),
                 mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
@@ -44,6 +45,5 @@ ind_plots <- function(xpdb,
                 xscale = check_scales('x', log),
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
-                plot_name = as.character(match.call()[[1]]),
-                panel_scales = 'free_y', ...)
+                plot_name = as.character(match.call()[[1]]), ...)
 }

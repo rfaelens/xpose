@@ -9,12 +9,14 @@
 prm_vs_iteration(xpdb, mapping = NULL, group = "variable", type = "pl",
   facets = NULL, title = "Parameter @y vs. @x | @run",
   subtitle = "Method: @method, minimization time: @runtime\\nTermination message: @term",
-  caption = "@dir", log = NULL, guides = FALSE, problem, subprob, ...)
+  caption = "@dir", log = NULL, guides = FALSE, problem, subprob, quiet,
+  ...)
 
 grd_vs_iteration(xpdb, mapping = NULL, group = "variable", type = "pl",
   facets = NULL, title = "Gradient @y vs. @x | @run",
   subtitle = "Method: @method, minimization time: @runtime\\nTermination message: @term",
-  caption = "@dir", log = NULL, guides = FALSE, problem, subprob, ...)
+  caption = "@dir", log = NULL, guides = FALSE, problem, subprob, quiet,
+  ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -46,6 +48,8 @@ the last estimation problem.}
 
 \item{subprob}{The sub-problem number to be used. By default returns 
 the last sub-problem associated with the selected problem.}
+
+\item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 
 \item{...}{Any additional aesthetics to be passed on \code{xplot_scatter}.}
 }

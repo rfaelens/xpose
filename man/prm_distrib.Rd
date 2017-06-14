@@ -8,18 +8,18 @@
 \usage{
 prm_distrib(xpdb, mapping = NULL, type = "hr", facets = NULL,
   title = "Parameter distribution | @run",
-  subtitle = "@nind individuals, @nobs observations", caption = "@dir",
-  log = NULL, guides = FALSE, problem, ...)
+  subtitle = "Based on @nind individuals", caption = "@dir", log = NULL,
+  guides = FALSE, problem, quiet, ...)
 
 eta_distrib(xpdb, mapping = NULL, type = "hr", facets = NULL,
   title = "Eta distribution | @run",
-  subtitle = "@nind individuals, @nobs observations", caption = "@dir",
-  log = NULL, guides = FALSE, problem, ...)
+  subtitle = "Based on @nind individuals", caption = "@dir", log = NULL,
+  guides = FALSE, problem, quiet, ...)
 
 res_distrib(xpdb, mapping = NULL, res = "CWRES", type = "hr",
   facets = NULL, title = "@x distribution | @run",
-  subtitle = "@nind individuals, @nobs observations", caption = "@dir",
-  log = NULL, guides = FALSE, problem, ...)
+  subtitle = "Based on @nobs observations", caption = "@dir", log = NULL,
+  guides = FALSE, problem, quiet, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -46,6 +46,8 @@ or a formula to use \link[ggplot2]{facet_grid}.}
 
 \item{problem}{The $problem number to be used. By default returns 
 the last estimation problem.}
+
+\item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 
 \item{...}{Any additional aesthetics to be passed on \code{xplot_scatter}.}
 

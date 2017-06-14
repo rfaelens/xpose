@@ -8,7 +8,7 @@ the independent variable for every individual}
 ind_plots(xpdb, mapping = NULL, group = "variable", type = "l",
   facets = NULL, title = "Individual plots | @run",
   subtitle = "Ofv: @ofv, Eps shrink: @epsshk", caption = "@dir",
-  log = NULL, problem, ...)
+  log = NULL, problem, quiet, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -35,6 +35,8 @@ or a formula to use \link[ggplot2]{facet_grid}.}
 
 \item{problem}{The $problem number to be used. By default returns 
 the last estimation problem.}
+
+\item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 
 \item{...}{Any additional aesthetics to be passed on \code{xplot_scatter}.}
 }
