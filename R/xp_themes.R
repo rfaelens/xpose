@@ -61,9 +61,9 @@ theme_xp_default <- function() {
     # Panel
     panel_ncol      = 3,
     panel_nrow      = 3,
-    panel_scales    = 'fixed',
+    panel_scales    = 'free',
     panel_shrink    = TRUE,
-    panel_labeller  = 'label_both',
+    panel_labeller  = 'label_value',
     panel_as.table  = TRUE,
     panel_switch    = NULL,
     panel_drop      = TRUE,
@@ -74,11 +74,32 @@ theme_xp_default <- function() {
     text_angle      = 0,
     text_color      = 'grey20',
     text_family     = '',
-    text_fontface   = 'bold',
+    text_fontface   = 'plain',
     text_lineheight = 1.2,
     text_size       = 3.1,
     text_hjust      = 0.5, # Change not recommended if type = 't' is used
-    text_vjust      = 0.5  # Change not recommended if type = 't' is used
+    text_vjust      = 0.5, # Change not recommended if type = 't' is used
+    
+    # Density
+    density_alpha    = 0.6,
+    density_color    = NA,
+    density_fill     = 'grey35',
+    density_weight   = 1,
+    density_size     = 0.5,
+    density_linetype = 1,
+    
+    # Histogram
+    histogram_alpha  = 0.6,
+    histogram_color  = NA,
+    histogram_fill   = 'grey35',
+    histogram_size   = 0.5,
+    histogram_bins   = 10,
+    
+    # Rug
+    rug_alpha        = 0.6,
+    rug_color        = 'grey35',
+    rug_linetype     = 1,
+    rug_size         = 0.5
     
   ), class = c('xpose_theme', 'uneval'))
 }
@@ -95,19 +116,19 @@ theme_xp_xpose4 <- function() {
     caption_suffix  = '',
     
     # Guide
-    guides_alpha    = 1,
+    guides_alpha    = NA,
     guides_color    = 'black',
     guides_linetype = 'solid',
     guides_size     = 0.5,
     
     # Line
-    line_alpha      =  1,
+    line_alpha      =  NA,
     line_color      = 'blue',
     line_linetype   = 'solid',
     line_size       =  0.5,
     
     # Point
-    point_alpha     = 1,
+    point_alpha     = NA,
     point_color     = 'blue',
     point_fill      = NA,
     point_shape     = 1,
@@ -115,7 +136,7 @@ theme_xp_xpose4 <- function() {
     point_stroke    = 0.5,
     
     # Smooth
-    smooth_alpha    = 0.4,
+    smooth_alpha    = NA,
     smooth_color    = 'red',
     smooth_fill     = 'red',
     smooth_linetype = 1,
@@ -127,24 +148,45 @@ theme_xp_xpose4 <- function() {
     # Panel
     panel_ncol      = 3,
     panel_nrow      = 3,
-    panel_scales    = 'fixed',
+    panel_scales    = 'free',
     panel_shrink    = TRUE,
-    panel_labeller  = 'label_both',
+    panel_labeller  = 'label_value',
     panel_as.table  = TRUE,
     panel_switch    = NULL,
     panel_drop      = TRUE,
     panel_dir       = 'h',
     
     # Text
-    text_alpha      = 1,
+    text_alpha      = NA,
     text_angle      = 0,
-    text_color      = 'grey20',
+    text_color      = 'black',
     text_family     = '',
-    text_fontface   = 'bold',
+    text_fontface   = 'plain',
     text_lineheight = 1.2,
     text_size       = 3.1,
     text_hjust      = 0.5, # Change not recommended if type = 't' is used
-    text_vjust      = 0.5  # Change not recommended if type = 't' is used
+    text_vjust      = 0.5, # Change not recommended if type = 't' is used
+    
+    # Density
+    density_alpha    = NA,
+    density_color    = 'black',
+    density_fill     = NA,
+    density_weight   = 1,
+    density_size     = 0.5,
+    density_linetype = 2,
+    
+    # Histogram
+    histogram_alpha  = NA,
+    histogram_color  = 'black',
+    histogram_fill   = 'cyan',
+    histogram_size   = 0.5,
+    histogram_bins   = 10,
+    
+    # Rug
+    rug_alpha        = NA,
+    rug_color        = 'black',
+    rug_linetype     = 1,
+    rug_size         = 0.5
     
   ), class = c('xpose_theme', 'uneval'))
 }
