@@ -36,10 +36,27 @@ data_opt_set <- function(problem   = NULL,
 }
 
 # Create shortcut functions on the fly to filter observations
-only_obs <- function(xpdb, problem) {
+only_obs <- function(xpdb, problem, quiet) {
   mdv_var <- xp_var(xpdb, problem, type = c('evid', 'mdv'))$col[1]
+  string <- c('Filtering data by ', mdv_var, ' == 0')
   fun <- function(x) {}
-  body(fun) <- bquote(x[x[, .(mdv_var)] == 0, ])
+  body(fun) <- bquote({
+    msg(.(string), .(quiet))
+    x[x[, .(mdv_var)] == 0, ]
+  })
+  fun
+}
+
+# Create shortcut functions on the fly to remove duplicates
+only_distinct <- function(xpdb, problem, facets, quiet) {
+  if (is.formula(facets)) facets <- all.vars(facets)
+  vars <- c(xp_var(xpdb, problem, type = c('id'))$col[1], facets)
+  string <- c('Removing duplicated rows based on: ', stringr::str_c(vars, collapse = ', '))
+  fun <- function(x) {}
+  body(fun) <- bquote({
+    msg(.(string), .(quiet))
+    dplyr::distinct_(.data = x, .dots = .(vars), .keep_all = TRUE)
+    })
   fun
 }
 

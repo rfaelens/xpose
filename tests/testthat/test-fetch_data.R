@@ -11,14 +11,20 @@ test_that("data_opt_set function works properly", {
 })
 
 test_that("only_obs function works properly", {
-  expect_true(is.function(only_obs(xpdb_ex_pk, problem = 1)))
-  expect_equal(only_obs(xpdb_ex_pk, problem = 1)(x = xpdb_ex_pk$data$data[[1]]),
+  expect_true(is.function(only_obs(xpdb_ex_pk, problem = 1, quiet = TRUE)))
+  expect_equal(only_obs(xpdb_ex_pk, problem = 1, quiet = TRUE)(x = xpdb_ex_pk$data$data[[1]]),
                xpdb_ex_pk$data$data[[1]][xpdb_ex_pk$data$data[[1]]$EVID == 0, ])
+})
+
+test_that("only_distinct function works properly", {
+  expect_true(is.function(only_distinct(xpdb_ex_pk, problem = 1, facets = 'OCC', quiet = TRUE)))
+  expect_equal(only_distinct(xpdb_ex_pk, problem = 1, facets = 'OCC', quiet = TRUE)(x = xpdb_ex_pk$data$data[[1]]),
+               dplyr::distinct_(.data = xpdb_ex_pk$data$data[[1]], .dots = c('ID', 'OCC'), .keep_all = TRUE))
 })
 
 test_that("fetch_data can get simple data", {
   imported_data <- fetch_data(xpdb_ex_pk, problem = 1, source = 'data', 
-                              simtab = FALSE, filter = only_obs(xpdb_ex_pk, 1))
+                              simtab = FALSE, filter = only_obs(xpdb_ex_pk, 1, TRUE))
   
   # Check attributes
   expect_equal(attr(imported_data, 'problem'), 1)
