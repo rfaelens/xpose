@@ -92,7 +92,7 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 
 \examples{
 # Standard residual
-res_vs_pred(xpdb_ex_pk, res = 'CWRES')
+res_vs_pred(xpdb_ex_pk, res = c('IWRES', 'CWRES'))
 
 # Absolute value of the residuals
 absval_res_vs_pred(xpdb_ex_pk, res = 'CWRES')

@@ -97,7 +97,7 @@ prm_qq(xpdb_ex_pk)
 eta_qq(xpdb_ex_pk)
 
 # QQ plot of residuals
-res_qq(xpdb_ex_pk, res = 'CWRES', facets = 'OCC')
+res_qq(xpdb_ex_pk, res = c('IWRES', 'CWRES'))
 
 # QQ plot of continuous covariates
 cov_qq(xpdb_ex_pk)

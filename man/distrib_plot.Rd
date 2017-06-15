@@ -98,7 +98,7 @@ prm_distrib(xpdb_ex_pk, type = 'h')
 eta_distrib(xpdb_ex_pk, type = 'dr')
 
 # Histogram of residuals by occasion
-res_distrib(xpdb_ex_pk, type = 'hr', res = 'CWRES', facets = 'OCC')
+res_distrib(xpdb_ex_pk, type = 'hr', res = c('IWRES', 'CWRES'))
 
 # Density plot of continuous covariates
 cov_distrib(xpdb_ex_pk, type = 'd')
