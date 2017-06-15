@@ -18,7 +18,7 @@
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
 #' # Standard residual
-#' res_vs_pred(xpdb_ex_pk, res = 'CWRES')
+#' res_vs_pred(xpdb_ex_pk, res = c('IWRES', 'CWRES'))
 #' 
 #' # Absolute value of the residuals
 #' absval_res_vs_pred(xpdb_ex_pk, res = 'CWRES')
@@ -41,11 +41,22 @@ res_vs_pred <- function(xpdb,
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
+  if (length(res) > 1) {
+    if (is.null(facets)) facets <- 'variable'
+    data_opt <- data_opt_set(problem = problem, 
+                             filter = only_obs(xpdb, problem, quiet),
+                             tidy = TRUE, value_col = res)
+    vars <- aes_c(aes_string(x = xp_var(xpdb, problem, type = 'pred')$col, 
+                             y = 'value'), mapping)
+  } else {
+    data_opt <- data_opt_set(problem = problem, 
+                             filter = only_obs(xpdb, problem, quiet))
+    vars <- aes_c(aes_string(x = xp_var(xpdb, problem, type = 'pred')$col, 
+                             y = toupper(res)), mapping)
+  }
+  
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
-                data_opt = data_opt_set(problem = problem, 
-                                    filter = only_obs(xpdb, problem, quiet)),
-                mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'pred')$col, 
-                                           y = toupper(res)), mapping), 
+                data_opt = data_opt, mapping = vars, 
                 type = type, guides = guides, panel_facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
@@ -74,11 +85,22 @@ absval_res_vs_pred <- function(xpdb,
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
+  if (length(res) > 1) {
+    if (is.null(facets)) facets <- 'variable'
+    data_opt <- data_opt_set(problem = problem, 
+                             filter = only_obs(xpdb, problem, quiet),
+                             tidy = TRUE, value_col = res)
+    vars <- aes_c(aes_string(x = xp_var(xpdb, problem, type = 'pred')$col, 
+                             y = 'abs(value)'), mapping)
+  } else {
+    data_opt <- data_opt_set(problem = problem, 
+                             filter = only_obs(xpdb, problem, quiet))
+    vars <- aes_c(aes_string(x = xp_var(xpdb, problem, type = 'pred')$col, 
+                             y =  stringr::str_c('abs(', toupper(res), ')')), mapping)
+  }
+  
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
-                data_opt = data_opt_set(problem = problem, 
-                                        filter = only_obs(xpdb, problem, quiet)),
-                mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'pred')$col, 
-                                           y = stringr::str_c('abs(', toupper(res), ')')), mapping),
+                data_opt = data_opt, mapping = vars, 
                 type = type, guides = guides, panel_facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
@@ -108,7 +130,7 @@ absval_res_vs_pred <- function(xpdb,
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
 #' # Standard residual
-#' res_vs_idv(xpdb_ex_pk, res = 'CWRES', aes(x = TAD))
+#' res_vs_idv(xpdb_ex_pk, res = c('IWRES', 'CWRES'), aes(x = TAD))
 #' 
 #' # Absolute value of the residuals
 #' absval_res_vs_idv(xpdb_ex_pk, res = 'CWRES', aes(x = TAD))
@@ -131,11 +153,22 @@ res_vs_idv <- function(xpdb,
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
+  if (length(res) > 1) {
+    if (is.null(facets)) facets <- 'variable'
+    data_opt <- data_opt_set(problem = problem, 
+                             filter = only_obs(xpdb, problem, quiet),
+                             tidy = TRUE, value_col = res)
+    vars <- aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
+                             y = 'value'), mapping)
+  } else {
+    data_opt <- data_opt_set(problem = problem, 
+                             filter = only_obs(xpdb, problem, quiet))
+    vars <- aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
+                             y = toupper(res)), mapping)
+  }
+  
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
-                data_opt = data_opt_set(problem = problem, 
-                                    filter = only_obs(xpdb, problem, quiet)),
-                mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
-                                           y = toupper(res)), mapping),
+                data_opt = data_opt, mapping = vars, 
                 type = type, guides = guides, panel_facets = facets, 
                 xscale = check_scales('x', log),
                 yscale = check_scales('y', log),
@@ -164,11 +197,22 @@ absval_res_vs_idv <- function(xpdb,
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
+  if (length(res) > 1) {
+    if (is.null(facets)) facets <- 'variable'
+    data_opt <- data_opt_set(problem = problem, 
+                             filter = only_obs(xpdb, problem, quiet),
+                             tidy = TRUE, value_col = res)
+    vars <- aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
+                             y = 'abs(value)'), mapping)
+  } else {
+    data_opt <- data_opt_set(problem = problem, 
+                             filter = only_obs(xpdb, problem, quiet))
+    vars <- aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
+                             y =  stringr::str_c('abs(', toupper(res), ')')), mapping)
+  }
+  
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
-                data_opt = data_opt_set(problem = problem,
-                                        filter = only_obs(xpdb, problem, quiet)),
-                mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
-                                           y = stringr::str_c('abs(', toupper(res), ')')), mapping), 
+                data_opt = data_opt, mapping = vars,
                 type = type, guides = guides, panel_facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 

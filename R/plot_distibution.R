@@ -18,7 +18,7 @@
 #' eta_distrib(xpdb_ex_pk, type = 'dr')
 #' 
 #' # Histogram of residuals by occasion
-#' res_distrib(xpdb_ex_pk, type = 'hr', res = 'CWRES', facets = 'OCC')
+#' res_distrib(xpdb_ex_pk, type = 'hr', res = c('IWRES', 'CWRES'))
 #' 
 #' # Density plot of continuous covariates
 #' cov_distrib(xpdb_ex_pk, type = 'd')
@@ -113,10 +113,20 @@ res_distrib <- function(xpdb,
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
+  if (length(res) > 1) {
+    if (is.null(facets)) facets <- 'variable'
+    data_opt <- data_opt_set(problem = problem, 
+                             filter = only_obs(xpdb, problem, quiet),
+                             tidy = TRUE, value_col = res)
+    vars <- aes_c(aes_string(x = 'value'), mapping)
+  } else {
+    data_opt <- data_opt_set(problem = problem, 
+                             filter = only_obs(xpdb, problem, quiet))
+    vars <- aes_c(aes_string(x = toupper(res)), mapping)
+  }
+  
   xplot_distrib(xpdb = xpdb, quiet = quiet,
-                data_opt = data_opt_set(problem = problem, 
-                                        filter = only_obs(xpdb, problem, quiet)),
-                mapping = aes_c(aes_string(x = toupper(res)), mapping), 
+                data_opt = data_opt, mapping = vars, 
                 type = type, guides = guides, panel_facets = facets,
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 

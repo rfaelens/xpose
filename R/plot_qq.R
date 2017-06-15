@@ -17,7 +17,7 @@
 #' eta_qq(xpdb_ex_pk)
 #' 
 #' # QQ plot of residuals
-#' res_qq(xpdb_ex_pk, res = 'CWRES', facets = 'OCC')
+#' res_qq(xpdb_ex_pk, res = c('IWRES', 'CWRES'))
 #' 
 #' # QQ plot of continuous covariates
 #' cov_qq(xpdb_ex_pk)
@@ -39,6 +39,7 @@ prm_qq <- function(xpdb,
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (is.null(facets)) facets <- 'variable'
+  
   prm_col <- xp_var(xpdb, problem, type = 'param')$col
   if (is.null(prm_col)) {
     msg('No parameter column found in the xpdb data index.', quiet)
@@ -116,10 +117,20 @@ res_qq <- function(xpdb,
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
+  if (length(res) > 1) {
+    if (is.null(facets)) facets <- 'variable'
+    data_opt <- data_opt_set(problem = problem, 
+                             filter = only_obs(xpdb, problem, quiet),
+                             tidy = TRUE, value_col = res)
+    vars <- aes_c(aes_string(sample = 'value'), mapping)
+  } else {
+    data_opt <- data_opt_set(problem = problem, 
+                             filter = only_obs(xpdb, problem, quiet))
+    vars <- aes_c(aes_string(sample = toupper(res)), mapping)
+  }
+  
   xplot_qq(xpdb = xpdb, quiet = quiet,
-           data_opt = data_opt_set(problem = problem, 
-                                   filter = only_obs(xpdb, problem, quiet)),
-           mapping = aes_c(aes_string(sample = toupper(res)), mapping), 
+           data_opt = data_opt, mapping = vars,
            type = type, guides = guides, panel_facets = facets,
            xscale = check_scales('x', log), 
            yscale = check_scales('y', log), 
