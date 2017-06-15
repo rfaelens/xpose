@@ -2,12 +2,14 @@
 % Please edit documentation in R/plot_vpc.R
 \name{vpc_opt_set}
 \alias{vpc_opt_set}
-\title{Create options for data import}
+\title{Generate a list of options for VPC data generation}
 \usage{
 vpc_opt_set(bins = "jenks", n_bins = "auto", bin_mid = "mean",
   obs_cols = NULL, sim_cols = NULL, pred_corr = FALSE,
-  pred_corr_lower_bnd = 0, ci = c(0.05, 0.95), pi = c(0.05, 0.95),
-  lloq = NULL, uloq = NULL)
+  pred_corr_lower_bnd = 0, pi = c(0.05, 0.95), ci = c(0.05, 0.95),
+  lloq = NULL, uloq = NULL, rtte = FALSE, rtte_calc_diff = TRUE,
+  events = NULL, kmmc = NULL, reverse_prob = FALSE,
+  as_percentage = TRUE)
 }
 \arguments{
 \item{bins}{Binning method, can be one of 'density', 'time', 'data', 'none', or one of the approaches 
@@ -19,30 +21,42 @@ the bin separators.}
 \item{bin_mid}{Specify how to is the mid bin value calculated, can be either 'mean' for the mean of all 
 timepoints (default) or 'middle' to use the average of the bin boundaries.}
 
-\item{obs_cols}{Observation dataset column names (list elements: 'dv', 'idv', 'id', 'pred')}
+\item{pred_corr}{Option reserved to continuous VPC. Logical, should a prediction correction (pcVPC) of the data be used.}
 
-\item{sim_cols}{Simulation dataset column names (list elements: 'dv', 'idv', 'id', 'pred')}
+\item{pred_corr_lower_bnd}{Option reserved to continuous VPC. Lower bound for the prediction-correction.}
 
-\item{pred_corr}{Logical, should a prediction correction (pcVPC) of the data be used.}
+\item{pi}{Option reserved to continuous VPC. Simulated prediction interval to plot. Default is c(0.05, 0.95).}
 
-\item{pred_corr_lower_bnd}{Lower bound for the prediction-correction.}
-
-\item{ci}{Confidence interval around the percentiles to plot. Default is (0.05, 0.95)}
-
-\item{pi}{Simulated prediction interval to plot. Default is c(0.05, 0.95).}
+\item{ci}{Confidence interval around the percentiles to plot. Default is c(0.05, 0.95)}
 
 \item{lloq}{Number or NULL indicating lower limit of quantification. Default is NULL.}
 
 \item{uloq}{Number or NULL indicating upper limit of quantification. Default is NULL.}
+
+\item{rtte}{Option reserved to time-to-event VPC. Is the data repeated time-to-event (RTTE) \code{TRUE} or 
+single time-to-event (TTE) \code{FALSE}.}
+
+\item{rtte_calc_diff}{Option reserved to time-to-event VPC. Should the time be recalculated? When simulating in NONMEM, 
+you will probably need to set this to \code{TRUE} to recalculate the TIME to the relative time between events (unless you 
+output the time difference between events and specify that as independent variable in the index.}
+
+\item{events}{Option reserved to time-to-event VPC. Numeric vector describing which events to show a VPC for when 
+repeated TTE data, e.g. c(1:4). Default is \code{NULL}, which shows all events.}
+
+\item{kmmc}{Option reserved to time-to-event VPC. Either NULL for regular TTE VPC (default), or a variable name 
+for a KMMC plot (e.g. 'WT').}
+
+\item{reverse_prob}{Option reserved to time-to-event VPC. Should the probability be reversed (i.e. plot 1-probability).}
+
+\item{as_percentage}{Should the Y-scale be in percent (0-100) \code{TRUE} (default), or standard (0-1) \code{FALSE}.}
 }
 \description{
-Provide a list of options to the general plotting functions such as 
-\code{xplot_scatter} in order to create appropriate data input for ggplot2.
+Provide a list of options to \code{vpc_data} function.
 }
 \examples{
 vpc_opt_set()
 
 }
 \seealso{
-\code{{vpc}}
+\code{vpc_data} \code{\link[vpc]{vpc}}
 }

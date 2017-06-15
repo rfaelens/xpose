@@ -4,16 +4,13 @@
 \alias{vpc}
 \title{Visual predictive checks}
 \usage{
-vpc(xpdb, vpc_opt = NULL, mapping = NULL, type = "alp", smooth = TRUE,
-  facets = NULL, title = "Visual predictive checks | @run",
+vpc(xpdb, mapping = NULL, type = "alp", smooth = TRUE,
+  title = "Visual predictive checks | @run",
   subtitle = "Nsim: @nsim, PI: @vpcpi", caption = "@dir", log = NULL,
-  psn_folder = NULL, obs_problem = NULL, sim_problem = NULL, quiet, ...)
+  quiet, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
-
-\item{vpc_opt}{A list of options regarding binning, pi and ci computation. 
-For more information see \code{\link{vpc_opt_set}}.}
 
 \item{mapping}{List of aesthetics mappings to be used for the xpose plot 
 (e.g. \code{point_color}).}
@@ -23,9 +20,6 @@ line 'l', area 'a' and text 't' or any combination of the four.}
 
 \item{smooth}{Should the bins be smoothed (connect bin midpoints, default) or shown as rectangular boxes.}
 
-\item{facets}{Either a character string to use \link[ggplot2]{facet_wrap} 
-or a formula to use \link[ggplot2]{facet_grid}.}
-
 \item{title}{Plot title. Use \code{NULL} to remove.}
 
 \item{subtitle}{Plot subtitle. Use \code{NULL} to remove.}
@@ -34,14 +28,6 @@ or a formula to use \link[ggplot2]{facet_grid}.}
 
 \item{log}{String assigning logarithmic scale to axes, can be either '', 
 'x', y' or 'xy'.}
-
-\item{psn_folder}{Specify a PsN-generated VPC-folder.}
-
-\item{obs_problem}{Alternative to the option `psn_folder`. The $problem number to be used for observations.
-By default returns the last estimation problem.}
-
-\item{sim_problem}{Alternative to the option `psn_folder`. The $problem number to be used for simulations.
-By default returns the last simulation problem.}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 
@@ -81,10 +67,11 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 
 \examples{
 \dontrun{
-# Simple vpc using simulated data from the xpdb
-vpc(xpdb_ex_pk)
+xpdb_ex_pk \%>\% 
+ vpc_data(xpdb_ex_pk) \%>\% 
+ vpc()
 }
 }
 \seealso{
-\code{\link[vpc]{vpc}}
+\code{vpc_data}
 }
