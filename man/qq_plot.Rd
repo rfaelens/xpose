@@ -21,7 +21,7 @@ eta_qq(xpdb, mapping = NULL, type = "p", facets = NULL,
 
 res_qq(xpdb, mapping = NULL, res = "CWRES", type = "p", facets = NULL,
   title = "QQ plot of @sample | @run",
-  subtitle = "Based on @nind individuals", caption = "@dir", log = NULL,
+  subtitle = "Based on @nobs observations", caption = "@dir", log = NULL,
   guides = TRUE, problem, quiet, ...)
 
 cov_qq(xpdb, mapping = NULL, type = "p", facets = NULL,

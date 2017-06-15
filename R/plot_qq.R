@@ -95,7 +95,7 @@ eta_qq <- function(xpdb,
            title = title, subtitle = subtitle, caption = caption,
            plot_name = as.character(match.call()[[1]]), 
            xscale_name = 'Quantiles of normal', 
-           yscale_name = 'Quantiles of etas', ...)
+           yscale_name = 'Quantiles of eta', ...)
 }
 
 #' @param res Only used for \code{res_qq}. Defines the type of residual to be used. Default is "CWRES".
@@ -107,7 +107,7 @@ res_qq <- function(xpdb,
                    type     = 'p',
                    facets   = NULL,
                    title    = 'QQ plot of @sample | @run',
-                   subtitle = 'Based on @nind individuals',
+                   subtitle = 'Based on @nobs observations',
                    caption  = '@dir',
                    log      = NULL,
                    guides   = TRUE,
@@ -175,5 +175,5 @@ cov_qq <- function(xpdb,
            title = title, subtitle = subtitle, caption = caption,
            plot_name = as.character(match.call()[[1]]), 
            xscale_name = 'Quantiles of normal', 
-           yscale_name = 'Quantiles of covariates', ...)
+           yscale_name = 'Quantiles of covariate', ...)
 }
