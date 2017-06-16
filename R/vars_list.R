@@ -24,7 +24,7 @@ list_vars <- function(xpdb, problem = NULL) {
   }
   
   order <- c('id', 'dv', 'idv', 'dvid', 'occ', 'amt', 'evid', 'mdv', 'pred', 'ipred', 
-             'cpred', 'param', 'eta', 'eps', 'res', 'catcov', 'contcov', 'na')
+             'param', 'eta', 'res', 'catcov', 'contcov', 'na')
   
   x <- x %>% 
     dplyr::mutate(grouping = as.integer(.$problem)) %>% 
@@ -41,7 +41,6 @@ list_vars <- function(xpdb, problem = NULL) {
                                                .$type == 'na' ~ 'Not attributed (na)',
                                                .$type == 'amt' ~ 'Dose amount (amt)',
                                                .$type == 'idv' ~ 'Independent variable (idv)',
-                                               .$type == 'cpred' ~ 'Model conditional predictions (cpred)',
                                                .$type == 'ipred' ~ 'Model individual predictions (ipred)',
                                                .$type == 'pred' ~ 'Model typical predictions (pred)',
                                                .$type == 'res' ~ 'Residuals (res)',
@@ -51,7 +50,6 @@ list_vars <- function(xpdb, problem = NULL) {
                                                .$type == 'contcov' ~ 'Continuous covariates (contcov)',
                                                .$type == 'param' ~ 'Model parameter (param)',
                                                .$type == 'eta' ~ 'Eta (eta)',
-                                               .$type == 'eps' ~ 'Epsilon (eps)',
                                                .$type == 'dvid' ~ 'DV identifier (dvid)',
                                                .$type == 'mdv' ~ 'Missing dependent variable (mdv)')) %>% 
         dplyr::mutate(descr = stringr::str_pad(.$descr, 37, 'right')) %>% 

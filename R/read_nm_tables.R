@@ -249,11 +249,9 @@ index_table <- function(x) {
       .$col == 'AMT' ~ 'amt',
       .$col == 'MDV' ~ 'mdv',
       .$col == 'EVID' ~ 'evid',
-      .$col == 'CPRED' ~ 'cpred',
       .$col == 'IPRED' ~ 'ipred',
       .$col == 'PRED' ~ 'pred',
       .$col %in% c('RES', 'WRES', 'CWRES', 'IWRES', 'EWRES', 'NPDE') ~ 'res',
       stringr::str_detect(.$col, 'ETA\\d+|ET\\d+') ~ 'eta',
-      stringr::str_detect(.$col, 'EPS\\d+|EP\\d+') ~ 'eps',
       TRUE ~ tab_type))
 }
