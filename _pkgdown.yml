@@ -50,6 +50,12 @@ reference:
     desc:  Indiviudal observations and model predictions profiles by the independent variable
     contents:
     - ind_plots
+  - title: Visual predictive checks
+    desc:  Visual predictive checks data and plot generation
+    contents:
+    - vpc_data
+    - vpc_opt_set
+    - vpc
   - title: Distribution plots
     desc:  Covariate, parameters, etas and residuals distribution plots
     contents:
