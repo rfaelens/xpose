@@ -96,10 +96,17 @@ theme_xp_default <- function() {
     histogram_bins   = 10,
     
     # Rug
-    rug_alpha        = 0.6,
+    rug_alpha        = 0.8,
     rug_color        = 'grey35',
     rug_linetype     = 1,
-    rug_size         = 0.3
+    rug_size         = 0.3,
+    
+    # Area
+    area_alpha       = 0.6,
+    area_color       = NA,
+    area_fill        = 'grey35',
+    area_size        = 0.5,
+    area_linetype    = 1
     
   ), class = c('xpose_theme', 'uneval'))
 }
@@ -186,7 +193,14 @@ theme_xp_xpose4 <- function() {
     rug_alpha        = NA,
     rug_color        = 'black',
     rug_linetype     = 1,
-    rug_size         = 0.3
+    rug_size         = 0.3,
+    
+    # Area
+    area_alpha       = NA,
+    area_color       = NA,
+    area_fill        = 'grey35',
+    area_size        = 0.5,
+    area_linetype    = 1
     
   ), class = c('xpose_theme', 'uneval'))
 }
