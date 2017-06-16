@@ -5,6 +5,9 @@
 #' the independent variable for every individual
 #' 
 #' @inheritParams dv_vs_pred
+#' @param ncol Number of columns per page.
+#' @param nrow Number of rows per page.
+#' @param page Page to draw.
 #' @inheritSection xplot_scatter Layers mapping
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
@@ -25,13 +28,15 @@ ind_plots <- function(xpdb,
                       subtitle = 'Ofv: @ofv, Eps shrink: @epsshk',
                       caption  = '@dir',
                       log      = NULL,
+                      nrow     = 3,
+                      ncol     = 3,
+                      page     = 1,
                       problem,
                       quiet,
                       ...) {
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (is.null(facets)) facets <- xp_var(xpdb, problem, type = 'id')$col
-  
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
                 data_opt = data_opt_set(problem = problem, source = 'data',
                                         filter = only_obs(xpdb, problem, quiet),
@@ -45,5 +50,6 @@ ind_plots <- function(xpdb,
                 xscale = check_scales('x', log),
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
-                plot_name = as.character(match.call()[[1]]), ...)
+                plot_name = as.character(match.call()[[1]]), 
+                panel_nrow = nrow, panel_ncol = ncol, ...)
 }

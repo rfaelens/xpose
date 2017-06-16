@@ -59,8 +59,8 @@ theme_xp_default <- function() {
     smooth_weight   = 1,
     
     # Panel
-    panel_ncol      = 3,
-    panel_nrow      = 3,
+    panel_ncol      = NULL,
+    panel_nrow      = NULL,
     panel_scales    = 'free',
     panel_shrink    = TRUE,
     panel_labeller  = 'label_value',
@@ -153,8 +153,8 @@ theme_xp_xpose4 <- function() {
     smooth_weight   = 1,
     
     # Panel
-    panel_ncol      = 3,
-    panel_nrow      = 3,
+    panel_ncol      = NULL,
+    panel_nrow      = NULL,
     panel_scales    = 'free',
     panel_shrink    = TRUE,
     panel_labeller  = 'label_value',
