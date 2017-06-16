@@ -148,38 +148,38 @@ the "problem" argument.</p></td>
     <pre class="examples"><div class='input'><span class='co'># By table name</span>
 <span class='no'>sdtab</span> <span class='kw'>&lt;-</span> <span class='fu'>get_data</span>(<span class='no'>xpdb_ex_pk</span>, <span class='st'>'sdtab001'</span>)
 <span class='no'>sdtab</span></div><div class='output co'>#&gt; # A tibble: 1,166 x 17
-#&gt;       ID   OCC  DOSE   AMT    SS    II  TIME   TAD    IPRED      CWRES
-#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
-#&gt;  1   110     3   200   100     0     0   0.0   0.0 -3.68890  0.0000000
-#&gt;  2   110     3   200     0     0     0   1.0   1.0 -1.77630 -2.5234000
-#&gt;  3   110     3   200     0     0     0   1.5   1.5 -1.41770 -0.7770900
-#&gt;  4   110     3   200     0     0     0   2.0   2.0 -1.22690  0.8963300
-#&gt;  5   110     3   200     0     0     0   4.0   4.0 -1.02520  0.4981000
-#&gt;  6   110     3   200     0     0     0   6.0   6.0 -1.13610  0.0031566
-#&gt;  7   110     3   200     0     0     0   8.0   8.0 -1.35770  0.0379040
-#&gt;  8   110     8   400   200     1    12  40.0   0.0 -1.15050  0.0000000
-#&gt;  9   110     8   400     0     0     0  40.0   0.0 -1.15050  0.8644100
-#&gt; 10   110     8   400     0     0     0  40.5   0.5 -0.83167 -0.5420500
+#&gt;        ID    OCC  DOSE   AMT    SS    II  TIME   TAD    IPRED      CWRES
+#&gt;    &lt;fctr&gt; &lt;fctr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
+#&gt;  1    110      3   200   100     0     0   0.0   0.0 -3.68890  0.0000000
+#&gt;  2    110      3   200     0     0     0   1.0   1.0 -1.77630 -2.5234000
+#&gt;  3    110      3   200     0     0     0   1.5   1.5 -1.41770 -0.7770900
+#&gt;  4    110      3   200     0     0     0   2.0   2.0 -1.22690  0.8963300
+#&gt;  5    110      3   200     0     0     0   4.0   4.0 -1.02520  0.4981000
+#&gt;  6    110      3   200     0     0     0   6.0   6.0 -1.13610  0.0031566
+#&gt;  7    110      3   200     0     0     0   8.0   8.0 -1.35770  0.0379040
+#&gt;  8    110      8   400   200     1    12  40.0   0.0 -1.15050  0.0000000
+#&gt;  9    110      8   400     0     0     0  40.0   0.0 -1.15050  0.8644100
+#&gt; 10    110      8   400     0     0     0  40.5   0.5 -0.83167 -0.5420500
 #&gt; # ... with 1,156 more rows, and 7 more variables: CPRED &lt;dbl&gt;, IWRES &lt;dbl&gt;,
 #&gt; #   EVID &lt;dbl&gt;, DV &lt;dbl&gt;, PRED &lt;dbl&gt;, RES &lt;dbl&gt;, WRES &lt;dbl&gt;</div><div class='input'>
 <span class='co'># By problem</span>
 <span class='no'>tables</span> <span class='kw'>&lt;-</span> <span class='fu'>get_data</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>tables</span></div><div class='output co'>#&gt; # A tibble: 1,166 x 30
-#&gt;       ID   OCC  DOSE   AMT    SS    II  TIME   TAD    IPRED      CWRES
-#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
-#&gt;  1   110     3   200   100     0     0   0.0   0.0 -3.68890  0.0000000
-#&gt;  2   110     3   200     0     0     0   1.0   1.0 -1.77630 -2.5234000
-#&gt;  3   110     3   200     0     0     0   1.5   1.5 -1.41770 -0.7770900
-#&gt;  4   110     3   200     0     0     0   2.0   2.0 -1.22690  0.8963300
-#&gt;  5   110     3   200     0     0     0   4.0   4.0 -1.02520  0.4981000
-#&gt;  6   110     3   200     0     0     0   6.0   6.0 -1.13610  0.0031566
-#&gt;  7   110     3   200     0     0     0   8.0   8.0 -1.35770  0.0379040
-#&gt;  8   110     8   400   200     1    12  40.0   0.0 -1.15050  0.0000000
-#&gt;  9   110     8   400     0     0     0  40.0   0.0 -1.15050  0.8644100
-#&gt; 10   110     8   400     0     0     0  40.5   0.5 -0.83167 -0.5420500
+#&gt;        ID    OCC  DOSE   AMT    SS    II  TIME   TAD    IPRED      CWRES
+#&gt;    &lt;fctr&gt; &lt;fctr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
+#&gt;  1    110      3   200   100     0     0   0.0   0.0 -3.68890  0.0000000
+#&gt;  2    110      3   200     0     0     0   1.0   1.0 -1.77630 -2.5234000
+#&gt;  3    110      3   200     0     0     0   1.5   1.5 -1.41770 -0.7770900
+#&gt;  4    110      3   200     0     0     0   2.0   2.0 -1.22690  0.8963300
+#&gt;  5    110      3   200     0     0     0   4.0   4.0 -1.02520  0.4981000
+#&gt;  6    110      3   200     0     0     0   6.0   6.0 -1.13610  0.0031566
+#&gt;  7    110      3   200     0     0     0   8.0   8.0 -1.35770  0.0379040
+#&gt;  8    110      8   400   200     1    12  40.0   0.0 -1.15050  0.0000000
+#&gt;  9    110      8   400     0     0     0  40.0   0.0 -1.15050  0.8644100
+#&gt; 10    110      8   400     0     0     0  40.5   0.5 -0.83167 -0.5420500
 #&gt; # ... with 1,156 more rows, and 20 more variables: CPRED &lt;dbl&gt;, IWRES &lt;dbl&gt;,
-#&gt; #   EVID &lt;dbl&gt;, DV &lt;dbl&gt;, PRED &lt;dbl&gt;, RES &lt;dbl&gt;, WRES &lt;dbl&gt;, SEX &lt;dbl&gt;,
-#&gt; #   MED1 &lt;dbl&gt;, MED2 &lt;dbl&gt;, CLCR &lt;dbl&gt;, AGE &lt;dbl&gt;, WT &lt;dbl&gt;, KA &lt;dbl&gt;,
+#&gt; #   EVID &lt;dbl&gt;, DV &lt;dbl&gt;, PRED &lt;dbl&gt;, RES &lt;dbl&gt;, WRES &lt;dbl&gt;, SEX &lt;fctr&gt;,
+#&gt; #   MED1 &lt;fctr&gt;, MED2 &lt;fctr&gt;, CLCR &lt;dbl&gt;, AGE &lt;dbl&gt;, WT &lt;dbl&gt;, KA &lt;dbl&gt;,
 #&gt; #   CL &lt;dbl&gt;, V &lt;dbl&gt;, ALAG1 &lt;dbl&gt;, ETA1 &lt;dbl&gt;, ETA2 &lt;dbl&gt;, ETA3 &lt;dbl&gt;</div><div class='input'>
 <span class='co'># Tip to list available tables in the xpdb</span>
 <span class='fu'>print</span>(<span class='no'>xpdb_ex_pk</span>)</div><div class='output co'>#&gt; run001.lst overview: 

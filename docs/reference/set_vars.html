@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>List available variables — list_vars • xpose</title>
+<title>Set variable type, label or units — set_vars • xpose</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -108,66 +108,96 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>List available variables</h1>
+    <h1>Set variable type, label or units</h1>
     </div>
 
     
-    <p>Function listing all available variables in an xpdb object.</p>
+    <p>Function designed to change the type, label or unit associated with variables.</p>
     
 
-    <pre class="usage"><span class='fu'>list_vars</span>(<span class='no'>xpdb</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>set_vars_type</span>(<span class='no'>xpdb</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>auto_factor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>quiet</span>)
+
+<span class='fu'>set_vars_label</span>(<span class='no'>xpdb</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='no'>quiet</span>)
+
+<span class='fu'>set_vars_units</span>(<span class='no'>xpdb</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='no'>quiet</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>xpdb</th>
-      <td><p>An <code>xpose_data</code> object from which the model code will be extracted.</p></td>
+      <td><p>An <code>xpose_data</code> object.</p></td>
     </tr>
     <tr>
       <th>problem</th>
-      <td><p>The problem to be used, by lists all available problems.</p></td>
+      <td><p>The problem number to which the edits will be applied.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Specifications of the edits to be made to the xpdb index. Edits are made as 
+type and variable pairs e.g. idv = 'TAD' will assign TAD to the type idv (independent variable).</p></td>
+    </tr>
+    <tr>
+      <th>auto_factor</th>
+      <td><p>With <code>set_vars_type</code> only. If <code>TRUE</code> new columns assigned to the type 'catcov' will be converted to
+factor.</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Logical, if <code>FALSE</code> messages are printed to the console.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>An xpose_data object</p>
+    
+    <h2 class="hasAnchor" id="recognized-variable-types"><a class="anchor" href="#recognized-variable-types"></a>Recognized variable types</h2>
+
+    
+    <ul>
+<li><p>amt: Dose amount</p></li>
+<li><p>catcov: Categorical covariates</p></li>
+<li><p>contcov: Continuous covariates</p></li>
+<li><p>dv: Dependent variable</p></li>
+<li><p>dvid: DV identifier</p></li>
+<li><p>eta: Eta</p></li>
+<li><p>evid: Event identifier</p></li>
+<li><p>id: Subject identifier</p></li>
+<li><p>idv: Independent variable</p></li>
+<li><p>ipred: Model individual predictions</p></li>
+<li><p>mdv: Missing dependent variable</p></li>
+<li><p>na: Not attributed</p></li>
+<li><p>occ: Occasion flag</p></li>
+<li><p>param: Model parameter</p></li>
+<li><p>pred: Model typical predictions</p></li>
+<li><p>res: Residuals</p></li>
+</ul>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='set_vars.html'>set_vars_type</a></code></p>
+    <p><code><a href='list_vars.html'>list_vars</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>list_vars</span>(<span class='no'>xpdb_ex_pk</span>)</div><div class='output co'>#&gt; 
-#&gt; List of available variables for problem no. 1 
-#&gt;  - Subject identifier (id)               : ID
-#&gt;  - Dependent variable (dv)               : DV
-#&gt;  - Independent variable (idv)            : TAD
-#&gt;  - Occasion flag (occ)                   : OCC
-#&gt;  - Dose amount (amt)                     : AMT
-#&gt;  - Event identifier (evid)               : EVID
-#&gt;  - Model typical predictions (pred)      : PRED
-#&gt;  - Model individual predictions (ipred)  : IPRED
-#&gt;  - Model parameter (param)               : KA, CL, V, ALAG1
-#&gt;  - Eta (eta)                             : ETA1, ETA2, ETA3
-#&gt;  - Residuals (res)                       : CWRES, IWRES, RES, WRES
-#&gt;  - Categorical covariates (catcov)       : SEX, MED1, MED2
-#&gt;  - Continuous covariates (contcov)       : CLCR, AGE, WT
-#&gt;  - Not attributed (na)                   : DOSE, SS, II, TIME, CPRED
-#&gt; 
-#&gt; List of available variables for problem no. 2 
-#&gt;  - Subject identifier (id)               : ID
-#&gt;  - Dependent variable (dv)               : DV
-#&gt;  - Independent variable (idv)            : TAD
-#&gt;  - Occasion flag (occ)                   : OCC
-#&gt;  - Dose amount (amt)                     : AMT
-#&gt;  - Event identifier (evid)               : EVID
-#&gt;  - Model individual predictions (ipred)  : IPRED
-#&gt;  - Not attributed (na)                   : DOSE, TIME, SEX, CLCR, AGE, WT</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># Change variable type</span>
+<span class='no'>xpdb_2</span> <span class='kw'>&lt;-</span> <span class='fu'>set_vars_type</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>idv</span> <span class='kw'>=</span> <span class='st'>'TAD'</span>)
+
+<span class='co'># Change labels</span>
+<span class='no'>xpdb_2</span> <span class='kw'>&lt;-</span> <span class='fu'>set_vars_label</span>(<span class='no'>xpdb_2</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>ALAG1</span> <span class='kw'>=</span> <span class='st'>'Lag time'</span>, <span class='kw'>CL</span> <span class='kw'>=</span> <span class='st'>'Clearance'</span>, <span class='kw'>V</span> <span class='kw'>=</span> <span class='st'>'Volume'</span>)
+
+<span class='co'># Change units</span>
+<span class='no'>xpdb_2</span> <span class='kw'>&lt;-</span> <span class='fu'>set_vars_units</span>(<span class='no'>xpdb_2</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>ALAG1</span> <span class='kw'>=</span> <span class='st'>'h'</span>, <span class='kw'>CL</span> <span class='kw'>=</span> <span class='st'>'L/h'</span>, <span class='kw'>V</span> <span class='kw'>=</span> <span class='st'>'L'</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#recognized-variable-types">Recognized variable types</a></li>
+
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
