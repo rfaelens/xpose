@@ -85,9 +85,8 @@ set_vars_type <- function(xpdb, problem = NULL, ..., auto_factor = TRUE, quiet) 
       
       # Change categorical covariates to factor
       if (any(args$type == 'catcov') && auto_factor) {
-        tables <- x$data[[1]]
-        col_to_factor <- colnames(tables) %in% args$col[args$type == 'catcov']
-        x$data[[1]] <- tables %>%   
+        col_to_factor <- colnames(x$data[[1]]) %in% args$col[args$type == 'catcov']
+        x$data[[1]] <- x$data[[1]] %>%   
           dplyr::mutate_if(col_to_factor, as.factor)
       }
       
