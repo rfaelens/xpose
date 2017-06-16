@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Visual predictive checks — vpc • xpose</title>
+<title>Visual predictive checks data — vpc_data • xpose</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -108,17 +108,16 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Visual predictive checks</h1>
+    <h1>Visual predictive checks data</h1>
     </div>
 
     
-    <p>Generate visual predictive checks (VPC)</p>
+    <p>Generate visual predictive checks (VPC) data</p>
     
 
-    <pre class="usage"><span class='fu'>vpc</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"alr"</span>, <span class='kw'>smooth</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>facets</span>,
-  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Visual predictive checks | @run"</span>, <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>vpc_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>gg_theme</span>, <span class='no'>xp_theme</span>,
-  <span class='no'>quiet</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>vpc_data</span>(<span class='no'>xpdb</span>, <span class='kw'>vpc_opt</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>vpc_type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"continuous"</span>, <span class='st'>"categorical"</span>,
+  <span class='st'>"censored"</span>, <span class='st'>"time-to-event"</span>), <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>psn_folder</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>obs_problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sim_problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>quiet</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -128,55 +127,32 @@
       <td><p>An xpose database object.</p></td>
     </tr>
     <tr>
-      <th>mapping</th>
-      <td><p>List of aesthetics mappings to be used for the xpose plot 
-(e.g. <code>point_color</code>).</p></td>
-    </tr>
-    <tr>
-      <th>type</th>
-      <td><p>String setting the type of plot to be used points 'p',
-line 'l', area 'a', rug 'r' and text 't' or any combination of the five.</p></td>
-    </tr>
-    <tr>
-      <th>smooth</th>
-      <td><p>Should the bins be smoothed (connect bin midpoints, default) or shown as rectangular boxes.</p></td>
-    </tr>
-    <tr>
-      <th>facets</th>
-      <td><p>Either a character string to use <a href='http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap'>facet_wrap</a> 
-or a formula to use <a href='http://www.rdocumentation.org/packages/ggplot2/topics/facet_grid'>facet_grid</a>.</p></td>
-    </tr>
-    <tr>
-      <th>title</th>
-      <td><p>Plot title. Use <code>NULL</code> to remove.</p></td>
-    </tr>
-    <tr>
-      <th>subtitle</th>
-      <td><p>Plot subtitle. Use <code>NULL</code> to remove.</p></td>
-    </tr>
-    <tr>
-      <th>caption</th>
-      <td><p>Page caption. Use <code>NULL</code> to remove.</p></td>
-    </tr>
-    <tr>
-      <th>log</th>
-      <td><p>String assigning logarithmic scale to axes, can be either '', 
-'x', y' or 'xy'.</p></td>
+      <th>vpc_opt</th>
+      <td><p>A list of options regarding binning, pi and ci computation. 
+For more information see <code><a href='vpc_opt_set.html'>vpc_opt_set</a></code>.</p></td>
     </tr>
     <tr>
       <th>vpc_type</th>
-      <td><p>Only used when multiple vpc data are present in the same xpdb. The type of 
-vpc to be created. Can be one of can be one of: 'continuous', 'categorical', 
-'censored' or 'time-to-event'.</p></td>
+      <td><p>A string specifying the type of VPC to be created, can be one of: 
+'continuous', 'categorical', 'censored' or 'time-to-event'.</p></td>
     </tr>
     <tr>
-      <th>gg_theme</th>
-      <td><p>A ggplot2 theme object (eg. <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_classic</a></code>).</p></td>
+      <th>stratify</th>
+      <td><p>Either a character string or a formula to stratify the data.</p></td>
     </tr>
     <tr>
-      <th>xp_theme</th>
-      <td><p>An xpose theme or vector of modifications to the xpose theme
-(eg. <code>c(point_color = 'red', line_linetype = 'dashed')</code>).</p></td>
+      <th>psn_folder</th>
+      <td><p>Specify a PsN-generated VPC-folder.</p></td>
+    </tr>
+    <tr>
+      <th>obs_problem</th>
+      <td><p>Alternative to the option `psn_folder`. The $problem number to 
+be used for observations. By default returns the last estimation problem.</p></td>
+    </tr>
+    <tr>
+      <th>sim_problem</th>
+      <td><p>Alternative to the option `psn_folder`. The $problem number to 
+be used for simulations. By default returns the last simulation problem.</p></td>
     </tr>
     <tr>
       <th>quiet</th>
@@ -188,54 +164,23 @@ vpc to be created. Can be one of can be one of: 'continuous', 'categorical',
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="layers-mapping"><a class="anchor" href="#layers-mapping"></a>Layers mapping</h2>
-
-    
-    <p>Plots can be customized by mapping arguments to specific layers. The naming convention is 
-layer_option where layer is one of the names defined in the list below and option is 
-any option supported by this layer e.g. point_color = 'blue', area_fill = 'green', etc.</p><ul>
-<li><p>point: options to <code>geom_point</code></p></li>
-<li><p>line: options to <code>geom_line</code></p></li>
-<li><p>area: options to <code>geom_ribbon</code> (smooth = TRUE) or <code>geom_rect</code> (smooth = FALSE)</p></li>
-<li><p>rug: options to <code>geom_rug</code></p></li>
-<li><p>panel: options to <code>facet_wrap</code> (facets is character) or <code>facet_grid</code>
-  (facets is a formula)</p></li>
-<li><p>smooth: options to <code>geom_smooth</code></p></li>
-<li><p>text: options to <code>geom_text</code></p></li>
-<li><p>xscale: options to <code>scale_x_continuous</code> or <code>scale_x_log10</code></p></li>
-<li><p>yscale: options to <code>scale_y_continuous</code> or <code>scale_y_log10</code></p></li>
-</ul>
-    
-    <h2 class="hasAnchor" id="template-titles"><a class="anchor" href="#template-titles"></a>Template titles</h2>
-
-    
-    <p>Template titles can be used to create highly informative diagnostics plots. 
-They can be applied to any plot title, subtitle and caption. Template titles 
-are defined via a single string containing key variables staring with a @ (e.g. @ofv)
-which will be replaced by their actual value when rendering the plot.
-For example '@run, @nobs observations in @nind subjects' would become 'run001, 
-1022 observations in 74 subjects'. The available key variables are listed under 
-<code><a href='template_titles.html'>template_titles</a></code>.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code>vpc_data</code></p>
+    <p><code>vpc</code> <code>vpc_opt_set</code> <code><a href='http://www.rdocumentation.org/packages/vpc/topics/vpc'>vpc</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>xpdb_ex_pk</span> <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='vpc_data.html'>vpc_data</a></span>() <span class='kw'>%&gt;%</span>
- <span class='fu'>vpc</span>()</div><img src='vpc-2.png' alt='' width='540' height='400' /></pre>
+    <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
+  <span class='no'>xpdb_ex_pk</span> <span class='kw'>%&gt;%</span>
+   <span class='fu'>vpc_data</span>() <span class='kw'>%&gt;%</span>
+   <span class='fu'><a href='vpc.html'>vpc</a></span>()
+})</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#layers-mapping">Layers mapping</a></li>
-
-      <li><a href="#template-titles">Template titles</a></li>
-
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>

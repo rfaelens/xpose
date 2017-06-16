@@ -40,9 +40,10 @@ xpdb
     run001.lst overview: 
      - Software: nonmem 7.3.0 
      - Attached files: 
-       + tables: $prob no.1: catab001.csv, cotab001, patab001, sdtab001 
+       + obs tabs: $prob no.1: catab001.csv, cotab001, patab001, sdtab001 
        + sim tabs: $prob no.2: simtab001.zip 
        + output files: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi, run001.shk 
+       + special: <none> 
      - gg_theme: theme_readable 
      - xp_theme: theme_xp_default 
      - Options: dir = analysis/models/pk/, quiet = TRUE, manual_import = NULL

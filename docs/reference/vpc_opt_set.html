@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create options for data import — vpc_opt_set • xpose</title>
+<title>Generate a list of options for VPC data generation — vpc_opt_set • xpose</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -108,18 +108,18 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create options for data import</h1>
+    <h1>Generate a list of options for VPC data generation</h1>
     </div>
 
     
-    <p>Provide a list of options to the general plotting functions such as 
-<code>xplot_scatter</code> in order to create appropriate data input for ggplot2.</p>
+    <p>Provide a list of options to <code>vpc_data</code> function.</p>
     
 
     <pre class="usage"><span class='fu'>vpc_opt_set</span>(<span class='kw'>bins</span> <span class='kw'>=</span> <span class='st'>"jenks"</span>, <span class='kw'>n_bins</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>bin_mid</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
-  <span class='kw'>obs_cols</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sim_cols</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pred_corr</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>pred_corr_lower_bnd</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.05</span>, <span class='fl'>0.95</span>), <span class='kw'>pi</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.05</span>, <span class='fl'>0.95</span>),
-  <span class='kw'>lloq</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>uloq</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>pred_corr</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pred_corr_lower_bnd</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>pi</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.05</span>, <span class='fl'>0.95</span>),
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.05</span>, <span class='fl'>0.95</span>), <span class='kw'>lloq</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>uloq</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rtte</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>rtte_calc_diff</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>events</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>kmmc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>reverse_prob</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>as_percentage</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -140,28 +140,20 @@ the bin separators.</p></td>
 timepoints (default) or 'middle' to use the average of the bin boundaries.</p></td>
     </tr>
     <tr>
-      <th>obs_cols</th>
-      <td><p>Observation dataset column names (list elements: 'dv', 'idv', 'id', 'pred')</p></td>
-    </tr>
-    <tr>
-      <th>sim_cols</th>
-      <td><p>Simulation dataset column names (list elements: 'dv', 'idv', 'id', 'pred')</p></td>
-    </tr>
-    <tr>
       <th>pred_corr</th>
-      <td><p>Logical, should a prediction correction (pcVPC) of the data be used.</p></td>
+      <td><p>Option reserved to continuous VPC. Logical, should a prediction correction (pcVPC) of the data be used.</p></td>
     </tr>
     <tr>
       <th>pred_corr_lower_bnd</th>
-      <td><p>Lower bound for the prediction-correction.</p></td>
-    </tr>
-    <tr>
-      <th>ci</th>
-      <td><p>Confidence interval around the percentiles to plot. Default is (0.05, 0.95)</p></td>
+      <td><p>Option reserved to continuous VPC. Lower bound for the prediction-correction.</p></td>
     </tr>
     <tr>
       <th>pi</th>
-      <td><p>Simulated prediction interval to plot. Default is c(0.05, 0.95).</p></td>
+      <td><p>Option reserved to continuous VPC. Simulated prediction interval to plot. Default is c(0.05, 0.95).</p></td>
+    </tr>
+    <tr>
+      <th>ci</th>
+      <td><p>Confidence interval around the percentiles to plot. Default is c(0.05, 0.95)</p></td>
     </tr>
     <tr>
       <th>lloq</th>
@@ -171,11 +163,40 @@ timepoints (default) or 'middle' to use the average of the bin boundaries.</p></
       <th>uloq</th>
       <td><p>Number or NULL indicating upper limit of quantification. Default is NULL.</p></td>
     </tr>
+    <tr>
+      <th>rtte</th>
+      <td><p>Option reserved to time-to-event VPC. Is the data repeated time-to-event (RTTE) <code>TRUE</code> or 
+single time-to-event (TTE) <code>FALSE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>rtte_calc_diff</th>
+      <td><p>Option reserved to time-to-event VPC. Should the time be recalculated? When simulating in NONMEM, 
+you will probably need to set this to <code>TRUE</code> to recalculate the TIME to the relative time between events (unless you 
+output the time difference between events and specify that as independent variable in the index.</p></td>
+    </tr>
+    <tr>
+      <th>events</th>
+      <td><p>Option reserved to time-to-event VPC. Numeric vector describing which events to show a VPC for when 
+repeated TTE data, e.g. c(1:4). Default is <code>NULL</code>, which shows all events.</p></td>
+    </tr>
+    <tr>
+      <th>kmmc</th>
+      <td><p>Option reserved to time-to-event VPC. Either NULL for regular TTE VPC (default), or a variable name 
+for a KMMC plot (e.g. 'WT').</p></td>
+    </tr>
+    <tr>
+      <th>reverse_prob</th>
+      <td><p>Option reserved to time-to-event VPC. Should the probability be reversed (i.e. plot 1-probability).</p></td>
+    </tr>
+    <tr>
+      <th>as_percentage</th>
+      <td><p>Should the Y-scale be in percent (0-100) <code>TRUE</code> (default), or standard (0-1) <code>FALSE</code>.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code>{vpc}</code></p>
+    <p><code>vpc_data</code> <code><a href='http://www.rdocumentation.org/packages/vpc/topics/vpc'>vpc</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -188,14 +209,8 @@ timepoints (default) or 'middle' to use the average of the bin boundaries.</p></
 #&gt; $bin_mid
 #&gt; [1] "mean"
 #&gt; 
-#&gt; $obs_cols
-#&gt; NULL
-#&gt; 
-#&gt; $sim_cols
-#&gt; NULL
-#&gt; 
 #&gt; $pred_corr
-#&gt; [1] FALSE
+#&gt; NULL
 #&gt; 
 #&gt; $pred_corr_lower_bnd
 #&gt; [1] 0
@@ -211,6 +226,24 @@ timepoints (default) or 'middle' to use the average of the bin boundaries.</p></
 #&gt; 
 #&gt; $uloq
 #&gt; NULL
+#&gt; 
+#&gt; $rtte
+#&gt; [1] FALSE
+#&gt; 
+#&gt; $rtte_calc_diff
+#&gt; [1] TRUE
+#&gt; 
+#&gt; $events
+#&gt; NULL
+#&gt; 
+#&gt; $kmmc
+#&gt; NULL
+#&gt; 
+#&gt; $reverse_prob
+#&gt; [1] FALSE
+#&gt; 
+#&gt; $as_percentage
+#&gt; [1] TRUE
 #&gt; </div><div class='input'>
 </div></pre>
   </div>
