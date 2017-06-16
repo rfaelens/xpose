@@ -82,9 +82,13 @@ vpc_data <- function(xpdb,
       psn_cmd  <- readr::read_lines(file = file.path(psn_folder, 'command.txt'))
       obs_cols <- get_psn_vpc_cols(psn_cmd)
       sim_cols <- obs_cols
-      if (is.null(stratify)) stratify <- get_psn_vpc_strat(psn_cmd)
-      if (is.null(vpc_opt$pred_corr)) vpc_opt$pred_corr <- dplyr::if_else(stringr::str_detect(psn_cmd, '-predcorr'), 
-                                                                          TRUE, FALSE)
+      if (is.null(stratify)) {
+        stratify <- get_psn_vpc_strat(psn_cmd)
+        facets   <- stratify
+      }
+      if (is.null(vpc_opt$pred_corr)) {
+        vpc_opt$pred_corr <- dplyr::if_else(stringr::str_detect(psn_cmd, '-predcorr'), TRUE, FALSE)
+      }
     } else {
       msg('File `command.txt` not found. Using default column names: ID, TIME, DV, PRED.', quiet)
       obs_cols <- c(id = 'ID', idv = 'TIME', dv = 'DV', pred = 'PRED')
