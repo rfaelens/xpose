@@ -4,9 +4,9 @@
 \alias{vpc}
 \title{Visual predictive checks}
 \usage{
-vpc(xpdb, mapping = NULL, type = "alp", smooth = TRUE,
-  title = "Visual predictive checks | @run",
-  subtitle = "Nsim: @nsim, PI: @vpcpi", caption = "@dir", log = NULL,
+vpc(xpdb, mapping = NULL, type = "alr", smooth = TRUE, facets,
+  title = "Visual predictive checks | @run", subtitle = NULL,
+  caption = "@dir", log = NULL, vpc_type = NULL, gg_theme, xp_theme,
   quiet, ...)
 }
 \arguments{
@@ -16,9 +16,12 @@ vpc(xpdb, mapping = NULL, type = "alp", smooth = TRUE,
 (e.g. \code{point_color}).}
 
 \item{type}{String setting the type of plot to be used points 'p',
-line 'l', area 'a' and text 't' or any combination of the four.}
+line 'l', area 'a', rug 'r' and text 't' or any combination of the five.}
 
 \item{smooth}{Should the bins be smoothed (connect bin midpoints, default) or shown as rectangular boxes.}
+
+\item{facets}{Either a character string to use \link[ggplot2]{facet_wrap} 
+or a formula to use \link[ggplot2]{facet_grid}.}
 
 \item{title}{Plot title. Use \code{NULL} to remove.}
 
@@ -28,6 +31,15 @@ line 'l', area 'a' and text 't' or any combination of the four.}
 
 \item{log}{String assigning logarithmic scale to axes, can be either '', 
 'x', y' or 'xy'.}
+
+\item{vpc_type}{Only used when multiple vpc data are present in the same xpdb. The type of 
+vpc to be created. Can be one of can be one of: 'continuous', 'categorical', 
+'censored' or 'time-to-event'.}
+
+\item{gg_theme}{A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).}
+
+\item{xp_theme}{An xpose theme or vector of modifications to the xpose theme
+(eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 

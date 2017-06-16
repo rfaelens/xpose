@@ -6,20 +6,24 @@
 #' @param mapping List of aesthetics mappings to be used for the xpose plot 
 #' (e.g. \code{point_color}).
 #' @param type String setting the type of plot to be used points 'p',
-#' line 'l', area 'a' and text 't' or any combination of the four.
+#' line 'l', area 'a', rug 'r' and text 't' or any combination of the five.
 #' @param smooth Should the bins be smoothed (connect bin midpoints, default) or shown as rectangular boxes.
-
-# @param facets Either a character string to use \link[ggplot2]{facet_wrap} 
-# or a formula to use \link[ggplot2]{facet_grid}.
-
+#' @param facets Either a character string to use \link[ggplot2]{facet_wrap} 
+#' or a formula to use \link[ggplot2]{facet_grid}.
 #' @param title Plot title. Use \code{NULL} to remove.
 #' @param subtitle Plot subtitle. Use \code{NULL} to remove.
 #' @param caption Page caption. Use \code{NULL} to remove.
 #' @param log String assigning logarithmic scale to axes, can be either '', 
-#' 'x', y' or 'xy'.       
+#' 'x', y' or 'xy'.   
+#' @param vpc_type Only used when multiple vpc data are present in the same xpdb. The type of 
+#' vpc to be created. Can be one of can be one of: 'continuous', 'categorical', 
+#' 'censored' or 'time-to-event'.
+#' @param gg_theme A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).
+#' @param xp_theme An xpose theme or vector of modifications to the xpose theme
+#' (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' @param ... any additional aesthetics.
-
+#' 
 #' @inheritSection xplot_scatter Layers mapping
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{vpc_data}
@@ -31,52 +35,19 @@
 #' }
 #' @export
 vpc <- function(xpdb,
-                mapping     = NULL,
-                type        = 'alp',
-                smooth      = TRUE,
-                #facets      = NULL,
-                title       = 'Visual predictive checks | @run',
-                subtitle    = 'Nsim: @nsim, PI: @vpcpi',
-                caption     = '@dir',
-                log         = NULL,
+                mapping  = NULL,
+                type     = 'alr',
+                smooth   = TRUE,
+                facets,
+                title    = 'Visual predictive checks | @run',
+                subtitle = NULL,
+                caption  = '@dir',
+                log      = NULL,
+                vpc_type = NULL,
+                gg_theme,
+                xp_theme,
                 quiet,
                 ...) {
-  
-}
-
-
-#' Visual predictive checks data
-#'
-#' @description Generate visual predictive checks (VPC) data
-#' 
-#' @param xpdb An xpose database object.
-#' @param vpc_opt A list of options regarding binning, pi and ci computation. 
-#' For more information see \code{\link{vpc_opt_set}}.
-#' @param stratify Either a character string or a formula to stratify the data.
-#' @param psn_folder Specify a PsN-generated VPC-folder.
-#' @param obs_problem Alternative to the option `psn_folder`. The $problem number to be used for observations.
-#' By default returns the last estimation problem.
-#' @param sim_problem Alternative to the option `psn_folder`. The $problem number to be used for simulations.
-#' By default returns the last simulation problem.
-#' @param quiet Logical, if \code{FALSE} messages are printed to the console.
-#' @param ... any additional aesthetics.
-#' 
-#' @seealso \code{vpc} \code{vpc_opt_set} \code{\link[vpc]{vpc}}
-#' @examples
-#' \dontrun{
-#' xpdb_ex_pk %>% 
-#'  vpc_data(xpdb_ex_pk) %>% 
-#'  vpc()
-#' }
-#' @export
-vpc_data <- function(xpdb,
-                     vpc_opt     = NULL,
-                     type        = c('continuous', 'categorical', 'censored', 'time-to-event'),
-                     stratify    = NULL,
-                     psn_folder  = NULL,
-                     obs_problem = NULL,
-                     sim_problem = NULL,
-                     quiet) {
   
   # Check input
   if (!is.xpdb(xpdb)) { 
@@ -86,125 +57,175 @@ vpc_data <- function(xpdb,
   
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
-  # Get raw data
-  if (is.null(psn_folder)) {
-    # When using xpdb tables
-    if (is.null(obs_problem)) obs_problem <- last_data_problem(xpdb, simtab = FALSE)
-    if (is.null(sim_problem)) sim_problem <- last_data_problem(xpdb, simtab = TRUE)
-    msg(c('Using xpdb simulation problem ', ifelse(is.na(sim_problem), '<na>', sim_problem), 
-          ' and observation problem ', ifelse(is.na(obs_problem), '<na>', obs_problem), '.'), quiet)
-    obs_data <- get_data(xpdb, problem = obs_problem) 
-    sim_data <- get_data(xpdb, problem = sim_problem)
-    obs_cols <- xp_var(xpdb, obs_problem, type = c('id', 'idv', 'dv', 'pred'))
-    obs_cols <- purrr::set_names(obs_cols$col, nm = obs_cols$type)
-    sim_cols <- xp_var(xpdb, sim_problem, type = c('id', 'idv', 'dv', 'pred'))
-    sim_cols <- purrr::set_names(sim_cols$col, nm = sim_cols$type)
-  } else {
-    # When using PsN
-    msg('Importing PsN generated data', quiet)
-    obs_data <- read_nm_tables(files = file.path(psn_folder, 'm1', dir(stringr::str_c(psn_folder, 'm1', sep = .Platform$file.sep), 
-                                                                       pattern = 'original.npctab')[1]), quiet = TRUE)
-    sim_data <- read_nm_tables(files = file.path(psn_folder, 'm1', dir(stringr::str_c(psn_folder, 'm1', sep = .Platform$file.sep), 
-                                                                       pattern = 'simulation.1.npctab')[1]), quiet = TRUE)
-    obs_cols <- NULL
-    sim_cols <- NULL
-  } 
-  
-  if (is.null(obs_data) && is.null(sim_data)) {
-    msg('At least a simulation or an observation dataset are required to create the VPC.', quiet)
+  # Fetch data
+  if (is.null(xpdb$special) | (!is.null(xpdb$special) && !any(xpdb$special$method == 'vpc'))) { 
+    msg('No vpc data available. Please refer to the function `vpc_data()` function.', quiet)
     return()
+  } else if (sum(xpdb$special$method == 'vpc') > 1) {
+    if (is.null(vpc_type)) {
+      msg('Several vpc data are associated with this xpdb. Please use the argument `vpc_type`.', quiet)
+      return()
+    } else {
+      vpc_type <- match.arg(vpc_type, choices = c('continuous', 'categorical', 'censored', 'time-to-event'))
+      if (!vpc_type %in% xpdb$special[xpdb$special$method == 'vpc', ]$type) {
+        msg(c('No data are available for ', vpc_type, ' VPC. Change `vpc_type` to one of: ', 
+              stringr::str_c(xpdb$special[xpdb$special$method == 'vpc', ]$type, collapse = ', '), '.'), quiet)
+        return()
+      }
+      vpc_dat  <- xpdb$special[xpdb$special$method == 'vpc' & xpdb$special$type == vpc_type, ]$data[[1]]
+    }
+  } else {
+    vpc_dat <- xpdb$special[xpdb$special$method == 'vpc', ]$data[[1]]
   }
   
-  # Prep for data processing
-  if (is.null(vpc_opt)) vpc_opt <- vpc_opt_set()
-  if (is.formula(stratify)) stratify <- all.vars(stratify)
+  # Assing xp_theme and gg_theme
+  if (!missing(xp_theme)) {
+    xpdb <- update_themes(xpdb = xpdb, xp_theme = xp_theme)
+  }
+  if (missing(gg_theme)) {
+    gg_theme <- xpdb$gg_theme
+  }
   
-  # Get the type of vpc
-  type <- match.arg(type)
+  # Create ggplot base
+  if (is.null(mapping)) mapping <- aes()
+  xp <- ggplot(data = NULL, mapping, ...) + gg_theme 
   
-  # Generate vpc data
-  if (type == 'continuous') {
-    vpc_dat <- vpc::vpc(obs = obs_data, sim = sim_data, psn_folder = psn_folder, bins = vpc_opt$bins, 
-                        n_bins = vpc_opt$n_bins, bin_mid = vpc_opt$bin_mid, obs_cols = obs_cols, 
-                        sim_cols = sim_cols, stratify = stratify, pred_corr = vpc_opt$pred_corr, 
-                        pred_corr_lower_bnd = vpc_opt$pred_corr_lower_bnd, pi = vpc_opt$pi, ci = vpc_opt$ci, 
-                        uloq = vpc_opt$uloq, lloq = vpc_opt$lloq, smooth = smooth, vpcdb = TRUE, verbose = !quiet) 
-  } else if (type == 'categorical') {
-    vpc_dat <- vpc::vpc_cat(obs = obs_data, sim = sim_data, psn_folder = psn_folder, bins = vpc_opt$bins, 
-                            n_bins = vpc_opt$n_bins, bin_mid = vpc_opt$bin_mid, obs_cols = obs_cols, 
-                            sim_cols = sim_cols, stratify = stratify, ci = vpc_opt$ci, 
-                            uloq = vpc_opt$uloq, lloq = vpc_opt$lloq, smooth = smooth, vpcdb = TRUE, verbose = !quiet) 
-  } else if (type == 'censored') {
-    vpc_dat <- vpc::vpc_cens(obs = obs_data, sim = sim_data, psn_folder = psn_folder, bins = vpc_opt$bins, 
-                             n_bins = vpc_opt$n_bins, bin_mid = vpc_opt$bin_mid, obs_cols = obs_cols, 
-                             sim_cols = sim_cols, stratify = stratify, ci = vpc_opt$ci, 
-                             uloq = vpc_opt$uloq, lloq = vpc_opt$lloq, smooth = smooth, vpcdb = TRUE, verbose = !quiet) 
-  } else {
-    vpc_dat <- vpc::vpc_tte(obs = obs_data, sim = sim_data, psn_folder = psn_folder, bins = vpc_opt$bins, 
-                            n_bins = vpc_opt$n_bins, obs_cols = obs_cols, sim_cols = sim_cols, stratify = stratify, 
-                            ci = vpc_opt$ci, smooth = smooth, rtte = vpc_opt$rtte, rtte_calc_diff = vpc_opt$rtte_calc_diff, 
-                            events = vpc_opt$events, kmmc = vpc_opt$kmmc, reverse_prob = vpc_opt$reverse_prob, 
-                            as_percentage = vpc_opt$as_percentage, vpcdb = TRUE, verbose = !quiet) 
-  } 
-  vpc_dat  
-}
+  # Add shadded areas
+  if (stringr::str_detect(type, stringr::fixed('a', ignore_case = TRUE))) {
+    if (smooth) {
+      xp <- xp + xp_geoms(mapping  = aes_c(aes_string(area_x = 'bin_mid', 
+                                                      area_ymin = 'low',
+                                                      area_ymax = 'up',
+                                                      area_group = 'strat',
+                                                      area_fill = 'simulations'), mapping),
+                          xp_theme = xpdb$xp_theme,
+                          name     = 'area',
+                          ggfun    = 'geom_ribbon',
+                          area_data = vpc_dat$vpc_dat,
+                          ...)
+    } else {
+      xp <- xp + xp_geoms(mapping  = aes_c(aes_string(area_xmin = 'bin_min',
+                                                      area_xmax = 'bin_max',
+                                                      area_ymin = 'low',
+                                                      area_ymax = 'up',
+                                                      area_group = 'strat',
+                                                      area_fill = 'simulations'), mapping),
+                          xp_theme = xpdb$xp_theme,
+                          name     = 'area',
+                          ggfun    = 'geom_rect',
+                          area_data = vpc_dat$vpc_dat,
+                          ...)
+    }
+  }
+  
+  # Add lines
+  if (stringr::str_detect(type, stringr::fixed('l', ignore_case = TRUE))) {
+    xp <- xp + xp_geoms(mapping  = aes_c(aes_string(line_x = 'bin_mid',
+                                                    line_y = 'value',
+                                                    line_group = 'strat',
+                                                    line_linetype = 'observations'), mapping),
+                        xp_theme = xpdb$xp_theme,
+                        name     = 'line',
+                        ggfun    = 'geom_line',
+                        line_data = vpc_dat$aggr_obs,
+                        ...)
+  }
+  
+  # Add points
+  if (stringr::str_detect(type, stringr::fixed('p', ignore_case = TRUE))) {
+    xp <- xp + xp_geoms(mapping  = aes_c(aes_string(point_x = 'idv',
+                                                    point_y = 'dv'), mapping),
+                        xp_theme = xpdb$xp_theme,
+                        name     = 'point',
+                        ggfun    = 'geom_point',
+                        point_data = vpc_dat$obs,
+                        ...)
+  }
+  
+  # Add text
+  if (stringr::str_detect(type, stringr::fixed('t', ignore_case = TRUE))) {
+    xp <- xp + xp_geoms(mapping  = aes_c(aes_string(text_x = 'idv',
+                                                    text_y = 'dv',
+                                                    text_label = 'id'), mapping),
+                        xp_theme = xpdb$xp_theme,
+                        name     = 'text',
+                        ggfun    = 'geom_text',
+                        text_data = vpc_dat$obs,
+                        ...)
+  }
+  
+  # Define scales
+  xp <- xp + 
+    xp_geoms(mapping  = mapping,
+             xp_theme = xpdb$xp_theme,
+             name     = 'xscale',
+             ggfun    = stringr::str_c('scale_x_', check_scales('x', log)),
+             xscale_name = vpc_dat$obs_cols$idv,
+             ...) +
+    xp_geoms(mapping  = mapping,
+             xp_theme = xpdb$xp_theme,
+             name     = 'yscale',
+             ggfun    = stringr::str_c('scale_y_', check_scales('y', log)),
+             yscale_name = vpc_dat$obs_cols$dv,
+             ...)
+  
+  # Define panels
+  if (missing(facets) && !is.null(vpc_dat$facets)) {
+    facets <- vpc_dat$facets
+  } else if (missing(facets)) {
+    facets <- NULL 
+  }
+  
+  if (!is.null(facets)) {
+    if (!is.formula(facets)) {
+      xp <- xp + xp_geoms(mapping  = mapping,
+                          xp_theme = xpdb$xp_theme,
+                          name     = 'panel',
+                          ggfun    = 'facet_wrap_paginate',
+                          panel_facets = facets,
+                          ...)
+    } else {
+      xp <- xp + xp_geoms(mapping  = mapping,
+                          xp_theme = filter_xp_theme(xpdb$xp_theme, 'panel_dir', 'drop'),
+                          name     = 'panel',
+                          ggfun    = 'facet_grid_paginate',
+                          panel_facets = facets,
+                          ...)
+    }
+  }
+  
+  # Add rug
+  if (stringr::str_detect(type, stringr::fixed('r', ignore_case = TRUE))) {
+    if (is.formula(facets)) {
+      facets_string <- all.vars(facets)
+    } else {
+      facets_string <- facets
+    }
+    xp <- xp + xp_geoms(mapping  = aes_c(aes_string(rug_x = 'idv'), mapping),
+                        xp_theme = xpdb$xp_theme,
+                        name     = 'rug',
+                        ggfun    = 'geom_rug',
+                        rug_data =   vpc_dat$obs %>% 
+                          dplyr::distinct_(.dots = c('idv', facets_string, 'bin'), 
+                                           .keep_all = TRUE),
+                        ...)
+  }
 
-
-#' Generate a list of options for VPC data generation
-#' 
-#' @description Provide a list of options to \code{vpc_data} function.
-#' 
-#' @param bins Binning method, can be one of 'density', 'time', 'data', 'none', or one of the approaches 
-#' available in \code{classInterval()} such as 'jenks' (default), 'pretty', or a numeric vector specifying 
-#' the bin separators.
-#' @param n_bins When using the 'auto' binning method, what number of bins to aim for.
-#' @param bin_mid Specify how to is the mid bin value calculated, can be either 'mean' for the mean of all 
-#' timepoints (default) or 'middle' to use the average of the bin boundaries.
-#' @param pred_corr Option reserved to continuous VPC. Logical, should a prediction correction (pcVPC) of the data be used.
-#' @param pred_corr_lower_bnd Option reserved to continuous VPC. Lower bound for the prediction-correction.
-#' @param pi Option reserved to continuous VPC. Simulated prediction interval to plot. Default is c(0.05, 0.95).
-#' @param ci Confidence interval around the percentiles to plot. Default is c(0.05, 0.95)
-#' @param lloq Number or NULL indicating lower limit of quantification. Default is NULL.               
-#' @param uloq Number or NULL indicating upper limit of quantification. Default is NULL.
-#' @param rtte Option reserved to time-to-event VPC. Is the data repeated time-to-event (RTTE) \code{TRUE} or 
-#' single time-to-event (TTE) \code{FALSE}.
-#' @param rtte_calc_diff Option reserved to time-to-event VPC. Should the time be recalculated? When simulating in NONMEM, 
-#' you will probably need to set this to \code{TRUE} to recalculate the TIME to the relative time between events (unless you 
-#' output the time difference between events and specify that as independent variable in the index.
-#' @param kmmc Option reserved to time-to-event VPC. Either NULL for regular TTE VPC (default), or a variable name 
-#' for a KMMC plot (e.g. 'WT').
-#' @param events Option reserved to time-to-event VPC. Numeric vector describing which events to show a VPC for when 
-#' repeated TTE data, e.g. c(1:4). Default is \code{NULL}, which shows all events.
-#' @param reverse_prob Option reserved to time-to-event VPC. Should the probability be reversed (i.e. plot 1-probability).
-#' @param as_percentage Should the Y-scale be in percent (0-100) \code{TRUE} (default), or standard (0-1) \code{FALSE}.
-#'
-#' @seealso \code{vpc_data} \code{\link[vpc]{vpc}}
-#' 
-#' @examples
-#' vpc_opt_set()
-#' 
-#' @export
-vpc_opt_set <- function(bins                = 'jenks',
-                        n_bins              = 'auto',
-                        bin_mid             = 'mean',
-                        obs_cols            = NULL,
-                        sim_cols            = NULL,
-                        pred_corr           = FALSE, 
-                        pred_corr_lower_bnd = 0,
-                        pi                  = c(0.05, 0.95), 
-                        ci                  = c(0.05, 0.95), 
-                        lloq                = NULL, 
-                        uloq                = NULL,
-                        rtte                = FALSE,
-                        rtte_calc_diff      = TRUE,
-                        events              = NULL,
-                        kmmc                = NULL,
-                        reverse_prob        = FALSE,
-                        as_percentage       = TRUE) {
+  # Add labels
+  xp <- xp + labs(title = title, subtitle = subtitle, caption = caption)
   
-  list(bins = bins, n_bins = n_bins, bin_mid = bin_mid,
-       pred_corr = pred_corr, pred_corr_lower_bnd = pred_corr_lower_bnd,
-       pi = pi, ci = ci, lloq = lloq, uloq = uloq, rtte = rtte,
-       rtte_calc_diff = rtte_calc_diff, events = events, kmmc = kmmc,
-       reverse_prob = reverse_prob, as_percentage = as_percentage)
-}
+  # Add color scales
+  xp <- xp + 
+    scale_fill_manual(values = c('deepskyblue3', 'grey60', 'deepskyblue3')) +
+    scale_linetype_manual(values = c('93', 'solid', '93'))
+  
+  # Add metadata to plots
+  xp$xpose <- list(fun      = stringr::str_c('vpc_', vpc_type),
+                   summary  = xpdb$summary,
+                   problem  = 0,
+                   quiet    = quiet,
+                   xp_theme = xpdb$xp_theme[stringr::str_c(c('title', 'subtitle', 'caption'), '_suffix')])
+  
+  # Ouptut the plot
+  structure(xp, class = c('xpose_plot', class(xp)))
+}  
