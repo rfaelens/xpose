@@ -24,7 +24,7 @@ print.xpose_data <- function(x, ...) {
         dplyr::group_by_(.dots = 'grouping') %>% 
         tidyr::nest() %>% 
         dplyr::mutate(string = purrr::map_chr(.$data, summarize_table_names)) %>% 
-        {stringr::str_c(.$string, collapse = '\n             ')}
+        {stringr::str_c(.$string, collapse = '\n               ')}
     } else {
       tab_names <- '<none>'
     }
@@ -50,12 +50,20 @@ print.xpose_data <- function(x, ...) {
     out_names <- '<none>'
   }
   
+  if (!is.null(x$special)) {
+    special_names <- stringr::str_c(x$special$method, x$special$type, 
+                                    sep = ' ', collapse = ', ')
+  } else {
+    special_names <- '<none>'
+  }
+  
   cat(x$summary$value[x$summary$label == 'file'], 'overview:',
       '\n - Software:', x$summary$value[x$summary$label %in% c('software', 'version')],
       '\n - Attached files:', 
-      '\n   + tables:', tab_names,
+      '\n   + obs tabs:', tab_names,
       '\n   + sim tabs:', sim_names,
       '\n   + output files:', out_names,
+      '\n   + special:', special_names,
       '\n - gg_theme:', attr(x$gg_theme, 'theme'),
       '\n - xp_theme:', attr(x$xp_theme, 'theme'),
       '\n - Options:', stringr::str_c(names(x$options), x$options, sep = ' = ', collapse = ', '))
