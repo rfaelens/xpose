@@ -30,8 +30,6 @@
 #' 
 #' dv_vs_ipred(xpdb_ex_pk)
 #' 
-#' dv_vs_cpred(xpdb_ex_pk)
-#' 
 #' @name dv_vs_pred
 #' @export
 dv_vs_ipred <- function(xpdb,
@@ -85,38 +83,6 @@ dv_vs_pred <- function(xpdb,
                 data_opt = data_opt_set(problem = problem, 
                                         filter = only_obs(xpdb, problem, quiet)),
                 mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'pred')$col, 
-                                           y = xp_var(xpdb, problem, type = 'dv')$col), mapping),
-                type = type, guides = guides, panel_facets = facets, 
-                xscale = check_scales('x', log), 
-                yscale = check_scales('y', log), 
-                title = title, subtitle = subtitle, caption = caption,
-                plot_name = as.character(match.call()[[1]]),
-                guides_slope = 1, ...)
-}
-
-
-#' @rdname dv_vs_pred
-#' @export
-dv_vs_cpred <- function(xpdb,
-                        mapping  = NULL,
-                        group    = 'ID',
-                        type     = 'pls',
-                        facets   = NULL,
-                        title    = '@y vs. @x | @run',
-                        subtitle = 'Ofv: @ofv',
-                        caption  = '@dir',
-                        log      = NULL,
-                        guides   = TRUE,
-                        problem,
-                        quiet,
-                        ...) {
-  if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
-  if (missing(quiet)) quiet <- xpdb$options$quiet
-  
-  xplot_scatter(xpdb = xpdb, group = group,  quiet = quiet,
-                data_opt = data_opt_set(problem = problem, 
-                                        filter = only_obs(xpdb, problem, quiet)),
-                mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'cpred')$col, 
                                            y = xp_var(xpdb, problem, type = 'dv')$col), mapping),
                 type = type, guides = guides, panel_facets = facets, 
                 xscale = check_scales('x', log), 

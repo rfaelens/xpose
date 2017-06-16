@@ -4,7 +4,6 @@
 \alias{dv_vs_pred}
 \alias{dv_vs_ipred}
 \alias{dv_vs_pred}
-\alias{dv_vs_cpred}
 \title{Observations plotted against model predictions}
 \usage{
 dv_vs_ipred(xpdb, mapping = NULL, group = "ID", type = "pls",
@@ -13,10 +12,6 @@ dv_vs_ipred(xpdb, mapping = NULL, group = "ID", type = "pls",
   log = NULL, guides = TRUE, problem, quiet, ...)
 
 dv_vs_pred(xpdb, mapping = NULL, group = "ID", type = "pls",
-  facets = NULL, title = "@y vs. @x | @run", subtitle = "Ofv: @ofv",
-  caption = "@dir", log = NULL, guides = TRUE, problem, quiet, ...)
-
-dv_vs_cpred(xpdb, mapping = NULL, group = "ID", type = "pls",
   facets = NULL, title = "@y vs. @x | @run", subtitle = "Ofv: @ofv",
   caption = "@dir", log = NULL, guides = TRUE, problem, quiet, ...)
 }
@@ -89,8 +84,6 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 dv_vs_pred(xpdb_ex_pk)
 
 dv_vs_ipred(xpdb_ex_pk)
-
-dv_vs_cpred(xpdb_ex_pk)
 
 }
 \seealso{

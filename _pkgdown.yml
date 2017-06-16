@@ -39,7 +39,6 @@ reference:
     - absval_res_vs_pred
     - res_vs_idv
     - res_vs_pred
-    - dv_vs_cpred
     - dv_vs_ipred
     - dv_vs_pred
     - dv_vs_idv
