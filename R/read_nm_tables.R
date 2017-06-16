@@ -142,18 +142,17 @@ read_nm_tables <- function(files         = NULL,
     return() 
   }
   
-  # Convert catcov to factor
+  # Convert catcov, id, occ, dvid to factor
   tables <- tables %>% 
     dplyr::mutate(grouping = .$problem) %>% 
     dplyr::group_by_(.dots = 'grouping') %>% 
     tidyr::nest(.key = 'tmp') %>% 
     dplyr::mutate(tmp = purrr::map(.$tmp, function(x) {
-      col_to_factor <- which(colnames(x$data[[1]]) %in% 
-                               x$index[[1]]$col[x$index[[1]]$type == 'catcov'])
-      if (length(col_to_factor) > 0) {
-        x$data[[1]] <- dplyr::mutate_at(x$data[[1]], col_to_factor, as.factor)
-      }
-      x})) %>% 
+      col_to_factor <- colnames(x$data[[1]]) %in% 
+        x$index[[1]]$col[x$index[[1]]$type %in% c('catcov', 'id', 'occ', 'dvid')]
+      x$data[[1]] <- dplyr::mutate_if(x$data[[1]], col_to_factor, as.factor)
+      x
+    })) %>% 
     tidyr::unnest_(unnest_cols = 'tmp') %>% 
     dplyr::select(dplyr::one_of('problem', 'simtab', 'data', 'index'))
   
