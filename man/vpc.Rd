@@ -52,12 +52,13 @@ Generate visual predictive checks (VPC)
 
 Plots can be customized by mapping arguments to specific layers. The naming convention is 
 layer_option where layer is one of the names defined in the list below and option is 
-any option supported by this layer e.g. point_color = 'blue', smooth_method = 'lm', etc.
+any option supported by this layer e.g. point_color = 'blue', area_fill = 'green', etc.
 \itemize{
   \item point: options to \code{geom_point}
   \item line: options to \code{geom_line}
-  \item guide: options to \code{geom_abline}
-  \item panel: options to \code{facet_wrap} (facets is character) or \code{facet_grid} 
+  \item area: options to \code{geom_ribbon} (smooth = TRUE) or \code{geom_rect} (smooth = FALSE)
+  \item rug: options to \code{geom_rug}
+  \item panel: options to \code{facet_wrap} (facets is character) or \code{facet_grid}
   (facets is a formula)
   \item smooth: options to \code{geom_smooth}
   \item text: options to \code{geom_text}
@@ -78,11 +79,9 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 }
 
 \examples{
-\dontrun{
 xpdb_ex_pk \%>\% 
- vpc_data(xpdb_ex_pk) \%>\% 
+ vpc_data() \%>\% 
  vpc()
-}
 }
 \seealso{
 \code{vpc_data}

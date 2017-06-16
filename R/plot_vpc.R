@@ -24,15 +24,28 @@
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' @param ... any additional aesthetics.
 #' 
-#' @inheritSection xplot_scatter Layers mapping
+#' @section Layers mapping:
+#' Plots can be customized by mapping arguments to specific layers. The naming convention is 
+#' layer_option where layer is one of the names defined in the list below and option is 
+#' any option supported by this layer e.g. point_color = 'blue', area_fill = 'green', etc.
+#' \itemize{
+#'   \item point: options to \code{geom_point}
+#'   \item line: options to \code{geom_line}
+#'   \item area: options to \code{geom_ribbon} (smooth = TRUE) or \code{geom_rect} (smooth = FALSE)
+#'   \item rug: options to \code{geom_rug}
+#'   \item panel: options to \code{facet_wrap} (facets is character) or \code{facet_grid}
+#'   (facets is a formula)
+#'   \item smooth: options to \code{geom_smooth}
+#'   \item text: options to \code{geom_text}
+#'   \item xscale: options to \code{scale_x_continuous} or \code{scale_x_log10}
+#'   \item yscale: options to \code{scale_y_continuous} or \code{scale_y_log10}
+#' }
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{vpc_data}
 #' @examples
-#' \dontrun{
 #' xpdb_ex_pk %>% 
-#'  vpc_data(xpdb_ex_pk) %>% 
+#'  vpc_data() %>% 
 #'  vpc()
-#' }
 #' @export
 vpc <- function(xpdb,
                 mapping  = NULL,
@@ -160,18 +173,20 @@ vpc <- function(xpdb,
              xp_theme = xpdb$xp_theme,
              name     = 'xscale',
              ggfun    = stringr::str_c('scale_x_', check_scales('x', log)),
-             xscale_name = vpc_dat$obs_cols$idv,
+             xscale_name = vpc_dat$obs_cols[['idv']],
              ...) +
     xp_geoms(mapping  = mapping,
              xp_theme = xpdb$xp_theme,
              name     = 'yscale',
              ggfun    = stringr::str_c('scale_y_', check_scales('y', log)),
-             yscale_name = vpc_dat$obs_cols$dv,
+             yscale_name = vpc_dat$obs_cols[['dv']],
              ...)
   
   # Define panels
   if (missing(facets) && !is.null(vpc_dat$facets)) {
     facets <- vpc_dat$facets
+  } else if (missing(facets) && vpc_dat$type == 'categorical') {
+    facets <- 'group'
   } else if (missing(facets)) {
     facets <- NULL 
   }
@@ -227,11 +242,10 @@ vpc <- function(xpdb,
   
   # Add metadata to plots
   xpdb_summary <- xpdb$summary
-  
   if (!is.null(vpc_dat$psn_folder)) {
    xpdb_summary$value[xpdb_summary$label == 'dir'] <- stringr::str_c('VPC folder: ', vpc_dat$psn_folder)
   }
-  xp$xpose <- list(fun      = stringr::str_c('vpc_', vpc_type),
+  xp$xpose <- list(fun      = stringr::str_c('vpc_', vpc_dat$type),
                    summary  = xpdb_summary,
                    problem  = dplyr::if_else(is.null(vpc_dat$psn_folder), 0, vpc_dat$sim_problem),
                    quiet    = quiet,

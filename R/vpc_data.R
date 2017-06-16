@@ -20,7 +20,7 @@
 #' @examples
 #' \dontrun{
 #' xpdb_ex_pk %>% 
-#'  vpc_data(xpdb_ex_pk) %>% 
+#'  vpc_data() %>% 
 #'  vpc()
 #' }
 #' @export
@@ -112,33 +112,33 @@ vpc_data <- function(xpdb,
   facets <- stratify
   if (is.formula(stratify)) stratify <- all.vars(stratify)
   if (!is.null(stratify)) {
-  msg(c('Using ', stringr::str_c(stratify, collapse = ', '), 
-        ' for stratification.'), quiet)
+    msg(c('Using ', stringr::str_c(stratify, collapse = ', '), 
+          ' for stratification.'), quiet)
   }
   if (!is.null(vpc_opt$lloq)) msg(c('Setting lloq to ', vpc_opt$lloq, '.'), quiet)
   if (!is.null(vpc_opt$uloq)) msg(c('Setting uloq to ', vpc_opt$uloq, '.'), quiet)
   
   # Generate vpc data
   if (vpc_type == 'continuous') {
-    vpc_dat <- vpc::vpc(obs = obs_data, sim = sim_data, psn_folder = psn_folder, bins = vpc_opt$bins, 
+    vpc_dat <- vpc::vpc(obs = obs_data, sim = sim_data, psn_folder = NULL, bins = vpc_opt$bins, 
                         n_bins = vpc_opt$n_bins, bin_mid = vpc_opt$bin_mid, obs_cols = obs_cols, 
                         sim_cols = sim_cols, stratify = stratify, pred_corr = vpc_opt$pred_corr, 
                         pred_corr_lower_bnd = vpc_opt$pred_corr_lower_bnd, pi = vpc_opt$pi, ci = vpc_opt$ci, 
                         uloq = vpc_opt$uloq, lloq = vpc_opt$lloq, smooth = FALSE, vpcdb = TRUE, verbose = !quiet) 
   } else if (vpc_type == 'categorical') {
-    vpc_dat <- vpc::vpc_cat(obs = obs_data, sim = sim_data, psn_folder = psn_folder, bins = vpc_opt$bins, 
+    vpc_dat <- vpc::vpc_cat(obs = obs_data, sim = sim_data, psn_folder = NULL, bins = vpc_opt$bins, 
                             n_bins = vpc_opt$n_bins, bin_mid = vpc_opt$bin_mid, obs_cols = obs_cols, 
                             sim_cols = sim_cols, stratify = stratify, ci = vpc_opt$ci, 
                             uloq = vpc_opt$uloq, lloq = vpc_opt$lloq, smooth = FALSE, vpcdb = TRUE, verbose = !quiet) 
   } else if (vpc_type == 'censored') {
-    vpc_dat <- vpc::vpc_cens(obs = obs_data, sim = sim_data, psn_folder = psn_folder, bins = vpc_opt$bins, 
+    vpc_dat <- vpc::vpc_cens(obs = obs_data, sim = sim_data, psn_folder = NULL, bins = vpc_opt$bins, 
                              n_bins = vpc_opt$n_bins, bin_mid = vpc_opt$bin_mid, obs_cols = obs_cols, 
                              sim_cols = sim_cols, stratify = stratify, ci = vpc_opt$ci, 
                              uloq = vpc_opt$uloq, lloq = vpc_opt$lloq, smooth = FALSE, vpcdb = TRUE, verbose = !quiet) 
   } else {
     msg('Time-to-event VPC are not yet available in xpose.', TRUE)
     return()
-    # vpc_dat <- vpc::vpc_tte(obs = obs_data, sim = sim_data, psn_folder = psn_folder, bins = vpc_opt$bins, 
+    # vpc_dat <- vpc::vpc_tte(obs = obs_data, sim = sim_data, psn_folder = NULL, bins = vpc_opt$bins, 
     #                         n_bins = vpc_opt$n_bins, obs_cols = obs_cols, sim_cols = sim_cols, stratify = stratify, 
     #                         ci = vpc_opt$ci, smooth = FALSE, rtte = vpc_opt$rtte, rtte_calc_diff = vpc_opt$rtte_calc_diff, 
     #                         events = vpc_opt$events, kmmc = vpc_opt$kmmc, reverse_prob = vpc_opt$reverse_prob, 
@@ -150,12 +150,19 @@ vpc_data <- function(xpdb,
     purrr::discard(names(.) %in% c('sim', 'stratify_original', 'stratify_color', 'facet', 'as_percentage')) %>%
     purrr::map_at('vpc_dat', function(x) {
       x <- x %>% 
+        dplyr::filter(!is.na(.$bin)) %>% 
         tidyr::gather(key = 'tmp', value = 'value', dplyr::matches('\\.(low|med|up)')) %>% 
         tidyr::separate_('tmp', into = c('simulations', 'ci'), sep = '\\.') %>% 
-        tidyr::spread_(key_col = 'ci', value_col = 'value') %>% 
-        dplyr::mutate(simulations = factor(.$simulations, levels = c('q5', 'q50', 'q95'),
-                                           labels = c(stringr::str_c(min(vpc_opt$pi)*100, 'th percentile'), 
-                                                      'Median', stringr::str_c(max(vpc_opt$pi)*100, 'th percentile'))))
+        tidyr::spread_(key_col = 'ci', value_col = 'value')
+      
+      if (vpc_type == 'continuous') {
+        x <- dplyr::mutate(.data = x, 
+                           simulations = factor(x$simulations, levels = c('q5', 'q50', 'q95'),
+                                                labels = c(stringr::str_c(min(vpc_opt$pi)*100, 'th percentile'), 
+                                                           'Median', stringr::str_c(max(vpc_opt$pi)*100, 'th percentile'))))
+      } else {
+        x <- dplyr::mutate(.data = x, simulations = factor(x$simulations, levels = 'q50', labels = 'Median'))
+      }
       if ('strat2' %in% colnames(x)) {
         x$strat1 <- stringr::str_replace(x$strat1, stringr::str_c(vpc_dat$stratify[1], '='), '')
         x$strat2 <- stringr::str_replace(x$strat2, stringr::str_c(vpc_dat$stratify[2], '='), '')
@@ -167,11 +174,20 @@ vpc_data <- function(xpdb,
       dplyr::mutate(.data = x, group = as.numeric(interaction(x$strat, x$simulations)))
     }) %>% 
     purrr::map_at('aggr_obs', function(x) {
-      x <- x %>% 
-        tidyr::gather(key = 'observations', value = 'value', dplyr::one_of('obs5', 'obs50', 'obs95')) %>% 
-        dplyr::mutate(observations = factor(.$observations, levels = c('obs5', 'obs50', 'obs95'),
-                                            labels = c(stringr::str_c(min(vpc_opt$pi)*100, 'th percentile'), 
-                                                       'Median', stringr::str_c(max(vpc_opt$pi)*100, 'th percentile'))))
+      if (vpc_type == 'continuous') {
+        x <- x %>% 
+          dplyr::filter(!is.na(.$bin)) %>% 
+          tidyr::gather(key = 'observations', value = 'value', dplyr::one_of('obs5', 'obs50', 'obs95')) %>% 
+          dplyr::mutate(observations = factor(.$observations, levels = c('obs5', 'obs50', 'obs95'),
+                                              labels = c(stringr::str_c(min(vpc_opt$pi)*100, 'th percentile'), 
+                                                         'Median', stringr::str_c(max(vpc_opt$pi)*100, 'th percentile'))))
+      } else {
+        x <- x %>% 
+          dplyr::filter(!is.na(.$bin)) %>% 
+          tidyr::gather(key = 'observations', value = 'value', dplyr::one_of('obs50')) %>% 
+          dplyr::mutate(observations = factor(.$observations, levels = 'obs50', labels = 'Median'))
+      }
+      
       if ('strat2' %in% colnames(x)) {
         x$strat1 <- stringr::str_replace(x$strat1, stringr::str_c(vpc_dat$stratify[1], '='), '')
         x$strat2 <- stringr::str_replace(x$strat2, stringr::str_c(vpc_dat$stratify[2], '='), '')

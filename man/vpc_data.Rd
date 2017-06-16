@@ -37,7 +37,7 @@ Generate visual predictive checks (VPC) data
 \examples{
 \dontrun{
 xpdb_ex_pk \%>\% 
- vpc_data(xpdb_ex_pk) \%>\% 
+ vpc_data() \%>\% 
  vpc()
 }
 }
