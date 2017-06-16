@@ -11,7 +11,8 @@ test_file <- c("TABLE NO.  4",
                "  1.1200E+02, 2.9835E+00, 2.1061E+01, 1.1637E+02, 2.3223E-01,-1.0516E-01, 2.0130E-02,-1.6260E-01")
 ctrl_file <- get_data(xpdb_ex_pk, table = 'patab001') %>% 
   dplyr::distinct_(.dots = 'ID', .keep_all = TRUE) %>% 
-  dplyr::slice(1:2)
+  dplyr::slice(1:2) %>% 
+  dplyr::mutate(ID = factor(.$ID, levels = c(110, 112)))
 
 firstonly_test <- as.nm.table.list(dplyr::tibble(problem   = 1, 
                                                  file      = c('sdtab001', 'patab001'),

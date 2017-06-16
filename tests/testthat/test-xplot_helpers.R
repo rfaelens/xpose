@@ -45,8 +45,8 @@ test_that('Check last_file_subprob', {
 })
 
 test_that('Check xp_var', {
-  expect_equal(xp_var(xpdb_ex_pk, 1, col = 'TIME')$type, 'idv')
-  expect_equal(xp_var(xpdb_ex_pk, 1, type = 'idv')$col, 'TIME')
+  expect_equal(xp_var(xpdb_ex_pk, 1, col = 'TAD')$type, 'idv')
+  expect_equal(xp_var(xpdb_ex_pk, 1, type = 'idv')$col, 'TAD')
   expect_null(xp_var(xpdb_ex_pk, 1, col = 'FAKE_COL'))
 })
 

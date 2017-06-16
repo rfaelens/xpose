@@ -4,9 +4,9 @@ context('Check VPCs')
 psn_cmd_1 <- '/opt/local64/PsN/bin/vpc -seed=221287 -samples=1000 -stratify_on=VAR1,VAR2 -lst=run001.lst run001.mod'
 psn_cmd_2 <- '/opt/local64/PsN/bin/vpc -seed=221287 -samples=1000 -idv=TAD -dv=IDV -lst=run001.lst run001.mod'
 
-# ctrl_special <- vpc_data(vpc_data(xpdb_ex_pk, vpc_opt = vpc_opt_set(n_bins = 3)),
-#                          vpc_type = 'cens', vpc_opt = vpc_opt_set(n_bins = 3, lloq = -2))
-# save(ctrl_special, file = 'ctrl_special.RData', compress = 'xz')
+ # ctrl_special <- vpc_data(vpc_data(xpdb_ex_pk, vpc_opt = vpc_opt_set(n_bins = 3)),
+ #                          vpc_type = 'cens', vpc_opt = vpc_opt_set(n_bins = 3, lloq = -2))
+ # save(ctrl_special, file = 'ctrl_special.RData', compress = 'xz')
 load('ctrl_special.RData')
 
 # Tests start here --------------------------------------------------------
