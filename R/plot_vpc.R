@@ -96,7 +96,7 @@ vpc <- function(xpdb,
       xp <- xp + xp_geoms(mapping  = aes_c(aes_string(area_x = 'bin_mid', 
                                                       area_ymin = 'low',
                                                       area_ymax = 'up',
-                                                      area_group = 'strat',
+                                                      area_group = 'group',
                                                       area_fill = 'simulations'), mapping),
                           xp_theme = xpdb$xp_theme,
                           name     = 'area',
@@ -108,7 +108,7 @@ vpc <- function(xpdb,
                                                       area_xmax = 'bin_max',
                                                       area_ymin = 'low',
                                                       area_ymax = 'up',
-                                                      area_group = 'strat',
+                                                      area_group = 'group',
                                                       area_fill = 'simulations'), mapping),
                           xp_theme = xpdb$xp_theme,
                           name     = 'area',
@@ -122,7 +122,7 @@ vpc <- function(xpdb,
   if (stringr::str_detect(type, stringr::fixed('l', ignore_case = TRUE))) {
     xp <- xp + xp_geoms(mapping  = aes_c(aes_string(line_x = 'bin_mid',
                                                     line_y = 'value',
-                                                    line_group = 'strat',
+                                                    line_group = 'group',
                                                     line_linetype = 'observations'), mapping),
                         xp_theme = xpdb$xp_theme,
                         name     = 'line',
@@ -205,14 +205,20 @@ vpc <- function(xpdb,
                         xp_theme = xpdb$xp_theme,
                         name     = 'rug',
                         ggfun    = 'geom_rug',
-                        rug_data =   vpc_dat$obs %>% 
-                          dplyr::distinct_(.dots = c('idv', facets_string, 'bin'), 
-                                           .keep_all = TRUE),
+                        rug_data =  vpc_dat$aggr_obs %>% 
+                          dplyr::distinct_(.dots = c('bin', facets_string), .keep_all = TRUE) %>% 
+                          dplyr::filter(!is.na(.$bin)) %>% 
+                          tidyr::gather(key = 'edges', value = 'idv', dplyr::one_of('bin_min', 'bin_max')) %>% 
+                          dplyr::distinct_(.dots = c(facets_string, 'idv'), .keep_all = TRUE),
                         ...)
+       
   }
 
   # Add labels
   xp <- xp + labs(title = title, subtitle = subtitle, caption = caption)
+  
+  # Add limits whenever needed
+  if (vpc_dat$type == 'categorical') xp <- xp + coord_cartesian(ylim = c(0, 1))
   
   # Add color scales
   xp <- xp + 
@@ -220,9 +226,14 @@ vpc <- function(xpdb,
     scale_linetype_manual(values = c('93', 'solid', '93'))
   
   # Add metadata to plots
+  xpdb_summary <- xpdb$summary
+  
+  if (!is.null(vpc_dat$psn_folder)) {
+   xpdb_summary$value[xpdb_summary$label == 'dir'] <- stringr::str_c('VPC folder: ', vpc_dat$psn_folder)
+  }
   xp$xpose <- list(fun      = stringr::str_c('vpc_', vpc_type),
-                   summary  = xpdb$summary,
-                   problem  = 0,
+                   summary  = xpdb_summary,
+                   problem  = dplyr::if_else(is.null(vpc_dat$psn_folder), 0, vpc_dat$sim_problem),
                    quiet    = quiet,
                    xp_theme = xpdb$xp_theme[stringr::str_c(c('title', 'subtitle', 'caption'), '_suffix')])
   
