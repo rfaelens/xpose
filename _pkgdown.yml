@@ -25,6 +25,12 @@ reference:
     - print.xpose_data
     - summary.xpose_data
     - list_vars
+  - title: Edit xpdb content
+    desc:  Edit data, index or files within an xpdb
+    contents:
+    - set_vars_type
+    - set_vars_labs
+    - set_vars_units
   - title: Access data from an xpdb
     desc:  Access code, data, files or summary from an xpdb object
     contents:
