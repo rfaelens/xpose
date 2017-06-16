@@ -142,6 +142,21 @@ read_nm_tables <- function(files         = NULL,
     return() 
   }
   
+  # Convert catcov to factor
+  tables <- tables %>% 
+    dplyr::mutate(grouping = .$problem) %>% 
+    dplyr::group_by_(.dots = 'grouping') %>% 
+    tidyr::nest(.key = 'tmp') %>% 
+    dplyr::mutate(tmp = purrr::map(.$tmp, function(x) {
+      col_to_factor <- which(colnames(x$data[[1]]) %in% 
+                               x$index[[1]]$col[x$index[[1]]$type == 'catcov'])
+      if (length(col_to_factor) > 0) {
+        x$data[[1]] <- dplyr::mutate_at(x$data[[1]], col_to_factor, as.factor)
+      }
+      x})) %>% 
+    tidyr::unnest_(unnest_cols = 'tmp') %>% 
+    dplyr::select(dplyr::one_of('problem', 'simtab', 'data', 'index'))
+  
   # If user mode return simple tibble as only 1 problem should be used
   if (user_mode) return(tables$data[[1]])
   tables
