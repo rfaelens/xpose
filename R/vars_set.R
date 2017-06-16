@@ -37,10 +37,10 @@
 #' xpdb_2 <- set_vars_type(xpdb_ex_pk, problem = 1, idv = 'TAD')
 #' 
 #' # Change labels
-#' xpdb_2 <- set_var_label(xpdb_2, problem = 1, ALAG1 = 'Lag time', CL = 'Clearance', V = 'Volume')
+#' xpdb_2 <- set_vars_label(xpdb_2, problem = 1, ALAG1 = 'Lag time', CL = 'Clearance', V = 'Volume')
 #' 
 #' # Change units
-#' xpdb_2 <- set_var_units(xpdb_2, problem = 1, ALAG1 = 'h', CL = 'L/h', V = 'L')
+#' xpdb_2 <- set_vars_units(xpdb_2, problem = 1, ALAG1 = 'h', CL = 'L/h', V = 'L')
 #' 
 #' @name set_vars
 #' @export
