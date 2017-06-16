@@ -225,6 +225,7 @@ vpc <- function(xpdb,
                           dplyr::filter(!is.na(.$bin)) %>% 
                           tidyr::gather(key = 'edges', value = 'idv', dplyr::one_of('bin_min', 'bin_max')) %>% 
                           dplyr::distinct_(.dots = c(facets_string, 'idv'), .keep_all = TRUE),
+                        rug_sides = 't',
                         ...)
        
   }
