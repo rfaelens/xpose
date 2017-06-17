@@ -98,8 +98,25 @@
 <div id="plot-type" class="section level3">
 <h3 class="hasAnchor">
 <a href="#plot-type" class="anchor"></a>Plot type</h3>
-<p>The option <code>type</code> allows to control how the data should be represented i.e. whether to use points <code>'p'</code>, lines <code>'l'</code>, smooth <code>'s'</code>, text <code>'t'</code> or any combination of the three (e.g. <code>type = 'pl'</code>).</p>
-<p><img src="customize_plots_files/figure-html/demo%20type-1.png" width="75%" style="display: block; margin: auto;"></p>
+<p>The option <code>type</code> allows to control how the data should be represented.</p>
+<div id="scatter-plots" class="section level4">
+<h4 class="hasAnchor">
+<a href="#scatter-plots" class="anchor"></a>Scatter plots</h4>
+<p>In scatter plots <code>type</code> can be any combination of: points <code>'p'</code>, lines <code>'l'</code>, smooth <code>'s'</code>, text <code>'t'</code>.</p>
+<p><img src="customize_plots_files/figure-html/demo%20type%20scatter-1.png" width="75%" style="display: block; margin: auto;"></p>
+</div>
+<div id="distribution-plots" class="section level4">
+<h4 class="hasAnchor">
+<a href="#distribution-plots" class="anchor"></a>Distribution plots</h4>
+<p>In distribution plots <code>type</code> can be any combination of: histogram <code>'h'</code>, density <code>'d'</code>, or rug <code>'r'</code>.</p>
+<p><img src="customize_plots_files/figure-html/demo%20type%20distrib-1.png" width="75%" style="display: block; margin: auto;"></p>
+</div>
+<div id="vpcs" class="section level4">
+<h4 class="hasAnchor">
+<a href="#vpcs" class="anchor"></a>VPCs</h4>
+<p>In visual predictive checks plots <code>type</code> can be any combination of: areas <code>'a'</code>, lines <code>'l'</code>, points <code>'p'</code>, text <code>'t'</code> or rug <code>'r'</code>.</p>
+<p><img src="customize_plots_files/figure-html/demo%20type%20vpc-1.png" width="75%" style="display: block; margin: auto;"></p>
+</div>
 </div>
 <div id="visual-guides" class="section level3">
 <h3 class="hasAnchor">
@@ -155,7 +172,7 @@
             <span class="dt">smooth_method =</span> <span class="st">'lm'</span>)</code></pre></div>
 <p><img src="customize_plots_files/figure-html/demo%20aesthetics-1.png" width="50%" style="display: block; margin: auto;"></p>
 <p>Aesthetics can also be defined mapped to a variable using the ggplot2 <code>aes()</code> function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">type =</span> <span class="st">'p'</span>, <span class="kw">aes</span>(<span class="dt">point_color =</span> <span class="kw">as.factor</span>(SEX))) </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">type =</span> <span class="st">'p'</span>, <span class="kw">aes</span>(<span class="dt">point_color =</span> SEX))</code></pre></div>
 <p><img src="customize_plots_files/figure-html/demo%20mapping-1.png" width="50%" style="display: block; margin: auto;"></p>
 </div>
 <div id="grouping-variable" class="section level3">
@@ -175,7 +192,7 @@
 <span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">facets =</span> <span class="kw">c</span>(<span class="st">'SEX'</span>, <span class="st">'OCC'</span>))</code></pre></div>
 <p><img src="customize_plots_files/figure-html/demo%20panels-1.png" width="75%" style="display: block; margin: auto;"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Example with a formula</span>
-<span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">facets =</span> SEX~OCC)</code></pre></div>
+<span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">facets =</span> SEX~OCC, <span class="dt">panel_labeller =</span> <span class="st">'label_both'</span>)</code></pre></div>
 <p><img src="customize_plots_files/figure-html/demo%20panels-2.png" width="75%" style="display: block; margin: auto;"></p>
 <p>Additional arguments can be passed to the panel function using the <code>panel_xxx</code> notation (e.g. <code>panel_ncol = 2</code>, <code>panel_labeller = 'label_both'</code>). For more options read the help of <a href="http://ggplot2.tidyverse.org/reference/facet_wrap.html"><code>facet_wrap</code></a> and <a href="http://ggplot2.tidyverse.org/reference/facet_grid.html"><code>facet_grid</code></a> from <code>ggplot2</code>.</p>
 </div>

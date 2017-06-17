@@ -174,7 +174,7 @@ Summary for problem no. 2 [Model simulations]
 List of available variables for problem no. 1 
  - Subject identifier (id)               : ID
  - Dependent variable (dv)               : DV
- - Independent variable (idv)            : TAD
+ - Independent variable (idv)            : TIME
  - Occasion flag (occ)                   : OCC
  - Dose amount (amt)                     : AMT
  - Event identifier (evid)               : EVID
@@ -185,36 +185,36 @@ List of available variables for problem no. 1
  - Residuals (res)                       : CWRES, IWRES, RES, WRES
  - Categorical covariates (catcov)       : SEX, MED1, MED2
  - Continuous covariates (contcov)       : CLCR, AGE, WT
- - Not attributed (na)                   : DOSE, SS, II, TIME, CPRED
+ - Not attributed (na)                   : DOSE, SS, II, TAD, CPRED
 
 List of available variables for problem no. 2 
  - Subject identifier (id)               : ID
  - Dependent variable (dv)               : DV
- - Independent variable (idv)            : TAD
+ - Independent variable (idv)            : TIME
  - Occasion flag (occ)                   : OCC
  - Dose amount (amt)                     : AMT
  - Event identifier (evid)               : EVID
  - Model individual predictions (ipred)  : IPRED
- - Not attributed (na)                   : DOSE, TIME, SEX, CLCR, AGE, WT</code></pre>
+ - Not attributed (na)                   : DOSE, TAD, SEX, CLCR, AGE, WT</code></pre>
+</div>
+<div id="editing-the-xpdb" class="section level3">
+<h3 class="hasAnchor">
+<a href="#editing-the-xpdb" class="anchor"></a>Editing the xpdb</h3>
+<p>Multiples edits can be made to the xpdb object. For instance the type (visible using the <code><a href="../reference/list_vars.html">list_vars()</a></code> function described above) of a variable can be changed. Hence the idependent variable (idv) could be changed from <code>TIME</code> (default in NONMEM) to <code>TAD</code>. All plots using <code>idv</code> will then automatically use <code>TAD</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># With the TIME default</span>
+xpdb %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/pred_vs_idv.html">dv_vs_idv</a></span>()</code></pre></div>
+<p><img src="introduction_files/figure-html/change%20idv-1.png" width="50%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># After IDV reassignment</span>
+xpdb %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/set_vars.html">set_vars_type</a></span>(<span class="dt">idv =</span> <span class="st">'TAD'</span>) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/pred_vs_idv.html">dv_vs_idv</a></span>()</code></pre></div>
+<p><img src="introduction_files/figure-html/change%20idv-2.png" width="50%" style="display: block; margin: auto;"></p>
 </div>
 <div id="generating-plots" class="section level3">
 <h3 class="hasAnchor">
 <a href="#generating-plots" class="anchor"></a>Generating plots</h3>
-<p>Many functions will be made available in the next release of xpose. Available functions feature:</p>
-<ul>
-<li>DV vs. PRED (<code><a href="../reference/dv_vs_pred.html">dv_vs_pred()</a></code>, <code><a href="../reference/dv_vs_pred.html">dv_vs_ipred()</a></code>, <code>dv_vs_cpred()</code>)<br>
-</li>
-<li>RES vs. IDV (<code><a href="../reference/res_vs_idv.html">res_vs_idv(res = 'CWRES')</a></code>)<br>
-</li>
-<li>RES vs. PRED (<code><a href="../reference/res_vs_pred.html">res_vs_pred(res = 'CWRES')</a></code>)<br>
-</li>
-<li>|RES| vs. IDV (<code><a href="../reference/res_vs_idv.html">absval_res_vs_idv(res = 'CWRES')</a></code>)<br>
-</li>
-<li>|RES| vs. PRED (<code><a href="../reference/res_vs_pred.html">absval_res_vs_pred(res = 'CWRES')</a></code>)<br>
-</li>
-<li>DV and PRED vs. IDV (<code><a href="../reference/pred_vs_idv.html">dv_vs_idv()</a></code>, <code><a href="../reference/pred_vs_idv.html">ipred_vs_idv()</a></code>, <code><a href="../reference/pred_vs_idv.html">pred_vs_idv()</a></code>, <code>dv_pred_vs_idv()</code>)</li>
-</ul>
-<p>These functions are used as follow:</p>
+<p>Many functions will be made available in the next release of xpose. The plotting functions are used as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># DV vs. IPRED plot</span>
 <span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb)</code></pre></div>
 <p><img src="introduction_files/figure-html/demo%20basic%20gof-1.png" width="50%" style="display: block; margin: auto;"></p>

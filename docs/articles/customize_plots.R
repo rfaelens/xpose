@@ -1,7 +1,7 @@
 ## ---- include = FALSE----------------------------------------------------
 library(xpose)
 
-xpdb <- xpdb_ex_pk
+xpdb <- xpdb_ex_pk %>% vpc_data()
 
 knitr::opts_chunk$set(fig.dpi = 96,
                       fig.align = 'center', 
@@ -10,12 +10,27 @@ knitr::opts_chunk$set(fig.dpi = 96,
                       out.width = '50%',
                       comment = '')
 
-## ----demo type, echo = FALSE, fig.height = 6, fig.width = 6, out.width = '75%'----
+## ----demo type scatter, echo = FALSE, fig.height = 6, fig.width = 6, out.width = '75%'----
 gridExtra::grid.arrange(
   dv_vs_ipred(xpdb, title = "type = \'p\'", subtitle = NULL, caption = NULL, type = 'p'),
   dv_vs_ipred(xpdb, title = "type = \'l\'", subtitle = NULL, caption = NULL, type = 'l'),
   dv_vs_ipred(xpdb, title = "type = \'s\'", subtitle = NULL, caption = NULL, type = 's'),
   dv_vs_ipred(xpdb, title = "type = \'t\'", subtitle = NULL, caption = NULL, type = 't'),
+  ncol = 2)
+
+## ----demo type distrib, echo = FALSE, fig.height = 3.2, fig.width = 6, out.width = '75%'----
+gridExtra::grid.arrange(
+  res_distrib(xpdb, title = "type = \'h\'", subtitle = NULL, caption = NULL, type = 'h'),
+  res_distrib(xpdb, title = "type = \'d\'", subtitle = NULL, caption = NULL, type = 'd') + labs(y = NULL),
+  res_distrib(xpdb, title = "type = \'r\'", subtitle = NULL, caption = NULL, type = 'r'),
+  ncol = 3)
+
+## ----demo type vpc, echo = FALSE, fig.height = 6, fig.width = 6, out.width = '75%'----
+gridExtra::grid.arrange(
+  vpc(xpdb, title = "type = \'a\'", subtitle = NULL, caption = NULL, type = 'a') + theme(legend.position = 'none') ,
+  vpc(xpdb, title = "type = \'l\'", subtitle = NULL, caption = NULL, type = 'l') + theme(legend.position = 'none'),
+  vpc(xpdb, title = "type = \'p\'", subtitle = NULL, caption = NULL, type = 'p'),
+  vpc(xpdb, title = "type = \'t\'", subtitle = NULL, caption = NULL, type = 't'),
   ncol = 2)
 
 ## ----demo titles---------------------------------------------------------
@@ -52,14 +67,14 @@ dv_vs_ipred(xpdb,
             smooth_method = 'lm')
 
 ## ----demo mapping--------------------------------------------------------
-dv_vs_ipred(xpdb, type = 'p', aes(point_color = as.factor(SEX))) 
+dv_vs_ipred(xpdb, type = 'p', aes(point_color = SEX))
 
 ## ----demo panels, fig.width = 6, fig.height = 6, out.width = '75%'-------
 # Example with a string
 dv_vs_ipred(xpdb, facets = c('SEX', 'OCC'))
 
 # Example with a formula
-dv_vs_ipred(xpdb, facets = SEX~OCC)
+dv_vs_ipred(xpdb, facets = SEX~OCC, panel_labeller = 'label_both')
 
 ## ----demo layers---------------------------------------------------------
 dv_vs_ipred(xpdb) +

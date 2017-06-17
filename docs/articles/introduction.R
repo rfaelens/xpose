@@ -1,14 +1,15 @@
 ## ---- include = FALSE----------------------------------------------------
 library(xpose)
 
-xpdb <- xpdb_ex_pk
+xpdb <- xpdb_ex_pk %>% 
+  set_vars_type(idv = 'TIME')
 
 knitr::opts_chunk$set(fig.dpi = 96,
-                      fig.align = 'center', 
-                      fig.height = 4, 
-                      fig.width = 4,
-                      out.width = '50%',
-                      comment = '')
+fig.align = 'center', 
+fig.height = 4, 
+fig.width = 4,
+out.width = '50%',
+comment = '')
 
 ## ----demo print xpose_data-----------------------------------------------
 xpdb # or print(xpdb)
@@ -18,6 +19,16 @@ summary(xpdb)
 
 ## ----demo list_vars------------------------------------------------------
 list_vars(xpdb)
+
+## ---- change idv---------------------------------------------------------
+# With the TIME default
+xpdb %>% 
+  dv_vs_idv()
+
+# After IDV reassignment
+xpdb %>% 
+  set_vars_type(idv = 'TAD') %>% 
+  dv_vs_idv()
 
 ## ----demo basic gof------------------------------------------------------
 # DV vs. IPRED plot

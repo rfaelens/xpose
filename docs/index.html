@@ -134,14 +134,53 @@ devtools::<span class="kw">install_github</span>(<span class="st">'UUPharmacomet
  - gg_theme: theme_readable 
  - xp_theme: theme_xp_default 
  - Options: dir = analysis/models/pk/, quiet = TRUE, manual_import = NULL</code></pre>
+<div id="model-summary" class="section level5">
+<h5 class="hasAnchor">
+<a href="#model-summary" class="anchor"></a>Model summary</h5>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(xpdb, <span class="dt">problem =</span> <span class="dv">1</span>)</code></pre></div>
+<pre><code>
+Summary for problem no. 1 [Parameter estimation] 
+ - Input data                   : mx19_1.csv
+ - Number of individuals        : 74
+ - Number of observations       : 1022
+ - ADVAN                        : 2
+ - Estimation method            : foce-i
+ - Termination message          : MINIMIZATION SUCCESSFUL
+ - Estimation runtime           : 00:00:06
+ - Objective function value     : -656.869
+ - Number of significant digits : 3.6
+ - Covariance step runtime      : 00:00:04
+ - Condition number             : 31.3
+ - Eta shrinkage                : 10.2 [1], 48.2 [2], 14.7 [3]
+ - Epsilon shrinkage            : 6.7 [1]
+ - Run warnings                 : (WARNING 2) NM-TRAN INFERS THAT THE DATA ARE POPULATION.</code></pre>
+</div>
 </div>
 <div id="generate-diagnostics" class="section level4">
 <h4 class="hasAnchor">
 <a href="#generate-diagnostics" class="anchor"></a>Generate diagnostics</h4>
+<div id="standard-goodness-of-fit-plots" class="section level5">
+<h5 class="hasAnchor">
+<a href="#standard-goodness-of-fit-plots" class="anchor"></a>Standard goodness-of-fit plots</h5>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb)</code></pre></div>
 <p><img src="inst/img/readme_example_figure_1-1.png" width="50%" style="display: block; margin: auto;"></p>
+</div>
+<div id="distribution-plots" class="section level5">
+<h5 class="hasAnchor">
+<a href="#distribution-plots" class="anchor"></a>Distribution plots</h5>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/distrib_plot.html">eta_distrib</a></span>(xpdb)</code></pre></div>
 <p><img src="inst/img/readme_example_figure_2-1.png" width="75%" style="display: block; margin: auto;"></p>
+</div>
+<div id="minimization-diagnostics" class="section level5">
+<h5 class="hasAnchor">
+<a href="#minimization-diagnostics" class="anchor"></a>Minimization diagnostics</h5>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/minimization_plots.html">prm_vs_iteration</a></span>(xpdb)</code></pre></div>
+<p><img src="inst/img/readme_example_figure_3-1.png" width="75%" style="display: block; margin: auto;"></p>
+</div>
+<div id="and-much-more" class="section level5">
+<h5 class="hasAnchor">
+<a href="#and-much-more" class="anchor"></a>And much more !</h5>
+</div>
 </div>
 </div>
 <div id="recommended-reading" class="section level3">

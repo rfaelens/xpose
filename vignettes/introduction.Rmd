@@ -8,18 +8,19 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-
+  
 ```{r, include = FALSE}
 library(xpose)
 
-xpdb <- xpdb_ex_pk
+xpdb <- xpdb_ex_pk %>% 
+  set_vars_type(idv = 'TIME')
 
 knitr::opts_chunk$set(fig.dpi = 96,
-                      fig.align = 'center', 
-                      fig.height = 4, 
-                      fig.width = 4,
-                      out.width = '50%',
-                      comment = '')
+fig.align = 'center', 
+fig.height = 4, 
+fig.width = 4,
+out.width = '50%',
+comment = '')
 ```
 
 
@@ -57,18 +58,22 @@ A list of available variables for plotting can be displayed to the console by us
 list_vars(xpdb)
 ```
 
+### Editing the xpdb
+Multiples edits can be made to the xpdb object. For instance the type (visible using the `list_vars()` function described above) of a variable can be changed. Hence the idependent variable (idv) could be changed from `TIME` (default in NONMEM) to `TAD`. All plots using `idv` will then automatically use `TAD`.
+
+```{r, change idv}
+# With the TIME default
+xpdb %>% 
+  dv_vs_idv()
+
+# After IDV reassignment
+xpdb %>% 
+  set_vars_type(idv = 'TAD') %>% 
+  dv_vs_idv()
+```
 
 ### Generating plots
-Many functions will be made available in the next release of xpose. Available functions feature:
-
- - DV vs. PRED (`dv_vs_pred()`, `dv_vs_ipred()`, `dv_vs_cpred()`)   
- - RES vs. IDV (`res_vs_idv(res = 'CWRES')`)   
- - RES vs. PRED (`res_vs_pred(res = 'CWRES')`)   
- - |RES| vs. IDV (`absval_res_vs_idv(res = 'CWRES')`)   
- - |RES| vs. PRED (`absval_res_vs_pred(res = 'CWRES')`)   
- - DV and PRED vs. IDV (`dv_vs_idv()`, `ipred_vs_idv()`, `pred_vs_idv()`, `dv_pred_vs_idv()`)
- 
-These functions are used as follow:
+Many functions will be made available in the next release of xpose. The plotting functions are used as follows:
 ``` {r demo basic gof}
 # DV vs. IPRED plot
 dv_vs_ipred(xpdb)
