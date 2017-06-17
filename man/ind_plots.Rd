@@ -5,7 +5,7 @@
 \title{Observations, individual predictions and population predictions plotted against 
 the independent variable for every individual}
 \usage{
-ind_plots(xpdb, mapping = NULL, group = "variable", type = "l",
+ind_plots(xpdb, mapping = NULL, group = "variable", type = "lp",
   facets = NULL, title = "Individual plots | @run",
   subtitle = "Ofv: @ofv, Eps shrink: @epsshk", caption = "@dir",
   log = NULL, nrow = 3, ncol = 3, page = 1, problem, quiet, ...)

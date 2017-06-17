@@ -22,7 +22,7 @@
 ind_plots <- function(xpdb,
                       mapping  = NULL,
                       group    = 'variable',
-                      type     = 'l',
+                      type     = 'lp',
                       facets   = NULL,
                       title    = 'Individual plots | @run',
                       subtitle = 'Ofv: @ofv, Eps shrink: @epsshk',
