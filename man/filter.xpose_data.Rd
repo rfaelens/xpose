@@ -18,8 +18,8 @@ See the dplyr vignette("programming") for an introduction to these concepts.}
 
 \item{.problem}{The problem from which the data will be modified}
 
-\item{.source}{The source of the data in the xpdb. Can be data or an output 
-file extension.}
+\item{.source}{The source of the data in the xpdb. Can either be 'data' or an output 
+file extension e.g. 'phi'.}
 }
 \description{
 Use filter() find rows/cases where conditions are true. 

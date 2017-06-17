@@ -5,8 +5,8 @@
 #' 
 #' @param .data An xpose database object.
 #' @param .problem The problem from which the data will be modified
-#' @param .source The source of the data in the xpdb. Can be data or an output 
-#' file extension.
+#' @param .source The source of the data in the xpdb. Can either be 'data' or an output 
+#' file extension e.g. 'phi'.
 #' @param ... Logical predicates defined in terms of the variables in .data. 
 #' Multiple conditions are combined with &. Only rows where the conditon evalutes 
 #' to \code{TRUE} are kept. 
