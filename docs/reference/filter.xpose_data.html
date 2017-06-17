@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Objects exported from other packages — reexports • xpose</title>
+<title>Filter an xpdb by matching condition — filter.xpose_data • xpose</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -108,26 +108,50 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Objects exported from other packages</h1>
+    <h1>Filter an xpdb by matching condition</h1>
     </div>
 
     
-    <p>These objects are imported from other packages. Follow the links
-below to see their documentation.</p><dl class='dl-horizontal'>
-  <dt>dplyr</dt><dd><p><code><a href='http://www.rdocumentation.org/packages/dplyr/topics/filter'>filter</a></code></p></dd>
-
-    <dt>ggforce</dt><dd><p><code><a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a></code>, <code><a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a></code></p></dd>
-
-    <dt>purrr</dt><dd><p><code>%&gt;%</code></p></dd>
-</dl>
+    <p>Use filter() find rows/cases where conditions are true. 
+Unlike base subsetting, rows where the condition evaluates to NA are dropped.</p>
     
 
-        
+    <pre class="usage"><span class='co'># S3 method for xpose_data</span>
+<span class='fu'><a href='reexports.html'>filter</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='no'>.problem</span>, <span class='no'>.source</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>.data</th>
+      <td><p>An xpose database object.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Logical predicates defined in terms of the variables in .data. 
+Multiple conditions are combined with &amp;. Only rows where the conditon evalutes 
+to <code>TRUE</code> are kept. 
+These arguments are automatically quoted and evaluated in the 
+context of the data frame. They support unquoting and splicing. 
+See the dplyr vignette("programming") for an introduction to these concepts.</p></td>
+    </tr>
+    <tr>
+      <th>.problem</th>
+      <td><p>The problem from which the data will be modified</p></td>
+    </tr>
+    <tr>
+      <th>.source</th>
+      <td><p>The source of the data in the xpdb. Can be data or an output 
+file extension.</p></td>
+    </tr>
+    </table>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
                 </ul>
 
   </div>
