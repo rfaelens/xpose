@@ -4,10 +4,10 @@
 \alias{filter.xpose_data}
 \title{Filter an xpdb by matching condition}
 \usage{
-\method{filter}{xpose_data}(.xpdb, ..., .problem, .source)
+\method{filter}{xpose_data}(.data, ..., .problem, .source)
 }
 \arguments{
-\item{.xpdb}{An xpose database object.}
+\item{.data}{An xpose database object.}
 
 \item{...}{Logical predicates defined in terms of the variables in .data. 
 Multiple conditions are combined with &. Only rows where the conditon evalutes 
@@ -16,12 +16,17 @@ These arguments are automatically quoted and evaluated in the
 context of the data frame. They support unquoting and splicing. 
 See the dplyr vignette("programming") for an introduction to these concepts.}
 
+\item{.problem}{The problem from which the data will be modified}
+
 \item{.source}{The source of the data in the xpdb. Can be data or an output 
 file extension.}
-
-\item{.param}{The problem from which the data will be modified}
 }
 \description{
 Use filter() find rows/cases where conditions are true. 
 Unlike base subsetting, rows where the condition evaluates to NA are dropped.
+}
+\examples{
+xpdb_ex_pk \%>\% 
+ filter(DV > -2, .problem = 1) \%>\% 
+  dv_vs_ipred()
 }
