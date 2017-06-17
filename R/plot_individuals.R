@@ -44,12 +44,16 @@ ind_plots <- function(xpdb,
                                         value_col = xp_var(xpdb, problem, 
                                                            type = c('dv', 'pred', 'ipred'))$col),
                 mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
-                                           y = 'value', line_color = 'variable',
-                                           point_color = 'variable'), mapping),
+                                           y = 'value', line_color = 'variable', 
+                                           line_linetype = 'variable', point_color = 'variable', 
+                                           point_shape = 'variable'), mapping),
                 type = type, panel_facets = facets,
                 xscale = check_scales('x', log),
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
                 plot_name = as.character(match.call()[[1]]), 
-                panel_nrow = nrow, panel_ncol = ncol, ...)
+                panel_nrow = nrow, panel_ncol = ncol, ...) +
+    scale_shape_manual(values = c(19, NA, NA)) +
+    scale_color_manual(values = c('grey60', 'deepskyblue3', 'deepskyblue3')) +
+    scale_linetype_manual(values = c('dashed', 'solid', '52'))
 }
