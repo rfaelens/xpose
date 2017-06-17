@@ -51,14 +51,28 @@ xpdb <- xpose_data(runno = '001')
 xpdb
 ```
 
+##### Model summary
+```{r, comment = ''}
+summary(xpdb, problem = 1)
+```
+
 #### Generate diagnostics
+##### Standard goodness-of-fit plots
 ```{r readme_example_figure_1}
 dv_vs_ipred(xpdb)
 ```
 
+##### Distribution plots
 ```{r readme_example_figure_2, fig.width = 6, out.width = '75%'}
 eta_distrib(xpdb)
 ```
+
+##### Minimization diagnostics
+```{r readme_example_figure_3, fig.width = 6, out.width = '75%'}
+prm_vs_iteration(xpdb)
+```
+
+##### And much more !
 
 ### Recommended reading
 The [xpose website](https://UUPharmacometrics.github.io/xpose/) contains several useful articles to make full use of xpose

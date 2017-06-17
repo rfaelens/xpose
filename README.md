@@ -48,7 +48,32 @@ xpdb
      - xp_theme: theme_xp_default 
      - Options: dir = analysis/models/pk/, quiet = TRUE, manual_import = NULL
 
+##### Model summary
+
+``` r
+summary(xpdb, problem = 1)
+```
+
+
+    Summary for problem no. 1 [Parameter estimation] 
+     - Input data                   : mx19_1.csv
+     - Number of individuals        : 74
+     - Number of observations       : 1022
+     - ADVAN                        : 2
+     - Estimation method            : foce-i
+     - Termination message          : MINIMIZATION SUCCESSFUL
+     - Estimation runtime           : 00:00:06
+     - Objective function value     : -656.869
+     - Number of significant digits : 3.6
+     - Covariance step runtime      : 00:00:04
+     - Condition number             : 31.3
+     - Eta shrinkage                : 10.2 [1], 48.2 [2], 14.7 [3]
+     - Epsilon shrinkage            : 6.7 [1]
+     - Run warnings                 : (WARNING 2) NM-TRAN INFERS THAT THE DATA ARE POPULATION.
+
 #### Generate diagnostics
+
+##### Standard goodness-of-fit plots
 
 ``` r
 dv_vs_ipred(xpdb)
@@ -56,11 +81,23 @@ dv_vs_ipred(xpdb)
 
 <img src="inst/img/readme_example_figure_1-1.png" width="50%" style="display: block; margin: auto;" />
 
+##### Distribution plots
+
 ``` r
 eta_distrib(xpdb)
 ```
 
 <img src="inst/img/readme_example_figure_2-1.png" width="75%" style="display: block; margin: auto;" />
+
+##### Minimization diagnostics
+
+``` r
+prm_vs_iteration(xpdb)
+```
+
+<img src="inst/img/readme_example_figure_3-1.png" width="75%" style="display: block; margin: auto;" />
+
+##### And much more !
 
 ### Recommended reading
 
