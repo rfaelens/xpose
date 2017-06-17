@@ -1,3 +1,7 @@
+#' @importFrom dplyr filter
+#' @export
+dplyr::filter
+
 #' @importFrom purrr %>%
 #' @export
 purrr::`%>%`
