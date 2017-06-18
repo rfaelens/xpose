@@ -8,7 +8,7 @@
 #' @param .source The source of the data in the xpdb. Can either be 'data' or an output 
 #' file extension e.g. 'phi'.
 #' @param ... Logical predicates defined in terms of the variables in .data. 
-#' Multiple conditions are combined with &. Only rows where the conditon evalutes 
+#' Multiple conditions are combined with &. Only rows where the condition evaluates 
 #' to \code{TRUE} are kept. 
 #' These arguments are automatically quoted and evaluated in the 
 #' context of the data frame. They support unquoting and splicing. 

@@ -17,7 +17,7 @@
 #' @param simtab If \code{TRUE} only reads in simulation tables, if \code{FALSE} only reads estimation tables. 
 #' Default \code{NULL} reads all tables. Option not compatible with manual_import.
 #' @param manual_import If \code{NULL} (default) the names of the output tables to import will be obtained from the model file. 
-#' To manually import files as in pervious versions of xpose, the check the function \code{\link{manual_nm_import}}.
+#' To manually import files as in previous versions of xpose, the check the function \code{\link{manual_nm_import}}.
 #' @param ... Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.
 #'
 #' @examples

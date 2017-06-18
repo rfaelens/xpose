@@ -6,7 +6,7 @@
 #' 
 #' \itemize{
 #' \item \code{theme_bw2}: Black and white theme inspired by a theme from Gunnar Yngman.
-#' \item \code{theme_readable}: Light grey theme, with dimed background and grid lines 
+#' \item \code{theme_readable}: Light grey theme, with dimmed background and grid lines 
 #' intended to bring the focus on the data.
 #' }
 #'

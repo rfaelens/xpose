@@ -16,8 +16,8 @@
 ##'  \item{\strong{problem}}{: a numeric identifier for the $PROBLEM associated with the code.}
 ##'  \item{\strong{level}}{: a unique numeric identifier to each subroutine block associated with the code.}
 ##'  \item{\strong{subroutine}}{: a character identifier named after the 3 first letters of the subroutine name e.g. "$THETA" and 
-##'  "$TABLE" will become "the" and "tab" respectively. In addtion all output from the .lst is labeled "lst", the general nonmem 
-##'  output e.g. NM-TRAN messages are labeled "oth". With priors thp, tpv, omp, opd, sip, spd abreviations are given to the THETAP, 
+##'  "$TABLE" will become "the" and "tab" respectively. In addition all output from the .lst is labeled "lst", the general nonmem 
+##'  output e.g. NM-TRAN messages are labeled "oth". With priors thp, tpv, omp, opd, sip, spd abbreviations are given to the THETAP, 
 ##'  THETAPV, OMEGAP, etc.}
 ##'  \item{\strong{code}}{: the code without comments or subroutine names e.g. "$THETA 0.5 ; TVCL" will return 0.5.}
 ##'  \item{\strong{comment}}{: the last comment of a record e.g. "0.5 ; Clearance (L/h) ; TVCL" will return "TVCL".}
@@ -77,7 +77,7 @@ read_nm_model <- function(file    = NULL,
       subroutine  = stringr::str_match(.$code, '^\\s*\\$(\\w+)')[, 2]) %>% 
     tidyr::fill(dplyr::one_of('subroutine'))
   
-  # Generate abreviated subroutine names
+  # Generate abbreviated subroutine names
   special <- c('THETAI', 'THETAR', 'THETAP', 'THETAPV', 'OMEGAP', 'OMEGAPD', 'SIGMAP', 'SIGMAPD')
   match_special <- match(model$subroutine[model$subroutine %in% special], special)
   model$subroutine[model$subroutine %in% special] <- c('thi', 'thr', 'thp', 'tpv', 

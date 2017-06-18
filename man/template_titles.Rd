@@ -40,7 +40,7 @@ Many key variables are available:
  \item{@runtime}{Estimation/Sim runtime}
  \item{@software}{Software used (e.g. NONMEM)}
  \item{@simseed}{Simulation seed}
- \item{@subroutine}{Differencial equation solver}
+ \item{@subroutine}{Differential equation solver}
  \item{@timestart}{Run start time}
  \item{@timestop}{Run stop time}
  \item{@term}{Termination message}
