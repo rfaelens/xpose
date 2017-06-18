@@ -83,13 +83,13 @@ parse_nm_files <- function(dat, quiet) {
   
   x[tab_rows, ]$problem <- stringr::str_match(x[tab_rows, ]$raw, '\\s+Problem=(\\d+)')[,2]
   x[tab_rows, ]$subprob <- stringr::str_match(x[tab_rows, ]$raw, '\\s+Subproblem=(\\d+)')[,2]
-  x[tab_rows, ]$method  <- dplyr::case_when(stringr::str_detect(x[tab_rows, ]$raw, 'First Order Conditional') ~ 'FOCE',
-                                            stringr::str_detect(x[tab_rows, ]$raw, 'Laplace Conditional') ~ 'LCE', 
-                                            stringr::str_detect(x[tab_rows, ]$raw, 'Iterative Two Stage') ~ 'ITS',
-                                            stringr::str_detect(x[tab_rows, ]$raw, 'Importance Sampling') ~ 'IMP',
-                                            stringr::str_detect(x[tab_rows, ]$raw, 'Stochastic Approximation') ~ 'SAEM',
-                                            stringr::str_detect(x[tab_rows, ]$raw, 'Markov-Chain') ~ 'BAYES',
-                                            TRUE ~ 'NA')
+  x[tab_rows, ]$method  <- dplyr::case_when(stringr::str_detect(x[tab_rows, ]$raw, 'First Order Conditional') ~ 'foce',
+                                            stringr::str_detect(x[tab_rows, ]$raw, 'Laplacian Conditional') ~ 'lce', 
+                                            stringr::str_detect(x[tab_rows, ]$raw, 'Iterative Two Stage') ~ 'its',
+                                            stringr::str_detect(x[tab_rows, ]$raw, 'Importance Sampling') ~ 'imp',
+                                            stringr::str_detect(x[tab_rows, ]$raw, 'Stochastic Approximation') ~ 'saem',
+                                            stringr::str_detect(x[tab_rows, ]$raw, 'Markov-Chain') ~ 'bayes',
+                                            TRUE ~ 'na')
   
   # Assumes that header are always present
   x[tab_rows + 1, ]$header <- TRUE
