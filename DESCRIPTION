@@ -1,7 +1,7 @@
 Package: xpose
 Type: Package
 Title: Graphical diagnostics for pharmacometric models
-Version: 0.1.5
+Version: 0.2
 Authors@R: c(
       person('Benjamin', 'Guiastrennec'
              , role = c('aut','cre', 'cph')
@@ -40,6 +40,7 @@ Imports:
   gridExtra,
   purrr (>= 0.2.0),
   readr,
+  rlang,
   stringr,
   tidyr (>= 0.6),
   utils,

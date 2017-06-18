@@ -20,6 +20,7 @@
 #'   dv_vs_ipred()
 #' @export
 filter.xpose_data <- function(.data, ..., .problem, .source) {
+  
   xpdb <- .data # To avoid issues with dplyr arguments
   if (missing(.source)) .source <- 'data'
   if (.source == 'data') {
@@ -30,7 +31,7 @@ filter.xpose_data <- function(.data, ..., .problem, .source) {
     }
     xpdb[['data']] <- xpdb[['data']] %>%
       dplyr::mutate(data = purrr::map_if(.$data, xpdb[['data']]$problem %in% .problem,
-                                         ~dplyr::filter(., !!dplyr::quo(...))))
+                                         ~dplyr::filter(., rlang::UQS(rlang::quos(...)))))
   } else {
     if (missing(.problem)) .problem <- xpdb[['files']]$problem
     if (!all(.source %in% xpdb[['files']]$extension)) {
@@ -44,7 +45,7 @@ filter.xpose_data <- function(.data, ..., .problem, .source) {
     xpdb[['files']] <- xpdb[['files']] %>%
       dplyr::mutate(data = purrr::map_if(.$data, xpdb[['files']]$problem %in% .problem &
                                            xpdb[['files']]$extension %in% .source,
-                                         ~dplyr::filter(., !!dplyr::quo(...))))
+                                         ~dplyr::filter(., rlang::UQS(rlang::quos(...)))))
   }
   xpdb
 }
