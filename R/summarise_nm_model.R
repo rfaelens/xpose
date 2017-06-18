@@ -196,9 +196,9 @@ sum_description <- function(model, software) {
                                        stringr::regex('2.\\s*description\\s*:', 
                                                       ignore_case = TRUE)))
     if (length(start) == 1) {
-      end <- which(stringr::str_detect(tolower(x$comment), '3.\\s*\\w+')) - 1
-      
-      if (length(end) == 0) end <- nrow(x)
+      end <- which(stringr::str_detect(tolower(x$comment), '(3|x\\d)\\.\\s*\\w+'))
+      end <- end[(end - start) > 0]
+      end <- ifelse(length(end) == 0, nrow(x), min(end) - 1)
       
       x <- dplyr::slice(.data = x, seq(start, end)) %>% 
       {stringr::str_replace(.$comment, '^\\s*;\\s*', '')} %>% 
@@ -511,12 +511,17 @@ sum_method <- function(model, software) {
     
     x %>% 
       dplyr::mutate(value = stringr::str_match(.$code, 'METHOD\\s*=\\s*([^\\s]+)')[, 2],
-                    inter = stringr::str_detect(.$code, 'INTER')) %>% 
+                    inter = stringr::str_detect(.$code, '\\sINTER'),
+                    lapl  = stringr::str_detect(.$code, '\\sLAPLA'),
+                    like  = stringr::str_detect(.$code, '\\sLIKE')) %>% 
       dplyr::mutate(value = dplyr::if_else(.$subroutine == 'sim', 'sim', .$value)) %>% 
-      dplyr::mutate(value = dplyr::case_when(.$value == '0' ~ 'FO',
+      dplyr::mutate(value = dplyr::case_when(.$value %in% c('0', 'ZERO') ~ 'FO',
                                              .$value == '1' ~ 'FOCE',
-                                             TRUE ~ .$value)) %>% 
-      dplyr::mutate(value = stringr::str_c(stringr::str_to_lower(.$value), dplyr::if_else(.$inter, '-i', ''))) %>% 
+                                             stringr::str_detect(.$value, 'COND') ~ 'FOCE',
+                                             TRUE ~ tolower(.$value))) %>% 
+      dplyr::mutate(value = stringr::str_c(stringr::str_to_lower(.$value), dplyr::if_else(.$inter, '-i', ''),
+                                           dplyr::if_else(.$lapl, ' laplacian', ''), 
+                                           dplyr::if_else(.$like, ' likelihood', ''))) %>% 
       dplyr::group_by_(.dots = 'problem') %>% 
       dplyr::mutate(subprob = (1:n()) - 1, label = 'method') %>% 
       dplyr::select(dplyr::one_of('problem', 'subprob', 'label', 'value')) %>% 
