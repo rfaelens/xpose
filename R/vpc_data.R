@@ -33,7 +33,7 @@ vpc_data <- function(xpdb,
                      sim_problem = NULL,
                      quiet) {
   # Check input
-  check_xpdb(xpdb, check = FALSE)
+  check_xpdb(xpdb, check = ifelse(is.null(psn_folder), 'data', FALSE))
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   # Set vpc_data options
