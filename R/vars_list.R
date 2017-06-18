@@ -10,9 +10,8 @@
 #' list_vars(xpdb_ex_pk)
 #' @export
 list_vars <- function(xpdb, problem = NULL) {
-  if (!is.xpdb(xpdb)) {
-    stop('Valid `xpdb` input required.', call. = FALSE)
-  }
+  # Check input
+  check_xpdb(xpdb, check = 'data')
   
   x <- xpdb$data
   

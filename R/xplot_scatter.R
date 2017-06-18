@@ -69,13 +69,8 @@ xplot_scatter <- function(xpdb,
                           data_opt,
                           quiet,
                           ...) {
-  
   # Check input
-  if (!is.xpdb(xpdb)) { 
-    msg('Bad input to the argument`xpdb`', ifelse(missing(quiet), TRUE, quiet))
-    return()
-  }
-  
+  check_xpdb(xpdb, check = FALSE)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   # Fetch data

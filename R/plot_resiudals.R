@@ -38,6 +38,8 @@ res_vs_pred <- function(xpdb,
                         problem,
                         quiet,
                         ...) {
+  # Check input
+  check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
@@ -82,6 +84,8 @@ absval_res_vs_pred <- function(xpdb,
                                problem,
                                quiet,
                                ...) {
+  # Check input
+  check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
@@ -150,6 +154,8 @@ res_vs_idv <- function(xpdb,
                        problem,
                        quiet,
                        ...) {
+  # Check input
+  check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
@@ -194,6 +200,8 @@ absval_res_vs_idv <- function(xpdb,
                               problem,
                               quiet,
                               ...) {
+  # Check input
+  check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   

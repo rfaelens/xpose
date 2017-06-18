@@ -27,11 +27,8 @@ update_themes <- function(xpdb     = NULL,
                           gg_theme = NULL,
                           xp_theme = NULL,
                           quiet) {
-  
-  if (!is.xpdb(xpdb)) {
-    stop('Valid `xpdb` input required.', call. = FALSE)
-  }
-  
+  # Check input
+  check_xpdb(xpdb, check = FALSE)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   # Replace/Update gg_theme

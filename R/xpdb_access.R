@@ -14,10 +14,7 @@
 #' 
 #' @export
 get_code <- function(xpdb, problem = NULL) {
-  if (!is.xpdb(xpdb)) {
-    stop('Valid `xpdb` input required.', call. = FALSE)
-  }
-  
+  check_xpdb(xpdb, check = FALSE)
   x <- xpdb$code
   
   if (!is.null(problem)) {
@@ -56,9 +53,7 @@ get_code <- function(xpdb, problem = NULL) {
 #' 
 #' @export
 get_data <- function(xpdb, table = NULL, problem = NULL) {
-  if (!is.xpdb(xpdb)) {
-    stop('Valid `xpdb` input required.', call. = FALSE)
-  }
+  check_xpdb(xpdb, check = 'data')
   
   if (is.null(table) && is.null(problem)) {
     stop('Argument `table` or `problem` required.', call. = FALSE) 
@@ -142,9 +137,7 @@ get_data <- function(xpdb, table = NULL, problem = NULL) {
 #' 
 #' @export
 get_file <- function(xpdb, file = NULL, ext = NULL, problem = NULL, subprob = NULL, quiet = FALSE) {
-  if (!is.xpdb(xpdb)) {
-    stop('Valid `xpdb` input required.', call. = FALSE)
-  }
+  check_xpdb(xpdb, check = 'files')
   
   if (is.null(file) && is.null(ext)) {
     stop('Argument `file` or `ext` required.', call. = FALSE) 
@@ -217,10 +210,7 @@ get_file <- function(xpdb, file = NULL, ext = NULL, problem = NULL, subprob = NU
 #' 
 #' @export
 get_summary <- function(xpdb, problem = NULL, subprob = NULL, only_last = FALSE) {
-  if (!is.xpdb(xpdb)) {
-    stop('Valid `xpdb` input required.', call. = FALSE)
-  }
-  
+  check_xpdb(xpdb, check = FALSE)
   x <- xpdb$summary
   
   # Filter by $problem

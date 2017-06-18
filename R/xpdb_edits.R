@@ -20,15 +20,20 @@
 #'   dv_vs_ipred()
 #' @export
 filter.xpose_data <- function(.data, ..., .problem, .source) {
-  
+  # Check input
+  check_xpdb(xpdb, check = FALSE)
   xpdb <- .data # To avoid issues with dplyr arguments
   if (missing(.source)) .source <- 'data'
+  check_xpdb(xpdb, check = .source)
+  
+  # Direct filter to specified source
   if (.source == 'data') {
-    if (missing(.problem)) .problem <- xpdb[['data']]$problem
-    if (!all(.problem %in% xpdb[['data']]$problem)) {
+    if (missing(.problem)) .problem <- all_data_problem(xpdb)
+    if (!all(.problem %in% all_data_problem(xpdb))) {
       stop('Problem no.', stringr::str_c(.problem[!.problem %in% xpdb[['data']]$problem], collapse = ', '), 
            ' not found in model output data.', call. = FALSE)
     }
+    
     xpdb[['data']] <- xpdb[['data']] %>%
       dplyr::mutate(data = purrr::map_if(.$data, xpdb[['data']]$problem %in% .problem,
                                          ~dplyr::filter(., rlang::UQS(rlang::quos(...)))))
@@ -38,10 +43,12 @@ filter.xpose_data <- function(.data, ..., .problem, .source) {
       stop('File extension ', stringr::str_c(.source[!.source %in% xpdb[['files']]$extension], collapse = ', '), 
            ' not found in model output files.', call. = FALSE)
     }
+    
     if (!all(.problem %in% xpdb[['files']]$problem[xpdb[['files']]$extension %in% .source])) {
       stop('Problem no.', stringr::str_c(.problem[!.problem %in% xpdb[['files']]$problem], collapse = ', '), 
            ' not found in model output files.', call. = FALSE)
     }
+    
     xpdb[['files']] <- xpdb[['files']] %>%
       dplyr::mutate(data = purrr::map_if(.$data, xpdb[['files']]$problem %in% .problem &
                                            xpdb[['files']]$extension %in% .source,

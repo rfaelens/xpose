@@ -45,11 +45,8 @@
 #' @name set_vars
 #' @export
 set_vars_type <- function(xpdb, problem = NULL, ..., auto_factor = TRUE, quiet) {
-  
-  if (!is.xpdb(xpdb)) {
-    stop('Valid `xpdb` input required.', call. = FALSE)
-  }
-  
+  # Check input
+  check_xpdb(xpdb, check = 'data')
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   dat <- xpdb$data
@@ -110,10 +107,8 @@ set_vars_type <- function(xpdb, problem = NULL, ..., auto_factor = TRUE, quiet) 
 
 
 set_var_generic <- function(xpdb, problem = NULL, what = NULL, ..., quiet) {
-  if (!is.xpdb(xpdb)) {
-    stop('Valid `xpdb` input required.', call. = FALSE)
-  }
-  
+  # Check input
+  check_xpdb(xpdb, check = 'data')
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   dat <- xpdb$data

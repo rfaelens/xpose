@@ -1,5 +1,9 @@
 context('Check xplot_helpers')
 
+xpdb_NULL <- xpdb_ex_pk
+xpdb_NULL$data <- NULL
+xpdb_NULL$files <- NULL
+
 # Tests start here --------------------------------------------------------
 # test_that('Check check_vars', {
 #   expect_null(check_vars(NULL, xpdb_ex_pk))
@@ -29,14 +33,25 @@ test_that('Check filter_xp_theme', {
                xpdb_ex_pk$xp_theme[!grepl('point_', names(xpdb_ex_pk$xp_theme))])
 })
 
+test_that('Check all_data_problem', {
+  expect_equal(all_data_problem(xpdb_NULL), NA_integer_)
+  expect_equal(all_data_problem(xpdb_ex_pk), 1:2)
+})
+
 test_that('Check last_data_problem', {
+  expect_error(last_data_problem(xpdb_NULL))
   expect_equal(last_data_problem(xpdb_ex_pk, simtab = FALSE), 1)
   expect_equal(last_data_problem(xpdb_ex_pk, simtab = TRUE), 2)
 })
 
+test_that('Check all_file_problem', {
+  expect_error(all_file_problem(xpdb_NULL))
+  expect_equal(all_file_problem(xpdb_ex_pk, ext = 'ext'), 1)
+  expect_equal(all_file_problem(xpdb_ex_pk, ext = 'fake'), NA_integer_)
+})
+
 test_that('Check last_file_problem', {
   expect_equal(last_file_problem(xpdb_ex_pk, ext = 'ext'), 1)
-  expect_equal(last_file_problem(xpdb_ex_pk, ext = 'fake'), NA_integer_)
 })
 
 test_that('Check last_file_subprob', {
@@ -56,4 +71,11 @@ test_that('Check append_aes', {
   expect_equal(aes_c(aes_string(x = 'IPRED', y = 'DV'), 
                      aes_string(y = 'PRED')), 
                aes_string(x = 'IPRED', y = 'PRED'))
+})
+
+test_that('Check check_xpdb', {
+  expect_error(check_xpdb(xpdb = '1', check = 'data'), regexp = 'Bad input')
+  expect_error(check_xpdb(xpdb_NULL, check = 'data'), regexp = 'No data could be found in this xpdb')
+  expect_null(check_xpdb(xpdb_NULL, check = FALSE))
+  expect_null(check_xpdb(xpdb_ex_pk, check = 'data'))
 })

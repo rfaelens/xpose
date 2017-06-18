@@ -34,9 +34,12 @@ ind_plots <- function(xpdb,
                       problem,
                       quiet,
                       ...) {
+  # Check input
+  check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (is.null(facets)) facets <- xp_var(xpdb, problem, type = 'id')$col
+  
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
                 data_opt = data_opt_set(problem = problem, source = 'data',
                                         filter = only_obs(xpdb, problem, quiet),

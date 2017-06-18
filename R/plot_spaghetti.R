@@ -30,6 +30,8 @@ dv_vs_idv <- function(xpdb,
                       problem,
                       quiet,
                       ...) {
+  # Check input
+  check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
@@ -60,6 +62,8 @@ ipred_vs_idv <- function(xpdb,
                          problem,
                          quiet,
                          ...) {
+  # Check input
+  check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
@@ -90,6 +94,8 @@ pred_vs_idv <- function(xpdb,
                         problem,
                         quiet,
                         ...) {
+  # Check input
+  check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
@@ -123,6 +129,8 @@ dv_preds_vs_idv <- function(xpdb,
                             problem,
                             quiet,
                             ...) {
+  # Check input
+  check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (is.null(facets)) facets <- 'variable'

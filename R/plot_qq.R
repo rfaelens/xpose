@@ -36,6 +36,8 @@ prm_qq <- function(xpdb,
                    problem,
                    quiet,
                    ...) {
+  # Check input
+  check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (is.null(facets)) facets <- 'variable'
@@ -74,6 +76,8 @@ eta_qq <- function(xpdb,
                    problem,
                    quiet,
                    ...) {
+  # Check input
+  check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (is.null(facets)) facets <- 'variable'
@@ -114,6 +118,8 @@ res_qq <- function(xpdb,
                    problem,
                    quiet,
                    ...) {
+  # Check input
+  check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
@@ -154,6 +160,8 @@ cov_qq <- function(xpdb,
                    problem,
                    quiet,
                    ...) {
+  # Check input
+  check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (is.null(facets)) facets <- 'variable'

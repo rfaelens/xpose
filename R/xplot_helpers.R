@@ -1,9 +1,19 @@
-# Check plot input variables
-# check_vars <- function(vars, xpdb) {
-#   if (!all(vars %in% colnames(xpdb$data))) {
-#     vars[!vars %in% colnames(xpdb$data)]
-#   }
-# }
+# Check xpdb
+check_xpdb <- function(xpdb, check = 'data') {
+  # Check the class
+  if (!is.xpdb(xpdb)) {
+    stop('Bad input to the argument `xpdb`', call. = FALSE)
+  }
+  
+  # Escape check
+  if (check == FALSE) return()
+  
+  # Check for the presence of data
+  check <- ifelse(check == 'data', 'data', 'files')
+  if (is.null(xpdb[[check]])) {
+    stop('No ', check, ' could be found in this xpdb.', call. = FALSE)
+  }
+}
 
 # Check plot scales
 check_scales <- function(scale, log) {
@@ -66,6 +76,13 @@ filter_xp_theme <- function(xp_theme, regex = NULL, action = 'keep') {
 }
 
 # Get last problem
+all_data_problem <- function(xpdb) {
+  prob_n <- xpdb$data$problem
+  if (length(prob_n) == 0) return(NA_integer_)
+  unique(prob_n)
+}
+
+# Get last problem
 last_data_problem <- function(xpdb, simtab = FALSE) {
   prob_n <- xpdb$data$simtab
   if (!simtab) prob_n <- !prob_n
@@ -74,11 +91,17 @@ last_data_problem <- function(xpdb, simtab = FALSE) {
   max(prob_n)
 }
 
-# Get file problem
-last_file_problem <- function(xpdb, ext) {
+# Get all file problem
+all_file_problem <- function(xpdb, ext) {
   prob_n <- xpdb$files$problem[xpdb$files$extension == ext]
   prob_n <- unique(prob_n)
   if (length(prob_n) == 0) return(NA_integer_)
+  prob_n
+}
+
+# Get last file problem
+last_file_problem <- function(xpdb, ext) {
+  prob_n <- all_file_problem(xpdb = xpdb, ext = ext)
   max(prob_n)
 }
 

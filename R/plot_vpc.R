@@ -61,13 +61,8 @@ vpc <- function(xpdb,
                 xp_theme,
                 quiet,
                 ...) {
-  
   # Check input
-  if (!is.xpdb(xpdb)) { 
-    msg('Bad input to the argument`xpdb`', ifelse(missing(quiet), TRUE, quiet))
-    return()
-  }
-  
+  check_xpdb(xpdb, check = 'data')
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   # Fetch data

@@ -45,6 +45,8 @@ dv_vs_ipred <- function(xpdb,
                         problem,
                         quiet,
                         ...) {
+  # Check input
+  check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
@@ -76,6 +78,8 @@ dv_vs_pred <- function(xpdb,
                        problem,
                        quiet,
                        ...) {
+  # Check input
+  check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   

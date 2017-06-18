@@ -30,6 +30,8 @@ prm_vs_iteration <- function(xpdb,
                              subprob,
                              quiet,
                              ...) {
+  # Check input
+  check_xpdb(xpdb, check = 'files')
   if (missing(problem)) problem <- last_file_problem(xpdb, 'ext')
   if (missing(subprob)) subprob <- last_file_subprob(xpdb, 'ext', problem)
   if (missing(quiet)) quiet <- xpdb$options$quiet
@@ -71,6 +73,8 @@ grd_vs_iteration <- function(xpdb,
                              subprob,
                              quiet,
                              ...) {
+  # Check input
+  check_xpdb(xpdb, check = 'files')
   if (missing(problem)) problem <- last_file_problem(xpdb, 'grd')
   if (missing(subprob)) subprob <- last_file_subprob(xpdb, 'grd', problem)
   if (missing(quiet)) quiet <- xpdb$options$quiet

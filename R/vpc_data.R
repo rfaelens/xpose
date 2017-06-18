@@ -32,13 +32,8 @@ vpc_data <- function(xpdb,
                      obs_problem = NULL,
                      sim_problem = NULL,
                      quiet) {
-  
   # Check input
-  if (!is.xpdb(xpdb)) { 
-    msg('Bad input to the argument`xpdb`', ifelse(missing(quiet), TRUE, quiet))
-    return()
-  }
-  
+  check_xpdb(xpdb, check = FALSE)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   # Set vpc_data options
