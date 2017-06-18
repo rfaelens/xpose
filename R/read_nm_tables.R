@@ -162,6 +162,13 @@ read_nm_tables <- function(files         = NULL,
 }
 
 
+read_funs <- function(fun) {
+  c(csv = readr::read_csv,
+    csv2 = readr::read_csv2,
+    table = readr::read_table,
+    table2 = readr::read_table2)[fun]
+}
+
 read_args <- function(x, quiet, col_types, ...) {
   if (missing(col_types)) col_types <- readr::cols(.default = 'd')
   
@@ -172,9 +179,10 @@ read_args <- function(x, quiet, col_types, ...) {
     return(dplyr::tibble(fun = list(), params = list()))
   }
   
-  delim <- dplyr::case_when(stringr::str_detect(top[3], '\\d,\\d+E[+-]\\d+\\s*;') ~ ';',
-                            stringr::str_detect(top[3], '\\d.\\d+E[+-]\\d+\\s*,') ~ ',', 
-                            TRUE ~ ' ')
+  fun <- dplyr::case_when(stringr::str_detect(top[3], '\\d,\\d+E[+-]\\d+\\s*;') ~ 'csv2',
+                          stringr::str_detect(top[3], '\\d.\\d+E[+-]\\d+\\s*,') ~ 'csv', 
+                          stringr::str_detect(top[3], '\\d,\\d+E[+-]\\d+\\s+') ~ 'table2',
+                          TRUE ~ 'table')
   skip <- dplyr::if_else(stringr::str_detect(top[1], 'TABLE NO\\.\\s+\\d'), 1, 0)
   
   if (!stringr::str_detect(top[1 + skip], '[A-z]{2,}+')) {
@@ -184,12 +192,14 @@ read_args <- function(x, quiet, col_types, ...) {
   
   col_names <- top[1 + skip] %>% 
     stringr::str_trim(side = 'both') %>% 
-    stringr::str_split(pattern = ifelse(delim == ' ', '\\s+', delim)) %>% 
+    stringr::str_split(pattern = dplyr::case_when(fun == 'csv' ~ ',', 
+                                                  fun == 'csv2' ~ ';',
+                                                  fun %in% c('table', 'table2') ~ '\\s+')) %>% 
     purrr::flatten_chr() %>% 
     stringr::str_trim()
   
-  dplyr::tibble(fun = list(readr::read_delim),
-                params = list(list(file = x$file, skip = skip + 1, delim = delim,
+  dplyr::tibble(fun = read_funs(fun),
+                params = list(list(file = x$file, skip = skip + 1,
                                    col_names = col_names, col_types = col_types, ...)))
 }
 
