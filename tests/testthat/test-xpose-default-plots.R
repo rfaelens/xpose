@@ -40,9 +40,9 @@ test_that("errors are returned for missing or bad xpdb", {
   expect_error(xplot_distrib())
   expect_error(xplot_qq())
   
-  expect_null(xplot_scatter(xpdb = 1))
-  expect_null(xplot_distrib(xpdb = 1))
-  expect_null(xplot_qq(xpdb = 1))
+  expect_error(xplot_scatter(xpdb = 1), regexp = 'Bad input')
+  expect_error(xplot_distrib(xpdb = 1), regexp = 'Bad input')
+  expect_error(xplot_qq(xpdb = 1), regexp = 'Bad input')
 })
 
 test_that("xpose plot objects are returned with appropriate xpdb", {

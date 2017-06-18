@@ -21,7 +21,6 @@
 #' @export
 filter.xpose_data <- function(.data, ..., .problem, .source) {
   # Check input
-  check_xpdb(xpdb, check = FALSE)
   xpdb <- .data # To avoid issues with dplyr arguments
   if (missing(.source)) .source <- 'data'
   check_xpdb(xpdb, check = .source)

@@ -5,12 +5,11 @@ check_xpdb <- function(xpdb, check = 'data') {
     stop('Bad input to the argument `xpdb`', call. = FALSE)
   }
   
-  # Escape check
-  if (check == FALSE) return()
+  skip  <- ifelse(check == FALSE, TRUE, FALSE)
+  check <- ifelse(check == 'data', 'data', 'files')
   
   # Check for the presence of data
-  check <- ifelse(check == 'data', 'data', 'files')
-  if (is.null(xpdb[[check]])) {
+  if (!skip && is.null(xpdb[[check]])) {
     stop('No ', check, ' could be found in this xpdb.', call. = FALSE)
   }
 }

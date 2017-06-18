@@ -52,7 +52,7 @@ test_that("vpc_type categorical works properly", {
 
 test_that("vpc plot properly check input", {
   expect_error(vpc())
-  expect_message(vpc(xpdb = 1, quiet = FALSE), regexp = 'Bad input')
+  expect_error(vpc(xpdb = 1, quiet = FALSE), regexp = 'Bad input')
   expect_message(vpc(xpdb_ex_pk, quiet = FALSE), regexp = 'No vpc data available')
   expect_message(vpc(ctrl_special, quiet = FALSE), regexp = 'Several vpc data')
   expect_error(vpc(ctrl_special, vpc_type = 'unknown', quiet = FALSE), 
