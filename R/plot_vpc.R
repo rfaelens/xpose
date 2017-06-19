@@ -86,6 +86,27 @@ vpc <- function(xpdb,
     vpc_dat <- xpdb$special[xpdb$special$method == 'vpc', ]$data[[1]]
   }
   
+  # Define panels
+  if (missing(facets) && !is.null(vpc_dat$facets)) {
+    facets <- vpc_dat$facets
+  } else if (missing(facets) && vpc_dat$type == 'categorical') {
+    facets <- 'group'
+  } else if (missing(facets)) {
+    facets <- NULL 
+  }
+  
+  # Check for present of facets in vpc_dat
+  stratify <- facets
+  if (is.formula(stratify)) stratify <- all.vars(stratify)
+  if (!all(stratify %in% colnames(vpc_dat$vpc_dat) & 
+           stratify %in% colnames(vpc_dat$aggr_obs))) {
+    unique(c(stratify[!stratify %in% colnames(vpc_dat$vpc_dat)], 
+             stratify[!stratify %in% colnames(vpc_dat$aggr_obs)])) %>% 
+      stringr::str_c(collapse = ', ') %>% 
+      {stop('Faceting variable: ', ., ' not found. Use `stratify` to add a stratification variable in vpc_data().', 
+          call. = FALSE)}
+  }
+  
   # Assing xp_theme and gg_theme
   if (!missing(xp_theme)) {
     xpdb <- update_themes(xpdb = xpdb, xp_theme = xp_theme)
@@ -176,15 +197,6 @@ vpc <- function(xpdb,
              ggfun    = stringr::str_c('scale_y_', check_scales('y', log)),
              yscale_name = vpc_dat$obs_cols[['dv']],
              ...)
-  
-  # Define panels
-  if (missing(facets) && !is.null(vpc_dat$facets)) {
-    facets <- vpc_dat$facets
-  } else if (missing(facets) && vpc_dat$type == 'categorical') {
-    facets <- 'group'
-  } else if (missing(facets)) {
-    facets <- NULL 
-  }
   
   if (!is.null(facets)) {
     if (!is.formula(facets)) {
