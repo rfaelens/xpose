@@ -4,14 +4,14 @@ context('Check VPCs')
 psn_cmd_1 <- '/opt/local64/PsN/bin/vpc -seed=221287 -samples=1000 -stratify_on=VAR1,VAR2 -lst=run001.lst run001.mod'
 psn_cmd_2 <- '/opt/local64/PsN/bin/vpc -seed=221287 -samples=1000 -idv=TAD -dv=IDV -lst=run001.lst run001.mod'
 
-# ctrl_special <- vpc_data(vpc_data(xpdb_ex_pk, opt = vpc_opt_set(n_bins = 3)),
-#                          vpc_type = 'cens', opt = vpc_opt_set(n_bins = 3, lloq = 1))
+# ctrl_special <- vpc_data(vpc_data(xpdb_ex_pk, opt = vpc_opt(n_bins = 3)),
+#                          vpc_type = 'cens', opt = vpc_opt(n_bins = 3, lloq = 1))
 # save(ctrl_special, file = 'ctrl_special.RData', compress = 'xz')
 load('ctrl_special.RData')
 
 # Tests start here --------------------------------------------------------
-test_that("vpc_opt_set works properly", {
-  expect_equal(vpc_opt_set(), 
+test_that("vpc_opt works properly", {
+  expect_equal(vpc_opt(), 
                list(bins = 'jenks', n_bins = 'auto', bin_mid = 'mean', pred_corr = NULL, 
                     pred_corr_lower_bnd = 0, pi = c(0.05, 0.95),  ci = c(0.05, 0.95),  
                     lloq = NULL,  uloq = NULL, rtte = FALSE, rtte_calc_diff = TRUE, 
@@ -38,14 +38,14 @@ test_that("vpc_data properly check input", {
 })
 
 test_that("vpc_data works properly with xpdb tables", {
-  xpdb_vpc <- vpc_data(xpdb_ex_pk, opt = vpc_opt_set(n_bins = 3))
+  xpdb_vpc <- vpc_data(xpdb_ex_pk, opt = vpc_opt(n_bins = 3))
   expect_true(is.xpdb(xpdb_vpc))
   expect_identical(xpdb_vpc$special, ctrl_special$special[2, ])
 })
 
 test_that("vpc_type categorical works properly", {
   xpdb_vpc_cens <- vpc_data(xpdb_ex_pk, vpc_type = 'cens', 
-                            opt = vpc_opt_set(n_bins = 3, lloq = 1))
+                            opt = vpc_opt(n_bins = 3, lloq = 1))
   expect_true(is.xpdb(xpdb_vpc_cens))
   expect_identical(xpdb_vpc_cens$special, ctrl_special$special[1, ])
 })

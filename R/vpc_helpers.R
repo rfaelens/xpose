@@ -29,24 +29,24 @@
 #' @seealso \code{vpc_data} \code{\link[vpc]{vpc}}
 #' 
 #' @examples
-#' vpc_opt_set()
+#' vpc_opt()
 #' 
 #' @export
-vpc_opt_set <- function(bins                = 'jenks',
-                        n_bins              = 'auto',
-                        bin_mid             = 'mean',
-                        pred_corr           = NULL, 
-                        pred_corr_lower_bnd = 0,
-                        pi                  = c(0.05, 0.95), 
-                        ci                  = c(0.05, 0.95), 
-                        lloq                = NULL, 
-                        uloq                = NULL,
-                        rtte                = FALSE,
-                        rtte_calc_diff      = TRUE,
-                        events              = NULL,
-                        kmmc                = NULL,
-                        reverse_prob        = FALSE,
-                        as_percentage       = TRUE) {
+vpc_opt <- function(bins                = 'jenks',
+                    n_bins              = 'auto',
+                    bin_mid             = 'mean',
+                    pred_corr           = NULL, 
+                    pred_corr_lower_bnd = 0,
+                    pi                  = c(0.05, 0.95), 
+                    ci                  = c(0.05, 0.95), 
+                    lloq                = NULL, 
+                    uloq                = NULL,
+                    rtte                = FALSE,
+                    rtte_calc_diff      = TRUE,
+                    events              = NULL,
+                    kmmc                = NULL,
+                    reverse_prob        = FALSE,
+                    as_percentage       = TRUE) {
   
   list(bins = bins, n_bins = n_bins, bin_mid = bin_mid, pred_corr = pred_corr, 
        pred_corr_lower_bnd = pred_corr_lower_bnd, pi = pi, ci = ci, lloq = lloq, 

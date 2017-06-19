@@ -4,7 +4,7 @@
 #' 
 #' @param xpdb An xpose database object.
 #' @param opt A list of options regarding binning, pi and ci computation. 
-#' For more information see \code{\link{vpc_opt_set}}.
+#' For more information see \code{\link{vpc_opt}}.
 #' @param vpc_type A string specifying the type of VPC to be created, can be one of: 
 #' 'continuous', 'categorical', 'censored' or 'time-to-event'.
 #' @param stratify Either a character string or a formula to stratify the data.
@@ -16,7 +16,7 @@
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' @param ... any additional aesthetics.
 #' 
-#' @seealso \code{vpc} \code{vpc_opt_set} \code{\link[vpc]{vpc}}
+#' @seealso \code{vpc} \code{vpc_opt} \code{\link[vpc]{vpc}}
 #' @examples
 #' \dontrun{
 #' xpdb_ex_pk %>% 
@@ -37,7 +37,7 @@ vpc_data <- function(xpdb,
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   # Set vpc_data options
-  if (is.null(opt)) opt <- vpc_opt_set()
+  if (is.null(opt)) opt <- vpc_opt()
   
   # Get raw data
   if (is.null(psn_folder)) {

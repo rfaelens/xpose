@@ -12,7 +12,7 @@ vpc_data(xpdb, opt = NULL, vpc_type = c("continuous", "categorical",
 \item{xpdb}{An xpose database object.}
 
 \item{opt}{A list of options regarding binning, pi and ci computation. 
-For more information see \code{\link{vpc_opt_set}}.}
+For more information see \code{\link{vpc_opt}}.}
 
 \item{vpc_type}{A string specifying the type of VPC to be created, can be one of: 
 'continuous', 'categorical', 'censored' or 'time-to-event'.}
@@ -42,5 +42,5 @@ xpdb_ex_pk \%>\%
 }
 }
 \seealso{
-\code{vpc} \code{vpc_opt_set} \code{\link[vpc]{vpc}}
+\code{vpc} \code{vpc_opt} \code{\link[vpc]{vpc}}
 }
