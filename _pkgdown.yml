@@ -61,7 +61,7 @@ reference:
     desc:  Visual predictive checks data and plot generation
     contents:
     - vpc_data
-    - vpc_opt_set
+    - vpc_opt
     - vpc
   - title: Distribution plots
     desc:  Covariate, parameters, etas and residuals distribution plots
@@ -88,7 +88,7 @@ reference:
     - xplot_distrib
     - xplot_qq
     - xplot_scatter
-    - data_opt_set
+    - data_opt
   - title: Customize plots
     desc:  Add, customize themes or template titles.
     contents:
