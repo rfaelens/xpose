@@ -10,7 +10,7 @@
 * Handles NONMEM tables in .csv, .zip format
 * Handles multiple $PROB and tables with FIRSTONLY option
 * Added option to import data manually as in xpose4 with `manual_nm_import()`
-* Added indexing of variable and convenience functions to edit it: `set_vars_type(), set_vars_label(), set_vars_units()`
+* Added indexing of variable and convenience functions to edit it: `set_vars_type()`, `set_vars_label()`, `set_vars_units()`
 
 #### `read_nm_files()`
 * Now imports multiple $PROB and subproblems
@@ -21,12 +21,12 @@
 * Added many new keywords to `template_titles`
 
 ### Access xpdb
-* Added convenience functions to access data from xpdb `get_code`, `get_data`, `get_file()`, `get_summary()`.
+* Added convenience functions to access data from xpdb `get_code()`, `get_data()`, `get_file()`, `get_summary()`.
 * Added a method for xpdb to `dplyr::filter()`
 
 ### Plots
 * Changed `cwres_vs_idv`, type residual functions to more general `res_vs_idv(res = 'CWRES')` functions
-* Implemented/improved general ploting functions: `xplot_distrib`, `xplot_qq`, `xplot_scatter`, with convenience function to fetch data in xpdb `data_opt_set()`.
+* Implemented/improved general plotting functions: `xplot_distrib()`, `xplot_qq()`, `xplot_scatter()`, with convenience function to fetch data in xpdb `data_opt_set()`.
 * Implemented: `dv_vs_idv()`, `ipred_vs_idv()`, `pred_vs_idv()`, `dv_preds_vs_idv()`, `ind_plots()`, `vpc()`, `prm_distrib()`, `eta_distrib()`,
 `res_distrib()`, `cov_distrib()`, `prm_qq()`, `eta_qq()`,
 `res_qq()`, `cov_qq()`, `prm_vs_iteration()`, `grd_vs_iteration()`.
