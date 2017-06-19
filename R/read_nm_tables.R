@@ -54,12 +54,14 @@ read_nm_tables <- function(files         = NULL,
   # Search for compressed tables
   if (ziptab) { 
     tables_zip <- files[!file.exists(files$file), ]
-    tables_zip$file <- stringr::str_c(tables_zip$file, '.zip')
-    tables_zip <- tables_zip[file.exists(tables_zip$file), ]
     if (nrow(tables_zip) > 0) {
-      tables <- tables %>% 
-        dplyr::bind_rows(tables_zip) %>% 
-        dplyr::arrange_(.dots = c('problem', 'file'))
+      tables_zip$file <- stringr::str_c(tables_zip$file, '.zip')
+      tables_zip <- tables_zip[file.exists(tables_zip$file), ]
+      if (nrow(tables_zip) > 0) {
+        tables <- tables %>% 
+          dplyr::bind_rows(tables_zip) %>% 
+          dplyr::arrange_(.dots = c('problem', 'file'))
+      }
     }
   }
   
