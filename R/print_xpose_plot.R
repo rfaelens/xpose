@@ -28,8 +28,10 @@ print.xpose_plot <- function(x, ...) {
       purrr::map_if(stringr::str_detect(., '@'),
                     ~parse_title(string = ., xpdb = x$xpose,
                                  problem = x$xpose$problem, quiet = x$xpose$quiet,
-                                 extra_key = c('plotfun', names(var_map)), 
-                                 extra_value = c(x$xpose$fun, var_map)))
+                                 extra_key = c('plotfun', 'timeplot', names(var_map)), 
+                                 extra_value = c(x$xpose$fun, 
+                                                 format(Sys.time(), "%a %b %d %X %Z %Y"), 
+                                                 var_map)))
   }
   print.ggplot(x, ...)
 }

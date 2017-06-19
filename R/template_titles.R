@@ -39,11 +39,11 @@
 #'  \item{@subroutine}{Differential equation solver}
 #'  \item{@timestart}{Run start time}
 #'  \item{@timestop}{Run stop time}
+#'  \item{@timeplot}{Time of the plot rendering}
 #'  \item{@term}{Termination message}
 #'  \item{@version}{Software version (e.g. 7.3)}
 #'  \item{@warnings}{Run warnings (e.g. boundary)}
-#'  \item{@x}{Name of the main X variable}
-#'  \item{@y}{Name of the main Y variable}
+#'  \item{@x @y etc.}{Name of any ggplot2 variable used for mapping in an \code{aes()} type function}
 #' }
 #' @seealso \link{xpose_save}
 #' @examples
