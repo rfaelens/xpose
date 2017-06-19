@@ -12,12 +12,14 @@
 #' @param xp_theme An xpose theme or vector of modifications to the xpose theme
 #' (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
-#' @param extra_files A vector of additional output file extensions to be imported. Default is ".ext", ".cov", ".cor", ".phi", 
-#' ".grd" for NONMEM.
 #' @param simtab If \code{TRUE} only reads in simulation tables, if \code{FALSE} only reads estimation tables. 
 #' Default \code{NULL} reads all tables. Option not compatible with manual_import.
 #' @param manual_import If \code{NULL} (default) the names of the output tables to import will be obtained from the model file. 
 #' To manually import files as in previous versions of xpose, the check the function \code{\link{manual_nm_import}}.
+#' @param extra_files A vector of additional output file extensions to be imported. Default is ".ext", ".cov", ".cor", ".phi", 
+#' ".grd" for NONMEM.
+#' @param skip Character vector be used to skip the import/generation of: 'data', 'files', 'summary' or any
+#' combination of the three.
 #' @param ... Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.
 #'
 #' @examples
@@ -35,8 +37,9 @@ xpose_data <- function(runno         = NULL,
                        xp_theme      = theme_xp_default(),
                        quiet         = FALSE,
                        extra_files,
-                       simtab         = NULL,
-                       manual_import  = NULL,
+                       simtab        = NULL,
+                       manual_import = NULL,
+                       skip          = NULL,
                        ...) {
   
   if (is.null(runno) && is.null(file)) {
@@ -62,17 +65,17 @@ xpose_data <- function(runno         = NULL,
   }  
   
   # Import estimation tables
-  if (software == 'nonmem') {
+  if (software == 'nonmem' && !'data' %in% skip) {
     data <- read_nm_tables(files = tbl_names, quiet = quiet, simtab = simtab, ...)
   }
   
   # Generate model summary
-  if (software == 'nonmem') {
+  if (software == 'nonmem' && !'summary' %in% skip) {
     summary <- summarise_nm_model(file, model_code, software, rounding = xp_theme$rounding)
   }
   
   # Import output files
-  if (software == 'nonmem') {
+  if (software == 'nonmem' && !'files' %in% skip) {
     if (missing(extra_files)) {
       extra_files <- c('.ext', '.cor', '.cov', '.phi', '.grd', '.shk')
     }
