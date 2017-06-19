@@ -4,14 +4,14 @@
 \alias{vpc_data}
 \title{Visual predictive checks data}
 \usage{
-vpc_data(xpdb, vpc_opt = NULL, vpc_type = c("continuous", "categorical",
+vpc_data(xpdb, opt = NULL, vpc_type = c("continuous", "categorical",
   "censored", "time-to-event"), stratify = NULL, psn_folder = NULL,
   obs_problem = NULL, sim_problem = NULL, quiet)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
 
-\item{vpc_opt}{A list of options regarding binning, pi and ci computation. 
+\item{opt}{A list of options regarding binning, pi and ci computation. 
 For more information see \code{\link{vpc_opt_set}}.}
 
 \item{vpc_type}{A string specifying the type of VPC to be created, can be one of: 
