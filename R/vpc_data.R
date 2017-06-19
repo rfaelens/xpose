@@ -58,7 +58,11 @@ vpc_data <- function(xpdb,
     }
   } else {
     # When using PsN
+    if (!dir.exists(psn_folder)) {
+      stop('The `psn_folder`:', psn_folder, ' could not be found.', call. = FALSE)
+    }
     msg('Importing PsN generated data', quiet)
+    
     if (!dir.exists(file_path(psn_folder, 'm1')) &
         file.exists(file_path(psn_folder, 'm1.zip'))) {
       msg('Unziping PsN m1 folder.', quiet)
