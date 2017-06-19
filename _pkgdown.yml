@@ -29,6 +29,7 @@ reference:
     desc:  Edit data, index or files within an xpdb
     contents:
     - filter.xpose_data
+    - mutate.xpose_data
     - set_vars_type
     - set_vars_label
     - set_vars_units

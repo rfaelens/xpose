@@ -20,9 +20,11 @@
 #'   dv_vs_ipred()
 #' @export
 filter.xpose_data <- function(.data, ..., .problem, .source) {
+  
   # Check input
-  xpdb <- .data # To avoid issues with dplyr arguments
+  xpdb <- .data # Avoids issues with dplyr arguments
   if (missing(.source)) .source <- 'data'
+  if (length(.source) > 1) stop('Argument `.source` should be of length 1.', call. = FALSE)
   check_xpdb(xpdb, check = .source)
   
   # Direct filter to specified source
@@ -32,6 +34,8 @@ filter.xpose_data <- function(.data, ..., .problem, .source) {
       stop('Problem no.', stringr::str_c(.problem[!.problem %in% xpdb[['data']]$problem], collapse = ', '), 
            ' not found in model output data.', call. = FALSE)
     }
+    
+    check_quo_vars(xpdb, ..., .source = .source, .problem = .problem)
     
     xpdb[['data']] <- xpdb[['data']] %>%
       dplyr::mutate(data = purrr::map_if(.$data, xpdb[['data']]$problem %in% .problem,
@@ -49,6 +53,8 @@ filter.xpose_data <- function(.data, ..., .problem, .source) {
            ' not found in model output files.', call. = FALSE)
     }
     
+    check_quo_vars(xpdb, ..., .source = .source, .problem = .problem)
+    
     xpdb[['files']] <- xpdb[['files']] %>%
       dplyr::mutate(data = purrr::map_if(.$data, xpdb[['files']]$problem %in% .problem &
                                            xpdb[['files']]$extension %in% .source,
@@ -56,4 +62,97 @@ filter.xpose_data <- function(.data, ..., .problem, .source) {
                     modified = dplyr::if_else(.$problem %in% .problem & .$extension %in% .source, TRUE, .$modified))
   }
   xpdb
+}
+
+
+#' Add new variables to an xpdb
+#' 
+#' @description \code{mutate()} adds new variables and preserves existing ones.
+#' 
+#' @param .data An xpose database object.
+#' @param .problem The problem from which the data will be modified
+#' @param .source The source of the data in the xpdb. Can either be 'data' or an output 
+#' file extension e.g. 'phi'.
+#' @param ... Name-value pairs of expressions. Use \code{NULL} to drop a variable.
+#' 
+#' These arguments are automatically quoted and evaluated in the 
+#' context of the data frame. They support unquoting and splicing. 
+#' See the dplyr vignette("programming") for an introduction to these concepts.
+#' @method filter xpose_data
+#' @examples
+#' xpdb_ex_pk %>% 
+#'  mutate(TAD2 = TIME %% 24, .problem = 1) %>% 
+#'   dv_vs_ipred(x = TAD2)
+#' @export
+mutate.xpose_data <- function(.data, ..., .problem, .source) {
+  
+  # Check input
+  xpdb <- .data # Avoids issues with dplyr arguments
+  if (missing(.source)) .source <- 'data'
+  if (length(.source) > 1) stop('Argument `.source` should be of length 1.', call. = FALSE)
+  check_xpdb(xpdb, check = .source)
+  
+  # Direct filter to specified source
+  if (.source == 'data') {
+    if (missing(.problem)) .problem <- all_data_problem(xpdb)
+    if (!all(.problem %in% all_data_problem(xpdb))) {
+      stop('Problem no.', stringr::str_c(.problem[!.problem %in% xpdb[['data']]$problem], collapse = ', '), 
+           ' not found in model output data.', call. = FALSE)
+    }
+    
+    check_quo_vars(xpdb, ..., .source = .source, .problem = .problem)
+    
+    xpdb[['data']] <- xpdb[['data']] %>%
+      dplyr::mutate(data = purrr::map_if(.$data, xpdb[['data']]$problem %in% .problem,
+                                         ~dplyr::mutate(., rlang::UQS(rlang::quos(...)))),
+                    modified = dplyr::if_else(.$problem %in% .problem, TRUE, .$modified))
+  } else {
+    if (missing(.problem)) .problem <- xpdb[['files']]$problem
+    if (!all(.source %in% xpdb[['files']]$extension)) {
+      stop('File extension ', stringr::str_c(.source[!.source %in% xpdb[['files']]$extension], collapse = ', '), 
+           ' not found in model output files.', call. = FALSE)
+    }
+    
+    if (!all(.problem %in% xpdb[['files']]$problem[xpdb[['files']]$extension %in% .source])) {
+      stop('Problem no.', stringr::str_c(.problem[!.problem %in% xpdb[['files']]$problem], collapse = ', '), 
+           ' not found in model output files.', call. = FALSE)
+    }
+    
+    check_quo_vars(xpdb, ..., .source = .source, .problem = .problem)
+    
+    xpdb[['files']] <- xpdb[['files']] %>%
+      dplyr::mutate(data = purrr::map_if(.$data, xpdb[['files']]$problem %in% .problem &
+                                           xpdb[['files']]$extension %in% .source,
+                                         ~dplyr::mutate(., rlang::UQS(rlang::quos(...)))),
+                    modified = dplyr::if_else(.$problem %in% .problem & .$extension %in% .source, TRUE, .$modified))
+  }
+  xpdb
+}
+
+
+check_quo_vars <- function(xpdb, ..., .source, .problem) {
+  quo_vars <- rlang::quos(...) %>% 
+    purrr::map(all.vars) %>% 
+    purrr::flatten_chr()
+  
+  if (length(quo_vars) > 0) {
+    if (.source == 'data') {
+      tmp <- xpdb$data[xpdb$data$problem %in% .problem, ] 
+    } else {
+      tmp <- xpdb$files[xpdb$files$extension %in% .source & xpdb$files$problem %in% .problem, ]
+    }
+    
+    tmp <- dplyr::mutate(.data = tmp,
+                         missing = purrr::map(tmp$data, ~stringr::str_c(quo_vars[!quo_vars %in% colnames(.)], collapse = ', ')),
+                         error = purrr::map_lgl(tmp$data, ~any(!quo_vars %in% colnames(.))))
+    
+    if (any(tmp$error)) {
+      tmp %>% 
+        dplyr::filter(.$error) %>% 
+        dplyr::mutate(string = stringr::str_c('missing: ', .$missing, ' variables in ', 
+                                              ifelse(.source == 'data', '', stringr::str_c('`', .source, '` file ')), 
+                                              '$prob no.', .$problem, '.')) %>% 
+                                              {stop(stringr::str_c(.$string, collapse = '\n       '), call. = FALSE)}
+    }
+  }
 }
