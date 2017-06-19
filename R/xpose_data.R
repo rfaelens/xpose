@@ -65,17 +65,23 @@ xpose_data <- function(runno         = NULL,
   }  
   
   # Import estimation tables
-  if (software == 'nonmem' && !'data' %in% skip) {
+  if (!'data' %in% skip) {
+    msg('Skipping data import', quiet)
+  } else if (software == 'nonmem') {
     data <- read_nm_tables(files = tbl_names, quiet = quiet, simtab = simtab, ...)
   }
   
   # Generate model summary
-  if (software == 'nonmem' && !'summary' %in% skip) {
+  if (!'summary' %in% skip) {
+    msg('Skipping summary generation', quiet)
+  } else if (software == 'nonmem') {
     summary <- summarise_nm_model(file, model_code, software, rounding = xp_theme$rounding)
   }
   
   # Import output files
-  if (software == 'nonmem' && !'files' %in% skip) {
+  if (!'files' %in% skip) {
+    msg('Skipping output files import', quiet)
+  } else if (software == 'nonmem') {
     if (missing(extra_files)) {
       extra_files <- c('.ext', '.cor', '.cov', '.phi', '.grd', '.shk')
     }
@@ -95,3 +101,4 @@ xpose_data <- function(runno         = NULL,
                       manual_import = manual_import)) %>% 
     structure(class = c('xpose_data', 'uneval'))
 }
+
