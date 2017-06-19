@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>NONMEM output table import function — read_nm_tables • xpose</title>
+<title>Add new variables to an xpdb — mutate.xpose_data • xpose</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -108,57 +108,46 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>NONMEM output table import function</h1>
+    <h1>Add new variables to an xpdb</h1>
     </div>
 
     
-    <p>Quickly import NONMEM output tables into R. This function automatically 
-detects the optimal settings to import the tables from nonmem.</p>
+    <p><code>mutate()</code> adds new variables and preserves existing ones.</p>
     
 
-    <pre class="usage"><span class='fu'>read_nm_tables</span>(<span class='kw'>files</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>combined</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>rm_duplicates</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>simtab</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ziptab</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for xpose_data</span>
+<span class='fu'><a href='reexports.html'>mutate</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='no'>.problem</span>, <span class='no'>.source</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>files</th>
-      <td><p>A character vector of path to the files or a <code>nm_table_list</code> file created with <code>list_nm_tables</code>.</p></td>
-    </tr>
-    <tr>
-      <th>combined</th>
-      <td><p>Logical value indicating whether multiple tables should be combined into a single one. If the number of rows 
-does not match an error will be returned.</p></td>
-    </tr>
-    <tr>
-      <th>rm_duplicates</th>
-      <td><p>Logical value indicating whether duplicated columns should be removed.</p></td>
-    </tr>
-    <tr>
-      <th>quiet</th>
-      <td><p>Logical, if <code>FALSE</code> messages are printed to the console.</p></td>
-    </tr>
-    <tr>
-      <th>simtab</th>
-      <td><p>If <code>TRUE</code> only reads in simulation tables, if <code>FALSE</code> only reads estimation tables. 
-Default <code>NULL</code> reads all tables.</p></td>
-    </tr>
-    <tr>
-      <th>ziptab</th>
-      <td><p>If <code>TRUE</code> search for the tables that have been compressed and renamed ´&lt;table&gt;.zip'.</p></td>
+      <th>.data</th>
+      <td><p>An xpose database object.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional arguments to be passed to the <code><a href='http://www.rdocumentation.org/packages/readr/topics/read_delim'>read_delim</a></code> functions.</p></td>
+      <td><p>Name-value pairs of expressions. Use <code>NULL</code> to drop a variable.</p>
+<p>These arguments are automatically quoted and evaluated in the 
+context of the data frame. They support unquoting and splicing. 
+See the dplyr vignette("programming") for an introduction to these concepts.</p></td>
+    </tr>
+    <tr>
+      <th>.problem</th>
+      <td><p>The problem from which the data will be modified</p></td>
+    </tr>
+    <tr>
+      <th>.source</th>
+      <td><p>The source of the data in the xpdb. Can either be 'data' or an output 
+file extension e.g. 'phi'.</p></td>
     </tr>
     </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
-  <span class='no'>nm_tables</span> <span class='kw'>&lt;-</span> <span class='fu'>read_nm_tables</span>(<span class='kw'>files</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>'sdtab001'</span>, <span class='st'>'patab001'</span>))
-})</div></pre>
+    <pre class="examples"><div class='input'><span class='no'>xpdb_ex_pk</span> <span class='kw'>%&gt;%</span>
+ <span class='fu'><a href='reexports.html'>mutate</a></span>(<span class='kw'>TAD2</span> <span class='kw'>=</span> <span class='no'>TIME</span> <span class='kw'>%%</span> <span class='fl'>40</span>, <span class='kw'>.problem</span> <span class='kw'>=</span> <span class='fl'>1</span>) <span class='kw'>%&gt;%</span>
+ <span class='fu'><a href='pred_vs_idv.html'>dv_vs_idv</a></span>(<span class='fu'>aes</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>TAD2</span>))</div><img src='mutate.xpose_data-2.png' alt='' width='540' height='400' /></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

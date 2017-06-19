@@ -62,13 +62,13 @@ summary(xpdb, problem = 1)
      - ADVAN                        : 2
      - Estimation method            : foce-i
      - Termination message          : MINIMIZATION SUCCESSFUL
-     - Estimation runtime           : 00:00:06
-     - Objective function value     : -656.869
+     - Estimation runtime           : 00:00:15
+     - Objective function value     : -1518.108
      - Number of significant digits : 3.6
-     - Covariance step runtime      : 00:00:04
-     - Condition number             : 31.3
-     - Eta shrinkage                : 10.2 [1], 48.2 [2], 14.7 [3]
-     - Epsilon shrinkage            : 6.7 [1]
+     - Covariance step runtime      : 00:00:15
+     - Condition number             : 6.1
+     - Eta shrinkage                : 22 [1], 20.9 [2], 20.5 [3]
+     - Epsilon shrinkage            : 7 [1]
      - Run warnings                 : (WARNING 2) NM-TRAN INFERS THAT THE DATA ARE POPULATION.
 
 #### Generate diagnostics

@@ -115,7 +115,7 @@
     <p>Generate visual predictive checks (VPC) data</p>
     
 
-    <pre class="usage"><span class='fu'>vpc_data</span>(<span class='no'>xpdb</span>, <span class='kw'>vpc_opt</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>vpc_type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"continuous"</span>, <span class='st'>"categorical"</span>,
+    <pre class="usage"><span class='fu'>vpc_data</span>(<span class='no'>xpdb</span>, <span class='kw'>opt</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>vpc_type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"continuous"</span>, <span class='st'>"categorical"</span>,
   <span class='st'>"censored"</span>, <span class='st'>"time-to-event"</span>), <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>psn_folder</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>obs_problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sim_problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>quiet</span>)</pre>
     
@@ -127,9 +127,9 @@
       <td><p>An xpose database object.</p></td>
     </tr>
     <tr>
-      <th>vpc_opt</th>
+      <th>opt</th>
       <td><p>A list of options regarding binning, pi and ci computation. 
-For more information see <code><a href='vpc_opt_set.html'>vpc_opt_set</a></code>.</p></td>
+For more information see <code><a href='vpc_opt.html'>vpc_opt</a></code>.</p></td>
     </tr>
     <tr>
       <th>vpc_type</th>
@@ -166,7 +166,7 @@ be used for simulations. By default returns the last simulation problem.</p></td
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code>vpc</code> <code>vpc_opt_set</code> <code><a href='http://www.rdocumentation.org/packages/vpc/topics/vpc'>vpc</a></code></p>
+    <p><code>vpc</code> <code>vpc_opt</code> <code><a href='http://www.rdocumentation.org/packages/vpc/topics/vpc'>vpc</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

@@ -89,7 +89,7 @@
       <h1>Access the xpdb data</h1>
                         <h4 class="author">Benjamin Guiastrennec</h4>
             
-            <h4 class="date">17 June, 2017</h4>
+            <h4 class="date">20 June, 2017</h4>
           </div>
 
     
@@ -119,20 +119,20 @@
 <p><em>Note that general code warnings and PsN outputs appended are listed as problem 0.</em></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">code &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_code.html">get_code</a></span>(xpdb)
 code</code></pre></div>
-<pre><code># A tibble: 787 x 5
-   problem level subroutine                                                        code
- *   &lt;dbl&gt; &lt;dbl&gt;      &lt;chr&gt;                                                       &lt;chr&gt;
- 1       0     0        oth                               Tue Jun 13 14:48:35 CEST 2017
- 2       0     0        oth                                                            
- 3       0     0        oth                                                            
- 4       0     0        oth                                                            
- 5       1     1        pro                                        Parameter estimation
- 6       1     2        inp          ID OCC XAT2=DROP DGRP=DROP DOSE FLAG=DROP ONO=DROP
- 7       1     2        inp  XIME=DROP DVO=DROP NEUY=DROP SCR AGE SEX CLASS WT DROP ACE
- 8       1     2        inp  MED1 MED2 NUMB=DROP TAD TIME VIDD=DROP CLCR AMT SS II DROP
- 9       1     2        inp    CMT=DROP CONO=DROP DV EVID=DROP OVID=DROP DROP SHR2=DROP
-10       1     3        dat                                         mx19_1.csv IGNORE=@
-# ... with 777 more rows, and 1 more variables: comment &lt;chr&gt;</code></pre>
+<pre><code># A tibble: 852 x 5
+   problem level subroutine                                                       code
+ *   &lt;dbl&gt; &lt;dbl&gt;      &lt;chr&gt;                                                      &lt;chr&gt;
+ 1       0     0        oth                              Mon Jun 19 01:13:13 CEST 2017
+ 2       0     0        oth                                                           
+ 3       0     0        oth                                                           
+ 4       0     0        oth                                                           
+ 5       1     1        pro                                       Parameter estimation
+ 6       1     2        inp         ID OCC XAT2=DROP DGRP=DROP DOSE FLAG=DROP ONO=DROP
+ 7       1     2        inp  XIME=DROP DV NEUY=DROP SCR AGE SEX CLASS WT DROP ACE MED1
+ 8       1     2        inp      MED2 NUMB=DROP TAD TIME VIDD=DROP CLCR AMT SS II DROP
+ 9       1     2        inp      CMT=DROP CONO=DROP LNDV=DROP EVID=DROP OVID=DROP DROP
+10       1     2        inp                                                  SHR2=DROP
+# ... with 842 more rows, and 1 more variables: comment &lt;chr&gt;</code></pre>
 </div>
 <div id="access-the-output-data" class="section level3">
 <h3 class="hasAnchor">
@@ -163,20 +163,20 @@ data</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">file &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_file.html">get_file</a></span>(xpdb, <span class="dt">file =</span> <span class="st">'run001.ext'</span>)</code></pre></div>
 <pre><code>Returning data from problem no.1 sub-problem no.0</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">file</code></pre></div>
-<pre><code># A tibble: 34 x 15
+<pre><code># A tibble: 30 x 15
    ITERATION  THETA1  THETA2  THETA3   THETA4   THETA5     THETA6 SIGMA.1.1. OMEGA.1.1. OMEGA.2.1.
        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
  1         0 27.5000 1.56500 2.10000 0.254000 0.230000 0.00800000          1  0.3000000          0
- 2         1 27.4212 1.56156 2.10527 0.259727 0.419087 0.00797891          1  0.2929510          0
- 3         2 27.3474 1.56221 2.10859 0.261258 0.451587 0.00797180          1  0.2853090          0
- 4         3 23.1413 1.67880 2.33794 0.335797 0.436782 0.00763214          1  0.0472800          0
- 5         4 28.7697 1.54124 2.53932 0.381648 0.429614 0.00745381          1  0.0208101          0
- 6         5 28.3703 1.47870 2.67525 0.385315 0.428860 0.00746121          1  0.0212882          0
- 7         6 28.5457 1.53846 3.54898 0.401145 0.426591 0.00750659          1  0.0258004          0
- 8         7 29.2138 1.67721 8.44612 0.206586 0.432386 0.00739348          1  0.0284159          0
- 9         8 28.5851 1.64530 9.55926 0.228455 0.433989 0.00652994          1  0.0217724          0
-10         9 28.1226 1.63433 8.01904 0.228860 0.432755 0.00634526          1  0.0250947          0
-# ... with 24 more rows, and 5 more variables: OMEGA.2.2. &lt;dbl&gt;, OMEGA.3.1. &lt;dbl&gt;,
+ 2         1 27.1315 1.50371 2.19470 0.263436 0.310468 0.00799037          1  0.2611680          0
+ 3         2 24.0386 1.05681 3.37071 0.341244 0.287332 0.00792983          1  0.0598594          0
+ 4         3 26.6619 1.23811 4.01449 0.409304 0.279560 0.00790061          1  0.0313285          0
+ 5         4 24.0386 1.44520 4.43650 0.400794 0.277556 0.00794055          1  0.0243288          0
+ 6         5 23.9144 1.44930 4.52519 0.404786 0.277363 0.00796163          1  0.0246511          0
+ 7         6 24.7365 1.50060 7.71427 0.410008 0.274756 0.00848706          1  0.0336991          0
+ 8         7 24.6300 1.49149 8.80826 0.409741 0.273132 0.00859991          1  0.0329758          0
+ 9         8 24.5996 1.47520 8.44218 0.413982 0.269094 0.00794411          1  0.0418260          0
+10         9 24.6701 1.45429 7.04078 0.413384 0.259226 0.00574881          1  0.0404368          0
+# ... with 20 more rows, and 5 more variables: OMEGA.2.2. &lt;dbl&gt;, OMEGA.3.1. &lt;dbl&gt;,
 #   OMEGA.3.2. &lt;dbl&gt;, OMEGA.3.3. &lt;dbl&gt;, OBJ &lt;dbl&gt;</code></pre>
 </div>
 <div id="access-the-run-summary" class="section level3">
@@ -198,8 +198,8 @@ run_sum</code></pre></div>
  7       0       0     Reference model         ref                           000
  8       0       0          Run number         run                        run001
  9       0       0            Software    software                        nonmem
-10       0       0      Run start time   timestart Tue Jun 13 14:48:35 CEST 2017
-11       0       0       Run stop time    timestop Tue Jun 13 14:48:50 CEST 2017
+10       0       0      Run start time   timestart Mon Jun 19 01:13:13 CEST 2017
+11       0       0       Run stop time    timestop Mon Jun 19 01:13:48 CEST 2017
 12       0       0    Software version     version                         7.3.0</code></pre>
 </div>
 </div>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Template titles — template_titles • xpose</title>
+<title>Create options for data import — data_opt • xpose</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -108,78 +108,95 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Template titles</h1>
+    <h1>Create options for data import</h1>
     </div>
 
     
-    <p>Template titles can be used to create highly informative diagnostics plots. 
-They can be applied to any plot title, subtitle, caption and the filename when saving 
-with the <code><a href='xpose_save.html'>xpose_save</a></code> function.</p>
-<p>Template titles are defined via a single string containing key variables staring 
-with a @ (e.g. @ofv) which will be replaced by their actual value when rendering the plot.
-For example '@run, @nobs observations in @nind subjects' would become 'run001, 
-1022 observations in 74 subjects'</p>
-<p>Many key variables are available:</p><dl class='dl-horizontal'>
- <dt>@condn</dt><dd><p>Condition number</p></dd>
- <dt>@covtime</dt><dd><p>Covariance matrix runtime</p></dd>
- <dt>@data</dt><dd><p>Model input data used</p></dd>
- <dt>@descr</dt><dd><p>Model description</p></dd>
- <dt>@dir</dt><dd><p>Model directory</p></dd>
- <dt>@epsshk</dt><dd><p>Epsilon shrinkage</p></dd>
- <dt>@errors</dt><dd><p>Run errors (e.g termination error)</p></dd>
- <dt>@esampleseed</dt><dd><p>ESAMPLE seed number (used in NPDE)</p></dd>
- <dt>@etashk</dt><dd><p>Eta shrinkage</p></dd>
- <dt>@file</dt><dd><p>Model file name</p></dd>
- <dt>@label</dt><dd><p>Model label</p></dd>
- <dt>@method</dt><dd><p>Estimation method or sim</p></dd>
- <dt>@nesample</dt><dd><p>Number of ESAMPLE (used in NPDE)</p></dd>
- <dt>@nind</dt><dd><p>Number of individuals</p></dd>
- <dt>@nobs</dt><dd><p>Number of observations</p></dd>
- <dt>@nsig</dt><dd><p>Number of significant digits</p></dd>
- <dt>@nsim</dt><dd><p>Number of simulations</p></dd>
- <dt>@ofv</dt><dd><p>Objective function value</p></dd>
- <dt>@probn</dt><dd><p>Problem number</p></dd>
- <dt>@plotfun</dt><dd><p>Name of the plot function</p></dd>
- <dt>@ref</dt><dd><p>Reference model</p></dd>
- <dt>@run</dt><dd><p>Model run name</p></dd>
- <dt>@runtime</dt><dd><p>Estimation/Sim runtime</p></dd>
- <dt>@software</dt><dd><p>Software used (e.g. NONMEM)</p></dd>
- <dt>@simseed</dt><dd><p>Simulation seed</p></dd>
- <dt>@subroutine</dt><dd><p>Differential equation solver</p></dd>
- <dt>@timestart</dt><dd><p>Run start time</p></dd>
- <dt>@timestop</dt><dd><p>Run stop time</p></dd>
- <dt>@timeplot</dt><dd><p>Time of the plot rendering</p></dd>
- <dt>@term</dt><dd><p>Termination message</p></dd>
- <dt>@version</dt><dd><p>Software version (e.g. 7.3)</p></dd>
- <dt>@warnings</dt><dd><p>Run warnings (e.g. boundary)</p></dd>
- <dt>@x @y etc.</dt><dd><p>Name of any ggplot2 variable used for mapping in an <code>aes()</code> type function</p></dd>
-</dl>
+    <p>Provide a list of options to the general plotting functions such as 
+<code>xplot_scatter</code> in order to create appropriate data input for ggplot2.</p>
     
 
-        
+    <pre class="usage"><span class='fu'>data_opt</span>(<span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subprob</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>source</span> <span class='kw'>=</span> <span class='st'>"data"</span>,
+  <span class='kw'>simtab</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>filter</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tidy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>index_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>value_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>problem</th>
+      <td><p>The problem to be used, by default returns the last one.</p></td>
+    </tr>
+    <tr>
+      <th>subprob</th>
+      <td><p>The subproblem to be used, by default returns the last one.</p></td>
+    </tr>
+    <tr>
+      <th>source</th>
+      <td><p>Define the location of the data in the xpdb. Should be either 'data' 
+to use the output tables or the name of an output file attached to the xpdb.</p></td>
+    </tr>
+    <tr>
+      <th>simtab</th>
+      <td><p>Only used when 'data' is defined as the source and `problem` is default. Should the data be coming 
+from an estimation or a simulation table.</p></td>
+    </tr>
+    <tr>
+      <th>filter</th>
+      <td><p>A function used to filter the data e.g. filter = function(x) x[x$TIME &gt; 20, ] where x is the data.</p></td>
+    </tr>
+    <tr>
+      <th>tidy</th>
+      <td><p>Logical, whether the data should be transformed to tidy data.</p></td>
+    </tr>
+    <tr>
+      <th>index_col</th>
+      <td><p>Only used when 'tidy' is defined a <code>TRUE</code> and <code>value_col</code> is <code>NULL</code>. 
+Column names to use as index when tidying the data.</p></td>
+    </tr>
+    <tr>
+      <th>value_col</th>
+      <td><p>Only used when 'tidy' is defined a <code>TRUE</code> and <code>index_col</code> is <code>NULL</code>. 
+Column names to be stacked when tidying the data.</p></td>
+    </tr>
+    </table>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><a href='xpose_save.html'>xpose_save</a></p>
+    <p><code>{xplot_scatter}</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Defined when creating a plot</span>
-<span class='fu'><a href='dv_vs_pred.html'>dv_vs_ipred</a></span>(<span class='no'>xpdb_ex_pk</span>,
-            <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>'DV vs. IPRED'</span>,
-            <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>'@ofv, @nind subjects, @nobs obs.'</span>,
-            <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>'@run, @descr'</span>)</div><img src='template_titles-2.png' alt='' width='540' height='400' /><div class='input'>
-<span class='co'># Any label can be modified later on</span>
-<span class='fu'><a href='dv_vs_pred.html'>dv_vs_ipred</a></span>(<span class='no'>xpdb_ex_pk</span>, <span class='fu'>aes</span>(<span class='kw'>point_color</span> <span class='kw'>=</span> <span class='no'>SEX</span>,
-                            <span class='kw'>line_color</span> <span class='kw'>=</span> <span class='no'>SEX</span>)) +
- <span class='fu'>labs</span>(<span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>'This runs is: @descr'</span>,
-      <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>'Color scale for @run'</span>,
-      <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>'IPRED for @nind subjects'</span>,
-      <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</div><img src='template_titles-4.png' alt='' width='540' height='400' /><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>data_opt</span>(<span class='kw'>problem</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>source</span> <span class='kw'>=</span> <span class='st'>'data'</span>, <span class='kw'>simtab</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; $problem
+#&gt; [1] 1
+#&gt; 
+#&gt; $subprob
+#&gt; NULL
+#&gt; 
+#&gt; $source
+#&gt; [1] "data"
+#&gt; 
+#&gt; $simtab
+#&gt; [1] TRUE
+#&gt; 
+#&gt; $filter
+#&gt; NULL
+#&gt; 
+#&gt; $tidy
+#&gt; [1] FALSE
+#&gt; 
+#&gt; $index_col
+#&gt; NULL
+#&gt; 
+#&gt; $value_col
+#&gt; NULL
+#&gt; </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#see-also">See also</a></li>
       
