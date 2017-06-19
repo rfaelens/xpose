@@ -5,6 +5,8 @@
 \alias{reexports}
 \alias{filter}
 \alias{reexports}
+\alias{mutate}
+\alias{reexports}
 \alias{\%>\%}
 \alias{reexports}
 \alias{facet_wrap_paginate}
@@ -17,7 +19,7 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{dplyr}{\code{\link[dplyr]{filter}}}
+  \item{dplyr}{\code{\link[dplyr]{filter}}, \code{\link[dplyr]{mutate}}}
 
   \item{ggforce}{\code{\link[ggforce]{facet_wrap_paginate}}, \code{\link[ggforce]{facet_grid_paginate}}}
 

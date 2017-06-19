@@ -78,11 +78,11 @@ filter.xpose_data <- function(.data, ..., .problem, .source) {
 #' These arguments are automatically quoted and evaluated in the 
 #' context of the data frame. They support unquoting and splicing. 
 #' See the dplyr vignette("programming") for an introduction to these concepts.
-#' @method filter xpose_data
+#' @method mutate xpose_data
 #' @examples
 #' xpdb_ex_pk %>% 
-#'  mutate(TAD2 = TIME %% 24, .problem = 1) %>% 
-#'   dv_vs_ipred(x = TAD2)
+#'  mutate(TAD2 = TIME %% 40, .problem = 1) %>% 
+#'  dv_vs_idv(aes(x = TAD2))
 #' @export
 mutate.xpose_data <- function(.data, ..., .problem, .source) {
   
@@ -106,6 +106,11 @@ mutate.xpose_data <- function(.data, ..., .problem, .source) {
       dplyr::mutate(data = purrr::map_if(.$data, xpdb[['data']]$problem %in% .problem,
                                          ~dplyr::mutate(., rlang::UQS(rlang::quos(...)))),
                     modified = dplyr::if_else(.$problem %in% .problem, TRUE, .$modified))
+    
+    # Update index
+    # 1. drop vars removed from index
+    # 2. add vars that are not in the index
+    
   } else {
     if (missing(.problem)) .problem <- xpdb[['files']]$problem
     if (!all(.source %in% xpdb[['files']]$extension)) {

@@ -4,7 +4,7 @@
 \alias{mutate.xpose_data}
 \title{Add new variables to an xpdb}
 \usage{
-\method{filter}{xpose_data}(.data, ..., .problem, .source)
+\method{mutate}{xpose_data}(.data, ..., .problem, .source)
 }
 \arguments{
 \item{.data}{An xpose database object.}
@@ -25,6 +25,6 @@ file extension e.g. 'phi'.}
 }
 \examples{
 xpdb_ex_pk \%>\% 
- mutate(TAD2 = TIME \%\% 24, .problem = 1) \%>\% 
-  dv_vs_ipred(x = TAD2)
+ mutate(TAD2 = TIME \%\% 40, .problem = 1) \%>\% 
+ dv_vs_idv(aes(x = TAD2))
 }

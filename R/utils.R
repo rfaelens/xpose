@@ -2,6 +2,10 @@
 #' @export
 dplyr::filter
 
+#' @importFrom dplyr mutate
+#' @export
+dplyr::mutate
+
 #' @importFrom purrr %>%
 #' @export
 purrr::`%>%`
