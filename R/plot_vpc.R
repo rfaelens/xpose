@@ -66,7 +66,7 @@ vpc <- function(xpdb,
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   # Fetch data
-  if (is.null(xpdb$special) | (!is.null(xpdb$special) && !any(xpdb$special$method == 'vpc'))) { 
+  if (!any(xpdb$special$method == 'vpc')) { 
     msg('No vpc data available. Please refer to the function `vpc_data()` function.', quiet)
     return()
   } else if (sum(xpdb$special$method == 'vpc') > 1) {
