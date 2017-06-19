@@ -35,7 +35,8 @@ filter.xpose_data <- function(.data, ..., .problem, .source) {
     
     xpdb[['data']] <- xpdb[['data']] %>%
       dplyr::mutate(data = purrr::map_if(.$data, xpdb[['data']]$problem %in% .problem,
-                                         ~dplyr::filter(., rlang::UQS(rlang::quos(...)))))
+                                         ~dplyr::filter(., rlang::UQS(rlang::quos(...)))),
+                    modified = dplyr::if_else(.$problem %in% .problem, TRUE, .$modified))
   } else {
     if (missing(.problem)) .problem <- xpdb[['files']]$problem
     if (!all(.source %in% xpdb[['files']]$extension)) {
@@ -51,7 +52,8 @@ filter.xpose_data <- function(.data, ..., .problem, .source) {
     xpdb[['files']] <- xpdb[['files']] %>%
       dplyr::mutate(data = purrr::map_if(.$data, xpdb[['files']]$problem %in% .problem &
                                            xpdb[['files']]$extension %in% .source,
-                                         ~dplyr::filter(., rlang::UQS(rlang::quos(...)))))
+                                         ~dplyr::filter(., rlang::UQS(rlang::quos(...)))),
+                    modified = dplyr::if_else(.$problem %in% .problem & .$extension %in% .source, TRUE, .$modified))
   }
   xpdb
 }

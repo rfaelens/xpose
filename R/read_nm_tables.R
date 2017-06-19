@@ -168,7 +168,8 @@ read_nm_tables <- function(files         = NULL,
       x
     })) %>% 
     tidyr::unnest_(unnest_cols = 'tmp') %>% 
-    dplyr::select(dplyr::one_of('problem', 'simtab', 'data', 'index'))
+    dplyr::mutate(modified = FALSE) %>% 
+    dplyr::select(dplyr::one_of('problem', 'simtab', 'index', 'data', 'modified'))
   
   # If user mode return simple tibble as only 1 problem should be used
   if (user_mode) return(tables$data[[1]])

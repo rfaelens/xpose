@@ -64,8 +64,9 @@ read_nm_files <- function(files  = NULL,
     dplyr::filter(!.$drop) %>% 
     tidyr::unnest_(unnest_cols = 'data') %>% 
     tidyr::unnest_(unnest_cols = 'tmp') %>% 
-    dplyr::mutate(extension = get_extension(.$name, dot = FALSE)) %>% 
-    dplyr::select(dplyr::one_of('name', 'extension', 'problem', 'subprob', 'method', 'data'))
+    dplyr::mutate(extension = get_extension(.$name, dot = FALSE),
+                  modified = FALSE) %>% 
+    dplyr::select(dplyr::one_of('name', 'extension', 'problem', 'subprob', 'method', 'data', 'modified'))
 }
 
 parse_nm_files <- function(dat, quiet) {

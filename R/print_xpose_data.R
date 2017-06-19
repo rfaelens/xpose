@@ -41,9 +41,10 @@ print.xpose_data <- function(x, ...) {
   }
   
   if (!is.null(x$files)) {
-    out_names <- unique(x$files$name) %>% 
-      sort() %>% 
-      stringr::str_c(collapse = ', ')
+    out_names <- x$files %>% 
+      dplyr::distinct_(.dots = 'name', .keep_all = TRUE) %>% 
+      dplyr::arrange_(.dots = c('name')) %>% 
+      {stringr::str_c(.$name, ifelse(.$modified, ' (modified)', ''), collapse = ', ')}
   } else {
     out_names <- '<none>'
   }
@@ -73,5 +74,5 @@ summarize_table_names <- function(dat) {
     sort() %>% 
     unique() %>% 
     stringr::str_c(collapse = ', ') %>% 
-    {stringr::str_c('$prob no.',dat$problem,': ', ., sep = '')}
+    {stringr::str_c('$prob no.', dat$problem, ifelse(dat$modified, ' (modified)', ''), ': ', .)}
 }

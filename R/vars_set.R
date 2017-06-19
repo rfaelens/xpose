@@ -100,7 +100,7 @@ set_vars_type <- function(xpdb, problem = NULL, ..., auto_factor = TRUE, quiet) 
       x
     }, args = args, quiet = quiet)) %>% 
     tidyr::unnest_(unnest_cols = 'out') %>% 
-    dplyr::select(dplyr::one_of('problem', 'simtab', 'data', 'index'))
+    dplyr::select(dplyr::one_of('problem', 'simtab', 'index', 'data', 'modified'))
   
   xpdb
 }
@@ -148,7 +148,7 @@ set_var_generic <- function(xpdb, problem = NULL, what = NULL, ..., quiet) {
       x
     }, args = args, quiet = quiet)) %>% 
     tidyr::unnest_(unnest_cols = 'out') %>% 
-    dplyr::select(dplyr::one_of('problem', 'simtab', 'data', 'index'))
+    dplyr::select(dplyr::one_of('problem', 'simtab', 'index', 'data', 'modified'))
   
   xpdb
 }
