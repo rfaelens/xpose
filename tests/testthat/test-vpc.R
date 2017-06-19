@@ -5,7 +5,7 @@ psn_cmd_1 <- '/opt/local64/PsN/bin/vpc -seed=221287 -samples=1000 -stratify_on=V
 psn_cmd_2 <- '/opt/local64/PsN/bin/vpc -seed=221287 -samples=1000 -idv=TAD -dv=IDV -lst=run001.lst run001.mod'
 
  # ctrl_special <- vpc_data(vpc_data(xpdb_ex_pk, vpc_opt = vpc_opt_set(n_bins = 3)),
- #                          vpc_type = 'cens', vpc_opt = vpc_opt_set(n_bins = 3, lloq = -2))
+ #                          vpc_type = 'cens', vpc_opt = vpc_opt_set(n_bins = 3, lloq = 1))
  # save(ctrl_special, file = 'ctrl_special.RData', compress = 'xz')
 load('ctrl_special.RData')
 
@@ -45,7 +45,7 @@ test_that("vpc_data works properly with xpdb tables", {
 
 test_that("vpc_type categorical works properly", {
   xpdb_vpc_cens <- vpc_data(xpdb_ex_pk, vpc_type = 'cens', 
-                            vpc_opt = vpc_opt_set(n_bins = 3, lloq = -2))
+                            vpc_opt = vpc_opt_set(n_bins = 3, lloq = 1))
   expect_true(is.xpdb(xpdb_vpc_cens))
   expect_identical(xpdb_vpc_cens$special, ctrl_special$special[1, ])
 })
@@ -53,7 +53,7 @@ test_that("vpc_type categorical works properly", {
 test_that("vpc plot properly check input", {
   expect_error(vpc())
   expect_error(vpc(xpdb = 1, quiet = FALSE), regexp = 'Bad input')
-  expect_message(vpc(xpdb_ex_pk, quiet = FALSE), regexp = 'No vpc data available')
+  expect_error(vpc(xpdb_ex_pk, quiet = FALSE), regexp = 'No special')
   expect_message(vpc(ctrl_special, quiet = FALSE), regexp = 'Several vpc data')
   expect_error(vpc(ctrl_special, vpc_type = 'unknown', quiet = FALSE), 
                regexp = 'should be one of')

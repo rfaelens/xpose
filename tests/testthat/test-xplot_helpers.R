@@ -18,7 +18,7 @@ test_that('Check check_scales', {
 })
 
 test_that('Check parse_title', {
-  expect_equal(parse_title('OFV: @ofv', xpdb_ex_pk, problem = 1, quiet = TRUE), 'OFV: -656.869')
+  expect_equal(parse_title('OFV: @ofv', xpdb_ex_pk, problem = 1, quiet = TRUE), 'OFV: -1518.108')
   expect_message(parse_title('OFV: @fake', xpdb_ex_pk, problem = 1, quiet = FALSE), regexp = 'not part of')
   expect_equal(parse_title('OFV: @fake', xpdb_ex_pk, problem = 1, quiet = TRUE), 'OFV: @fake')
   expect_equal(parse_title('OFV: @fake', xpdb_ex_pk, problem = 1, quiet = TRUE, extra_key = 'fake', extra_value = '1987'), 'OFV: 1987')
