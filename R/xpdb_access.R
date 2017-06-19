@@ -14,7 +14,7 @@
 #' 
 #' @export
 get_code <- function(xpdb, problem = NULL) {
-  check_xpdb(xpdb, check = FALSE)
+  check_xpdb(xpdb, check = 'code')
   x <- xpdb$code
   
   if (!is.null(problem)) {
@@ -210,7 +210,7 @@ get_file <- function(xpdb, file = NULL, ext = NULL, problem = NULL, subprob = NU
 #' 
 #' @export
 get_summary <- function(xpdb, problem = NULL, subprob = NULL, only_last = FALSE) {
-  check_xpdb(xpdb, check = FALSE)
+  check_xpdb(xpdb, check = 'summary')
   x <- xpdb$summary
   
   # Filter by $problem

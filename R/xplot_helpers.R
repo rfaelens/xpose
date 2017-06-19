@@ -6,7 +6,8 @@ check_xpdb <- function(xpdb, check = 'data') {
   }
   
   skip  <- ifelse(check == FALSE, TRUE, FALSE)
-  check <- ifelse(check == 'data', 'data', 'files')
+  check <- ifelse(!check %in% c('data', 'files', 'summary', 'special', 'code'), 
+                  'files', check)
   
   # Check for the presence of data
   if (!skip && is.null(xpdb[[check]])) {

@@ -62,7 +62,7 @@ vpc <- function(xpdb,
                 quiet,
                 ...) {
   # Check input
-  check_xpdb(xpdb, check = FALSE)
+  check_xpdb(xpdb, check = 'special')
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   # Fetch data
