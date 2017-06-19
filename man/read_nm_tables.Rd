@@ -5,7 +5,7 @@
 \title{NONMEM output table import function}
 \usage{
 read_nm_tables(files = NULL, combined = TRUE, rm_duplicates = TRUE,
-  quiet = FALSE, simtab = NULL, ...)
+  quiet = FALSE, simtab = NULL, ziptab = TRUE, ...)
 }
 \arguments{
 \item{files}{A character vector of path to the files or a \code{nm_table_list} file created with \code{list_nm_tables}.}
@@ -19,6 +19,8 @@ does not match an error will be returned.}
 
 \item{simtab}{If \code{TRUE} only reads in simulation tables, if \code{FALSE} only reads estimation tables. 
 Default \code{NULL} reads all tables.}
+
+\item{ziptab}{If \code{TRUE} search for the tables that have been compressed and renamed ´<table>.zip'.}
 
 \item{...}{Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.}
 }

@@ -10,6 +10,7 @@
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' @param simtab If \code{TRUE} only reads in simulation tables, if \code{FALSE} only reads estimation tables. 
 #' Default \code{NULL} reads all tables.
+#' @param ziptab If \code{TRUE} search for the tables that have been compressed and renamed ´<table>.zip'.
 #' @param ... Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.
 #' @examples
 #' \dontrun{
@@ -21,6 +22,7 @@ read_nm_tables <- function(files         = NULL,
                            rm_duplicates = TRUE,
                            quiet         = FALSE,
                            simtab        = NULL,
+                           ziptab        = TRUE,
                            ...) {
   
   if (!is.null(files) && !is.nm.table.list(files)) {
@@ -48,6 +50,18 @@ read_nm_tables <- function(files         = NULL,
   }
   
   tables <- files[file.exists(files$file), ]
+  
+  # Search for compressed tables
+  if (ziptab) { 
+    tables_zip <- files[!file.exists(files$file), ]
+    tables_zip$file <- stringr::str_c(tables_zip$file, '.zip')
+    tables_zip <- tables_zip[file.exists(tables_zip$file), ]
+    if (nrow(tables_zip) > 0) {
+      tables <- tables %>% 
+        dplyr::bind_rows(tables_zip) %>% 
+        dplyr::arrange_(.dots = c('problem', 'file'))
+    }
+  }
   
   # Print reading messages
   tables %>% 
