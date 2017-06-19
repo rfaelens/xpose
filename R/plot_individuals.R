@@ -16,7 +16,9 @@
 #' ind_plots(xpdb_ex_pk)
 #' 
 #' # Example with mapping and facetting
-#' ind_plots(xpdb_ex_pk, aes(x = TAD), facets = OCC~ID)
+#' ind_plots(xpdb_ex_pk, aes(x = TAD), 
+#'           facets = OCC~ID, 
+#'           panel_labeller = 'label_both')
 #' 
 #' @export
 ind_plots <- function(xpdb,
@@ -49,14 +51,14 @@ ind_plots <- function(xpdb,
                 mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
                                            y = 'value', line_color = 'variable', 
                                            line_linetype = 'variable', point_color = 'variable', 
-                                           point_shape = 'variable'), mapping),
+                                           point_alpha = 'variable'), mapping),
                 type = type, panel_facets = facets,
                 xscale = check_scales('x', log),
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
                 plot_name = as.character(match.call()[[1]]), 
                 panel_nrow = nrow, panel_ncol = ncol, ...) +
-    scale_shape_manual(values = c(19, NA, NA)) +
+    scale_alpha_manual(values = c(0.8, 0, 0)) +
     scale_color_manual(values = c('grey60', 'deepskyblue3', 'deepskyblue3')) +
     scale_linetype_manual(values = c('dashed', 'solid', '52'))
 }
