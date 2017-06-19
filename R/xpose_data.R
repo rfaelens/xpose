@@ -11,15 +11,15 @@
 #' @param gg_theme A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).
 #' @param xp_theme An xpose theme or vector of modifications to the xpose theme
 #' (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).
-#' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' @param simtab If \code{TRUE} only reads in simulation tables, if \code{FALSE} only reads estimation tables. 
 #' Default \code{NULL} reads all tables. Option not compatible with manual_import.
 #' @param manual_import If \code{NULL} (default) the names of the output tables to import will be obtained from the model file. 
 #' To manually import files as in previous versions of xpose, the check the function \code{\link{manual_nm_import}}.
-#' @param extra_files A vector of additional output file extensions to be imported. Default is ".ext", ".cov", ".cor", ".phi", 
-#' ".grd" for NONMEM.
 #' @param skip Character vector be used to skip the import/generation of: 'data', 'files', 'summary' or any
 #' combination of the three.
+#' @param extra_files A vector of additional output file extensions to be imported. Default is ".ext", ".cov", ".cor", ".phi", 
+#' ".grd" for NONMEM.
+#' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' @param ... Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.
 #'
 #' @examples
@@ -35,11 +35,11 @@ xpose_data <- function(runno         = NULL,
                        ext           = '.lst',
                        gg_theme      = theme_readable(),
                        xp_theme      = theme_xp_default(),
-                       quiet         = FALSE,
-                       extra_files,
                        simtab        = NULL,
                        manual_import = NULL,
                        skip          = NULL,
+                       extra_files,
+                       quiet,
                        ...) {
   
   if (is.null(runno) && is.null(file)) {
@@ -50,6 +50,8 @@ xpose_data <- function(runno         = NULL,
     ext  <- make_extension(ext)
     file <- file_path(dir, stringr::str_c(prefix, runno, ext))
   }
+  
+  if (missing(quiet)) quiet <- !interactive()
   
   if (ext %in% c('.lst', '.out', '.res', '.mod', '.ctl')) {
     software <- 'nonmem'

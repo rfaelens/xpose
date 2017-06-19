@@ -6,8 +6,8 @@
 \usage{
 xpose_data(runno = NULL, dir = NULL, file = NULL, prefix = "run",
   ext = ".lst", gg_theme = theme_readable(),
-  xp_theme = theme_xp_default(), quiet = FALSE, extra_files,
-  simtab = NULL, manual_import = NULL, skip = NULL, ...)
+  xp_theme = theme_xp_default(), simtab = NULL, manual_import = NULL,
+  skip = NULL, extra_files, quiet, ...)
 }
 \arguments{
 \item{runno}{Run number to be evaluated.}
@@ -26,11 +26,6 @@ xpose_data(runno = NULL, dir = NULL, file = NULL, prefix = "run",
 \item{xp_theme}{An xpose theme or vector of modifications to the xpose theme
 (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).}
 
-\item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
-
-\item{extra_files}{A vector of additional output file extensions to be imported. Default is ".ext", ".cov", ".cor", ".phi", 
-".grd" for NONMEM.}
-
 \item{simtab}{If \code{TRUE} only reads in simulation tables, if \code{FALSE} only reads estimation tables. 
 Default \code{NULL} reads all tables. Option not compatible with manual_import.}
 
@@ -39,6 +34,11 @@ To manually import files as in previous versions of xpose, the check the functio
 
 \item{skip}{Character vector be used to skip the import/generation of: 'data', 'files', 'summary' or any
 combination of the three.}
+
+\item{extra_files}{A vector of additional output file extensions to be imported. Default is ".ext", ".cov", ".cor", ".phi", 
+".grd" for NONMEM.}
+
+\item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 
 \item{...}{Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.}
 }
