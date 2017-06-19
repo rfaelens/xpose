@@ -84,7 +84,9 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 ind_plots(xpdb_ex_pk)
 
 # Example with mapping and facetting
-ind_plots(xpdb_ex_pk, aes(x = TAD), facets = OCC~ID)
+ind_plots(xpdb_ex_pk, aes(x = TAD), 
+          facets = OCC~ID, 
+          panel_labeller = 'label_both')
 
 }
 \seealso{
