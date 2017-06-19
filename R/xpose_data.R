@@ -65,22 +65,25 @@ xpose_data <- function(runno         = NULL,
   }  
   
   # Import estimation tables
-  if (!'data' %in% skip) {
+  if ('data' %in% skip) {
     msg('Skipping data import', quiet)
+    data <- NULL
   } else if (software == 'nonmem') {
     data <- read_nm_tables(files = tbl_names, quiet = quiet, simtab = simtab, ...)
   }
   
   # Generate model summary
-  if (!'summary' %in% skip) {
+  if ('summary' %in% skip) {
     msg('Skipping summary generation', quiet)
+    summary <- NULL
   } else if (software == 'nonmem') {
     summary <- summarise_nm_model(file, model_code, software, rounding = xp_theme$rounding)
   }
   
   # Import output files
-  if (!'files' %in% skip) {
+  if ('files' %in% skip) {
     msg('Skipping output files import', quiet)
+    out_files <- NULL
   } else if (software == 'nonmem') {
     if (missing(extra_files)) {
       extra_files <- c('.ext', '.cor', '.cov', '.phi', '.grd', '.shk')
