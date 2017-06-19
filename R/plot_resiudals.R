@@ -45,20 +45,20 @@ res_vs_pred <- function(xpdb,
   
   if (length(res) > 1) {
     if (is.null(facets)) facets <- 'variable'
-    data_opt <- data_opt_set(problem = problem, 
-                             filter = only_obs(xpdb, problem, quiet),
-                             tidy = TRUE, value_col = res)
+    opt <- data_opt(problem = problem, 
+                    filter = only_obs(xpdb, problem, quiet),
+                    tidy = TRUE, value_col = res)
     vars <- aes_c(aes_string(x = xp_var(xpdb, problem, type = 'pred')$col, 
                              y = 'value'), mapping)
   } else {
-    data_opt <- data_opt_set(problem = problem, 
-                             filter = only_obs(xpdb, problem, quiet))
+    opt <- data_opt(problem = problem, 
+                    filter = only_obs(xpdb, problem, quiet))
     vars <- aes_c(aes_string(x = xp_var(xpdb, problem, type = 'pred')$col, 
                              y = toupper(res)), mapping)
   }
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
-                data_opt = data_opt, mapping = vars, 
+                opt = opt, mapping = vars, 
                 type = type, guides = guides, panel_facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
@@ -91,20 +91,20 @@ absval_res_vs_pred <- function(xpdb,
   
   if (length(res) > 1) {
     if (is.null(facets)) facets <- 'variable'
-    data_opt <- data_opt_set(problem = problem, 
-                             filter = only_obs(xpdb, problem, quiet),
-                             tidy = TRUE, value_col = res)
+    opt <- data_opt(problem = problem, 
+                    filter = only_obs(xpdb, problem, quiet),
+                    tidy = TRUE, value_col = res)
     vars <- aes_c(aes_string(x = xp_var(xpdb, problem, type = 'pred')$col, 
                              y = 'abs(value)'), mapping)
   } else {
-    data_opt <- data_opt_set(problem = problem, 
-                             filter = only_obs(xpdb, problem, quiet))
+    opt <- data_opt(problem = problem, 
+                    filter = only_obs(xpdb, problem, quiet))
     vars <- aes_c(aes_string(x = xp_var(xpdb, problem, type = 'pred')$col, 
                              y =  stringr::str_c('abs(', toupper(res), ')')), mapping)
   }
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
-                data_opt = data_opt, mapping = vars, 
+                opt = opt, mapping = vars, 
                 type = type, guides = guides, panel_facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
@@ -161,20 +161,20 @@ res_vs_idv <- function(xpdb,
   
   if (length(res) > 1) {
     if (is.null(facets)) facets <- 'variable'
-    data_opt <- data_opt_set(problem = problem, 
-                             filter = only_obs(xpdb, problem, quiet),
-                             tidy = TRUE, value_col = res)
+    opt <- data_opt(problem = problem, 
+                    filter = only_obs(xpdb, problem, quiet),
+                    tidy = TRUE, value_col = res)
     vars <- aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
                              y = 'value'), mapping)
   } else {
-    data_opt <- data_opt_set(problem = problem, 
-                             filter = only_obs(xpdb, problem, quiet))
+    opt <- data_opt(problem = problem, 
+                    filter = only_obs(xpdb, problem, quiet))
     vars <- aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
                              y = toupper(res)), mapping)
   }
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
-                data_opt = data_opt, mapping = vars, 
+                opt = opt, mapping = vars, 
                 type = type, guides = guides, panel_facets = facets, 
                 xscale = check_scales('x', log),
                 yscale = check_scales('y', log),
@@ -207,20 +207,20 @@ absval_res_vs_idv <- function(xpdb,
   
   if (length(res) > 1) {
     if (is.null(facets)) facets <- 'variable'
-    data_opt <- data_opt_set(problem = problem, 
-                             filter = only_obs(xpdb, problem, quiet),
-                             tidy = TRUE, value_col = res)
+    opt <- data_opt(problem = problem, 
+                    filter = only_obs(xpdb, problem, quiet),
+                    tidy = TRUE, value_col = res)
     vars <- aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
                              y = 'abs(value)'), mapping)
   } else {
-    data_opt <- data_opt_set(problem = problem, 
-                             filter = only_obs(xpdb, problem, quiet))
+    opt <- data_opt(problem = problem, 
+                    filter = only_obs(xpdb, problem, quiet))
     vars <- aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
                              y =  stringr::str_c('abs(', toupper(res), ')')), mapping)
   }
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
-                data_opt = data_opt, mapping = vars,
+                opt = opt, mapping = vars,
                 type = type, guides = guides, panel_facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 

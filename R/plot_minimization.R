@@ -39,15 +39,13 @@ prm_vs_iteration <- function(xpdb,
   x_var <- 'ITERATION'
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
-                data_opt = data_opt_set(problem = problem, 
-                                        source = 'ext',
-                                        filter = function(x){
-                                          x %>% 
-                                            dplyr::filter(.[, x_var] >= 0) %>% 
-                                            dplyr::select_if(.predicate = function(x) dplyr::n_distinct(x) > 1)
-                                        },
-                                        tidy = TRUE,
-                                        index_col = x_var),
+                opt = data_opt(problem = problem, 
+                               source = 'ext',
+                               filter = function(x) {
+                                 x %>% 
+                                   dplyr::filter(.[, x_var] >= 0) %>% 
+                                   dplyr::select_if(.predicate = function(x) dplyr::n_distinct(x) > 1)
+                               }, tidy = TRUE, index_col = x_var),
                 mapping = aes_c(aes_string(x = x_var, y = 'value'), mapping),
                 type = type, guides = guides, panel_facets = facets, 
                 xscale = check_scales('x', log), 
@@ -82,15 +80,13 @@ grd_vs_iteration <- function(xpdb,
   x_var <- 'ITERATION'
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
-                data_opt = data_opt_set(problem = problem, 
-                                        source = 'grd',
-                                        filter = function(x){
-                                          x %>% 
-                                            dplyr::filter(.[, x_var] >= 0) %>% 
-                                            dplyr::select_if(.predicate = function(x) dplyr::n_distinct(x) > 1)
-                                        },
-                                        tidy = TRUE,
-                                        index_col = x_var),
+                opt = data_opt(problem = problem, 
+                               source = 'grd',
+                               filter = function(x) {
+                                 x %>% 
+                                   dplyr::filter(.[, x_var] >= 0) %>% 
+                                   dplyr::select_if(.predicate = function(x) dplyr::n_distinct(x) > 1)
+                               }, tidy = TRUE, index_col = x_var),
                 mapping = aes_c(aes_string(x = x_var, y = 'value'), mapping),
                 type = type, guides = guides, panel_facets = facets, 
                 xscale = check_scales('x', log), 

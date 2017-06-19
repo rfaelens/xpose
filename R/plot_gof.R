@@ -51,8 +51,7 @@ dv_vs_ipred <- function(xpdb,
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
-                data_opt = data_opt_set(problem = problem, 
-                                        filter = only_obs(xpdb, problem, quiet)),
+                opt = data_opt(problem = problem, filter = only_obs(xpdb, problem, quiet)),
                 mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'ipred')$col, 
                                            y = xp_var(xpdb, problem, type = 'dv')$col), mapping),
                 type = type, guides = guides, panel_facets = facets, 
@@ -84,8 +83,7 @@ dv_vs_pred <- function(xpdb,
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
-                data_opt = data_opt_set(problem = problem, 
-                                        filter = only_obs(xpdb, problem, quiet)),
+                opt = data_opt(problem = problem, filter = only_obs(xpdb, problem, quiet)),
                 mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'pred')$col, 
                                            y = xp_var(xpdb, problem, type = 'dv')$col), mapping),
                 type = type, guides = guides, panel_facets = facets, 

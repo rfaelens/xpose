@@ -49,9 +49,9 @@ prm_qq <- function(xpdb,
   }
   
   xplot_qq(xpdb = xpdb, quiet = quiet,
-           data_opt = data_opt_set(problem = problem, 
-                                   filter = only_distinct(xpdb, problem, facets, quiet), 
-                                   tidy = TRUE, value_col = prm_col),
+           opt = data_opt(problem = problem, 
+                          filter = only_distinct(xpdb, problem, facets, quiet), 
+                          tidy = TRUE, value_col = prm_col),
            mapping = aes_c(aes_string(sample = 'value'), mapping), 
            type = type, guides = guides, panel_facets = facets,
            xscale = check_scales('x', log), 
@@ -89,9 +89,9 @@ eta_qq <- function(xpdb,
   }
   
   xplot_qq(xpdb = xpdb, quiet = quiet,
-           data_opt = data_opt_set(problem = problem, 
-                                   filter = only_distinct(xpdb, problem, facets, quiet), 
-                                   tidy = TRUE, value_col = eta_col),
+           opt = data_opt(problem = problem, 
+                          filter = only_distinct(xpdb, problem, facets, quiet), 
+                          tidy = TRUE, value_col = eta_col),
            mapping = aes_c(aes_string(sample = 'value'), mapping), 
            type = type, guides = guides, panel_facets = facets,
            xscale = check_scales('x', log), 
@@ -125,18 +125,18 @@ res_qq <- function(xpdb,
   
   if (length(res) > 1) {
     if (is.null(facets)) facets <- 'variable'
-    data_opt <- data_opt_set(problem = problem, 
-                             filter = only_obs(xpdb, problem, quiet),
-                             tidy = TRUE, value_col = res)
+    opt <- data_opt(problem = problem, 
+                    filter = only_obs(xpdb, problem, quiet),
+                    tidy = TRUE, value_col = res)
     vars <- aes_c(aes_string(sample = 'value'), mapping)
   } else {
-    data_opt <- data_opt_set(problem = problem, 
-                             filter = only_obs(xpdb, problem, quiet))
+    opt <- data_opt(problem = problem, 
+                    filter = only_obs(xpdb, problem, quiet))
     vars <- aes_c(aes_string(sample = toupper(res)), mapping)
   }
   
   xplot_qq(xpdb = xpdb, quiet = quiet,
-           data_opt = data_opt, mapping = vars,
+           opt = opt, mapping = vars,
            type = type, guides = guides, panel_facets = facets,
            xscale = check_scales('x', log), 
            yscale = check_scales('y', log), 
@@ -173,9 +173,9 @@ cov_qq <- function(xpdb,
   }
   
   xplot_qq(xpdb = xpdb, quiet = quiet,
-           data_opt = data_opt_set(problem = problem, 
-                                   filter = only_distinct(xpdb, problem, facets, quiet), 
-                                   tidy = TRUE, value_col = cov_col),
+           opt = data_opt(problem = problem, 
+                          filter = only_distinct(xpdb, problem, facets, quiet), 
+                          tidy = TRUE, value_col = cov_col),
            mapping = aes_c(aes_string(sample = 'value'), mapping), 
            type = type, guides = guides, panel_facets = facets,
            xscale = check_scales('x', log), 

@@ -1,8 +1,8 @@
 context('Check fetch_data')
 
 # Tests start here --------------------------------------------------------
-test_that("data_opt_set function works properly", {
-  expect_equal(data_opt_set(problem = 1, subprob = 2, source = 'data', simtab = FALSE, 
+test_that("data_opt function works properly", {
+  expect_equal(data_opt(problem = 1, subprob = 2, source = 'data', simtab = FALSE, 
                             filter = function(x){ x }, tidy = FALSE, index_col = 'ID',
                             value_col = 'IPRED'),
                list(problem = 1, subprob = 2, source = 'data', simtab = FALSE, 
