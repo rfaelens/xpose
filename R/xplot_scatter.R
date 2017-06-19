@@ -18,8 +18,8 @@
 #' @param gg_theme A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).
 #' @param xp_theme An xpose theme or vector of modifications to the xpose theme
 #' (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).
-#' @param data_opt A list of options in order to create appropriate data input for 
-#' ggplot2. For more information see \code{\link{data_opt_set}}.
+#' @param opt A list of options in order to create appropriate data input for 
+#' ggplot2. For more information see \code{\link{data_opt}}.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' @param ... Any additional aesthetics.
 #' 
@@ -66,7 +66,7 @@ xplot_scatter <- function(xpdb,
                           plot_name = 'scatter_plot',
                           gg_theme,
                           xp_theme,
-                          data_opt,
+                          opt,
                           quiet,
                           ...) {
   # Check input
@@ -74,10 +74,10 @@ xplot_scatter <- function(xpdb,
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   # Fetch data
-  if (missing(data_opt)) data_opt <- data_opt_set()
-  data <- fetch_data(xpdb, quiet = quiet, problem = data_opt$problem, subprob = data_opt$subprob, 
-                     source = data_opt$source, simtab = data_opt$simtab, filter = data_opt$filter, 
-                     tidy = data_opt$tidy, index_col = data_opt$index_col, value_col = data_opt$value_col)
+  if (missing(opt)) opt <- data_opt()
+  data <- fetch_data(xpdb, quiet = quiet, problem = opt$problem, subprob = opt$subprob, 
+                     source = opt$source, simtab = opt$simtab, filter = opt$filter, 
+                     tidy = opt$tidy, index_col = opt$index_col, value_col = opt$value_col)
   if (is.null(data)) {
     msg('No data available for plotting. Please check the variable mapping and filering options.', quiet)
     return()
@@ -119,7 +119,7 @@ xplot_scatter <- function(xpdb,
   # Add text
   if (stringr::str_detect(type, stringr::fixed('t', ignore_case = TRUE))) {
     xp <- xp + xp_geoms(mapping  = c(mapping, aes_string(text_label = xp_var(xpdb, attr(data, 'problem'), 
-                                                                         type = 'id')$col)),
+                                                                             type = 'id')$col)),
                         xp_theme = xpdb$xp_theme,
                         name     = 'text',
                         ggfun    = 'geom_text',

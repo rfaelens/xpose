@@ -7,7 +7,7 @@
 xplot_qq(xpdb, mapping = NULL, type = "p", guides = FALSE,
   xscale = "continuous", yscale = "continuous", title = NULL,
   subtitle = NULL, caption = NULL, plot_name = "qq_plot", gg_theme,
-  xp_theme, data_opt, quiet, ...)
+  xp_theme, opt, quiet, ...)
 }
 \arguments{
 \item{xpdb}{An \code{xpose_data} object generated with \code{\link{xpose_data}}.}
@@ -36,8 +36,8 @@ xplot_qq(xpdb, mapping = NULL, type = "p", guides = FALSE,
 \item{xp_theme}{An xpose theme or vector of modifications to the xpose theme
 (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).}
 
-\item{data_opt}{A list of options in order to create appropriate data input for 
-ggplot2. For more information see \code{\link{data_opt_set}}.}
+\item{opt}{A list of options in order to create appropriate data input for 
+ggplot2. For more information see \code{\link{data_opt}}.}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 

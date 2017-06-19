@@ -37,7 +37,7 @@ xplot_qq <- function(xpdb,
                      plot_name = 'qq_plot',
                      gg_theme,
                      xp_theme,
-                     data_opt,
+                     opt,
                      quiet,
                      ...) {
   # Check input
@@ -45,10 +45,10 @@ xplot_qq <- function(xpdb,
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   # Fetch data
-  if (missing(data_opt)) data_opt <- data_opt_set()
-  data <- fetch_data(xpdb, quiet = quiet, problem = data_opt$problem, subprob = data_opt$subprob, 
-                     source = data_opt$source, simtab = data_opt$simtab, filter = data_opt$filter, 
-                     tidy = data_opt$tidy, index_col = data_opt$index_col, value_col = data_opt$value_col)
+  if (missing(opt)) opt <- data_opt()
+  data <- fetch_data(xpdb, quiet = quiet, problem = opt$problem, subprob = opt$subprob, 
+                     source = opt$source, simtab = opt$simtab, filter = opt$filter, 
+                     tidy = opt$tidy, index_col = opt$index_col, value_col = opt$value_col)
   if (is.null(data)) {
     msg('No data available for plotting. Please check the variable mapping and filering options.', quiet)
     return()

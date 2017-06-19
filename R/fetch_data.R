@@ -19,17 +19,17 @@
 #' @seealso \code{{xplot_scatter}}
 #' 
 #' @examples
-#' data_opt_set(problem = 1, source = 'data', simtab = TRUE)
+#' data_opt(problem = 1, source = 'data', simtab = TRUE)
 #' 
 #' @export
-data_opt_set <- function(problem   = NULL, 
-                         subprob   = NULL, 
-                         source    = 'data', 
-                         simtab    = FALSE,
-                         filter    = NULL,
-                         tidy      = FALSE,
-                         index_col = NULL,
-                         value_col = NULL) {
+data_opt <- function(problem   = NULL, 
+                     subprob   = NULL, 
+                     source    = 'data', 
+                     simtab    = FALSE,
+                     filter    = NULL,
+                     tidy      = FALSE,
+                     index_col = NULL,
+                     value_col = NULL) {
   list(problem = problem, subprob = subprob, source = source, 
        simtab = simtab, filter = filter, tidy = tidy, 
        index_col = index_col, value_col = value_col)
@@ -56,7 +56,7 @@ only_distinct <- function(xpdb, problem, facets, quiet) {
   body(fun) <- bquote({
     msg(.(string), .(quiet))
     dplyr::distinct_(.data = x, .dots = .(vars), .keep_all = TRUE)
-    })
+  })
   fun
 }
 
