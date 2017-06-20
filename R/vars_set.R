@@ -86,8 +86,10 @@ set_vars_type <- function(xpdb, problem = NULL, ..., auto_factor = TRUE, quiet) 
       if (length(single_type) > 0) index$type[index$type %in% single_type] <- 'na'
       
       # Replace the matching values
-      index$type[match(args$col, index$col)] <- args$type
-      x$index[[1]] <- index
+      for (repl in 1:nrow(args)) {
+        index$type[index$col == args$col[repl]] <- args$type[repl]
+      }
+       x$index[[1]] <- index
       
       # Change categorical covariates to factor
       if (any(args$type == 'catcov') && auto_factor) {
