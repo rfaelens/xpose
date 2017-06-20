@@ -108,9 +108,29 @@ mutate.xpose_data <- function(.data, ..., .problem, .source) {
                     modified = dplyr::if_else(.$problem %in% .problem, TRUE, .$modified))
     
     # Update index
-    # 1. drop vars removed from index
-    # 2. add vars that are not in the index
-    
+    xpdb[['data']] <- xpdb[['data']] %>% 
+      dplyr::group_by_(.dots = 'problem') %>% 
+      tidyr::nest(.key = 'tmp') %>% 
+      dplyr::mutate(tmp = purrr::map_if(.$tmp, 
+                                        xpdb[['data']]$problem %in% .problem,
+                                        function(x) {
+                                          col_names <- colnames(x$data[[1]])
+                                          # Drop columns not present in data anymore
+                                          x$index[[1]] <- x$index[[1]] %>% 
+                                            dplyr::filter(.$col %in% col_names)
+                                          
+                                          # Add new columns found in data
+                                          add_cols <- col_names[!col_names %in% x$index[[1]]$col]
+                                          if (length(add_cols) > 0) {
+                                            x$index[[1]] <- x$index[[1]] %>%   
+                                              dplyr::bind_rows(
+                                                dplyr::tibble(table = 'na', col = add_cols, type = 'na', 
+                                                              label = NA_character_, 
+                                                              units = NA_character_))
+                                          }
+                                          x
+                                        })) %>% 
+      tidyr::unnest_(unnest_cols = 'tmp')
   } else {
     if (missing(.problem)) .problem <- xpdb[['files']]$problem
     if (!all(.source %in% xpdb[['files']]$extension)) {
