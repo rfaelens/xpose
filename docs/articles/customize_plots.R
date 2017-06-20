@@ -80,17 +80,18 @@ dv_vs_ipred(xpdb, facets = SEX~OCC, panel_labeller = 'label_both')
 dv_vs_ipred(xpdb) +
   geom_rug(alpha = 0.2, color = 'grey50',
            sides = 'lb', size = 0.4) +
-  annotate(geom = 'text', 
+  annotate(geom = 'text',
+           fontface = 'bold',
            color = 'darkred',
-           label = 'LLOQ', x = -4, y = -4) +
+           label = 'Toxic', x = 3.7, y = 4.8) +
   annotate(geom = 'rect',
            alpha = 0.2, fill = 'red',
-           xmin = -Inf, xmax = -3,
-           ymin = -Inf, ymax = -3)
+           xmin = 3, xmax = Inf,
+           ymin = 3, ymax = Inf)
 
 ## ----scales demo---------------------------------------------------------
 dv_vs_ipred(xpdb, 
-            xscale_breaks = c(-4, -2, 0),
+            xscale_breaks = c(1, 2, 3),
             xscale_labels = c('Low', 'Med', 'High'),
             xscale_expand = c(0.2, 0),
             xscale_name = 'Individual model predictions')

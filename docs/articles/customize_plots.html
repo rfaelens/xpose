@@ -204,13 +204,14 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb) +
 <span class="st">  </span><span class="kw">geom_rug</span>(<span class="dt">alpha =</span> <span class="fl">0.2</span>, <span class="dt">color =</span> <span class="st">'grey50'</span>,
            <span class="dt">sides =</span> <span class="st">'lb'</span>, <span class="dt">size =</span> <span class="fl">0.4</span>) +
-<span class="st">  </span><span class="kw">annotate</span>(<span class="dt">geom =</span> <span class="st">'text'</span>, 
+<span class="st">  </span><span class="kw">annotate</span>(<span class="dt">geom =</span> <span class="st">'text'</span>,
+           <span class="dt">fontface =</span> <span class="st">'bold'</span>,
            <span class="dt">color =</span> <span class="st">'darkred'</span>,
-           <span class="dt">label =</span> <span class="st">'LLOQ'</span>, <span class="dt">x =</span> -<span class="dv">4</span>, <span class="dt">y =</span> -<span class="dv">4</span>) +
+           <span class="dt">label =</span> <span class="st">'Toxic'</span>, <span class="dt">x =</span> <span class="fl">3.7</span>, <span class="dt">y =</span> <span class="fl">4.8</span>) +
 <span class="st">  </span><span class="kw">annotate</span>(<span class="dt">geom =</span> <span class="st">'rect'</span>,
            <span class="dt">alpha =</span> <span class="fl">0.2</span>, <span class="dt">fill =</span> <span class="st">'red'</span>,
-           <span class="dt">xmin =</span> -<span class="ot">Inf</span>, <span class="dt">xmax =</span> -<span class="dv">3</span>,
-           <span class="dt">ymin =</span> -<span class="ot">Inf</span>, <span class="dt">ymax =</span> -<span class="dv">3</span>)</code></pre></div>
+           <span class="dt">xmin =</span> <span class="dv">3</span>, <span class="dt">xmax =</span> <span class="ot">Inf</span>,
+           <span class="dt">ymin =</span> <span class="dv">3</span>, <span class="dt">ymax =</span> <span class="ot">Inf</span>)</code></pre></div>
 <p><img src="customize_plots_files/figure-html/demo%20layers-1.png" width="50%" style="display: block; margin: auto;"></p>
 </div>
 <div id="scales-options" class="section level3">
@@ -218,7 +219,7 @@
 <a href="#scales-options" class="anchor"></a>Scales options</h3>
 <p>The argument <code>log</code> allows to automatically log the relevant axes when set to <code>TRUE</code>. Additional arguments can be provided to the scales via the mapping by using the naming convention <code>xscale_xxx</code> or <code>yscale_xxx</code> where <code>xxx</code> is the name of a <code>ggplot2</code> scale argument such as <code>name</code>, <code>breaks</code>, <code>labels</code>, <code>expand</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, 
-            <span class="dt">xscale_breaks =</span> <span class="kw">c</span>(-<span class="dv">4</span>, -<span class="dv">2</span>, <span class="dv">0</span>),
+            <span class="dt">xscale_breaks =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),
             <span class="dt">xscale_labels =</span> <span class="kw">c</span>(<span class="st">'Low'</span>, <span class="st">'Med'</span>, <span class="st">'High'</span>),
             <span class="dt">xscale_expand =</span> <span class="kw">c</span>(<span class="fl">0.2</span>, <span class="dv">0</span>),
             <span class="dt">xscale_name =</span> <span class="st">'Individual model predictions'</span>)</code></pre></div>
