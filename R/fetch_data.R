@@ -38,12 +38,20 @@ data_opt <- function(problem   = NULL,
 # Create shortcut functions on the fly to filter observations
 only_obs <- function(xpdb, problem, quiet) {
   mdv_var <- xp_var(xpdb, problem, type = c('evid', 'mdv'))$col[1]
-  string <- c('Filtering data by ', mdv_var, ' == 0')
   fun <- function(x) {}
-  body(fun) <- bquote({
-    msg(.(string), .(quiet))
-    x[x[, .(mdv_var)] == 0, ]
-  })
+  if (!is.null(mdv_var)) {
+    string <- c('Filtering data by ', mdv_var, ' == 0')
+    body(fun) <- bquote({
+      msg(.(string), .(quiet))
+      x[x[, .(mdv_var)] == 0, ]
+    })
+  } else {
+    string <- c('No `evid` or `mdv` variable available to filter the data.')
+    body(fun) <- bquote({
+      msg(.(string), .(quiet))
+      x
+    }) 
+  }
   fun
 }
 
