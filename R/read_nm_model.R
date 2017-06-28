@@ -113,8 +113,8 @@ read_nm_model <- function(file    = NULL,
   # Remove subroutine names from the code
   model$code <- stringr::str_replace(model$code, '^\\s*\\$\\w+\\s*', '')
   
-  # Remove empty rows
-  model <- model[!stringr::str_detect(model$code, '^(\\s|\\t)*$'), ]
+  # Remove empty rows but $PROBLEM
+  model <- model[!stringr::str_detect(model$code, '^(\\s|\\t)*$') | model$subroutine == 'pro', ]
   
   # Create comment column
   code_rows <- !model$subroutine %in% c('lst', 'oth') | model$level == 0
