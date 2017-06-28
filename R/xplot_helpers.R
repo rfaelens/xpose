@@ -82,13 +82,18 @@ all_data_problem <- function(xpdb) {
   unique(prob_n)
 }
 
-# Get last problem
+# Get last problem that is not a simulation problem (unless simtab is TRUE)
 last_data_problem <- function(xpdb, simtab = FALSE) {
   prob_n <- xpdb$data$simtab
   if (!simtab) prob_n <- !prob_n
   prob_n <- xpdb$data$problem[prob_n]
   if (length(prob_n) == 0) return(NA_integer_)
   max(prob_n)
+}
+
+# get the default problem to be plotted if problem has not been supplied (the last estimation problem, unless there is only one problem)
+default_plot_problem <- function(xpdb){
+  last_data_problem(xpdb, simtab = nrow(xpdb$data)==1)
 }
 
 # Get all file problem

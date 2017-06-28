@@ -76,7 +76,7 @@ eta_distrib <- function(xpdb,
                         ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
+  if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (is.null(facets)) facets <- 'variable'
   eta_col <- xp_var(xpdb, problem, type = 'eta')$col
@@ -116,7 +116,7 @@ res_distrib <- function(xpdb,
                         ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
+  if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   if (length(res) > 1) {
@@ -156,7 +156,7 @@ cov_distrib <- function(xpdb,
                         ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
+  if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (is.null(facets)) facets <- 'variable'
   cov_col <- xp_var(xpdb, problem, type = 'contcov')$col

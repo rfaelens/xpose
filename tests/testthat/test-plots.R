@@ -1,57 +1,35 @@
 context('Check plot functions')
 
+prediction_plot_functions <- c("dv_vs_pred", "dv_vs_ipred", "dv_vs_idv", "ipred_vs_idv", "pred_vs_idv", "dv_preds_vs_idv")
+residual_plot_functions <- c("res_vs_idv", "res_vs_pred", "absval_res_vs_idv", "absval_res_vs_pred", "res_distrib", "res_qq") 
+iteration_plot_functions <- c("prm_vs_iteration", "grd_vs_iteration")
+parameter_plot_functions <- c("prm_distrib", "prm_qq")
+eta_plot_functions <- c("eta_distrib", "eta_qq")
+cov_plot_functions <- c("cov_distrib", "cov_qq")
+individual_plot_functions <- c("ind_plots")
+
+plot_functions <- c(prediction_plot_functions, residual_plot_functions, iteration_plot_functions, eta_plot_functions, cov_plot_functions, individual_plot_functions)
+
+xpdb_sim_only <- xpose_data(file = "sim.lst")
+
+
 # Tests start here --------------------------------------------------------
 
-test_that("errors are returned for missing xpdb_ex_pk", {
-  expect_error(dv_vs_pred())
-  expect_error(dv_vs_ipred())
-  expect_error(dv_vs_idv())
-  expect_error(ipred_vs_idv())
-  expect_error(pred_vs_idv())
-  expect_error(dv_preds_vs_idv())
-  expect_error(res_vs_idv())
-  expect_error(res_vs_pred())
-  expect_error(absval_res_vs_idv())
-  expect_error(absval_res_vs_pred())
-  expect_error(prm_vs_iteration())
-  expect_error(grd_vs_iteration())
-  expect_error(ind_plots())
-  expect_error(prm_distrib())
-  expect_error(eta_distrib())
-  expect_error(res_distrib())
-  expect_error(cov_distrib())
-  expect_error(prm_qq())
-  expect_error(eta_qq())
-  expect_error(res_qq())
-  expect_error(cov_qq())
+test_that_for_all(plot_functions, "errors are returned when xpdb_ex_pk is missing", {
+   expect_error(.plot_function())
 })
 
-test_that("xpose plot objects are returned with appropriate xpdb_ex_pk", {
-  expect_true(is.xpose.plot(dv_vs_pred(xpdb_ex_pk)))
-  expect_true(is.xpose.plot(dv_vs_ipred(xpdb_ex_pk)))
-  expect_true(is.xpose.plot(dv_vs_idv(xpdb_ex_pk)))
-  expect_true(is.xpose.plot(ipred_vs_idv(xpdb_ex_pk)))
-  expect_true(is.xpose.plot(pred_vs_idv(xpdb_ex_pk)))
-  expect_true(is.xpose.plot(dv_preds_vs_idv(xpdb_ex_pk)))
-  expect_true(is.xpose.plot(res_vs_idv(xpdb_ex_pk)))
-  expect_true(is.xpose.plot(res_vs_idv(xpdb_ex_pk, res = c('CWRES', 'IWRES'))))
-  expect_true(is.xpose.plot(res_vs_pred(xpdb_ex_pk)))
-  expect_true(is.xpose.plot(res_vs_pred(xpdb_ex_pk, res = c('CWRES', 'IWRES'))))
-  expect_true(is.xpose.plot(absval_res_vs_idv(xpdb_ex_pk)))
-  expect_true(is.xpose.plot(absval_res_vs_idv(xpdb_ex_pk, res = c('CWRES', 'IWRES'))))
-  expect_true(is.xpose.plot(absval_res_vs_pred(xpdb_ex_pk)))
-  expect_true(is.xpose.plot(absval_res_vs_pred(xpdb_ex_pk, res = c('CWRES', 'IWRES'))))
-  expect_true(is.xpose.plot(prm_vs_iteration(xpdb_ex_pk)))
-  expect_true(is.xpose.plot(grd_vs_iteration(xpdb_ex_pk)))
-  expect_true(is.xpose.plot(ind_plots(xpdb_ex_pk)))
-  expect_true(is.xpose.plot(prm_distrib(xpdb_ex_pk)))
-  expect_true(is.xpose.plot(eta_distrib(xpdb_ex_pk)))
-  expect_true(is.xpose.plot(res_distrib(xpdb_ex_pk)))
-  expect_true(is.xpose.plot(res_distrib(xpdb_ex_pk, res = c('CWRES', 'IWRES'))))
-  expect_true(is.xpose.plot(cov_distrib(xpdb_ex_pk)))
-  expect_true(is.xpose.plot(prm_qq(xpdb_ex_pk)))
-  expect_true(is.xpose.plot(eta_qq(xpdb_ex_pk)))
-  expect_true(is.xpose.plot(res_qq(xpdb_ex_pk)))
-  expect_true(is.xpose.plot(res_qq(xpdb_ex_pk, res = c('CWRES', 'IWRES'))))
-  expect_true(is.xpose.plot(cov_qq(xpdb_ex_pk)))
+test_that_for_all(plot_functions, "xpose plot objects are returned with appropriate xpdb_ex_pk", {
+  expect_true(is.xpose.plot(.plot_function(xpdb_ex_pk)))
 })
+
+test_that_for_all(residual_plot_functions, "xpose plot objects are returned with appropriate xpdb_ex_pk and muliple residuals", {
+  expect_true(is.xpose.plot(.residual_plot_function(xpdb_ex_pk, res = c('CWRES', 'IWRES'))))
+})
+
+test_that_for_all(plot_functions, "no error occurs when xpdb is from a simulation only", {
+  expect_error(.plot_function(xpdb_sim_only), NA)
+})
+
+
+
