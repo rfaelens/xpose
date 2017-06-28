@@ -1,6 +1,6 @@
 
 # function that makes the testing of the same expectation for multiple expressions easier
-test_that_for_all <- function(X, desc, code){
+test_that_for_all <- function(X, desc, code, envir = parent.frame()){
   stopifnot(is.character(X))
   
   # capture name of the first argument
@@ -17,7 +17,7 @@ test_that_for_all <- function(X, desc, code){
       attr(code_x, "srcref") <- attr(code, "srcref")
       
       # call test_code function avoiding ::: operator
-      do.call(get("test_code", envir = asNamespace("testthat")), list(test = paste(desc, "for", name_x, x), code = code_x))
+      do.call(get("test_code", envir = asNamespace("testthat")), list(test = paste(desc, "for", name_x, x), code = code_x), envir = envir)
     })
 }
 
