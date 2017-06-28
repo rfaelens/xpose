@@ -21,3 +21,7 @@ test_that("properly parses a model given via the file argument", {
 test_that("properly parses a model given via the runno and dir arguments", {
   expect_equal(read_nm_model(runno = '001', ext = '.lst'), ctrl_mod)
 })
+
+test_that("problem record is present even if no text has been supplied",{
+  expect_true("pro" %in% read_nm_model(file = "sim.lst")[["subroutine"]])
+})
