@@ -32,7 +32,8 @@ dv_vs_idv <- function(xpdb,
                       ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
+  # use last estimation problem unless there is only one problem
+  if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
@@ -64,7 +65,7 @@ ipred_vs_idv <- function(xpdb,
                          ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
+  if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
@@ -96,7 +97,7 @@ pred_vs_idv <- function(xpdb,
                         ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
+  if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
@@ -131,7 +132,7 @@ dv_preds_vs_idv <- function(xpdb,
                             ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
+  if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (is.null(facets)) facets <- 'variable'
   

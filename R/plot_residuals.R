@@ -40,7 +40,7 @@ res_vs_pred <- function(xpdb,
                         ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
+    if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   if (length(res) > 1) {
@@ -86,7 +86,7 @@ absval_res_vs_pred <- function(xpdb,
                                ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
+    if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   if (length(res) > 1) {
@@ -156,7 +156,7 @@ res_vs_idv <- function(xpdb,
                        ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
+    if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   if (length(res) > 1) {
@@ -202,7 +202,7 @@ absval_res_vs_idv <- function(xpdb,
                               ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
+    if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   if (length(res) > 1) {

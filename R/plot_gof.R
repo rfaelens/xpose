@@ -47,7 +47,7 @@ dv_vs_ipred <- function(xpdb,
                         ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
+  if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
@@ -79,7 +79,7 @@ dv_vs_pred <- function(xpdb,
                        ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
+  if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
