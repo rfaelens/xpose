@@ -93,7 +93,7 @@ last_data_problem <- function(xpdb, simtab = FALSE) {
 
 # get the default problem to be plotted if problem has not been supplied (the last estimation problem, unless there is only one problem)
 default_plot_problem <- function(xpdb){
-  last_data_problem(xpdb, simtab = nrow(xpdb$data)==1)
+  last_data_problem(xpdb, simtab = nrow(xpdb$data)==1 && xpdb$data$simtab[1])
 }
 
 # Get all file problem
