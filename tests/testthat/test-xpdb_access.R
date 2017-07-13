@@ -82,6 +82,12 @@ test_that("get_file works properly", {
                              `run001.phi` = xpdb_ex_pk$files[xpdb_ex_pk$files$name == 'run001.phi', ]$data[[1]]))
 })
 
+test_that("get_file is quite when option is set in xpdb", {
+  # ensure option is set
+  xpdb_ex_pk$options$quiet <- TRUE
+  expect_silent(get_file(xpdb_ex_pk, file = 'run001.ext'))
+})
+
 
 # Tests for get_summary ---------------------------------------------------
 test_that("get_summary checks input properly", {

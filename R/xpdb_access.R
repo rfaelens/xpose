@@ -136,8 +136,9 @@ get_data <- function(xpdb, table = NULL, problem = NULL) {
 #' print(xpdb_ex_pk)
 #' 
 #' @export
-get_file <- function(xpdb, file = NULL, ext = NULL, problem = NULL, subprob = NULL, quiet = FALSE) {
+get_file <- function(xpdb, file = NULL, ext = NULL, problem = NULL, subprob = NULL, quiet) {
   check_xpdb(xpdb, check = 'files')
+  if (missing(quiet)) quiet <- xpdb$options$quiet
   
   if (is.null(file) && is.null(ext)) {
     stop('Argument `file` or `ext` required.', call. = FALSE) 
