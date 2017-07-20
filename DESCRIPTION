@@ -42,6 +42,7 @@ Imports:
   stats,
   vpc
 Suggests:
+  rmarkdown,
   knitr,
   testthat,
   plotly,
