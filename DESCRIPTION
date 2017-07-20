@@ -44,7 +44,8 @@ Imports:
 Suggests:
   knitr,
   testthat,
-  plotly
+  plotly,
+  webshot
 Remotes:
  ronkeizer/vpc
 License: LGPL-3 + file LICENSE
