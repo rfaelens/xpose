@@ -43,7 +43,8 @@ Imports:
   vpc
 Suggests:
   knitr,
-  testthat
+  testthat,
+  plotly
 Remotes:
  ronkeizer/vpc
 License: LGPL-3 + file LICENSE
