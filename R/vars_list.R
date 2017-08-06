@@ -5,7 +5,7 @@
 #' @param xpdb An \code{xpose_data} object from which the model code will be extracted.
 #' @param problem The problem to be used, by lists all available problems.
 #' 
-#' @seealso \code{\link{set_vars_type}}
+#' @seealso \code{\link{set_var_types}}
 #' @examples
 #' list_vars(xpdb_ex_pk)
 #' @export

@@ -18,5 +18,5 @@ Function listing all available variables in an xpdb object.
 list_vars(xpdb_ex_pk)
 }
 \seealso{
-\code{\link{set_vars_type}}
+\code{\link{set_var_types}}
 }
