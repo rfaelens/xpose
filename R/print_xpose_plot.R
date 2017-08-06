@@ -26,12 +26,12 @@ print.xpose_plot <- function(x, ...) {
     x$labels$caption  <- append_suffix(x$xpose, x$labels$caption, 'caption')
     x$labels <- x$labels %>% 
       purrr::map_if(stringr::str_detect(., '@'),
-                    ~parse_title(string = ., xpdb = x$xpose,
-                                 problem = x$xpose$problem, quiet = x$xpose$quiet,
-                                 extra_key = c('plotfun', 'timeplot', names(var_map)), 
-                                 extra_value = c(x$xpose$fun, 
-                                                 format(Sys.time(), "%a %b %d %X %Z %Y"), 
-                                                 var_map)))
+                    .f = parse_title, xpdb = x$xpose,
+                    problem = x$xpose$problem, quiet = x$xpose$quiet,
+                    extra_key = c('plotfun', 'timeplot', names(var_map)), 
+                    extra_value = c(x$xpose$fun, 
+                                    format(Sys.time(), "%a %b %d %X %Z %Y"), 
+                                    var_map))
   }
   print.ggplot(x, ...)
 }

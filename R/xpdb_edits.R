@@ -39,7 +39,7 @@ filter.xpose_data <- function(.data, ..., .problem, .source) {
     
     xpdb[['data']] <- xpdb[['data']] %>%
       dplyr::mutate(data = purrr::map_if(.$data, xpdb[['data']]$problem %in% .problem,
-                                         ~dplyr::filter(., rlang::UQS(rlang::quos(...)))),
+                                         .f = dplyr::filter, rlang::UQS(rlang::quos(...))),
                     modified = dplyr::if_else(.$problem %in% .problem, TRUE, .$modified))
   } else {
     if (missing(.problem)) .problem <- xpdb[['files']]$problem
@@ -58,7 +58,7 @@ filter.xpose_data <- function(.data, ..., .problem, .source) {
     xpdb[['files']] <- xpdb[['files']] %>%
       dplyr::mutate(data = purrr::map_if(.$data, xpdb[['files']]$problem %in% .problem &
                                            xpdb[['files']]$extension %in% .source,
-                                         ~dplyr::filter(., rlang::UQS(rlang::quos(...)))),
+                                         .f = dplyr::filter, rlang::UQS(rlang::quos(...))),
                     modified = dplyr::if_else(.$problem %in% .problem & .$extension %in% .source, TRUE, .$modified))
   }
   xpdb
@@ -104,7 +104,7 @@ mutate.xpose_data <- function(.data, ..., .problem, .source) {
     
     xpdb[['data']] <- xpdb[['data']] %>%
       dplyr::mutate(data = purrr::map_if(.$data, xpdb[['data']]$problem %in% .problem,
-                                         ~dplyr::mutate(., rlang::UQS(rlang::quos(...)))),
+                                         .f = dplyr::mutate, rlang::UQS(rlang::quos(...))),
                     modified = dplyr::if_else(.$problem %in% .problem, TRUE, .$modified))
     
     # Update index
@@ -148,7 +148,7 @@ mutate.xpose_data <- function(.data, ..., .problem, .source) {
     xpdb[['files']] <- xpdb[['files']] %>%
       dplyr::mutate(data = purrr::map_if(.$data, xpdb[['files']]$problem %in% .problem &
                                            xpdb[['files']]$extension %in% .source,
-                                         ~dplyr::mutate(., rlang::UQS(rlang::quos(...)))),
+                                         .f = dplyr::mutate, rlang::UQS(rlang::quos(...))),
                     modified = dplyr::if_else(.$problem %in% .problem & .$extension %in% .source, TRUE, .$modified))
   }
   xpdb

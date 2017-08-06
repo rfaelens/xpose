@@ -49,10 +49,10 @@ read_nm_files <- function(files  = NULL,
     dplyr::tibble(path = ., name = basename(.)) %>% 
     dplyr::filter(file.exists(.$path)) %>% 
     dplyr::mutate(grouping = 1:n(),
-                  raw = purrr::map(.$path, ~readr::read_lines(file = .))) %>% 
+                  raw = purrr::map(.$path, .f = readr::read_lines)) %>% 
     dplyr::group_by_(.dots = 'grouping') %>% 
     tidyr::nest() %>% 
-    dplyr::mutate(tmp = purrr::map(.$data, ~parse_nm_files(dat = ., quiet))) %>% 
+    dplyr::mutate(tmp = purrr::map(.$data, .f = parse_nm_files, quiet)) %>% 
     dplyr::mutate(drop = purrr::map_lgl(.$tmp, is.null)) 
   
   if (all(out$drop)) {
@@ -109,7 +109,7 @@ parse_nm_files <- function(dat, quiet) {
                   raw = stringr::str_trim(.$raw, side = 'both')) %>% 
     dplyr::group_by_(.dots = c('problem', 'subprob', 'method')) %>% 
     tidyr::nest() %>% 
-    dplyr::mutate(data = purrr::map(.$data, ~raw_to_tibble(., sep, quiet, file = dat$name)))
+    dplyr::mutate(data = purrr::map(.$data, .f = raw_to_tibble, sep, quiet, file = dat$name))
 }  
 
 raw_to_tibble <- function(x, sep, quiet, file) {
