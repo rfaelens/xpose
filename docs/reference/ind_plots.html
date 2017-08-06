@@ -24,7 +24,8 @@ the independent variable for every individual — ind_plots • xpose</title>
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  <link href="../extra.css" rel="stylesheet">
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -60,28 +61,47 @@ the independent variable for every individual — ind_plots • xpose</title>
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li class="divider"></li>
+    <li class="dropdown-header">Getting started</li>
     <li>
-      <a href="../articles/introduction.html">1. Introduction</a>
+      <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
-      <a href="../articles/import_model_outputs.html">2. Import model outputs</a>
+      <a href="../articles/import_model_outputs.html">Import model outputs</a>
     </li>
     <li>
-      <a href="../articles/access_xpdb_data.html">3. Access xpdb data</a>
+      <a href="../articles/access_xpdb_data.html">Access xpdb data</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Going further</li>
+    <li>
+      <a href="../articles/customize_plots.html">Customize plots</a>
     </li>
     <li>
-      <a href="../articles/customize_plots.html">4. Customize plots</a>
-    </li>
-    <li>
-      <a href="../articles/interactive_plots.html">5. Create interactive plots (beta)</a>
+      <a href="../articles/interactive_plots.html">Create interactive plots (beta)</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">
+    <span class="fa fa-list-ul"></span>
+     
+    Functions
+  </a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../articles/faq.html">
+    <span class="fa fa-question-circle-o"></span>
+     
+    FAQ
+  </a>
+</li>
+<li>
+  <a href="../news/index.html">
+    <span class="fa fa-newspaper-o"></span>
+     
+    News
+  </a>
 </li>
       </ul>
       
@@ -228,12 +248,12 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Basic example</span>
-<span class='fu'>ind_plots</span>(<span class='no'>xpdb_ex_pk</span>)</div><img src='ind_plots-2.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>ind_plots</span>(<span class='no'>xpdb_ex_pk</span>)</div><div class='img'><img src='ind_plots-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># Example with mapping and facetting</span>
 <span class='fu'>ind_plots</span>(<span class='no'>xpdb_ex_pk</span>, <span class='fu'>aes</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>TAD</span>),
           <span class='kw'>facets</span> <span class='kw'>=</span> <span class='no'>OCC</span>~<span class='no'>ID</span>,
           <span class='kw'>panel_labeller</span> <span class='kw'>=</span> <span class='st'>'label_both'</span>)</div><div class='output co'>#&gt; <span class='message'>geom_path: Each group consists of only one observation. Do you need to adjust</span>
-#&gt; <span class='message'>the group aesthetic?</span></div><img src='ind_plots-5.png' alt='' width='540' height='400' /><div class='input'>
+#&gt; <span class='message'>the group aesthetic?</span></div><div class='img'><img src='ind_plots-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -255,7 +275,7 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/guiastrennec'>Benjamin Guiastrennec</a>, <a href='https://github.com/OlofssonA'>Anna Olofsson</a>, <a href='https://github.com/andrewhooker'>Andrew C. Hooker</a>, <a href='https://katalog.uu.se/profile/?id=XX3384'>Mats O. Karlsson</a>, <a href='https://github.com/ronkeizer'>Ron Keizer</a>.</p>
+  <p>Developed by <a href='https://github.com/guiastrennec'>Benjamin Guiastrennec</a>, <a href='https://github.com/andrewhooker'>Andrew C. Hooker</a>, <a href='https://github.com/OlofssonA'>Anna Olofsson</a>, <a href='https://github.com/sebastianueckert'>Sebastian Ueckert</a>, <a href='https://github.com/ronkeizer'>Ron Keizer</a>, <a href='https://katalog.uu.se/profile/?id=XX3384'>Mats O. Karlsson</a>.</p>
 </div>
 
 <div class="pkgdown">

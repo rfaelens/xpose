@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  <link href="../extra.css" rel="stylesheet">
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -59,28 +60,47 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li class="divider"></li>
+    <li class="dropdown-header">Getting started</li>
     <li>
-      <a href="../articles/introduction.html">1. Introduction</a>
+      <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
-      <a href="../articles/import_model_outputs.html">2. Import model outputs</a>
+      <a href="../articles/import_model_outputs.html">Import model outputs</a>
     </li>
     <li>
-      <a href="../articles/access_xpdb_data.html">3. Access xpdb data</a>
+      <a href="../articles/access_xpdb_data.html">Access xpdb data</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Going further</li>
+    <li>
+      <a href="../articles/customize_plots.html">Customize plots</a>
     </li>
     <li>
-      <a href="../articles/customize_plots.html">4. Customize plots</a>
-    </li>
-    <li>
-      <a href="../articles/interactive_plots.html">5. Create interactive plots (beta)</a>
+      <a href="../articles/interactive_plots.html">Create interactive plots (beta)</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">
+    <span class="fa fa-list-ul"></span>
+     
+    Functions
+  </a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../articles/faq.html">
+    <span class="fa fa-question-circle-o"></span>
+     
+    FAQ
+  </a>
+</li>
+<li>
+  <a href="../news/index.html">
+    <span class="fa fa-newspaper-o"></span>
+     
+    News
+  </a>
 </li>
       </ul>
       
@@ -116,7 +136,7 @@
     
 
     <pre class="usage"><span class='fu'>get_file</span>(<span class='no'>xpdb</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ext</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subprob</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='no'>quiet</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -158,45 +178,46 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Single file (returns a tibble)</span>
-<span class='no'>ext_file</span> <span class='kw'>&lt;-</span> <span class='fu'>get_file</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>'run001.ext'</span>)</div><div class='output co'>#&gt; <span class='message'>Returning data from problem no.1 sub-problem no.0</span></div><div class='input'><span class='no'>ext_file</span></div><div class='output co'>#&gt; # A tibble: 30 x 15
-#&gt;    ITERATION  THETA1  THETA2  THETA3   THETA4   THETA5     THETA6 SIGMA.1.1.
-#&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
-#&gt;  1         0 27.5000 1.56500 2.10000 0.254000 0.230000 0.00800000          1
-#&gt;  2         1 27.1315 1.50371 2.19470 0.263436 0.310468 0.00799037          1
-#&gt;  3         2 24.0386 1.05681 3.37071 0.341244 0.287332 0.00792983          1
-#&gt;  4         3 26.6619 1.23811 4.01449 0.409304 0.279560 0.00790061          1
-#&gt;  5         4 24.0386 1.44520 4.43650 0.400794 0.277556 0.00794055          1
-#&gt;  6         5 23.9144 1.44930 4.52519 0.404786 0.277363 0.00796163          1
-#&gt;  7         6 24.7365 1.50060 7.71427 0.410008 0.274756 0.00848706          1
-#&gt;  8         7 24.6300 1.49149 8.80826 0.409741 0.273132 0.00859991          1
-#&gt;  9         8 24.5996 1.47520 8.44218 0.413982 0.269094 0.00794411          1
-#&gt; 10         9 24.6701 1.45429 7.04078 0.413384 0.259226 0.00574881          1
-#&gt; # ... with 20 more rows, and 7 more variables: OMEGA.1.1. &lt;dbl&gt;,
-#&gt; #   OMEGA.2.1. &lt;dbl&gt;, OMEGA.2.2. &lt;dbl&gt;, OMEGA.3.1. &lt;dbl&gt;, OMEGA.3.2. &lt;dbl&gt;,
-#&gt; #   OMEGA.3.3. &lt;dbl&gt;, OBJ &lt;dbl&gt;</div><div class='input'>
+<span class='no'>ext_file</span> <span class='kw'>&lt;-</span> <span class='fu'>get_file</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>'run001.ext'</span>)
+<span class='no'>ext_file</span></div><div class='output co'>#&gt; # A tibble: 30 x 15
+#&gt;    ITERATION  THETA1  THETA2  THETA3   THETA4   THETA5     THETA6 `SIGMA(1,1)`
+#&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;
+#&gt;  1         0 27.5000 1.56500 2.10000 0.254000 0.230000 0.00800000            1
+#&gt;  2         1 27.1315 1.50371 2.19470 0.263436 0.310468 0.00799037            1
+#&gt;  3         2 24.0386 1.05681 3.37071 0.341244 0.287332 0.00792983            1
+#&gt;  4         3 26.6619 1.23811 4.01449 0.409304 0.279560 0.00790061            1
+#&gt;  5         4 24.0386 1.44520 4.43650 0.400794 0.277556 0.00794055            1
+#&gt;  6         5 23.9144 1.44930 4.52519 0.404786 0.277363 0.00796163            1
+#&gt;  7         6 24.7365 1.50060 7.71427 0.410008 0.274756 0.00848706            1
+#&gt;  8         7 24.6300 1.49149 8.80826 0.409741 0.273132 0.00859991            1
+#&gt;  9         8 24.5996 1.47520 8.44218 0.413982 0.269094 0.00794411            1
+#&gt; 10         9 24.6701 1.45429 7.04078 0.413384 0.259226 0.00574881            1
+#&gt; # ... with 20 more rows, and 7 more variables: `OMEGA(1,1)` &lt;dbl&gt;,
+#&gt; #   `OMEGA(2,1)` &lt;dbl&gt;, `OMEGA(2,2)` &lt;dbl&gt;, `OMEGA(3,1)` &lt;dbl&gt;,
+#&gt; #   `OMEGA(3,2)` &lt;dbl&gt;, `OMEGA(3,3)` &lt;dbl&gt;, OBJ &lt;dbl&gt;</div><div class='input'>
 <span class='co'># Multiple files (returns a list)</span>
 <span class='no'>files</span> <span class='kw'>&lt;-</span> <span class='fu'>get_file</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>'run001.ext'</span>, <span class='st'>'run001.phi'</span>))
 <span class='no'>files</span></div><div class='output co'>#&gt; $run001.ext
 #&gt; # A tibble: 30 x 15
-#&gt;    ITERATION  THETA1  THETA2  THETA3   THETA4   THETA5     THETA6 SIGMA.1.1.
-#&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
-#&gt;  1         0 27.5000 1.56500 2.10000 0.254000 0.230000 0.00800000          1
-#&gt;  2         1 27.1315 1.50371 2.19470 0.263436 0.310468 0.00799037          1
-#&gt;  3         2 24.0386 1.05681 3.37071 0.341244 0.287332 0.00792983          1
-#&gt;  4         3 26.6619 1.23811 4.01449 0.409304 0.279560 0.00790061          1
-#&gt;  5         4 24.0386 1.44520 4.43650 0.400794 0.277556 0.00794055          1
-#&gt;  6         5 23.9144 1.44930 4.52519 0.404786 0.277363 0.00796163          1
-#&gt;  7         6 24.7365 1.50060 7.71427 0.410008 0.274756 0.00848706          1
-#&gt;  8         7 24.6300 1.49149 8.80826 0.409741 0.273132 0.00859991          1
-#&gt;  9         8 24.5996 1.47520 8.44218 0.413982 0.269094 0.00794411          1
-#&gt; 10         9 24.6701 1.45429 7.04078 0.413384 0.259226 0.00574881          1
-#&gt; # ... with 20 more rows, and 7 more variables: OMEGA.1.1. &lt;dbl&gt;,
-#&gt; #   OMEGA.2.1. &lt;dbl&gt;, OMEGA.2.2. &lt;dbl&gt;, OMEGA.3.1. &lt;dbl&gt;, OMEGA.3.2. &lt;dbl&gt;,
-#&gt; #   OMEGA.3.3. &lt;dbl&gt;, OBJ &lt;dbl&gt;
+#&gt;    ITERATION  THETA1  THETA2  THETA3   THETA4   THETA5     THETA6 `SIGMA(1,1)`
+#&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;
+#&gt;  1         0 27.5000 1.56500 2.10000 0.254000 0.230000 0.00800000            1
+#&gt;  2         1 27.1315 1.50371 2.19470 0.263436 0.310468 0.00799037            1
+#&gt;  3         2 24.0386 1.05681 3.37071 0.341244 0.287332 0.00792983            1
+#&gt;  4         3 26.6619 1.23811 4.01449 0.409304 0.279560 0.00790061            1
+#&gt;  5         4 24.0386 1.44520 4.43650 0.400794 0.277556 0.00794055            1
+#&gt;  6         5 23.9144 1.44930 4.52519 0.404786 0.277363 0.00796163            1
+#&gt;  7         6 24.7365 1.50060 7.71427 0.410008 0.274756 0.00848706            1
+#&gt;  8         7 24.6300 1.49149 8.80826 0.409741 0.273132 0.00859991            1
+#&gt;  9         8 24.5996 1.47520 8.44218 0.413982 0.269094 0.00794411            1
+#&gt; 10         9 24.6701 1.45429 7.04078 0.413384 0.259226 0.00574881            1
+#&gt; # ... with 20 more rows, and 7 more variables: `OMEGA(1,1)` &lt;dbl&gt;,
+#&gt; #   `OMEGA(2,1)` &lt;dbl&gt;, `OMEGA(2,2)` &lt;dbl&gt;, `OMEGA(3,1)` &lt;dbl&gt;,
+#&gt; #   `OMEGA(3,2)` &lt;dbl&gt;, `OMEGA(3,3)` &lt;dbl&gt;, OBJ &lt;dbl&gt;
 #&gt; 
 #&gt; $run001.phi
 #&gt; # A tibble: 74 x 12
-#&gt;    SUBJECT_NO    ID     ETA.1.     ETA.2.      ETA.3.   ETC.1.1.     ETC.2.1.
+#&gt;    SUBJECT_NO    ID   `ETA(1)`   `ETA(2)`    `ETA(3)` `ETC(1,1)`   `ETC(2,1)`
 #&gt;         &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;
 #&gt;  1          1   110 -0.0806742 -0.0607414 -1.76376000 0.01277110 -0.000839822
 #&gt;  2          2   112 -0.0569953 -0.0759594 -1.12982000 0.00522566 -0.001305390
@@ -208,8 +229,8 @@
 #&gt;  8          8   127 -0.0031396  0.3230990  0.39069200 0.01973200 -0.004476720
 #&gt;  9          9   128  0.0604116  0.0220288 -1.48978000 0.02527590 -0.001712680
 #&gt; 10         10   210 -0.3465460 -0.4536260 -0.90240000 0.00768758 -0.002431600
-#&gt; # ... with 64 more rows, and 5 more variables: ETC.2.2. &lt;dbl&gt;, ETC.3.1. &lt;dbl&gt;,
-#&gt; #   ETC.3.2. &lt;dbl&gt;, ETC.3.3. &lt;dbl&gt;, OBJ &lt;dbl&gt;
+#&gt; # ... with 64 more rows, and 5 more variables: `ETC(2,2)` &lt;dbl&gt;,
+#&gt; #   `ETC(3,1)` &lt;dbl&gt;, `ETC(3,2)` &lt;dbl&gt;, `ETC(3,3)` &lt;dbl&gt;, OBJ &lt;dbl&gt;
 #&gt; </div><div class='input'>
 <span class='co'># Tip to list available files in the xpdb</span>
 <span class='fu'>print</span>(<span class='no'>xpdb_ex_pk</span>)</div><div class='output co'>#&gt; run001.lst overview: 
@@ -241,7 +262,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/guiastrennec'>Benjamin Guiastrennec</a>, <a href='https://github.com/OlofssonA'>Anna Olofsson</a>, <a href='https://github.com/andrewhooker'>Andrew C. Hooker</a>, <a href='https://katalog.uu.se/profile/?id=XX3384'>Mats O. Karlsson</a>, <a href='https://github.com/ronkeizer'>Ron Keizer</a>.</p>
+  <p>Developed by <a href='https://github.com/guiastrennec'>Benjamin Guiastrennec</a>, <a href='https://github.com/andrewhooker'>Andrew C. Hooker</a>, <a href='https://github.com/OlofssonA'>Anna Olofsson</a>, <a href='https://github.com/sebastianueckert'>Sebastian Ueckert</a>, <a href='https://github.com/ronkeizer'>Ron Keizer</a>, <a href='https://katalog.uu.se/profile/?id=XX3384'>Mats O. Karlsson</a>.</p>
 </div>
 
 <div class="pkgdown">

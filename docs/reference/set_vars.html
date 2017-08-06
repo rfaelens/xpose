@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  <link href="../extra.css" rel="stylesheet">
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -59,28 +60,47 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li class="divider"></li>
+    <li class="dropdown-header">Getting started</li>
     <li>
-      <a href="../articles/introduction.html">1. Introduction</a>
+      <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
-      <a href="../articles/import_model_outputs.html">2. Import model outputs</a>
+      <a href="../articles/import_model_outputs.html">Import model outputs</a>
     </li>
     <li>
-      <a href="../articles/access_xpdb_data.html">3. Access xpdb data</a>
+      <a href="../articles/access_xpdb_data.html">Access xpdb data</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Going further</li>
+    <li>
+      <a href="../articles/customize_plots.html">Customize plots</a>
     </li>
     <li>
-      <a href="../articles/customize_plots.html">4. Customize plots</a>
-    </li>
-    <li>
-      <a href="../articles/interactive_plots.html">5. Create interactive plots (beta)</a>
+      <a href="../articles/interactive_plots.html">Create interactive plots (beta)</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">
+    <span class="fa fa-list-ul"></span>
+     
+    Functions
+  </a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../articles/faq.html">
+    <span class="fa fa-question-circle-o"></span>
+     
+    FAQ
+  </a>
+</li>
+<li>
+  <a href="../news/index.html">
+    <span class="fa fa-newspaper-o"></span>
+     
+    News
+  </a>
 </li>
       </ul>
       
@@ -115,11 +135,11 @@
     <p>Function designed to change the type, label or unit associated with variables.</p>
     
 
-    <pre class="usage"><span class='fu'>set_vars_type</span>(<span class='no'>xpdb</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>auto_factor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>quiet</span>)
+    <pre class="usage"><span class='fu'>set_var_types</span>(<span class='no'>xpdb</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>auto_factor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>quiet</span>)
 
-<span class='fu'>set_vars_label</span>(<span class='no'>xpdb</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='no'>quiet</span>)
+<span class='fu'>set_var_labels</span>(<span class='no'>xpdb</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='no'>quiet</span>)
 
-<span class='fu'>set_vars_units</span>(<span class='no'>xpdb</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='no'>quiet</span>)</pre>
+<span class='fu'>set_var_units</span>(<span class='no'>xpdb</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='no'>quiet</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -139,7 +159,7 @@ type and variable pairs e.g. idv = 'TAD' will assign TAD to the type idv (indepe
     </tr>
     <tr>
       <th>auto_factor</th>
-      <td><p>With <code>set_vars_type</code> only. If <code>TRUE</code> new columns assigned to the type 'catcov' will be converted to
+      <td><p>With <code>set_var_types</code> only. If <code>TRUE</code> new columns assigned to the type 'catcov' will be converted to
 factor.</p></td>
     </tr>
     <tr>
@@ -157,20 +177,20 @@ factor.</p></td>
     
     <ul>
 <li><p>amt: Dose amount</p></li>
-<li><p>catcov: Categorical covariates</p></li>
-<li><p>contcov: Continuous covariates</p></li>
+<li><p>catcov: Categorical covariate</p></li>
+<li><p>contcov: Continuous covariate</p></li>
 <li><p>dv: Dependent variable</p></li>
 <li><p>dvid: DV identifier</p></li>
 <li><p>eta: Eta</p></li>
 <li><p>evid: Event identifier</p></li>
 <li><p>id: Subject identifier</p></li>
 <li><p>idv: Independent variable</p></li>
-<li><p>ipred: Model individual predictions</p></li>
+<li><p>ipred: Individual model predictions</p></li>
 <li><p>mdv: Missing dependent variable</p></li>
 <li><p>na: Not attributed</p></li>
 <li><p>occ: Occasion flag</p></li>
 <li><p>param: Model parameter</p></li>
-<li><p>pred: Model typical predictions</p></li>
+<li><p>pred: Typical model predictions</p></li>
 <li><p>res: Residuals</p></li>
 </ul>
     
@@ -181,13 +201,13 @@ factor.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Change variable type</span>
-<span class='no'>xpdb_2</span> <span class='kw'>&lt;-</span> <span class='fu'>set_vars_type</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>idv</span> <span class='kw'>=</span> <span class='st'>'TAD'</span>)
+<span class='no'>xpdb_2</span> <span class='kw'>&lt;-</span> <span class='fu'>set_var_types</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>idv</span> <span class='kw'>=</span> <span class='st'>'TAD'</span>)
 
 <span class='co'># Change labels</span>
-<span class='no'>xpdb_2</span> <span class='kw'>&lt;-</span> <span class='fu'>set_vars_label</span>(<span class='no'>xpdb_2</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>ALAG1</span> <span class='kw'>=</span> <span class='st'>'Lag time'</span>, <span class='kw'>CL</span> <span class='kw'>=</span> <span class='st'>'Clearance'</span>, <span class='kw'>V</span> <span class='kw'>=</span> <span class='st'>'Volume'</span>)
+<span class='no'>xpdb_2</span> <span class='kw'>&lt;-</span> <span class='fu'>set_var_labels</span>(<span class='no'>xpdb_2</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>ALAG1</span> <span class='kw'>=</span> <span class='st'>'Lag time'</span>, <span class='kw'>CL</span> <span class='kw'>=</span> <span class='st'>'Clearance'</span>, <span class='kw'>V</span> <span class='kw'>=</span> <span class='st'>'Volume'</span>)
 
 <span class='co'># Change units</span>
-<span class='no'>xpdb_2</span> <span class='kw'>&lt;-</span> <span class='fu'>set_vars_units</span>(<span class='no'>xpdb_2</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>ALAG1</span> <span class='kw'>=</span> <span class='st'>'h'</span>, <span class='kw'>CL</span> <span class='kw'>=</span> <span class='st'>'L/h'</span>, <span class='kw'>V</span> <span class='kw'>=</span> <span class='st'>'L'</span>)</div></pre>
+<span class='no'>xpdb_2</span> <span class='kw'>&lt;-</span> <span class='fu'>set_var_units</span>(<span class='no'>xpdb_2</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>ALAG1</span> <span class='kw'>=</span> <span class='st'>'h'</span>, <span class='kw'>CL</span> <span class='kw'>=</span> <span class='st'>'L/h'</span>, <span class='kw'>V</span> <span class='kw'>=</span> <span class='st'>'L'</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -208,7 +228,7 @@ factor.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/guiastrennec'>Benjamin Guiastrennec</a>, <a href='https://github.com/OlofssonA'>Anna Olofsson</a>, <a href='https://github.com/andrewhooker'>Andrew C. Hooker</a>, <a href='https://katalog.uu.se/profile/?id=XX3384'>Mats O. Karlsson</a>, <a href='https://github.com/ronkeizer'>Ron Keizer</a>.</p>
+  <p>Developed by <a href='https://github.com/guiastrennec'>Benjamin Guiastrennec</a>, <a href='https://github.com/andrewhooker'>Andrew C. Hooker</a>, <a href='https://github.com/OlofssonA'>Anna Olofsson</a>, <a href='https://github.com/sebastianueckert'>Sebastian Ueckert</a>, <a href='https://github.com/ronkeizer'>Ron Keizer</a>, <a href='https://katalog.uu.se/profile/?id=XX3384'>Mats O. Karlsson</a>.</p>
 </div>
 
 <div class="pkgdown">
