@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  <link href="../extra.css" rel="stylesheet">
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -59,28 +60,47 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li class="divider"></li>
+    <li class="dropdown-header">Getting started</li>
     <li>
-      <a href="../articles/introduction.html">1. Introduction</a>
+      <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
-      <a href="../articles/import_model_outputs.html">2. Import model outputs</a>
+      <a href="../articles/import_model_outputs.html">Import model outputs</a>
     </li>
     <li>
-      <a href="../articles/access_xpdb_data.html">3. Access xpdb data</a>
+      <a href="../articles/access_xpdb_data.html">Access xpdb data</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Going further</li>
+    <li>
+      <a href="../articles/customize_plots.html">Customize plots</a>
     </li>
     <li>
-      <a href="../articles/customize_plots.html">4. Customize plots</a>
-    </li>
-    <li>
-      <a href="../articles/interactive_plots.html">5. Create interactive plots (beta)</a>
+      <a href="../articles/interactive_plots.html">Create interactive plots (beta)</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">
+    <span class="fa fa-list-ul"></span>
+     
+    Functions
+  </a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../articles/faq.html">
+    <span class="fa fa-question-circle-o"></span>
+     
+    FAQ
+  </a>
+</li>
+<li>
+  <a href="../news/index.html">
+    <span class="fa fa-newspaper-o"></span>
+     
+    News
+  </a>
 </li>
       </ul>
       
@@ -140,7 +160,7 @@
 <li>Handles multiple $PROB and tables with FIRSTONLY option</li>
 <li>Added option to import data manually as in xpose4 with <code><a href="../reference/manual_nm_import.html">manual_nm_import()</a></code>
 </li>
-<li>Added indexing of variable and convenience functions to edit it: <code><a href="../reference/set_vars.html">set_vars_type()</a></code>, <code><a href="../reference/set_vars.html">set_vars_label()</a></code>, <code><a href="../reference/set_vars.html">set_vars_units()</a></code>
+<li>Added indexing of variable and convenience functions to edit it: <code>set_vars_type()</code>, <code>set_vars_label()</code>, <code>set_vars_units()</code>
 </li>
 </ul>
 </div>
@@ -168,7 +188,7 @@
 <a href="#access-xpdb" class="anchor"></a>Access xpdb</h3>
 <ul>
 <li>Added convenience functions to access data from xpdb <code><a href="../reference/get_code.html">get_code()</a></code>, <code><a href="../reference/get_data.html">get_data()</a></code>, <code><a href="../reference/get_file.html">get_file()</a></code>, <code><a href="../reference/get_summary.html">get_summary()</a></code>.</li>
-<li>Added a method for xpdb to <code>dplyr::filter()</code>
+<li>Added a method for xpdb to <code><a href="http://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a></code>
 </li>
 </ul>
 </div>
@@ -178,7 +198,7 @@
 <ul>
 <li>Changed <code>cwres_vs_idv</code>, type residual functions to more general <code><a href="../reference/res_vs_idv.html">res_vs_idv(res = 'CWRES')</a></code> functions</li>
 <li>Implemented/improved general plotting functions: <code><a href="../reference/xplot_distrib.html">xplot_distrib()</a></code>, <code><a href="../reference/xplot_qq.html">xplot_qq()</a></code>, <code><a href="../reference/xplot_scatter.html">xplot_scatter()</a></code>, with convenience function to fetch data in xpdb <code>data_opt_set()</code>.</li>
-<li>Implemented: <code><a href="../reference/pred_vs_idv.html">dv_vs_idv()</a></code>, <code><a href="../reference/pred_vs_idv.html">ipred_vs_idv()</a></code>, <code><a href="../reference/pred_vs_idv.html">pred_vs_idv()</a></code>, <code><a href="../reference/pred_vs_idv.html">dv_preds_vs_idv()</a></code>, <code><a href="../reference/ind_plots.html">ind_plots()</a></code>, <code><a href="../reference/vpc.html">vpc()</a></code>, <code><a href="../reference/distrib_plot.html">prm_distrib()</a></code>, <code><a href="../reference/distrib_plot.html">eta_distrib()</a></code>, <code><a href="../reference/distrib_plot.html">res_distrib()</a></code>, <code><a href="../reference/distrib_plot.html">cov_distrib()</a></code>, <code><a href="../reference/qq_plot.html">prm_qq()</a></code>, <code><a href="../reference/qq_plot.html">eta_qq()</a></code>, <code><a href="../reference/qq_plot.html">res_qq()</a></code>, <code><a href="../reference/qq_plot.html">cov_qq()</a></code>, <code><a href="../reference/minimization_plots.html">prm_vs_iteration()</a></code>, <code><a href="../reference/minimization_plots.html">grd_vs_iteration()</a></code>.</li>
+<li>Implemented: <code><a href="../reference/pred_vs_idv.html">dv_vs_idv()</a></code>, <code><a href="../reference/pred_vs_idv.html">ipred_vs_idv()</a></code>, <code>pred_vs_idv()</code>, <code><a href="../reference/pred_vs_idv.html">dv_preds_vs_idv()</a></code>, <code><a href="../reference/ind_plots.html">ind_plots()</a></code>, <code><a href="../reference/vpc.html">vpc()</a></code>, <code><a href="../reference/distrib_plot.html">prm_distrib()</a></code>, <code><a href="../reference/distrib_plot.html">eta_distrib()</a></code>, <code><a href="../reference/distrib_plot.html">res_distrib()</a></code>, <code><a href="../reference/distrib_plot.html">cov_distrib()</a></code>, <code><a href="../reference/qq_plot.html">prm_qq()</a></code>, <code><a href="../reference/qq_plot.html">eta_qq()</a></code>, <code><a href="../reference/qq_plot.html">res_qq()</a></code>, <code><a href="../reference/qq_plot.html">cov_qq()</a></code>, <code><a href="../reference/minimization_plots.html">prm_vs_iteration()</a></code>, <code><a href="../reference/minimization_plots.html">grd_vs_iteration()</a></code>.</li>
 <li>Updated/renamed: <code><a href="../reference/gg_themes.html">theme_bw2()</a></code>, <code><a href="../reference/gg_themes.html">theme_readable()</a></code>, <code><a href="../reference/xp_themes.html">theme_xp_default()</a></code>, <code><a href="../reference/xp_themes.html">theme_xp_xpose4()</a></code>.</li>
 </ul>
 </div>
@@ -231,7 +251,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/guiastrennec'>Benjamin Guiastrennec</a>, <a href='https://github.com/OlofssonA'>Anna Olofsson</a>, <a href='https://github.com/andrewhooker'>Andrew C. Hooker</a>, <a href='https://katalog.uu.se/profile/?id=XX3384'>Mats O. Karlsson</a>, <a href='https://github.com/ronkeizer'>Ron Keizer</a>.</p>
+  <p>Developed by <a href='https://github.com/guiastrennec'>Benjamin Guiastrennec</a>, <a href='https://github.com/andrewhooker'>Andrew C. Hooker</a>, <a href='https://github.com/OlofssonA'>Anna Olofsson</a>, <a href='https://github.com/sebastianueckert'>Sebastian Ueckert</a>, <a href='https://github.com/ronkeizer'>Ron Keizer</a>, <a href='https://katalog.uu.se/profile/?id=XX3384'>Mats O. Karlsson</a>.</p>
 </div>
 
 <div class="pkgdown">

@@ -30,9 +30,9 @@ reference:
     contents:
     - filter.xpose_data
     - mutate.xpose_data
-    - set_vars_type
-    - set_vars_label
-    - set_vars_units
+    - set_var_types
+    - set_var_labels
+    - set_var_units
   - title: Access data from an xpdb
     desc:  Access code, data, files or summary from an xpdb object
     contents:
@@ -132,19 +132,28 @@ navbar:
   - text: Articles
     icon: fa-book
     menu:
-        - text: 1. Introduction
+        - text: "--------------------------"
+        - text: "Getting started"
+        - text: Introduction
           href: articles/introduction.html
-        - text: 2. Import model outputs
+        - text: Import model outputs
           href: articles/import_model_outputs.html
-        - text: 3. Access xpdb data
+        - text: Access xpdb data
           href: articles/access_xpdb_data.html
-        - text: 4. Customize plots
+        - text: "--------------------------"
+        - text: "Going further"
+        - text: Customize plots
           href: articles/customize_plots.html
-        - text: 5. Create interactive plots (beta)
+        - text: Create interactive plots (beta)
           href: articles/interactive_plots.html
-  - text: Reference
+  - text: Functions
+    icon: fa-list-ul
     href: reference/index.html
+  - text: FAQ
+    icon: fa-question-circle-o
+    href: articles/faq.html
   - text: News
+    icon: fa-newspaper-o
     href: news/index.html
   right:
   - icon: fa-github fa-lg

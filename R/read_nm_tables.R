@@ -82,7 +82,7 @@ read_nm_tables <- function(files         = NULL,
                   grouping = 1:n()) %>% 
     dplyr::group_by_(.dots = 'grouping') %>% 
     tidyr::nest() %>% 
-    dplyr::mutate(args = purrr::map(.$data, ~read_args(x = . , quiet, ...))) %>% 
+    dplyr::mutate(args = purrr::map(.x = .$data, .f = read_args, quiet, ...)) %>% 
     tidyr::unnest_(unnest_cols = 'data') %>% 
     tidyr::unnest_(unnest_cols = 'args') %>% 
     dplyr::mutate(name = basename(.$file)) %>% 
@@ -97,7 +97,7 @@ read_nm_tables <- function(files         = NULL,
   tables <- tables %>% 
     dplyr::bind_cols(tables %>% 
                        dplyr::select(dplyr::one_of(c('fun', 'params'))) %>% 
-                       {purrr::invoke_map(.$fun, .$params)} %>%
+                       {purrr::invoke_map(.$fun, .x = .$params)} %>%
                        dplyr::tibble(data = .))
   
   if (!combined) {

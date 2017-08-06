@@ -11,3 +11,4 @@
 ^docs$
 ^appveyor\.yml$
 ^vignettes/interactive_plots.*$
+^pkgdown$

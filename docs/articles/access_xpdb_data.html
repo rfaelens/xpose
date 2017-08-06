@@ -9,7 +9,8 @@
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
+<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
@@ -37,28 +38,47 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/introduction.html">1. Introduction</a>
+<li class="divider">
+    <li class="dropdown-header">Getting started</li>
+    <li>
+      <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
-      <a href="../articles/import_model_outputs.html">2. Import model outputs</a>
+      <a href="../articles/import_model_outputs.html">Import model outputs</a>
     </li>
     <li>
-      <a href="../articles/access_xpdb_data.html">3. Access xpdb data</a>
+      <a href="../articles/access_xpdb_data.html">Access xpdb data</a>
+    </li>
+    <li class="divider">
+    <li class="dropdown-header">Going further</li>
+    <li>
+      <a href="../articles/customize_plots.html">Customize plots</a>
     </li>
     <li>
-      <a href="../articles/customize_plots.html">4. Customize plots</a>
-    </li>
-    <li>
-      <a href="../articles/interactive_plots.html">5. Create interactive plots (beta)</a>
+      <a href="../articles/interactive_plots.html">Create interactive plots (beta)</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">
+    <span class="fa fa-list-ul"></span>
+     
+    Functions
+  </a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../articles/faq.html">
+    <span class="fa fa-question-circle-o"></span>
+     
+    FAQ
+  </a>
+</li>
+<li>
+  <a href="../news/index.html">
+    <span class="fa fa-newspaper-o"></span>
+     
+    News
+  </a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -89,7 +109,7 @@
       <h1>Access the xpdb data</h1>
                         <h4 class="author">Benjamin Guiastrennec</h4>
             
-            <h4 class="date">20 June, 2017</h4>
+            <h4 class="date">06 August, 2017</h4>
           </div>
 
     
@@ -160,24 +180,23 @@ data</code></pre></div>
 <h3 class="hasAnchor">
 <a href="#access-the-run-files" class="anchor"></a>Access the run files</h3>
 <p>The <code><a href="../reference/get_file.html">get_file()</a></code> function can be used to access the imported output files. Files can be accessed by <code>file</code> name, by <code>problem</code> and/or <code>subprob</code>. If more than one <code>file</code> name, <code>problem</code> or subproblem number is provided a named list is returned.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">file &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_file.html">get_file</a></span>(xpdb, <span class="dt">file =</span> <span class="st">'run001.ext'</span>)</code></pre></div>
-<pre><code>Returning data from problem no.1 sub-problem no.0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">file</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">file &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_file.html">get_file</a></span>(xpdb, <span class="dt">file =</span> <span class="st">'run001.ext'</span>)
+file</code></pre></div>
 <pre><code># A tibble: 30 x 15
-   ITERATION  THETA1  THETA2  THETA3   THETA4   THETA5     THETA6 SIGMA.1.1. OMEGA.1.1. OMEGA.2.1.
-       &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
- 1         0 27.5000 1.56500 2.10000 0.254000 0.230000 0.00800000          1  0.3000000          0
- 2         1 27.1315 1.50371 2.19470 0.263436 0.310468 0.00799037          1  0.2611680          0
- 3         2 24.0386 1.05681 3.37071 0.341244 0.287332 0.00792983          1  0.0598594          0
- 4         3 26.6619 1.23811 4.01449 0.409304 0.279560 0.00790061          1  0.0313285          0
- 5         4 24.0386 1.44520 4.43650 0.400794 0.277556 0.00794055          1  0.0243288          0
- 6         5 23.9144 1.44930 4.52519 0.404786 0.277363 0.00796163          1  0.0246511          0
- 7         6 24.7365 1.50060 7.71427 0.410008 0.274756 0.00848706          1  0.0336991          0
- 8         7 24.6300 1.49149 8.80826 0.409741 0.273132 0.00859991          1  0.0329758          0
- 9         8 24.5996 1.47520 8.44218 0.413982 0.269094 0.00794411          1  0.0418260          0
-10         9 24.6701 1.45429 7.04078 0.413384 0.259226 0.00574881          1  0.0404368          0
-# ... with 20 more rows, and 5 more variables: OMEGA.2.2. &lt;dbl&gt;, OMEGA.3.1. &lt;dbl&gt;,
-#   OMEGA.3.2. &lt;dbl&gt;, OMEGA.3.3. &lt;dbl&gt;, OBJ &lt;dbl&gt;</code></pre>
+   ITERATION  THETA1  THETA2  THETA3   THETA4   THETA5     THETA6 `SIGMA(1,1)` `OMEGA(1,1)`
+       &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+ 1         0 27.5000 1.56500 2.10000 0.254000 0.230000 0.00800000            1    0.3000000
+ 2         1 27.1315 1.50371 2.19470 0.263436 0.310468 0.00799037            1    0.2611680
+ 3         2 24.0386 1.05681 3.37071 0.341244 0.287332 0.00792983            1    0.0598594
+ 4         3 26.6619 1.23811 4.01449 0.409304 0.279560 0.00790061            1    0.0313285
+ 5         4 24.0386 1.44520 4.43650 0.400794 0.277556 0.00794055            1    0.0243288
+ 6         5 23.9144 1.44930 4.52519 0.404786 0.277363 0.00796163            1    0.0246511
+ 7         6 24.7365 1.50060 7.71427 0.410008 0.274756 0.00848706            1    0.0336991
+ 8         7 24.6300 1.49149 8.80826 0.409741 0.273132 0.00859991            1    0.0329758
+ 9         8 24.5996 1.47520 8.44218 0.413982 0.269094 0.00794411            1    0.0418260
+10         9 24.6701 1.45429 7.04078 0.413384 0.259226 0.00574881            1    0.0404368
+# ... with 20 more rows, and 6 more variables: `OMEGA(2,1)` &lt;dbl&gt;, `OMEGA(2,2)` &lt;dbl&gt;,
+#   `OMEGA(3,1)` &lt;dbl&gt;, `OMEGA(3,2)` &lt;dbl&gt;, `OMEGA(3,3)` &lt;dbl&gt;, OBJ &lt;dbl&gt;</code></pre>
 </div>
 <div id="access-the-run-summary" class="section level3">
 <h3 class="hasAnchor">
@@ -212,7 +231,7 @@ run_sum</code></pre></div>
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://github.com/guiastrennec">Benjamin Guiastrennec</a>, <a href="https://github.com/OlofssonA">Anna Olofsson</a>, <a href="https://github.com/andrewhooker">Andrew C. Hooker</a>, <a href="https://katalog.uu.se/profile/?id=XX3384">Mats O. Karlsson</a>, <a href="https://github.com/ronkeizer">Ron Keizer</a>.</p>
+  <p>Developed by <a href="https://github.com/guiastrennec">Benjamin Guiastrennec</a>, <a href="https://github.com/andrewhooker">Andrew C. Hooker</a>, <a href="https://github.com/OlofssonA">Anna Olofsson</a>, <a href="https://github.com/sebastianueckert">Sebastian Ueckert</a>, <a href="https://github.com/ronkeizer">Ron Keizer</a>, <a href="https://katalog.uu.se/profile/?id=XX3384">Mats O. Karlsson</a>.</p>
 </div>
 
 <div class="pkgdown">
