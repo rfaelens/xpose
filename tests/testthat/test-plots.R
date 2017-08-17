@@ -8,7 +8,10 @@ eta_plot_functions <- c("eta_distrib", "eta_qq")
 cov_plot_functions <- c("cov_distrib", "cov_qq")
 individual_plot_functions <- c("ind_plots")
 
-plot_functions <- c(prediction_plot_functions, residual_plot_functions, iteration_plot_functions, eta_plot_functions, cov_plot_functions, individual_plot_functions)
+plot_functions <- c(prediction_plot_functions, residual_plot_functions, 
+                    iteration_plot_functions, parameter_plot_functions, 
+                    eta_plot_functions, cov_plot_functions, 
+                    individual_plot_functions)
 
 xpdb_sim_only <- xpose_data(file = "sim.lst")
 
