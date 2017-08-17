@@ -65,11 +65,13 @@ xplot_distrib <- function(xpdb,
   if (missing(gg_theme)) gg_theme <- xpdb$gg_theme
   
   # Create ggplot base
-  xp <- ggplot(data = data, mapping, ...) + gg_theme 
+  xp <- ggplot(data = data, aes_filter(mapping, keep_only = c('x', 'y')), ...) + gg_theme 
   
   # Add histogram
   if (stringr::str_detect(type, stringr::fixed('h', ignore_case = TRUE))) {
-    xp <- xp + xp_geoms(mapping  = mapping,
+    xp <- xp + xp_geoms(mapping  = mapping %>% 
+                          aes_rename('y', 'histogram_y') %>% 
+                          aes_c(fun_aes = aes(histogram_y = ..density..)),
                         xp_theme = xpdb$xp_theme,
                         name     = 'histogram',
                         ggfun    = 'geom_histogram',
@@ -87,16 +89,18 @@ xplot_distrib <- function(xpdb,
   
   # Add rug
   if (stringr::str_detect(type, stringr::fixed('r', ignore_case = TRUE))) {
-    xp <- xp + xp_geoms(mapping  = mapping,
+    xp <- xp + xp_geoms(mapping  = aes_rename(mapping, 'x', 'rug_x'),
                         xp_theme = xpdb$xp_theme,
                         name     = 'rug',
                         ggfun    = 'geom_rug',
+                        rug_inherit.aes = FALSE, 
+                        rug_data = data,
                         ...)
   }
   
   # Add reference distibution
   if (guides) {
-    msg('Reference distribution not available yet.', quiet)
+    msg('Reference distribution not yet available.', quiet)
     # xp <- xp + xp_geoms(xp_theme = xpdb$xp_theme,
     #                     name     = 'guides',
     #                     ggfun    = 'geom_line',
