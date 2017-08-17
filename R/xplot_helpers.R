@@ -131,9 +131,29 @@ xp_var <- function(xpdb, problem, col = NULL, type = NULL) {
     dplyr::arrange_(.dots = c('type', 'col'))
 }
 
-# Append aes
+# Set new default value for aesthetics
 aes_c <- function(fun_aes, user_aes) {
   if (is.null(user_aes)) return(fun_aes)
   aes <- c(fun_aes[!names(fun_aes) %in% names(user_aes)], user_aes)
   structure(aes, class = 'uneval')
+}
+
+# Filter aesthetics
+aes_filter <- function(mapping, drop = NULL, keep_only = NULL) {
+  if (is.null(mapping)) return()
+  if (!is.null(keep_only)) {
+    aes <- mapping[names(mapping) %in% keep_only]
+  } else {
+    aes <- mapping[!names(mapping) %in% drop]
+  }
+  if (length(aes) == 0) return()
+  aes
+}
+
+# Rename aesthetics
+aes_rename <- function(mapping, from, to) {
+  if (is.null(mapping)) return()
+  if (!any(from %in% names(mapping))) return(mapping)
+  names(mapping)[match(from, names(mapping))] <- to[which(from %in% names(mapping))]
+  mapping
 }

@@ -59,6 +59,6 @@ ind_plots <- function(xpdb,
                 plot_name = as.character(match.call()[[1]]), 
                 panel_nrow = nrow, panel_ncol = ncol, ...) +
     scale_alpha_manual(values = c(0.8, 0, 0)) +
-    scale_color_manual(values = c('grey60', 'deepskyblue3', 'deepskyblue3')) +
-    scale_linetype_manual(values = c('dashed', 'solid', '52'))
+    scale_color_manual(values = c('grey60', 'deepskyblue4', 'deepskyblue3')) +
+    scale_linetype_manual(values = c('blank', 'solid', '55'))
 }
