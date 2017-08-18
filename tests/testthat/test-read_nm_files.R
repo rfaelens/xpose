@@ -20,8 +20,8 @@ test_that('message is returned when missing file argument', {
 })
 
 test_that('message is returned when all provided files are missing', {
-  expect_null(read_nm_files(runno = 'run999', quiet = TRUE))
-  expect_message(read_nm_files(runno = 'run999', quiet = FALSE), regexp = 'could be found')
+  expect_null(read_nm_files(runno = 'run999', dir = 'data', quiet = TRUE))
+  expect_message(read_nm_files(runno = 'run999', dir = 'data', quiet = FALSE), regexp = 'could be found')
 })
 
 test_that('read_nm_files handles one file with inappropriate format', {
@@ -52,5 +52,5 @@ test_that('read_nm_files handles all files with inappropriate format', {
 })
 
 test_that('Files are imported correctly', {
-  expect_identical(read_nm_files(runno = '001', quiet = TRUE), ctrl_file1)
+  expect_identical(read_nm_files(runno = '001', dir = 'data', quiet = TRUE), ctrl_file1)
 })
