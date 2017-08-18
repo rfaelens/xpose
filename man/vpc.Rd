@@ -15,7 +15,7 @@ vpc(xpdb, mapping = NULL, type = "alr", smooth = TRUE, facets,
 \item{mapping}{List of aesthetics mappings to be used for the xpose plot 
 (e.g. \code{point_color}).}
 
-\item{type}{String setting the type of plot to be used points 'p',
+\item{type}{String setting the type of plot to be used. Can be points 'p',
 line 'l', area 'a', rug 'r' and text 't' or any combination of the five.}
 
 \item{smooth}{Should the bins be smoothed (connect bin midpoints, default) or shown as rectangular boxes.}

@@ -7,7 +7,7 @@
 #' @param mapping List of aesthetics mappings to be used for the xpose plot 
 #' (e.g. \code{point_color}).
 #' @param group Grouping variable to be used for lines.
-#' @param type String setting the type of plot to be used points 'p',
+#' @param type String setting the type of plot to be used. Can be points 'p',
 #' line 'l', smooth 's' and text 't' or any combination of the four.
 #' @param facets Either a character string to use \link[ggplot2]{facet_wrap} 
 #' or a formula to use \link[ggplot2]{facet_grid}.

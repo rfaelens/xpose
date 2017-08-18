@@ -8,7 +8,7 @@ the independent variable for every individual}
 ind_plots(xpdb, mapping = NULL, group = "variable", type = "lp",
   facets = NULL, title = "Individual plots | @run",
   subtitle = "Ofv: @ofv, Eps shrink: @epsshk", caption = "@dir",
-  log = NULL, nrow = 3, ncol = 3, page = 1, problem, quiet, ...)
+  log = NULL, problem, quiet, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -18,7 +18,7 @@ ind_plots(xpdb, mapping = NULL, group = "variable", type = "lp",
 
 \item{group}{Grouping variable to be used for lines.}
 
-\item{type}{String setting the type of plot to be used points 'p',
+\item{type}{String setting the type of plot to be used. Can be points 'p',
 line 'l', smooth 's' and text 't' or any combination of the four.}
 
 \item{facets}{Either a character string to use \link[ggplot2]{facet_wrap} 
@@ -32,12 +32,6 @@ or a formula to use \link[ggplot2]{facet_grid}.}
 
 \item{log}{String assigning logarithmic scale to axes, can be either '', 
 'x', y' or 'xy'.}
-
-\item{nrow}{Number of rows per page.}
-
-\item{ncol}{Number of columns per page.}
-
-\item{page}{Page to draw.}
 
 \item{problem}{The $problem number to be used. By default returns 
 the last estimation problem.}

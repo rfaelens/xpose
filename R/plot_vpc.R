@@ -5,7 +5,7 @@
 #' @param xpdb An xpose database object.
 #' @param mapping List of aesthetics mappings to be used for the xpose plot 
 #' (e.g. \code{point_color}).
-#' @param type String setting the type of plot to be used points 'p',
+#' @param type String setting the type of plot to be used. Can be points 'p',
 #' line 'l', area 'a', rug 'r' and text 't' or any combination of the five.
 #' @param smooth Should the bins be smoothed (connect bin midpoints, default) or shown as rectangular boxes.
 #' @param facets Either a character string to use \link[ggplot2]{facet_wrap} 
