@@ -10,9 +10,9 @@ get_data(xpdb, table = NULL, problem = NULL)
 \item{xpdb}{An \code{xpose_data} object from which the model output file data will be extracted.}
 
 \item{table}{Name of the output table to be extracted from the xpdb e.g. 'sdtab001'. Alternative to 
-the "problem" argument.}
+the `problem` argument.}
 
-\item{problem}{Accesses all tables from the specified problem. Alternative to the "table" argument.}
+\item{problem}{Accesses all tables from the specified problem. Alternative to the `table` argument.}
 }
 \value{
 A tibble for single file or a named list for multiple files.
