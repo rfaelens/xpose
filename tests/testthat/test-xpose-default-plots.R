@@ -35,7 +35,7 @@ q3 <- xplot_qq(xpdb = xpdb_ex_pk, aes_string(sample = 'PRED'),
 
 # Tests start here --------------------------------------------------------
 
-test_that("errors are returned for missing or bad xpdb", {
+test_that('errors are returned for missing or bad xpdb', {
   expect_error(xplot_scatter())
   expect_error(xplot_distrib())
   expect_error(xplot_qq())
@@ -45,7 +45,7 @@ test_that("errors are returned for missing or bad xpdb", {
   expect_error(xplot_qq(xpdb = 1), regexp = 'Bad input')
 })
 
-test_that("xpose plot objects are returned with appropriate xpdb", {
+test_that('xpose plot objects are returned with appropriate xpdb', {
   # Check class
   expect_true(is.xpose.plot(p1))
   expect_true(is.xpose.plot(d1))
@@ -69,10 +69,10 @@ test_that("xpose plot objects are returned with appropriate xpdb", {
 })
 
 test_that('layers of xplot_scatter', {
-  expect_equal(class(p1$layers[[1]]$geom)[1], 'GeomAbline')
-  expect_equal(class(p1$layers[[2]]$geom)[1], 'GeomLine')
-  expect_equal(class(p1$layers[[3]]$geom)[1], 'GeomPoint')
-  expect_equal(class(p1$layers[[4]]$geom)[1], 'GeomText')
+  expect_equal(class(p1$layers[[1]]$geom)[1], 'GeomLine')
+  expect_equal(class(p1$layers[[2]]$geom)[1], 'GeomPoint')
+  expect_equal(class(p1$layers[[3]]$geom)[1], 'GeomText')
+  expect_equal(class(p1$layers[[4]]$geom)[1], 'GeomAbline')
   expect_equal(class(p1$layers[[5]]$geom)[1], 'GeomSmooth')
 })
 
@@ -83,8 +83,8 @@ test_that('layers of xplot_density', {
 })
 
 test_that('layers of xplot_qq', {
-  expect_equal(class(q1$layers[[1]]$geom)[1], 'GeomPath')
-  expect_equal(class(q1$layers[[2]]$geom)[1], 'GeomPoint')
+  expect_equal(class(q1$layers[[1]]$geom)[1], 'GeomPoint')
+  expect_equal(class(q1$layers[[2]]$geom)[1], 'GeomPath')
 })
 
 
@@ -106,15 +106,15 @@ test_that('faceting works properly', {
 })
 
 test_that('xpose_geom mapping works properly', {
-  expect_equal(p1$layers[[2]]$aes_params$colour, 'blue')
-  expect_equal(p1$layers[[3]]$aes_params$colour, 'red')
-  expect_equal(p1$layers[[4]]$aes_params$colour, 'yellow')
+  expect_equal(p1$layers[[2]]$aes_params$colour, 'red')
+  expect_equal(p1$layers[[3]]$aes_params$colour, 'yellow')
+  expect_equal(p1$layers[[4]]$aes_params$colour, 'black')
   expect_equal(p1$layers[[5]]$aes_params$colour, 'green')
   
   expect_equal(d1$layers[[1]]$aes_params$colour, 'red')
   expect_equal(d1$layers[[2]]$aes_params$colour, 'blue')
   expect_equal(d1$layers[[3]]$aes_params$colour, 'yellow')
   
-  expect_equal(q1$layers[[1]]$aes_params$colour, 'blue')
-  expect_equal(q1$layers[[2]]$aes_params$colour, 'red')
+  expect_equal(q1$layers[[1]]$aes_params$colour, 'red')
+  expect_equal(q1$layers[[2]]$aes_params$colour, 'blue')
 })
