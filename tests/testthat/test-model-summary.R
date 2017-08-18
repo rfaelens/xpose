@@ -13,7 +13,7 @@ sum_out <- function(sum_fun, prob = 1) {
 
 # Tests start here --------------------------------------------------------
 
-test_that("summary is properly created with the appropriate information", {
+test_that('summary is properly created with the appropriate information', {
   expect_equal(sum_out(sum_software(software)), c('software', 'nonmem'))
   expect_equal(sum_out(sum_version(model, software)), c('version', '7.3.0'))
   expect_equal(sum_out(sum_file(file)), c('file', 'run001.lst'))
@@ -53,7 +53,7 @@ test_that("summary is properly created with the appropriate information", {
   expect_equal(sum_out(sum_shk(model, software, 'eta', rounding)), c('etashk', '21.97 [1], 20.85 [2], 20.53 [3]'))
 })
 
-test_that("summary default summary is returned for missing information", {
+test_that('summary default summary is returned for missing information', {
   expect_equal(sum_out(sum_version(model2, software)), c('version', 'na'))
   expect_equal(sum_out(sum_reference(model2, software)), c('ref', 'na'))
   expect_equal(sum_out(sum_probn(model2, software)), c('probn', 'na'))
