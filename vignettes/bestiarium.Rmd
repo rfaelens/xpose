@@ -1,0 +1,98 @@
+---
+title: "The xpose plots"
+author: "Benjamin Guiastrennec"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Customize plots}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+library(xpose)
+
+knitr::opts_chunk$set(fig.dpi = 96,
+                      fig.align = 'center', 
+                      fig.height = 4, 
+                      fig.width = 4,
+                      out.width = '50%',
+                      comment = '')
+```
+
+
+## Basic goodness-of-fit plots
+### Plots of the independent variable (IDV)
+```{r}
+dv_vs_idv(xpdb_ex_pk)
+ipred_vs_idv(xpdb_ex_pk)
+pred_vs_idv(xpdb_ex_pk)
+dv_preds_vs_idv(xpdb_ex_pk)
+```
+
+### DV vs. PREDs plots
+```{r}
+dv_vs_pred(xpdb_ex_pk)
+dv_vs_ipred(xpdb_ex_pk)
+```
+
+### Residual plots
+```{r}
+res_vs_idv(xpdb_ex_pk, res = 'CWRES')
+res_vs_pred(xpdb_ex_pk, res = 'CWRES')
+absval_res_vs_idv(xpdb_ex_pk, res = 'CWRES')
+absval_res_vs_pred(xpdb_ex_pk, res = 'CWRES')
+```
+
+## Minimization plots
+```{r}
+prm_vs_iteration(xpdb_ex_pk)
+grd_vs_iteration(xpdb_ex_pk)
+```
+
+## Individual plots
+```{r}
+ind_plots(xpdb_ex_pk)
+```
+
+## Distributions
+### Histograms and density plots
+```{r}
+prm_distrib(xpdb_ex_pk)
+eta_distrib(xpdb_ex_pk)
+res_distrib(xpdb_ex_pk)
+cov_distrib(xpdb_ex_pk)
+```
+
+### QQ plots
+```{r}
+prm_qq(xpdb_ex_pk)
+eta_qq(xpdb_ex_pk)
+res_qq(xpdb_ex_pk)
+cov_qq(xpdb_ex_pk)
+```
+
+## Visual predictive checks (VPC)
+### Continuous vpc
+```{r}
+xpdb_ex_pk %>% 
+ vpc_data() %>% 
+ vpc()
+```
+
+### Censored vpc
+```{r}
+xpdb_ex_pk %>% 
+ vpc_data(vpc_type = 'censored', opt = vpc_opt(lloq = 1)) %>% 
+ vpc()
+```
+
+
+### Categorical vpc
+```{r, eval = FALSE}
+xpdb_ex_pk %>% 
+ vpc_data(vpc_type = 'categorical') %>% 
+ vpc()
+```
+
+
