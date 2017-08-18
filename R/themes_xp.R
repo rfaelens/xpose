@@ -30,9 +30,9 @@ theme_xp_default <- function() {
     
     # Guide
     guides_alpha    = 1,
-    guides_color    = 'grey70',
+    guides_color    = 'black',
     guides_linetype = 'solid',
-    guides_size     = 1,
+    guides_size     = 0.5,
     
     # Line
     line_alpha      =  0.7,
