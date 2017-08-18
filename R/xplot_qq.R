@@ -61,14 +61,6 @@ xplot_qq <- function(xpdb,
   # Create ggplot base
   xp <- ggplot(data = data, mapping, ...) + gg_theme 
   
-  # Add reference line
-  if (guides) {
-    xp <- xp + xp_geoms(xp_theme = xpdb$xp_theme,
-                        name     = 'guides',
-                        ggfun    = 'geom_qq_line',
-                        ...)
-  }
-  
   # Add points
   if (stringr::str_detect(type, stringr::fixed('p', ignore_case = TRUE))) {
     xp <- xp + xp_geoms(mapping    = mapping,
@@ -76,6 +68,14 @@ xplot_qq <- function(xpdb,
                         name       = 'point',
                         ggfun      = 'geom_point',
                         point_stat = 'qq',
+                        ...)
+  }
+  
+  # Add reference line
+  if (guides) {
+    xp <- xp + xp_geoms(xp_theme = xpdb$xp_theme,
+                        name     = 'guides',
+                        ggfun    = 'geom_qq_line',
                         ...)
   }
   
