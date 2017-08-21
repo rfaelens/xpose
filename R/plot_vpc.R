@@ -255,7 +255,7 @@ vpc <- function(xpdb,
   }
   xp$xpose <- list(fun      = stringr::str_c('vpc_', vpc_dat$type),
                    summary  = xpdb_summary,
-                   problem  = dplyr::if_else(is.null(vpc_dat$psn_folder), 0, vpc_dat$sim_problem),
+                   problem  = dplyr::if_else(is.null(vpc_dat$psn_folder), 0L, vpc_dat$sim_problem),
                    quiet    = quiet,
                    xp_theme = xpdb$xp_theme[stringr::str_c(c('title', 'subtitle', 'caption'), '_suffix')])
   
