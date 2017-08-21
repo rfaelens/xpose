@@ -1,28 +1,28 @@
 #' NONMEM model file parser
 #'
 #' @description Parse NONMEM model files in R format
-#'
-#' @param runno Run number to be evaluated.
-#' @param prefix Prefix of the model file name.
-#' @param ext Extension of the model file. Should be one of ".lst", ".out", ".res", ".mod" or ".ctl".
-#' @param file Full file name preferably a `.lst` file. Alternative argument to \code{dir}, \code{prefix},
-#' \code{runno} and \code{ext}.
-#' @param dir Location of the model file.
-#' @param quiet Logical, if \code{FALSE} messages are printed to the console.
-#'
+#' 
+#' @inheritParams xpose_data
 #' @inheritSection xpose_data File path generation
 #'
+#' @details 
+#' A NONMEM model output file (i.e. .lst, .out or .res) should preferably be provided to \code{read_nm_model} to allow for a more extensive xpose 
+#' summary. However in some cases these output files may not contain the model code, thus preventing xpose from identifying the accociated output 
+#' tables names. In such cases xpose will attempt to read the associated model file (i.e. .mod or .ctl) instead to find the model code. Note: it 
+#' is important that between the naming convention between the NONMEM output and the model file remains consistent e.g. run001.lst should be 
+#' associated with run001.mod.
+#' 
 #' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_tables}}
 #' @return A \code{\link[dplyr]{tibble}} of class \code{model} containing the following columns: 
 #' \itemize{
 #'  \item{\strong{problem}}{: a numeric identifier for the $PROBLEM associated with the code.}
 #'  \item{\strong{level}}{: a unique numeric identifier to each subroutine block associated with the code.}
-#'  \item{\strong{subroutine}}{: a character identifier named after the 3 first letters of the subroutine name e.g. "$THETA" and 
-#'  "$TABLE" will become "the" and "tab" respectively. In addition all output from the .lst is labeled "lst", the general nonmem 
-#'  output e.g. NM-TRAN messages are labeled "oth". With priors thp, tpv, omp, opd, sip, spd abbreviations are given to the THETAP, 
+#'  \item{\strong{subroutine}}{: a character identifier named after the 3 first letters of the subroutine name e.g. '$THETA' and 
+#'  '$TABLE' will become 'the' and 'tab' respectively. In addition all output from the .lst is labeled 'lst', the general nonmem 
+#'  output e.g. NM-TRAN messages are labeled 'oth'. With priors thp, tpv, omp, opd, sip, spd abbreviations are given to the THETAP, 
 #'  THETAPV, OMEGAP, etc.}
-#'  \item{\strong{code}}{: the code without comments or subroutine names e.g. "$THETA 0.5 ; TVCL" will return 0.5.}
-#'  \item{\strong{comment}}{: the last comment of a record e.g. "0.5 ; Clearance (L/h) ; TVCL" will return "TVCL".}
+#'  \item{\strong{code}}{: the code without comments or subroutine names e.g. '$THETA 0.5 ; TVCL' will return '0.5'.}
+#'  \item{\strong{comment}}{: the last comment of a record e.g. '0.5 ; Clearance (L/h) ; TVCL' will return 'TVCL'.}
 #' }
 #' 
 #' @examples
@@ -39,8 +39,7 @@ read_nm_model <- function(runno   = NULL,
                           prefix  = 'run',
                           ext     = '.lst',
                           file    = NULL,
-                          dir     = NULL,
-                          quiet   = FALSE) {
+                          dir     = NULL) {
   
   if (is.null(runno) && is.null(file)) {
     stop('Argument `runno` or `file` required.', call. = FALSE)
@@ -64,14 +63,14 @@ read_nm_model <- function(runno   = NULL,
   
   model <- readr::read_lines(full_path)
   
-  if (!any(stringr::str_detect(model, '^\\s*\\$PROB.+')) && get_extension(full_path) %in% c('.lst', '.out', '.res')) {
+  if (!any(stringr::str_detect(model, '^\\s*\\$PROB.+')) && ext %in% c('.lst', '.out', '.res')) {
     # Attempts to recover the model code from model file rather than in the nonmem output file
-    orig_ext  <- get_extension(full_path)
     full_path <- update_extension(full_path, c('.mod', '.ctl'))
     full_path <- full_path[file.exists(full_path)]
     
     if (any(file.exists(full_path))) {
-      msg(c('No model code found in`', orig_ext, '` NONMEM output file using `', get_extension(full_path)[1], '` instead.'), quiet)
+      warning(c('No model code found in `', ext, '` NONMEM output file importing `', 
+                get_extension(full_path)[1], '` instead.'), call. = FALSE)
       model <- readr::read_lines(full_path[1])
     }
   }
@@ -137,6 +136,8 @@ read_nm_model <- function(runno   = NULL,
   # Remove na values and output
   tidyr::replace_na(model, replace = list(code = '', comment = '')) %>% 
     dplyr::select(dplyr::one_of('problem', 'level', 'subroutine', 'code', 'comment')) %>% 
+    dplyr::mutate(problem = as.integer(as.character(problem)),
+                  level   = as.integer(as.character(level))) %>% 
     structure(file     = basename(full_path),
               dir      = dirname(full_path),
               software = 'nonmem',
