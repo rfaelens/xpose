@@ -19,7 +19,8 @@ knitr::opts_chunk$set(fig.dpi = 96,
                       fig.height = 4, 
                       fig.width = 4,
                       out.width = '50%',
-                      comment = '')
+                      comment = '',
+                      message = FALSE)
 ```
 
 
@@ -62,8 +63,7 @@ gridExtra::grid.arrange(
 ```
 
 ### Visual guides
-The option `guides` can enable (`TRUE`) or disable (`FALSE`) the visual guides on the graphs such as unity line on the `dv_vs_ipred()` type plot or horizontal lines on residual plots (e.g. `res_vs_idv()`).
-
+The option `guides` can enable (`TRUE`) or disable (`FALSE`) the visual guides on the graphs such as the line of identity on the `dv_vs_ipred()` type plot or horizontal lines on residual plots (e.g. `res_vs_idv()`).
 
 ### Labels
 All xpose plots have by default an informative title, subtitle and caption. For example all plots using individual model predictions (IPRED) will display the epsilons' shrinkage. These titles can easily be edited as templates using @keywords which will be replaced by their actual value stored in the summary level of the `xpdb` object when rendering the plots. Keywords are defined by a word preceded by a `@` e.g. `'@ofv'`. A list of all available keyword can be accessed via `help('template_titles')`. The title, subtitle or caption can be disabled by setting them to `NULL`. Suffix can be automatically added to title, subtitle and caption of all plots. The suffixes can be defined in the `xp_theme`.
@@ -137,7 +137,11 @@ dv_vs_ipred(xpdb, facets = c('SEX', 'OCC'))
 dv_vs_ipred(xpdb, facets = SEX~OCC, panel_labeller = 'label_both')
 ```
 
-Additional arguments can be passed to the panel function using the `panel_xxx` notation (e.g. `panel_ncol = 2`, `panel_labeller = 'label_both'`). For more options read the help of [`facet_wrap`](http://ggplot2.tidyverse.org/reference/facet_wrap.html) and [`facet_grid`](http://ggplot2.tidyverse.org/reference/facet_grid.html) from `ggplot2`.
+Additional arguments can be passed to the panel function using the `panel_xxx` notation (e.g. `panel_ncol = 2`, `panel_labeller = 'label_both'`). 
+
+With the default xpose theme scales are set to `'free'` from one panel to another (`panel_scales = 'free'`), this behavior can be changed with `panel_scales = 'fixed'`, `'free_y'` or `'free_x'`.
+
+For more options read the help of [`facet_wrap`](http://ggplot2.tidyverse.org/reference/facet_wrap.html) and [`facet_grid`](http://ggplot2.tidyverse.org/reference/facet_grid.html) from `ggplot2`.
 
 
 ### Additional layers

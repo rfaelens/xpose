@@ -20,11 +20,12 @@ knitr::opts_chunk$set(fig.dpi = 96,
                       fig.height = 4, 
                       fig.width = 4,
                       out.width = '75%',
-                      comment = '')
+                      comment = '',
+                      message = FALSE)
 ```
 
 ### The `xpose_data` function
-The function `xpose_data()` collects all model output files and table and organizes them into an R object commonly called `xpdb` for xpose data base. Note that xpose makes use of the [readr](http://readr.tidyverse.org) package to rapidly import big dataset into R.
+The function `xpose_data()` collects all model output files and table and organizes them into an R object commonly called `xpdb` for xpose data base. xpose makes use of the [readr](http://readr.tidyverse.org) which offers the advantages of 1) rapidly import big tables and 2) automatically import compressed table (e.g. sdtab001.zip) to increase storage capacity.
 
 ``` r
 xpdb <- xpose_data(runno = '001')
@@ -63,12 +64,13 @@ Coming with future releases...
 
 
 ### Structure of the `xpdb` object
-A typical `xpdb` object contains 7 levels namely:
+A typical `xpdb` object contains 8 levels namely:
 
 - `code`: the parsed model code
 - `summary`: contains key information regarding the model. All the information contained in the summary can be used as part of the `template_titles`.
 - `data`: contains all output and simulation tables as well as the column indexing
 - `files`: contains all output files
+- `special`: contains postprocessed datasets used by functions like `vpc()`
 - `gg_theme`: an attached ggplot2 theme
 - `xp_theme`: an attached xpose theme
 - `options`: attached global options
