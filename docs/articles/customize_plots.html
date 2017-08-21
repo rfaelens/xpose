@@ -101,7 +101,7 @@
       <h1>Customize plots</h1>
                         <h4 class="author">Benjamin Guiastrennec</h4>
             
-            <h4 class="date">18 August, 2017</h4>
+            <h4 class="date">21 August, 2017</h4>
           </div>
 
     
@@ -133,7 +133,7 @@
 <div id="visual-guides" class="section level3">
 <h3 class="hasAnchor">
 <a href="#visual-guides" class="anchor"></a>Visual guides</h3>
-<p>The option <code>guides</code> can enable (<code>TRUE</code>) or disable (<code>FALSE</code>) the visual guides on the graphs such as unity line on the <code><a href="../reference/dv_vs_pred.html">dv_vs_ipred()</a></code> type plot or horizontal lines on residual plots (e.g. <code><a href="../reference/res_vs_idv.html">res_vs_idv()</a></code>).</p>
+<p>The option <code>guides</code> can enable (<code>TRUE</code>) or disable (<code>FALSE</code>) the visual guides on the graphs such as the line of identity on the <code><a href="../reference/dv_vs_pred.html">dv_vs_ipred()</a></code> type plot or horizontal lines on residual plots (e.g. <code><a href="../reference/res_vs_idv.html">res_vs_idv()</a></code>).</p>
 </div>
 <div id="labels" class="section level3">
 <h3 class="hasAnchor">
@@ -206,7 +206,9 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Example with a formula</span>
 <span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">facets =</span> SEX<span class="op">~</span>OCC, <span class="dt">panel_labeller =</span> <span class="st">'label_both'</span>)</code></pre></div>
 <p><img src="customize_plots_files/figure-html/demo%20panels-2.png" width="75%" style="display: block; margin: auto;"></p>
-<p>Additional arguments can be passed to the panel function using the <code>panel_xxx</code> notation (e.g. <code>panel_ncol = 2</code>, <code>panel_labeller = 'label_both'</code>). For more options read the help of <a href="http://ggplot2.tidyverse.org/reference/facet_wrap.html"><code>facet_wrap</code></a> and <a href="http://ggplot2.tidyverse.org/reference/facet_grid.html"><code>facet_grid</code></a> from <code>ggplot2</code>.</p>
+<p>Additional arguments can be passed to the panel function using the <code>panel_xxx</code> notation (e.g. <code>panel_ncol = 2</code>, <code>panel_labeller = 'label_both'</code>).</p>
+<p>With the default xpose theme scales are set to <code>'free'</code> from one panel to another (<code>panel_scales = 'free'</code>), this behavior can be changed with <code>panel_scales = 'fixed'</code>, <code>'free_y'</code> or <code>'free_x'</code>.</p>
+<p>For more options read the help of <a href="http://ggplot2.tidyverse.org/reference/facet_wrap.html"><code>facet_wrap</code></a> and <a href="http://ggplot2.tidyverse.org/reference/facet_grid.html"><code>facet_grid</code></a> from <code>ggplot2</code>.</p>
 </div>
 <div id="additional-layers" class="section level3">
 <h3 class="hasAnchor">

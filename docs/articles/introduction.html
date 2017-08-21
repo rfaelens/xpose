@@ -101,7 +101,7 @@
       <h1>Introduction</h1>
                         <h4 class="author">Benjamin Guiastrennec</h4>
             
-            <h4 class="date">18 August, 2017</h4>
+            <h4 class="date">21 August, 2017</h4>
           </div>
 
     
@@ -110,13 +110,13 @@
 <div id="load-xpose" class="section level3">
 <h3 class="hasAnchor">
 <a href="#load-xpose" class="anchor"></a>Load xpose</h3>
-<p>The first step is to load xpose in R with the following command.</p>
+<p>The first step is to load xpose in R with the following command:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(xpose)</code></pre></div>
 </div>
 <div id="import-model-output" class="section level3">
 <h3 class="hasAnchor">
 <a href="#import-model-output" class="anchor"></a>Import model output</h3>
-<p>The function <code><a href="../reference/xpose_data.html">xpose_data()</a></code> collects all model output files and table and organizes them into an R object commonly called <code>xpdb</code> which stands for xpose data base.</p>
+<p>The function <code><a href="../reference/xpose_data.html">xpose_data()</a></code> collects all model output files and table and organizes them into an R object commonly called <code>xpdb</code> which stands for “xpose database”.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xpdb &lt;-<span class="st"> </span><span class="kw"><a href="../reference/xpose_data.html">xpose_data</a></span>(<span class="dt">runno =</span> <span class="st">'001'</span>, <span class="dt">dir =</span> <span class="st">'analysis/model/pk/'</span>)</code></pre></div>
 </div>
 <div id="glimpse-at-the-xpdb" class="section level3">
@@ -133,7 +133,7 @@
    + special: &lt;none&gt; 
  - gg_theme: theme_readable 
  - xp_theme: theme_xp_default 
- - Options: dir = analysis/models/pk/, quiet = TRUE, manual_import = NULL</code></pre>
+ - Options: dir = analysis/models/pk/, quiet = FALSE, manual_import = NULL</code></pre>
 </div>
 <div id="model-summary" class="section level3">
 <h3 class="hasAnchor">
@@ -209,10 +209,18 @@ List of available variables for problem no. 2
  - Model individual predictions (ipred)  : IPRED
  - Not attributed (na)                   : DOSE, TAD, SEX, CLCR, AGE, WT</code></pre>
 </div>
+<div id="pipes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#pipes" class="anchor"></a>Pipes</h3>
+<p><code>xpose</code> makes use of the pipe operator <code>%&gt;%</code> from the package <a href="http://dplyr.tidyverse.org">dplyr</a>. Pipes can be used to generate clear workflow.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/xpose_data.html">xpose_data</a></span>(<span class="dt">runno =</span> <span class="st">'001'</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/xpose_save.html">xpose_save</a></span>()</code></pre></div>
+</div>
 <div id="editing-the-xpdb" class="section level3">
 <h3 class="hasAnchor">
 <a href="#editing-the-xpdb" class="anchor"></a>Editing the xpdb</h3>
-<p>Multiples edits can be made to the xpdb object. For instance the type (visible using the <code><a href="../reference/list_vars.html">list_vars()</a></code> function described above) of a variable can be changed. Hence the idependent variable (idv) could be changed from <code>TIME</code> (default in NONMEM) to <code>TAD</code>. All plots using <code>idv</code> will then automatically use <code>TAD</code>.</p>
+<p>Multiples edits can be made to the xpdb object. For instance the type (visible using the <code><a href="../reference/list_vars.html">list_vars()</a></code> function described above) of a variable can be changed. Hence the independent variable (idv) could be changed from <code>TIME</code> (default in NONMEM) to <code>TAD</code>. All plots using <code>idv</code> will then automatically use <code>TAD</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># With the TIME default</span>
 xpdb <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/pred_vs_idv.html">dv_vs_idv</a></span>()</code></pre></div>
@@ -226,7 +234,7 @@ xpdb <span class="op">%&gt;%</span><span class="st"> </span>
 <div id="generating-plots" class="section level3">
 <h3 class="hasAnchor">
 <a href="#generating-plots" class="anchor"></a>Generating plots</h3>
-<p>Many functions will be made available in the next release of xpose. The plotting functions are used as follows:</p>
+<p>Plotting functions are used as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># DV vs. IPRED plot</span>
 <span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb)</code></pre></div>
 <p><img src="introduction_files/figure-html/demo%20basic%20gof-1.png" width="50%" style="display: block; margin: auto;"></p>
@@ -237,20 +245,12 @@ xpdb <span class="op">%&gt;%</span><span class="st"> </span>
 <div id="exporting-plots" class="section level3">
 <h3 class="hasAnchor">
 <a href="#exporting-plots" class="anchor"></a>Exporting plots</h3>
-<p>The <code>xpose_save</code> function was designed to facilitated the export of plots from R to files. xpose will automatically save plots according to their run number and the plotting function using keywords preceded by a <code>@</code> you can learn more about these keywords using <code>help('template_titles')</code>. The file extension is guessed from the file name and must match one of .pdf, .jpeg, .png, .bmp or .tiff, if missing a pdf will be generated by default. Finally, if the <code>plot</code> argument is left empty <code>xpose_save</code> will automatically save the last plot that was generated by ggplot2.</p>
+<p>The <code>xpose_save</code> function was designed to facilitate the export of plots from R to files. xpose will automatically save plots according to their run number (<code>@run</code>) and the plotting function (<code>@plotfun</code>) using keywords preceded by a <code>@</code> you can learn more about these keywords using <code>help('template_titles')</code>. The file extension is guessed from the file name and must match one of .pdf, .jpeg, .png, .bmp or .tiff, if missing a pdf will be generated by default. Finally, if the <code>plot</code> argument is left empty <code>xpose_save</code> will automatically save the last plot that was generated by ggplot2.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Save the last plot</span>
 <span class="kw"><a href="../reference/xpose_save.html">xpose_save</a></span>()
 
 <span class="co"># Change file name and extension</span>
-<span class="kw"><a href="../reference/xpose_save.html">xpose_save</a></span>(<span class="dt">filename =</span> <span class="st">'@run_@plotfun_[@ofv].jpeg'</span>)</code></pre></div>
-</div>
-<div id="pipes" class="section level3">
-<h3 class="hasAnchor">
-<a href="#pipes" class="anchor"></a>Pipes</h3>
-<p><code>xpose</code> makes use of the pipe operator <code>%&gt;%</code> from the package <a href="http://dplyr.tidyverse.org">dplyr</a>. Pipes can be used to generate clear workflow.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/xpose_data.html">xpose_data</a></span>(<span class="dt">runno =</span> <span class="st">'001'</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/xpose_save.html">xpose_save</a></span>()</code></pre></div>
+<span class="kw"><a href="../reference/xpose_save.html">xpose_save</a></span>(<span class="dt">file =</span> <span class="st">'@run_@plotfun_[@ofv].jpeg'</span>, <span class="dt">dir =</span> <span class="st">'pk/diagnostics'</span>)</code></pre></div>
 </div>
 </div>
   </div>
