@@ -4,20 +4,20 @@
 \alias{read_nm_model}
 \title{NONMEM model file parser}
 \usage{
-read_nm_model(file = NULL, runno = NULL, dir = NULL, prefix = "run",
-  ext = c(".lst", ".out", ".res", ".mod", ".ctl"), quiet = FALSE)
+read_nm_model(runno = NULL, prefix = "run", ext = ".lst", file = NULL,
+  dir = NULL, quiet = FALSE)
 }
 \arguments{
-\item{file}{Full file name preferably a `.lst` file. Alternative argument to \code{dir}, \code{prefix},
-\code{runno} and \code{ext}.}
-
 \item{runno}{Run number to be evaluated.}
-
-\item{dir}{Location of the model file.}
 
 \item{prefix}{Prefix of the model file name.}
 
 \item{ext}{Extension of the model file. Should be one of ".lst", ".out", ".res", ".mod" or ".ctl".}
+
+\item{file}{Full file name preferably a `.lst` file. Alternative argument to \code{dir}, \code{prefix},
+\code{runno} and \code{ext}.}
+
+\item{dir}{Location of the model file.}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 }
@@ -37,9 +37,24 @@ A \code{\link[dplyr]{tibble}} of class \code{model} containing the following col
 \description{
 Parse NONMEM model files in R format
 }
+\section{File path generation}{
+
+The rules for model file names generation are as follow:
+\itemize{
+  \item with \code{runno}: the full path is generated as \code{<dir>/<prefix><runno>.<ext>} e.g. with \code{dir = 'model/pk'}, \code{prefix = 'run'}, \code{runno = '001'}, 
+  \code{ext = '.lst'} the resulting path would be \code{model/pk/run001.lst}
+  \item with \code{file}: the full path is generated as \code{<dir>/<file>} e.g. with \code{dir = 'model/pk'}, \code{file = 'run001.lst'} the resulting path
+  would also be \code{model/pk/run001.lst}. Note: in this case the file extension should be provided as part of the `file` argument.
+  }
+}
+
 \examples{
 \dontrun{
-nm_model <- read_nm_model(file = 'run001.lst')
+# Using the `file` argument to import a model file:
+nm_model <- read_nm_model(file = 'run001.lst', dir = 'models')
+
+# Using the `runno` argument to import a model file:
+nm_model <- read_nm_model(runno = '001', ext = '.lst', dir = 'models')
 }
 
 }
