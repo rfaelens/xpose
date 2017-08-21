@@ -30,19 +30,19 @@ theme_xp_default <- function() {
     
     # Guide
     guides_alpha    = 1,
-    guides_color    = 'black',
+    guides_color    = 'tomato',
     guides_linetype = 'solid',
-    guides_size     = 0.5,
+    guides_size     = 0.8,
     
     # Line
     line_alpha      =  0.7,
-    line_color      = 'grey35',
+    line_color      = 'grey20',
     line_linetype   = 'solid',
     line_size       =  0.5,
     
     # Point
     point_alpha     = 0.7,
-    point_color     = 'grey35',
+    point_color     = 'grey20',
     point_fill      = NA,
     point_shape     = 19,
     point_size      = 2.5,
