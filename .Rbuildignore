@@ -11,4 +11,5 @@
 ^docs$
 ^appveyor\.yml$
 ^vignettes/interactive_plots.*$
+^vignettes/bestiarium.*$
 ^pkgdown$
