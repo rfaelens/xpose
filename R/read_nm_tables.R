@@ -3,57 +3,77 @@
 #' @description Quickly import NONMEM output tables into R. This function automatically 
 #' detects the optimal settings to import the tables from nonmem.
 #'
-#' @param files A character vector of path to the files or a \code{nm_table_list} file created with \code{list_nm_tables}.
+#' @param file A character vector of path to the files or a \code{nm_table_list} object created with \code{list_nm_tables}.
+#' @param dir Location of the model files.
 #' @param combined Logical value indicating whether multiple tables should be combined into a single one. If the number of rows 
 #' does not match an error will be returned.
 #' @param rm_duplicates Logical value indicating whether duplicated columns should be removed.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' @param simtab If \code{TRUE} only reads in simulation tables, if \code{FALSE} only reads estimation tables. 
 #' Default \code{NULL} reads all tables.
-#' @param ziptab If \code{TRUE} search for the tables that have been compressed and renamed ´<table>.zip'.
-#' @param ... Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.
+#' @param ziptab If \code{TRUE} search for the tables that have been compressed and renamed ´<file>.zip'.
+#' @param ... Additional arguments to be passed to the \code{\link[readr]{read_table}} or \code{\link[readr]{read_csv}} functions.
 #' @examples
 #' \dontrun{
-#' nm_tables <- read_nm_tables(files = c('sdtab001', 'patab001'))
+#' # Import tables manually and return them as a list of individual tables
+#' nm_tables <- read_nm_tables(file = c('sdtab001', 'patab001'), 
+#'                             dir = 'model/pk', combined = FALSE)
+#' 
+#' # Import tables manually and return them as a single merged table
+#' nm_tables <- read_nm_tables(file = c('sdtab001', 'patab001'), 
+#'                             dir = 'model/pk', combined = TRUE)
+#' 
+#' # Import tables automatically (used internally by xpose_data())
+#' nm_tables <- read_nm_model(file = 'run001.lst', dir = 'model/pk') %>% 
+#'               list_nm_tables() %>% 
+#'               read_nm_tables()
+#' 
+#' # Passing arguments to readr via `...` 
+#' # (e.g. import columns as character and only first 10 rows)
+#' nm_tables <- read_nm_tables(file = 'sdtab001', dir = 'model/pk', 
+#'                             col_type = readr::cols(.default = 'c'), 
+#'                             n_max = 10)
+#' 
 #' }
 #' @export
-read_nm_tables <- function(files         = NULL,
+read_nm_tables <- function(file          = NULL,
+                           dir           = NULL,
                            combined      = TRUE,
                            rm_duplicates = TRUE,
                            quiet         = FALSE,
                            simtab        = NULL,
                            ziptab        = TRUE,
                            ...) {
+  # Check inputs
+  if (is.null(file)) stop('Argument `file` required.', call. = FALSE)
   
-  if (!is.null(files) && !is.nm.table.list(files)) {
-    files <- dplyr::tibble(problem   = 1, 
-                           file      = files,
-                           firstonly = FALSE,
-                           simtab    = FALSE)
+  if (!is.null(file) && !is.nm.table.list(file)) {
+    file <- dplyr::tibble(problem   = 1, 
+                          file      = file_path(dir, file),
+                          firstonly = FALSE,
+                          simtab    = FALSE)
   }
   
-  user_mode <- !is.nm.table.list(files)
+  user_mode <- !is.nm.table.list(file)
   
   # Filter tables if needed
-  if (!is.null(simtab)) files <- files[files$simtab == simtab, ]
-  msg('\nLooking for nonmem output tables', quiet)
+  if (!is.null(simtab)) file <- file[file$simtab == simtab, ]
+  msg('\nLooking for nonmem output tables.', quiet)
   
   # Check that file exists
-  if (is.null(files) || !any(file.exists(files$file))) {
-    msg('No table file could be found.', quiet)
-    return()
+  if (is.null(file) || !any(file.exists(file$file))) {
+    stop('No table file could be found.', call. = FALSE)
   }
   
-  if (any(duplicated(files$file))) {
-    msg('No tables imported due to duplicated names', quiet)
-    return()
+  if (any(duplicated(file$file))) {
+    stop('No tables imported due to duplicated names.', call. = FALSE)
   }
   
-  tables <- files[file.exists(files$file), ]
+  tables <- file[file.exists(file$file), ]
   
   # Search for compressed tables
   if (ziptab) { 
-    tables_zip <- files[!file.exists(files$file), ]
+    tables_zip <- file[!file.exists(file$file), ]
     if (nrow(tables_zip) > 0) {
       tables_zip$file <- stringr::str_c(tables_zip$file, '.zip')
       tables_zip <- tables_zip[file.exists(tables_zip$file), ]
@@ -88,10 +108,7 @@ read_nm_tables <- function(files         = NULL,
     dplyr::mutate(name = basename(.$file)) %>% 
     dplyr::select(dplyr::one_of('problem', 'name', 'simtab', 'firstonly', 'fun', 'params'))
   
-  if (nrow(tables) == 0) {
-    msg('\nNo table imported.', quiet)
-    return() 
-  }
+  if (nrow(tables) == 0) stop('No table imported.', call. = FALSE)
   
   # Read in data
   tables <- tables %>% 
@@ -124,10 +141,7 @@ read_nm_tables <- function(files         = NULL,
     tidyr::unnest_(unnest_cols = 'out') %>% 
     dplyr::select(dplyr::one_of('problem', 'simtab', 'firstonly', 'data', 'index'))
   
-  if (nrow(tables) == 0) {
-    msg('\nNo table imported.', quiet)
-    return() 
-  }
+  if (nrow(tables) == 0) stop('No table imported.', call. = FALSE)
   
   # Remove duplicated columns to decrease xpdb size
   if (rm_duplicates) {
@@ -153,10 +167,7 @@ read_nm_tables <- function(files         = NULL,
       dplyr::select(dplyr::one_of('problem', 'simtab', 'data', 'index'))
   }
   
-  if (nrow(tables) == 0) {
-    msg('\nNo table imported.', quiet)
-    return() 
-  }
+  if (nrow(tables) == 0) stop('No table imported.', call. = FALSE)
   
   # Convert catcov, id, occ, dvid to factor
   tables <- tables %>% 
@@ -192,7 +203,7 @@ read_args <- function(x, quiet, col_types, ...) {
   top <- x$top[[1]]
   
   if (is.na(top[3]) || !stringr::str_detect(top[3], '\\d+E[+-]\\d+\\s*')) {
-    msg(c('Dropped: ', basename(x$file), ' due to unexpected data format'), quiet)
+    warning(c('Dropped: ', basename(x$file), ' due to unexpected data format'), call. = FALSE)
     return(dplyr::tibble(fun = list(), params = list()))
   }
   
@@ -203,7 +214,7 @@ read_args <- function(x, quiet, col_types, ...) {
   skip <- dplyr::if_else(stringr::str_detect(top[1], 'TABLE NO\\.\\s+\\d'), 1, 0)
   
   if (!stringr::str_detect(top[1 + skip], '[A-z]{2,}+')) {
-    msg(c('Dropped: ', basename(x$file), ' due to missing headers.'), quiet = quiet)
+    warning(c('Dropped: ', basename(x$file), ' due to missing headers.'), call. = FALSE)
     return(dplyr::tibble(fun = list(), params = list()))
   }
   
@@ -222,8 +233,8 @@ read_args <- function(x, quiet, col_types, ...) {
 
 combine_tables <- function(x, quiet) {
   if (length(unique(x$nrow)) > 1) {
-    msg(c('Dropped: ', stringr::str_c(x$name, collapse = ', '), 
-          ' due to missmatch in row number.'), quiet)
+    warning(c('Dropped: ', stringr::str_c(x$name, collapse = ', '), 
+              ' due to missmatch in row number.'), call. = FALSE)
     return(dplyr::tibble(data = list(), index = list()))
     
   }
@@ -240,15 +251,15 @@ merge_firstonly <- function(x, quiet) {
     # No merge needed
     return(dplyr::tibble(data = x$data, index = x$index))
   } else if (nrow(x) != 2) {
-    msg(c(' * Something went wrong while consolidating: ', 
-          paste0(x[x$firstonly == TRUE, ]$index[[1]]$tables, 
-                 collapse = ', ')), quiet) 
+    warning(c(' * Something went wrong while consolidating: ', 
+              stringr::str_c(x[x$firstonly == TRUE, ]$index[[1]]$tables, 
+                             collapse = ', ')), call. = FALSE) 
     return(dplyr::tibble(data = list(), index = list()))
   }
   xdata   <- x$data[x$firstonly == FALSE][[1]]
   ydata   <- x$data[x$firstonly == TRUE][[1]]
   by_vars <- intersect(colnames(xdata), colnames(ydata))
-  msg(c(' * Joining by: ', paste0(by_vars, collapse = ', ')), quiet)
+  msg(c(' * Joining by: ', stringr::str_c(by_vars, collapse = ', ')), quiet)
   dplyr::tibble(data = list(dplyr::left_join(x  = xdata, 
                                              y  = ydata,
                                              by = by_vars)),
