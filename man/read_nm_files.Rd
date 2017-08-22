@@ -4,30 +4,45 @@
 \alias{read_nm_files}
 \title{NONMEM output file import function}
 \usage{
-read_nm_files(files = NULL, runno = NULL, dir = NULL, prefix = "run",
-  ext = c(".ext", ".cor", ".cov", ".phi", ".grd", ".shk"), quiet = FALSE)
+read_nm_files(runno = NULL, prefix = "run", ext = c(".ext", ".cor",
+  ".cov", ".phi", ".grd", ".shk"), file = NULL, dir = NULL, quiet = FALSE)
 }
 \arguments{
-\item{files}{Full model file names. Alternative argument to \code{dir}, \code{prefix},
-\code{runno} and \code{ext}.}
-
 \item{runno}{Run number to be evaluated.}
-
-\item{dir}{Location of the model files.}
 
 \item{prefix}{Prefix of the model file names.}
 
 \item{ext}{A vector of the file extension to import. By default '.ext', '.cor', '.cov', '.phi', '.grd', '.shk'
 files are listed.}
 
+\item{file}{Names of the model output file to be imported. Alternative argument to \code{prefix},
+\code{runno} and \code{ext}.}
+
+\item{dir}{Location of the model files.}
+
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 }
 \description{
 Quickly import NONMEM output files into R.
 }
+\section{File path generation}{
+
+The rules for model file names generation are as follow:
+\itemize{
+  \item with \code{runno}: the full path is generated as \code{<dir>/<prefix><runno>.<ext>} e.g. with \code{dir = 'model/pk'}, \code{prefix = 'run'}, \code{runno = '001'}, 
+  \code{ext = '.lst'} the resulting path would be \code{model/pk/run001.lst}
+  \item with \code{file}: the full path is generated as \code{<dir>/<file>} e.g. with \code{dir = 'model/pk'}, \code{file = 'run001.lst'} the resulting path
+  would also be \code{model/pk/run001.lst}. Note: in this case the file extension should be provided as part of the `file` argument.
+  }
+}
+
 \examples{
 \dontrun{
-ext_file <- read_nm_files(files = 'run001.ext')
+# Using the `file` argument to import a model file:
+ext_file <- read_nm_files(file = 'run001.ext', dir = 'models')
+
+# Using the `runno` argument to import a model file:
+ext_file <- read_nm_files(runno = '001', ext = '.ext', dir = 'models')
 }
 }
 \seealso{
