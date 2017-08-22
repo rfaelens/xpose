@@ -17,20 +17,20 @@
 #' \dontrun{
 #' # Import tables manually and return them as a list of individual tables
 #' nm_tables <- read_nm_tables(file = c('sdtab001', 'patab001'), 
-#'                             dir = 'model/pk', combined = FALSE)
+#'                             dir = 'models', combined = FALSE)
 #' 
 #' # Import tables manually and return them as a single merged table
 #' nm_tables <- read_nm_tables(file = c('sdtab001', 'patab001'), 
-#'                             dir = 'model/pk', combined = TRUE)
+#'                             dir = 'models', combined = TRUE)
 #' 
 #' # Import tables automatically (used internally by xpose_data())
-#' nm_tables <- read_nm_model(file = 'run001.lst', dir = 'model/pk') %>% 
+#' nm_tables <- read_nm_model(file = 'run001.lst', dir = 'models') %>% 
 #'               list_nm_tables() %>% 
 #'               read_nm_tables()
 #' 
 #' # Passing arguments to readr via `...` 
 #' # (e.g. import columns as character and only first 10 rows)
-#' nm_tables <- read_nm_tables(file = 'sdtab001', dir = 'model/pk', 
+#' nm_tables <- read_nm_tables(file = 'sdtab001', dir = 'models', 
 #'                             col_type = readr::cols(.default = 'c'), 
 #'                             n_max = 10)
 #' 
