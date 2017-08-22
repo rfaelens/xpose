@@ -7,7 +7,8 @@
 #' For more information see \code{\link{vpc_opt}}.
 #' @param vpc_type A string specifying the type of VPC to be created, can be one of: 
 #' 'continuous', 'categorical', 'censored' or 'time-to-event'.
-#' @param stratify Either a character string or a formula to stratify the data.
+#' @param stratify Either a character string or a formula to stratify the data. For 'categorical' vpcs the 
+#' stratification fixed to the different categories.
 #' @param psn_folder Specify a PsN-generated VPC-folder.
 #' @param obs_problem Alternative to the option `psn_folder`. The $problem number to 
 #' be used for observations. By default returns the last estimation problem.
@@ -113,11 +114,11 @@ vpc_data <- function(xpdb,
   vpc_type <- match.arg(vpc_type)
   
   # Info on stratification
+  if (vpc_type == 'categorical') stratify <- 'group'
   facets <- stratify
   if (is.formula(stratify)) stratify <- all.vars(stratify)
-  if (!is.null(stratify)) {
-    msg(c('Using ', stringr::str_c(stratify, collapse = ', '), 
-          ' for stratification.'), quiet)
+  if (!is.null(stratify) && vpc_type != 'categorical') {
+    msg(c('Stratifying by ', stringr::str_c(stratify, collapse = ', ')), quiet)
   }
   if (!is.null(opt$lloq)) msg(c('Setting lloq to ', opt$lloq, '.'), quiet)
   if (!is.null(opt$uloq)) msg(c('Setting uloq to ', opt$uloq, '.'), quiet)
@@ -132,8 +133,8 @@ vpc_data <- function(xpdb,
   } else if (vpc_type == 'categorical') {
     vpc_dat <- vpc::vpc_cat(obs = obs_data, sim = sim_data, psn_folder = NULL, bins = opt$bins, 
                             n_bins = opt$n_bins, bin_mid = opt$bin_mid, obs_cols = obs_cols, 
-                            sim_cols = sim_cols, stratify = stratify, ci = opt$ci, 
-                            uloq = opt$uloq, lloq = opt$lloq, smooth = FALSE, vpcdb = TRUE, verbose = !quiet) 
+                            sim_cols = sim_cols, ci = opt$ci, uloq = opt$uloq, lloq = opt$lloq, 
+                            smooth = FALSE, vpcdb = TRUE, verbose = !quiet) 
   } else if (vpc_type == 'censored') {
     vpc_dat <- vpc::vpc_cens(obs = obs_data, sim = sim_data, psn_folder = NULL, bins = opt$bins, 
                              n_bins = opt$n_bins, bin_mid = opt$bin_mid, obs_cols = obs_cols, 
