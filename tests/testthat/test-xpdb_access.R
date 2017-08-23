@@ -2,15 +2,15 @@ context('Check xpdb_access functions')
 
 # Tests for get_code ------------------------------------------------------
 
-test_that("get_code checks input properly", {
+test_that('get_code checks input properly', {
   # Error with missing xpdb
-  expect_error(get_code(), regexp = '\"xpdb\" is missing')
+  expect_error(get_code(), regexp = '"xpdb" is missing')
   
   # Error with bad problem input
   expect_error(get_code(xpdb_ex_pk, problem = 99), regexp = 'Problem no.99 not found in model code')
 })
 
-test_that("get_code works properly", {
+test_that('get_code works properly', {
   # Return full code
   expect_equal(get_code(xpdb_ex_pk), xpdb_ex_pk$code)
   
@@ -23,9 +23,9 @@ test_that("get_code works properly", {
 
 
 # Tests for get_data ------------------------------------------------------
-test_that("get_data checks input properly", {
+test_that('get_data checks input properly', {
   # Error with missing xpdb
-  expect_error(get_data(), regexp = '\"xpdb\" is missing')
+  expect_error(get_data(), regexp = '"xpdb" is missing')
   
   # Error with missing table and problems
   expect_error(get_data(xpdb_ex_pk), regexp = '`table` or `problem` required')
@@ -40,7 +40,7 @@ test_that("get_data checks input properly", {
   expect_error(get_data(xpdb_ex_pk, table = 'faketab'), regexp = 'faketab not found')
 })
 
-test_that("get_data works properly", {
+test_that('get_data works properly', {
   # Return single problem
   expect_equal(get_data(xpdb_ex_pk, problem = 1), xpdb_ex_pk$data$data[[1]])
   
@@ -55,9 +55,9 @@ test_that("get_data works properly", {
 
 
 # Tests for get_file ------------------------------------------------------
-test_that("get_file checks input properly", {
+test_that('get_file checks input properly', {
   # Error with missing xpdb
-  expect_error(get_file(), regexp = '\"xpdb\" is missing')
+  expect_error(get_file(), regexp = '"xpdb" is missing')
   
   # Error with missing file
   expect_error(get_file(xpdb_ex_pk), regexp = '`file` or `ext` required')
@@ -72,9 +72,10 @@ test_that("get_file checks input properly", {
   expect_error(get_file(xpdb_ex_pk, file = 'run001.ext', subprob = 99), regexp = 'Sub-problem no.99 not found')
 })
 
-test_that("get_file works properly", {
+test_that('get_file works properly', {
   # Return single file
-  expect_equal(get_file(xpdb_ex_pk, file = 'run001.ext', problem = 1, subprob = 0), xpdb_ex_pk$files[xpdb_ex_pk$files$name == 'run001.ext', ]$data[[1]])
+  expect_equal(get_file(xpdb_ex_pk, file = 'run001.ext', problem = 1, subprob = 0, quiet = TRUE), 
+               xpdb_ex_pk$files[xpdb_ex_pk$files$name == 'run001.ext', ]$data[[1]])
   
   # Return multiple files
   expect_equal(get_file(xpdb_ex_pk, file = c('run001.ext', 'run001.phi')), 
@@ -82,7 +83,7 @@ test_that("get_file works properly", {
                              `run001.phi` = xpdb_ex_pk$files[xpdb_ex_pk$files$name == 'run001.phi', ]$data[[1]]))
 })
 
-test_that("get_file is quite when option is set in xpdb", {
+test_that('get_file is quite when option is set in xpdb', {
   # ensure option is set
   xpdb_ex_pk$options$quiet <- TRUE
   expect_silent(get_file(xpdb_ex_pk, file = 'run001.ext'))
@@ -90,9 +91,9 @@ test_that("get_file is quite when option is set in xpdb", {
 
 
 # Tests for get_summary ---------------------------------------------------
-test_that("get_summary checks input properly", {
+test_that('get_summary checks input properly', {
   # Error with missing xpdb
-  expect_error(get_summary(), regexp = '\"xpdb\" is missing')
+  expect_error(get_summary(), regexp = '"xpdb" is missing')
   
   # Error with bad problem input
   expect_error(get_summary(xpdb_ex_pk, problem = 99), regexp = 'Problem no.99 not found')
@@ -101,7 +102,7 @@ test_that("get_summary checks input properly", {
   expect_error(get_summary(xpdb_ex_pk, subprob = 99), regexp = 'Sub-problem no.99 not found')
 })
 
-test_that("get_summary works properly", {
+test_that('get_summary works properly', {
   # Return single problem
   expect_equal(get_summary(xpdb_ex_pk, problem = 1), xpdb_ex_pk$summary[xpdb_ex_pk$summary$problem == 1, ])
   

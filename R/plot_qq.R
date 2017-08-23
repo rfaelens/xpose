@@ -3,7 +3,7 @@
 #' @description QQ plots of the ETA and model residuals.
 #' 
 #' @inheritParams dv_vs_pred
-#' @param type String setting the type of plot to be points 'p'.
+#' @param type String setting the type of plot. Can only be points 'p'.
 #' @param guides Should the guides (e.g. reference line) be displayed.
 #' 
 #' @inheritSection xplot_qq Layers mapping

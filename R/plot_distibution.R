@@ -3,8 +3,8 @@
 #' @description Histograms and density plots of the ETA and parameter values.
 #' 
 #' @inheritParams dv_vs_pred
-#' @param type String setting the type of plot to be used histogram 'h',
-#' density 'd', rug 'r' the three.
+#' @param type String setting the type of plot to be used. Can be histogram 'h',
+#' density 'd', rug 'r' or any combination of the three.
 #' @param guides Should the guides (e.g. reference distribution) be displayed.
 #' 
 #' @inheritSection xplot_distrib Layers mapping

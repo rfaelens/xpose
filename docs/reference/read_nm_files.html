@@ -127,24 +127,15 @@
     <p>Quickly import NONMEM output files into R.</p>
     
 
-    <pre class="usage"><span class='fu'>read_nm_files</span>(<span class='kw'>files</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>runno</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"run"</span>,
-  <span class='kw'>ext</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".ext"</span>, <span class='st'>".cor"</span>, <span class='st'>".cov"</span>, <span class='st'>".phi"</span>, <span class='st'>".grd"</span>, <span class='st'>".shk"</span>), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>read_nm_files</span>(<span class='kw'>runno</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"run"</span>, <span class='kw'>ext</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".ext"</span>, <span class='st'>".cor"</span>,
+  <span class='st'>".cov"</span>, <span class='st'>".phi"</span>, <span class='st'>".grd"</span>, <span class='st'>".shk"</span>), <span class='kw'>file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>files</th>
-      <td><p>Full model file names. Alternative argument to <code>dir</code>, <code>prefix</code>,
-<code>runno</code> and <code>ext</code>.</p></td>
-    </tr>
-    <tr>
       <th>runno</th>
       <td><p>Run number to be evaluated.</p></td>
-    </tr>
-    <tr>
-      <th>dir</th>
-      <td><p>Location of the model files.</p></td>
     </tr>
     <tr>
       <th>prefix</th>
@@ -156,10 +147,29 @@
 files are listed.</p></td>
     </tr>
     <tr>
+      <th>file</th>
+      <td><p>Names of the model output file to be imported. Alternative argument to <code>prefix</code>,
+<code>runno</code> and <code>ext</code>.</p></td>
+    </tr>
+    <tr>
+      <th>dir</th>
+      <td><p>Location of the model files.</p></td>
+    </tr>
+    <tr>
       <th>quiet</th>
       <td><p>Logical, if <code>FALSE</code> messages are printed to the console.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="file-path-generation"><a class="anchor" href="#file-path-generation"></a>File path generation</h2>
+
+    
+    <p>The rules for model file names generation are as follow:</p><ul>
+<li><p>with <code>runno</code>: the full path is generated as <code>&lt;dir&gt;/&lt;prefix&gt;&lt;runno&gt;.&lt;ext&gt;</code> e.g. with <code>dir = 'model/pk'</code>, <code>prefix = 'run'</code>, <code>runno = '001'</code>, 
+  <code>ext = '.lst'</code> the resulting path would be <code>model/pk/run001.lst</code></p></li>
+<li><p>with <code>file</code>: the full path is generated as <code>&lt;dir&gt;/&lt;file&gt;</code> e.g. with <code>dir = 'model/pk'</code>, <code>file = 'run001.lst'</code> the resulting path
+  would also be <code>model/pk/run001.lst</code>. Note: in this case the file extension should be provided as part of the `file` argument.</p></li>
+</ul>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -168,7 +178,11 @@ files are listed.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>ext_file</span> <span class='kw'>&lt;-</span> <span class='fu'>read_nm_files</span>(<span class='kw'>files</span> <span class='kw'>=</span> <span class='st'>'run001.ext'</span>)
+<span class='co'># Using the `file` argument to import a model file:</span>
+<span class='no'>ext_file</span> <span class='kw'>&lt;-</span> <span class='fu'>read_nm_files</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>'run001.ext'</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>'models'</span>)
+
+<span class='co'># Using the `runno` argument to import a model file:</span>
+<span class='no'>ext_file</span> <span class='kw'>&lt;-</span> <span class='fu'>read_nm_files</span>(<span class='kw'>runno</span> <span class='kw'>=</span> <span class='st'>'001'</span>, <span class='kw'>ext</span> <span class='kw'>=</span> <span class='st'>'.ext'</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>'models'</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -176,6 +190,8 @@ files are listed.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#file-path-generation">File path generation</a></li>
+
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>

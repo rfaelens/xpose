@@ -2,14 +2,15 @@
 library(xpose)
 
 xpdb <- xpdb_ex_pk %>% 
-  set_vars_type(idv = 'TIME')
+set_var_types(idv = 'TIME')
 
 knitr::opts_chunk$set(fig.dpi = 96,
 fig.align = 'center', 
 fig.height = 4, 
 fig.width = 4,
 out.width = '50%',
-comment = '')
+comment = '',
+message = FALSE)
 
 ## ----demo print xpose_data-----------------------------------------------
 xpdb # or print(xpdb)
@@ -20,6 +21,11 @@ summary(xpdb)
 ## ----demo list_vars------------------------------------------------------
 list_vars(xpdb)
 
+## ---- eval = FALSE-------------------------------------------------------
+#  xpose_data(runno = '001') %>%
+#    dv_vs_ipred() %>%
+#    xpose_save()
+
 ## ---- change idv---------------------------------------------------------
 # With the TIME default
 xpdb %>% 
@@ -27,7 +33,7 @@ xpdb %>%
 
 # After IDV reassignment
 xpdb %>% 
-  set_vars_type(idv = 'TAD') %>% 
+  set_var_types(idv = 'TAD') %>% 
   dv_vs_idv()
 
 ## ----demo basic gof------------------------------------------------------
@@ -42,10 +48,5 @@ res_vs_pred(xpdb, res = 'CWRES')
 #  xpose_save()
 #  
 #  # Change file name and extension
-#  xpose_save(filename = '@run_@plotfun_[@ofv].jpeg')
-
-## ---- eval = FALSE-------------------------------------------------------
-#  xpose_data(runno = '001') %>%
-#    dv_vs_ipred() %>%
-#    xpose_save()
+#  xpose_save(file = '@run_@plotfun_[@ofv].jpeg', dir = 'pk/diagnostics')
 

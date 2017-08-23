@@ -34,8 +34,8 @@ get_code <- function(xpdb, problem = NULL) {
 #' 
 #' @param xpdb An \code{xpose_data} object from which the model output file data will be extracted.
 #' @param table Name of the output table to be extracted from the xpdb e.g. 'sdtab001'. Alternative to 
-#' the "problem" argument.
-#' @param problem Accesses all tables from the specified problem. Alternative to the "table" argument.
+#' the `problem` argument.
+#' @param problem Accesses all tables from the specified problem. Alternative to the `table` argument.
 #' 
 #' @return A tibble for single file or a named list for multiple files.
 #' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_tables}}

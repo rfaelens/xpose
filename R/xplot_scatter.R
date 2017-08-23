@@ -6,7 +6,7 @@
 #' @param mapping List of aesthetics mappings to be used for the xpose plot 
 #' (e.g. \code{point_color}).
 #' @param group Grouping variable to be used for lines.
-#' @param type String setting the type of plot to be used points 'p',
+#' @param type String setting the type of plot to be used. Can be points 'p',
 #' line 'l', smooth 's' and text 't' or any combination of the four.
 #' @param guides Should the guides (eg. unity line) be displayed.
 #' @param xscale Scale type for x axis (eg. 'continuous', 'discrete', 'log10').

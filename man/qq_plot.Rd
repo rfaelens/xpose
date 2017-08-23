@@ -35,7 +35,7 @@ cov_qq(xpdb, mapping = NULL, type = "p", facets = NULL,
 \item{mapping}{List of aesthetics mappings to be used for the xpose plot 
 (e.g. \code{point_color}).}
 
-\item{type}{String setting the type of plot to be points 'p'.}
+\item{type}{String setting the type of plot. Can only be points 'p'.}
 
 \item{facets}{Either a character string to use \link[ggplot2]{facet_wrap} 
 or a formula to use \link[ggplot2]{facet_grid}.}

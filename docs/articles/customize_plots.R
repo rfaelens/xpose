@@ -8,7 +8,8 @@ knitr::opts_chunk$set(fig.dpi = 96,
                       fig.height = 4, 
                       fig.width = 4,
                       out.width = '50%',
-                      comment = '')
+                      comment = '',
+                      message = FALSE)
 
 ## ----demo type scatter, echo = FALSE, fig.height = 6, fig.width = 6, out.width = '75%'----
 gridExtra::grid.arrange(

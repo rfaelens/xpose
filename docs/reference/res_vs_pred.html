@@ -166,7 +166,7 @@
     </tr>
     <tr>
       <th>type</th>
-      <td><p>String setting the type of plot to be used points 'p',
+      <td><p>String setting the type of plot to be used. Can be points 'p',
 line 'l', smooth 's' and text 't' or any combination of the four.</p></td>
     </tr>
     <tr>
@@ -245,9 +245,9 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Standard residual</span>
-<span class='fu'>res_vs_pred</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>'IWRES'</span>, <span class='st'>'CWRES'</span>))</div><div class='img'><img src='res_vs_pred-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>res_vs_pred</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>'IWRES'</span>, <span class='st'>'CWRES'</span>))</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Filtering data by EVID == 0</span></div><div class='output co'>#&gt; <span class='message'>Tidying data by ID, SEX, MED1, MED2, OCC ... and 23 more variables</span></div><div class='img'><img src='res_vs_pred-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># Absolute value of the residuals</span>
-<span class='fu'>absval_res_vs_pred</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='st'>'CWRES'</span>)</div><div class='img'><img src='res_vs_pred-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>absval_res_vs_pred</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='st'>'CWRES'</span>)</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Filtering data by EVID == 0</span></div><div class='img'><img src='res_vs_pred-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

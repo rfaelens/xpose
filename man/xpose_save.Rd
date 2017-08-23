@@ -4,17 +4,18 @@
 \alias{xpose_save}
 \title{Save xpose plot}
 \usage{
-xpose_save(plot = last_plot(), filename = "@run_@plotfun.pdf",
-  path = NULL, device = NULL, width = 7, height = 6, units = c("in",
-  "cm", "mm"), dpi = 200, ...)
+xpose_save(plot = last_plot(), file = "@run_@plotfun.pdf", dir = NULL,
+  device = NULL, width = 7, height = 6, units = c("in", "cm", "mm"),
+  dpi = 200, ...)
 }
 \arguments{
 \item{plot}{A xpose plot object.}
 
-\item{filename}{An optional name to be given to the file. Template variables such as @run 
+\item{file}{An optional name to be given to the file. Template variables such as @run 
 can be used to generate template names.}
 
-\item{path}{Path under which the xpose plot will be saved.}
+\item{dir}{Directory under which the xpose plot will be saved. Template variables such as @dir 
+can be used to generate template names.}
 
 \item{device}{Graphical device to use. Can be either be a device function
 (e.g. \code{\link{png}}), or one of 'eps', 'ps', 'tex' (pictex),

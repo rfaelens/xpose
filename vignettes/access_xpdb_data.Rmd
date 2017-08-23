@@ -20,13 +20,14 @@ knitr::opts_chunk$set(fig.dpi = 96,
                       fig.height = 4, 
                       fig.width = 4,
                       out.width = '75%',
-                      comment = '')
+                      comment = '',
+                      message = FALSE)
 ```
 
 The xpose package was designed as a standardized interface between model outputs and R. Hence model output files can easily be imported in R and used to summarize data or create plots.
 
 ### Glimpse at the xpdb
-The files attached to an xpdb object can be displayed to the console simply by writing its name to the console or by using the `print()` function. Any of these files can be accessed from the xpdb using one of the functions listed below.
+The files attached to an xpdb object can be displayed to the console simply by writing the xpdb name to the console or by using the `print()` function. Any of these files can be accessed from the xpdb using one of the functions listed below.
 
 ```{r demo print xpose_data}
 xpdb # or print(xpdb)
@@ -34,7 +35,7 @@ xpdb # or print(xpdb)
 
 
 ### Access the model code
-The `get_code()` function can be used to access the parsed model code from the xpdb. This code was used to create the summary and find table names and can be used to get additional information regarding the run. If the argument `problem` is specified a subset of the code can be returned based on `$PROBLEM`. 
+The `get_code()` function can be used to access the parsed model code from the xpdb. This code was used to create the summary and find table names. The parsed code can be used to get additional information about the run. If the argument `problem` is specified a subset of the code can be returned based on `$PROBLEM`. 
 
 *Note that general code warnings and PsN outputs appended are listed as problem 0.*
 
@@ -46,7 +47,7 @@ code
 ### Access the output data
 The `get_data()` function can be used to access the imported table files. Tables can be accessed by `table` name or by `problem`. In the latter a single dataset containing all aggregated tables is returned. If more than one `table` name or `problem` number is provided a named list is returned. 
 
-*Note when providing a table name it is not garanteed that the table will be identical to its file e.g. the order of the columns may have been changed and tables with `FIRSTONLY` will no longer be deduplicated.*
+*Note when providing a table name it is not garanteed that the table will be identical to its file (i.e. the order of the columns may have been changed and tables with `FIRSTONLY` will no longer be deduplicated).*
 
 ```{r demo get_data}
 data <- get_data(xpdb, table = 'cotab001')

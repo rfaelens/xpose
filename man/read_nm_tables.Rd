@@ -4,11 +4,14 @@
 \alias{read_nm_tables}
 \title{NONMEM output table import function}
 \usage{
-read_nm_tables(files = NULL, combined = TRUE, rm_duplicates = TRUE,
-  quiet = FALSE, simtab = NULL, ziptab = TRUE, ...)
+read_nm_tables(file = NULL, dir = NULL, combined = TRUE,
+  rm_duplicates = TRUE, quiet = FALSE, simtab = NULL, ziptab = TRUE,
+  ...)
 }
 \arguments{
-\item{files}{A character vector of path to the files or a \code{nm_table_list} file created with \code{list_nm_tables}.}
+\item{file}{A character vector of path to the files or a \code{nm_table_list} object created with \code{list_nm_tables}.}
+
+\item{dir}{Location of the model files.}
 
 \item{combined}{Logical value indicating whether multiple tables should be combined into a single one. If the number of rows 
 does not match an error will be returned.}
@@ -20,9 +23,9 @@ does not match an error will be returned.}
 \item{simtab}{If \code{TRUE} only reads in simulation tables, if \code{FALSE} only reads estimation tables. 
 Default \code{NULL} reads all tables.}
 
-\item{ziptab}{If \code{TRUE} search for the tables that have been compressed and renamed ´<table>.zip'.}
+\item{ziptab}{If \code{TRUE} search for the tables that have been compressed and renamed ´<file>.zip'.}
 
-\item{...}{Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.}
+\item{...}{Additional arguments to be passed to the \code{\link[readr]{read_table}} or \code{\link[readr]{read_csv}} functions.}
 }
 \description{
 Quickly import NONMEM output tables into R. This function automatically 
@@ -30,6 +33,24 @@ detects the optimal settings to import the tables from nonmem.
 }
 \examples{
 \dontrun{
-nm_tables <- read_nm_tables(files = c('sdtab001', 'patab001'))
+# Import tables manually and return them as a list of individual tables
+nm_tables <- read_nm_tables(file = c('sdtab001', 'patab001'), 
+                            dir = 'models', combined = FALSE)
+
+# Import tables manually and return them as a single merged table
+nm_tables <- read_nm_tables(file = c('sdtab001', 'patab001'), 
+                            dir = 'models', combined = TRUE)
+
+# Import tables automatically (used internally by xpose_data())
+nm_tables <- read_nm_model(file = 'run001.lst', dir = 'models') \%>\% 
+              list_nm_tables() \%>\% 
+              read_nm_tables()
+
+# Passing arguments to readr via `...` 
+# (e.g. import columns as character and only first 10 rows)
+nm_tables <- read_nm_tables(file = 'sdtab001', dir = 'models', 
+                            col_type = readr::cols(.default = 'c'), 
+                            n_max = 10)
+
 }
 }

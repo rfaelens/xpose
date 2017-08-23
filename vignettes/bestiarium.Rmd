@@ -9,15 +9,16 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r, include=FALSE}
 library(xpose)
 
 knitr::opts_chunk$set(fig.dpi = 96,
                       fig.align = 'center', 
-                      fig.height = 4, 
-                      fig.width = 4,
-                      out.width = '50%',
-                      comment = '')
+                      fig.height = 6, 
+                      fig.width = 6,
+                      out.width = '75%',
+                      comment = '',
+                      message = FALSE)
 ```
 
 
@@ -89,7 +90,7 @@ xpdb_ex_pk %>%
 
 
 ### Categorical vpc
-```{r, eval = FALSE}
+```{r, eval=FALSE}
 xpdb_ex_pk %>% 
  vpc_data(vpc_type = 'categorical') %>% 
  vpc()

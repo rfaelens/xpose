@@ -9,6 +9,18 @@
 #' @param sim_suffix Default is 'sim', but can be changed to any character string to be used as 
 #' suffix in the simulation table names e.g. sdtab001sim.
 #'
+#' @details 
+#' In order to be imported manually, table names must follow the following convention: 
+#' \code{<tab_names><runno><tab/sim_suffix>} e.g. sdtab001sim. When the argument `file` is used in 
+#' \code{xpose_data}, the \code{<runno>} part is guessed by taking the portion of the string starting 
+#' by any digit and ending at the file extension e.g. \code{file = run001a.mod} will guess <runno> as
+#' `001a`. If no valid <runno> can be guessed, xpose will return an error. In this case it is advised 
+#' to use the \code{xpose_data} argument `runno` directly rather than `file` hence preventing xpose 
+#' from having to guess <runno>.
+#' 
+#' Note that with manual table import xpose still reads in the NONMEM model file in order to generate
+#' the run summary.
+#' 
 #' @seealso \code{\link{xpose_data}}
 #' @examples 
 #' \dontrun{
@@ -28,8 +40,17 @@ manual_nm_import <- function(tab_names = c('sdtab', 'mutab', 'patab', 'catab', '
 
 
 # Creates an nm_table_list from manually defined table name patterns
-list_nm_tables_manual <- function(file, prefix, tab_list) {
-  file_path(dirname(file), stringr::str_c(tab_list$tab_names, get_runno(file, prefix))) %>% 
+list_nm_tables_manual <- function(runno = NULL, file = NULL, dir = NULL, tab_list) {
+  if (is.null(runno)) {
+    # Attempt to guess runno if file has been used
+    runno <- stringr::str_match(string = update_extension(file, ''), 
+                                pattern = '\\d.+$')[1,]
+    if (is.na(runno)) {
+      stop('Failed to guess `runno` from `file` argument. Check ?manual_nm_import for help.',
+           call. = FALSE)
+    }
+  }
+  file_path(dir, stringr::str_c(tab_list$tab_names, runno)) %>% 
     dplyr::tibble(problem = 1, file = ., firstonly = FALSE, simtab = NA) %>% 
     tidyr::expand(problem = .$problem, file = .$file, firstonly = .$firstonly, simtab = c(FALSE, TRUE)) %>% 
     dplyr::mutate(file = dplyr::if_else(.$simtab, stringr::str_c(.$file, tab_list$sim_suffix),
@@ -37,3 +58,4 @@ list_nm_tables_manual <- function(file, prefix, tab_list) {
     dplyr::filter(file.exists(.$file)) %>% 
     as.nm.table.list()
 }
+

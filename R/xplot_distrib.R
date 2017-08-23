@@ -3,8 +3,8 @@
 #' @description Manually generate distribution plots from an xpdb object.
 #'
 #' @inheritParams xplot_scatter
-#' @param type String setting the type of plot to be used histogram 'h',
-#' density 'd', rug 'r' the three.
+#' @param type String setting the type of plot to be used. Can be histogram 'h',
+#' density 'd', rug 'r' or any combination of the three.
 #' @param guides Should the guides (e.g. reference distribution) be displayed.
 
 #' @section Layers mapping:
