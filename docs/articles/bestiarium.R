@@ -1,4 +1,4 @@
-## ---- include = FALSE----------------------------------------------------
+## ---- include=FALSE------------------------------------------------------
 library(xpose)
 
 knitr::opts_chunk$set(fig.dpi = 96,
@@ -49,12 +49,12 @@ xpdb_ex_pk %>%
  vpc_data() %>% 
  vpc()
 
-## ------------------------------------------------------------------------
-xpdb_ex_pk %>% 
- vpc_data(vpc_type = 'censored', opt = vpc_opt(lloq = 1)) %>% 
- vpc()
+## ---- eval=FALSE---------------------------------------------------------
+#  xpdb_ex_pk %>%
+#   vpc_data(vpc_type = 'censored', opt = vpc_opt(lloq = 1)) %>%
+#   vpc()
 
-## ---- eval = FALSE-------------------------------------------------------
+## ---- eval=FALSE---------------------------------------------------------
 #  xpdb_ex_pk %>%
 #   vpc_data(vpc_type = 'categorical') %>%
 #   vpc()
