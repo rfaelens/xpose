@@ -53,8 +53,6 @@
       <ul class="nav navbar-nav">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-book"></span>
-     
     Articles
      
     <span class="caret"></span>
@@ -82,30 +80,24 @@
   </ul>
 </li>
 <li>
-  <a href="../reference/index.html">
-    <span class="fa fa-list-ul"></span>
-     
-    Functions
-  </a>
+  <a href="../reference/index.html">Functions</a>
 </li>
 <li>
-  <a href="../articles/faq.html">
-    <span class="fa fa-question-circle-o"></span>
-     
-    FAQ
-  </a>
+  <a href="../articles/bestiarium.html">Plots</a>
 </li>
 <li>
-  <a href="../news/index.html">
-    <span class="fa fa-newspaper-o"></span>
-     
-    News
-  </a>
+  <a href="../articles/faq.html">FAQ</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="../articles/about.html">About</a>
+</li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
+<li>
   <a href="https://github.com/UUPharmacometrics/xpose">
     <span class="fa fa-github fa-lg"></span>
      
@@ -158,6 +150,18 @@ suffix in the simulation table names e.g. sdtab001sim.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>In order to be imported manually, table names must follow the following convention: 
+<code>&lt;tab_names&gt;&lt;runno&gt;&lt;tab/sim_suffix&gt;</code> e.g. sdtab001sim. When the argument `file` is used in 
+<code>xpose_data</code>, the <code>&lt;runno&gt;</code> part is guessed by taking the portion of the string starting 
+by any digit and ending at the file extension e.g. <code>file = run001a.mod</code> will guess &lt;runno&gt; as
+`001a`. If no valid &lt;runno&gt; can be guessed, xpose will return an error. In this case it is advised 
+to use the <code>xpose_data</code> argument `runno` directly rather than `file` hence preventing xpose 
+from having to guess &lt;runno&gt;.</p>
+<p>Note that with manual table import xpose still reads in the NONMEM model file in order to generate
+the run summary.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p><code><a href='xpose_data.html'>xpose_data</a></code></p>
@@ -177,6 +181,8 @@ suffix in the simulation table names e.g. sdtab001sim.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#details">Details</a></li>
+
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>

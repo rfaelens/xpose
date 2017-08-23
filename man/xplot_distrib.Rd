@@ -15,8 +15,8 @@ xplot_distrib(xpdb, mapping = NULL, type = "hr", guides = FALSE,
 \item{mapping}{List of aesthetics mappings to be used for the xpose plot 
 (e.g. \code{point_color}).}
 
-\item{type}{String setting the type of plot to be used histogram 'h',
-density 'd', rug 'r' the three.}
+\item{type}{String setting the type of plot to be used. Can be histogram 'h',
+density 'd', rug 'r' or any combination of the three.}
 
 \item{guides}{Should the guides (e.g. reference distribution) be displayed.}
 

@@ -9,5 +9,6 @@ knitr::opts_chunk$set(fig.dpi = 96,
                       fig.height = 4, 
                       fig.width = 4,
                       out.width = '75%',
-                      comment = '')
+                      comment = '',
+                      message = FALSE)
 

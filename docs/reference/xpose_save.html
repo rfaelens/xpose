@@ -53,8 +53,6 @@
       <ul class="nav navbar-nav">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-book"></span>
-     
     Articles
      
     <span class="caret"></span>
@@ -82,30 +80,24 @@
   </ul>
 </li>
 <li>
-  <a href="../reference/index.html">
-    <span class="fa fa-list-ul"></span>
-     
-    Functions
-  </a>
+  <a href="../reference/index.html">Functions</a>
 </li>
 <li>
-  <a href="../articles/faq.html">
-    <span class="fa fa-question-circle-o"></span>
-     
-    FAQ
-  </a>
+  <a href="../articles/bestiarium.html">Plots</a>
 </li>
 <li>
-  <a href="../news/index.html">
-    <span class="fa fa-newspaper-o"></span>
-     
-    News
-  </a>
+  <a href="../articles/faq.html">FAQ</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="../articles/about.html">About</a>
+</li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
+<li>
   <a href="https://github.com/UUPharmacometrics/xpose">
     <span class="fa fa-github fa-lg"></span>
      
@@ -138,9 +130,9 @@ the function will automatically name and save a plot after its run number and th
 function name by using the metadata attached to the plot.</p>
     
 
-    <pre class="usage"><span class='fu'>xpose_save</span>(<span class='kw'>plot</span> <span class='kw'>=</span> <span class='fu'>last_plot</span>(), <span class='kw'>filename</span> <span class='kw'>=</span> <span class='st'>"@run_@plotfun.pdf"</span>,
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>device</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>height</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>units</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"in"</span>,
-  <span class='st'>"cm"</span>, <span class='st'>"mm"</span>), <span class='kw'>dpi</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>xpose_save</span>(<span class='kw'>plot</span> <span class='kw'>=</span> <span class='fu'>last_plot</span>(), <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"@run_@plotfun.pdf"</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>device</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>height</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>units</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"in"</span>, <span class='st'>"cm"</span>, <span class='st'>"mm"</span>),
+  <span class='kw'>dpi</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -150,13 +142,14 @@ function name by using the metadata attached to the plot.</p>
       <td><p>A xpose plot object.</p></td>
     </tr>
     <tr>
-      <th>filename</th>
+      <th>file</th>
       <td><p>An optional name to be given to the file. Template variables such as @run 
 can be used to generate template names.</p></td>
     </tr>
     <tr>
-      <th>path</th>
-      <td><p>Path under which the xpose plot will be saved.</p></td>
+      <th>dir</th>
+      <td><p>Directory under which the xpose plot will be saved. Template variables such as @dir 
+can be used to generate template names.</p></td>
     </tr>
     <tr>
       <th>device</th>

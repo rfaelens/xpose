@@ -34,8 +34,8 @@ cov_distrib(xpdb, mapping = NULL, type = "hr", facets = NULL,
 \item{mapping}{List of aesthetics mappings to be used for the xpose plot 
 (e.g. \code{point_color}).}
 
-\item{type}{String setting the type of plot to be used histogram 'h',
-density 'd', rug 'r' the three.}
+\item{type}{String setting the type of plot to be used. Can be histogram 'h',
+density 'd', rug 'r' or any combination of the three.}
 
 \item{facets}{Either a character string to use \link[ggplot2]{facet_wrap} 
 or a formula to use \link[ggplot2]{facet_grid}.}

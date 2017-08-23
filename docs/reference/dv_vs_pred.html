@@ -53,8 +53,6 @@
       <ul class="nav navbar-nav">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-book"></span>
-     
     Articles
      
     <span class="caret"></span>
@@ -82,30 +80,24 @@
   </ul>
 </li>
 <li>
-  <a href="../reference/index.html">
-    <span class="fa fa-list-ul"></span>
-     
-    Functions
-  </a>
+  <a href="../reference/index.html">Functions</a>
 </li>
 <li>
-  <a href="../articles/faq.html">
-    <span class="fa fa-question-circle-o"></span>
-     
-    FAQ
-  </a>
+  <a href="../articles/bestiarium.html">Plots</a>
 </li>
 <li>
-  <a href="../news/index.html">
-    <span class="fa fa-newspaper-o"></span>
-     
-    News
-  </a>
+  <a href="../articles/faq.html">FAQ</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="../articles/about.html">About</a>
+</li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
+<li>
   <a href="https://github.com/UUPharmacometrics/xpose">
     <span class="fa fa-github fa-lg"></span>
      
@@ -163,7 +155,7 @@ individual predictions (IPRED) or conditional population predictions (CPRED).</p
     </tr>
     <tr>
       <th>type</th>
-      <td><p>String setting the type of plot to be used points 'p',
+      <td><p>String setting the type of plot to be used. Can be points 'p',
 line 'l', smooth 's' and text 't' or any combination of the four.</p></td>
     </tr>
     <tr>
@@ -241,8 +233,8 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>dv_vs_pred</span>(<span class='no'>xpdb_ex_pk</span>)</div><div class='img'><img src='dv_vs_pred-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
-<span class='fu'>dv_vs_ipred</span>(<span class='no'>xpdb_ex_pk</span>)</div><div class='img'><img src='dv_vs_pred-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>dv_vs_pred</span>(<span class='no'>xpdb_ex_pk</span>)</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Filtering data by EVID == 0</span></div><div class='img'><img src='dv_vs_pred-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>dv_vs_ipred</span>(<span class='no'>xpdb_ex_pk</span>)</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Filtering data by EVID == 0</span></div><div class='img'><img src='dv_vs_pred-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -6,9 +6,11 @@
 ^logo\.png$
 ^README\.Rmd$
 ^temporary$
-^inst/models/
+^inst/models$
+^data-raw$
 ^\.Rprofile$
 ^docs$
 ^appveyor\.yml$
 ^vignettes/interactive_plots.*$
+^vignettes/bestiarium.*$
 ^pkgdown$

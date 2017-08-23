@@ -7,9 +7,10 @@
 #' function name by using the metadata attached to the plot.
 #'
 #' @param plot A xpose plot object.
-#' @param filename An optional name to be given to the file. Template variables such as @run 
+#' @param file An optional name to be given to the file. Template variables such as @run 
 #' can be used to generate template names.
-#' @param path Path under which the xpose plot will be saved.
+#' @param dir Directory under which the xpose plot will be saved. Template variables such as @dir 
+#' can be used to generate template names.
 #' @param device Graphical device to use. Can be either be a device function
 #'   (e.g. \code{\link{png}}), or one of 'eps', 'ps', 'tex' (pictex),
 #'   'pdf' (default), 'jpeg', 'tiff', 'png', 'bmp', 'svg' or 'wmf' (windows only).
@@ -26,8 +27,8 @@
 #' }
 #' @export
 xpose_save <- function(plot     = last_plot(),
-                       filename = '@run_@plotfun.pdf',
-                       path     = NULL,
+                       file     = '@run_@plotfun.pdf',
+                       dir      = NULL,
                        device   = NULL,
                        width    = 7,
                        height   = 6,
@@ -36,23 +37,29 @@ xpose_save <- function(plot     = last_plot(),
                        ...) {
   
   if (is.null(plot)) {
-    stop('The \"plot\" argument is NULL.')
-  } else if (is.null(filename)) {
-    stop('The \"filename\" argument is NULL.')
+    stop('The `plot` argument is NULL.')
+  } else if (is.null(file)) {
+    stop('The `file` argument is NULL.')
   }
   
-  # Parse the filename for keywords
-  filename <- parse_title(string = filename, xpdb = plot$xpose,
-                          problem = plot$xpose$problem, quiet = plot$xpose$quiet,
-                          extra_key = 'plotfun', extra_value = plot$xpose$fun)
+  # Parse the dir and file arguments for keywords
+  if (!is.null(dir)) {
+    dir <- parse_title(string = dir, xpdb = plot$xpose,
+                       problem = plot$xpose$problem, quiet = plot$xpose$quiet,
+                       extra_key = 'plotfun', extra_value = plot$xpose$fun)
+  }
+  
+  file <- parse_title(string = file, xpdb = plot$xpose,
+                      problem = plot$xpose$problem, quiet = plot$xpose$quiet,
+                      extra_key = 'plotfun', extra_value = plot$xpose$fun)
   
   
-  # Add device to filename
-  if (!is.null(device) && !is.function(device) && !grepl('\\.[[:alnum:]]+$', filename)) {
-     filename <- paste0(filename, '.', device)
-   }
+  # Add device to file
+  if (!is.null(device) && !is.function(device) && !grepl('\\.[[:alnum:]]+$', file)) {
+    file <- paste0(file, '.', device)
+  }
   
   # Call ggsave
-  ggsave(plot = plot, filename = filename, path = path, device = device, 
+  ggsave(plot = plot, filename = file, path = dir, device = device, 
          width = width, height = height, units = units, dpi = dpi, ...)
 }

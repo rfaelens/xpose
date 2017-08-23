@@ -15,7 +15,7 @@ xplot_qq(xpdb, mapping = NULL, type = "p", guides = FALSE,
 \item{mapping}{List of aesthetics mappings to be used for the xpose plot 
 (e.g. \code{point_color}).}
 
-\item{type}{String setting the type of plot to be points 'p'.}
+\item{type}{String setting the type of plot to be used. Can only be points 'p'.}
 
 \item{guides}{Should the guides (e.g. reference line) be displayed.}
 

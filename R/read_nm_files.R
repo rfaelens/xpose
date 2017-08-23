@@ -2,50 +2,60 @@
 #'
 #' @description Quickly import NONMEM output files into R.
 #'
-#' @param files Full model file names. Alternative argument to \code{dir}, \code{prefix},
-#' \code{runno} and \code{ext}.
 #' @param runno Run number to be evaluated.
-#' @param dir Location of the model files.
 #' @param prefix Prefix of the model file names.
 #' @param ext A vector of the file extension to import. By default '.ext', '.cor', '.cov', '.phi', '.grd', '.shk'
 #' files are listed.
+#' @param file Names of the model output file to be imported. Alternative argument to \code{prefix},
+#' \code{runno} and \code{ext}.
+#' @param dir Location of the model files.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
-#'
+#' 
+#' @inheritSection xpose_data File path generation
 #' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_tables}}
 #' @examples
 #' \dontrun{
-#' ext_file <- read_nm_files(files = 'run001.ext')
+#' # Using the `file` argument to import a model file:
+#' ext_file <- read_nm_files(file = 'run001.ext', dir = 'models')
+#' 
+#' # Using the `runno` argument to import a model file:
+#' ext_file <- read_nm_files(runno = '001', ext = '.ext', dir = 'models')
 #' }
 #' @export
 
-read_nm_files <- function(files  = NULL,
-                          runno  = NULL,
-                          dir    = NULL,
+read_nm_files <- function(runno  = NULL,
                           prefix = 'run',
                           ext    = c('.ext', '.cor', '.cov', '.phi', '.grd', '.shk'),
+                          file   = NULL,
+                          dir    = NULL,
                           quiet  = FALSE) {
   
-  if (is.null(runno) && is.null(files)) {
+  # Check inputs
+  if (is.null(runno) && is.null(file)) {
     stop('Argument `runno` or `file` required.', call. = FALSE)
   }
   
-  if (is.null(files)) {
-    files <- file_path(dir, paste0(prefix, runno, make_extension(ext)))
+  if (missing(quiet)) quiet <- !interactive()
+  
+  # Generate full paths
+  if (!is.null(runno)) {
+    full_path <- file_path(dir, stringr::str_c(prefix, runno, make_extension(ext)))
+  } else {
+    full_path <- file_path(dir, file)
   }
   
-  files <- sort(unique(files))
-  bases <- basename(files)
+  full_path <- sort(unique(full_path))
+  bases     <- basename(full_path)
   
   msg('\nLooking for nonmem output files', quiet)
   
-  if (!any(file.exists(files))) {
-    msg('No output file could be found.', quiet)
-    return()
-  } else if (any(file.exists(files))) {
-    msg(c('Reading: ', stringr::str_c(bases[file.exists(files)], collapse = ', ')), quiet)
+  if (!any(file.exists(full_path))) {
+    stop('No output file could be found.', call. = FALSE)
   }
   
-  out <- files %>% 
+  msg(c('Reading: ', stringr::str_c(bases[file.exists(full_path)], collapse = ', ')), quiet)
+  
+  out <- full_path %>% 
     dplyr::tibble(path = ., name = basename(.)) %>% 
     dplyr::filter(file.exists(.$path)) %>% 
     dplyr::mutate(grouping = 1:n(),
@@ -55,10 +65,7 @@ read_nm_files <- function(files  = NULL,
     dplyr::mutate(tmp = purrr::map(.$data, .f = parse_nm_files, quiet)) %>% 
     dplyr::mutate(drop = purrr::map_lgl(.$tmp, is.null)) 
   
-  if (all(out$drop)) {
-    msg('\nNo output file imported.', quiet)
-    return()
-  }  
+  if (all(out$drop)) stop('No output file imported.', call. = FALSE)
   
   out %>% 
     dplyr::filter(!.$drop) %>% 
@@ -66,19 +73,21 @@ read_nm_files <- function(files  = NULL,
     tidyr::unnest_(unnest_cols = 'tmp') %>% 
     dplyr::mutate(extension = get_extension(.$name, dot = FALSE),
                   modified = FALSE) %>% 
-    dplyr::select(dplyr::one_of('name', 'extension', 'problem', 'subprob', 'method', 'data', 'modified'))
+    dplyr::select(dplyr::one_of('name', 'extension', 'problem', 'subprob', 
+                                'method', 'data', 'modified'))
 }
 
 parse_nm_files <- function(dat, quiet) {
   if (length(unlist(dat$raw)) == 0) {
     tab_rows <- NULL 
   } else {
-    x <- dplyr::tibble(raw = unlist(dat$raw), problem = NA, subprob = NA, method = NA, header = FALSE)
+    x <- dplyr::tibble(raw = unlist(dat$raw), problem = NA, 
+                       subprob = NA, method = NA, header = FALSE)
     tab_rows <- which(stringr::str_detect(x$raw, '^\\s*TABLE NO'))
   }
   
   if (length(tab_rows) == 0) {
-    msg(c('Dropping ', dat$name, ' due to inappropriate format.'), quiet)
+    warning(c('Dropping ', dat$name, ' due to inappropriate format.'), call. = FALSE)
     return()
   }
   
@@ -118,7 +127,7 @@ raw_to_tibble <- function(x, sep, quiet, file) {
     purrr::flatten_chr()
   
   if (any(is.na(header))) {
-    msg(c('Issue encountered while parsing ', file), quiet)
+    warning(c('Issue encountered while parsing ', file, '.'), call. = FALSE)
     return()
   }
   

@@ -53,8 +53,6 @@
       <ul class="nav navbar-nav">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-book"></span>
-     
     Articles
      
     <span class="caret"></span>
@@ -82,30 +80,24 @@
   </ul>
 </li>
 <li>
-  <a href="../reference/index.html">
-    <span class="fa fa-list-ul"></span>
-     
-    Functions
-  </a>
+  <a href="../reference/index.html">Functions</a>
 </li>
 <li>
-  <a href="../articles/faq.html">
-    <span class="fa fa-question-circle-o"></span>
-     
-    FAQ
-  </a>
+  <a href="../articles/bestiarium.html">Plots</a>
 </li>
 <li>
-  <a href="../news/index.html">
-    <span class="fa fa-newspaper-o"></span>
-     
-    News
-  </a>
+  <a href="../articles/faq.html">FAQ</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="../articles/about.html">About</a>
+</li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
+<li>
   <a href="https://github.com/UUPharmacometrics/xpose">
     <span class="fa fa-github fa-lg"></span>
      
@@ -178,8 +170,7 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Single file (returns a tibble)</span>
-<span class='no'>ext_file</span> <span class='kw'>&lt;-</span> <span class='fu'>get_file</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>'run001.ext'</span>)
-<span class='no'>ext_file</span></div><div class='output co'>#&gt; # A tibble: 30 x 15
+<span class='no'>ext_file</span> <span class='kw'>&lt;-</span> <span class='fu'>get_file</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>'run001.ext'</span>)</div><div class='output co'>#&gt; <span class='message'>Returning data from problem no.1 sub-problem no.0</span></div><div class='input'><span class='no'>ext_file</span></div><div class='output co'>#&gt; # A tibble: 30 x 15
 #&gt;    ITERATION  THETA1  THETA2  THETA3   THETA4   THETA5     THETA6 `SIGMA(1,1)`
 #&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;
 #&gt;  1         0 27.5000 1.56500 2.10000 0.254000 0.230000 0.00800000            1
@@ -242,7 +233,7 @@
 #&gt;    + special: &lt;none&gt; 
 #&gt;  - gg_theme: theme_readable 
 #&gt;  - xp_theme: theme_xp_default 
-#&gt;  - Options: dir = analysis/models/pk/, quiet = TRUE, manual_import = NULL</div><div class='input'>
+#&gt;  - Options: dir = analysis/models/pk/, quiet = FALSE, manual_import = NULL</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

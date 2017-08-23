@@ -5,7 +5,7 @@
 #' @param xpdb An xpose database object.
 #' @param mapping List of aesthetics mappings to be used for the xpose plot 
 #' (e.g. \code{point_color}).
-#' @param type String setting the type of plot to be used points 'p',
+#' @param type String setting the type of plot to be used. Can be points 'p',
 #' line 'l', area 'a', rug 'r' and text 't' or any combination of the five.
 #' @param smooth Should the bins be smoothed (connect bin midpoints, default) or shown as rectangular boxes.
 #' @param facets Either a character string to use \link[ggplot2]{facet_wrap} 
@@ -245,7 +245,7 @@ vpc <- function(xpdb,
   
   # Add color scales
   xp <- xp + 
-    scale_fill_manual(values = c('deepskyblue3', 'grey60', 'deepskyblue3')) +
+    scale_fill_manual(values = c('steelblue2', 'grey40', 'steelblue2')) +
     scale_linetype_manual(values = c('93', 'solid', '93'))
   
   # Add metadata to plots
@@ -255,7 +255,7 @@ vpc <- function(xpdb,
   }
   xp$xpose <- list(fun      = stringr::str_c('vpc_', vpc_dat$type),
                    summary  = xpdb_summary,
-                   problem  = dplyr::if_else(is.null(vpc_dat$psn_folder), 0, vpc_dat$sim_problem),
+                   problem  = dplyr::if_else(is.null(vpc_dat$psn_folder), 0L, vpc_dat$sim_problem),
                    quiet    = quiet,
                    xp_theme = xpdb$xp_theme[stringr::str_c(c('title', 'subtitle', 'caption'), '_suffix')])
   

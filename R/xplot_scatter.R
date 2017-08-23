@@ -6,7 +6,7 @@
 #' @param mapping List of aesthetics mappings to be used for the xpose plot 
 #' (e.g. \code{point_color}).
 #' @param group Grouping variable to be used for lines.
-#' @param type String setting the type of plot to be used points 'p',
+#' @param type String setting the type of plot to be used. Can be points 'p',
 #' line 'l', smooth 's' and text 't' or any combination of the four.
 #' @param guides Should the guides (eg. unity line) be displayed.
 #' @param xscale Scale type for x axis (eg. 'continuous', 'discrete', 'log10').
@@ -90,14 +90,6 @@ xplot_scatter <- function(xpdb,
   # Create ggplot base
   xp <- ggplot(data = data, mapping, ...) + gg_theme 
   
-  # Add unity line
-  if (guides) {
-    xp <- xp + xp_geoms(xp_theme = xpdb$xp_theme,
-                        name     = 'guides',
-                        ggfun    = 'geom_abline',
-                        ...)
-  }
-  
   # Add lines
   if (stringr::str_detect(type, stringr::fixed('l', ignore_case = TRUE))) {
     xp <- xp + xp_geoms(mapping  = c(mapping, aes_string(line_group = group)),
@@ -123,6 +115,14 @@ xplot_scatter <- function(xpdb,
                         xp_theme = xpdb$xp_theme,
                         name     = 'text',
                         ggfun    = 'geom_text',
+                        ...)
+  }
+  
+  # Add unity line
+  if (guides) {
+    xp <- xp + xp_geoms(xp_theme = xpdb$xp_theme,
+                        name     = 'guides',
+                        ggfun    = 'geom_abline',
                         ...)
   }
   

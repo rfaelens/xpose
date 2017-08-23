@@ -31,8 +31,6 @@
       <ul class="nav navbar-nav">
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-book"></span>
-     
     Articles
      
     <span class="caret"></span>
@@ -60,28 +58,22 @@
   </ul>
 </li>
 <li>
-  <a href="../reference/index.html">
-    <span class="fa fa-list-ul"></span>
-     
-    Functions
-  </a>
+  <a href="../reference/index.html">Functions</a>
 </li>
 <li>
-  <a href="../articles/faq.html">
-    <span class="fa fa-question-circle-o"></span>
-     
-    FAQ
-  </a>
+  <a href="../articles/bestiarium.html">Plots</a>
 </li>
 <li>
-  <a href="../news/index.html">
-    <span class="fa fa-newspaper-o"></span>
-     
-    News
-  </a>
+  <a href="../articles/faq.html">FAQ</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="../articles/about.html">About</a>
+</li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
 <li>
   <a href="https://github.com/UUPharmacometrics/xpose">
     <span class="fa fa-github fa-lg"></span>
@@ -109,7 +101,7 @@
       <h1>Access the xpdb data</h1>
                         <h4 class="author">Benjamin Guiastrennec</h4>
             
-            <h4 class="date">06 August, 2017</h4>
+            <h4 class="date">23 August, 2017</h4>
           </div>
 
     
@@ -119,7 +111,7 @@
 <div id="glimpse-at-the-xpdb" class="section level3">
 <h3 class="hasAnchor">
 <a href="#glimpse-at-the-xpdb" class="anchor"></a>Glimpse at the xpdb</h3>
-<p>The files attached to an xpdb object can be displayed to the console simply by writing its name to the console or by using the <code>print()</code> function. Any of these files can be accessed from the xpdb using one of the functions listed below.</p>
+<p>The files attached to an xpdb object can be displayed to the console simply by writing the xpdb name to the console or by using the <code>print()</code> function. Any of these files can be accessed from the xpdb using one of the functions listed below.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xpdb <span class="co"># or print(xpdb)</span></code></pre></div>
 <pre><code>run001.lst overview: 
  - Software: nonmem 7.3.0 
@@ -130,18 +122,18 @@
    + special: &lt;none&gt; 
  - gg_theme: theme_readable 
  - xp_theme: theme_xp_default 
- - Options: dir = analysis/models/pk/, quiet = TRUE, manual_import = NULL</code></pre>
+ - Options: dir = analysis/models/pk/, quiet = FALSE, manual_import = NULL</code></pre>
 </div>
 <div id="access-the-model-code" class="section level3">
 <h3 class="hasAnchor">
 <a href="#access-the-model-code" class="anchor"></a>Access the model code</h3>
-<p>The <code><a href="../reference/get_code.html">get_code()</a></code> function can be used to access the parsed model code from the xpdb. This code was used to create the summary and find table names and can be used to get additional information regarding the run. If the argument <code>problem</code> is specified a subset of the code can be returned based on <code>$PROBLEM</code>.</p>
+<p>The <code><a href="../reference/get_code.html">get_code()</a></code> function can be used to access the parsed model code from the xpdb. This code was used to create the summary and find table names. The parsed code can be used to get additional information about the run. If the argument <code>problem</code> is specified a subset of the code can be returned based on <code>$PROBLEM</code>.</p>
 <p><em>Note that general code warnings and PsN outputs appended are listed as problem 0.</em></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">code &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_code.html">get_code</a></span>(xpdb)
 code</code></pre></div>
 <pre><code># A tibble: 852 x 5
    problem level subroutine                                                       code
- *   &lt;dbl&gt; &lt;dbl&gt;      &lt;chr&gt;                                                      &lt;chr&gt;
+ *   &lt;int&gt; &lt;int&gt;      &lt;chr&gt;                                                      &lt;chr&gt;
  1       0     0        oth                              Mon Jun 19 01:13:13 CEST 2017
  2       0     0        oth                                                           
  3       0     0        oth                                                           
@@ -158,7 +150,7 @@ code</code></pre></div>
 <h3 class="hasAnchor">
 <a href="#access-the-output-data" class="anchor"></a>Access the output data</h3>
 <p>The <code><a href="../reference/get_data.html">get_data()</a></code> function can be used to access the imported table files. Tables can be accessed by <code>table</code> name or by <code>problem</code>. In the latter a single dataset containing all aggregated tables is returned. If more than one <code>table</code> name or <code>problem</code> number is provided a named list is returned.</p>
-<p><em>Note when providing a table name it is not garanteed that the table will be identical to its file e.g. the order of the columns may have been changed and tables with <code>FIRSTONLY</code> will no longer be deduplicated.</em></p>
+<p><em>Note when providing a table name it is not garanteed that the table will be identical to its file (i.e. the order of the columns may have been changed and tables with <code>FIRSTONLY</code> will no longer be deduplicated).</em></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_data.html">get_data</a></span>(xpdb, <span class="dt">table =</span> <span class="st">'cotab001'</span>)
 data</code></pre></div>
 <pre><code># A tibble: 1,166 x 4

@@ -17,7 +17,8 @@ For more information see \code{\link{vpc_opt}}.}
 \item{vpc_type}{A string specifying the type of VPC to be created, can be one of: 
 'continuous', 'categorical', 'censored' or 'time-to-event'.}
 
-\item{stratify}{Either a character string or a formula to stratify the data.}
+\item{stratify}{Either a character string or a formula to stratify the data. For 'categorical' vpcs the 
+stratification fixed to the different categories.}
 
 \item{psn_folder}{Specify a PsN-generated VPC-folder.}
 

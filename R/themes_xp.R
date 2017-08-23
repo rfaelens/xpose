@@ -30,23 +30,23 @@ theme_xp_default <- function() {
     
     # Guide
     guides_alpha    = 1,
-    guides_color    = 'grey70',
+    guides_color    = 'tomato',
     guides_linetype = 'solid',
-    guides_size     = 1,
+    guides_size     = 0.8,
     
     # Line
     line_alpha      =  0.7,
-    line_color      = 'grey30',
+    line_color      = 'grey20',
     line_linetype   = 'solid',
     line_size       =  0.5,
     
     # Point
     point_alpha     = 0.7,
-    point_color     = 'grey30',
+    point_color     = 'grey20',
     point_fill      = NA,
     point_shape     = 19,
-    point_size      = 1.5,
-    point_stroke    = 0.5,
+    point_size      = 2.5,
+    point_stroke    = 0,
     
     # Smooth
     smooth_alpha    = 0.4,
@@ -72,7 +72,7 @@ theme_xp_default <- function() {
     # Text
     text_alpha      = 0.7,
     text_angle      = 0,
-    text_color      = 'grey20',
+    text_color      = 'grey33',
     text_family     = '',
     text_fontface   = 'plain',
     text_lineheight = 1.2,

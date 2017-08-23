@@ -14,14 +14,14 @@ ctrl_file1 <- xpdb_ex_pk$files
 
 # Tests start here --------------------------------------------------------
 
-test_that('message is returned when missing file argument', {
-  expect_error(read_nm_files(quiet = TRUE), regexp = 'required')
-  expect_error(read_nm_files(quiet = FALSE), regexp = 'required')
+test_that('error is returned when missing file argument', {
+  expect_error(read_nm_files(quiet = TRUE), 
+               regexp = 'Argument `runno` or `file` required')
 })
 
-test_that('message is returned when all provided files are missing', {
-  expect_null(read_nm_files(runno = 'run999', quiet = TRUE))
-  expect_message(read_nm_files(runno = 'run999', quiet = FALSE), regexp = 'could be found')
+test_that('error is returned when all provided files are missing', {
+  expect_error(read_nm_files(runno = 'run999', dir = 'data', quiet = TRUE),
+               regexp = 'No output file could be found')
 })
 
 test_that('read_nm_files handles one file with inappropriate format', {
@@ -33,8 +33,9 @@ test_that('read_nm_files handles one file with inappropriate format', {
   writeLines(text = test_file1, con = file1)
   writeLines(text = test_file2, con = file2)
   writeLines(text = test_file2, con = file3) 
-  expect_is(read_nm_files(files = c(file1, file2, file3), quiet = TRUE), class = 'tbl_df')
-  expect_message(read_nm_files(files = c(file1, file2, file3), quiet = FALSE), regexp = 'Dropping.+inappropriate format')
+  expect_warning(tmp_file_A <- read_nm_files(file = c(file1, file2, file3), quiet = TRUE), 
+                 regexp = 'Dropping.+inappropriate format')
+  expect_is(tmp_file_A, class = 'tbl_df')
 })
 
 test_that('read_nm_files handles all files with inappropriate format', {
@@ -47,10 +48,12 @@ test_that('read_nm_files handles all files with inappropriate format', {
   writeLines(text = test_file1, con = file5)
   writeLines(text = test_file1, con = file6)
   
-  expect_null(read_nm_files(files = c(file4, file5, file6), quiet = TRUE))
-  expect_message(read_nm_files(files = c(file4, file5, file6), quiet = FALSE), regexp = 'No output file imported')
+  expect_error(suppressWarnings(read_nm_files(file = c(file4, file5, file6), quiet = TRUE)), 
+               regexp = 'No output file imported')
 })
 
-test_that('Files are imported correctly', {
-  expect_identical(read_nm_files(runno = '001', quiet = TRUE), ctrl_file1)
+test_that('files are imported correctly', {
+  expect_identical(read_nm_files(runno = '001', dir = 'data', quiet = TRUE), ctrl_file1)
+  expect_identical(read_nm_files(file = paste0('run001', c('.ext', '.cor', '.cov', '.phi', '.grd', '.shk')), 
+                                 dir = 'data', quiet = TRUE), ctrl_file1)
 })

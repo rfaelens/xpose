@@ -3,7 +3,7 @@
 #' @description Manually generate QQ plots from an xpdb object.
 #'
 #' @inheritParams xplot_scatter
-#' @param type String setting the type of plot to be points 'p'.
+#' @param type String setting the type of plot to be used. Can only be points 'p'.
 #' @param guides Should the guides (e.g. reference line) be displayed.
 #' 
 #' @section Layers mapping:
@@ -61,21 +61,21 @@ xplot_qq <- function(xpdb,
   # Create ggplot base
   xp <- ggplot(data = data, mapping, ...) + gg_theme 
   
-  # Add reference line
-  if (guides) {
-    xp <- xp + xp_geoms(xp_theme = xpdb$xp_theme,
-                        name     = 'guides',
-                        ggfun    = 'geom_qq_line',
-                        ...)
-  }
-  
-  # Add points
+  # Add points (note: could not get geom_text to work with stat_qq)
   if (stringr::str_detect(type, stringr::fixed('p', ignore_case = TRUE))) {
     xp <- xp + xp_geoms(mapping    = mapping,
                         xp_theme   = xpdb$xp_theme,
                         name       = 'point',
                         ggfun      = 'geom_point',
                         point_stat = 'qq',
+                        ...)
+  }
+  
+  # Add reference line
+  if (guides) {
+    xp <- xp + xp_geoms(xp_theme = xpdb$xp_theme,
+                        name     = 'guides',
+                        ggfun    = 'geom_qq_line',
                         ...)
   }
   
