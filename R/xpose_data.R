@@ -2,37 +2,60 @@
 #'
 #' @description Gather model outputs into a R database
 #'
-#' @param runno Run number to be evaluated.
+#' @param runno Run number to be used to generate model file name. Used in combination with \code{prefix} and \code{ext}.
+#' @param prefix Prefix to be used to generate model file name. Used in combination with \code{runno} and \code{ext}.
+#' @param ext Extension to be used to generate model file name.Should be one of '.lst' (default), '.out', '.res', '.mod' or '.ctl' for NONMEM.
+#' @param file Model file name (preferably a '.lst' file) containing the file extension. Alternative to \code{prefix},
+#' \code{runno} and \code{ext} arguments.
 #' @param dir Location of the model files.
-#' @param file Full file name preferably a `.lst` file. Alternative argument to \code{dir}, \code{prefix},
-#' \code{runno} and \code{ext}.
-#' @param prefix Prefix of the model file name.
-#' @param ext Extension of the model file. Should be one of ".lst" (default), ".out", ".res", ".mod" or ".ctl" for NONMEM.
-#' @param gg_theme A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).
+#' @param gg_theme A ggplot2 theme object (e.g. \code{\link[ggplot2]{theme_classic}}).
 #' @param xp_theme An xpose theme or vector of modifications to the xpose theme
-#' (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).
+#' (e.g. \code{c(point_color = 'red', line_linetype = 'dashed')}).
 #' @param simtab If \code{TRUE} only reads in simulation tables, if \code{FALSE} only reads estimation tables. 
 #' Default \code{NULL} reads all tables. Option not compatible with manual_import.
 #' @param manual_import If \code{NULL} (default) the names of the output tables to import will be obtained from the model file. 
 #' To manually import files as in previous versions of xpose, the check the function \code{\link{manual_nm_import}}.
 #' @param skip Character vector be used to skip the import/generation of: 'data', 'files', 'summary' or any
 #' combination of the three.
-#' @param extra_files A vector of additional output file extensions to be imported. Default is ".ext", ".cov", ".cor", ".phi", 
+#' @param extra_files A vector of additional output file extensions to be imported. Default is '.ext', '.cov', '.cor', '.phi', 
 #' ".grd" for NONMEM.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' @param ... Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.
-#'
+#' 
+#' @section File path generation:
+#' The rules for model file names generation are as follow:
+#' \itemize{
+#'   \item with \code{runno}: the full path is generated as \code{<dir>/<prefix><runno>.<ext>} e.g. with \code{dir = 'model/pk'}, \code{prefix = 'run'}, \code{runno = '001'}, 
+#'   \code{ext = '.lst'} the resulting path would be \code{model/pk/run001.lst}
+#'   \item with \code{file}: the full path is generated as \code{<dir>/<file>} e.g. with \code{dir = 'model/pk'}, \code{file = 'run001.lst'} the resulting path
+#'   would also be \code{model/pk/run001.lst}. Note: in this case the file extension should be provided as part of the `file` argument.
+#'   }
+#' 
 #' @examples
 #' \dontrun{
-#' xpdb <- xpose_data(file = 'run001.lst')
+#' # Using the `file` argument to point to the model file:
+#' xpdb <- xpose_data(file = 'run001.lst', dir = 'models')
+#' 
+#' # Using the `runno` argument to point to the model file:
+#' xpdb <- xpose_data(runno = '001', ext = '.lst', dir = 'models')
+#' 
+#' # Using the `extra_files` argument to import specific output files only:
+#' xpdb <- xpose_data(file = 'run001.lst', dir = 'models', extra_files = c('.ext', '.phi'))
+#' 
+#' # Using `skip` to disable import of tables and output files:
+#' xpdb <- xpose_data(file = 'run001.lst', dir = 'models', skip = c('data', 'files'))
+#' 
+#' # Using `simtab` to disable import of simulation tables
+#' xpdb <- xpose_data(file = 'run001.lst', dir = 'models', simtab = FALSE)
+#' 
 #' }
 #' 
 #' @export
 xpose_data <- function(runno         = NULL,
-                       dir           = NULL,
-                       file          = NULL,
                        prefix        = 'run',
                        ext           = '.lst',
+                       file          = NULL,
+                       dir           = NULL,
                        gg_theme      = theme_readable(),
                        xp_theme      = theme_xp_default(),
                        simtab        = NULL,
@@ -41,26 +64,33 @@ xpose_data <- function(runno         = NULL,
                        extra_files,
                        quiet,
                        ...) {
-  
+  # Check inputs
   if (is.null(runno) && is.null(file)) {
     stop('Argument `runno` or `file` required.', call. = FALSE)
   }
   
-  if (is.null(file)) {
-    ext  <- make_extension(ext)
-    file <- file_path(dir, stringr::str_c(prefix, runno, ext))
-  }
-  
   if (missing(quiet)) quiet <- !interactive()
   
+  # Check extensions
+  if (!is.null(runno)) {
+    ext <- make_extension(ext)
+    full_path <- file_path(dir, stringr::str_c(prefix, runno, ext))
+  } else {
+    ext <- get_extension(file)
+    if (ext == '') stop('An extension should be provided in the `file` name.', call. = FALSE)
+    full_path <- file_path(dir, file)
+  }
+  
+  # List tables
   if (ext %in% c('.lst', '.out', '.res', '.mod', '.ctl')) {
-    software <- 'nonmem'
-    model_code <- read_nm_model(file, runno, dir, prefix, ext, quiet)
+    software   <- 'nonmem'
+    model_code <- read_nm_model(file = basename(full_path), dir = dir)
     
     if (is.null(manual_import)) {
       tbl_names <- list_nm_tables(model_code)
     } else {
-      tbl_names <- list_nm_tables_manual(file = file, prefix = prefix, tab_list = manual_import)
+      tbl_names <- list_nm_tables_manual(runno = runno, file = file, 
+                                         dir = dir, tab_list = manual_import)
     }
   } else {
     stop('Model file currently not supported by xpose.', call. = FALSE)
@@ -68,10 +98,10 @@ xpose_data <- function(runno         = NULL,
   
   # Import estimation tables
   if ('data' %in% skip) {
-    msg('Skipping data import', quiet)
+    msg('Skipping data import.', quiet)
     data <- NULL
   } else if (software == 'nonmem') {
-    data <- read_nm_tables(files = tbl_names, quiet = quiet, simtab = simtab, ...)
+    data <- read_nm_tables(file = tbl_names, dir = NULL, quiet = quiet, simtab = simtab, ...)
   }
   
   # Generate model summary
@@ -79,7 +109,8 @@ xpose_data <- function(runno         = NULL,
     msg('Skipping summary generation', quiet)
     summary <- NULL
   } else if (software == 'nonmem') {
-    summary <- summarise_nm_model(file, model_code, software, rounding = xp_theme$rounding)
+    summary <- summarise_nm_model(file = full_path, model = model_code, 
+                                  software = software, rounding = xp_theme$rounding)
   }
   
   # Import output files
@@ -89,10 +120,13 @@ xpose_data <- function(runno         = NULL,
   } else if (software == 'nonmem') {
     if (missing(extra_files)) {
       extra_files <- c('.ext', '.cor', '.cov', '.phi', '.grd', '.shk')
+    } else {
+      extra_files <- make_extension(extra_files) 
     }
-    out_files <- update_extension(file, '') %>% 
-      stringr::str_c(make_extension(extra_files)) %>% 
-      read_nm_files(quiet = quiet)
+    out_files <- full_path %>% 
+      basename() %>% 
+      update_extension(ext = extra_files) %>% 
+      {read_nm_files(file = ., dir = dir, quiet = quiet)}
   }
   
   # Label themes
@@ -102,7 +136,7 @@ xpose_data <- function(runno         = NULL,
   # Output xpose_data
   list(code = model_code, summary = summary, data = data,
        files = out_files, gg_theme = gg_theme, xp_theme = xp_theme,
-       options = list(dir = dirname(file), quiet = quiet, 
+       options = list(dir = dir, quiet = quiet, 
                       manual_import = manual_import)) %>% 
     structure(class = c('xpose_data', 'uneval'))
 }

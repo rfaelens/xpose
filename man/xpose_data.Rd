@@ -4,27 +4,27 @@
 \alias{xpose_data}
 \title{Import NONMEM output into R}
 \usage{
-xpose_data(runno = NULL, dir = NULL, file = NULL, prefix = "run",
-  ext = ".lst", gg_theme = theme_readable(),
-  xp_theme = theme_xp_default(), simtab = NULL, manual_import = NULL,
-  skip = NULL, extra_files, quiet, ...)
+xpose_data(runno = NULL, prefix = "run", ext = ".lst", file = NULL,
+  dir = NULL, gg_theme = theme_readable(), xp_theme = theme_xp_default(),
+  simtab = NULL, manual_import = NULL, skip = NULL, extra_files, quiet,
+  ...)
 }
 \arguments{
-\item{runno}{Run number to be evaluated.}
+\item{runno}{Run number to be used to generate model file name. Used in combination with \code{prefix} and \code{ext}.}
+
+\item{prefix}{Prefix to be used to generate model file name. Used in combination with \code{runno} and \code{ext}.}
+
+\item{ext}{Extension to be used to generate model file name.Should be one of '.lst' (default), '.out', '.res', '.mod' or '.ctl' for NONMEM.}
+
+\item{file}{Model file name (preferably a '.lst' file) containing the file extension. Alternative to \code{prefix},
+\code{runno} and \code{ext} arguments.}
 
 \item{dir}{Location of the model files.}
 
-\item{file}{Full file name preferably a `.lst` file. Alternative argument to \code{dir}, \code{prefix},
-\code{runno} and \code{ext}.}
-
-\item{prefix}{Prefix of the model file name.}
-
-\item{ext}{Extension of the model file. Should be one of ".lst" (default), ".out", ".res", ".mod" or ".ctl" for NONMEM.}
-
-\item{gg_theme}{A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).}
+\item{gg_theme}{A ggplot2 theme object (e.g. \code{\link[ggplot2]{theme_classic}}).}
 
 \item{xp_theme}{An xpose theme or vector of modifications to the xpose theme
-(eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).}
+(e.g. \code{c(point_color = 'red', line_linetype = 'dashed')}).}
 
 \item{simtab}{If \code{TRUE} only reads in simulation tables, if \code{FALSE} only reads estimation tables. 
 Default \code{NULL} reads all tables. Option not compatible with manual_import.}
@@ -35,7 +35,7 @@ To manually import files as in previous versions of xpose, the check the functio
 \item{skip}{Character vector be used to skip the import/generation of: 'data', 'files', 'summary' or any
 combination of the three.}
 
-\item{extra_files}{A vector of additional output file extensions to be imported. Default is ".ext", ".cov", ".cor", ".phi", 
+\item{extra_files}{A vector of additional output file extensions to be imported. Default is '.ext', '.cov', '.cor', '.phi', 
 ".grd" for NONMEM.}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
@@ -45,9 +45,34 @@ combination of the three.}
 \description{
 Gather model outputs into a R database
 }
+\section{File path generation}{
+
+The rules for model file names generation are as follow:
+\itemize{
+  \item with \code{runno}: the full path is generated as \code{<dir>/<prefix><runno>.<ext>} e.g. with \code{dir = 'model/pk'}, \code{prefix = 'run'}, \code{runno = '001'}, 
+  \code{ext = '.lst'} the resulting path would be \code{model/pk/run001.lst}
+  \item with \code{file}: the full path is generated as \code{<dir>/<file>} e.g. with \code{dir = 'model/pk'}, \code{file = 'run001.lst'} the resulting path
+  would also be \code{model/pk/run001.lst}. Note: in this case the file extension should be provided as part of the `file` argument.
+  }
+}
+
 \examples{
 \dontrun{
-xpdb <- xpose_data(file = 'run001.lst')
+# Using the `file` argument to point to the model file:
+xpdb <- xpose_data(file = 'run001.lst', dir = 'models')
+
+# Using the `runno` argument to point to the model file:
+xpdb <- xpose_data(runno = '001', ext = '.lst', dir = 'models')
+
+# Using the `extra_files` argument to import specific output files only:
+xpdb <- xpose_data(file = 'run001.lst', dir = 'models', extra_files = c('.ext', '.phi'))
+
+# Using `skip` to disable import of tables and output files:
+xpdb <- xpose_data(file = 'run001.lst', dir = 'models', skip = c('data', 'files'))
+
+# Using `simtab` to disable import of simulation tables
+xpdb <- xpose_data(file = 'run001.lst', dir = 'models', simtab = FALSE)
+
 }
 
 }
