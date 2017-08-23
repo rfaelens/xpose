@@ -7,8 +7,8 @@ psn_cmd_2 <- '/opt/local64/PsN/bin/vpc -seed=221287 -samples=1000 -idv=TAD -dv=I
 # ctrl_special <- xpdb_ex_pk %>%
 #   vpc_data(opt = vpc_opt(n_bins = 3)) %>%
 #   vpc_data(vpc_type = 'cens', opt = vpc_opt(n_bins = 3, lloq = 1))
-# save(ctrl_special, file = 'data/ctrl_special.RData', compress = 'xz')
-load(file.path('data', 'ctrl_special.RData'))
+#  save(ctrl_special, file = 'data/ctrl_special.RData', compress = 'xz')
+load(file = file.path('data', 'ctrl_special.RData'))
 
 # Tests start here --------------------------------------------------------
 test_that('vpc_opt works properly', {
@@ -45,7 +45,7 @@ test_that('vpc_data works properly with xpdb tables', {
 })
 
 test_that('vpc_type categorical works properly', {
-  xpdb_vpc_cens <- vpc_data(xpdb_ex_pk, vpc_type = 'cens', 
+  xpdb_vpc_cens <- vpc_data(xpdb_ex_pk, vpc_type = 'censored', 
                             opt = vpc_opt(n_bins = 3, lloq = 1))
   expect_true(is.xpdb(xpdb_vpc_cens))
   expect_identical(xpdb_vpc_cens$special, ctrl_special$special[1, ])
