@@ -54,7 +54,7 @@ parse_title <- function(string, xpdb, problem, quiet, extra_key = NULL, extra_va
     keyword[!keyword %in% values$label] %>% 
       unique() %>% 
       stringr::str_c(collapse = ', ') %>%   
-      {msg(c(., ' is not part of the available keywords. Check ?template_titles for a full list.'), quiet)}
+      {warning(c(., ' is not part of the available keywords. Check ?template_titles for a full list.'), call. = FALSE)}
     keyword <- keyword[keyword %in% values$label]
   }
   
@@ -93,7 +93,7 @@ last_data_problem <- function(xpdb, simtab = FALSE) {
 
 # get the default problem to be plotted if problem has not been supplied (the last estimation problem, unless there is only one problem)
 default_plot_problem <- function(xpdb){
-  last_data_problem(xpdb, simtab = nrow(xpdb$data)==1 && xpdb$data$simtab[1])
+  last_data_problem(xpdb, simtab = nrow(xpdb$data) == 1 && xpdb$data$simtab[1])
 }
 
 # Get all file problem

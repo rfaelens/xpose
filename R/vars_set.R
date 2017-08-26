@@ -74,9 +74,9 @@ set_var_types <- function(xpdb, problem = NULL, ..., auto_factor = TRUE, quiet) 
       
       # Check for missmatches
       if (any(!args$col %in% index$col)) {
-        msg(c('In $prob no.', x$problem, ' columns: ',
+        warning(c('In $prob no.', x$problem, ' columns: ',
               stringr::str_c(args$col[!args$col %in% index$col], collapse = ', '),
-              ' not present in the data.'), quiet)
+              ' not present in the data.'), call. = FALSE)
         args <- dplyr::filter(.data = args, args$col %in% index$col)
       }
       
@@ -136,9 +136,9 @@ set_var_generic <- function(xpdb, problem = NULL, what = NULL, ..., quiet) {
       
       # Check for missmatches
       if (any(!args$col %in% index$col)) {
-        msg(c('In $prob no.', x$problem, ' columns: ',
+        warning(c('In $prob no.', x$problem, ' columns: ',
               stringr::str_c(args$col[!args$col %in% index$col], collapse = ', '),
-              ' not present in the data.'), quiet)
+              ' not present in the data.'), call. = FALSE)
         args <- dplyr::filter(.data = args, args$col %in% index$col)
       }
       

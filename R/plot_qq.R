@@ -44,8 +44,7 @@ prm_qq <- function(xpdb,
   
   prm_col <- xp_var(xpdb, problem, type = 'param')$col
   if (is.null(prm_col)) {
-    msg('No parameter column found in the xpdb data index.', quiet)
-    return()
+    stop('No parameter column found in the xpdb data index.', call. = FALSE)
   }
   
   xplot_qq(xpdb = xpdb, quiet = quiet,
@@ -84,8 +83,7 @@ eta_qq <- function(xpdb,
   eta_col <- xp_var(xpdb, problem, type = 'eta')$col
   
   if (is.null(eta_col)) {
-    msg('No eta column found in the xpdb data index.', quiet)
-    return()
+    stop('No eta column found in the xpdb data index.', call. = FALSE)
   }
   
   xplot_qq(xpdb = xpdb, quiet = quiet,
@@ -168,8 +166,7 @@ cov_qq <- function(xpdb,
   cov_col <- xp_var(xpdb, problem, type = 'contcov')$col
   
   if (is.null(cov_col)) {
-    msg('No continuous covariate column found in the xpdb data index.', quiet)
-    return()
+    stop('No continuous covariate column found in the xpdb data index.', call. = FALSE)
   }
   
   xplot_qq(xpdb = xpdb, quiet = quiet,
