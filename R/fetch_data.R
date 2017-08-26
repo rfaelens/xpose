@@ -89,7 +89,7 @@ fetch_data <- function(xpdb,
     data <- get_data(xpdb, problem = problem)
   } else {
     if (!any(xpdb$files$extension == source)) {
-      stop(c('File extension ', source, ' not found in model output files.'), call. = FALSE) 
+      stop(c('File extension `.', source, '` not found in model output files.'), call. = FALSE) 
     }
     if (is.null(problem)) problem <- last_file_problem(xpdb, source)
     if (is.null(subprob)) subprob <- last_file_subprob(xpdb, source, problem)
