@@ -38,7 +38,7 @@ prm_qq <- function(xpdb,
                    ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-    if (missing(problem)) problem <- default_plot_problem(xpdb)
+  if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (is.null(facets)) facets <- 'variable'
   
@@ -77,11 +77,11 @@ eta_qq <- function(xpdb,
                    ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-    if (missing(problem)) problem <- default_plot_problem(xpdb)
+  if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (is.null(facets)) facets <- 'variable'
-  eta_col <- xp_var(xpdb, problem, type = 'eta')$col
   
+  eta_col <- xp_var(xpdb, problem, type = 'eta')$col
   if (is.null(eta_col)) {
     stop('No eta column found in the xpdb data index.', call. = FALSE)
   }
@@ -118,8 +118,13 @@ res_qq <- function(xpdb,
                    ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-    if (missing(problem)) problem <- default_plot_problem(xpdb)
+  if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
+  
+  if (is.null(xp_var(xpdb, problem, col = res))) {
+    stop('No ', stringr::str_c(res, collapse = ', '), 
+         ' column found in the xpdb data index.', call. = FALSE)
+  }
   
   if (length(res) > 1) {
     if (is.null(facets)) facets <- 'variable'
@@ -163,8 +168,8 @@ cov_qq <- function(xpdb,
   if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (is.null(facets)) facets <- 'variable'
-  cov_col <- xp_var(xpdb, problem, type = 'contcov')$col
   
+  cov_col <- xp_var(xpdb, problem, type = 'contcov')$col
   if (is.null(cov_col)) {
     stop('No continuous covariate column found in the xpdb data index.', call. = FALSE)
   }
