@@ -245,7 +245,7 @@ vpc <- function(xpdb,
   
   # Add color scales
   xp <- xp + 
-    scale_fill_manual(values = c('steelblue2', 'grey40', 'steelblue2')) +
+    scale_fill_manual(values = c('steelblue3', 'grey60', 'steelblue3')) +
     scale_linetype_manual(values = c('93', 'solid', '93'))
   
   # Add metadata to plots
