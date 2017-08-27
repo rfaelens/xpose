@@ -83,15 +83,13 @@ fetch_data <- function(xpdb,
   if (source == 'data') {
     if (is.null(problem)) problem <- last_data_problem(xpdb, simtab)
     if (is.na(problem)) {
-      msg(c('No data associated with $prob no.', problem, ' could be found.'), quiet)
-      return()
+      stop(c('No data associated with $prob no.', problem, ' could be found.'), call. = FALSE)
     }
     msg(c('Using data from $prob no.', problem), quiet)
     data <- get_data(xpdb, problem = problem)
   } else {
     if (!any(xpdb$files$extension == source)) {
-      msg(c('File extension ', source, ' not found in model output files.'), quiet) 
-      return()
+      stop(c('File extension `.', source, '` not found in model output files.'), call. = FALSE) 
     }
     if (is.null(problem)) problem <- last_file_problem(xpdb, source)
     if (is.null(subprob)) subprob <- last_file_subprob(xpdb, source, problem)

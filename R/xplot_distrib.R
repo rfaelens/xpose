@@ -55,9 +55,9 @@ xplot_distrib <- function(xpdb,
   data <- fetch_data(xpdb, quiet = quiet, problem = opt$problem, subprob = opt$subprob, 
                      source = opt$source, simtab = opt$simtab, filter = opt$filter, 
                      tidy = opt$tidy, index_col = opt$index_col, value_col = opt$value_col)
-  if (is.null(data)) {
-    msg('No data available for plotting. Please check the variable mapping and filering options.', quiet)
-    return()
+  if (is.null(data) || nrow(data) == 0) {
+    stop('No data available for plotting. Please check the variable mapping and filering options.', 
+         call. = FALSE)
   }
   
   # Assing xp_theme and gg_theme

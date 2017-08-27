@@ -33,20 +33,20 @@ test_that('get_psn_vpc_strat works properly', {
 
 
 test_that('vpc_data properly check input', {
-  expect_error(vpc_data(), 'argument "xpdb" is missing, with no default')
-  expect_error(vpc_data(xpdb_ex_pk, psn_folder = '.', quiet = FALSE), 
-                 regexp = 'Argument `file` required')
+  expect_error(vpc_data(), regexp = 'argument \"xpdb\" is missing')
+  expect_error(vpc_data(xpdb_ex_pk, psn_folder = '.', quiet = TRUE), 
+                 regexp = 'No table file could be found')
 })
 
 test_that('vpc_data works properly with xpdb tables', {
-  xpdb_vpc <- vpc_data(xpdb_ex_pk, opt = vpc_opt(n_bins = 3))
+  xpdb_vpc <- vpc_data(xpdb_ex_pk, opt = vpc_opt(n_bins = 3), quiet = TRUE)
   expect_true(is.xpdb(xpdb_vpc))
   expect_identical(xpdb_vpc$special, ctrl_special$special[2, ])
 })
 
 test_that('vpc_type categorical works properly', {
   xpdb_vpc_cens <- vpc_data(xpdb_ex_pk, vpc_type = 'censored', 
-                            opt = vpc_opt(n_bins = 3, lloq = 1))
+                            opt = vpc_opt(n_bins = 3, lloq = 1), quiet = TRUE)
   expect_true(is.xpdb(xpdb_vpc_cens))
   expect_identical(xpdb_vpc_cens$special, ctrl_special$special[1, ])
 })
@@ -55,7 +55,7 @@ test_that('vpc plot properly check input', {
   expect_error(vpc())
   expect_error(vpc(xpdb = 1, quiet = FALSE), regexp = 'Bad input')
   expect_error(vpc(xpdb_ex_pk, quiet = FALSE), regexp = 'No special')
-  expect_message(vpc(ctrl_special, quiet = FALSE), regexp = 'Several vpc data')
+  expect_error(vpc(ctrl_special, quiet = FALSE), regexp = 'Several vpc data')
   expect_error(vpc(ctrl_special, vpc_type = 'unknown', quiet = FALSE), 
                regexp = 'should be one of')
 })

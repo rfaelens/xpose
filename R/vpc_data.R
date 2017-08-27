@@ -66,22 +66,22 @@ vpc_data <- function(xpdb,
     
     if (!dir.exists(file_path(psn_folder, 'm1')) &
         file.exists(file_path(psn_folder, 'm1.zip'))) {
-      msg('Unziping PsN m1 folder.', quiet)
+      msg('Unziping PsN m1 folder', quiet)
       utils::unzip(zipfile = file_path(psn_folder, 'm1.zip'), 
                    exdir   = file_path(psn_folder, ''))
       unzip <- TRUE
     } else {
       unzip <- FALSE 
     }
-    obs_data <- read_nm_tables(files = file.path(psn_folder, 'm1', dir(stringr::str_c(psn_folder, 'm1', sep = .Platform$file.sep), 
-                                                                       pattern = 'original.npctab')[1]), quiet = TRUE)
-    sim_data <- read_nm_tables(files = file.path(psn_folder, 'm1', dir(stringr::str_c(psn_folder, 'm1', sep = .Platform$file.sep), 
-                                                                       pattern = 'simulation.1.npctab')[1]), quiet = TRUE)
+    obs_data <- read_nm_tables(file = dir(file_path(psn_folder, 'm1'), pattern = 'original.npctab')[1],
+                               dir = file.path(psn_folder, 'm1'), quiet = TRUE)
+    sim_data <- read_nm_tables(file = dir(file_path(psn_folder, 'm1'), pattern = 'simulation.1.npctab')[1],
+                               dir = file.path(psn_folder, 'm1'), quiet = TRUE)
     if (unzip) unlink(x = file_path(psn_folder, 'm1'), recursive = TRUE, force = TRUE)
     
     # Getting multiple options form the psn command
     if (file.exists(file_path(psn_folder, 'command.txt'))) {
-      psn_cmd  <- readr::read_lines(file = file.path(psn_folder, 'command.txt'))
+      psn_cmd  <- readr::read_lines(file = file_path(psn_folder, 'command.txt'))
       obs_cols <- get_psn_vpc_cols(psn_cmd)
       sim_cols <- obs_cols
       if (is.null(stratify)) stratify <- get_psn_vpc_strat(psn_cmd)
@@ -104,8 +104,7 @@ vpc_data <- function(xpdb,
   } 
   
   if (is.null(obs_data) && is.null(sim_data)) {
-    msg('No data table found.', quiet)
-    return()
+    stop('No data table found.', call. = FALSE)
   }
   
   if (is.null(opt$pred_corr)) opt$pred_corr <- FALSE
@@ -141,8 +140,7 @@ vpc_data <- function(xpdb,
                              sim_cols = sim_cols, stratify = stratify, ci = opt$ci, 
                              uloq = opt$uloq, lloq = opt$lloq, smooth = FALSE, vpcdb = TRUE, verbose = !quiet) 
   } else {
-    msg('Time-to-event VPC are not yet available in xpose.', TRUE)
-    return()
+    stop('Time-to-event VPC are not yet available in xpose.', call. = FALSE)
     # vpc_dat <- vpc::vpc_tte(obs = obs_data, sim = sim_data, psn_folder = NULL, bins = opt$bins, 
     #                         n_bins = opt$n_bins, obs_cols = obs_cols, sim_cols = sim_cols, stratify = stratify, 
     #                         ci = opt$ci, smooth = FALSE, rtte = opt$rtte, rtte_calc_diff = opt$rtte_calc_diff, 
