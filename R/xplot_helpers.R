@@ -15,6 +15,16 @@ check_xpdb <- function(xpdb, check = 'data') {
   }
 }
 
+# Check plot type
+check_plot_type <- function(user_input, allowed) {
+  user_input  <- stringr::str_extract_all(user_input, pattern = '.')[[1]]
+  not_allowed <- user_input[!user_input %in% allowed]
+  if (length(not_allowed) > 0) {
+    warning('Plot type ', stringr::str_c('"',not_allowed, '"', collapse = ', '), 
+         ' not recognized.', call. = FALSE)
+  }
+}
+
 # Check plot scales
 check_scales <- function(scale, log) {
   if (is.null(log)) return('continuous')
