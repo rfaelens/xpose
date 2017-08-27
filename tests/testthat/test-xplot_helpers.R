@@ -80,3 +80,11 @@ test_that('Check check_xpdb', {
   expect_null(check_xpdb(xpdb_NULL, check = FALSE))
   expect_null(check_xpdb(xpdb_ex_pk, check = 'data'))
 })
+
+test_that('Check check_plot_type', {
+  expect_silent(check_plot_type('pls', allowed = c('p', 'l', 's', 't')))
+  expect_warning(check_plot_type('prlst', allowed = c('p', 'l', 's', 't')), 
+                 regexp = 'Plot type \"r\" not recognized')
+  expect_warning(check_plot_type('prsz', allowed = c('p', 'l', 's', 't')), 
+                 regexp = 'Plot type \"r\", \"z\" not recognized')
+})
