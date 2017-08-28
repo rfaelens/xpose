@@ -9,11 +9,11 @@
 dv_vs_ipred(xpdb, mapping = NULL, group = "ID", type = "pls",
   facets = NULL, title = "@y vs. @x | @run",
   subtitle = "Ofv: @ofv, Eps shrink: @epsshk", caption = "@dir",
-  log = NULL, guides = TRUE, problem, quiet, ...)
+  log = NULL, guide = TRUE, problem, quiet, ...)
 
 dv_vs_pred(xpdb, mapping = NULL, group = "ID", type = "pls",
   facets = NULL, title = "@y vs. @x | @run", subtitle = "Ofv: @ofv",
-  caption = "@dir", log = NULL, guides = TRUE, problem, quiet, ...)
+  caption = "@dir", log = NULL, guide = TRUE, problem, quiet, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -38,7 +38,7 @@ or a formula to use \link[ggplot2]{facet_grid}.}
 \item{log}{String assigning logarithmic scale to axes, can be either '', 
 'x', y' or 'xy'.}
 
-\item{guides}{Enable guides display (e.g. unity line).}
+\item{guide}{Enable guide display (e.g. unity line).}
 
 \item{problem}{The $problem number to be used. By default returns 
 the last estimation problem.}

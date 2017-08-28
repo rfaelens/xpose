@@ -35,7 +35,7 @@ res_vs_pred <- function(xpdb,
                         subtitle = 'Ofv: @ofv',
                         caption  = '@dir',
                         log      = NULL,
-                        guides   = TRUE,
+                        guide    = TRUE,
                         problem,
                         quiet,
                         ...) {
@@ -60,12 +60,12 @@ res_vs_pred <- function(xpdb,
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
                 opt = opt, mapping = vars, 
-                type = type, guides = guides, facets = facets, 
+                type = type, guide = guide, facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
                 plot_name = as.character(match.call()[[1]]),
-                guides_slope = 0, ...)
+                guide_slope = 0, ...)
 }
 
 
@@ -81,7 +81,7 @@ absval_res_vs_pred <- function(xpdb,
                                subtitle = 'Ofv: @ofv',
                                caption  = '@dir',
                                log      = NULL,
-                               guides   = FALSE,
+                               guide    = FALSE,
                                problem,
                                quiet,
                                ...) {
@@ -106,12 +106,12 @@ absval_res_vs_pred <- function(xpdb,
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
                 opt = opt, mapping = vars, 
-                type = type, guides = guides, facets = facets, 
+                type = type, guide = guide, facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
                 plot_name = as.character(match.call()[[1]]),
-                guides_slope = 0, ...)
+                guide_slope = 0, ...)
 }
 
 
@@ -151,7 +151,7 @@ res_vs_idv <- function(xpdb,
                        subtitle = 'Ofv: @ofv',
                        caption  = '@dir',
                        log      = NULL,
-                       guides   = TRUE,
+                       guide    = TRUE,
                        problem,
                        quiet,
                        ...) {
@@ -176,12 +176,12 @@ res_vs_idv <- function(xpdb,
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
                 opt = opt, mapping = vars, 
-                type = type, guides = guides, facets = facets, 
+                type = type, guide = guide, facets = facets, 
                 xscale = check_scales('x', log),
                 yscale = check_scales('y', log),
                 title = title, subtitle = subtitle, caption = caption,
                 plot_name = as.character(match.call()[[1]]),
-                guides_slope = 0, ...)
+                guide_slope = 0, ...)
 }
 
 
@@ -197,7 +197,7 @@ absval_res_vs_idv <- function(xpdb,
                               subtitle = 'Ofv: @ofv',
                               caption  = '@dir',
                               log      = NULL,
-                              guides   = FALSE,
+                              guide    = FALSE,
                               problem,
                               quiet,
                               ...) {
@@ -222,10 +222,10 @@ absval_res_vs_idv <- function(xpdb,
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
                 opt = opt, mapping = vars,
-                type = type, guides = guides, facets = facets, 
+                type = type, guide = guide, facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
                 plot_name = as.character(match.call()[[1]]),
-                guides_slope = 0, ...)
+                guide_slope = 0, ...)
 }

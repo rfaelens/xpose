@@ -4,7 +4,7 @@
 \alias{xplot_qq}
 \title{Default xpose QQ plot function}
 \usage{
-xplot_qq(xpdb, mapping = NULL, type = "p", guides = FALSE,
+xplot_qq(xpdb, mapping = NULL, type = "p", guide = FALSE,
   xscale = "continuous", yscale = "continuous", title = NULL,
   subtitle = NULL, caption = NULL, plot_name = "qq_plot", gg_theme,
   xp_theme, opt, quiet, ...)
@@ -17,11 +17,11 @@ xplot_qq(xpdb, mapping = NULL, type = "p", guides = FALSE,
 
 \item{type}{String setting the type of plot to be used. Can only be points 'p'.}
 
-\item{guides}{Should the guides (e.g. reference line) be displayed.}
+\item{guide}{Should the guide (e.g. reference line) be displayed.}
 
-\item{xscale}{Scale type for x axis (eg. 'continuous', 'discrete', 'log10').}
+\item{xscale}{Scale type for x axis (e.g. 'continuous', 'discrete', 'log10').}
 
-\item{yscale}{Scale type for y axis (eg. 'continuous', 'discrete', 'log10').}
+\item{yscale}{Scale type for y axis (e.g. 'continuous', 'discrete', 'log10').}
 
 \item{title}{Plot title. Use \code{NULL} to remove.}
 
@@ -31,10 +31,10 @@ xplot_qq(xpdb, mapping = NULL, type = "p", guides = FALSE,
 
 \item{plot_name}{Name to be used by \code{xpose_save()} when saving the plot.}
 
-\item{gg_theme}{A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).}
+\item{gg_theme}{A ggplot2 theme object (e.g. \code{\link[ggplot2]{theme_classic}}).}
 
 \item{xp_theme}{An xpose theme or vector of modifications to the xpose theme
-(eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).}
+(e.g. \code{c(point_color = 'red', line_linetype = 'dashed')}).}
 
 \item{opt}{A list of options in order to create appropriate data input for 
 ggplot2. For more information see \code{\link{data_opt}}.}
@@ -82,7 +82,7 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 }
 
 \examples{
-xplot_qq(xpdb_ex_pk, aes(sample = CWRES), guides = TRUE)
+xplot_qq(xpdb_ex_pk, aes(sample = CWRES), guide = TRUE)
 
 }
 \seealso{

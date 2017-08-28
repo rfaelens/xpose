@@ -5,7 +5,7 @@
 #' @inheritParams xplot_scatter
 #' @param type String setting the type of plot to be used. Can be histogram 'h',
 #' density 'd', rug 'r' or any combination of the three.
-#' @param guides Should the guides (e.g. reference distribution) be displayed.
+#' @param guide Should the guide (e.g. reference distribution) be displayed.
 
 #' @section Layers mapping:
 #' Plots can be customized by mapping arguments to specific layers. The naming convention is 
@@ -33,7 +33,7 @@
 xplot_distrib <- function(xpdb,
                           mapping   = NULL,
                           type      = 'hr',
-                          guides    = FALSE,
+                          guide     = FALSE,
                           xscale    = 'continuous',
                           yscale    = 'continuous',
                           title     = NULL,
@@ -101,10 +101,10 @@ xplot_distrib <- function(xpdb,
   }
   
   # Add reference distibution
-  if (guides) {
+  if (guide) {
     msg('Reference distribution not yet available.', quiet)
     # xp <- xp + xp_geoms(xp_theme = xpdb$xp_theme,
-    #                     name     = 'guides',
+    #                     name     = 'guide',
     #                     ggfun    = 'geom_line',
     #                     ...)
   }

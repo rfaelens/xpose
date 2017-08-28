@@ -46,10 +46,10 @@ theme_xp_default <- function() {
     byrow           = TRUE,
     
     # Guide
-    guides_alpha    = 1,
-    guides_color    = 'tomato',
-    guides_linetype = 'solid',
-    guides_size     = 0.8,
+    guide_alpha     = 1,
+    guide_color     = 'tomato',
+    guide_linetype  = 'solid',
+    guide_size      = 0.8,
     
     # Line
     line_alpha      =  0.7,
@@ -146,10 +146,10 @@ theme_xp_xpose4 <- function() {
     byrow           = TRUE,
     
     # Guide
-    guides_alpha    = NA,
-    guides_color    = 'black',
-    guides_linetype = 'solid',
-    guides_size     = 0.5,
+    guide_alpha     = NA,
+    guide_color     = 'black',
+    guide_linetype  = 'solid',
+    guide_size      = 0.5,
     
     # Line
     line_alpha      =  NA,

@@ -5,7 +5,7 @@
 \title{Default xpose scatter plot function}
 \usage{
 xplot_scatter(xpdb, mapping = NULL, group = "ID", type = "pls",
-  guides = FALSE, xscale = "continuous", yscale = "continuous",
+  guide = FALSE, xscale = "continuous", yscale = "continuous",
   title = NULL, subtitle = NULL, caption = NULL,
   plot_name = "scatter_plot", gg_theme, xp_theme, opt, quiet, ...)
 }
@@ -20,11 +20,11 @@ xplot_scatter(xpdb, mapping = NULL, group = "ID", type = "pls",
 \item{type}{String setting the type of plot to be used. Can be points 'p',
 line 'l', smooth 's' and text 't' or any combination of the four.}
 
-\item{guides}{Should the guides (eg. unity line) be displayed.}
+\item{guide}{Should the guide (e.g. unity line) be displayed.}
 
-\item{xscale}{Scale type for x axis (eg. 'continuous', 'discrete', 'log10').}
+\item{xscale}{Scale type for x axis (e.g. 'continuous', 'discrete', 'log10').}
 
-\item{yscale}{Scale type for y axis (eg. 'continuous', 'discrete', 'log10').}
+\item{yscale}{Scale type for y axis (e.g. 'continuous', 'discrete', 'log10').}
 
 \item{title}{Plot title. Use \code{NULL} to remove.}
 
@@ -34,10 +34,10 @@ line 'l', smooth 's' and text 't' or any combination of the four.}
 
 \item{plot_name}{Name to be used by \code{xpose_save()} when saving the plot.}
 
-\item{gg_theme}{A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).}
+\item{gg_theme}{A ggplot2 theme object (e.g. \code{\link[ggplot2]{theme_classic}}).}
 
 \item{xp_theme}{An xpose theme or vector of modifications to the xpose theme
-(eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).}
+(e.g. \code{c(point_color = 'red', line_linetype = 'dashed')}).}
 
 \item{opt}{A list of options in order to create appropriate data input for 
 ggplot2. For more information see \code{\link{data_opt}}.}

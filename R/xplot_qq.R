@@ -4,7 +4,7 @@
 #'
 #' @inheritParams xplot_scatter
 #' @param type String setting the type of plot to be used. Can only be points 'p'.
-#' @param guides Should the guides (e.g. reference line) be displayed.
+#' @param guide Should the guide (e.g. reference line) be displayed.
 #' 
 #' @section Layers mapping:
 #' Plots can be customized by mapping arguments to specific layers. The naming convention is 
@@ -21,13 +21,13 @@
 #' @seealso \code{\link{xplot_scatter}} \code{\link{xplot_distrib}}
 #' 
 #' @examples
-#' xplot_qq(xpdb_ex_pk, aes(sample = CWRES), guides = TRUE)
+#' xplot_qq(xpdb_ex_pk, aes(sample = CWRES), guide = TRUE)
 #' 
 #' @export
 xplot_qq <- function(xpdb,
                      mapping   = NULL,
                      type      = 'p',
-                     guides    = FALSE,
+                     guide     = FALSE,
                      xscale    = 'continuous',
                      yscale    = 'continuous',
                      title     = NULL,
@@ -74,9 +74,9 @@ xplot_qq <- function(xpdb,
   }
   
   # Add reference line
-  if (guides) {
+  if (guide) {
     xp <- xp + xp_geoms(xp_theme = xpdb$xp_theme,
-                        name     = 'guides',
+                        name     = 'guide',
                         ggfun    = 'geom_qq_line',
                         ...)
   }

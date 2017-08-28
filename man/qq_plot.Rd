@@ -12,22 +12,22 @@
 prm_qq(xpdb, mapping = NULL, type = "p", facets = NULL,
   title = "QQ plot of parameters | @run",
   subtitle = "Based on @nind individuals", caption = "@dir", log = NULL,
-  guides = TRUE, problem, quiet, ...)
+  guide = TRUE, problem, quiet, ...)
 
 eta_qq(xpdb, mapping = NULL, type = "p", facets = NULL,
   title = "QQ plot of etas | @run",
   subtitle = "Based on @nind individuals, Eta shrink: @etashk",
-  caption = "@dir", log = NULL, guides = TRUE, problem, quiet, ...)
+  caption = "@dir", log = NULL, guide = TRUE, problem, quiet, ...)
 
 res_qq(xpdb, mapping = NULL, res = "CWRES", type = "p", facets = NULL,
   title = "QQ plot of @sample | @run",
   subtitle = "Based on @nobs observations", caption = "@dir", log = NULL,
-  guides = TRUE, problem, quiet, ...)
+  guide = TRUE, problem, quiet, ...)
 
 cov_qq(xpdb, mapping = NULL, type = "p", facets = NULL,
   title = "QQ plot of continuous covariates | @run",
   subtitle = "Based on @nind individuals", caption = "@dir", log = NULL,
-  guides = TRUE, problem, quiet, ...)
+  guide = TRUE, problem, quiet, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -49,7 +49,7 @@ or a formula to use \link[ggplot2]{facet_grid}.}
 \item{log}{String assigning logarithmic scale to axes, can be either '', 
 'x', y' or 'xy'.}
 
-\item{guides}{Should the guides (e.g. reference line) be displayed.}
+\item{guide}{Should the guide (e.g. reference line) be displayed.}
 
 \item{problem}{The $problem number to be used. By default returns 
 the last estimation problem.}

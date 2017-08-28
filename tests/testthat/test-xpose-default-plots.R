@@ -4,17 +4,17 @@ context('Check default plot functions')
 # Define plots to be tested -----------------------------------------------
 
 # General tests
-p1 <- xplot_scatter(xpdb = xpdb_ex_pk, aes_string(x = 'PRED', y = 'DV'), guides = TRUE, type = 'plst',
+p1 <- xplot_scatter(xpdb = xpdb_ex_pk, aes_string(x = 'PRED', y = 'DV'), guide = TRUE, type = 'plst',
                     title = '@run-title', subtitle = '@run-subtitle', caption = '@run-caption',
                     point_color = 'red', line_color = 'blue', 
                     smooth_color = 'green', text_color = 'yellow', quiet = TRUE)
-d1 <- xplot_distrib(xpdb = xpdb_ex_pk, aes_string(x = 'PRED'), guides = FALSE, type = 'dhr',
+d1 <- xplot_distrib(xpdb = xpdb_ex_pk, aes_string(x = 'PRED'), guide = FALSE, type = 'dhr',
                     title = '@run-title', subtitle = '@run-subtitle', caption = '@run-caption',
                     histogram_color = 'red', density_color = 'blue', rug_color = 'yellow', 
                     quiet = TRUE)
-q1 <- xplot_qq(xpdb = xpdb_ex_pk, aes_string(sample = 'PRED'), guides = TRUE, type = 'p',
+q1 <- xplot_qq(xpdb = xpdb_ex_pk, aes_string(sample = 'PRED'), guide = TRUE, type = 'p',
                title = '@run-title', subtitle = '@run-subtitle', caption = '@run-caption',
-               point_color = 'red', guides_color = 'blue', quiet = TRUE)
+               point_color = 'red', guide_color = 'blue', quiet = TRUE)
 
 # Facet wrap
 p2 <- xplot_scatter(xpdb = xpdb_ex_pk, aes_string(x = 'PRED', y = 'DV'), 

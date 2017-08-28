@@ -8,16 +8,16 @@
 #' @param group Grouping variable to be used for lines.
 #' @param type String setting the type of plot to be used. Can be points 'p',
 #' line 'l', smooth 's' and text 't' or any combination of the four.
-#' @param guides Should the guides (eg. unity line) be displayed.
-#' @param xscale Scale type for x axis (eg. 'continuous', 'discrete', 'log10').
-#' @param yscale Scale type for y axis (eg. 'continuous', 'discrete', 'log10').
+#' @param guide Should the guide (e.g. unity line) be displayed.
+#' @param xscale Scale type for x axis (e.g. 'continuous', 'discrete', 'log10').
+#' @param yscale Scale type for y axis (e.g. 'continuous', 'discrete', 'log10').
 #' @param title Plot title. Use \code{NULL} to remove.
 #' @param subtitle Plot subtitle. Use \code{NULL} to remove.
 #' @param caption Page caption. Use \code{NULL} to remove.
 #' @param plot_name Name to be used by \code{xpose_save()} when saving the plot.
-#' @param gg_theme A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).
+#' @param gg_theme A ggplot2 theme object (e.g. \code{\link[ggplot2]{theme_classic}}).
 #' @param xp_theme An xpose theme or vector of modifications to the xpose theme
-#' (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).
+#' (e.g. \code{c(point_color = 'red', line_linetype = 'dashed')}).
 #' @param opt A list of options in order to create appropriate data input for 
 #' ggplot2. For more information see \code{\link{data_opt}}.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
@@ -64,7 +64,7 @@ xplot_scatter <- function(xpdb,
                           mapping   = NULL,
                           group     = 'ID',
                           type      = 'pls',
-                          guides    = FALSE,
+                          guide     = FALSE,
                           xscale    = 'continuous',
                           yscale    = 'continuous',
                           title     = NULL,
@@ -129,9 +129,9 @@ xplot_scatter <- function(xpdb,
   }
   
   # Add unity line
-  if (guides) {
+  if (guide) {
     xp <- xp + xp_geoms(xp_theme = xpdb$xp_theme,
-                        name     = 'guides',
+                        name     = 'guide',
                         ggfun    = 'geom_abline',
                         ...)
   }

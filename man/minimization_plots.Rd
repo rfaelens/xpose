@@ -9,13 +9,13 @@
 prm_vs_iteration(xpdb, mapping = NULL, group = "variable", type = "pl",
   facets = NULL, title = "Parameter @y vs. @x | @run",
   subtitle = "Method: @method, minimization time: @runtime\\nTermination message: @term",
-  caption = "@dir", log = NULL, guides = FALSE, problem, subprob, quiet,
+  caption = "@dir", log = NULL, guide = FALSE, problem, subprob, quiet,
   ...)
 
 grd_vs_iteration(xpdb, mapping = NULL, group = "variable", type = "pl",
   facets = NULL, title = "Gradient @y vs. @x | @run",
   subtitle = "Method: @method, minimization time: @runtime\\nTermination message: @term",
-  caption = "@dir", log = NULL, guides = FALSE, problem, subprob, quiet,
+  caption = "@dir", log = NULL, guide = FALSE, problem, subprob, quiet,
   ...)
 }
 \arguments{
@@ -41,7 +41,7 @@ or a formula to use \link[ggplot2]{facet_grid}.}
 \item{log}{String assigning logarithmic scale to axes, can be either '', 
 'x', y' or 'xy'.}
 
-\item{guides}{Enable guides display (e.g. unity line).}
+\item{guide}{Enable guide display (e.g. unity line).}
 
 \item{problem}{The $problem number to be used. By default returns 
 the last estimation problem.}

@@ -11,22 +11,22 @@
 prm_distrib(xpdb, mapping = NULL, type = "hr", facets = NULL,
   title = "Parameter distribution | @run",
   subtitle = "Based on @nind individuals", caption = "@dir", log = NULL,
-  guides = FALSE, problem, quiet, ...)
+  guide = FALSE, problem, quiet, ...)
 
 eta_distrib(xpdb, mapping = NULL, type = "hr", facets = NULL,
   title = "Eta distribution | @run",
   subtitle = "Based on @nind individuals, Eta shrink: @etashk",
-  caption = "@dir", log = NULL, guides = FALSE, problem, quiet, ...)
+  caption = "@dir", log = NULL, guide = FALSE, problem, quiet, ...)
 
 res_distrib(xpdb, mapping = NULL, res = "CWRES", type = "hr",
   facets = NULL, title = "@x distribution | @run",
   subtitle = "Based on @nobs observations", caption = "@dir", log = NULL,
-  guides = FALSE, problem, quiet, ...)
+  guide = FALSE, problem, quiet, ...)
 
 cov_distrib(xpdb, mapping = NULL, type = "hr", facets = NULL,
   title = "Continuous covariates distribution | @run",
   subtitle = "Based on @nind individuals", caption = "@dir", log = NULL,
-  guides = FALSE, problem, quiet, ...)
+  guide = FALSE, problem, quiet, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -49,7 +49,7 @@ or a formula to use \link[ggplot2]{facet_grid}.}
 \item{log}{String assigning logarithmic scale to axes, can be either '', 
 'x', y' or 'xy'.}
 
-\item{guides}{Should the guides (e.g. reference distribution) be displayed.}
+\item{guide}{Should the guide (e.g. reference distribution) be displayed.}
 
 \item{problem}{The $problem number to be used. By default returns 
 the last estimation problem.}

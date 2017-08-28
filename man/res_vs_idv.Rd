@@ -7,12 +7,12 @@
 \usage{
 res_vs_idv(xpdb, mapping = NULL, res = "CWRES", group = "ID",
   type = "pls", facets = NULL, title = "@y vs. @x | @run",
-  subtitle = "Ofv: @ofv", caption = "@dir", log = NULL, guides = TRUE,
+  subtitle = "Ofv: @ofv", caption = "@dir", log = NULL, guide = TRUE,
   problem, quiet, ...)
 
 absval_res_vs_idv(xpdb, mapping = NULL, res = "CWRES", group = "ID",
   type = "pls", facets = NULL, title = "@y vs. @x  | @run",
-  subtitle = "Ofv: @ofv", caption = "@dir", log = NULL, guides = FALSE,
+  subtitle = "Ofv: @ofv", caption = "@dir", log = NULL, guide = FALSE,
   problem, quiet, ...)
 }
 \arguments{
@@ -40,7 +40,7 @@ or a formula to use \link[ggplot2]{facet_grid}.}
 \item{log}{String assigning logarithmic scale to axes, can be either '', 
 'x', y' or 'xy'.}
 
-\item{guides}{Enable guides display (e.g. unity line).}
+\item{guide}{Enable guide display (e.g. unity line).}
 
 \item{problem}{The $problem number to be used. By default returns 
 the last estimation problem.}
