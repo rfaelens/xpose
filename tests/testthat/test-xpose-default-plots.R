@@ -18,19 +18,19 @@ q1 <- xplot_qq(xpdb = xpdb_ex_pk, aes_string(sample = 'PRED'), guides = TRUE, ty
 
 # Facet wrap
 p2 <- xplot_scatter(xpdb = xpdb_ex_pk, aes_string(x = 'PRED', y = 'DV'), 
-                    panel_facets = 'SEX', quiet = TRUE)
+                    facets = 'SEX', quiet = TRUE)
 d2 <- xplot_distrib(xpdb = xpdb_ex_pk, aes_string(x = 'PRED'), 
-                    panel_facets = 'SEX', quiet = TRUE)
+                    facets = 'SEX', quiet = TRUE)
 q2 <- xplot_qq(xpdb = xpdb_ex_pk, aes_string(sample = 'PRED'), 
-               panel_facets = 'SEX', quiet = TRUE)
+               facets = 'SEX', quiet = TRUE)
 
 # Facet grid
 p3 <- xplot_scatter(xpdb = xpdb_ex_pk, aes_string(x = 'PRED', y = 'DV'), 
-                    panel_facets = OCC~SEX, quiet = TRUE)
+                    facets = OCC~SEX, quiet = TRUE)
 d3 <- xplot_distrib(xpdb = xpdb_ex_pk, aes_string(x = 'PRED'), 
-                    panel_facets = OCC~SEX, quiet = TRUE)
+                    facets = OCC~SEX, quiet = TRUE)
 q3 <- xplot_qq(xpdb = xpdb_ex_pk, aes_string(sample = 'PRED'), 
-               panel_facets = OCC~SEX, quiet = TRUE)
+               facets = OCC~SEX, quiet = TRUE)
 
 
 # Tests start here --------------------------------------------------------

@@ -8,6 +8,7 @@
 #' @param guides Should the guides (e.g. reference distribution) be displayed.
 #' 
 #' @inheritSection xplot_distrib Layers mapping
+#' @inheritSection xplot_scatter Faceting
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_distrib}}
 #' @examples
@@ -52,7 +53,7 @@ prm_distrib <- function(xpdb,
                                filter = only_distinct(xpdb, problem, facets, quiet),
                                tidy = TRUE, value_col = prm_col),
                 mapping = aes_c(aes_string(x = 'value'), mapping), 
-                type = type, guides = guides, panel_facets = facets,
+                type = type, guides = guides, facets = facets,
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
@@ -89,7 +90,7 @@ eta_distrib <- function(xpdb,
                                filter = only_distinct(xpdb, problem, facets, quiet), 
                                tidy = TRUE, value_col = eta_col),
                 mapping = aes_c(aes_string(x = 'value'), mapping), 
-                type = type, guides = guides, panel_facets = facets,
+                type = type, guides = guides, facets = facets,
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
@@ -136,7 +137,7 @@ res_distrib <- function(xpdb,
   
   xplot_distrib(xpdb = xpdb, quiet = quiet,
                 opt = opt, mapping = vars, 
-                type = type, guides = guides, panel_facets = facets,
+                type = type, guides = guides, facets = facets,
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
@@ -173,7 +174,7 @@ cov_distrib <- function(xpdb,
                                filter = only_distinct(xpdb, problem, facets, quiet), 
                                tidy = TRUE, value_col = cov_col),
                 mapping = aes_c(aes_string(x = 'value'), mapping), 
-                type = type, guides = guides, panel_facets = facets,
+                type = type, guides = guides, facets = facets,
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,

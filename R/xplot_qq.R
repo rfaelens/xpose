@@ -13,11 +13,10 @@
 #' \itemize{
 #'   \item point: options to \code{geom_point}
 #'   \item guide: options to \code{geom_abline}
-#'   \item panel: options to \code{facet_wrap} (facets is character) or \code{facet_grid} 
-#'   (facets is a formula)
 #'   \item xscale: options to \code{scale_x_continuous} or \code{scale_x_log10}
 #'   \item yscale: options to \code{scale_y_continuous} or \code{scale_y_log10}
 #' }
+#' @inheritSection xplot_scatter Faceting
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}} \code{\link{xplot_distrib}}
 #' 
@@ -62,7 +61,7 @@ xplot_qq <- function(xpdb,
   if (missing(gg_theme)) gg_theme <- xpdb$gg_theme
   
   # Create ggplot base
-  xp <- ggplot(data = data, mapping, ...) + gg_theme 
+  xp <- ggplot(data = data, mapping) + gg_theme 
   
   # Add points (note: could not get geom_text to work with stat_qq)
   if (stringr::str_detect(type, stringr::fixed('p', ignore_case = TRUE))) {
@@ -96,20 +95,9 @@ xplot_qq <- function(xpdb,
              ...)
   
   # Define panels
-  if (!is.null(list(...)[['panel_facets']])) {
-    if (!is.formula(list(...)[['panel_facets']])) {
-      xp <- xp + xp_geoms(mapping  = mapping,
-                          xp_theme = xpdb$xp_theme,
-                          name     = 'panel',
-                          ggfun    = 'facet_wrap_paginate',
-                          ...)
-    } else {
-      xp <- xp + xp_geoms(mapping  = mapping,
-                          xp_theme = filter_xp_theme(xpdb$xp_theme, 'panel_dir', 'drop'),
-                          name     = 'panel',
-                          ggfun    = 'facet_grid_paginate',
-                          ...)
-    }
+  if (!is.null(list(...)[['facets']])) {
+    xp <- xp + xpose_panels(xp_theme = xpdb$xp_theme, 
+                            extra_args = list(...))
   }
   
   # Add labels

@@ -5,6 +5,7 @@
 #'
 #' @inheritParams dv_vs_pred
 #' @inheritSection xplot_scatter Layers mapping
+#' @inheritSection xplot_scatter Faceting
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
@@ -41,7 +42,7 @@ dv_vs_idv <- function(xpdb,
                                filter = only_obs(xpdb, problem, quiet)),
                 mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
                                            y = xp_var(xpdb, problem, type = 'dv')$col), mapping),
-                type = type, panel_facets = facets, 
+                type = type, facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
@@ -73,7 +74,7 @@ ipred_vs_idv <- function(xpdb,
                                filter = only_obs(xpdb, problem, quiet)),
                 mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
                                            y = xp_var(xpdb, problem, type = 'ipred')$col), mapping),
-                type = type, panel_facets = facets, 
+                type = type, facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
@@ -105,7 +106,7 @@ pred_vs_idv <- function(xpdb,
                                filter = only_obs(xpdb, problem, quiet)),
                 mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
                                            y = xp_var(xpdb, problem, type = 'pred')$col), mapping),
-                type = type, panel_facets = facets, 
+                type = type, facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
@@ -143,7 +144,7 @@ dv_preds_vs_idv <- function(xpdb,
                                                   type = c('dv', 'pred', 'ipred'))$col),
                 mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
                                            y = 'value'), mapping), 
-                type = type, guides = FALSE, panel_facets = facets,
+                type = type, guides = FALSE, facets = facets,
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,

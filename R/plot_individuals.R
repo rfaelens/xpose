@@ -6,16 +6,18 @@
 #' 
 #' @inheritParams dv_vs_pred
 #' @inheritSection xplot_scatter Layers mapping
+#' @inheritSection xplot_scatter Faceting
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
 #' # Basic example
-#' ind_plots(xpdb_ex_pk)
+#' ind_plots(xpdb_ex_pk, page = 1,
+#'           ncol = 3, nrow = 3)
 #' 
-#' # Example with mapping and facetting
+#' # Example with custom mapping and facetting
 #' ind_plots(xpdb_ex_pk, aes(x = TAD), 
 #'           facets = OCC~ID, 
-#'           panel_labeller = 'label_both')
+#'           labeller = 'label_both')
 #' 
 #' @export
 ind_plots <- function(xpdb,
@@ -37,8 +39,8 @@ ind_plots <- function(xpdb,
   if (is.null(facets)) facets <- xp_var(xpdb, problem, type = 'id')$col
   
   extra_args <- list(...)
-  if (!any(names(extra_args) == 'panel_nrow')) extra_args$panel_nrow <- 3
-  if (!any(names(extra_args) == 'panel_ncol')) extra_args$panel_ncol <- 3
+  if (!any(names(extra_args) == 'nrow')) extra_args$nrow <- 3
+  if (!any(names(extra_args) == 'ncol')) extra_args$ncol <- 3
 
   do.call('xplot_scatter', 
           c(extra_args, 
@@ -52,7 +54,7 @@ ind_plots <- function(xpdb,
                                             y = 'value', line_color = 'variable', 
                                             line_linetype = 'variable', point_color = 'variable', 
                                             point_alpha = 'variable'), mapping),
-                 type = type, panel_facets = facets,
+                 type = type, facets = facets,
                  xscale = check_scales('x', log),
                  yscale = check_scales('y', log), 
                  title = title, subtitle = subtitle, caption = caption,

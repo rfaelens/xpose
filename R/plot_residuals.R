@@ -14,6 +14,7 @@
 #' @inheritParams dv_vs_pred
 #' @param res Type of residual to be used. Default is "CWRES".
 #' @inheritSection xplot_scatter Layers mapping
+#' @inheritSection xplot_scatter Faceting
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
@@ -59,7 +60,7 @@ res_vs_pred <- function(xpdb,
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
                 opt = opt, mapping = vars, 
-                type = type, guides = guides, panel_facets = facets, 
+                type = type, guides = guides, facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
@@ -105,7 +106,7 @@ absval_res_vs_pred <- function(xpdb,
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
                 opt = opt, mapping = vars, 
-                type = type, guides = guides, panel_facets = facets, 
+                type = type, guides = guides, facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
@@ -175,7 +176,7 @@ res_vs_idv <- function(xpdb,
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
                 opt = opt, mapping = vars, 
-                type = type, guides = guides, panel_facets = facets, 
+                type = type, guides = guides, facets = facets, 
                 xscale = check_scales('x', log),
                 yscale = check_scales('y', log),
                 title = title, subtitle = subtitle, caption = caption,
@@ -221,7 +222,7 @@ absval_res_vs_idv <- function(xpdb,
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
                 opt = opt, mapping = vars,
-                type = type, guides = guides, panel_facets = facets, 
+                type = type, guides = guides, facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,

@@ -33,13 +33,13 @@
 #'   \item line: options to \code{geom_line}
 #'   \item area: options to \code{geom_ribbon} (smooth = TRUE) or \code{geom_rect} (smooth = FALSE)
 #'   \item rug: options to \code{geom_rug}
-#'   \item panel: options to \code{facet_wrap} (facets is character) or \code{facet_grid}
-#'   (facets is a formula)
 #'   \item smooth: options to \code{geom_smooth}
 #'   \item text: options to \code{geom_text}
 #'   \item xscale: options to \code{scale_x_continuous} or \code{scale_x_log10}
 #'   \item yscale: options to \code{scale_y_continuous} or \code{scale_y_log10}
 #' }
+#' @inheritSection xplot_scatter Faceting
+#' @inheritSection xplot_scatter Faceting
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{vpc_data}
 #' @examples
@@ -117,7 +117,7 @@ vpc <- function(xpdb,
   
   # Create ggplot base
   if (is.null(mapping)) mapping <- aes()
-  xp <- ggplot(data = NULL, mapping, ...) + gg_theme 
+  xp <- ggplot(data = NULL, mapping) + gg_theme 
   
   # Add shadded areas
   if (stringr::str_detect(type, stringr::fixed('a', ignore_case = TRUE))) {
@@ -198,24 +198,6 @@ vpc <- function(xpdb,
              yscale_name = vpc_dat$obs_cols[['dv']],
              ...)
   
-  if (!is.null(facets)) {
-    if (!is.formula(facets)) {
-      xp <- xp + xp_geoms(mapping  = mapping,
-                          xp_theme = xpdb$xp_theme,
-                          name     = 'panel',
-                          ggfun    = 'facet_wrap_paginate',
-                          panel_facets = facets,
-                          ...)
-    } else {
-      xp <- xp + xp_geoms(mapping  = mapping,
-                          xp_theme = filter_xp_theme(xpdb$xp_theme, 'panel_dir', 'drop'),
-                          name     = 'panel',
-                          ggfun    = 'facet_grid_paginate',
-                          panel_facets = facets,
-                          ...)
-    }
-  }
-  
   # Add rug
   if (stringr::str_detect(type, stringr::fixed('r', ignore_case = TRUE))) {
     if (is.formula(facets)) {
@@ -235,6 +217,12 @@ vpc <- function(xpdb,
                         rug_sides = 't',
                         ...)
     
+  }
+  
+  # Define panels
+  if (!is.null(facets)) {
+    xp <- xp + xpose_panels(xp_theme = xpdb$xp_theme, 
+                            extra_args = c(facets = facets, list(...)))
   }
   
   # Add labels

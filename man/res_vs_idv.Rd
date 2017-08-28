@@ -70,8 +70,6 @@ any option supported by this layer e.g. point_color = 'blue', smooth_method = 'l
   \item point: options to \code{geom_point}
   \item line: options to \code{geom_line}
   \item guide: options to \code{geom_abline}
-  \item panel: options to \code{facet_wrap} (facets is character) or \code{facet_grid} 
-  (facets is a formula)
   \item smooth: options to \code{geom_smooth}
   \item text: options to \code{geom_text}
   \item xscale: options to \code{scale_x_continuous} or \code{scale_x_log10}

@@ -28,6 +28,23 @@ theme_xp_default <- function() {
     subtitle_suffix = '',
     caption_suffix  = '',
     
+    # Panels
+    facets          = NULL,
+    ncol            = NULL,
+    nrow            = NULL,
+    page            = 1,
+    scales          = 'free',
+    shrink          = TRUE,
+    labeller        = 'label_value',
+    as.table        = TRUE,
+    switch          = NULL,
+    drop            = TRUE,
+    dir             = 'h',
+    strip.position  = 'top',
+    margins         = FALSE,
+    space           = 'fixed',
+    byrow           = TRUE,
+    
     # Guide
     guides_alpha    = 1,
     guides_color    = 'tomato',
@@ -57,17 +74,6 @@ theme_xp_default <- function() {
     smooth_se       = FALSE,
     smooth_size     = 1,
     smooth_weight   = 1,
-    
-    # Panel
-    panel_ncol      = NULL,
-    panel_nrow      = NULL,
-    panel_scales    = 'free',
-    panel_shrink    = TRUE,
-    panel_labeller  = 'label_value',
-    panel_as.table  = TRUE,
-    panel_switch    = NULL,
-    panel_drop      = TRUE,
-    panel_dir       = 'h',
     
     # Text
     text_alpha      = 0.7,
@@ -122,6 +128,23 @@ theme_xp_xpose4 <- function() {
     subtitle_suffix = '',
     caption_suffix  = '',
     
+    # Panels
+    facets          = NULL,
+    ncol            = NULL,
+    nrow            = NULL,
+    page            = 1,
+    scales          = 'free',
+    shrink          = TRUE,
+    labeller        = 'label_value',
+    as.table        = TRUE,
+    switch          = NULL,
+    drop            = TRUE,
+    dir             = 'h',
+    strip.position  = 'top',
+    margins         = FALSE,
+    space           = 'fixed',
+    byrow           = TRUE,
+    
     # Guide
     guides_alpha    = NA,
     guides_color    = 'black',
@@ -151,17 +174,6 @@ theme_xp_xpose4 <- function() {
     smooth_se       = FALSE,
     smooth_size     = 1,
     smooth_weight   = 1,
-    
-    # Panel
-    panel_ncol      = NULL,
-    panel_nrow      = NULL,
-    panel_scales    = 'free',
-    panel_shrink    = TRUE,
-    panel_labeller  = 'label_value',
-    panel_as.table  = TRUE,
-    panel_switch    = NULL,
-    panel_drop      = TRUE,
-    panel_dir       = 'h',
     
     # Text
     text_alpha      = NA,

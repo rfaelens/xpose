@@ -23,6 +23,7 @@
 #' @param ... Any additional aesthetics to be passed on \code{xplot_scatter}.
 #' 
 #' @inheritSection xplot_scatter Layers mapping
+#' @inheritSection xplot_scatter Faceting
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
@@ -54,7 +55,7 @@ dv_vs_ipred <- function(xpdb,
                 opt = data_opt(problem = problem, filter = only_obs(xpdb, problem, quiet)),
                 mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'ipred')$col, 
                                            y = xp_var(xpdb, problem, type = 'dv')$col), mapping),
-                type = type, guides = guides, panel_facets = facets, 
+                type = type, guides = guides, facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
@@ -86,7 +87,7 @@ dv_vs_pred <- function(xpdb,
                 opt = data_opt(problem = problem, filter = only_obs(xpdb, problem, quiet)),
                 mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'pred')$col, 
                                            y = xp_var(xpdb, problem, type = 'dv')$col), mapping),
-                type = type, guides = guides, panel_facets = facets, 
+                type = type, guides = guides, facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
