@@ -128,7 +128,7 @@
     
 
     <pre class="usage"><span class='fu'>xplot_scatter</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pls"</span>,
-  <span class='kw'>guides</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>xscale</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>, <span class='kw'>yscale</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>,
+  <span class='kw'>guide</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>xscale</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>, <span class='kw'>yscale</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>plot_name</span> <span class='kw'>=</span> <span class='st'>"scatter_plot"</span>, <span class='no'>gg_theme</span>, <span class='no'>xp_theme</span>, <span class='no'>opt</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)</pre>
     
@@ -154,16 +154,16 @@
 line 'l', smooth 's' and text 't' or any combination of the four.</p></td>
     </tr>
     <tr>
-      <th>guides</th>
-      <td><p>Should the guides (eg. unity line) be displayed.</p></td>
+      <th>guide</th>
+      <td><p>Should the guide (e.g. unity line) be displayed.</p></td>
     </tr>
     <tr>
       <th>xscale</th>
-      <td><p>Scale type for x axis (eg. 'continuous', 'discrete', 'log10').</p></td>
+      <td><p>Scale type for x axis (e.g. 'continuous', 'discrete', 'log10').</p></td>
     </tr>
     <tr>
       <th>yscale</th>
-      <td><p>Scale type for y axis (eg. 'continuous', 'discrete', 'log10').</p></td>
+      <td><p>Scale type for y axis (e.g. 'continuous', 'discrete', 'log10').</p></td>
     </tr>
     <tr>
       <th>title</th>
@@ -183,12 +183,12 @@ line 'l', smooth 's' and text 't' or any combination of the four.</p></td>
     </tr>
     <tr>
       <th>gg_theme</th>
-      <td><p>A ggplot2 theme object (eg. <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_classic</a></code>).</p></td>
+      <td><p>A ggplot2 theme object (e.g. <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_classic</a></code>).</p></td>
     </tr>
     <tr>
       <th>xp_theme</th>
       <td><p>An xpose theme or vector of modifications to the xpose theme
-(eg. <code>c(point_color = 'red', line_linetype = 'dashed')</code>).</p></td>
+(e.g. <code>c(point_color = 'red', line_linetype = 'dashed')</code>).</p></td>
     </tr>
     <tr>
       <th>opt</th>
@@ -214,13 +214,22 @@ any option supported by this layer e.g. point_color = 'blue', smooth_method = 'l
 <li><p>point: options to <code>geom_point</code></p></li>
 <li><p>line: options to <code>geom_line</code></p></li>
 <li><p>guide: options to <code>geom_abline</code></p></li>
-<li><p>panel: options to <code>facet_wrap</code> (facets is character) or <code>facet_grid</code> 
-  (facets is a formula)</p></li>
 <li><p>smooth: options to <code>geom_smooth</code></p></li>
 <li><p>text: options to <code>geom_text</code></p></li>
 <li><p>xscale: options to <code>scale_x_continuous</code> or <code>scale_x_log10</code></p></li>
 <li><p>yscale: options to <code>scale_y_continuous</code> or <code>scale_y_log10</code></p></li>
 </ul>
+    
+    <h2 class="hasAnchor" id="faceting"><a class="anchor" href="#faceting"></a>Faceting</h2>
+
+    
+    <p>Every xpose plot function has built-in facetting functionalities. Faceting arguments 
+are passed to the functions <a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a> when the <code>facets</code> 
+argument is a character string (e.g. <code>facets = c('OCC', 'SEX')</code>) or 
+<a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a> when facets is a formula (e.g. <code>facets = OCC~SEX</code>).
+All xpose plot functions accept all the arguments for the <a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a> 
+and <a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a> functions e.g. <code><a href='dv_vs_pred.html'>dv_vs_ipred(xpdb_ex_pk, 
+facets = OCC~SEX, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')</a></code>.</p>
     
     <h2 class="hasAnchor" id="template-titles"><a class="anchor" href="#template-titles"></a>Template titles</h2>
 
@@ -248,6 +257,8 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#layers-mapping">Layers mapping</a></li>
+
+      <li><a href="#faceting">Faceting</a></li>
 
       <li><a href="#template-titles">Template titles</a></li>
 

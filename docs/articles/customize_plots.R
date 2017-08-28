@@ -72,10 +72,10 @@ dv_vs_ipred(xpdb, type = 'p', aes(point_color = SEX))
 
 ## ----demo panels, fig.width = 6, fig.height = 6, out.width = '75%'-------
 # Example with a string
-dv_vs_ipred(xpdb, facets = c('SEX', 'OCC'))
+dv_vs_ipred(xpdb, facets = c('SEX', 'OCC'), ncol = 2, nrow = 1, page = 1)
 
 # Example with a formula
-dv_vs_ipred(xpdb, facets = SEX~OCC, panel_labeller = 'label_both')
+dv_vs_ipred(xpdb, facets = SEX~OCC, labeller = 'label_both', margins = TRUE)
 
 ## ----demo layers---------------------------------------------------------
 dv_vs_ipred(xpdb) +
