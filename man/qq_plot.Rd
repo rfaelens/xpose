@@ -12,22 +12,22 @@
 prm_qq(xpdb, mapping = NULL, type = "p", facets = NULL,
   title = "QQ plot of parameters | @run",
   subtitle = "Based on @nind individuals", caption = "@dir", log = NULL,
-  guides = TRUE, problem, quiet, ...)
+  guide = TRUE, problem, quiet, ...)
 
 eta_qq(xpdb, mapping = NULL, type = "p", facets = NULL,
   title = "QQ plot of etas | @run",
   subtitle = "Based on @nind individuals, Eta shrink: @etashk",
-  caption = "@dir", log = NULL, guides = TRUE, problem, quiet, ...)
+  caption = "@dir", log = NULL, guide = TRUE, problem, quiet, ...)
 
 res_qq(xpdb, mapping = NULL, res = "CWRES", type = "p", facets = NULL,
   title = "QQ plot of @sample | @run",
   subtitle = "Based on @nobs observations", caption = "@dir", log = NULL,
-  guides = TRUE, problem, quiet, ...)
+  guide = TRUE, problem, quiet, ...)
 
 cov_qq(xpdb, mapping = NULL, type = "p", facets = NULL,
   title = "QQ plot of continuous covariates | @run",
   subtitle = "Based on @nind individuals", caption = "@dir", log = NULL,
-  guides = TRUE, problem, quiet, ...)
+  guide = TRUE, problem, quiet, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -49,7 +49,7 @@ or a formula to use \link[ggplot2]{facet_grid}.}
 \item{log}{String assigning logarithmic scale to axes, can be either '', 
 'x', y' or 'xy'.}
 
-\item{guides}{Should the guides (e.g. reference line) be displayed.}
+\item{guide}{Should the guide (e.g. reference line) be displayed.}
 
 \item{problem}{The $problem number to be used. By default returns 
 the last estimation problem.}
@@ -71,11 +71,20 @@ any option supported by this layer e.g. point_color = 'blue', etc.
 \itemize{
   \item point: options to \code{geom_point}
   \item guide: options to \code{geom_abline}
-  \item panel: options to \code{facet_wrap} (facets is character) or \code{facet_grid} 
-  (facets is a formula)
   \item xscale: options to \code{scale_x_continuous} or \code{scale_x_log10}
   \item yscale: options to \code{scale_y_continuous} or \code{scale_y_log10}
 }
+}
+
+\section{Faceting}{
+
+Every xpose plot function has built-in facetting functionalities. Faceting arguments 
+are passed to the functions \link[ggforce]{facet_wrap_paginate} when the \code{facets} 
+argument is a character string (e.g. \code{facets = c('OCC', 'SEX')}) or 
+\link[ggforce]{facet_grid_paginate} when facets is a formula (e.g. \code{facets = OCC~SEX}).
+All xpose plot functions accept all the arguments for the \link[ggforce]{facet_wrap_paginate} 
+and \link[ggforce]{facet_grid_paginate} functions e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
+facets = OCC~SEX, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')}.
 }
 
 \section{Template titles}{

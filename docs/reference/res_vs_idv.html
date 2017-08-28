@@ -136,12 +136,12 @@
 
     <pre class="usage"><span class='fu'>res_vs_idv</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='st'>"CWRES"</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>,
   <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pls"</span>, <span class='kw'>facets</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"@y vs. @x | @run"</span>,
-  <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Ofv: @ofv"</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guides</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Ofv: @ofv"</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guide</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='no'>problem</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)
 
 <span class='fu'>absval_res_vs_idv</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='st'>"CWRES"</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>,
   <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pls"</span>, <span class='kw'>facets</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"@y vs. @x  | @run"</span>,
-  <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Ofv: @ofv"</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guides</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Ofv: @ofv"</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guide</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>problem</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -192,8 +192,8 @@ or a formula to use <a href='http://www.rdocumentation.org/packages/ggplot2/topi
 'x', y' or 'xy'.</p></td>
     </tr>
     <tr>
-      <th>guides</th>
-      <td><p>Enable guides display (e.g. unity line).</p></td>
+      <th>guide</th>
+      <td><p>Enable guide display (e.g. unity line).</p></td>
     </tr>
     <tr>
       <th>problem</th>
@@ -219,8 +219,6 @@ any option supported by this layer e.g. point_color = 'blue', smooth_method = 'l
 <li><p>point: options to <code>geom_point</code></p></li>
 <li><p>line: options to <code>geom_line</code></p></li>
 <li><p>guide: options to <code>geom_abline</code></p></li>
-<li><p>panel: options to <code>facet_wrap</code> (facets is character) or <code>facet_grid</code> 
-  (facets is a formula)</p></li>
 <li><p>smooth: options to <code>geom_smooth</code></p></li>
 <li><p>text: options to <code>geom_text</code></p></li>
 <li><p>xscale: options to <code>scale_x_continuous</code> or <code>scale_x_log10</code></p></li>

@@ -8,16 +8,16 @@
 #' @param group Grouping variable to be used for lines.
 #' @param type String setting the type of plot to be used. Can be points 'p',
 #' line 'l', smooth 's' and text 't' or any combination of the four.
-#' @param guides Should the guides (eg. unity line) be displayed.
-#' @param xscale Scale type for x axis (eg. 'continuous', 'discrete', 'log10').
-#' @param yscale Scale type for y axis (eg. 'continuous', 'discrete', 'log10').
+#' @param guide Should the guide (e.g. unity line) be displayed.
+#' @param xscale Scale type for x axis (e.g. 'continuous', 'discrete', 'log10').
+#' @param yscale Scale type for y axis (e.g. 'continuous', 'discrete', 'log10').
 #' @param title Plot title. Use \code{NULL} to remove.
 #' @param subtitle Plot subtitle. Use \code{NULL} to remove.
 #' @param caption Page caption. Use \code{NULL} to remove.
 #' @param plot_name Name to be used by \code{xpose_save()} when saving the plot.
-#' @param gg_theme A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).
+#' @param gg_theme A ggplot2 theme object (e.g. \code{\link[ggplot2]{theme_classic}}).
 #' @param xp_theme An xpose theme or vector of modifications to the xpose theme
-#' (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).
+#' (e.g. \code{c(point_color = 'red', line_linetype = 'dashed')}).
 #' @param opt A list of options in order to create appropriate data input for 
 #' ggplot2. For more information see \code{\link{data_opt}}.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
@@ -31,13 +31,20 @@
 #'   \item point: options to \code{geom_point}
 #'   \item line: options to \code{geom_line}
 #'   \item guide: options to \code{geom_abline}
-#'   \item panel: options to \code{facet_wrap} (facets is character) or \code{facet_grid} 
-#'   (facets is a formula)
 #'   \item smooth: options to \code{geom_smooth}
 #'   \item text: options to \code{geom_text}
 #'   \item xscale: options to \code{scale_x_continuous} or \code{scale_x_log10}
 #'   \item yscale: options to \code{scale_y_continuous} or \code{scale_y_log10}
 #' }
+#' 
+#' @section Faceting:
+#' Every xpose plot function has built-in facetting functionalities. Faceting arguments 
+#' are passed to the functions \link[ggforce]{facet_wrap_paginate} when the \code{facets} 
+#' argument is a character string (e.g. \code{facets = c('OCC', 'SEX')}) or 
+#' \link[ggforce]{facet_grid_paginate} when facets is a formula (e.g. \code{facets = OCC~SEX}).
+#' All xpose plot functions accept all the arguments for the \link[ggforce]{facet_wrap_paginate} 
+#' and \link[ggforce]{facet_grid_paginate} functions e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
+#' facets = OCC~SEX, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')}.
 #' 
 #' @section Template titles:
 #' Template titles can be used to create highly informative diagnostics plots. 
@@ -57,7 +64,7 @@ xplot_scatter <- function(xpdb,
                           mapping   = NULL,
                           group     = 'ID',
                           type      = 'pls',
-                          guides    = FALSE,
+                          guide     = FALSE,
                           xscale    = 'continuous',
                           yscale    = 'continuous',
                           title     = NULL,
@@ -89,9 +96,9 @@ xplot_scatter <- function(xpdb,
   # Assing xp_theme and gg_theme
   if (!missing(xp_theme)) xpdb <- update_themes(xpdb = xpdb, xp_theme = xp_theme)
   if (missing(gg_theme)) gg_theme <- xpdb$gg_theme
-  
+
   # Create ggplot base
-  xp <- ggplot(data = data, mapping, ...) + gg_theme 
+  xp <- ggplot(data = data, mapping) + gg_theme 
   
   # Add lines
   if (stringr::str_detect(type, stringr::fixed('l', ignore_case = TRUE))) {
@@ -122,9 +129,9 @@ xplot_scatter <- function(xpdb,
   }
   
   # Add unity line
-  if (guides) {
+  if (guide) {
     xp <- xp + xp_geoms(xp_theme = xpdb$xp_theme,
-                        name     = 'guides',
+                        name     = 'guide',
                         ggfun    = 'geom_abline',
                         ...)
   }
@@ -152,22 +159,11 @@ xplot_scatter <- function(xpdb,
              ...)
   
   # Define panels
-  if (!is.null(list(...)[['panel_facets']])) {
-    if (!is.formula(list(...)[['panel_facets']])) {
-      xp <- xp + xp_geoms(mapping  = mapping,
-                          xp_theme = xpdb$xp_theme,
-                          name     = 'panel',
-                          ggfun    = 'facet_wrap_paginate',
-                          ...)
-    } else {
-      xp <- xp + xp_geoms(mapping  = mapping,
-                          xp_theme = filter_xp_theme(xpdb$xp_theme, 'panel_dir', 'drop'),
-                          name     = 'panel',
-                          ggfun    = 'facet_grid_paginate',
-                          ...)
-    }
+  if (!is.null(list(...)[['facets']])) {
+    xp <- xp + xpose_panels(xp_theme = xpdb$xp_theme, 
+                            extra_args = list(...))
   }
-  
+
   # Add labels
   xp <- xp + labs(title = title, subtitle = subtitle, caption = caption)
   

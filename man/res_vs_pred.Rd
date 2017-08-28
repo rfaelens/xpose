@@ -7,12 +7,12 @@
 \usage{
 res_vs_pred(xpdb, mapping = NULL, res = "CWRES", group = "ID",
   type = "pls", facets = NULL, title = "@y vs. @x | @run",
-  subtitle = "Ofv: @ofv", caption = "@dir", log = NULL, guides = TRUE,
+  subtitle = "Ofv: @ofv", caption = "@dir", log = NULL, guide = TRUE,
   problem, quiet, ...)
 
 absval_res_vs_pred(xpdb, mapping = NULL, res = "CWRES", group = "ID",
   type = "pls", facets = NULL, title = "@y vs. @x | @run",
-  subtitle = "Ofv: @ofv", caption = "@dir", log = NULL, guides = FALSE,
+  subtitle = "Ofv: @ofv", caption = "@dir", log = NULL, guide = FALSE,
   problem, quiet, ...)
 }
 \arguments{
@@ -40,7 +40,7 @@ or a formula to use \link[ggplot2]{facet_grid}.}
 \item{log}{String assigning logarithmic scale to axes, can be either '', 
 'x', y' or 'xy'.}
 
-\item{guides}{Enable guides display (e.g. unity line).}
+\item{guide}{Enable guide display (e.g. unity line).}
 
 \item{problem}{The $problem number to be used. By default returns 
 the last estimation problem.}
@@ -70,13 +70,22 @@ any option supported by this layer e.g. point_color = 'blue', smooth_method = 'l
   \item point: options to \code{geom_point}
   \item line: options to \code{geom_line}
   \item guide: options to \code{geom_abline}
-  \item panel: options to \code{facet_wrap} (facets is character) or \code{facet_grid} 
-  (facets is a formula)
   \item smooth: options to \code{geom_smooth}
   \item text: options to \code{geom_text}
   \item xscale: options to \code{scale_x_continuous} or \code{scale_x_log10}
   \item yscale: options to \code{scale_y_continuous} or \code{scale_y_log10}
 }
+}
+
+\section{Faceting}{
+
+Every xpose plot function has built-in facetting functionalities. Faceting arguments 
+are passed to the functions \link[ggforce]{facet_wrap_paginate} when the \code{facets} 
+argument is a character string (e.g. \code{facets = c('OCC', 'SEX')}) or 
+\link[ggforce]{facet_grid_paginate} when facets is a formula (e.g. \code{facets = OCC~SEX}).
+All xpose plot functions accept all the arguments for the \link[ggforce]{facet_wrap_paginate} 
+and \link[ggforce]{facet_grid_paginate} functions e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
+facets = OCC~SEX, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')}.
 }
 
 \section{Template titles}{

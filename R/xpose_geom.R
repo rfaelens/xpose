@@ -29,3 +29,21 @@ xp_geoms <- function(mapping = NULL, xp_theme, name, ggfun, ...) {
   arg     <- update_args(thm_arg, name, ...)
   xp_map(arg, mapping, ggfun)
 }
+
+# Generic panel function for xpose_plots
+xpose_panels <- function(xp_theme, extra_args) {
+  if (!is.formula(extra_args$facets)) {
+    thm_arg  <- xp_theme[c('facets', 'nrow', 'ncol', 'scales', 'shrink', 
+                           'labeller', 'as.table', 'drop', 'dir', 
+                           'switch', 'strip.position', 'page')]
+    facet_fun <- 'facet_wrap_paginate'
+  } else {
+    thm_arg  <- xp_theme[c('facets', 'margins', 'scales', 'space', 'shrink', 
+                           'labeller', 'as.table', 'switch', 'drop', 'ncol', 
+                           'nrow', 'page', 'byrow')]
+    facet_fun <- 'facet_grid_paginate'
+  }
+  usr_changes <- intersect(names(thm_arg), names(extra_args))
+  thm_arg[usr_changes] <- extra_args[usr_changes]
+  do.call(facet_fun, thm_arg)
+}

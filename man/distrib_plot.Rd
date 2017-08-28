@@ -11,22 +11,22 @@
 prm_distrib(xpdb, mapping = NULL, type = "hr", facets = NULL,
   title = "Parameter distribution | @run",
   subtitle = "Based on @nind individuals", caption = "@dir", log = NULL,
-  guides = FALSE, problem, quiet, ...)
+  guide = FALSE, problem, quiet, ...)
 
 eta_distrib(xpdb, mapping = NULL, type = "hr", facets = NULL,
   title = "Eta distribution | @run",
   subtitle = "Based on @nind individuals, Eta shrink: @etashk",
-  caption = "@dir", log = NULL, guides = FALSE, problem, quiet, ...)
+  caption = "@dir", log = NULL, guide = FALSE, problem, quiet, ...)
 
 res_distrib(xpdb, mapping = NULL, res = "CWRES", type = "hr",
   facets = NULL, title = "@x distribution | @run",
   subtitle = "Based on @nobs observations", caption = "@dir", log = NULL,
-  guides = FALSE, problem, quiet, ...)
+  guide = FALSE, problem, quiet, ...)
 
 cov_distrib(xpdb, mapping = NULL, type = "hr", facets = NULL,
   title = "Continuous covariates distribution | @run",
   subtitle = "Based on @nind individuals", caption = "@dir", log = NULL,
-  guides = FALSE, problem, quiet, ...)
+  guide = FALSE, problem, quiet, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -49,7 +49,7 @@ or a formula to use \link[ggplot2]{facet_grid}.}
 \item{log}{String assigning logarithmic scale to axes, can be either '', 
 'x', y' or 'xy'.}
 
-\item{guides}{Should the guides (e.g. reference distribution) be displayed.}
+\item{guide}{Should the guide (e.g. reference distribution) be displayed.}
 
 \item{problem}{The $problem number to be used. By default returns 
 the last estimation problem.}
@@ -71,12 +71,21 @@ any option supported by this layer e.g. histogram_fill = 'blue', rug_sides = 'b'
 \itemize{
   \item histogram: options to \code{geom_histogram}
   \item density: options to \code{geom_density}
-  \item panel: options to \code{facet_wrap} (facets is character) or \code{facet_grid} 
-  (facets is a formula)
   \item rug: options to \code{geom_rug}
   \item xscale: options to \code{scale_x_continuous} or \code{scale_x_log10}
   \item yscale: options to \code{scale_y_continuous} or \code{scale_y_log10}
 }
+}
+
+\section{Faceting}{
+
+Every xpose plot function has built-in facetting functionalities. Faceting arguments 
+are passed to the functions \link[ggforce]{facet_wrap_paginate} when the \code{facets} 
+argument is a character string (e.g. \code{facets = c('OCC', 'SEX')}) or 
+\link[ggforce]{facet_grid_paginate} when facets is a formula (e.g. \code{facets = OCC~SEX}).
+All xpose plot functions accept all the arguments for the \link[ggforce]{facet_wrap_paginate} 
+and \link[ggforce]{facet_grid_paginate} functions e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
+facets = OCC~SEX, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')}.
 }
 
 \section{Template titles}{
