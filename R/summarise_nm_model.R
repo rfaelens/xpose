@@ -539,7 +539,7 @@ sum_shk <- function(model, software, type, rounding) {
       dplyr::filter(stringr::str_detect(.$code, stringr::regex(
         stringr::str_c(stringr::str_to_upper(type), 'SHRINK[^V]'), 
         ignore_case = TRUE)))
-    
+
     if (nrow(x) == 0) return(sum_tpl(stringr::str_c(type, 'shk'), 'na'))
     
     x %>% 
