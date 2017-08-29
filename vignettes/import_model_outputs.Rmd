@@ -25,7 +25,7 @@ knitr::opts_chunk$set(fig.dpi = 96,
 ```
 
 ### The `xpose_data` function
-The function `xpose_data()` collects all model output files and table and organizes them into an R object commonly called `xpdb` for xpose data base. xpose makes use of the [readr](http://readr.tidyverse.org) which offers the advantages of 1) rapidly import big tables and 2) automatically import compressed table (e.g. sdtab001.zip) to increase storage capacity.
+The function `xpose_data()` collects all model output files and table and organizes them into an R object commonly called `xpdb` for xpose data base. 
 
 ``` r
 xpdb <- xpose_data(runno = '001')
@@ -58,6 +58,12 @@ Reading: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi
 
 These messages can be silenced with the option `quiet = TRUE`.
 
+##### `FIRSTONLY` tables
+Xpose is compatible with the `$TABLE FIRSTONLY` option of NONMEM. The option `FIRSTONLY` only output the first record for each `ID` and hence can be used to decrease the size of output tables having no time-varying columns. During tables import xpose will merge `FIRSTONLY` tables with regular tables allowing seamless use of columns from `FIRSTONLY` in plots.
+
+##### Compressed tables
+Xpose makes use of the [readr](http://readr.tidyverse.org) which offers the advantages of 1) rapidly import big tables and 2) automatically import compressed table (e.g. sdtab001.zip) to increase storage capacity.
+
 
 #### Others NLME tools
 Coming with future releases...
@@ -70,7 +76,7 @@ A typical `xpdb` object contains 8 levels namely:
 - `summary`: contains key information regarding the model. All the information contained in the summary can be used as part of the `template_titles`.
 - `data`: contains all output and simulation tables as well as the column indexing
 - `files`: contains all output files
-- `special`: contains postprocessed datasets used by functions like `vpc()`
+- `special`: contains post-processed datasets used by functions like `vpc()`
 - `gg_theme`: an attached ggplot2 theme
 - `xp_theme`: an attached xpose theme
 - `options`: attached global options
