@@ -57,7 +57,7 @@ print.xpose_data <- function(x, ...) {
   }
   
   cat(x$summary$value[x$summary$label == 'file'], 'overview:',
-      '\n - Software:', x$summary$value[x$summary$label %in% c('software', 'version')],
+      '\n - Software:', x$summary$value[x$summary$label %in% c('software', 'version') & x$summary$value != 'na'],
       '\n - Attached files:', 
       '\n   + obs tabs:', tab_names,
       '\n   + sim tabs:', sim_names,
