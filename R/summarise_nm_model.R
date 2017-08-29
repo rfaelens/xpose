@@ -536,13 +536,14 @@ sum_shk <- function(model, software, type, rounding) {
     ## Method 3 (worse one)
     x <- model %>% 
       dplyr::filter(.$subroutine == 'lst') %>% 
-      dplyr::filter(stringr::str_detect(.$code, stringr::fixed(stringr::str_c(stringr::str_to_upper(type), 
-                                                                              'shrink', sep = ''))))
+      dplyr::filter(stringr::str_detect(.$code, stringr::regex(
+        stringr::str_c(stringr::str_to_upper(type), 'SHRINK[^V]'), 
+        ignore_case = TRUE)))
     
     if (nrow(x) == 0) return(sum_tpl(stringr::str_c(type, 'shk'), 'na'))
     
     x %>% 
-      dplyr::mutate(code = stringr::str_match(.$code, '\\Q(%):\\E\\s*(.+)')[, 2]) %>% 
+      dplyr::mutate(code = stringr::str_match(.$code, '\\Q(%)\\E:*\\s*(.+)')[, 2]) %>% 
       dplyr::mutate(code = stringr::str_split(.$code, '\\s+')) %>% 
       dplyr::mutate(value = purrr::map(.$code, ~round(as.numeric(.), digits = rounding)),
                     grouping = purrr::map(.$code, ~stringr::str_c(' [', 1:length(.), ']', sep = ''))) %>% 
