@@ -6,7 +6,7 @@
 \usage{
 data_opt(problem = NULL, subprob = NULL, source = "data",
   simtab = FALSE, filter = NULL, tidy = FALSE, index_col = NULL,
-  value_col = NULL)
+  value_col = NULL, post_processing = NULL)
 }
 \arguments{
 \item{problem}{The problem to be used, by default returns the last one.}
@@ -28,6 +28,9 @@ Column names to use as index when tidying the data.}
 
 \item{value_col}{Only used when 'tidy' is defined a \code{TRUE} and \code{index_col} is \code{NULL}. 
 Column names to be stacked when tidying the data.}
+
+\item{post_processing}{A function used to modify the data after it has been tidyied e.g. post_processing = function(x) 
+dplyr::mutate(.data = x, variable = as.factor(.$variable)) where x is the tidy data.}
 }
 \description{
 Provide a list of options to the general plotting functions such as 
