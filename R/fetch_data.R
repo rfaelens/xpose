@@ -72,13 +72,14 @@ only_distinct <- function(xpdb, problem, facets, quiet) {
   fun
 }
 
-# Reorder ETA panels numerically
-reorder_etas_factors <- function() {
+# Reorder panels numerically
+reorder_factors <- function(type) {
   function(x) {
     x %>% 
       dplyr::mutate(variable = as.numeric(gsub('\\D', '', .$variable))) %>% 
       dplyr::mutate(variable = factor(.$variable, levels = sort(unique(.$variable)),
-                                      labels = stringr::str_c('ETA ', sort(unique(.$variable)))))
+                                      labels = stringr::str_c(type, sort(unique(.$variable)), 
+                                                              sep = ' ')))
   }
 }
 

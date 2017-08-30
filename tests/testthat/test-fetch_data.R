@@ -23,7 +23,7 @@ test_that('only_distinct function works properly', {
 })
 
 test_that('reorder_etas_factors function works properly', {
-  expect_true(is.function(reorder_etas_factors()))
+  expect_true(is.function(reorder_factors(type = 'Eta')))
 })
 
 test_that('fetch_data can get simple data', {
