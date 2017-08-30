@@ -129,6 +129,23 @@ last_file_subprob <- function(xpdb, ext, problem) {
   max(subprob_n)
 }
 
+# Get only columns that have several unique values
+drop_static_cols <- function(xpdb, problem, cols, quiet) {
+  if (is.null(cols)) return()
+  cols_rm <- get_data(xpdb, problem = problem) %>% 
+    dplyr::select_(.dots = cols) %>%
+    dplyr::select_if(.predicate = function(x) length(unique(x)) == 1) %>% 
+    colnames()
+  if (length(cols_rm) == 0) return(cols)
+   dplyr::if_else(length(cols_rm) > 5, 
+                 stringr::str_c(stringr::str_c(cols_rm[1:5], collapse = ', '), 
+                                '... and', length(cols_rm) - 5 , 'more', sep = ' '),
+                 stringr::str_c(cols_rm , collapse = ', ')) %>%
+                 {msg(c('Static variables ', .,' will be dropped'), quiet)}
+  dplyr::setdiff(x = cols, y = cols_rm)
+}
+
+
 # Get a variable name from xpose
 xp_var <- function(xpdb, problem, col = NULL, type = NULL) {
   index <- xpdb$data[xpdb$data$problem == problem, ]$index[[1]]

@@ -88,3 +88,10 @@ test_that('Check check_plot_type', {
   expect_warning(check_plot_type('prsz', allowed = c('p', 'l', 's', 't')), 
                  regexp = 'Plot type \"r\", \"z\" not recognized')
 })
+
+test_that('Check drop_static', {
+  expect_message(variable_cols <- drop_static_cols(xpdb_ex_pk, problem = 1, quiet = FALSE,
+                                                   cols = c('CL', 'V', 'KA', 'ALAG1')), 
+                 regexp = 'Static variables ALAG1 will be dropped')
+  expect_equal(variable_cols, c('CL', 'V', 'KA'))
+  })

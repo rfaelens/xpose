@@ -8,13 +8,13 @@
 \alias{cov_distrib}
 \title{Distribution plots of ETA and parameters}
 \usage{
-prm_distrib(xpdb, mapping = NULL, type = "hr", facets = NULL,
-  title = "Parameter distribution | @run",
+prm_distrib(xpdb, mapping = NULL, drop_static = TRUE, type = "hr",
+  facets = NULL, title = "Parameter distribution | @run",
   subtitle = "Based on @nind individuals", caption = "@dir", log = NULL,
   guide = FALSE, problem, quiet, ...)
 
-eta_distrib(xpdb, mapping = NULL, type = "hr", facets = NULL,
-  title = "Eta distribution | @run",
+eta_distrib(xpdb, mapping = NULL, drop_static = TRUE, type = "hr",
+  facets = NULL, title = "Eta distribution | @run",
   subtitle = "Based on @nind individuals, Eta shrink: @etashk",
   caption = "@dir", log = NULL, guide = FALSE, problem, quiet, ...)
 
@@ -23,8 +23,8 @@ res_distrib(xpdb, mapping = NULL, res = "CWRES", type = "hr",
   subtitle = "Based on @nobs observations", caption = "@dir", log = NULL,
   guide = FALSE, problem, quiet, ...)
 
-cov_distrib(xpdb, mapping = NULL, type = "hr", facets = NULL,
-  title = "Continuous covariates distribution | @run",
+cov_distrib(xpdb, mapping = NULL, drop_static = TRUE, type = "hr",
+  facets = NULL, title = "Continuous covariates distribution | @run",
   subtitle = "Based on @nind individuals", caption = "@dir", log = NULL,
   guide = FALSE, problem, quiet, ...)
 }
@@ -33,6 +33,9 @@ cov_distrib(xpdb, mapping = NULL, type = "hr", facets = NULL,
 
 \item{mapping}{List of aesthetics mappings to be used for the xpose plot 
 (e.g. \code{point_color}).}
+
+\item{drop_static}{Should columns that only have a single unique value 
+(i.e. static) be dropped.}
 
 \item{type}{String setting the type of plot to be used. Can be histogram 'h',
 density 'd', rug 'r' or any combination of the three.}
