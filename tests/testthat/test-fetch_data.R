@@ -3,11 +3,11 @@ context('Check fetch_data')
 # Tests start here --------------------------------------------------------
 test_that('data_opt function works properly', {
   expect_equal(data_opt(problem = 1, subprob = 2, source = 'data', simtab = FALSE, 
-                            filter = function(x){ x }, tidy = FALSE, index_col = 'ID',
-                            value_col = 'IPRED'),
+                        filter = function(x){ x }, tidy = FALSE, index_col = 'ID',
+                        value_col = 'IPRED', post_processing = function(x) { x }),
                list(problem = 1, subprob = 2, source = 'data', simtab = FALSE, 
                     filter = function(x){ x }, tidy = FALSE, index_col = 'ID',
-                    value_col = 'IPRED'))
+                    value_col = 'IPRED', post_processing = function(x) { x }))
 })
 
 test_that('only_obs function works properly', {
@@ -20,6 +20,10 @@ test_that('only_distinct function works properly', {
   expect_true(is.function(only_distinct(xpdb_ex_pk, problem = 1, facets = 'OCC', quiet = TRUE)))
   expect_equal(only_distinct(xpdb_ex_pk, problem = 1, facets = 'OCC', quiet = TRUE)(x = xpdb_ex_pk$data$data[[1]]),
                dplyr::distinct_(.data = xpdb_ex_pk$data$data[[1]], .dots = c('ID', 'OCC'), .keep_all = TRUE))
+})
+
+test_that('reorder_etas_factors function works properly', {
+  expect_true(is.function(reorder_etas_factors()))
 })
 
 test_that('fetch_data can get simple data', {
