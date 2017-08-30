@@ -78,7 +78,7 @@ reorder_etas_factors <- function() {
     x %>% 
       dplyr::mutate(variable = as.numeric(gsub('\\D', '', .$variable))) %>% 
       dplyr::mutate(variable = factor(.$variable, levels = sort(unique(.$variable)),
-                                      labels = stringr::str_c('ETA', sort(unique(.$variable)))))
+                                      labels = stringr::str_c('ETA ', sort(unique(.$variable)))))
   }
 }
 
