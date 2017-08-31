@@ -353,11 +353,12 @@ sum_term <- function(model, software) {
   if (software == 'nonmem') {
     x <- dplyr::filter(model, model$subroutine == 'lst')
     start <- which(stringr::str_detect(x$code, stringr::fixed('0MINIMIZATION')))
+    end <- which(stringr::str_detect(x$code, stringr::fixed(" NO. OF FUNCTION EVALUATIONS USED:")))
     
-    if (length(start) == 0) return(sum_tpl('term', 'na'))
+    if (length(start) == 0 | length(end)  == 0 | length(start)!=length(end)) return(sum_tpl('term', 'na'))
     
     x %>% 
-      dplyr::slice(purrr::map(start, ~.:(.+5)) %>% purrr::flatten_int()) %>% 
+      dplyr::slice(purrr::map2(start, end, ~seq(.x,.y)) %>% purrr::flatten_int()) %>% 
       dplyr::group_by_(.dots = 'problem') %>% 
       tidyr::nest() %>% 
       dplyr::mutate(value = purrr::map_chr(.$data, function(y) {

@@ -81,3 +81,29 @@ test_that('summary default summary is returned for missing information', {
   expect_equal(sum_out(sum_shk(model2, software, 'eps', rounding)), c('epsshk', 'na'))
   expect_equal(sum_out(sum_shk(model2, software, 'eta', rounding)), c('etashk', 'na'))
 })
+
+test_that("Termination messages are parsed when minimization is terminated",{
+  relevant_lst_part <- "#TERM:
+0MINIMIZATION TERMINATED
+ DUE TO PROXIMITY OF NEXT ITERATION EST. TO A VALUE
+ AT WHICH THE OBJ. FUNC. IS INFINITE
+0AT THE LAST COMPUTED INFINITE VALUE OF THE OBJ. FUNCT.:
+ ERROR IN NCONTR WITH INDIVIDUAL       1   ID= 1.00000000000000E+00
+ NUMERICAL HESSIAN OF OBJ. FUNC. FOR COMPUTING CONDITIONAL ESTIMATE
+ IS NON POSITIVE DEFINITE
+ THETA=
+  2.79E+00   1.04E-02   4.38E-02   1.90E-01   1.69E+00   1.02E+00   0.00E+00   0.00E+00   0.00E+00   0.00E+00
+  0.00E+00   0.00E+00   0.00E+00   0.00E+00  -1.00E+00   0.00E+00  -7.84E-01  -1.13E+00   1.57E+00  -9.40E-01
+ -9.05E-01  -7.71E-01  -8.34E-01  -1.43E+00   7.66E-01  -6.55E-01  -8.89E-01   5.02E-01  -9.12E-01  -9.84E-01
+ -2.27E+00  -7.53E-01  -8.85E-01  -1.04E+00  -7.16E-01  -4.04E-01  -6.25E+00  -1.15E+00
+
+ NO. OF FUNCTION EVALUATIONS USED:     5329
+ NO. OF SIG. DIGITS UNREPORTABLE
+
+ ETABAR IS THE ARITHMETIC MEAN OF THE ETA-ESTIMATES,
+ AND THE P-VALUE IS GIVEN FOR THE NULL HYPOTHESIS THAT THE TRUE MEAN IS 0.
+" 
+  expected_result <- tibble::tibble(problem = 1, subprob = 0, label = 'term', value = "MINIMIZATION TERMINATED\nDUE TO PROXIMITY OF NEXT ITERATION EST. TO A VALUE\nAT WHICH THE OBJ. FUNC. IS INFINITE\n0AT THE LAST COMPUTED INFINITE VALUE OF THE OBJ. FUNCT.:\nERROR IN NCONTR WITH INDIVIDUAL       1   ID= 1.00000...\nNUMERICAL HESSIAN OF OBJ. FUNC. FOR COMPUTING CONDITI...\nIS NON POSITIVE DEFINITE\nTHETA=\n2.79E+00   1.04E-02   4.38E-02   1.90E-01   1.69E+00 ...\n0.00E+00   0.00E+00   0.00E+00   0.00E+00  -1.00E+00 ...\n-9.05E-01  -7.71E-01  -8.34E-01  -1.43E+00   7.66E-01...\n-2.27E+00  -7.53E-01  -8.85E-01  -1.04E+00  -7.16E-01...\n")
+  model <- tibble::tibble(problem = 1, level = 60, subroutine = 'lst', code = unlist(stringr::str_split(relevant_lst_part, "\\n")), comment = "")
+  expect_equal(sum_term(model, "nonmem"), expected_result)
+})
