@@ -35,6 +35,7 @@ Function designed to change the type, label or unit associated with variables.
 \section{Recognized variable types}{
 
 \itemize{
+  \item a: Compartments' amount
   \item amt: Dose amount
   \item catcov: Categorical covariate
   \item contcov: Continuous covariate

@@ -8,6 +8,7 @@ iteration_plot_functions  <- c('prm_vs_iteration', 'grd_vs_iteration')
 parameter_plot_functions  <- c('prm_distrib', 'prm_qq')
 eta_plot_functions        <- c('eta_distrib', 'eta_qq')
 cov_plot_functions        <- c('cov_distrib', 'cov_qq')
+kinetic_plot_functions    <- c('amt_vs_idv')
 individual_plot_functions <- c('ind_plots')
 
 plot_functions <- c(prediction_plot_functions, residual_plot_functions, 
@@ -60,3 +61,11 @@ test_that_for_all(distribution_functions, 'have proper error check', {
   expect_error(.distribution_function(xpdb_no_file), 
                regexp = 'No data could be found in this xpdb')
 })
+
+test_that_for_all(kinetic_plot_functions, 'works properly', {
+  expect_error(.kinetic_plot_function(xpdb_ex_pk), 
+               regexp = 'No compartment amount column found in the xpdb data index')
+  expect_true(is.xpose.plot(.kinetic_plot_function(xpdb_ex_pk %>% 
+                                                     set_var_types(a = c('IPRED', 'DV')))))
+})
+  

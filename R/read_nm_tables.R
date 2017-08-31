@@ -295,5 +295,6 @@ index_table <- function(x) {
       .$col == 'PRED' ~ 'pred',
       .$col %in% c('RES', 'WRES', 'CWRES', 'IWRES', 'EWRES', 'NPDE') ~ 'res',
       stringr::str_detect(.$col, 'ETA\\d+|ET\\d+') ~ 'eta',
+      stringr::str_detect(.$col, '^A\\d+$') ~ 'a',
       TRUE ~ tab_type))
 }
