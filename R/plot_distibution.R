@@ -6,6 +6,8 @@
 #' @param type String setting the type of plot to be used. Can be histogram 'h',
 #' density 'd', rug 'r' or any combination of the three.
 #' @param guide Should the guide (e.g. reference distribution) be displayed.
+#' @param drop_static Should columns that only have a single unique value 
+#' (i.e. static) be dropped.
 #' 
 #' @inheritSection xplot_distrib Layers mapping
 #' @inheritSection xplot_scatter Faceting
@@ -27,6 +29,7 @@
 #' @export
 prm_distrib <- function(xpdb,
                         mapping  = NULL,
+                        drop_static = TRUE,
                         type     = 'hr',
                         facets   = NULL,
                         title    = 'Parameter distribution | @run',
@@ -44,6 +47,9 @@ prm_distrib <- function(xpdb,
   if (is.null(facets)) facets <- 'variable'
   
   prm_col <- xp_var(xpdb, problem, type = 'param')$col
+  if (drop_static) {
+    prm_col <- drop_static_cols(xpdb, problem, cols = prm_col, quiet = quiet)
+  }
   if (is.null(prm_col)) {
     stop('No parameter column found in the xpdb data index.', call. = FALSE)
   }
@@ -64,6 +70,7 @@ prm_distrib <- function(xpdb,
 #' @export
 eta_distrib <- function(xpdb,
                         mapping  = NULL,
+                        drop_static = TRUE,
                         type     = 'hr',
                         facets   = NULL,
                         title    = 'Eta distribution | @run',
@@ -81,6 +88,9 @@ eta_distrib <- function(xpdb,
   if (is.null(facets)) facets <- 'variable'
   
   eta_col <- xp_var(xpdb, problem, type = 'eta')$col
+  if (drop_static) {
+    eta_col <- drop_static_cols(xpdb, problem, cols = eta_col, quiet = quiet)
+  }
   if (is.null(eta_col)) {
     stop('No eta column found in the xpdb data index.', call. = FALSE)
   }
@@ -88,7 +98,8 @@ eta_distrib <- function(xpdb,
   xplot_distrib(xpdb = xpdb, quiet = quiet,
                 opt = data_opt(problem = problem, 
                                filter = only_distinct(xpdb, problem, facets, quiet), 
-                               tidy = TRUE, value_col = eta_col),
+                               tidy = TRUE, value_col = eta_col,
+                               post_processing = reorder_factors(type = 'Eta')),
                 mapping = aes_c(aes_string(x = 'value'), mapping), 
                 type = type, guide = guide, facets = facets,
                 xscale = check_scales('x', log), 
@@ -148,6 +159,7 @@ res_distrib <- function(xpdb,
 #' @export
 cov_distrib <- function(xpdb,
                         mapping  = NULL,
+                        drop_static = TRUE,
                         type     = 'hr',
                         facets   = NULL,
                         title    = 'Continuous covariates distribution | @run',
@@ -163,8 +175,11 @@ cov_distrib <- function(xpdb,
   if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (is.null(facets)) facets <- 'variable'
-  cov_col <- xp_var(xpdb, problem, type = 'contcov')$col
   
+  cov_col <- xp_var(xpdb, problem, type = 'contcov')$col
+  if (drop_static) {
+    cov_col <- drop_static_cols(xpdb, problem, cols = cov_col, quiet = quiet)
+  }
   if (is.null(cov_col)) {
     stop('No continuous covariate column found in the xpdb data index.', call. = FALSE)
   }

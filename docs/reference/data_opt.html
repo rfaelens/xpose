@@ -130,7 +130,7 @@
 
     <pre class="usage"><span class='fu'>data_opt</span>(<span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subprob</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>source</span> <span class='kw'>=</span> <span class='st'>"data"</span>,
   <span class='kw'>simtab</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>filter</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tidy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>index_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>value_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>value_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>post_processing</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -171,6 +171,11 @@ Column names to use as index when tidying the data.</p></td>
       <td><p>Only used when 'tidy' is defined a <code>TRUE</code> and <code>index_col</code> is <code>NULL</code>. 
 Column names to be stacked when tidying the data.</p></td>
     </tr>
+    <tr>
+      <th>post_processing</th>
+      <td><p>A function used to modify the data after it has been tidyied e.g. post_processing = function(x) 
+dplyr::mutate(.data = x, variable = as.factor(.$variable)) where x is the tidy data.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -201,6 +206,9 @@ Column names to be stacked when tidying the data.</p></td>
 #&gt; NULL
 #&gt; 
 #&gt; $value_col
+#&gt; NULL
+#&gt; 
+#&gt; $post_processing
 #&gt; NULL
 #&gt; </div><div class='input'>
 </div></pre>

@@ -1,4 +1,4 @@
-Mon Jun 19 01:13:13 CEST 2017
+Fri Sep  1 01:27:25 CEST 2017
 ;; 1. Based on:     000
 ;; 2. Description:       
 ;;    NONMEM PK example for xpose
@@ -11,7 +11,8 @@ $INPUT      ID OCC XAT2=DROP DGRP=DROP DOSE FLAG=DROP ONO=DROP
 $DATA      mx19_1.csv IGNORE=@
 $ABBREVIATED DERIV2=NO COMRES=6
 $SUBROUTINE ADVAN2 TRANS1
-$PK  
+$PK
+ 
    TVCL    = THETA(1)*(1+THETA(6)*(CLCR-65))
    TVV     = THETA(2)*WT
    CL      = TVCL*EXP(ETA(1))
@@ -21,7 +22,8 @@ $PK
    K       = CL/V
    S2      = V
 
-$ERROR  
+$ERROR
+ 
      A1    = A(1)
      A2    = A(2)
      W     = THETA(5)
@@ -43,7 +45,7 @@ $SIGMA  1  FIX
 $ESTIMATION METHOD=1 INTER MAXEVALS=9999 PRINT=1 NOABORT MSFO=msf001
 $COVARIANCE PRINT=E
 $TABLE      ID OCC DOSE AMT SS II TIME TAD IPRED CWRES CPRED IWRES
-            EVID ONEHEADER NOPRINT FILE=sdtab001 ; Simple table
+            EVID A1 A2 ONEHEADER NOPRINT FILE=sdtab001 ; Simple table
 $TABLE      ID SEX MED1 MED2 ONEHEADER NOPRINT NOAPPEND
             FORMAT=,1PE11.4 FILE=catab001.csv ; Table in csv format
 $TABLE      ID CLCR AGE WT ONEHEADER FIRSTONLY NOPRINT NOAPPEND
@@ -207,8 +209,8 @@ NM-TRAN MESSAGES
 
 License Registered to: Uppsala University
 Expiration Date:    14 MAR 2018
-Current Date:       19 JUN 2017
-Days until program expires : 270
+Current Date:        1 SEP 2017
+Days until program expires : 198
 1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.3.0
  ORIGINALLY DEVELOPED BY STUART BEAL, LEWIS SHEINER, AND ALISON BOECKMANN
  CURRENT DEVELOPERS ARE ROBERT BAUER, ICON DEVELOPMENT SOLUTIONS,
@@ -230,7 +232,7 @@ Days until program expires : 270
 0LABELS FOR DATA ITEMS:
  ID OCC DOSE DV SCR AGE SEX CLASS WT ACE MED1 MED2 TAD TIME CLCR AMT SS II EVID MDV
 0(NONBLANK) LABELS FOR PRED-DEFINED ITEMS:
- CL V KA ALAG1 IPRED IWRES
+ CL V KA ALAG1 A1 A2 IPRED IWRES
 0FORMAT FOR DATA:
  (E5.0,E2.0,E4.0,E7.0,E4.0,E3.0,2E2.0,E4.0,3E2.0,2E9.0,4E4.0/2F2.0)              
  
@@ -281,7 +283,7 @@ Days until program expires : 270
  LFORMAT:               
  RFORMAT:               
 0USER-CHOSEN ITEMS:
- ID OCC DOSE AMT SS II TIME TAD IPRED CWRES CPRED IWRES EVID
+ ID OCC DOSE AMT SS II TIME TAD IPRED CWRES CPRED IWRES EVID A1 A2
 0-- TABLE   2 --
 04 COLUMNS APPENDED:     NO 
  PRINTED:                NO 
@@ -559,8 +561,8 @@ Days until program expires : 270
  EPSshrink(%):   6.9935E+00
 
  #TERE:
- Elapsed estimation time in seconds:    14.78
- Elapsed covariance time in seconds:    14.93
+ Elapsed estimation time in seconds:     4.26
+ Elapsed covariance time in seconds:     4.38
 1
  
  
@@ -1135,6 +1137,6 @@ Days until program expires : 270
  SOURCE  1:
     SEED1:     298938252   SEED2:             0
  ESTIMATION STEP OMITTED:                 YES 
- #CPUT: Total CPU Time in Seconds,       19.769
+ #CPUT: Total CPU Time in Seconds,       10.379
 Stop Time:
-Mon Jun 19 01:13:48 CEST 2017
+Fri Sep  1 01:27:36 CEST 2017

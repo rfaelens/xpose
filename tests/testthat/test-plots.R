@@ -8,14 +8,15 @@ iteration_plot_functions  <- c('prm_vs_iteration', 'grd_vs_iteration')
 parameter_plot_functions  <- c('prm_distrib', 'prm_qq')
 eta_plot_functions        <- c('eta_distrib', 'eta_qq')
 cov_plot_functions        <- c('cov_distrib', 'cov_qq')
+kinetic_plot_functions    <- c('amt_vs_idv')
 individual_plot_functions <- c('ind_plots')
 
 plot_functions <- c(prediction_plot_functions, residual_plot_functions, 
                     iteration_plot_functions, parameter_plot_functions, 
                     eta_plot_functions, cov_plot_functions, 
-                    individual_plot_functions)
+                    individual_plot_functions, kinetic_plot_functions)
 
-not_files_based_functions <- plot_functions[!grepl('iteration|prm_|eta_|cov_|res_qq|res_distrib', plot_functions)]
+not_sim_functions <- plot_functions[!grepl('iteration|prm_|eta_|cov_|res_qq|res_distrib|amt_', plot_functions)]
 distribution_functions <- plot_functions[grepl('(prm|eta|cov|res)_(distrib|qq)', plot_functions)]
 
 # Simulation only xpdb
@@ -43,8 +44,8 @@ test_that_for_all(residual_plot_functions, 'xpose plot objects are returned with
   expect_true(is.xpose.plot(.residual_plot_function(xpdb_ex_pk, res = c('CWRES', 'IWRES'))))
 })
 
-test_that_for_all(not_files_based_functions, 'no error occurs when xpdb is from a simulation only', {
-  expect_error(.not_files_based_function(xpdb_sim_only), NA)
+test_that_for_all(not_sim_functions, 'no error occurs when xpdb is from a simulation only', {
+  expect_error(.not_sim_function(xpdb_sim_only), NA)
 })
 
 test_that_for_all(iteration_plot_functions, 'have proper error check', {
@@ -53,7 +54,7 @@ test_that_for_all(iteration_plot_functions, 'have proper error check', {
   expect_error(.iteration_plot_function(xpdb_mis_file), 
                regexp = 'File extension.+not found in model output files')
 })  
-  
+
 test_that_for_all(distribution_functions, 'have proper error check', {
   expect_error(.distribution_function(xpdb_sim_only), 
                regexp = 'No.+column found in the xpdb data index')

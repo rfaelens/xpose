@@ -12,6 +12,7 @@
 #' 
 #' @section Recognized variable types:
 #' \itemize{
+#'   \item a: Compartments' amount
 #'   \item amt: Dose amount
 #'   \item catcov: Categorical covariate
 #'   \item contcov: Continuous covariate
