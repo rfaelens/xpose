@@ -353,11 +353,12 @@ sum_term <- function(model, software) {
   if (software == 'nonmem') {
     x <- dplyr::filter(model, model$subroutine == 'lst')
     start <- which(stringr::str_detect(x$code, stringr::fixed('0MINIMIZATION')))
+    end <- which(stringr::str_detect(x$code, stringr::fixed(" NO. OF FUNCTION EVALUATIONS USED:")))
     
-    if (length(start) == 0) return(sum_tpl('term', 'na'))
+    if (length(start) == 0 | length(end)  == 0 | length(start)!=length(end)) return(sum_tpl('term', 'na'))
     
     x %>% 
-      dplyr::slice(purrr::map(start, ~.:(.+5)) %>% purrr::flatten_int()) %>% 
+      dplyr::slice(purrr::map2(start, end, ~seq(.x,.y)) %>% purrr::flatten_int()) %>% 
       dplyr::group_by_(.dots = 'problem') %>% 
       tidyr::nest() %>% 
       dplyr::mutate(value = purrr::map_chr(.$data, function(y) {
@@ -536,13 +537,14 @@ sum_shk <- function(model, software, type, rounding) {
     ## Method 3 (worse one)
     x <- model %>% 
       dplyr::filter(.$subroutine == 'lst') %>% 
-      dplyr::filter(stringr::str_detect(.$code, stringr::fixed(stringr::str_c(stringr::str_to_upper(type), 
-                                                                              'shrink', sep = ''))))
-    
+      dplyr::filter(stringr::str_detect(.$code, stringr::regex(
+        stringr::str_c(stringr::str_to_upper(type), 'SHRINK[^V]'), 
+        ignore_case = TRUE)))
+
     if (nrow(x) == 0) return(sum_tpl(stringr::str_c(type, 'shk'), 'na'))
     
     x %>% 
-      dplyr::mutate(code = stringr::str_match(.$code, '\\Q(%):\\E\\s*(.+)')[, 2]) %>% 
+      dplyr::mutate(code = stringr::str_match(.$code, '\\Q(%)\\E:*\\s*(.+)')[, 2]) %>% 
       dplyr::mutate(code = stringr::str_split(.$code, '\\s+')) %>% 
       dplyr::mutate(value = purrr::map(.$code, ~round(as.numeric(.), digits = rounding)),
                     grouping = purrr::map(.$code, ~stringr::str_c(' [', 1:length(.), ']', sep = ''))) %>% 

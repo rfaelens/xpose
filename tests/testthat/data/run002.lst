@@ -19,7 +19,7 @@
 0LABELS FOR DATA ITEMS:
  ID OCC DOSE DV SCR AGE SEX CLASS WT ACE MED1 MED2 TAD TIME CLCR AMT SS II EVID MDV
 0(NONBLANK) LABELS FOR PRED-DEFINED ITEMS:
- CL V KA ALAG1 IPRED IWRES
+ CL V KA ALAG1 A1 A2 IPRED IWRES
 0FORMAT FOR DATA:
  (E5.0,E2.0,E4.0,E7.0,E4.0,E3.0,2E2.0,E4.0,3E2.0,2E9.0,4E4.0/2F2.0)              
  
@@ -70,7 +70,7 @@
  LFORMAT:               
  RFORMAT:               
 0USER-CHOSEN ITEMS:
- ID OCC DOSE AMT SS II TIME TAD IPRED CWRES CPRED IWRES EVID
+ ID OCC DOSE AMT SS II TIME TAD IPRED CWRES CPRED IWRES EVID A1 A2
 0-- TABLE   2 --
 04 COLUMNS APPENDED:     NO 
  PRINTED:                NO 
@@ -348,8 +348,8 @@
  EPSshrink(%):   6.9935E+00
 
  #TERE:
- Elapsed estimation time in seconds:    14.78
- Elapsed covariance time in seconds:    14.93
+ Elapsed estimation time in seconds:     4.26
+ Elapsed covariance time in seconds:     4.38
 1
  
  
@@ -924,6 +924,6 @@
  SOURCE  1:
     SEED1:     298938252   SEED2:             0
  ESTIMATION STEP OMITTED:                 YES 
- #CPUT: Total CPU Time in Seconds,       19.769
-This file was created using the NONMEM version in directory c:\nmvi
-Started  Finished 
+ #CPUT: Total CPU Time in Seconds,       10.379
+Stop Time:
+Fri Sep  1 01:27:36 CEST 2017

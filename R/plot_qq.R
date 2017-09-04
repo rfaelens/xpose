@@ -4,9 +4,12 @@
 #' 
 #' @inheritParams dv_vs_pred
 #' @param type String setting the type of plot. Can only be points 'p'.
-#' @param guides Should the guides (e.g. reference line) be displayed.
+#' @param guide Should the guide (e.g. reference line) be displayed.
+#' @param drop_static Should columns that only have a single unique value 
+#' (i.e. static) be dropped.
 #' 
 #' @inheritSection xplot_qq Layers mapping
+#' @inheritSection xplot_scatter Faceting
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_distrib}}
 #' @examples
@@ -26,26 +29,29 @@
 #' @export
 prm_qq <- function(xpdb,
                    mapping  = NULL,
+                   drop_static = TRUE,
                    type     = 'p',
                    facets   = NULL,
                    title    = 'QQ plot of parameters | @run',
                    subtitle = 'Based on @nind individuals',
                    caption  = '@dir',
                    log      = NULL,
-                   guides   = TRUE,
+                   guide    = TRUE,
                    problem,
                    quiet,
                    ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-    if (missing(problem)) problem <- default_plot_problem(xpdb)
+  if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (is.null(facets)) facets <- 'variable'
   
   prm_col <- xp_var(xpdb, problem, type = 'param')$col
+  if (drop_static) {
+    prm_col <- drop_static_cols(xpdb, problem, cols = prm_col, quiet = quiet)
+  }
   if (is.null(prm_col)) {
-    msg('No parameter column found in the xpdb data index.', quiet)
-    return()
+    stop('No parameter column found in the xpdb data index.', call. = FALSE)
   }
   
   xplot_qq(xpdb = xpdb, quiet = quiet,
@@ -53,7 +59,7 @@ prm_qq <- function(xpdb,
                           filter = only_distinct(xpdb, problem, facets, quiet), 
                           tidy = TRUE, value_col = prm_col),
            mapping = aes_c(aes_string(sample = 'value'), mapping), 
-           type = type, guides = guides, panel_facets = facets,
+           type = type, guide = guide, facets = facets,
            xscale = check_scales('x', log), 
            yscale = check_scales('y', log), 
            title = title, subtitle = subtitle, caption = caption,
@@ -66,34 +72,38 @@ prm_qq <- function(xpdb,
 #' @export
 eta_qq <- function(xpdb,
                    mapping  = NULL,
+                   drop_static = TRUE,
                    type     = 'p',
                    facets   = NULL,
                    title    = 'QQ plot of etas | @run',
                    subtitle = 'Based on @nind individuals, Eta shrink: @etashk',
                    caption  = '@dir',
                    log      = NULL,
-                   guides   = TRUE,
+                   guide    = TRUE,
                    problem,
                    quiet,
                    ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-    if (missing(problem)) problem <- default_plot_problem(xpdb)
+  if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (is.null(facets)) facets <- 'variable'
-  eta_col <- xp_var(xpdb, problem, type = 'eta')$col
   
+  eta_col <- xp_var(xpdb, problem, type = 'eta')$col
+  if (drop_static) {
+    eta_col <- drop_static_cols(xpdb, problem, cols = eta_col, quiet = quiet)
+  }
   if (is.null(eta_col)) {
-    msg('No eta column found in the xpdb data index.', quiet)
-    return()
+    stop('No eta column found in the xpdb data index.', call. = FALSE)
   }
   
   xplot_qq(xpdb = xpdb, quiet = quiet,
            opt = data_opt(problem = problem, 
                           filter = only_distinct(xpdb, problem, facets, quiet), 
-                          tidy = TRUE, value_col = eta_col),
+                          tidy = TRUE, value_col = eta_col,
+                          post_processing = reorder_factors(type = 'Eta')),
            mapping = aes_c(aes_string(sample = 'value'), mapping), 
-           type = type, guides = guides, panel_facets = facets,
+           type = type, guide = guide, facets = facets,
            xscale = check_scales('x', log), 
            yscale = check_scales('y', log), 
            title = title, subtitle = subtitle, caption = caption,
@@ -114,14 +124,19 @@ res_qq <- function(xpdb,
                    subtitle = 'Based on @nobs observations',
                    caption  = '@dir',
                    log      = NULL,
-                   guides   = TRUE,
+                   guide    = TRUE,
                    problem,
                    quiet,
                    ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-    if (missing(problem)) problem <- default_plot_problem(xpdb)
+  if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
+  
+  if (is.null(xp_var(xpdb, problem, col = res))) {
+    stop('No ', stringr::str_c(res, collapse = ', '), 
+         ' column found in the xpdb data index.', call. = FALSE)
+  }
   
   if (length(res) > 1) {
     if (is.null(facets)) facets <- 'variable'
@@ -137,7 +152,7 @@ res_qq <- function(xpdb,
   
   xplot_qq(xpdb = xpdb, quiet = quiet,
            opt = opt, mapping = vars,
-           type = type, guides = guides, panel_facets = facets,
+           type = type, guide = guide, facets = facets,
            xscale = check_scales('x', log), 
            yscale = check_scales('y', log), 
            title = title, subtitle = subtitle, caption = caption,
@@ -150,13 +165,14 @@ res_qq <- function(xpdb,
 #' @export
 cov_qq <- function(xpdb,
                    mapping  = NULL,
+                   drop_static = TRUE,
                    type     = 'p',
                    facets   = NULL,
                    title    = 'QQ plot of continuous covariates | @run',
                    subtitle = 'Based on @nind individuals',
                    caption  = '@dir',
                    log      = NULL,
-                   guides   = TRUE,
+                   guide    = TRUE,
                    problem,
                    quiet,
                    ...) {
@@ -165,11 +181,13 @@ cov_qq <- function(xpdb,
   if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (is.null(facets)) facets <- 'variable'
-  cov_col <- xp_var(xpdb, problem, type = 'contcov')$col
   
+  cov_col <- xp_var(xpdb, problem, type = 'contcov')$col
+  if (drop_static) {
+    cov_col <- drop_static_cols(xpdb, problem, cols = cov_col, quiet = quiet)
+  }
   if (is.null(cov_col)) {
-    msg('No continuous covariate column found in the xpdb data index.', quiet)
-    return()
+    stop('No continuous covariate column found in the xpdb data index.', call. = FALSE)
   }
   
   xplot_qq(xpdb = xpdb, quiet = quiet,
@@ -177,7 +195,7 @@ cov_qq <- function(xpdb,
                           filter = only_distinct(xpdb, problem, facets, quiet), 
                           tidy = TRUE, value_col = cov_col),
            mapping = aes_c(aes_string(sample = 'value'), mapping), 
-           type = type, guides = guides, panel_facets = facets,
+           type = type, guide = guide, facets = facets,
            xscale = check_scales('x', log), 
            yscale = check_scales('y', log), 
            title = title, subtitle = subtitle, caption = caption,

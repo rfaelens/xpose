@@ -84,13 +84,14 @@ xpose_data <- function(runno         = NULL,
   # List tables
   if (ext %in% c('.lst', '.out', '.res', '.mod', '.ctl')) {
     software   <- 'nonmem'
-    model_code <- read_nm_model(file = basename(full_path), dir = dir)
+    model_code <- read_nm_model(file = basename(full_path), 
+                                dir  = dirname(full_path))
     
     if (is.null(manual_import)) {
       tbl_names <- list_nm_tables(model_code)
     } else {
-      tbl_names <- list_nm_tables_manual(runno = runno, file = file, 
-                                         dir = dir, tab_list = manual_import)
+      tbl_names <- list_nm_tables_manual(runno = runno, file = basename(full_path), 
+                                         dir = dirname(full_path), tab_list = manual_import)
     }
   } else {
     stop('Model file currently not supported by xpose.', call. = FALSE)
@@ -101,7 +102,9 @@ xpose_data <- function(runno         = NULL,
     msg('Skipping data import.', quiet)
     data <- NULL
   } else if (software == 'nonmem') {
-    data <- read_nm_tables(file = tbl_names, dir = NULL, quiet = quiet, simtab = simtab, ...)
+    data <- tryCatch(read_nm_tables(file = tbl_names, dir = NULL, 
+                                    quiet = quiet, simtab = simtab, ...), 
+                     error = function(e) msg(c(' * Warning: ', e$message), quiet = FALSE))
   }
   
   # Generate model summary
@@ -126,7 +129,8 @@ xpose_data <- function(runno         = NULL,
     out_files <- full_path %>% 
       basename() %>% 
       update_extension(ext = extra_files) %>% 
-      {read_nm_files(file = ., dir = dir, quiet = quiet)}
+      {tryCatch(read_nm_files(file = ., dir = dirname(full_path), quiet = quiet), 
+                error = function(e) msg(c(' * Warning: ', e$message), quiet = FALSE))}
   }
   
   # Label themes
@@ -136,7 +140,7 @@ xpose_data <- function(runno         = NULL,
   # Output xpose_data
   list(code = model_code, summary = summary, data = data,
        files = out_files, gg_theme = gg_theme, xp_theme = xp_theme,
-       options = list(dir = dir, quiet = quiet, 
+       options = list(dir = dirname(full_path), quiet = quiet, 
                       manual_import = manual_import)) %>% 
     structure(class = c('xpose_data', 'uneval'))
 }

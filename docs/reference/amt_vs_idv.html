@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Default xpose scatter plot function — xplot_scatter • xpose</title>
+<title>Compartment kinetics — amt_vs_idv • xpose</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -120,24 +120,24 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Default xpose scatter plot function</h1>
+    <h1>Compartment kinetics</h1>
     </div>
 
     
-    <p>Manually generate scatter plots from an xpdb object.</p>
+    <p>Plot of the change in compartments' amount over the independent variable</p>
     
 
-    <pre class="usage"><span class='fu'>xplot_scatter</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pls"</span>,
-  <span class='kw'>guide</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>xscale</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>, <span class='kw'>yscale</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>,
-  <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>plot_name</span> <span class='kw'>=</span> <span class='st'>"scatter_plot"</span>, <span class='no'>gg_theme</span>, <span class='no'>xp_theme</span>, <span class='no'>opt</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>amt_vs_idv</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>, <span class='kw'>drop_static</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"l"</span>, <span class='kw'>facets</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Compartments amount vs. @x | @run"</span>,
+  <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Ofv: @ofv"</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>problem</span>, <span class='no'>quiet</span>,
+  <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>xpdb</th>
-      <td><p>An <code>xpose_data</code> object generated with <code><a href='xpose_data.html'>xpose_data</a></code>.</p></td>
+      <td><p>An xpose database object.</p></td>
     </tr>
     <tr>
       <th>mapping</th>
@@ -149,21 +149,19 @@
       <td><p>Grouping variable to be used for lines.</p></td>
     </tr>
     <tr>
+      <th>drop_static</th>
+      <td><p>Should columns that only have a single unique value 
+(i.e. static) be dropped.</p></td>
+    </tr>
+    <tr>
       <th>type</th>
       <td><p>String setting the type of plot to be used. Can be points 'p',
 line 'l', smooth 's' and text 't' or any combination of the four.</p></td>
     </tr>
     <tr>
-      <th>guide</th>
-      <td><p>Should the guide (e.g. unity line) be displayed.</p></td>
-    </tr>
-    <tr>
-      <th>xscale</th>
-      <td><p>Scale type for x axis (e.g. 'continuous', 'discrete', 'log10').</p></td>
-    </tr>
-    <tr>
-      <th>yscale</th>
-      <td><p>Scale type for y axis (e.g. 'continuous', 'discrete', 'log10').</p></td>
+      <th>facets</th>
+      <td><p>Either a character string to use <a href='http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap'>facet_wrap</a> 
+or a formula to use <a href='http://www.rdocumentation.org/packages/ggplot2/topics/facet_grid'>facet_grid</a>.</p></td>
     </tr>
     <tr>
       <th>title</th>
@@ -178,22 +176,14 @@ line 'l', smooth 's' and text 't' or any combination of the four.</p></td>
       <td><p>Page caption. Use <code>NULL</code> to remove.</p></td>
     </tr>
     <tr>
-      <th>plot_name</th>
-      <td><p>Name to be used by <code><a href='xpose_save.html'>xpose_save()</a></code> when saving the plot.</p></td>
+      <th>log</th>
+      <td><p>String assigning logarithmic scale to axes, can be either '', 
+'x', y' or 'xy'.</p></td>
     </tr>
     <tr>
-      <th>gg_theme</th>
-      <td><p>A ggplot2 theme object (e.g. <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_classic</a></code>).</p></td>
-    </tr>
-    <tr>
-      <th>xp_theme</th>
-      <td><p>An xpose theme or vector of modifications to the xpose theme
-(e.g. <code>c(point_color = 'red', line_linetype = 'dashed')</code>).</p></td>
-    </tr>
-    <tr>
-      <th>opt</th>
-      <td><p>A list of options in order to create appropriate data input for 
-ggplot2. For more information see <code><a href='data_opt.html'>data_opt</a></code>.</p></td>
+      <th>problem</th>
+      <td><p>The $problem number to be used. By default returns 
+the last estimation problem.</p></td>
     </tr>
     <tr>
       <th>quiet</th>
@@ -201,7 +191,7 @@ ggplot2. For more information see <code><a href='data_opt.html'>data_opt</a></co
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Any additional aesthetics.</p></td>
+      <td><p>Any additional aesthetics to be passed on <code>xplot_scatter</code>.</p></td>
     </tr>
     </table>
     
@@ -244,11 +234,11 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='xplot_distrib.html'>xplot_distrib</a></code> <code><a href='xplot_qq.html'>xplot_qq</a></code></p>
+    <p><code><a href='xplot_scatter.html'>xplot_scatter</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>xplot_scatter</span>(<span class='no'>xpdb_ex_pk</span>, <span class='fu'>aes</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>IPRED</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>DV</span>))</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='img'><img src='xplot_scatter-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>amt_vs_idv</span>(<span class='no'>xpdb_ex_pk</span>)</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Tidying data by ID, SEX, MED1, MED2, OCC ... and 24 more variables</span></div><div class='img'><img src='amt_vs_idv-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

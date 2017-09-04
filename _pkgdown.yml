@@ -77,6 +77,10 @@ reference:
     - eta_qq
     - prm_qq
     - res_qq
+  - title: Kinetic plots
+    desc:  Plots of compartments' amount
+    contents:
+    - amt_vs_idv
   - title: Minimization diagnostics
     desc: Graphics to evaluate the estimation step
     contents:

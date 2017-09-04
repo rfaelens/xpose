@@ -33,13 +33,13 @@
 #'   \item line: options to \code{geom_line}
 #'   \item area: options to \code{geom_ribbon} (smooth = TRUE) or \code{geom_rect} (smooth = FALSE)
 #'   \item rug: options to \code{geom_rug}
-#'   \item panel: options to \code{facet_wrap} (facets is character) or \code{facet_grid}
-#'   (facets is a formula)
 #'   \item smooth: options to \code{geom_smooth}
 #'   \item text: options to \code{geom_text}
 #'   \item xscale: options to \code{scale_x_continuous} or \code{scale_x_log10}
 #'   \item yscale: options to \code{scale_y_continuous} or \code{scale_y_log10}
 #' }
+#' @inheritSection xplot_scatter Faceting
+#' @inheritSection xplot_scatter Faceting
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{vpc_data}
 #' @examples
@@ -67,18 +67,15 @@ vpc <- function(xpdb,
   
   # Fetch data
   if (!any(xpdb$special$method == 'vpc')) { 
-    msg('No vpc data available. Please refer to the function `vpc_data()` function.', quiet)
-    return()
+    stop('No vpc data available. Please refer to the function `vpc_data()` function.', call. = FALSE)
   } else if (sum(xpdb$special$method == 'vpc') > 1) {
     if (is.null(vpc_type)) {
-      msg('Several vpc data are associated with this xpdb. Please use the argument `vpc_type`.', quiet)
-      return()
+      stop('Several vpc data are associated with this xpdb. Please use the argument `vpc_type`.', call. = FALSE)
     } else {
       vpc_type <- match.arg(vpc_type, choices = c('continuous', 'categorical', 'censored', 'time-to-event'))
       if (!vpc_type %in% xpdb$special[xpdb$special$method == 'vpc', ]$type) {
-        msg(c('No data are available for ', vpc_type, ' VPC. Change `vpc_type` to one of: ', 
-              stringr::str_c(xpdb$special[xpdb$special$method == 'vpc', ]$type, collapse = ', '), '.'), quiet)
-        return()
+        stop(c('No data are available for ', vpc_type, ' VPC. Change `vpc_type` to one of: ', 
+               stringr::str_c(xpdb$special[xpdb$special$method == 'vpc', ]$type, collapse = ', '), '.'), call. = FALSE)
       }
       vpc_dat  <- xpdb$special[xpdb$special$method == 'vpc' & xpdb$special$type == vpc_type, ]$data[[1]]
     }
@@ -104,8 +101,11 @@ vpc <- function(xpdb,
              stratify[!stratify %in% colnames(vpc_dat$aggr_obs)])) %>% 
       stringr::str_c(collapse = ', ') %>% 
       {stop('Faceting variable: ', ., ' not found. Use `stratify` to add a stratification variable in vpc_data().', 
-          call. = FALSE)}
+            call. = FALSE)}
   }
+  
+  # Check type
+  check_plot_type(type, allowed = c('a', 'p', 'l', 'r', 't'))
   
   # Assing xp_theme and gg_theme
   if (!missing(xp_theme)) {
@@ -117,7 +117,7 @@ vpc <- function(xpdb,
   
   # Create ggplot base
   if (is.null(mapping)) mapping <- aes()
-  xp <- ggplot(data = NULL, mapping, ...) + gg_theme 
+  xp <- ggplot(data = NULL, mapping) + gg_theme 
   
   # Add shadded areas
   if (stringr::str_detect(type, stringr::fixed('a', ignore_case = TRUE))) {
@@ -198,24 +198,6 @@ vpc <- function(xpdb,
              yscale_name = vpc_dat$obs_cols[['dv']],
              ...)
   
-  if (!is.null(facets)) {
-    if (!is.formula(facets)) {
-      xp <- xp + xp_geoms(mapping  = mapping,
-                          xp_theme = xpdb$xp_theme,
-                          name     = 'panel',
-                          ggfun    = 'facet_wrap_paginate',
-                          panel_facets = facets,
-                          ...)
-    } else {
-      xp <- xp + xp_geoms(mapping  = mapping,
-                          xp_theme = filter_xp_theme(xpdb$xp_theme, 'panel_dir', 'drop'),
-                          name     = 'panel',
-                          ggfun    = 'facet_grid_paginate',
-                          panel_facets = facets,
-                          ...)
-    }
-  }
-  
   # Add rug
   if (stringr::str_detect(type, stringr::fixed('r', ignore_case = TRUE))) {
     if (is.formula(facets)) {
@@ -234,9 +216,15 @@ vpc <- function(xpdb,
                           dplyr::distinct_(.dots = c(facets_string, 'idv'), .keep_all = TRUE),
                         rug_sides = 't',
                         ...)
-       
+    
   }
-
+  
+  # Define panels
+  if (!is.null(facets)) {
+    xp <- xp + xpose_panels(xp_theme = xpdb$xp_theme, 
+                            extra_args = c(facets = facets, list(...)))
+  }
+  
   # Add labels
   xp <- xp + labs(title = title, subtitle = subtitle, caption = caption)
   
@@ -245,13 +233,13 @@ vpc <- function(xpdb,
   
   # Add color scales
   xp <- xp + 
-    scale_fill_manual(values = c('steelblue2', 'grey40', 'steelblue2')) +
+    scale_fill_manual(values = c('steelblue3', 'grey60', 'steelblue3')) +
     scale_linetype_manual(values = c('93', 'solid', '93'))
   
   # Add metadata to plots
   xpdb_summary <- xpdb$summary
   if (!is.null(vpc_dat$psn_folder)) {
-   xpdb_summary$value[xpdb_summary$label == 'dir'] <- stringr::str_c('VPC folder: ', vpc_dat$psn_folder)
+    xpdb_summary$value[xpdb_summary$label == 'dir'] <- stringr::str_c('VPC folder: ', vpc_dat$psn_folder)
   }
   xp$xpose <- list(fun      = stringr::str_c('vpc_', vpc_dat$type),
                    summary  = xpdb_summary,

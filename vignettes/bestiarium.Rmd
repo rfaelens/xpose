@@ -73,6 +73,12 @@ res_qq(xpdb_ex_pk)
 cov_qq(xpdb_ex_pk)
 ```
 
+## Kinetic plots
+### Compartment's amount
+```{r}
+amt_vs_idv(xpdb_ex_pk)
+```
+
 ## Visual predictive checks (VPC)
 ### Continuous vpc
 ```{r}

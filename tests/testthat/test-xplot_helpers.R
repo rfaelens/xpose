@@ -14,14 +14,15 @@ test_that('Check check_scales', {
   expect_equal(check_scales('x', NULL), 'continuous')
   expect_equal(check_scales(c('log10', 'continuous'), NULL), 'continuous')
   expect_equal(check_scales(c('log10', 'continuous'), 'log10'), c('log10','continuous'))
-  
 })
 
 test_that('Check parse_title', {
   expect_equal(parse_title('OFV: @ofv', xpdb_ex_pk, problem = 1, quiet = TRUE), 'OFV: -1518.108')
-  expect_message(parse_title('OFV: @fake', xpdb_ex_pk, problem = 1, quiet = FALSE), regexp = 'not part of')
-  expect_equal(parse_title('OFV: @fake', xpdb_ex_pk, problem = 1, quiet = TRUE), 'OFV: @fake')
-  expect_equal(parse_title('OFV: @fake', xpdb_ex_pk, problem = 1, quiet = TRUE, extra_key = 'fake', extra_value = '1987'), 'OFV: 1987')
+  expect_warning(tmp_title1 <- parse_title('OFV: @fake', xpdb_ex_pk, problem = 1, quiet = FALSE), 
+                 regexp = 'not part of')
+  expect_equal(tmp_title1, 'OFV: @fake')
+  expect_equal(parse_title('OFV: @fake', xpdb_ex_pk, problem = 1, quiet = TRUE, extra_key = 'fake', 
+                           extra_value = '1987'), 'OFV: 1987')
 })
 
 test_that('Check filter_xp_theme', {
@@ -79,3 +80,18 @@ test_that('Check check_xpdb', {
   expect_null(check_xpdb(xpdb_NULL, check = FALSE))
   expect_null(check_xpdb(xpdb_ex_pk, check = 'data'))
 })
+
+test_that('Check check_plot_type', {
+  expect_silent(check_plot_type('pls', allowed = c('p', 'l', 's', 't')))
+  expect_warning(check_plot_type('prlst', allowed = c('p', 'l', 's', 't')), 
+                 regexp = 'Plot type \"r\" not recognized')
+  expect_warning(check_plot_type('prsz', allowed = c('p', 'l', 's', 't')), 
+                 regexp = 'Plot type \"r\", \"z\" not recognized')
+})
+
+test_that('Check drop_static', {
+  expect_message(variable_cols <- drop_static_cols(xpdb_ex_pk, problem = 1, quiet = FALSE,
+                                                   cols = c('CL', 'V', 'KA', 'ALAG1')), 
+                 regexp = 'Static variables ALAG1 will be dropped')
+  expect_equal(variable_cols, c('CL', 'V', 'KA'))
+  })

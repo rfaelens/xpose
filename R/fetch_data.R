@@ -15,6 +15,8 @@
 #' Column names to use as index when tidying the data.
 #' @param value_col Only used when 'tidy' is defined a \code{TRUE} and \code{index_col} is \code{NULL}. 
 #' Column names to be stacked when tidying the data.
+#' @param post_processing A function used to modify the data after it has been tidyied e.g. post_processing = function(x) 
+#' dplyr::mutate(.data = x, variable = as.factor(.$variable)) where x is the tidy data.
 #'
 #' @seealso \code{{xplot_scatter}}
 #' 
@@ -22,17 +24,19 @@
 #' data_opt(problem = 1, source = 'data', simtab = TRUE)
 #' 
 #' @export
-data_opt <- function(problem   = NULL, 
-                     subprob   = NULL, 
-                     source    = 'data', 
-                     simtab    = FALSE,
-                     filter    = NULL,
-                     tidy      = FALSE,
-                     index_col = NULL,
-                     value_col = NULL) {
+data_opt <- function(problem         = NULL, 
+                     subprob         = NULL, 
+                     source          = 'data', 
+                     simtab          = FALSE,
+                     filter          = NULL,
+                     tidy            = FALSE,
+                     index_col       = NULL,
+                     value_col       = NULL,
+                     post_processing = NULL) {
   list(problem = problem, subprob = subprob, source = source, 
        simtab = simtab, filter = filter, tidy = tidy, 
-       index_col = index_col, value_col = value_col)
+       index_col = index_col, value_col = value_col,
+       post_processing = post_processing)
 }
 
 # Create shortcut functions on the fly to filter observations
@@ -68,6 +72,17 @@ only_distinct <- function(xpdb, problem, facets, quiet) {
   fun
 }
 
+# Reorder panels numerically
+reorder_factors <- function(type) {
+  function(x) {
+    x %>% 
+      dplyr::mutate(variable = as.numeric(gsub('\\D', '', .$variable))) %>% 
+      dplyr::mutate(variable = factor(.$variable, levels = sort(unique(.$variable)),
+                                      labels = stringr::str_c(type, sort(unique(.$variable)), 
+                                                              sep = ' ')))
+  }
+}
+
 # Main function to get the data from different source and prepare it for plotting
 fetch_data <- function(xpdb, 
                        problem   = NULL, 
@@ -78,20 +93,19 @@ fetch_data <- function(xpdb,
                        tidy      = FALSE, 
                        index_col = NULL,
                        value_col = NULL,
+                       post_processing = NULL,
                        quiet     = FALSE) {
   
   if (source == 'data') {
     if (is.null(problem)) problem <- last_data_problem(xpdb, simtab)
     if (is.na(problem)) {
-      msg(c('No data associated with $prob no.', problem, ' could be found.'), quiet)
-      return()
+      stop(c('No data associated with $prob no.', problem, ' could be found.'), call. = FALSE)
     }
     msg(c('Using data from $prob no.', problem), quiet)
     data <- get_data(xpdb, problem = problem)
   } else {
     if (!any(xpdb$files$extension == source)) {
-      msg(c('File extension ', source, ' not found in model output files.'), quiet) 
-      return()
+      stop(c('File extension `.', source, '` not found in model output files.'), call. = FALSE) 
     }
     if (is.null(problem)) problem <- last_file_problem(xpdb, source)
     if (is.null(subprob)) subprob <- last_file_subprob(xpdb, source, problem)
@@ -114,6 +128,8 @@ fetch_data <- function(xpdb,
     data <- tidyr::gather_(data = data, key_col = 'variable', value_col = 'value',
                            gather_cols = colnames(data)[!colnames(data) %in% index_col])
   }
+  
+  if (is.function(post_processing)) data <- post_processing(data)
   
   # Add metadata to output
   attributes(data) <- c(attributes(data), 

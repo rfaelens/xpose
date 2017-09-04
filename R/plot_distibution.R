@@ -5,9 +5,12 @@
 #' @inheritParams dv_vs_pred
 #' @param type String setting the type of plot to be used. Can be histogram 'h',
 #' density 'd', rug 'r' or any combination of the three.
-#' @param guides Should the guides (e.g. reference distribution) be displayed.
+#' @param guide Should the guide (e.g. reference distribution) be displayed.
+#' @param drop_static Should columns that only have a single unique value 
+#' (i.e. static) be dropped.
 #' 
 #' @inheritSection xplot_distrib Layers mapping
+#' @inheritSection xplot_scatter Faceting
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_distrib}}
 #' @examples
@@ -26,26 +29,29 @@
 #' @export
 prm_distrib <- function(xpdb,
                         mapping  = NULL,
+                        drop_static = TRUE,
                         type     = 'hr',
                         facets   = NULL,
                         title    = 'Parameter distribution | @run',
                         subtitle = 'Based on @nind individuals',
                         caption  = '@dir',
                         log      = NULL,
-                        guides   = FALSE,
+                        guide    = FALSE,
                         problem,
                         quiet,
                         ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- last_data_problem(xpdb, simtab = FALSE)
+  if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (is.null(facets)) facets <- 'variable'
   
   prm_col <- xp_var(xpdb, problem, type = 'param')$col
+  if (drop_static) {
+    prm_col <- drop_static_cols(xpdb, problem, cols = prm_col, quiet = quiet)
+  }
   if (is.null(prm_col)) {
-    msg('No parameter column found in the xpdb data index.', quiet)
-    return()
+    stop('No parameter column found in the xpdb data index.', call. = FALSE)
   }
   
   xplot_distrib(xpdb = xpdb, quiet = quiet,
@@ -53,7 +59,7 @@ prm_distrib <- function(xpdb,
                                filter = only_distinct(xpdb, problem, facets, quiet),
                                tidy = TRUE, value_col = prm_col),
                 mapping = aes_c(aes_string(x = 'value'), mapping), 
-                type = type, guides = guides, panel_facets = facets,
+                type = type, guide = guide, facets = facets,
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
@@ -64,13 +70,14 @@ prm_distrib <- function(xpdb,
 #' @export
 eta_distrib <- function(xpdb,
                         mapping  = NULL,
+                        drop_static = TRUE,
                         type     = 'hr',
                         facets   = NULL,
                         title    = 'Eta distribution | @run',
                         subtitle = 'Based on @nind individuals, Eta shrink: @etashk',
                         caption  = '@dir',
                         log      = NULL,
-                        guides   = FALSE,
+                        guide    = FALSE,
                         problem,
                         quiet,
                         ...) {
@@ -79,19 +86,22 @@ eta_distrib <- function(xpdb,
   if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (is.null(facets)) facets <- 'variable'
-  eta_col <- xp_var(xpdb, problem, type = 'eta')$col
   
+  eta_col <- xp_var(xpdb, problem, type = 'eta')$col
+  if (drop_static) {
+    eta_col <- drop_static_cols(xpdb, problem, cols = eta_col, quiet = quiet)
+  }
   if (is.null(eta_col)) {
-    msg('No eta column found in the xpdb data index.', quiet)
-    return()
+    stop('No eta column found in the xpdb data index.', call. = FALSE)
   }
   
   xplot_distrib(xpdb = xpdb, quiet = quiet,
                 opt = data_opt(problem = problem, 
                                filter = only_distinct(xpdb, problem, facets, quiet), 
-                               tidy = TRUE, value_col = eta_col),
+                               tidy = TRUE, value_col = eta_col,
+                               post_processing = reorder_factors(type = 'Eta')),
                 mapping = aes_c(aes_string(x = 'value'), mapping), 
-                type = type, guides = guides, panel_facets = facets,
+                type = type, guide = guide, facets = facets,
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
@@ -110,7 +120,7 @@ res_distrib <- function(xpdb,
                         subtitle = 'Based on @nobs observations',
                         caption  = '@dir',
                         log      = NULL,
-                        guides   = FALSE,
+                        guide    = FALSE,
                         problem,
                         quiet,
                         ...) {
@@ -118,6 +128,11 @@ res_distrib <- function(xpdb,
   check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
+  
+  if (is.null(xp_var(xpdb, problem, col = res))) {
+    stop('No ', stringr::str_c(res, collapse = ', '), 
+         ' column found in the xpdb data index.', call. = FALSE)
+  }
   
   if (length(res) > 1) {
     if (is.null(facets)) facets <- 'variable'
@@ -133,7 +148,7 @@ res_distrib <- function(xpdb,
   
   xplot_distrib(xpdb = xpdb, quiet = quiet,
                 opt = opt, mapping = vars, 
-                type = type, guides = guides, panel_facets = facets,
+                type = type, guide = guide, facets = facets,
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
@@ -144,13 +159,14 @@ res_distrib <- function(xpdb,
 #' @export
 cov_distrib <- function(xpdb,
                         mapping  = NULL,
+                        drop_static = TRUE,
                         type     = 'hr',
                         facets   = NULL,
                         title    = 'Continuous covariates distribution | @run',
                         subtitle = 'Based on @nind individuals',
                         caption  = '@dir',
                         log      = NULL,
-                        guides   = FALSE,
+                        guide    = FALSE,
                         problem,
                         quiet,
                         ...) {
@@ -159,11 +175,13 @@ cov_distrib <- function(xpdb,
   if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (is.null(facets)) facets <- 'variable'
-  cov_col <- xp_var(xpdb, problem, type = 'contcov')$col
   
+  cov_col <- xp_var(xpdb, problem, type = 'contcov')$col
+  if (drop_static) {
+    cov_col <- drop_static_cols(xpdb, problem, cols = cov_col, quiet = quiet)
+  }
   if (is.null(cov_col)) {
-    msg('No continuous covariate column found in the xpdb data index.', quiet)
-    return()
+    stop('No continuous covariate column found in the xpdb data index.', call. = FALSE)
   }
   
   xplot_distrib(xpdb = xpdb, quiet = quiet,
@@ -171,7 +189,7 @@ cov_distrib <- function(xpdb,
                                filter = only_distinct(xpdb, problem, facets, quiet), 
                                tidy = TRUE, value_col = cov_col),
                 mapping = aes_c(aes_string(x = 'value'), mapping), 
-                type = type, guides = guides, panel_facets = facets,
+                type = type, guide = guide, facets = facets,
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,

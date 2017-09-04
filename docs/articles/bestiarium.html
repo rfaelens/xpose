@@ -101,7 +101,7 @@
       <h1>The xpose plots</h1>
                         <h4 class="author">Benjamin Guiastrennec</h4>
             
-            <h4 class="date">23 August, 2017</h4>
+            <h4 class="date">01 September, 2017</h4>
           </div>
 
     
@@ -185,6 +185,16 @@
 <p><img src="bestiarium_files/figure-html/unnamed-chunk-8-4.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 </div>
+<div id="kinetic-plots" class="section level2">
+<h2 class="hasAnchor">
+<a href="#kinetic-plots" class="anchor"></a>Kinetic plots</h2>
+<div id="compartments-amount" class="section level3">
+<h3 class="hasAnchor">
+<a href="#compartments-amount" class="anchor"></a>Compartment’s amount</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/amt_vs_idv.html">amt_vs_idv</a></span>(xpdb_ex_pk)</code></pre></div>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-9-1.png" width="75%" style="display: block; margin: auto;"></p>
+</div>
+</div>
 <div id="visual-predictive-checks-vpc" class="section level2">
 <h2 class="hasAnchor">
 <a href="#visual-predictive-checks-vpc" class="anchor"></a>Visual predictive checks (VPC)</h2>
@@ -194,7 +204,7 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xpdb_ex_pk <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st"> </span><span class="kw"><a href="../reference/vpc_data.html">vpc_data</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st"> </span><span class="kw"><a href="../reference/vpc.html">vpc</a></span>()</code></pre></div>
-<p><img src="bestiarium_files/figure-html/unnamed-chunk-9-1.png" width="75%" style="display: block; margin: auto;"></p>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-10-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="censored-vpc" class="section level3">
 <h3 class="hasAnchor">
@@ -202,7 +212,7 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xpdb_ex_pk <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st"> </span><span class="kw"><a href="../reference/vpc_data.html">vpc_data</a></span>(<span class="dt">vpc_type =</span> <span class="st">'censored'</span>, <span class="dt">opt =</span> <span class="kw"><a href="../reference/vpc_opt.html">vpc_opt</a></span>(<span class="dt">lloq =</span> <span class="dv">1</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st"> </span><span class="kw"><a href="../reference/vpc.html">vpc</a></span>()</code></pre></div>
-<p><img src="bestiarium_files/figure-html/unnamed-chunk-10-1.png" width="75%" style="display: block; margin: auto;"></p>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-11-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="categorical-vpc" class="section level3">
 <h3 class="hasAnchor">
@@ -224,6 +234,7 @@
       <li><a href="#minimization-plots">Minimization plots</a></li>
       <li><a href="#individual-plots">Individual plots</a></li>
       <li><a href="#distributions">Distributions</a></li>
+      <li><a href="#kinetic-plots">Kinetic plots</a></li>
       <li><a href="#visual-predictive-checks-vpc">Visual predictive checks (VPC)</a></li>
       </ul>
 </div>

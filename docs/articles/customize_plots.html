@@ -101,7 +101,7 @@
       <h1>Customize plots</h1>
                         <h4 class="author">Benjamin Guiastrennec</h4>
             
-            <h4 class="date">23 August, 2017</h4>
+            <h4 class="date">01 September, 2017</h4>
           </div>
 
     
@@ -130,10 +130,10 @@
 <p><img src="customize_plots_files/figure-html/demo%20type%20vpc-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 </div>
-<div id="visual-guides" class="section level3">
+<div id="visual-guide" class="section level3">
 <h3 class="hasAnchor">
-<a href="#visual-guides" class="anchor"></a>Visual guides</h3>
-<p>The option <code>guides</code> can enable (<code>TRUE</code>) or disable (<code>FALSE</code>) the visual guides on the graphs such as the line of identity on the <code><a href="../reference/dv_vs_pred.html">dv_vs_ipred()</a></code> type plot or horizontal lines on residual plots (e.g. <code><a href="../reference/res_vs_idv.html">res_vs_idv()</a></code>).</p>
+<a href="#visual-guide" class="anchor"></a>Visual guide</h3>
+<p>The option <code>guide</code> can enable (<code>TRUE</code>) or disable (<code>FALSE</code>) the visual guide on the graphs such as the line of identity on the <code><a href="../reference/dv_vs_pred.html">dv_vs_ipred()</a></code> type plot or horizontal lines on residual plots (e.g. <code><a href="../reference/res_vs_idv.html">res_vs_idv()</a></code>).</p>
 </div>
 <div id="labels" class="section level3">
 <h3 class="hasAnchor">
@@ -172,7 +172,7 @@
 <h3 class="hasAnchor">
 <a href="#modify-aesthetics" class="anchor"></a>Modify aesthetics</h3>
 <p>By default the aesthetics are read from the <code>xp_theme</code> level in the xpdb object but these can be modified in any plot function. xpose makes use of the <code>ggplot2</code> functions mapping for any layer (e.g. points, lines, etc.) however to direct the mapping to a specific layer, a prefix appealing to the targeted layer should be used. The format is defined as <code>layer_aesthetic = value</code>. Hence to change the color of points in ggplot2 the argument <code>color = 'green'</code> could be used in <code>geom_point()</code>, while in xpose the same could be achieved with <code>point_color = 'green'</code>.</p>
-<p>In basic goodness-of-fit plots, the layers have been named as: <code>point_xxx</code>, <code>line_xxx</code>, <code>smooth_xxx</code>, <code>guide_xxx</code>, <code>panel_xxx</code>, <code>xscale_xxx</code>, <code>yscale_xxx</code> where <code>xxx</code> can be any option available in the <code>ggplot2</code> layers: <code>geom_point</code>, <code>geom_line</code>, <code>geom_smooth</code>, <code>geom_abline</code>, <code>facet_wrap</code>, <code>scale_x_continuous</code>, etc.</p>
+<p>In basic goodness-of-fit plots, the layers have been named as: <code>point_xxx</code>, <code>line_xxx</code>, <code>smooth_xxx</code>, <code>guide_xxx</code>, <code>xscale_xxx</code>, <code>yscale_xxx</code> where <code>xxx</code> can be any option available in the <code>ggplot2</code> layers: <code>geom_point</code>, <code>geom_line</code>, <code>geom_smooth</code>, <code>geom_abline</code>, <code>scale_x_continuous</code>, etc.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, 
             <span class="co"># Change points aesthetics</span>
             <span class="dt">point_color =</span> <span class="st">'blue'</span>, <span class="dt">point_alpha =</span> <span class="fl">0.5</span>, 
@@ -197,18 +197,17 @@
 <a href="#panels" class="anchor"></a>Panels</h3>
 <p>Panels (or faceting) can be created by using the <code>facets</code> argument as follows:</p>
 <ul>
-<li>If <code>facets</code> is a string e.g <code>facets = "OCC"</code>, <code><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap">ggplot2::facet_wrap</a></code> will be used</li>
-<li>If <code>facets</code> is a formula e.g <code>facets = SEX~OCC</code>, <code><a href="http://www.rdocumentation.org/packages/ggplot2/topics/facet_grid">ggplot2::facet_grid</a></code> will be used</li>
+<li>If <code>facets</code> is a string e.g <code>facets = "OCC"</code>, <code><a href="http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate">ggforce::facet_wrap_paginate</a></code> will be used</li>
+<li>If <code>facets</code> is a formula e.g <code>facets = SEX~OCC</code>, <code>ggplot2::facet_grid_paginate</code> will be used</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Example with a string</span>
-<span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">facets =</span> <span class="kw">c</span>(<span class="st">'SEX'</span>, <span class="st">'OCC'</span>))</code></pre></div>
+<span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">facets =</span> <span class="kw">c</span>(<span class="st">'SEX'</span>, <span class="st">'OCC'</span>), <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">nrow =</span> <span class="dv">1</span>, <span class="dt">page =</span> <span class="dv">1</span>)</code></pre></div>
 <p><img src="customize_plots_files/figure-html/demo%20panels-1.png" width="75%" style="display: block; margin: auto;"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Example with a formula</span>
-<span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">facets =</span> SEX<span class="op">~</span>OCC, <span class="dt">panel_labeller =</span> <span class="st">'label_both'</span>)</code></pre></div>
+<span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">facets =</span> SEX<span class="op">~</span>OCC, <span class="dt">labeller =</span> <span class="st">'label_both'</span>, <span class="dt">margins =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p><img src="customize_plots_files/figure-html/demo%20panels-2.png" width="75%" style="display: block; margin: auto;"></p>
-<p>Additional arguments can be passed to the panel function using the <code>panel_xxx</code> notation (e.g. <code>panel_ncol = 2</code>, <code>panel_labeller = 'label_both'</code>).</p>
-<p>With the default xpose theme scales are set to <code>'free'</code> from one panel to another (<code>panel_scales = 'free'</code>), this behavior can be changed with <code>panel_scales = 'fixed'</code>, <code>'free_y'</code> or <code>'free_x'</code>.</p>
-<p>For more options read the help of <a href="http://ggplot2.tidyverse.org/reference/facet_wrap.html"><code>facet_wrap</code></a> and <a href="http://ggplot2.tidyverse.org/reference/facet_grid.html"><code>facet_grid</code></a> from <code>ggplot2</code>.</p>
+<p>All xpose plot functions accept arguments for <code>facet_wrap_pagninate</code> and <code>facet_grid_paginate</code> (e.g. <code>ncol = 2</code>, <code>labeller = 'label_both'</code>, etc.). With the default xpose theme scales are set to <code>'free'</code> from one panel to another (<code>scales = 'free'</code>), this behavior can be changed with <code>scales = 'fixed'</code>, <code>'free_y'</code> or <code>'free_x'</code>.</p>
+<p>For more information on the available faceting options read the help of <a href="https://www.rdocumentation.org/packages/ggforce/versions/0.1.1/topics/facet_wrap_paginate"><code>facet_wrap_paginate</code></a> and <a href="https://www.rdocumentation.org/packages/ggforce/versions/0.1.1/topics/facet_grid_paginate"><code>facet_grid_paginate</code></a> from the package ggforce.</p>
 </div>
 <div id="additional-layers" class="section level3">
 <h3 class="hasAnchor">

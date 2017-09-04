@@ -16,13 +16,14 @@
 #' @param caption Page caption. Use \code{NULL} to remove.
 #' @param log String assigning logarithmic scale to axes, can be either '', 
 #' 'x', y' or 'xy'.
-#' @param guides Enable guides display (e.g. unity line).
+#' @param guide Enable guide display (e.g. unity line).
 #' @param problem The $problem number to be used. By default returns 
 #' the last estimation problem.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' @param ... Any additional aesthetics to be passed on \code{xplot_scatter}.
 #' 
 #' @inheritSection xplot_scatter Layers mapping
+#' @inheritSection xplot_scatter Faceting
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
@@ -41,7 +42,7 @@ dv_vs_ipred <- function(xpdb,
                         subtitle = 'Ofv: @ofv, Eps shrink: @epsshk',
                         caption  = '@dir',
                         log      = NULL,
-                        guides   = TRUE,
+                        guide    = TRUE,
                         problem,
                         quiet,
                         ...) {
@@ -54,12 +55,12 @@ dv_vs_ipred <- function(xpdb,
                 opt = data_opt(problem = problem, filter = only_obs(xpdb, problem, quiet)),
                 mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'ipred')$col, 
                                            y = xp_var(xpdb, problem, type = 'dv')$col), mapping),
-                type = type, guides = guides, panel_facets = facets, 
+                type = type, guide = guide, facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
                 plot_name = as.character(match.call()[[1]]),
-                guides_slope = 1, ...)
+                guide_slope = 1, ...)
 }
 
 #' @rdname dv_vs_pred
@@ -73,7 +74,7 @@ dv_vs_pred <- function(xpdb,
                        subtitle = 'Ofv: @ofv',
                        caption  = '@dir',
                        log      = NULL,
-                       guides   = TRUE,
+                       guide    = TRUE,
                        problem,
                        quiet,
                        ...) {
@@ -86,10 +87,10 @@ dv_vs_pred <- function(xpdb,
                 opt = data_opt(problem = problem, filter = only_obs(xpdb, problem, quiet)),
                 mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'pred')$col, 
                                            y = xp_var(xpdb, problem, type = 'dv')$col), mapping),
-                type = type, guides = guides, panel_facets = facets, 
+                type = type, guide = guide, facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
                 plot_name = as.character(match.call()[[1]]),
-                guides_slope = 1, ...)
+                guide_slope = 1, ...)
 }

@@ -136,12 +136,12 @@
 
     <pre class="usage"><span class='fu'>res_vs_pred</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='st'>"CWRES"</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>,
   <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pls"</span>, <span class='kw'>facets</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"@y vs. @x | @run"</span>,
-  <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Ofv: @ofv"</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guides</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Ofv: @ofv"</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guide</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='no'>problem</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)
 
 <span class='fu'>absval_res_vs_pred</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='st'>"CWRES"</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>,
   <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pls"</span>, <span class='kw'>facets</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"@y vs. @x | @run"</span>,
-  <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Ofv: @ofv"</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guides</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Ofv: @ofv"</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guide</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>problem</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -192,8 +192,8 @@ or a formula to use <a href='http://www.rdocumentation.org/packages/ggplot2/topi
 'x', y' or 'xy'.</p></td>
     </tr>
     <tr>
-      <th>guides</th>
-      <td><p>Enable guides display (e.g. unity line).</p></td>
+      <th>guide</th>
+      <td><p>Enable guide display (e.g. unity line).</p></td>
     </tr>
     <tr>
       <th>problem</th>
@@ -219,13 +219,22 @@ any option supported by this layer e.g. point_color = 'blue', smooth_method = 'l
 <li><p>point: options to <code>geom_point</code></p></li>
 <li><p>line: options to <code>geom_line</code></p></li>
 <li><p>guide: options to <code>geom_abline</code></p></li>
-<li><p>panel: options to <code>facet_wrap</code> (facets is character) or <code>facet_grid</code> 
-  (facets is a formula)</p></li>
 <li><p>smooth: options to <code>geom_smooth</code></p></li>
 <li><p>text: options to <code>geom_text</code></p></li>
 <li><p>xscale: options to <code>scale_x_continuous</code> or <code>scale_x_log10</code></p></li>
 <li><p>yscale: options to <code>scale_y_continuous</code> or <code>scale_y_log10</code></p></li>
 </ul>
+    
+    <h2 class="hasAnchor" id="faceting"><a class="anchor" href="#faceting"></a>Faceting</h2>
+
+    
+    <p>Every xpose plot function has built-in facetting functionalities. Faceting arguments 
+are passed to the functions <a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a> when the <code>facets</code> 
+argument is a character string (e.g. <code>facets = c('OCC', 'SEX')</code>) or 
+<a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a> when facets is a formula (e.g. <code>facets = OCC~SEX</code>).
+All xpose plot functions accept all the arguments for the <a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a> 
+and <a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a> functions e.g. <code><a href='dv_vs_pred.html'>dv_vs_ipred(xpdb_ex_pk, 
+facets = OCC~SEX, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')</a></code>.</p>
     
     <h2 class="hasAnchor" id="template-titles"><a class="anchor" href="#template-titles"></a>Template titles</h2>
 
@@ -245,7 +254,7 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Standard residual</span>
-<span class='fu'>res_vs_pred</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>'IWRES'</span>, <span class='st'>'CWRES'</span>))</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Filtering data by EVID == 0</span></div><div class='output co'>#&gt; <span class='message'>Tidying data by ID, SEX, MED1, MED2, OCC ... and 23 more variables</span></div><div class='img'><img src='res_vs_pred-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>res_vs_pred</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>'IWRES'</span>, <span class='st'>'CWRES'</span>))</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Filtering data by EVID == 0</span></div><div class='output co'>#&gt; <span class='message'>Tidying data by ID, SEX, MED1, MED2, OCC ... and 25 more variables</span></div><div class='img'><img src='res_vs_pred-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># Absolute value of the residuals</span>
 <span class='fu'>absval_res_vs_pred</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='st'>'CWRES'</span>)</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Filtering data by EVID == 0</span></div><div class='img'><img src='res_vs_pred-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
@@ -256,6 +265,8 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#layers-mapping">Layers mapping</a></li>
+
+      <li><a href="#faceting">Faceting</a></li>
 
       <li><a href="#template-titles">Template titles</a></li>
 

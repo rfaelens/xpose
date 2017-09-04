@@ -19,6 +19,12 @@ firstonly_test <- as.nm.table.list(dplyr::tibble(problem   = 1,
                                                  firstonly = c(TRUE, FALSE),
                                                  simtab    = FALSE))
 
+minus_sign_test <- c('TABLE NO.  1',
+                     ' ID          TIME        DV',
+                     '  1.0000E+00  0.0000E+00  1.0000E+00',
+                     '  1.0000E+00  1.0000E+00  1.0000E+00',
+                     '  1.0000E+00  2.0000E+00 -5.0000E+00')
+
 # Tests start here --------------------------------------------------------
 
 test_that('error is returned when missing file argument', {
@@ -72,3 +78,18 @@ test_that('properly assign skip and header arguments', {
   writeLines(text = test_file[2:4], con = files[2])
   expect_equal(read_nm_tables(file = files[2], quiet = TRUE),  ctrl_file)
 })
+
+test_that('properly pick us column signs', {
+  files <- tempfile('tmp_c')
+  on.exit(unlink(files))
+  writeLines(text = minus_sign_test, con = files)
+  
+  # Positive control with readr (reproducible bug example)
+  expect_false(min(readr::read_table(file = files, skip = 2, guess_max = 1,
+                                     col_names = c('ID', 'TIME', 'DV'))$DV) == -5)
+  
+  # Text on xpose
+  expect_true(min(read_nm_tables(file = files, quiet = TRUE, 
+                                 guess_max = 1, skip = 2)$DV) == -5)
+  })
+

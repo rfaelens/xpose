@@ -7,6 +7,7 @@
 #' the last sub-problem associated with the selected problem.
 #' 
 #' @inheritSection xplot_scatter Layers mapping
+#' @inheritSection xplot_scatter Faceting
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
@@ -25,7 +26,7 @@ prm_vs_iteration <- function(xpdb,
                              subtitle = 'Method: @method, minimization time: @runtime\nTermination message: @term',
                              caption  = '@dir',
                              log      = NULL,
-                             guides   = FALSE,
+                             guide    = FALSE,
                              problem,
                              subprob,
                              quiet,
@@ -47,12 +48,12 @@ prm_vs_iteration <- function(xpdb,
                                    dplyr::select_if(.predicate = function(x) dplyr::n_distinct(x) > 1)
                                }, tidy = TRUE, index_col = x_var),
                 mapping = aes_c(aes_string(x = x_var, y = 'value'), mapping),
-                type = type, guides = guides, panel_facets = facets, 
+                type = type, guide = guide, facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
                 plot_name = as.character(match.call()[[1]]),
-                panel_scales = 'free_y', ...)
+                scales = 'free_y', ...)
 }
 
 #' @rdname minimization_plots
@@ -66,7 +67,7 @@ grd_vs_iteration <- function(xpdb,
                              subtitle = 'Method: @method, minimization time: @runtime\nTermination message: @term',
                              caption  = '@dir',
                              log      = NULL,
-                             guides   = FALSE,
+                             guide    = FALSE,
                              problem,
                              subprob,
                              quiet,
@@ -86,12 +87,13 @@ grd_vs_iteration <- function(xpdb,
                                  x %>% 
                                    dplyr::filter(.[, x_var] >= 0) %>% 
                                    dplyr::select_if(.predicate = function(x) dplyr::n_distinct(x) > 1)
-                               }, tidy = TRUE, index_col = x_var),
+                               }, tidy = TRUE, index_col = x_var, 
+                               post_processing = reorder_factors(type = 'Gradient')),
                 mapping = aes_c(aes_string(x = x_var, y = 'value'), mapping),
-                type = type, guides = guides, panel_facets = facets, 
+                type = type, guide = guide, facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
                 plot_name = as.character(match.call()[[1]]),
-                panel_scales = 'free_y', ...)
+                scales = 'free_y', ...)
 }
