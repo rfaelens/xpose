@@ -12,7 +12,7 @@
 #' @param simtab If \code{TRUE} only reads in simulation tables, if \code{FALSE} only reads estimation tables. 
 #' Default \code{NULL} reads all tables.
 #' @param ziptab If \code{TRUE} search for the tables that have been compressed and renamed ´<file>.zip'.
-#' @param ... Additional arguments to be passed to the \code{\link[readr]{read_table}} or \code{\link[readr]{read_csv}} functions.
+#' @param ... Additional arguments to be passed to the \code{\link[readr]{read_table2}} or \code{\link[readr]{read_csv}} functions.
 #' @examples
 #' \dontrun{
 #' # Import tables manually and return them as a list of individual tables
@@ -114,7 +114,7 @@ read_nm_tables <- function(file          = NULL,
   tables <- tables %>% 
     dplyr::bind_cols(tables %>% 
                        dplyr::select(dplyr::one_of(c('fun', 'params'))) %>% 
-                       {purrr::invoke_map(.$fun, .x = .$params)} %>%
+                       {purrr::invoke_map(.f = .$fun, .x = .$params)} %>%
                        dplyr::tibble(data = .))
   
   if (!combined) {
@@ -191,14 +191,13 @@ read_nm_tables <- function(file          = NULL,
 
 
 read_funs <- function(fun) {
-  c(csv = readr::read_csv,
-    csv2 = readr::read_csv2,
-    table = readr::read_table,
-    table2 = readr::read_table2)[fun]
+  c(csv   = readr::read_csv,
+    csv2  = readr::read_csv2,
+    table = readr::read_table2)[fun]
 }
 
-read_args <- function(x, quiet, col_types, ...) {
-  if (missing(col_types)) col_types <- readr::cols(.default = 'd')
+read_args <- function(x, quiet, col_types = readr::cols(.default = 'd'), 
+                      na = 'NA', comment = 'TABLE', skip = 1, ...) {
   
   top <- x$top[[1]]
   
@@ -209,26 +208,27 @@ read_args <- function(x, quiet, col_types, ...) {
   
   fun <- dplyr::case_when(stringr::str_detect(top[3], '\\d,\\d+E[+-]\\d+\\s*;') ~ 'csv2',
                           stringr::str_detect(top[3], '\\d.\\d+E[+-]\\d+\\s*,') ~ 'csv', 
-                          stringr::str_detect(top[3], '\\d,\\d+E[+-]\\d+\\s+') ~ 'table2',
                           TRUE ~ 'table')
-  skip <- dplyr::if_else(stringr::str_detect(top[1], 'TABLE NO\\.\\s+\\d'), 1, 0)
   
-  if (!stringr::str_detect(top[1 + skip], '[A-z]{2,}+')) {
+  skip_h <- dplyr::if_else(stringr::str_detect(top[1], 'TABLE NO\\.\\s+\\d'), 1, 0)
+  
+  if (!stringr::str_detect(top[1 + skip_h], '[A-z]{2,}+')) {
     warning(c('Dropped: ', basename(x$file), ' due to missing headers.'), call. = FALSE)
     return(dplyr::tibble(fun = list(), params = list()))
   }
   
-  col_names <- top[1 + skip] %>% 
+  col_names <- top[1 + skip_h] %>% 
     stringr::str_trim(side = 'both') %>% 
     stringr::str_split(pattern = dplyr::case_when(fun == 'csv' ~ ',', 
                                                   fun == 'csv2' ~ ';',
-                                                  fun %in% c('table', 'table2') ~ '\\s+')) %>% 
+                                                  fun == 'table' ~ '\\s+')) %>% 
     purrr::flatten_chr() %>% 
     stringr::str_trim()
   
   dplyr::tibble(fun = read_funs(fun),
-                params = list(list(file = x$file, skip = skip + 1,
-                                   col_names = col_names, col_types = col_types, ...)))
+                params = list(list(file = x$file, skip = skip, comment = comment, 
+                                   na = c(na, col_names), col_names = col_names, 
+                                   col_types = col_types, ...)))
 }
 
 combine_tables <- function(x, quiet) {
