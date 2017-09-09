@@ -15,7 +15,7 @@
 #' Default \code{NULL} reads all tables. Option not compatible with manual_import.
 #' @param manual_import If \code{NULL} (default) the names of the output tables to import will be obtained from the model file. 
 #' To manually import files as in previous versions of xpose, the check the function \code{\link{manual_nm_import}}.
-#' @param skip Character vector be used to skip the import/generation of: 'data', 'files', 'summary' or any
+#' @param ignore Character vector be used to ignore the import/generation of: 'data', 'files', 'summary' or any
 #' combination of the three.
 #' @param extra_files A vector of additional output file extensions to be imported. Default is '.ext', '.cov', '.cor', '.phi', 
 #' ".grd" for NONMEM.
@@ -42,8 +42,8 @@
 #' # Using the `extra_files` argument to import specific output files only:
 #' xpdb <- xpose_data(file = 'run001.lst', dir = 'models', extra_files = c('.ext', '.phi'))
 #' 
-#' # Using `skip` to disable import of tables and output files:
-#' xpdb <- xpose_data(file = 'run001.lst', dir = 'models', skip = c('data', 'files'))
+#' # Using `ignore` to disable import of tables and output files:
+#' xpdb <- xpose_data(file = 'run001.lst', dir = 'models', ignore = c('data', 'files'))
 #' 
 #' # Using `simtab` to disable import of simulation tables
 #' xpdb <- xpose_data(file = 'run001.lst', dir = 'models', simtab = FALSE)
@@ -60,7 +60,7 @@ xpose_data <- function(runno         = NULL,
                        xp_theme      = theme_xp_default(),
                        simtab        = NULL,
                        manual_import = NULL,
-                       skip          = NULL,
+                       ignore          = NULL,
                        extra_files,
                        quiet,
                        ...) {
@@ -98,8 +98,8 @@ xpose_data <- function(runno         = NULL,
   }  
   
   # Import estimation tables
-  if ('data' %in% skip) {
-    msg('Skipping data import.', quiet)
+  if ('data' %in% ignore) {
+    msg('Ignoring data import.', quiet)
     data <- NULL
   } else if (software == 'nonmem') {
     data <- tryCatch(read_nm_tables(file = tbl_names, dir = NULL, 
@@ -108,8 +108,8 @@ xpose_data <- function(runno         = NULL,
   }
   
   # Generate model summary
-  if ('summary' %in% skip) {
-    msg('Skipping summary generation', quiet)
+  if ('summary' %in% ignore) {
+    msg('Ignoring summary generation', quiet)
     summary <- NULL
   } else if (software == 'nonmem') {
     summary <- summarise_nm_model(file = full_path, model = model_code, 
@@ -117,8 +117,8 @@ xpose_data <- function(runno         = NULL,
   }
   
   # Import output files
-  if ('files' %in% skip) {
-    msg('Skipping output files import', quiet)
+  if ('files' %in% ignore) {
+    msg('Ignoring output files import', quiet)
     out_files <- NULL
   } else if (software == 'nonmem') {
     if (missing(extra_files)) {

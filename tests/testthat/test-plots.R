@@ -24,11 +24,11 @@ xpdb_sim_only <- xpose_data(file = 'sim.lst', dir = 'data', quiet = TRUE)
 
 # Missing all output files except grd
 xpdb_mis_file <- xpose_data(file = 'sim.lst', dir = 'data', 
-                            skip = c('data', 'summary'), quiet = TRUE,
+                            ignore = c('data', 'summary'), quiet = TRUE,
                             extra_files = '.phi')
 # No output files at all
 xpdb_no_file <- xpose_data(file = 'sim.lst', dir = 'data', quiet = TRUE,
-                           skip = c('data', 'files', 'summary'))
+                           ignore = c('data', 'files', 'summary'))
 
 # Tests start here --------------------------------------------------------
 
