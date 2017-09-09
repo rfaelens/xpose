@@ -112,8 +112,9 @@ xpose_data <- function(runno         = NULL,
     msg('Ignoring summary generation', quiet)
     summary <- NULL
   } else if (software == 'nonmem') {
-    summary <- summarise_nm_model(file = full_path, model = model_code, 
-                                  software = software, rounding = xp_theme$rounding)
+    summary <- tryCatch(summarise_nm_model(file = full_path, model = model_code, 
+                                           software = software, rounding = xp_theme$rounding),
+                        error = function(e) msg(c('\nError returned by run summary\n* ', e$message), quiet = FALSE))
   }
   
   # Import output files

@@ -39,3 +39,11 @@ test_that('properly creates the xpdb when using the runno argument', {
   xpdb_2$options$quiet <- FALSE
   expect_identical(xpdb_2, xpdb_ex_pk)
 })
+
+test_that('properly handles error in summary', {
+  expect_message(xpdb_3 <- xpose_data(runno = '001', ext = '.lst', dir = 'data', 
+                                      ignore = c('data', 'files'),
+                                      quiet = TRUE, xp_theme = c(rounding = 'No')),
+                 regexp = 'Error returned by run summary')
+  expect_error(summary(xpdb_3), regex = 'No `summary` slot could be found in this xpdb')
+})  
