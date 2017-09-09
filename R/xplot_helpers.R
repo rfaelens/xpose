@@ -11,7 +11,7 @@ check_xpdb <- function(xpdb, check = 'data') {
   
   # Check for the presence of data
   if (!skip && is.null(xpdb[[check]])) {
-    stop('No ', check, ' could be found in this xpdb.', call. = FALSE)
+    stop('No `', check, '` slot could be found in this xpdb.', call. = FALSE)
   }
 }
 

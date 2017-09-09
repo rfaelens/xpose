@@ -50,7 +50,7 @@ test_that_for_all(not_sim_functions, 'no error occurs when xpdb is from a simula
 
 test_that_for_all(iteration_plot_functions, 'have proper error check', {
   expect_error(.iteration_plot_function(xpdb_no_file), 
-               regexp = 'No files could be found in this xpdb')
+               regexp = 'No `files` slot could be found in this xpdb')
   expect_error(.iteration_plot_function(xpdb_mis_file), 
                regexp = 'File extension.+not found in model output files')
 })  
@@ -59,5 +59,5 @@ test_that_for_all(distribution_functions, 'have proper error check', {
   expect_error(.distribution_function(xpdb_sim_only), 
                regexp = 'No.+column found in the xpdb data index')
   expect_error(.distribution_function(xpdb_no_file), 
-               regexp = 'No data could be found in this xpdb')
+               regexp = 'No `data` slot could be found in this xpdb')
 })
