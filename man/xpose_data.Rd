@@ -6,7 +6,7 @@
 \usage{
 xpose_data(runno = NULL, prefix = "run", ext = ".lst", file = NULL,
   dir = NULL, gg_theme = theme_readable(), xp_theme = theme_xp_default(),
-  simtab = NULL, manual_import = NULL, skip = NULL, extra_files, quiet,
+  simtab = NULL, manual_import = NULL, ignore = NULL, extra_files, quiet,
   ...)
 }
 \arguments{
@@ -32,7 +32,7 @@ Default \code{NULL} reads all tables. Option not compatible with manual_import.}
 \item{manual_import}{If \code{NULL} (default) the names of the output tables to import will be obtained from the model file. 
 To manually import files as in previous versions of xpose, the check the function \code{\link{manual_nm_import}}.}
 
-\item{skip}{Character vector be used to skip the import/generation of: 'data', 'files', 'summary' or any
+\item{ignore}{Character vector be used to ignore the import/generation of: 'data', 'files', 'summary' or any
 combination of the three.}
 
 \item{extra_files}{A vector of additional output file extensions to be imported. Default is '.ext', '.cov', '.cor', '.phi', 
@@ -67,8 +67,8 @@ xpdb <- xpose_data(runno = '001', ext = '.lst', dir = 'models')
 # Using the `extra_files` argument to import specific output files only:
 xpdb <- xpose_data(file = 'run001.lst', dir = 'models', extra_files = c('.ext', '.phi'))
 
-# Using `skip` to disable import of tables and output files:
-xpdb <- xpose_data(file = 'run001.lst', dir = 'models', skip = c('data', 'files'))
+# Using `ignore` to disable import of tables and output files:
+xpdb <- xpose_data(file = 'run001.lst', dir = 'models', ignore = c('data', 'files'))
 
 # Using `simtab` to disable import of simulation tables
 xpdb <- xpose_data(file = 'run001.lst', dir = 'models', simtab = FALSE)

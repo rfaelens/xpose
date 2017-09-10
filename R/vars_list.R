@@ -50,7 +50,7 @@ list_vars <- function(xpdb, problem = NULL) {
                                                .$type == 'contcov' ~ 'Continuous covariates (contcov)',
                                                .$type == 'param' ~ 'Model parameter (param)',
                                                .$type == 'eta' ~ 'Eta (eta)',
-                                               .$type == 'a' ~ 'Compartments\' amount (a)',
+                                               .$type == 'a' ~ 'Compartment amounts (a)',
                                                .$type == 'dvid' ~ 'DV identifier (dvid)',
                                                .$type == 'mdv' ~ 'Missing dependent variable (mdv)')) %>% 
         dplyr::mutate(descr = stringr::str_pad(.$descr, 37, 'right')) %>% 

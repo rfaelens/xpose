@@ -76,7 +76,7 @@ test_that('Check append_aes', {
 
 test_that('Check check_xpdb', {
   expect_error(check_xpdb(xpdb = '1', check = 'data'), regexp = 'Bad input')
-  expect_error(check_xpdb(xpdb_NULL, check = 'data'), regexp = 'No data could be found in this xpdb')
+  expect_error(check_xpdb(xpdb_NULL, check = 'data'), regexp = 'No `data` slot could be found in this xpdb')
   expect_null(check_xpdb(xpdb_NULL, check = FALSE))
   expect_null(check_xpdb(xpdb_ex_pk, check = 'data'))
 })

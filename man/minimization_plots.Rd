@@ -6,13 +6,13 @@
 \alias{grd_vs_iteration}
 \title{Parameter value or gradient vs. iterations}
 \usage{
-prm_vs_iteration(xpdb, mapping = NULL, group = "variable", type = "pl",
+prm_vs_iteration(xpdb, mapping = NULL, group = "variable", type = "l",
   facets = NULL, title = "Parameter @y vs. @x | @run",
   subtitle = "Method: @method, minimization time: @runtime\\nTermination message: @term",
   caption = "@dir", log = NULL, guide = FALSE, problem, subprob, quiet,
   ...)
 
-grd_vs_iteration(xpdb, mapping = NULL, group = "variable", type = "pl",
+grd_vs_iteration(xpdb, mapping = NULL, group = "variable", type = "l",
   facets = NULL, title = "Gradient @y vs. @x | @run",
   subtitle = "Method: @method, minimization time: @runtime\\nTermination message: @term",
   caption = "@dir", log = NULL, guide = FALSE, problem, subprob, quiet,

@@ -129,7 +129,7 @@
 
     <pre class="usage"><span class='fu'>xpose_data</span>(<span class='kw'>runno</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"run"</span>, <span class='kw'>ext</span> <span class='kw'>=</span> <span class='st'>".lst"</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>gg_theme</span> <span class='kw'>=</span> <span class='fu'><a href='gg_themes.html'>theme_readable</a></span>(), <span class='kw'>xp_theme</span> <span class='kw'>=</span> <span class='fu'><a href='xp_themes.html'>theme_xp_default</a></span>(),
-  <span class='kw'>simtab</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>manual_import</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>extra_files</span>, <span class='no'>quiet</span>,
+  <span class='kw'>simtab</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>manual_import</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ignore</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>extra_files</span>, <span class='no'>quiet</span>,
   <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -176,8 +176,8 @@ Default <code>NULL</code> reads all tables. Option not compatible with manual_im
 To manually import files as in previous versions of xpose, the check the function <code><a href='manual_nm_import.html'>manual_nm_import</a></code>.</p></td>
     </tr>
     <tr>
-      <th>skip</th>
-      <td><p>Character vector be used to skip the import/generation of: 'data', 'files', 'summary' or any
+      <th>ignore</th>
+      <td><p>Character vector be used to ignore the import/generation of: 'data', 'files', 'summary' or any
 combination of the three.</p></td>
     </tr>
     <tr>
@@ -217,8 +217,8 @@ combination of the three.</p></td>
 <span class='co'># Using the `extra_files` argument to import specific output files only:</span>
 <span class='no'>xpdb</span> <span class='kw'>&lt;-</span> <span class='fu'>xpose_data</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>'run001.lst'</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>'models'</span>, <span class='kw'>extra_files</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>'.ext'</span>, <span class='st'>'.phi'</span>))
 
-<span class='co'># Using `skip` to disable import of tables and output files:</span>
-<span class='no'>xpdb</span> <span class='kw'>&lt;-</span> <span class='fu'>xpose_data</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>'run001.lst'</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>'models'</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>'data'</span>, <span class='st'>'files'</span>))
+<span class='co'># Using `ignore` to disable import of tables and output files:</span>
+<span class='no'>xpdb</span> <span class='kw'>&lt;-</span> <span class='fu'>xpose_data</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>'run001.lst'</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>'models'</span>, <span class='kw'>ignore</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>'data'</span>, <span class='st'>'files'</span>))
 
 <span class='co'># Using `simtab` to disable import of simulation tables</span>
 <span class='no'>xpdb</span> <span class='kw'>&lt;-</span> <span class='fu'>xpose_data</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>'run001.lst'</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>'models'</span>, <span class='kw'>simtab</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
