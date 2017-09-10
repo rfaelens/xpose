@@ -1,6 +1,6 @@
 #' Compartment kinetics
 #'
-#' @description Plot of the change in compartments' amount over the independent variable
+#' @description Plot of the change in compartment amounts over the independent variable
 #'
 #' @inheritParams dv_vs_pred
 #' @param drop_static Should columns that only have a single unique value 

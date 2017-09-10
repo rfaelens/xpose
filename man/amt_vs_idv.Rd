@@ -43,7 +43,7 @@ the last estimation problem.}
 \item{...}{Any additional aesthetics to be passed on \code{xplot_scatter}.}
 }
 \description{
-Plot of the change in compartments' amount over the independent variable
+Plot of the change in compartment amounts over the independent variable
 }
 \section{Layers mapping}{
 
