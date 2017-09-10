@@ -88,7 +88,7 @@ grd_vs_iteration <- function(xpdb,
                                    dplyr::filter(.[, x_var] >= 0) %>% 
                                    dplyr::select_if(.predicate = function(x) dplyr::n_distinct(x) > 1)
                                }, tidy = TRUE, index_col = x_var, 
-                               post_processing = reorder_factors(type = 'Gradient')),
+                               post_processing = reorder_factors(prefix = 'GRD(', suffix = ')')),
                 mapping = aes_c(aes_string(x = x_var, y = 'value'), mapping),
                 type = type, guide = guide, facets = facets, 
                 xscale = check_scales('x', log), 

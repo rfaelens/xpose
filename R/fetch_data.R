@@ -73,13 +73,12 @@ only_distinct <- function(xpdb, problem, facets, quiet) {
 }
 
 # Reorder panels numerically
-reorder_factors <- function(type) {
+reorder_factors <- function(prefix, suffix = NULL) {
   function(x) {
     x %>% 
       dplyr::mutate(variable = as.numeric(gsub('\\D', '', .$variable))) %>% 
       dplyr::mutate(variable = factor(.$variable, levels = sort(unique(.$variable)),
-                                      labels = stringr::str_c(type, sort(unique(.$variable)), 
-                                                              sep = ' ')))
+                                      labels = stringr::str_c(prefix, sort(unique(.$variable)), suffix)))
   }
 }
 

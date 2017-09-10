@@ -52,7 +52,7 @@ amt_vs_idv <- function(xpdb,
                                 filter = function(x) {
                                   dplyr::select_if(.tbl = x, .predicate = function(x) dplyr::n_distinct(x) > 1)
                                 }, tidy = TRUE, value_col = amt_col,
-                                post_processing = reorder_factors(type = 'Comp. ')),
+                                post_processing = reorder_factors(prefix = 'Comp. ')),
                  mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
                                             y = 'value'), mapping),
                  type = type, facets = facets, 
