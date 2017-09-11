@@ -20,3 +20,4 @@ A function
 Create shortcut functions on the fly to remove records 
 not associated with an observation.
 }
+\keyword{internal}

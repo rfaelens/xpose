@@ -18,3 +18,4 @@ vector for the given file `ext`.
 \description{
 Get all file problems
 }
+\keyword{internal}

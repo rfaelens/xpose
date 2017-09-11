@@ -21,3 +21,4 @@ A modified `xp_theme`
 \description{
 Subset an `xp_theme`
 }
+\keyword{internal}

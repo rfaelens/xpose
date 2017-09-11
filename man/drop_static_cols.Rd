@@ -22,3 +22,4 @@ value was found in the data.
 \description{
 Return names of columns having several unique values
 }
+\keyword{internal}

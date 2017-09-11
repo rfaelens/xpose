@@ -9,8 +9,8 @@
 #' 
 #' @return ggplot2 aesthetics for the layer defined in `name`.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 parse_arg <- function(x = NULL, name) {
   if (is.null(x)) return()
   x[stringr::str_detect(names(x), stringr::str_c('^', name, '_'))] %>% 
@@ -30,8 +30,8 @@ parse_arg <- function(x = NULL, name) {
 #' 
 #' @return A list of arguments for the layer defined in `name`.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 update_args <- function(thm_arg, name, ...) {
   thm_arg <- parse_arg(x = thm_arg, name = name)
   usr_arg <- parse_arg(x = list(...), name = name)
@@ -51,8 +51,8 @@ update_args <- function(thm_arg, name, ...) {
 #' 
 #' @return Output of the `ggfun` call.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 xp_map <- function(arg, mapping, ggfun) {
   x <- do.call(ggfun, arg[!names(arg) %in% names(mapping)])
   if (!is.null(mapping)) x$mapping <- mapping
@@ -68,11 +68,13 @@ xp_map <- function(arg, mapping, ggfun) {
 #' @param name Name of the destination layer for the argument 
 #' parsing (e.g. point).
 #' @param ggfun Name of the ggplot2 layer function to be called.
+#' @param ... Additional arguments to be parsed and passed to the 
+#' destination layer.
 #' 
 #' @return Output of the `ggfun` call.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 xp_geoms <- function(mapping = NULL, xp_theme, name, ggfun, ...) {
   if (!is.null(mapping)) mapping <- parse_arg(mapping, name)
   thm_arg <- filter_xp_theme(xp_theme, stringr::str_c('^', name, '_')) 
@@ -91,8 +93,8 @@ xp_geoms <- function(mapping = NULL, xp_theme, name, ggfun, ...) {
 #' @return Output a `facet` layer. Layer will be `facet_wrap_paginate` if 
 #' `facets` is a string, and `facet_grid_paginate` if `facets` is a formula.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 xpose_panels <- function(xp_theme, extra_args) {
   if (!is.formula(extra_args$facets)) {
     thm_arg  <- xp_theme[c('facets', 'nrow', 'ncol', 'scales', 'shrink', 

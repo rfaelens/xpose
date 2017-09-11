@@ -20,3 +20,4 @@ The modified `string`.
 \description{
 Append suffix contained in the `xp_theme` to titles
 }
+\keyword{internal}

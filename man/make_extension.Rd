@@ -16,3 +16,4 @@ A string or vector of strings of extension(s).
 Generate consistent extension strings by adding dot 
 prefix whenever necessary.
 }
+\keyword{internal}

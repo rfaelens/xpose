@@ -20,3 +20,4 @@ else the last simulation problem as an integer.
 Used by several internal functions when the problem argument has not 
 been supplied by the user.
 }
+\keyword{internal}

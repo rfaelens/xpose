@@ -15,3 +15,4 @@ x with `nm_table_list` class.
 \description{
 Adds `nm_table_list` attribute to an object
 }
+\keyword{internal}

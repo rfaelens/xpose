@@ -16,3 +16,4 @@ and `FALSE` otherwise.
 \description{
 Reports whether x is a `xpose_plot` object
 }
+\keyword{internal}

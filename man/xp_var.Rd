@@ -26,3 +26,4 @@ label (label associated with the column) and units
 \description{
 Access xpdb index information for a given variable or variable type
 }
+\keyword{internal}

@@ -20,3 +20,4 @@ Output of the `ggfun` call.
 Function calling the ggplot2 layer function 
 with its parsed arguments.
 }
+\keyword{internal}

@@ -16,3 +16,4 @@ and `FALSE` otherwise.
 \description{
 Reports whether x is an `xpose_data` object
 }
+\keyword{internal}

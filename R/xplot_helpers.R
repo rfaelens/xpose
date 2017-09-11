@@ -7,8 +7,8 @@
 #' 
 #' @return Silent if successful check, else returns error.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 check_xpdb <- function(xpdb, check = 'data') {
   # Check the class
   if (!is.xpdb(xpdb)) {
@@ -32,8 +32,8 @@ check_xpdb <- function(xpdb, check = 'data') {
 #' 
 #' @return Silent if proper user input else warns for unrecognized `type`.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 check_plot_type <- function(type, allowed) {
   type  <- stringr::str_extract_all(type, pattern = '.')[[1]]
   not_allowed <- type[!type %in% allowed]
@@ -52,8 +52,8 @@ check_plot_type <- function(type, allowed) {
 #' 
 #' @return A string taking `continuous` or `log10` as value.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 check_scales <- function(scale, log) {
   if (is.null(log)) return('continuous')
   ifelse(stringr::str_detect(string = log, pattern = scale), 'log10', 'continuous')
@@ -69,8 +69,8 @@ check_scales <- function(scale, log) {
 #' 
 #' @return The modified `string`.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 append_suffix <- function(xpdb, string = NULL, type = NULL) {
   if (is.null(string)) return()
   stringr::str_c(string, xpdb$xp_theme[stringr::str_c(type, '_suffix')], sep = '')
@@ -89,8 +89,8 @@ append_suffix <- function(xpdb, string = NULL, type = NULL) {
 #' 
 #' @return The parsed `string`.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 parse_title <- function(string, xpdb, problem, quiet, extra_key = NULL, extra_value = NULL) {
   # Extract keywords from the string
   keyword <- string %>% 
@@ -142,8 +142,8 @@ parse_title <- function(string, xpdb, problem, quiet, extra_key = NULL, extra_va
 #' 
 #' @return A modified `xp_theme`
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 filter_xp_theme <- function(xp_theme, regex = NULL, action = 'keep') {
   match <- stringr::str_detect(names(xp_theme), regex)
   if (action == 'drop') match <- !match
@@ -158,8 +158,8 @@ filter_xp_theme <- function(xp_theme, regex = NULL, action = 'keep') {
 #' @return The number of the all data problems as an integer 
 #' vector.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 all_data_problem <- function(xpdb) {
   prob_n <- xpdb$data$problem
   if (length(prob_n) == 0) return(NA_integer_)
@@ -169,7 +169,6 @@ all_data_problem <- function(xpdb) {
 
 #' Get last data problem
 #'
-#' 
 #' @description Used by several internal functions when the problem argument has not 
 #' been supplied by the user.
 #' 
@@ -180,8 +179,8 @@ all_data_problem <- function(xpdb) {
 #' @return The last estimation problem when `simtab = FALSE`, 
 #' else the last simulation problem as an integer.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 last_data_problem <- function(xpdb, simtab = FALSE) {
   prob_n <- xpdb$data$simtab
   if (!simtab) prob_n <- !prob_n
@@ -201,8 +200,8 @@ last_data_problem <- function(xpdb, simtab = FALSE) {
 #' @return The last estimation problem when at least one estimation problem is present, 
 #' else the last simulation problem as an integer.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 default_plot_problem <- function(xpdb){
   last_data_problem(xpdb, simtab = all(xpdb$data$simtab))
 }
@@ -216,8 +215,8 @@ default_plot_problem <- function(xpdb){
 #' @return The number of the all file problems as an integer 
 #' vector for the given file `ext`.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 all_file_problem <- function(xpdb, ext) {
   prob_n <- xpdb$files$problem[xpdb$files$extension == ext]
   prob_n <- unique(prob_n)
@@ -233,8 +232,8 @@ all_file_problem <- function(xpdb, ext) {
 #' @return The number of the last file problem as an integer 
 #' for the given file `ext`.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 last_file_problem <- function(xpdb, ext) {
   prob_n <- all_file_problem(xpdb = xpdb, ext = ext)
   max(prob_n)
@@ -249,8 +248,8 @@ last_file_problem <- function(xpdb, ext) {
 #' @return The number of the last file subproblem as an integer 
 #' for the given `problem` and file `ext`.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 last_file_subprob <- function(xpdb, ext, problem) {
   subprob_n <- xpdb$files$subprob[xpdb$files$extension == ext & xpdb$files$problem == problem]
   subprob_n <- unique(subprob_n)
@@ -269,8 +268,8 @@ last_file_subprob <- function(xpdb, ext, problem) {
 #' @return A subset of `col` for which more than one single 
 #' value was found in the data.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 drop_static_cols <- function(xpdb, problem, cols, quiet) {
   if (is.null(cols)) return()
   cols_rm <- get_data(xpdb, problem = problem) %>% 
@@ -300,8 +299,8 @@ drop_static_cols <- function(xpdb, problem, cols, quiet) {
 #' label (label associated with the column) and units 
 #' (units associated with the column)
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 xp_var <- function(xpdb, problem, col = NULL, type = NULL, silent = FALSE) {
   index <- xpdb$data[xpdb$data$problem == problem, ]$index[[1]]
   if (!is.null(type)) {
@@ -336,8 +335,8 @@ xp_var <- function(xpdb, problem, col = NULL, type = NULL, silent = FALSE) {
 #' 
 #' @return ggplot2 aesthetics mapping
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 aes_c <- function(fun_aes, user_aes) {
   if (is.null(user_aes)) return(fun_aes)
   aes <- c(fun_aes[!names(fun_aes) %in% names(user_aes)], user_aes)
@@ -355,8 +354,8 @@ aes_c <- function(fun_aes, user_aes) {
 #' 
 #' @return ggplot2 aesthetics mapping
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 aes_filter <- function(mapping, drop = NULL, keep_only = NULL) {
   if (is.null(mapping)) return()
   if (!is.null(keep_only)) {
@@ -379,8 +378,8 @@ aes_filter <- function(mapping, drop = NULL, keep_only = NULL) {
 #' 
 #' @return ggplot2 aesthetics mapping
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 aes_rename <- function(mapping, from, to) {
   if (is.null(mapping)) return()
   if (!any(from %in% names(mapping))) return(mapping)

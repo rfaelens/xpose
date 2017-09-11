@@ -17,3 +17,4 @@ A string or vector of strings of file name(s).
 \description{
 Change the extension of a file.
 }
+\keyword{internal}

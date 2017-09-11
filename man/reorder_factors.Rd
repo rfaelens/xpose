@@ -18,3 +18,4 @@ A modified tibble
 Will for example convert `ETA(1)` to 1 create factors then generate labels
 by wrapping the digits with prefix and suffix.
 }
+\keyword{internal}

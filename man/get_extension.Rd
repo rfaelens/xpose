@@ -18,3 +18,4 @@ A string or vector of string of the file(s) extension.
 \description{
 Extract file extension from the filename string.
 }
+\keyword{internal}

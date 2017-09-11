@@ -18,3 +18,4 @@ A string or vector of string of the full file path.
 Wrapper around `file.path` that cleans trailing forward 
 slash and missing `dir`.
 }
+\keyword{internal}

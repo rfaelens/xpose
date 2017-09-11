@@ -168,8 +168,8 @@ mutate.xpose_data <- function(.data, ..., .problem, .source) {
 #' 
 #' @return Silent if checks are successful, returns errors otherwise.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 check_quo_vars <- function(xpdb, ..., .source, .problem) {
   quo_vars <- rlang::quos(...) %>% 
     purrr::map(all.vars) %>% 

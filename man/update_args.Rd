@@ -20,3 +20,4 @@ A list of arguments for the layer defined in `name`.
 \description{
 Combine the arguments from the user and the `xp_theme`.
 }
+\keyword{internal}

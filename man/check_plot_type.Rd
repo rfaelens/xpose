@@ -17,3 +17,4 @@ Silent if proper user input else warns for unrecognized `type`.
 \description{
 Check plot `type`
 }
+\keyword{internal}

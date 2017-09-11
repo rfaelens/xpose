@@ -22,3 +22,4 @@ A function
 \description{
 Create shortcut functions on the fly to remove duplicated records in data.
 }
+\keyword{internal}

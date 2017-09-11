@@ -9,6 +9,8 @@ fetch_data(xpdb, problem = NULL, subprob = NULL, source = "data",
   value_col = NULL, post_processing = NULL, quiet = FALSE)
 }
 \arguments{
+\item{xpdb}{An xpose database object.}
+
 \item{problem}{The problem to be used, by default returns the last one.}
 
 \item{subprob}{The subproblem to be used, by default returns the last one.}
@@ -31,6 +33,8 @@ Column names to be stacked when tidying the data.}
 
 \item{post_processing}{A function used to modify the data after it has been tidyied e.g. post_processing = function(x) 
 dplyr::mutate(.data = x, variable = as.factor(.$variable)) where x is the tidy data.}
+
+\item{quiet}{Should messages be displayed to the console.}
 }
 \value{
 A tibble
@@ -39,3 +43,4 @@ A tibble
 Main internal function to get the data from different source and 
 prepare it for plotting. Arguments are usually provided by `data_opt()`.
 }
+\keyword{internal}

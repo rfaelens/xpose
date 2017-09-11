@@ -23,3 +23,4 @@ Silent if checks are successful, returns errors otherwise.
 Ensure that variables used in quos are present in the 
 data and return informative error messages otherwise.
 }
+\keyword{internal}

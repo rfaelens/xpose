@@ -197,8 +197,8 @@ read_nm_tables <- function(file          = NULL,
 #' 
 #' @return A data import function.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 read_funs <- function(fun) {
   c(csv   = readr::read_csv,
     csv2  = readr::read_csv2,
@@ -221,8 +221,8 @@ read_funs <- function(fun) {
 #' @return A list of 2 levels fun (the import function) and params (a list 
 #' of arguments to be used when calling fun).
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 read_args <- function(x, quiet, col_types = readr::cols(.default = 'd'), 
                       na = 'NA', comment = 'TABLE', skip = 1, ...) {
   
@@ -267,8 +267,8 @@ read_args <- function(x, quiet, col_types = readr::cols(.default = 'd'),
 #' 
 #' @return A list containing `data` and `index` of the combined table.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 combine_tables <- function(x) {
   if (length(unique(x$nrow)) > 1) {
     warning(c('Dropped: ', stringr::str_c(x$name, collapse = ', '), 
@@ -294,8 +294,8 @@ combine_tables <- function(x) {
 #' 
 #' @return A list containing `data` and `index` of the merged table.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 merge_firstonly <- function(x, quiet) {
   if (nrow(x) == 1) {
     # No merge needed
@@ -323,12 +323,11 @@ merge_firstonly <- function(x, quiet) {
 #' 
 #' @param x A list containing the tables (`x$data`) to be 
 #' combined along with their respective names (`x$name`).
-#' @param quiet Should messages be displayed to the console.
 #' 
 #' @return A tibble of the index.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 index_table <- function(x) {
   tab_type <- dplyr::case_when(
     stringr::str_detect(x$name, 'patab') ~ 'param',   # model parameters

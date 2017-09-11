@@ -20,3 +20,4 @@ A tibble containing the parsed `data` along with `name`, `problem`,
 Function parsing NONMEM output files from their 
 raw input.
 }
+\keyword{internal}

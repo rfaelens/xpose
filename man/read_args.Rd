@@ -31,3 +31,4 @@ of arguments to be used when calling fun).
 \description{
 Define data import arguments
 }
+\keyword{internal}

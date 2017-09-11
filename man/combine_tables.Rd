@@ -17,3 +17,4 @@ A list containing `data` and `index` of the combined table.
 \description{
 Combine tables
 }
+\keyword{internal}

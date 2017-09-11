@@ -32,8 +32,8 @@ ggforce::facet_grid_paginate
 #' @return Logical value, `TRUE` for `xpose_theme` class 
 #' and `FALSE` otherwise.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 is.xp.theme <- function(x) {
   inherits(x, 'xpose_theme')
 }
@@ -48,8 +48,8 @@ is.xp.theme <- function(x) {
 #' @return Logical value, `TRUE` for `xpose_data` class 
 #' and `FALSE` otherwise.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 is.xpdb <- function(x) {
   inherits(x, 'xpose_data')
 }
@@ -64,8 +64,8 @@ is.xpdb <- function(x) {
 #' @return Logical value, `TRUE` for `nm_model` class 
 #' and `FALSE` otherwise.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 is.nm.model <- function(x) {
   inherits(x, 'nm_model')
 }
@@ -79,8 +79,8 @@ is.nm.model <- function(x) {
 #' @return Logical value, `TRUE` for `nm_table_list` class 
 #' and `FALSE` otherwise.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 is.nm.table.list <- function(x) {
   inherits(x, 'nm_table_list')
 }
@@ -94,8 +94,8 @@ is.nm.table.list <- function(x) {
 #' 
 #' @return x with `nm_table_list` class.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 as.nm.table.list <- function(x) {
   structure(x, class = c('nm_table_list', class(x)))
 }
@@ -110,8 +110,8 @@ as.nm.table.list <- function(x) {
 #' @return Logical value, `TRUE` for `xpose_plot` class 
 #' and `FALSE` otherwise.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 is.xpose.plot <- function(x) {
   inherits(x, 'xpose_plot')
 }
@@ -126,8 +126,8 @@ is.xpose.plot <- function(x) {
 #' @return Logical value, `TRUE` for `formula` class 
 #' and `FALSE` otherwise.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 is.formula <- function(x) {
   inherits(x, 'formula')
 }
@@ -141,8 +141,8 @@ is.formula <- function(x) {
 #' 
 #' @return A string of time in `hh:mm:ss`.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 as.ctime <- function(x) {
   x <- round(as.numeric(x), 0)
   sprintf("%02d:%02d:%02d", 
@@ -161,8 +161,8 @@ as.ctime <- function(x) {
 #' 
 #' @return Silent when quiet is `TRUE` or a message is quiet is `FALSE`.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 msg <- function(txt, quiet = TRUE) {
   if (!quiet) message(txt)
 }
@@ -178,8 +178,8 @@ msg <- function(txt, quiet = TRUE) {
 #' 
 #' @return A string or vector of string of the full file path.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 file_path <- function(dir, file) {
   if (is.null(dir)) return(file) 
   
@@ -198,8 +198,8 @@ file_path <- function(dir, file) {
 #' 
 #' @return A string or vector of string of the file(s) extension.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 get_extension <- function(x, dot = TRUE) {
   x <- stringr::str_extract(x, '\\.[[:alnum:]]+$')
   x[is.na(x)] <- ''
@@ -217,8 +217,8 @@ get_extension <- function(x, dot = TRUE) {
 #' 
 #' @return A string or vector of strings of extension(s).
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 make_extension <- function(x) {
   dplyr::if_else(!stringr::str_detect(x, '^\\..+'), stringr::str_c('.', x), x)
 }
@@ -233,8 +233,8 @@ make_extension <- function(x) {
 #' 
 #' @return A string or vector of strings of file name(s).
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 update_extension <- function(x, ext) {
   stringr::str_replace(x, '\\.[[:alnum:]]+$', ext)
 }

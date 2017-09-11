@@ -19,3 +19,4 @@ A tibble.
 \description{
 Convert raw data strings to a tibble format.
 }
+\keyword{internal}

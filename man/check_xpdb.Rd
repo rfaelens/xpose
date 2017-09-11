@@ -19,3 +19,4 @@ Silent if successful check, else returns error.
 \description{
 Check xpdb
 }
+\keyword{internal}

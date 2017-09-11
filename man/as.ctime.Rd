@@ -15,3 +15,4 @@ A string of time in `hh:mm:ss`.
 \description{
 Convert seconds to hh:mm:ss
 }
+\keyword{internal}

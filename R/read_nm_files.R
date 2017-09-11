@@ -89,8 +89,8 @@ read_nm_files <- function(runno  = NULL,
 #' @return A tibble containing the parsed `data` along with `name`, `problem`, 
 #' `subprob`, and `method`.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 parse_nm_files <- function(dat, quiet) {
   if (length(unlist(dat$raw)) == 0) {
     tab_rows <- NULL 
@@ -146,8 +146,8 @@ parse_nm_files <- function(dat, quiet) {
 #' 
 #' @return A tibble.
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 raw_to_tibble <- function(x, sep, file) {
   header <- x$raw[x$header] %>% 
     stringr::str_split(pattern = sep) %>% 

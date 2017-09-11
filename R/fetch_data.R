@@ -51,8 +51,8 @@ data_opt <- function(problem         = NULL,
 #' 
 #' @return A function
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 only_obs <- function(xpdb, problem, quiet) {
   mdv_var <- xp_var(xpdb, problem, type = c('evid', 'mdv'))$col[1]
   fun <- function(x) {}
@@ -85,8 +85,8 @@ only_obs <- function(xpdb, problem, quiet) {
 #' 
 #' @return A function
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 only_distinct <- function(xpdb, problem, facets, quiet) {
   if (is.formula(facets)) facets <- all.vars(facets)
   vars <- c(xp_var(xpdb, problem, type = c('id'))$col[1], facets)
@@ -110,8 +110,8 @@ only_distinct <- function(xpdb, problem, facets, quiet) {
 #' 
 #' @return A modified tibble
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 reorder_factors <- function(prefix, suffix = NULL) {
   function(x) {
     x %>% 
@@ -128,11 +128,13 @@ reorder_factors <- function(prefix, suffix = NULL) {
 #' prepare it for plotting. Arguments are usually provided by `data_opt()`.
 #' 
 #' @inheritParams data_opt
+#' @param xpdb An xpose database object.
+#' @param quiet Should messages be displayed to the console.
 #' 
 #' @return A tibble
 #' 
-# @keywords internal
-# @export
+#' @keywords internal
+#' @export
 fetch_data <- function(xpdb, 
                        problem   = NULL, 
                        subprob   = NULL,

@@ -16,3 +16,4 @@ and `FALSE` otherwise.
 \description{
 Reports whether x is a `nm_table_list` object
 }
+\keyword{internal}

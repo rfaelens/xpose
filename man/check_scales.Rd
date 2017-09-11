@@ -18,3 +18,4 @@ A string taking `continuous` or `log10` as value.
 \description{
 Check plot scales
 }
+\keyword{internal}

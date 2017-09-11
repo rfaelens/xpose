@@ -9,8 +9,6 @@ index_table(x)
 \arguments{
 \item{x}{A list containing the tables (`x$data`) to be 
 combined along with their respective names (`x$name`).}
-
-\item{quiet}{Should messages be displayed to the console.}
 }
 \value{
 A tibble of the index.
@@ -18,3 +16,4 @@ A tibble of the index.
 \description{
 Index table columns
 }
+\keyword{internal}

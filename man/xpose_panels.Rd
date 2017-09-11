@@ -19,3 +19,4 @@ Output a `facet` layer. Layer will be `facet_wrap_paginate` if
 \description{
 Convenience wrapper around ggforce facetting functions.
 }
+\keyword{internal}

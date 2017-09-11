@@ -19,3 +19,4 @@ ggplot2 aesthetics for the layer defined in `name`.
 Transform arguments from xpose (e.g. point_color) 
 to ggplot2 (e.g. color) format.
 }
+\keyword{internal}

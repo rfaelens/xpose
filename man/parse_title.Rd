@@ -27,3 +27,4 @@ The parsed `string`.
 \description{
 Parse keywords in string based on values contained in an xpdb
 }
+\keyword{internal}

@@ -16,3 +16,4 @@ and `FALSE` otherwise.
 \description{
 Reports whether x is a `nm_model` object
 }
+\keyword{internal}

@@ -17,3 +17,4 @@ Silent when quiet is `TRUE` or a message is quiet is `FALSE`.
 \description{
 Message function with quiet option inspired from `ronkeizer/vpc`.
 }
+\keyword{internal}

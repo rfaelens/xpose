@@ -21,3 +21,4 @@ ggplot2 aesthetics mapping
 \description{
 Convenience function to easily filter ggplot2 aesthetics
 }
+\keyword{internal}

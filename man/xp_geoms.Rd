@@ -15,6 +15,9 @@ xp_geoms(mapping = NULL, xp_theme, name, ggfun, ...)
 parsing (e.g. point).}
 
 \item{ggfun}{Name of the ggplot2 layer function to be called.}
+
+\item{...}{Additional arguments to be parsed and passed to the 
+destination layer.}
 }
 \value{
 Output of the `ggfun` call.
@@ -22,3 +25,4 @@ Output of the `ggfun` call.
 \description{
 Generic wrapper around ggplot2 layer functions.
 }
+\keyword{internal}

@@ -18,3 +18,4 @@ ggplot2 aesthetics mapping
 \description{
 Set new default value for ggplot2 aesthetics
 }
+\keyword{internal}
