@@ -12,8 +12,8 @@ xpdb_NULL$files <- NULL
 
 test_that('Check check_scales', {
   expect_equal(check_scales('x', NULL), 'continuous')
-  expect_equal(check_scales(c('log10', 'continuous'), NULL), 'continuous')
-  expect_equal(check_scales(c('log10', 'continuous'), 'log10'), c('log10','continuous'))
+  expect_equal(check_scales('x', 'y'), 'continuous')
+  expect_equal(check_scales('x', 'xy'), 'log10')
 })
 
 test_that('Check parse_title', {
@@ -63,7 +63,9 @@ test_that('Check last_file_subprob', {
 test_that('Check xp_var', {
   expect_equal(xp_var(xpdb_ex_pk, 1, col = 'TAD')$type, 'idv')
   expect_equal(xp_var(xpdb_ex_pk, 1, type = 'idv')$col, 'TAD')
-  expect_null(xp_var(xpdb_ex_pk, 1, col = 'FAKE_COL'))
+  expect_null(xp_var(xpdb_ex_pk, 1, col = 'FAKE_COL', silent = TRUE))
+  expect_error(xp_var(xpdb_ex_pk, 1, col = 'FAKE_COL', silent = FALSE),
+               regexp = 'Column `FAKE_COL` not available')
 })
 
 test_that('Check append_aes', {
