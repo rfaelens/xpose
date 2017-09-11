@@ -12,7 +12,7 @@ aes_filter(mapping, drop = NULL, keep_only = NULL)
 \item{drop}{names of ggplot2 aesthetics to be removed from the `mapping`. 
 Alternative to the `keep_only` argument.}
 
-\item{keep_only}{names of the only ggplot2 aesthetics to be keept in the 
+\item{keep_only}{names of the only ggplot2 aesthetics to be kept in the 
 `mapping`. Alternative to the `drop` argument.}
 }
 \value{

@@ -14,7 +14,7 @@ check_xpdb(xpdb, check = "data")
 test will be skipped.}
 }
 \value{
-Silent if sucessful check, else returns error.
+Silent if successful check, else returns error.
 }
 \description{
 Check xpdb

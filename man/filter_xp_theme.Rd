@@ -16,7 +16,7 @@ filter_xp_theme(xp_theme, regex = NULL, action = "keep")
 while `drop` will drop the matches.}
 }
 \value{
-A modifed `xp_theme`
+A modified `xp_theme`
 }
 \description{
 Subset an `xp_theme`

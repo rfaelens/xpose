@@ -2,7 +2,7 @@
 % Please edit documentation in R/xplot_helpers.R
 \name{append_suffix}
 \alias{append_suffix}
-\title{Apend suffix contained in the `xp_theme` to titles}
+\title{Append suffix contained in the `xp_theme` to titles}
 \usage{
 append_suffix(xpdb, string = NULL, type = NULL)
 }
@@ -18,5 +18,5 @@ in the `xp_theme`. Can be one of `title`, `subtitle` or `caption`.}
 The modified `string`.
 }
 \description{
-Apend suffix contained in the `xp_theme` to titles
+Append suffix contained in the `xp_theme` to titles
 }

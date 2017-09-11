@@ -9,7 +9,7 @@ aes_c(fun_aes, user_aes)
 \arguments{
 \item{fun_aes}{Default ggplot2 aesthetics mapping defined for the function}
 
-\item{user_aes}{ggplot2 aesthetics mapping inputed by the user. These 
+\item{user_aes}{ggplot2 aesthetics mapping inputted by the user. These 
 aesthetics will overwrite matching elements in `fun_aes`.}
 }
 \value{

@@ -10,7 +10,7 @@ vignette: >
 ---
 
 # Our team
-The xpose developpers' team features:
+The xpose developers' team features:
 
 - Benjamin Guiastrennec
 - Andrew C. Hooker
@@ -28,7 +28,7 @@ The xpose package development was kindly sponsored by:
 - [Pfizer](http://www.pfizer.com)
 
 # Our history
-The new xpose was inspired from data vizualization and model diagnostics concepts established by the [xpose4](http://xpose.sourceforge.net) package. Xpose4 was developped by the [Department of Pharmaceutical Biosciences](http://www.farmbio.uu.se/forskning/researchgroups/pharmacometrics/) at Uppsala University:
+The new xpose was inspired from data visualization and model diagnostics concepts established by the [xpose4](http://xpose.sourceforge.net) package. Xpose4 was developed by the [Department of Pharmaceutical Biosciences](http://www.farmbio.uu.se/forskning/researchgroups/pharmacometrics/) at Uppsala University:
 
 - Copyright (C) 2009-present Andrew C. Hooker, Mats O. Karlsson and E. Niclas Jonsson.
 - Copyright (C) 2005-2008 Andrew C. Hooker, Justin J. Wilkins, Mats O. Karlsson and E. Niclas Jonsson.

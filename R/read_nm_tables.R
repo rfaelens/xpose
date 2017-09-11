@@ -137,7 +137,7 @@ read_nm_tables <- function(file          = NULL,
   tables <- tables %>% 
     dplyr::group_by_(.dots = c('problem', 'simtab', 'firstonly')) %>% 
     tidyr::nest(.key = 'tmp') %>% 
-    dplyr::mutate(out = purrr::map(.$tmp, combine_tables, quiet)) %>% 
+    dplyr::mutate(out = purrr::map(.$tmp, combine_tables)) %>% 
     tidyr::unnest_(unnest_cols = 'out') %>% 
     dplyr::select(dplyr::one_of('problem', 'simtab', 'firstonly', 'data', 'index'))
   
@@ -190,12 +190,39 @@ read_nm_tables <- function(file          = NULL,
 }
 
 
+#' Define data import functions
+#' 
+#' @param fun Abbreviated `readr` data import function. 
+#' Can be `csv`, `csv2` or `table`.
+#' 
+#' @return A data import function.
+#' 
+# @keywords internal
+# @export
 read_funs <- function(fun) {
   c(csv   = readr::read_csv,
     csv2  = readr::read_csv2,
     table = readr::read_table2)[fun]
 }
 
+
+#' Define data import arguments
+#' 
+#' @param x A list containing a the 3 first records of a 
+#' dataset under `[[1]]`.
+#' @param quiet Should messages be displayed to the console.
+#' @param col_types Defines the type of each to be passed to 
+#' the `readr` import function.
+#' @param na Character string defining the values to be treated as `NA`.
+#' @param comment Character string defining the value to mark comments.
+#' @param skip Number of rows to be skipped before reading the data.
+#' @param ... Additional arguments to be passed to the `readr` function
+#' 
+#' @return A list of 2 levels fun (the import function) and params (a list 
+#' of arguments to be used when calling fun).
+#' 
+# @keywords internal
+# @export
 read_args <- function(x, quiet, col_types = readr::cols(.default = 'd'), 
                       na = 'NA', comment = 'TABLE', skip = 1, ...) {
   
@@ -231,7 +258,18 @@ read_args <- function(x, quiet, col_types = readr::cols(.default = 'd'),
                                    col_types = col_types, ...)))
 }
 
-combine_tables <- function(x, quiet) {
+
+#' Combine tables
+#' 
+#' @param x A list containing the tables (`x$data`) to be 
+#' combined, their names (`x$name`), their number of rows (`x$nrow`) 
+#' and their respective index (`x$index`).
+#' 
+#' @return A list containing `data` and `index` of the combined table.
+#' 
+# @keywords internal
+# @export
+combine_tables <- function(x) {
   if (length(unique(x$nrow)) > 1) {
     warning(c('Dropped: ', stringr::str_c(x$name, collapse = ', '), 
               ' due to missmatch in row number.'), call. = FALSE)
@@ -246,6 +284,18 @@ combine_tables <- function(x, quiet) {
                 index = list(dplyr::bind_rows(x$index)))
 }
 
+
+#' Merge firstonly table with full length tables
+#' 
+#' @param x A list containing the tables (`x$data`) to be 
+#' merged, the firstonly flag (`x$firstonly`) and the 
+#' indexes (`x$index`).
+#' @param quiet Should messages be displayed to the console.
+#' 
+#' @return A list containing `data` and `index` of the merged table.
+#' 
+# @keywords internal
+# @export
 merge_firstonly <- function(x, quiet) {
   if (nrow(x) == 1) {
     # No merge needed
@@ -268,6 +318,17 @@ merge_firstonly <- function(x, quiet) {
                   list())
 }
 
+
+#' Index table columns
+#' 
+#' @param x A list containing the tables (`x$data`) to be 
+#' combined along with their respective names (`x$name`).
+#' @param quiet Should messages be displayed to the console.
+#' 
+#' @return A tibble of the index.
+#' 
+# @keywords internal
+# @export
 index_table <- function(x) {
   tab_type <- dplyr::case_when(
     stringr::str_detect(x$name, 'patab') ~ 'param',   # model parameters
@@ -280,8 +341,8 @@ index_table <- function(x) {
     dplyr::tibble(table = x$name,
                   col   = ., 
                   type  = NA_character_, 
-                  label = NA_character_,     # Feature to be added in future release
-                  units = NA_character_) %>% # Feature to be added in future release
+                  label = NA_character_,     # Feature to be added in future releases
+                  units = NA_character_) %>% # Feature to be added in future releases
     dplyr::mutate(type = dplyr::case_when(
       .$col == 'ID' ~ 'id',
       .$col == 'DV' ~ 'dv',

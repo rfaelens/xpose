@@ -5,7 +5,7 @@
 #' `summary`, `special`, `code`, a file name, or `FALSE`. IF `FALSE` the slot 
 #' test will be skipped.
 #' 
-#' @return Silent if sucessful check, else returns error.
+#' @return Silent if successful check, else returns error.
 #' 
 # @keywords internal
 # @export
@@ -60,7 +60,7 @@ check_scales <- function(scale, log) {
 }
 
 
-#' Apend suffix contained in the `xp_theme` to titles
+#' Append suffix contained in the `xp_theme` to titles
 #' 
 #' @param xpdb An xpose database object.
 #' @param string A string to which the suffix will be appended.
@@ -140,7 +140,7 @@ parse_title <- function(string, xpdb, problem, quiet, extra_key = NULL, extra_va
 #' `keep` will subset the `xp_theme` to only the names matching the `regex`, 
 #' while `drop` will drop the matches.
 #' 
-#' @return A modifed `xp_theme`
+#' @return A modified `xp_theme`
 #' 
 # @keywords internal
 # @export
@@ -331,7 +331,7 @@ xp_var <- function(xpdb, problem, col = NULL, type = NULL, silent = FALSE) {
 #' Set new default value for ggplot2 aesthetics
 #' 
 #' @param fun_aes Default ggplot2 aesthetics mapping defined for the function
-#' @param user_aes ggplot2 aesthetics mapping inputed by the user. These 
+#' @param user_aes ggplot2 aesthetics mapping inputted by the user. These 
 #' aesthetics will overwrite matching elements in `fun_aes`.
 #' 
 #' @return ggplot2 aesthetics mapping
@@ -350,7 +350,7 @@ aes_c <- function(fun_aes, user_aes) {
 #' @param mapping ggplot2 aesthetics
 #' @param drop names of ggplot2 aesthetics to be removed from the `mapping`. 
 #' Alternative to the `keep_only` argument.
-#' @param keep_only names of the only ggplot2 aesthetics to be keept in the 
+#' @param keep_only names of the only ggplot2 aesthetics to be kept in the 
 #' `mapping`. Alternative to the `drop` argument.
 #' 
 #' @return ggplot2 aesthetics mapping
