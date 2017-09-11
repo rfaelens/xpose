@@ -13,6 +13,10 @@
 #' Default \code{NULL} reads all tables.
 #' @param ziptab If \code{TRUE} search for the tables that have been compressed and renamed ´<file>.zip'.
 #' @param ... Additional arguments to be passed to the \code{\link[readr]{read_table2}} or \code{\link[readr]{read_csv}} functions.
+#' 
+#' @note An `ID` column must be present in all data tables. This is required for properly combining/merging tables and removing `NA` values. 
+#' If the `ID` column is missing from a table xpose will return the following warning: \code{Unknown variables: `ID`}.
+#' 
 #' @examples
 #' \dontrun{
 #' # Import tables manually and return them as a list of individual tables
