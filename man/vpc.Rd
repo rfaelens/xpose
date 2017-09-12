@@ -4,10 +4,10 @@
 \alias{vpc}
 \title{Visual predictive checks}
 \usage{
-vpc(xpdb, mapping = NULL, type = "alr", smooth = TRUE, facets,
+vpc(xpdb, mapping = NULL, type = "alr", smooth = TRUE,
   title = "Visual predictive checks | @run", subtitle = NULL,
   caption = "@dir", log = NULL, vpc_type = NULL, gg_theme, xp_theme,
-  quiet, ...)
+  facets, quiet, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -19,9 +19,6 @@ vpc(xpdb, mapping = NULL, type = "alr", smooth = TRUE, facets,
 line 'l', area 'a', rug 'r' and text 't' or any combination of the five.}
 
 \item{smooth}{Should the bins be smoothed (connect bin midpoints, default) or shown as rectangular boxes.}
-
-\item{facets}{Either a character string to use \link[ggplot2]{facet_wrap} 
-or a formula to use \link[ggplot2]{facet_grid}.}
 
 \item{title}{Plot title. Use \code{NULL} to remove.}
 
@@ -40,6 +37,9 @@ vpc to be created. Can be one of can be one of: 'continuous', 'categorical',
 
 \item{xp_theme}{An xpose theme or vector of modifications to the xpose theme
 (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).}
+
+\item{facets}{Either a character string to use \link[ggplot2]{facet_wrap} 
+or a formula to use \link[ggplot2]{facet_grid}.}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 
@@ -75,6 +75,16 @@ All xpose plot functions accept all the arguments for the \link[ggforce]{facet_w
 and \link[ggforce]{facet_grid_paginate} functions e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
 facets = OCC~SEX, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')}.
 
+Facetting options can either be defined in plot functions (e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
+facets = 'OCC')}) or assigned globally to an xpdb object via the \code{xp_theme} (e.g. \code{xpdb 
+<- update_themes(xpdb_ex_pk, xp_theme = list(facets = 'OCC'))}). In the latter example all plots 
+generate from this xpdb will automatically be stratified by `OCC`.
+
+By default, some plot functions use a custom stratyfiyng variable named `variable`, e.g. 
+\code{eta_distrib()}. When using the \code{facets} argument, `variable` needs to be added manually 
+e.g. \code{facets = c('OCC', 'variable')} or \code{facets = c('OCC', 'variable')}, but is optional, 
+when using the \code{facets} argument in \code{xp_theme} variable is automatically added whenever needed.
+
 
 Every xpose plot function has built-in facetting functionalities. Faceting arguments 
 are passed to the functions \link[ggforce]{facet_wrap_paginate} when the \code{facets} 
@@ -83,6 +93,16 @@ argument is a character string (e.g. \code{facets = c('OCC', 'SEX')}) or
 All xpose plot functions accept all the arguments for the \link[ggforce]{facet_wrap_paginate} 
 and \link[ggforce]{facet_grid_paginate} functions e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
 facets = OCC~SEX, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')}.
+
+Facetting options can either be defined in plot functions (e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
+facets = 'OCC')}) or assigned globally to an xpdb object via the \code{xp_theme} (e.g. \code{xpdb 
+<- update_themes(xpdb_ex_pk, xp_theme = list(facets = 'OCC'))}). In the latter example all plots 
+generate from this xpdb will automatically be stratified by `OCC`.
+
+By default, some plot functions use a custom stratyfiyng variable named `variable`, e.g. 
+\code{eta_distrib()}. When using the \code{facets} argument, `variable` needs to be added manually 
+e.g. \code{facets = c('OCC', 'variable')} or \code{facets = c('OCC', 'variable')}, but is optional, 
+when using the \code{facets} argument in \code{xp_theme} variable is automatically added whenever needed.
 }
 
 \section{Template titles}{
