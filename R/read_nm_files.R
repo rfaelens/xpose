@@ -49,7 +49,7 @@ read_nm_files <- function(runno  = NULL,
   msg('\nLooking for nonmem output files', quiet)
   
   if (!any(file.exists(full_path))) {
-    stop('No output file could be found.', call. = FALSE)
+    stop('No output files could be found.', call. = FALSE)
   }
   
   msg(c('Reading: ', stringr::str_c(bases[file.exists(full_path)], collapse = ', ')), quiet)
@@ -101,7 +101,7 @@ parse_nm_files <- function(dat, quiet) {
   }
   
   if (length(tab_rows) == 0) {
-    warning(c('Dropping ', dat$name, ' due to inappropriate format.'), call. = FALSE)
+    warning(c('Dropped `', dat$name, '` due to inappropriate format.'), call. = FALSE)
     return()
   }
   
