@@ -45,10 +45,6 @@ combination of the three.}
 \description{
 Gather model outputs into a R database
 }
-\note{
-An `ID` column must be present in all data tables. This is required for properly combining/merging tables and removing `NA` values. 
-If the `ID` column is missing from a table xpose will return the following warning: \code{Unknown variables: `ID`}.
-}
 \section{File path generation}{
 
 The rules for model file names generation are as follow:
@@ -58,6 +54,14 @@ The rules for model file names generation are as follow:
   \item with \code{file}: the full path is generated as \code{<dir>/<file>} e.g. with \code{dir = 'model/pk'}, \code{file = 'run001.lst'} the resulting path
   would also be \code{model/pk/run001.lst}. Note: in this case the file extension should be provided as part of the `file` argument.
   }
+}
+
+\section{Table format requirement}{
+
+When importing data, an \code{ID} column must be present in at least one table for each problem and for each `firstonly` 
+category. \code{ID} columns are required to properly combine/merge tables and removing \code{NA} records. If 
+\code{ID} columns are missing xpose will return the following warning: \code{Dropped `<tablenames>` due to missing 
+required `ID` column.}.
 }
 
 \examples{
