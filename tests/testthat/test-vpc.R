@@ -35,7 +35,7 @@ test_that('get_psn_vpc_strat works properly', {
 test_that('vpc_data properly check input', {
   expect_error(vpc_data(), regexp = 'argument \"xpdb\" is missing')
   expect_error(vpc_data(xpdb_ex_pk, psn_folder = '.', quiet = TRUE), 
-                 regexp = 'No table file could be found')
+                 regexp = 'No table files could be found')
 })
 
 test_that('vpc_data works properly with xpdb tables', {

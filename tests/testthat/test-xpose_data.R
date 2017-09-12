@@ -40,10 +40,26 @@ test_that('properly creates the xpdb when using the runno argument', {
   expect_identical(xpdb_2, xpdb_ex_pk)
 })
 
-test_that('properly handles error in summary', {
-  expect_message(xpdb_3 <- xpose_data(runno = '001', ext = '.lst', dir = 'data', 
+test_that('properly handles errors in tables', {
+  expect_warning(xpdb_3 <- xpose_data(runno = '001', ext = '.lst', dir = 'data', 
+                                      ignore = c('files', 'summary'), quiet = TRUE, 
+                                      manual_import = manual_nm_import(tab_names = 'badtab')),
+                 regexp = 'Dropped `badtab001`')
+  expect_error(dv_vs_pred(xpdb_3), regex = 'No `data` slot could be found in this xpdb')
+})  
+
+test_that('properly handles errors in summary', {
+  expect_warning(xpdb_4 <- xpose_data(runno = '001', ext = '.lst', dir = 'data', 
                                       ignore = c('data', 'files'),
                                       quiet = TRUE, xp_theme = c(rounding = 'No')),
-                 regexp = 'Error returned by run summary')
-  expect_error(summary(xpdb_3), regex = 'No `summary` slot could be found in this xpdb')
+                 regexp = 'Failed to create run summary')
+  expect_error(summary(xpdb_4), regex = 'No `summary` slot could be found in this xpdb')
+})  
+
+test_that('properly handles errors in files', {
+  expect_warning(xpdb_5 <- xpose_data(runno = '001', ext = '.lst', dir = 'data', 
+                                      ignore = c('data', 'summary'), quiet = FALSE,
+                                      extra_files = c('.lst', '.mod')),
+                 regexp = 'Dropped `run001.lst`')
+  expect_error(grd_vs_iteration(xpdb_5), regex = 'No `files` slot could be found in this xpdb')
 })  
