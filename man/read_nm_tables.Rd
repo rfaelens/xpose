@@ -31,6 +31,10 @@ Default \code{NULL} reads all tables.}
 Quickly import NONMEM output tables into R. This function automatically 
 detects the optimal settings to import the tables from nonmem.
 }
+\note{
+An `ID` column must be present in all data tables. This is required for properly combining/merging tables and removing `NA` values. 
+If the `ID` column is missing from a table xpose will return the following warning: \code{Unknown variables: `ID`}.
+}
 \examples{
 \dontrun{
 # Import tables manually and return them as a list of individual tables

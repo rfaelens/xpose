@@ -31,6 +31,9 @@
 #'   would also be \code{model/pk/run001.lst}. Note: in this case the file extension should be provided as part of the `file` argument.
 #'   }
 #' 
+#' @note An `ID` column must be present in all data tables. This is required for properly combining/merging tables and removing `NA` values. 
+#' If the `ID` column is missing from a table xpose will return the following warning: \code{Unknown variables: `ID`}.
+#' 
 #' @examples
 #' \dontrun{
 #' # Using the `file` argument to point to the model file:

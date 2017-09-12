@@ -1,4 +1,14 @@
-# Check xpdb
+#' Check xpdb
+#' 
+#' @param xpdb An xpose database object.
+#' @param check The `xpdb` slot to be checked, can be `data`, `files`, 
+#' `summary`, `special`, `code`, a file name, or `FALSE`. IF `FALSE` the slot 
+#' test will be skipped.
+#' 
+#' @return Silent if successful check, else returns error.
+#' 
+#' @keywords internal
+#' @export
 check_xpdb <- function(xpdb, check = 'data') {
   # Check the class
   if (!is.xpdb(xpdb)) {
@@ -15,29 +25,72 @@ check_xpdb <- function(xpdb, check = 'data') {
   }
 }
 
-# Check plot type
-check_plot_type <- function(user_input, allowed) {
-  user_input  <- stringr::str_extract_all(user_input, pattern = '.')[[1]]
-  not_allowed <- user_input[!user_input %in% allowed]
+#' Check plot `type`
+#' 
+#' @param type A character string guiding the plot type.
+#' @param allowed A character vector of all allowed types e.g. `c('p', 'l')`.
+#' 
+#' @return Silent if proper user input else warns for unrecognized `type`.
+#' 
+#' @keywords internal
+#' @export
+check_plot_type <- function(type, allowed) {
+  type  <- stringr::str_extract_all(type, pattern = '.')[[1]]
+  not_allowed <- type[!type %in% allowed]
   if (length(not_allowed) > 0) {
     warning('Plot type ', stringr::str_c('"',not_allowed, '"', collapse = ', '), 
-         ' not recognized.', call. = FALSE)
+            ' not recognized.', call. = FALSE)
   }
 }
 
-# Check plot scales
+
+#' Check plot scales
+#' 
+#' @param scale The axis to be checked. Can be `x` or `y`.
+#' @param log A string to guide which axis (e.g. `x`, `y` or `xy`) should be 
+#' plotted on log scale.
+#' 
+#' @return A string taking `continuous` or `log10` as value.
+#' 
+#' @keywords internal
+#' @export
 check_scales <- function(scale, log) {
   if (is.null(log)) return('continuous')
   ifelse(stringr::str_detect(string = log, pattern = scale), 'log10', 'continuous')
 }
 
-# Add suffix contained in the theme the labs
+
+#' Append suffix contained in the `xp_theme` to titles
+#' 
+#' @param xpdb An xpose database object.
+#' @param string A string to which the suffix will be appended.
+#' @param type A string determining what suffix type should be used 
+#' in the `xp_theme`. Can be one of `title`, `subtitle` or `caption`.
+#' 
+#' @return The modified `string`.
+#' 
+#' @keywords internal
+#' @export
 append_suffix <- function(xpdb, string = NULL, type = NULL) {
   if (is.null(string)) return()
   stringr::str_c(string, xpdb$xp_theme[stringr::str_c(type, '_suffix')], sep = '')
 }
 
-# Add keyword values in template titles
+
+#' Parse keywords in string based on values contained in an xpdb
+#' 
+#' @param string A string containing keywords (e.g. `@nobs`) to be parsed 
+#' (e.g. title, label, etc.) using values stored in the `xpdb$summary`.
+#' @param xpdb An xpose database object.
+#' @param problem The $problem number to be used.
+#' @param quiet Should messages be displayed to the console.
+#' @param extra_key A vector of additional keywords not available in the `xpdb$summary`.
+#' @param extra_value A vector of values matching the order of `extra_key`.
+#' 
+#' @return The parsed `string`.
+#' 
+#' @keywords internal
+#' @export
 parse_title <- function(string, xpdb, problem, quiet, extra_key = NULL, extra_value = NULL) {
   # Extract keywords from the string
   keyword <- string %>% 
@@ -78,21 +131,56 @@ parse_title <- function(string, xpdb, problem, quiet, extra_key = NULL, extra_va
     stringr::str_interp()
 }
 
-# Subset an xp_theme
+
+#' Subset an `xp_theme`
+#' 
+#' @param xp_theme An xpose theme list.
+#' @param regex A string used to find matching names in the `xp_theme`
+#' @param action A string used to determine the action of on the xp_theme.
+#' `keep` will subset the `xp_theme` to only the names matching the `regex`, 
+#' while `drop` will drop the matches.
+#' 
+#' @return A modified `xp_theme`
+#' 
+#' @keywords internal
+#' @export
 filter_xp_theme <- function(xp_theme, regex = NULL, action = 'keep') {
   match <- stringr::str_detect(names(xp_theme), regex)
   if (action == 'drop') match <- !match
   xp_theme[match]
 }
 
-# Get last problem
+
+#' Get all data problems
+#' 
+#' @param xpdb An xpose database object.
+#' 
+#' @return The number of the all data problems as an integer 
+#' vector.
+#' 
+#' @keywords internal
+#' @export
 all_data_problem <- function(xpdb) {
   prob_n <- xpdb$data$problem
   if (length(prob_n) == 0) return(NA_integer_)
   unique(prob_n)
 }
 
-# Get last problem that is not a simulation problem (unless simtab is TRUE)
+
+#' Get last data problem
+#'
+#' @description Used by several internal functions when the problem argument has not 
+#' been supplied by the user.
+#' 
+#' @param xpdb An xpose database object.
+#' @param simtab Logical if `TRUE` the last simulation problem is returned. If `FALSE` 
+#' the last estimation problem is returned.
+#' 
+#' @return The last estimation problem when `simtab = FALSE`, 
+#' else the last simulation problem as an integer.
+#' 
+#' @keywords internal
+#' @export
 last_data_problem <- function(xpdb, simtab = FALSE) {
   prob_n <- xpdb$data$simtab
   if (!simtab) prob_n <- !prob_n
@@ -101,13 +189,34 @@ last_data_problem <- function(xpdb, simtab = FALSE) {
   max(prob_n)
 }
 
-# Get the default problem to be plotted if problem has not been supplied 
-# (the last estimation problem, or last sim problem if only simulations)
+
+#' Get the default data problem to be plotted 
+#' 
+#' @description Used by plot functions when the problem argument has not 
+#' been supplied by the user.
+#' 
+#' @param xpdb An xpose database object.
+#' 
+#' @return The last estimation problem when at least one estimation problem is present, 
+#' else the last simulation problem as an integer.
+#' 
+#' @keywords internal
+#' @export
 default_plot_problem <- function(xpdb){
   last_data_problem(xpdb, simtab = all(xpdb$data$simtab))
 }
 
-# Get all file problem
+
+#' Get all file problems
+#' 
+#' @param xpdb An xpose database object.
+#' @param ext The file extension to be used.
+#' 
+#' @return The number of the all file problems as an integer 
+#' vector for the given file `ext`.
+#' 
+#' @keywords internal
+#' @export
 all_file_problem <- function(xpdb, ext) {
   prob_n <- xpdb$files$problem[xpdb$files$extension == ext]
   prob_n <- unique(prob_n)
@@ -115,13 +224,32 @@ all_file_problem <- function(xpdb, ext) {
   prob_n
 }
 
-# Get last file problem
+#' Get last file problem
+#' 
+#' @param xpdb An xpose database object.
+#' @param ext The file extension to be used.
+#' 
+#' @return The number of the last file problem as an integer 
+#' for the given file `ext`.
+#' 
+#' @keywords internal
+#' @export
 last_file_problem <- function(xpdb, ext) {
   prob_n <- all_file_problem(xpdb = xpdb, ext = ext)
   max(prob_n)
 }
 
-# Get file subproblem
+#' Get last file subproblem
+#' 
+#' @param xpdb An xpose database object.
+#' @param ext The file extension to be used.
+#' @param problem The $problem number to be used.
+#' 
+#' @return The number of the last file subproblem as an integer 
+#' for the given `problem` and file `ext`.
+#' 
+#' @keywords internal
+#' @export
 last_file_subprob <- function(xpdb, ext, problem) {
   subprob_n <- xpdb$files$subprob[xpdb$files$extension == ext & xpdb$files$problem == problem]
   subprob_n <- unique(subprob_n)
@@ -129,7 +257,19 @@ last_file_subprob <- function(xpdb, ext, problem) {
   max(subprob_n)
 }
 
-# Get only columns that have several unique values
+
+#' Return names of columns having several unique values
+#' 
+#' @param xpdb An xpose database object.
+#' @param problem The $problem number to be used.
+#' @param cols A vector of column names to be checked.
+#' @param quiet Should messages be displayed to the console.
+#' 
+#' @return A subset of `col` for which more than one single 
+#' value was found in the data.
+#' 
+#' @keywords internal
+#' @export
 drop_static_cols <- function(xpdb, problem, cols, quiet) {
   if (is.null(cols)) return()
   cols_rm <- get_data(xpdb, problem = problem) %>% 
@@ -137,7 +277,7 @@ drop_static_cols <- function(xpdb, problem, cols, quiet) {
     dplyr::select_if(.predicate = function(x) length(unique(x)) == 1) %>% 
     colnames()
   if (length(cols_rm) == 0) return(cols)
-   dplyr::if_else(length(cols_rm) > 5, 
+  dplyr::if_else(length(cols_rm) > 5, 
                  stringr::str_c(stringr::str_c(cols_rm[1:5], collapse = ', '), 
                                 '... and', length(cols_rm) - 5 , 'more', sep = ' '),
                  stringr::str_c(cols_rm , collapse = ', ')) %>%
@@ -146,12 +286,39 @@ drop_static_cols <- function(xpdb, problem, cols, quiet) {
 }
 
 
-# Get a variable name from xpose
-xp_var <- function(xpdb, problem, col = NULL, type = NULL) {
+#' Access xpdb index information for a given variable or variable type
+#' 
+#' @param xpdb An xpose database object.
+#' @param problem The $problem number to be used.
+#' @param col The column name to be searched in the index. Alternative to arg `type`.
+#' @param type The type of column to searched in the index. Alternative to `col`.
+#' @param silent Should the function be silent or return errors.
+#' 
+#' @return A subset of the xpdb index as tibble with columns: 
+#' col (column name), type (column type in the index), 
+#' label (label associated with the column) and units 
+#' (units associated with the column)
+#' 
+#' @keywords internal
+#' @export
+xp_var <- function(xpdb, problem, col = NULL, type = NULL, silent = FALSE) {
   index <- xpdb$data[xpdb$data$problem == problem, ]$index[[1]]
-  if (!is.null(type)) index <- index[index$type %in% type, ]
-  if (!is.null(col)) index <- index[index$col %in% col, ]
-  if (nrow(index) == 0) return()
+  if (!is.null(type)) {
+    index <- index[index$type %in% type, ] 
+  } else {
+    index <- index[index$col %in% col, ]
+  }
+  
+  if (nrow(index) == 0) {
+    if (silent) return()
+    stop('Column ', 
+         ifelse(!is.null(type), 
+                stringr::str_c('type ', stringr::str_c('`',type, '`', collapse = ', ')),
+                stringr::str_c('`',col, '`', collapse = ', ')),
+         ' not available in data for problem no.', problem, 
+         '. Check `list_vars()` for an exhaustive list of available columns.', 
+         call. = FALSE)
+  }
   
   index %>% 
     dplyr::distinct_(.dots = 'col', .keep_all = TRUE) %>% 
@@ -159,14 +326,36 @@ xp_var <- function(xpdb, problem, col = NULL, type = NULL) {
     dplyr::arrange_(.dots = c('type', 'col'))
 }
 
-# Set new default value for aesthetics
+
+#' Set new default value for ggplot2 aesthetics
+#' 
+#' @param fun_aes Default ggplot2 aesthetics mapping defined for the function
+#' @param user_aes ggplot2 aesthetics mapping inputted by the user. These 
+#' aesthetics will overwrite matching elements in `fun_aes`.
+#' 
+#' @return ggplot2 aesthetics mapping
+#' 
+#' @keywords internal
+#' @export
 aes_c <- function(fun_aes, user_aes) {
   if (is.null(user_aes)) return(fun_aes)
   aes <- c(fun_aes[!names(fun_aes) %in% names(user_aes)], user_aes)
   structure(aes, class = 'uneval')
 }
 
-# Filter aesthetics
+
+#' Convenience function to easily filter ggplot2 aesthetics
+#' 
+#' @param mapping ggplot2 aesthetics
+#' @param drop names of ggplot2 aesthetics to be removed from the `mapping`. 
+#' Alternative to the `keep_only` argument.
+#' @param keep_only names of the only ggplot2 aesthetics to be kept in the 
+#' `mapping`. Alternative to the `drop` argument.
+#' 
+#' @return ggplot2 aesthetics mapping
+#' 
+#' @keywords internal
+#' @export
 aes_filter <- function(mapping, drop = NULL, keep_only = NULL) {
   if (is.null(mapping)) return()
   if (!is.null(keep_only)) {
@@ -178,10 +367,23 @@ aes_filter <- function(mapping, drop = NULL, keep_only = NULL) {
   aes
 }
 
-# Rename aesthetics
+
+#' Convenience function to easily rename ggplot2 aesthetics
+#' 
+#' @param mapping ggplot2 aesthetics
+#' @param from names of ggplot2 aesthetics to be renamed. Note: should match the 
+#' order of arg `to`.
+#' @param to new names to be set for ggplot2 aesthetics. Note: should match the 
+#' order of arg `from`.
+#' 
+#' @return ggplot2 aesthetics mapping
+#' 
+#' @keywords internal
+#' @export
 aes_rename <- function(mapping, from, to) {
   if (is.null(mapping)) return()
   if (!any(from %in% names(mapping))) return(mapping)
   names(mapping)[match(from, names(mapping))] <- to[which(from %in% names(mapping))]
   mapping
 }
+

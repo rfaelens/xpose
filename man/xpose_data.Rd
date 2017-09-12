@@ -45,6 +45,10 @@ combination of the three.}
 \description{
 Gather model outputs into a R database
 }
+\note{
+An `ID` column must be present in all data tables. This is required for properly combining/merging tables and removing `NA` values. 
+If the `ID` column is missing from a table xpose will return the following warning: \code{Unknown variables: `ID`}.
+}
 \section{File path generation}{
 
 The rules for model file names generation are as follow:
