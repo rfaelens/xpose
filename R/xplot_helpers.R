@@ -281,7 +281,7 @@ drop_static_cols <- function(xpdb, problem, cols, quiet) {
                  stringr::str_c(stringr::str_c(cols_rm[1:5], collapse = ', '), 
                                 '... and', length(cols_rm) - 5 , 'more', sep = ' '),
                  stringr::str_c(cols_rm , collapse = ', ')) %>%
-                 {msg(c('Static variables ', .,' will be dropped'), quiet)}
+                 {msg(c('Dropped static variables ', .,'.'), quiet)}
   dplyr::setdiff(x = cols, y = cols_rm)
 }
 
@@ -387,3 +387,23 @@ aes_rename <- function(mapping, from, to) {
   mapping
 }
 
+
+#' Add faceting variable
+#' 
+#' @description Convenience function to add default faceting variable
+#' 
+#' @param facets User input faceting variable as a character or formula.
+#' @param variable Default variable to be appended to variables in facets.
+#' 
+#' @return facets as formula or character string.
+#' 
+#' @keywords internal
+#' @export
+add_facet_var <- function(facets, variable = 'variable') {
+  if (!is.formula(facets)) {
+    c(variable, facets)
+  } else {
+    update.formula(old = facets, 
+                   new = as.formula(stringr::str_c('~. + ', variable)))
+  }
+}
