@@ -14,7 +14,7 @@
 #' ind_plots(xpdb_ex_pk, page = 1,
 #'           ncol = 3, nrow = 3)
 #' 
-#' # Example with custom mapping and facetting
+#' # Example with custom mapping and faceting
 #' ind_plots(xpdb_ex_pk, aes(x = TAD), 
 #'           facets = OCC~ID, 
 #'           labeller = 'label_both')

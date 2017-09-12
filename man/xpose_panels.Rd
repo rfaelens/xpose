@@ -17,6 +17,6 @@ Output a `facet` layer. Layer will be `facet_wrap_paginate` if
 `facets` is a string, and `facet_grid_paginate` if `facets` is a formula.
 }
 \description{
-Convenience wrapper around ggforce facetting functions.
+Convenience wrapper around ggforce faceting functions.
 }
 \keyword{internal}

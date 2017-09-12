@@ -38,7 +38,7 @@
 #' }
 #' 
 #' @section Faceting:
-#' Every xpose plot function has built-in facetting functionalities. Faceting arguments 
+#' Every xpose plot function has built-in faceting functionalities. Faceting arguments 
 #' are passed to the functions \link[ggforce]{facet_wrap_paginate} when the \code{facets} 
 #' argument is a character string (e.g. \code{facets = c('OCC', 'SEX')}) or 
 #' \link[ggforce]{facet_grid_paginate} when facets is a formula (e.g. \code{facets = OCC~SEX}).
@@ -46,7 +46,7 @@
 #' and \link[ggforce]{facet_grid_paginate} functions e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
 #' facets = OCC~SEX, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')}.
 #' 
-#' Facetting options can either be defined in plot functions (e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
+#' Faceting options can either be defined in plot functions (e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
 #' facets = 'OCC')}) or assigned globally to an xpdb object via the \code{xp_theme} (e.g. \code{xpdb 
 #' <- update_themes(xpdb_ex_pk, xp_theme = list(facets = 'OCC'))}). In the latter example all plots 
 #' generate from this xpdb will automatically be stratified by `OCC`.
