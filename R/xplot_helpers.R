@@ -404,6 +404,6 @@ add_facet_var <- function(facets, variable = 'variable') {
     c(variable, facets)
   } else {
     stats::update.formula(old = facets, 
-                          new = as.formula(stringr::str_c('~. + ', variable)))
+                          new = stats::as.formula(stringr::str_c('~. + ', variable)))
   }
 }
