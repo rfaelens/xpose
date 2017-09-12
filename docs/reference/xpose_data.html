@@ -195,11 +195,6 @@ combination of the three.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p>An `ID` column must be present in all data tables. This is required for properly combining/merging tables and removing `NA` values. 
-If the `ID` column is missing from a table xpose will return the following warning: <code>Unknown variables: `ID`</code>.</p>
-    
     <h2 class="hasAnchor" id="file-path-generation"><a class="anchor" href="#file-path-generation"></a>File path generation</h2>
 
     
@@ -209,6 +204,14 @@ If the `ID` column is missing from a table xpose will return the following warni
 <li><p>with <code>file</code>: the full path is generated as <code>&lt;dir&gt;/&lt;file&gt;</code> e.g. with <code>dir = 'model/pk'</code>, <code>file = 'run001.lst'</code> the resulting path
   would also be <code>model/pk/run001.lst</code>. Note: in this case the file extension should be provided as part of the `file` argument.</p></li>
 </ul>
+    
+    <h2 class="hasAnchor" id="table-format-requirement"><a class="anchor" href="#table-format-requirement"></a>Table format requirement</h2>
+
+    
+    <p>When importing data, an <code>ID</code> column must be present in at least one table for each problem and for each `firstonly` 
+category. <code>ID</code> columns are required to properly combine/merge tables and removing <code>NA</code> records. If 
+<code>ID</code> columns are missing xpose will return the following warning: <code>Dropped `&lt;tablenames&gt;` due to missing 
+required `ID` column.</code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -236,9 +239,9 @@ If the `ID` column is missing from a table xpose will return the following warni
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#note">Note</a></li>
-
       <li><a href="#file-path-generation">File path generation</a></li>
+
+      <li><a href="#table-format-requirement">Table format requirement</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
