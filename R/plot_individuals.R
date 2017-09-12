@@ -24,11 +24,11 @@ ind_plots <- function(xpdb,
                       mapping  = NULL,
                       group    = 'variable',
                       type     = 'lp',
-                      facets   = NULL,
                       title    = 'Individual plots | @run',
                       subtitle = 'Ofv: @ofv, Eps shrink: @epsshk',
                       caption  = '@dir',
                       log      = NULL,
+                      facets,
                       problem,
                       quiet,
                       ...) {
@@ -36,8 +36,9 @@ ind_plots <- function(xpdb,
   check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
-  if (is.null(facets)) facets <- xp_var(xpdb, problem, type = 'id')$col
-  
+  if (missing(facets)) facets <- add_facet_var(facets = xpdb$xp_theme$facets,
+                                               variable = xp_var(xpdb, problem, type = 'id')$col)
+
   extra_args <- list(...)
   if (!any(names(extra_args) == 'nrow')) extra_args$nrow <- 3
   if (!any(names(extra_args) == 'ncol')) extra_args$ncol <- 3

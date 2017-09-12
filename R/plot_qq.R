@@ -31,12 +31,12 @@ prm_qq <- function(xpdb,
                    mapping  = NULL,
                    drop_static = TRUE,
                    type     = 'p',
-                   facets   = NULL,
                    title    = 'QQ plot of parameters | @run',
                    subtitle = 'Based on @nind individuals',
                    caption  = '@dir',
                    log      = NULL,
                    guide    = TRUE,
+                   facets,
                    problem,
                    quiet,
                    ...) {
@@ -44,7 +44,8 @@ prm_qq <- function(xpdb,
   check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
-  if (is.null(facets)) facets <- 'variable'
+  if (missing(facets)) facets <- add_facet_var(facets = xpdb$xp_theme$facets, 
+                                               variable = 'variable')
   
   prm_col <- xp_var(xpdb, problem, type = 'param')$col
   if (drop_static) {
@@ -74,12 +75,12 @@ eta_qq <- function(xpdb,
                    mapping  = NULL,
                    drop_static = TRUE,
                    type     = 'p',
-                   facets   = NULL,
                    title    = 'QQ plot of etas | @run',
                    subtitle = 'Based on @nind individuals, Eta shrink: @etashk',
                    caption  = '@dir',
                    log      = NULL,
                    guide    = TRUE,
+                   facets,
                    problem,
                    quiet,
                    ...) {
@@ -87,7 +88,8 @@ eta_qq <- function(xpdb,
   check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
-  if (is.null(facets)) facets <- 'variable'
+  if (missing(facets)) facets <- add_facet_var(facets = xpdb$xp_theme$facets, 
+                                               variable = 'variable')
   
   eta_col <- xp_var(xpdb, problem, type = 'eta')$col
   if (drop_static) {
@@ -119,12 +121,12 @@ res_qq <- function(xpdb,
                    mapping  = NULL,
                    res      = 'CWRES',
                    type     = 'p',
-                   facets   = NULL,
                    title    = 'QQ plot of @sample | @run',
                    subtitle = 'Based on @nobs observations',
                    caption  = '@dir',
                    log      = NULL,
                    guide    = TRUE,
+                   facets,
                    problem,
                    quiet,
                    ...) {
@@ -139,12 +141,14 @@ res_qq <- function(xpdb,
   }
   
   if (length(res) > 1) {
-    if (is.null(facets)) facets <- 'variable'
+    if (missing(facets)) facets <- add_facet_var(facets = xpdb$xp_theme$facets, 
+                                                 variable = 'variable')
     opt <- data_opt(problem = problem, 
                     filter = only_obs(xpdb, problem, quiet),
                     tidy = TRUE, value_col = res)
     vars <- aes_c(aes_string(sample = 'value'), mapping)
   } else {
+    if (missing(facets)) facets <- xpdb$xp_theme$facets
     opt <- data_opt(problem = problem, 
                     filter = only_obs(xpdb, problem, quiet))
     vars <- aes_c(aes_string(sample = toupper(res)), mapping)
@@ -167,12 +171,12 @@ cov_qq <- function(xpdb,
                    mapping  = NULL,
                    drop_static = TRUE,
                    type     = 'p',
-                   facets   = NULL,
                    title    = 'QQ plot of continuous covariates | @run',
                    subtitle = 'Based on @nind individuals',
                    caption  = '@dir',
                    log      = NULL,
                    guide    = TRUE,
+                   facets,
                    problem,
                    quiet,
                    ...) {
@@ -180,7 +184,8 @@ cov_qq <- function(xpdb,
   check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
-  if (is.null(facets)) facets <- 'variable'
+  if (missing(facets)) facets <- add_facet_var(facets = xpdb$xp_theme$facets, 
+                                               variable = 'variable')
   
   cov_col <- xp_var(xpdb, problem, type = 'contcov')$col
   if (drop_static) {

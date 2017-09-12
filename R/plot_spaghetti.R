@@ -23,11 +23,11 @@ dv_vs_idv <- function(xpdb,
                       mapping  = NULL,
                       group    = 'ID',
                       type     = 'pls',
-                      facets   = NULL,
                       title    = '@y vs. @x | @run',
                       subtitle = 'Ofv: @ofv',
                       caption  = '@dir',
                       log      = NULL,
+                      facets,
                       problem,
                       quiet,
                       ...) {
@@ -36,6 +36,7 @@ dv_vs_idv <- function(xpdb,
   # use last estimation problem unless there is only one problem
   if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
+  if (missing(facets)) facets <- xpdb$xp_theme$facets
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
                 opt = data_opt(problem = problem, 
@@ -56,7 +57,7 @@ ipred_vs_idv <- function(xpdb,
                          mapping  = NULL,
                          group    = 'ID',
                          type     = 'pls',
-                         facets   = NULL,
+                         facets,
                          title    = '@y vs. @x | @run',
                          subtitle = 'Ofv: @ofv, Eps shrink: @epsshk',
                          caption  = '@dir',
@@ -68,6 +69,7 @@ ipred_vs_idv <- function(xpdb,
   check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
+  if (missing(facets)) facets <- xpdb$xp_theme$facets
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
                 opt = data_opt(problem = problem, 
@@ -88,7 +90,7 @@ pred_vs_idv <- function(xpdb,
                         mapping  = NULL,
                         group    = 'ID',
                         type     = 'pls',
-                        facets   = NULL,
+                        facets,
                         title    = '@y vs. @x | @run',
                         subtitle = 'Ofv: @ofv',
                         caption  = '@dir',
@@ -100,6 +102,7 @@ pred_vs_idv <- function(xpdb,
   check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
+  if (missing(facets)) facets <- xpdb$xp_theme$facets
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
                 opt = data_opt(problem = problem, 
@@ -123,7 +126,7 @@ dv_preds_vs_idv <- function(xpdb,
                             mapping  = NULL,
                             group    = 'ID',
                             type     = 'pls',
-                            facets   = NULL,
+                            facets,
                             title    = 'Observations, Individual predictions and Population predictions vs. @x | @run',
                             subtitle = 'Ofv: @ofv, Eps shrink: @epsshk',
                             caption  = '@dir',
@@ -135,7 +138,8 @@ dv_preds_vs_idv <- function(xpdb,
   check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
-  if (is.null(facets)) facets <- 'variable'
+  if (missing(facets)) facets <- add_facet_var(facets = xpdb$xp_theme$facets, 
+                                               variable = 'variable')
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
                 opt = data_opt(problem = problem, tidy = TRUE, 

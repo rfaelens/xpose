@@ -21,12 +21,12 @@ prm_vs_iteration <- function(xpdb,
                              mapping  = NULL,
                              group    = 'variable',
                              type     = 'l',
-                             facets   = NULL,
                              title    = 'Parameter @y vs. @x | @run',
                              subtitle = 'Method: @method, minimization time: @runtime\nTermination message: @term',
                              caption  = '@dir',
                              log      = NULL,
                              guide    = FALSE,
+                             facets,
                              problem,
                              subprob,
                              quiet,
@@ -36,7 +36,7 @@ prm_vs_iteration <- function(xpdb,
   if (missing(problem)) problem <- last_file_problem(xpdb, 'ext')
   if (missing(subprob)) subprob <- last_file_subprob(xpdb, 'ext', problem)
   if (missing(quiet)) quiet <- xpdb$options$quiet
-  if (is.null(facets)) facets <- 'variable'
+  if (missing(facets)) facets <- 'variable'
   x_var <- 'ITERATION'
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
@@ -62,12 +62,12 @@ grd_vs_iteration <- function(xpdb,
                              mapping  = NULL,
                              group    = 'variable',
                              type     = 'l',
-                             facets   = NULL,
                              title    = 'Gradient @y vs. @x | @run',
                              subtitle = 'Method: @method, minimization time: @runtime\nTermination message: @term',
                              caption  = '@dir',
                              log      = NULL,
                              guide    = FALSE,
+                             facets,
                              problem,
                              subprob,
                              quiet,
@@ -77,7 +77,7 @@ grd_vs_iteration <- function(xpdb,
   if (missing(problem)) problem <- last_file_problem(xpdb, 'grd')
   if (missing(subprob)) subprob <- last_file_subprob(xpdb, 'grd', problem)
   if (missing(quiet)) quiet <- xpdb$options$quiet
-  if (is.null(facets)) facets <- 'variable'
+  if (missing(facets)) facets <- 'variable'
   x_var <- 'ITERATION'
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
