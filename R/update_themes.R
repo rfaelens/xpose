@@ -18,8 +18,8 @@
 #' # Updating the gg_theme and xp_theme
 #' xpdb_ex_pk %>% 
 #'   update_themes(gg_theme = theme_bw(),
-#'                 xp_theme = c(point_color = 'blue',
-#'                              line_color  = 'blue')) %>% 
+#'                 xp_theme = list(point_color = 'blue',
+#'                                 line_color  = 'blue')) %>% 
 #'   dv_vs_ipred()
 #'   
 #' @export
@@ -61,5 +61,3 @@ update_themes <- function(xpdb     = NULL,
   }
   xpdb
 }
-
-

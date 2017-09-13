@@ -14,8 +14,15 @@
 #' @param ziptab If \code{TRUE} search for the tables that have been compressed and renamed ´<file>.zip'.
 #' @param ... Additional arguments to be passed to the \code{\link[readr]{read_table2}} or \code{\link[readr]{read_csv}} functions.
 #' 
-#' @note An `ID` column must be present in all data tables. This is required for properly combining/merging tables and removing `NA` values. 
-#' If the `ID` column is missing from a table xpose will return the following warning: \code{Unknown variables: `ID`}.
+#' @section Table format requirement:
+#' When using \code{read_nm_tables} with the \code{combined} argument set to \code{FALSE} an \code{ID} column 
+#' must be present in all data tables. When \code{combined} is set to \code{TRUE} instead an \code{ID} column must be 
+#' present in at least one table for each problem and for each `firstonly` category. \code{ID} columns are required 
+#' to properly combine/merge tables and removing \code{NA} records. If the \code{ID} column is missing from a table and 
+#' \code{combined = FALSE} \code{read_nm_tables} will return the following warning: \code{Unknown variables: `ID`}. While
+#' the data is returned beware that \code{NA} records might be left in the data and the output should be checked carefully.
+#' If \code{combined = TRUE} \code{read_nm_tables} xpose is more strict and will return the following warning instead: 
+#' \code{Dropped `<tablenames>` due to missing required `ID` column.}.
 #' 
 #' @examples
 #' \dontrun{
@@ -66,11 +73,11 @@ read_nm_tables <- function(file          = NULL,
   
   # Check that file exists
   if (is.null(file) || !any(file.exists(file$file))) {
-    stop('No table file could be found.', call. = FALSE)
+    stop('No table files could be found.', call. = FALSE)
   }
   
   if (any(duplicated(file$file))) {
-    stop('No tables imported due to duplicated names.', call. = FALSE)
+    stop('No table imported due to duplicated names.', call. = FALSE)
   }
   
   tables <- file[file.exists(file$file), ]
@@ -274,12 +281,22 @@ read_args <- function(x, quiet, col_types = readr::cols(.default = 'd'),
 #' @keywords internal
 #' @export
 combine_tables <- function(x) {
+  # Check for matching length
   if (length(unique(x$nrow)) > 1) {
-    warning(c('Dropped: ', stringr::str_c(x$name, collapse = ', '), 
+    warning(c('Dropped ', stringr::str_c('`', x$name, '`', collapse = ', '), 
               ' due to missmatch in row number.'), call. = FALSE)
     return(dplyr::tibble(data = list(), index = list()))
     
   }
+  
+  # Check for ID column
+  if (!any(purrr::map_lgl(x$index, ~any(.$type == 'id')))) {
+    warning(c('Dropped ', stringr::str_c('`', x$name, '`', collapse = ', '), 
+              ' due to missing required `ID` column.'), call. = FALSE)
+    return(dplyr::tibble(data = list(), index = list()))
+  }
+  
+  # Combine tables
   dplyr::tibble(data = x$data %>%
                   dplyr::bind_cols() %>%
                   purrr::set_names(make.unique(names(.))) %>%

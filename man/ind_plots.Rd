@@ -6,9 +6,9 @@
 the independent variable for every individual}
 \usage{
 ind_plots(xpdb, mapping = NULL, group = "variable", type = "lp",
-  facets = NULL, title = "Individual plots | @run",
+  title = "Individual plots | @run",
   subtitle = "Ofv: @ofv, Eps shrink: @epsshk", caption = "@dir",
-  log = NULL, problem, quiet, ...)
+  log = NULL, facets, problem, quiet, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -21,9 +21,6 @@ ind_plots(xpdb, mapping = NULL, group = "variable", type = "lp",
 \item{type}{String setting the type of plot to be used. Can be points 'p',
 line 'l', smooth 's' and text 't' or any combination of the four.}
 
-\item{facets}{Either a character string to use \link[ggplot2]{facet_wrap} 
-or a formula to use \link[ggplot2]{facet_grid}.}
-
 \item{title}{Plot title. Use \code{NULL} to remove.}
 
 \item{subtitle}{Plot subtitle. Use \code{NULL} to remove.}
@@ -32,6 +29,9 @@ or a formula to use \link[ggplot2]{facet_grid}.}
 
 \item{log}{String assigning logarithmic scale to axes, can be either '', 
 'x', y' or 'xy'.}
+
+\item{facets}{Either a character string to use \link[ggplot2]{facet_wrap} 
+or a formula to use \link[ggplot2]{facet_grid}.}
 
 \item{problem}{The $problem number to be used. By default returns 
 the last estimation problem.}
@@ -62,13 +62,23 @@ any option supported by this layer e.g. point_color = 'blue', smooth_method = 'l
 
 \section{Faceting}{
 
-Every xpose plot function has built-in facetting functionalities. Faceting arguments 
+Every xpose plot function has built-in faceting functionalities. Faceting arguments 
 are passed to the functions \link[ggforce]{facet_wrap_paginate} when the \code{facets} 
 argument is a character string (e.g. \code{facets = c('OCC', 'SEX')}) or 
 \link[ggforce]{facet_grid_paginate} when facets is a formula (e.g. \code{facets = OCC~SEX}).
 All xpose plot functions accept all the arguments for the \link[ggforce]{facet_wrap_paginate} 
 and \link[ggforce]{facet_grid_paginate} functions e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
 facets = OCC~SEX, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')}.
+
+Faceting options can either be defined in plot functions (e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
+facets = 'OCC')}) or assigned globally to an xpdb object via the \code{xp_theme} (e.g. \code{xpdb 
+<- update_themes(xpdb_ex_pk, xp_theme = list(facets = 'OCC'))}). In the latter example all plots 
+generate from this xpdb will automatically be stratified by `OCC`.
+
+By default, some plot functions use a custom stratyfiyng variable named `variable`, e.g. 
+\code{eta_distrib()}. When using the \code{facets} argument, `variable` needs to be added manually 
+e.g. \code{facets = c('OCC', 'variable')} or \code{facets = c('OCC', 'variable')}, but is optional, 
+when using the \code{facets} argument in \code{xp_theme} variable is automatically added whenever needed.
 }
 
 \section{Template titles}{
@@ -87,7 +97,7 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 ind_plots(xpdb_ex_pk, page = 1,
           ncol = 3, nrow = 3)
 
-# Example with custom mapping and facetting
+# Example with custom mapping and faceting
 ind_plots(xpdb_ex_pk, aes(x = TAD), 
           facets = OCC~ID, 
           labeller = 'label_both')

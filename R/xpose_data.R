@@ -31,8 +31,11 @@
 #'   would also be \code{model/pk/run001.lst}. Note: in this case the file extension should be provided as part of the `file` argument.
 #'   }
 #' 
-#' @note An `ID` column must be present in all data tables. This is required for properly combining/merging tables and removing `NA` values. 
-#' If the `ID` column is missing from a table xpose will return the following warning: \code{Unknown variables: `ID`}.
+#' @section Table format requirement:
+#' When importing data, an \code{ID} column must be present in at least one table for each problem and for each `firstonly` 
+#' category. \code{ID} columns are required to properly combine/merge tables and removing \code{NA} records. If 
+#' \code{ID} columns are missing xpose will return the following warning: \code{Dropped `<tablenames>` due to missing 
+#' required `ID` column.}.
 #' 
 #' @examples
 #' \dontrun{
@@ -107,7 +110,10 @@ xpose_data <- function(runno         = NULL,
   } else if (software == 'nonmem') {
     data <- tryCatch(read_nm_tables(file = tbl_names, dir = NULL, 
                                     quiet = quiet, simtab = simtab, ...), 
-                     error = function(e) msg(c(' * Warning: ', e$message), quiet = FALSE))
+                     error = function(e) {
+                       warning(e$message, call. = FALSE)
+                       return()
+                     })
   }
   
   # Generate model summary
@@ -117,7 +123,10 @@ xpose_data <- function(runno         = NULL,
   } else if (software == 'nonmem') {
     summary <- tryCatch(summarise_nm_model(file = full_path, model = model_code, 
                                            software = software, rounding = xp_theme$rounding),
-                        error = function(e) msg(c('\nError returned by run summary\n* ', e$message), quiet = FALSE))
+                        error = function(e) {
+                          warning(c('Failed to create run summary. ', e$message), call. = FALSE)
+                          return()
+                        })
   }
   
   # Import output files
@@ -134,7 +143,10 @@ xpose_data <- function(runno         = NULL,
       basename() %>% 
       update_extension(ext = extra_files) %>% 
       {tryCatch(read_nm_files(file = ., dir = dirname(full_path), quiet = quiet), 
-                error = function(e) msg(c(' * Warning: ', e$message), quiet = FALSE))}
+                error = function(e) {
+                  warning(e$message, call. = FALSE)
+                  return()
+                })}
   }
   
   # Label themes
@@ -148,4 +160,5 @@ xpose_data <- function(runno         = NULL,
                       manual_import = manual_import)) %>% 
     structure(class = c('xpose_data', 'uneval'))
 }
+
 

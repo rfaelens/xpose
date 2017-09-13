@@ -54,7 +54,7 @@ data_opt <- function(problem         = NULL,
 #' @keywords internal
 #' @export
 only_obs <- function(xpdb, problem, quiet) {
-  mdv_var <- xp_var(xpdb, problem, type = c('evid', 'mdv'))$col[1]
+  mdv_var <- xp_var(xpdb, problem, type = c('evid', 'mdv'), silent = TRUE)$col[1]
   fun <- function(x) {}
   if (!is.null(mdv_var)) {
     string <- c('Filtering data by ', mdv_var, ' == 0')

@@ -19,11 +19,11 @@ amt_vs_idv <- function(xpdb,
                        group    = 'ID',
                        drop_static = TRUE,
                        type     = 'l',
-                       facets   = NULL,
                        title    = 'Compartments amount vs. @x | @run',
                        subtitle = 'Ofv: @ofv',
                        caption  = '@dir',
                        log      = NULL,
+                       facets,
                        problem,
                        quiet,
                        ...) {
@@ -31,7 +31,8 @@ amt_vs_idv <- function(xpdb,
   check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
-  if (is.null(facets)) facets <- 'variable'
+  if (missing(facets)) facets <- add_facet_var(facets = xpdb$xp_theme$facets, 
+                                               variable = 'variable')
   
   extra_args <- list(...)
   if (!any(names(extra_args) == 'nrow')) extra_args$nrow <- 3

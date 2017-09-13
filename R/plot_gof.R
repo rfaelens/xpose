@@ -9,14 +9,14 @@
 #' @param group Grouping variable to be used for lines.
 #' @param type String setting the type of plot to be used. Can be points 'p',
 #' line 'l', smooth 's' and text 't' or any combination of the four.
-#' @param facets Either a character string to use \link[ggplot2]{facet_wrap} 
-#' or a formula to use \link[ggplot2]{facet_grid}.
 #' @param title Plot title. Use \code{NULL} to remove.
 #' @param subtitle Plot subtitle. Use \code{NULL} to remove.
 #' @param caption Page caption. Use \code{NULL} to remove.
 #' @param log String assigning logarithmic scale to axes, can be either '', 
 #' 'x', y' or 'xy'.
 #' @param guide Enable guide display (e.g. unity line).
+#' @param facets Either a character string to use \link[ggplot2]{facet_wrap} 
+#' or a formula to use \link[ggplot2]{facet_grid}.
 #' @param problem The $problem number to be used. By default returns 
 #' the last estimation problem.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
@@ -37,19 +37,20 @@ dv_vs_ipred <- function(xpdb,
                         mapping  = NULL,
                         group    = 'ID',
                         type     = 'pls',
-                        facets   = NULL,
                         title    = '@y vs. @x | @run',
                         subtitle = 'Ofv: @ofv, Eps shrink: @epsshk',
                         caption  = '@dir',
                         log      = NULL,
                         guide    = TRUE,
+                        facets,
                         problem,
                         quiet,
                         ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- default_plot_problem(xpdb)
-  if (missing(quiet)) quiet <- xpdb$options$quiet
+  if (missing(quiet))   quiet <- xpdb$options$quiet
+  if (missing(facets))  facets <- xpdb$xp_theme$facets
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
                 opt = data_opt(problem = problem, filter = only_obs(xpdb, problem, quiet)),
@@ -69,12 +70,12 @@ dv_vs_pred <- function(xpdb,
                        mapping  = NULL,
                        group    = 'ID',
                        type     = 'pls',
-                       facets   = NULL,
                        title    = '@y vs. @x | @run',
                        subtitle = 'Ofv: @ofv',
                        caption  = '@dir',
                        log      = NULL,
                        guide    = TRUE,
+                       facets,
                        problem,
                        quiet,
                        ...) {
@@ -82,6 +83,7 @@ dv_vs_pred <- function(xpdb,
   check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
+  if (missing(facets))  facets <- xpdb$xp_theme$facets
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
                 opt = data_opt(problem = problem, filter = only_obs(xpdb, problem, quiet)),

@@ -94,6 +94,13 @@ test_that('Check check_plot_type', {
 test_that('Check drop_static', {
   expect_message(variable_cols <- drop_static_cols(xpdb_ex_pk, problem = 1, quiet = FALSE,
                                                    cols = c('CL', 'V', 'KA', 'ALAG1')), 
-                 regexp = 'Static variables ALAG1 will be dropped')
+                 regexp = 'Dropped static variables ALAG1')
   expect_equal(variable_cols, c('CL', 'V', 'KA'))
+  })
+
+test_that('Check add_facets_var', {
+  expect_equal(add_facet_var(facets = c('OCC', 'SEX'), variable = 'variable'),
+               c('variable', 'OCC', 'SEX'))
+  expect_equal(add_facet_var(facets = as.formula('OCC~SEX'), variable = 'variable'),
+               as.formula('OCC~SEX+variable'))
   })

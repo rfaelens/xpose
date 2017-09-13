@@ -84,7 +84,7 @@ xp_geoms <- function(mapping = NULL, xp_theme, name, ggfun, ...) {
 
 #' Generic panel function for `xpose_plots`
 #' 
-#' @description Convenience wrapper around ggforce facetting functions.
+#' @description Convenience wrapper around ggforce faceting functions.
 #' 
 #' @param xp_theme An `xpose_theme` object.
 #' @param extra_args User arguments to be passed to the 
