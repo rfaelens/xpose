@@ -10,16 +10,15 @@ vignette: >
 ---
 
 # Our team
-The xpose developers' team features:
-
-- Benjamin Guiastrennec
-- Andrew C. Hooker
-- Anna Olofsson
-- Sebastian Ueckert
-- Ron Keizer
-- Kajsa Harling
-- Mike K. Smith
-- Mats O. Karlsson
+- [Benjamin Guiastrennec](mailto:guiastrennec@gmail.com) *(Uppsala University)*
+- [Andrew C. Hooker](mailto:andrew.hooker@farmbio.uu.se) *(Uppsala University)*
+- [Anna Olofsson](mailto:anna.olofsson@pharmetheus.com) *(Pharmetheus)*
+- [Sebastian Ueckert](mailto:sebastian.ueckert@farmbio.uu.se) *(Uppsala University)*
+- [Ron Keizer](mailto:ronkeizer@gmail.com) *(InsightRx)*
+- [Kajsa Harling](mailto:kajsa.harling@pharmetheus.com) *(Pharmetheus)*
+- [Mike K. Smith](mailto:mike.k.smith@pfizer.com) *(Pfizer)*
+- [Elodie Plan](mailto:elodie.plan@pharmetheus.com) *(Pharmetheus)*
+- [Mats O. Karlsson](mailto:mats.karlsson@farmbio.uu.se) *(Uppsala University)*
   
 # Our sponsors
 The xpose package development was kindly sponsored by:
