@@ -546,7 +546,7 @@ sum_shk <- function(model, software, type, rounding) {
           which() %>% 
           {ifelse(length(.) == 0, NA_integer_, .)}
       })) %>% 
-      filter(!is.na(start))
+      filter(!is.na(.$start))
     
     if (nrow(x) == 0) return(sum_tpl(stringr::str_c(type, 'shk'), 'na'))
     
