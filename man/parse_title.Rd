@@ -5,7 +5,7 @@
 \title{Parse keywords in string based on values contained in an xpdb}
 \usage{
 parse_title(string, xpdb, problem, quiet, extra_key = NULL,
-  extra_value = NULL)
+  extra_value = NULL, ignore_key = NULL)
 }
 \arguments{
 \item{string}{A string containing keywords (e.g. `@nobs`) to be parsed 
@@ -20,6 +20,8 @@ parse_title(string, xpdb, problem, quiet, extra_key = NULL,
 \item{extra_key}{A vector of additional keywords not available in the `xpdb$summary`.}
 
 \item{extra_value}{A vector of values matching the order of `extra_key`.}
+
+\item{ignore_key}{A vector of keywords to be ignored i.e. warnings will not be returned.}
 }
 \value{
 The parsed `string`.
