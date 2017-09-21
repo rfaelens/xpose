@@ -127,7 +127,7 @@ The argument group defines the grouping variable to be used in the dataset __for
 Panels (or faceting) can be created by using the `facets` argument as follows:
 
 * If `facets` is a string e.g `facets = "OCC"`, `ggforce::facet_wrap_paginate` will be used
-* If `facets` is a formula e.g `facets = SEX~OCC`, `ggplot2::facet_grid_paginate` will be used
+* If `facets` is a formula e.g `facets = SEX~OCC`, `ggforce::facet_grid_paginate` will be used
 
 ```{r demo panels, fig.width = 6, fig.height = 6, out.width = '75%'}
 # Example with a string
