@@ -41,7 +41,7 @@ print.xpose_plot <- function(x, page, ...) {
   
   # Print multiple pages
   if (class(x$facet)[1] %in% c('FacetWrapPaginate', 'FacetGridPaginate')) {
-
+    
     # Get and check the page number to be drawn
     if (missing(page)) {
       page_2_draw <- x$facet$params$page
@@ -52,25 +52,27 @@ print.xpose_plot <- function(x, page, ...) {
     # Get total number of pages
     page_tot <- ggforce::n_pages(repair_facet(x))
     
-    
     if (any(page_2_draw > page_tot)) {
       page_2_draw <- page_2_draw[page_2_draw <= page_tot]
       if (length(page_2_draw) == 0) {
         stop('All `page` element exceeded the total (', page_tot, ') number of pages.', call. = FALSE)  
       }
-      warning('`page` contained elements exceeding the total (', page_tot, ') number of pages. These pages were ignored.',
+      warning('`page` contained elements exceeding the total (', page_tot, ') number of pages. These were ignored.',
               call. = FALSE)
     }
     
     # Begin multiple page ploting
     n_page_2_draw <- length(page_2_draw)
+    
     if (interactive()) {
       message('Printing ', n_page_2_draw, ' selected page(s) out of ', page_tot, '.')
     }
     
     if (n_page_2_draw == 1) {
-      x$facet$params$page <- page_2_draw
-      print.ggplot(repair_facet(x), ...)
+      x %>% 
+        paginate(page_2_draw, page_tot) %>% 
+        repair_facet() %>% 
+        print.ggplot(...)
     } else {
       if (interactive() && !x$xpose$quiet) {
         pb <- utils::txtProgressBar(min = 0, max = n_page_2_draw, 
@@ -78,14 +80,10 @@ print.xpose_plot <- function(x, page, ...) {
       }
       for (p in seq_along(page_2_draw)) {
         x$facet$params$page <- page_2_draw[p]
-        x$labels <- x$labels %>% 
-          purrr::map_if(stringr::str_detect(., '@(page|lastpage)'),
-                        .f = parse_title, xpdb = x$xpose,
-                        problem = x$xpose$problem, quiet = x$xpose$quiet,
-                        extra_key = c('page', 'lastpage'), 
-                        extra_value = c(as.character(page_2_draw[p]), page_tot))
-        
-        print.ggplot(repair_facet(x), ...)
+        x %>% 
+          paginate(page_2_draw[p], page_tot) %>% 
+          repair_facet() %>% 
+          print.ggplot(...)
         if (interactive() && !x$xpose$quiet) {
           utils::setTxtProgressBar(pb, value = p) # Update progress bar
         }
@@ -99,12 +97,28 @@ print.xpose_plot <- function(x, page, ...) {
     if (!missing(page)) warning('Faceting not set. Ignoring `page` argument.', call. = FALSE)
     
     # Print without multiple pages
-    print.ggplot(x, ...)
+    x %>% 
+      paginate(page_2_draw = 1, page_tot = 1) %>% 
+      repair_facet() %>% 
+      print.ggplot(...)
   }
 }
 
 # Import print ggplot method
 print.ggplot <- get('print.ggplot', envir = asNamespace('ggplot2'))
+
+
+# Add page number to pages
+paginate <- function(plot, page_2_draw, page_tot) {
+  plot$labels <- plot$labels %>% 
+    purrr::map_if(stringr::str_detect(., '@(page|lastpage)'),
+                  .f = parse_title, xpdb = plot$xpose,
+                  problem = plot$xpose$problem, quiet = plot$xpose$quiet,
+                  extra_key = c('page', 'lastpage'), 
+                  extra_value = c(as.character(page_2_draw), page_tot))
+  plot
+}
+
 
 # Temporary fix for ggforce facet_wrap_paginate (may)
 repair_facet <- function(x) {
