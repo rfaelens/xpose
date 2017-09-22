@@ -147,6 +147,8 @@ navbar:
         - text: "Going further"
         - text: Customize plots
           href: articles/customize_plots.html
+        - text: Multiple pages
+          href: articles/multiple_pages.html
         - text: Create interactive plots (beta)
           href: articles/interactive_plots.html
   - text: Functions
