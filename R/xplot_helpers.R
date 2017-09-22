@@ -98,7 +98,8 @@ parse_title <- function(string, xpdb, problem, quiet, extra_key = NULL,
   keyword <- string %>% 
     stringr::str_extract_all('@[[:alnum:]]+') %>% 
     purrr::flatten_chr() %>% 
-    stringr::str_replace(stringr::fixed('@'), '')
+    stringr::str_replace(stringr::fixed('@'), '') %>% 
+    subset(!.%in% ignore_key)
   
   # Get the associated values in the summart
   values <- xpdb$summary[xpdb$summary$problem %in% c(0, problem) & 
@@ -115,7 +116,7 @@ parse_title <- function(string, xpdb, problem, quiet, extra_key = NULL,
   }
   
   # Remove unmatched keywords from the list
-  if (!all(keyword[!keyword %in% ignore_key] %in% values$label)) {
+  if (!all(keyword %in% values$label)) {
     keyword[!keyword %in% values$label & !keyword %in% ignore_key] %>% 
       unique() %>% 
       stringr::str_c(collapse = ', ') %>%   
