@@ -102,9 +102,10 @@ reference:
     - theme_readable
     - theme_xp_default
     - theme_xp_xpose4
-  - title: Save plots
-    desc:  Save plots to a file.
+  - title: Print and save plots
+    desc:  Print plots to the console or save them into a file.
     contents:
+    - print.xpose_plot
     - xpose_save
     
 authors:

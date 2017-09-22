@@ -53,6 +53,9 @@
       <a href="../articles/customize_plots.html">Customize plots</a>
     </li>
     <li>
+      <a href="../articles/multiple_pages.html">Multiple pages</a>
+    </li>
+    <li>
       <a href="../articles/interactive_plots.html">Create interactive plots (beta)</a>
     </li>
   </ul>
@@ -101,7 +104,7 @@
       <h1>Customize plots</h1>
                         <h4 class="author">Benjamin Guiastrennec</h4>
             
-            <h4 class="date">19 September, 2017</h4>
+            <h4 class="date">22 September, 2017</h4>
           </div>
 
     
@@ -198,7 +201,7 @@
 <p>Panels (or faceting) can be created by using the <code>facets</code> argument as follows:</p>
 <ul>
 <li>If <code>facets</code> is a string e.g <code>facets = "OCC"</code>, <code><a href="http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate">ggforce::facet_wrap_paginate</a></code> will be used</li>
-<li>If <code>facets</code> is a formula e.g <code>facets = SEX~OCC</code>, <code>ggplot2::facet_grid_paginate</code> will be used</li>
+<li>If <code>facets</code> is a formula e.g <code>facets = SEX~OCC</code>, <code><a href="http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate">ggforce::facet_grid_paginate</a></code> will be used</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Example with a string</span>
 <span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">facets =</span> <span class="kw">c</span>(<span class="st">'SEX'</span>, <span class="st">'OCC'</span>), <span class="dt">labeller =</span> <span class="st">'label_both'</span>, 
