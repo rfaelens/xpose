@@ -64,7 +64,7 @@ print.xpose_plot <- function(x, page, ...) {
     # Begin multiple page ploting
     n_page_2_draw <- length(page_2_draw)
     
-    if (interactive()) {
+    if (interactive() && !x$xpose$quiet) {
       message('Printing ', n_page_2_draw, ' selected page(s) out of ', page_tot, '.')
     }
     
