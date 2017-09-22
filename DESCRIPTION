@@ -50,15 +50,13 @@ Imports:
   tidyr (>= 0.6),
   utils,
   stats,
-  vpc
+  vpc (>= 1.0.0)
 Suggests:
   rmarkdown,
   knitr,
   testthat,
   plotly,
   webshot
-Remotes:
- ronkeizer/vpc
 License: LGPL-3 + file LICENSE
 URL: https://github.com/UUPharmacometrics/xpose
 BugReports: https://github.com/UUPharmacometrics/xpose/issues
