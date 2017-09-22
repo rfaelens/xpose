@@ -86,17 +86,20 @@ append_suffix <- function(xpdb, string = NULL, type = NULL) {
 #' @param quiet Should messages be displayed to the console.
 #' @param extra_key A vector of additional keywords not available in the `xpdb$summary`.
 #' @param extra_value A vector of values matching the order of `extra_key`.
+#' @param ignore_key A vector of keywords to be ignored i.e. warnings will not be returned.
 #' 
 #' @return The parsed `string`.
 #' 
 #' @keywords internal
 #' @export
-parse_title <- function(string, xpdb, problem, quiet, extra_key = NULL, extra_value = NULL) {
+parse_title <- function(string, xpdb, problem, quiet, extra_key = NULL, 
+                        extra_value = NULL, ignore_key = NULL) {
   # Extract keywords from the string
   keyword <- string %>% 
     stringr::str_extract_all('@[[:alnum:]]+') %>% 
     purrr::flatten_chr() %>% 
-    stringr::str_replace(stringr::fixed('@'), '')
+    stringr::str_replace(stringr::fixed('@'), '') %>% 
+    subset(!.%in% ignore_key)
   
   # Get the associated values in the summart
   values <- xpdb$summary[xpdb$summary$problem %in% c(0, problem) & 
@@ -114,7 +117,7 @@ parse_title <- function(string, xpdb, problem, quiet, extra_key = NULL, extra_va
   
   # Remove unmatched keywords from the list
   if (!all(keyword %in% values$label)) {
-    keyword[!keyword %in% values$label] %>% 
+    keyword[!keyword %in% values$label & !keyword %in% ignore_key] %>% 
       unique() %>% 
       stringr::str_c(collapse = ', ') %>%   
       {warning(c(., ' is not part of the available keywords. Check ?template_titles for a full list.'), call. = FALSE)}

@@ -75,6 +75,9 @@
       <a href="../articles/customize_plots.html">Customize plots</a>
     </li>
     <li>
+      <a href="../articles/multiple_pages.html">Multiple pages</a>
+    </li>
+    <li>
       <a href="../articles/interactive_plots.html">Create interactive plots (beta)</a>
     </li>
   </ul>
@@ -128,7 +131,7 @@
     
 
     <pre class="usage"><span class='fu'>parse_title</span>(<span class='no'>string</span>, <span class='no'>xpdb</span>, <span class='no'>problem</span>, <span class='no'>quiet</span>, <span class='kw'>extra_key</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>extra_value</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>extra_value</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ignore_key</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -157,6 +160,10 @@
     <tr>
       <th>extra_value</th>
       <td><p>A vector of values matching the order of `extra_key`.</p></td>
+    </tr>
+    <tr>
+      <th>ignore_key</th>
+      <td><p>A vector of keywords to be ignored i.e. warnings will not be returned.</p></td>
     </tr>
     </table>
     

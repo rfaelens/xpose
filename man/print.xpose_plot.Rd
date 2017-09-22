@@ -4,10 +4,13 @@
 \alias{print.xpose_plot}
 \title{Draw an xpose_plot object}
 \usage{
-\method{print}{xpose_plot}(x, ...)
+\method{print}{xpose_plot}(x, page, ...)
 }
 \arguments{
 \item{x}{An \code{xpose_plot} object.}
+
+\item{page}{The page number to be drawn. Can be specified as vector or range 
+of integer values.}
 
 \item{...}{Options to be passed on to the ggplot2 print method.}
 }
