@@ -12,6 +12,9 @@ install:
 
 # Adapt as necessary starting from here
 
+cache:
+  - packages -> appveyor.yml
+
 build_script:
   - travis-tool.sh install_deps
 
