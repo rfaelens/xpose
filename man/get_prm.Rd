@@ -27,6 +27,10 @@ A tibble for single problem/subprob or a named list for multiple problem|subprob
 Access model parameter estimates from an xpdb object.
 }
 \examples{
+# Display to the console
 get_prm(xpdb_ex_pk, problem = 1)
+
+# Store the parameters in an object
+prm <- get_prm(xpdb_ex_pk, problem = 1)
 
 }
