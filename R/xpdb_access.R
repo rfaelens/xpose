@@ -237,3 +237,129 @@ get_summary <- function(xpdb, problem = NULL, subprob = NULL, only_last = FALSE)
   
   x
 }
+
+
+#' Access model parameters
+#'
+#' @description Access model parameter estimates from an xpdb object.
+#' 
+#' @param xpdb An \code{xpose_data} object from which the model output file data will be extracted.
+#' @param problem The problem to be used, by default returns the last one for each file.
+#' @param subprob The subproblem to be used, by default returns the last one for each file.
+#' @param signif The number of significant digits to be displayed.
+#' @param show_all Logical, whether the 0 fixed off-diagonal elements should be removed outputed or not.
+#' @param quiet Logical, if \code{FALSE} messages are printed to the console.
+#' 
+#' @return A tibble for single problem/subprob or a named list for multiple problem|subprob.
+#' @examples
+#' get_prm(xpdb_ex_pk, problem = 1)
+#' 
+#' @export
+get_prm <- function(xpdb, 
+                    problem  = NULL, 
+                    subprob  = NULL, 
+                    digits   = 4,
+                    show_all = FALSE,
+                    quiet) {
+  
+  check_xpdb(xpdb, check = 'files')
+  if (missing(quiet)) quiet <- xpdb$options$quiet
+  if (is.null(problem)) problem <- last_file_problem(xpdb, ext = 'ext')
+  if (is.null(subprob)) subprob <- last_file_subprob(xpdb, ext = 'ext', problem = problem)
+  
+  # Initate raw ext file formating
+  ext_file <- get_file(xpdb = xpdb, ext = 'ext', problem = problem, 
+                       subprob = subprob, quiet = quiet) %>% 
+    dplyr::filter(.$ITERATION %in% c(-1000000000, -1000000001, -1000000006)) %>% 
+    dplyr::mutate(name = dplyr::case_when(.$ITERATION == -1000000000 ~ 'value', 
+                                          .$ITERATION == -1000000001 ~ 'rse',
+                                          TRUE ~ 'fixed')) %>% 
+    dplyr::select(colnames(.)[!colnames(.) %in% c('ITERATION', 'OBJ')]) %>% 
+    {as.data.frame(t(.), stringsAsFactors = FALSE)} %>% 
+    {purrr::set_names(x = ., nm = purrr::flatten_chr(.[nrow(.),]))} %>% 
+    dplyr::mutate(name  = row.names(.)) %>% 
+    dplyr::slice(-nrow(.)) %>% 
+    dplyr::mutate(value = as.numeric(.$value),
+                  fixed = as.logical(as.numeric(.$fixed)))
+  
+  # Check RSE column
+  if (any(colnames(ext_file) == 'rse')) {
+    has_rse  <- TRUE
+    ext_file <- dplyr::mutate(.data = ext_file, rse = as.numeric(ext_file$rse))
+  } else {
+    has_rse      <- FALSE
+    ext_file$rse <- NA
+  }
+  
+  # Add flag for diagonal elements identification
+  ext_file <- ext_file %>% 
+    dplyr::mutate(type = dplyr::case_when(stringr::str_detect(.$name, 'THETA') ~ 'the',
+                                          stringr::str_detect(.$name, 'OMEGA') ~ 'ome',
+                                          stringr::str_detect(.$name, 'SIGMA') ~ 'sig'),
+                  number = stringr::str_replace_all(.$name, '[^\\d,]+', '')) %>% 
+    tidyr::separate(col = 'number', into = c('m', 'n'), sep = ',', 
+                    fill = 'right') %>% 
+    dplyr::mutate(diagonal = dplyr::if_else(.$m == .$n, TRUE, FALSE),
+                  m = NULL, n = NULL)
+  
+  # Convert RSE to CV%
+  if (has_rse) {
+    ext_file <- ext_file %>% 
+      dplyr::mutate(rse = dplyr::case_when(.$fixed ~ NA_real_,
+                                           .$type == 'the' ~ abs(.$rse / .$value),
+                                           TRUE ~ abs(.$rse / .$value) / 2)) # Approximate standard deviation scale
+  }
+  
+  # Change variances to CV%, round values and reorder row/cols
+  ext_file$value[ext_file$type %in% c('ome', 'sig') & ext_file$diagonal] <- 
+    sqrt(ext_file$value[ext_file$type %in% c('ome', 'sig') & ext_file$diagonal])
+  
+  ext_file <- ext_file %>%
+    dplyr::mutate(label = '',
+                  value = signif(.$value, digits = digits),
+                  rse   = signif(.$rse, digits = digits),
+                  order = dplyr::case_when(.$type == 'the' ~ 1,
+                                           .$type == 'ome' ~ 2,
+                                           TRUE ~ 3)) %>% 
+    dplyr::arrange_(.dots = 'order') %>% 
+    dplyr::select(dplyr::one_of('type', 'name', 'label', 'value', 'rse', 'fixed', 'diagonal'))
+  
+  # Assign THETA labels
+  n_theta     <- sum(ext_file$type == 'the')
+  theta_names <- xpdb$code$comment[xpdb$code$subroutine == 'the']
+  if (n_theta != length(theta_names)) {
+    warning('$THETA labels did not match the number of THETAs in the `.ext` file.', call. = FALSE)
+  } else {
+    ext_file$label[ext_file$type == 'the'] <- theta_names
+  }
+  
+  # Assign OMEGA labels
+  n_omega     <- sum(ext_file$type == 'ome' & ext_file$diagonal, na.rm = TRUE)
+  omega_names <- xpdb$code %>% 
+    dplyr::filter(.$subroutine == 'ome') %>% 
+    dplyr::filter(!(stringr::str_detect(.$code, 'BLOCK\\(\\d+') & .$comment == '')) %>% 
+    {purrr::flatten_chr(.[, 'comment'])}
+  
+  if (n_omega != length(omega_names)) {
+    warning('$OMEGA labels did not match the number of OMEGAs in the `.ext` file.', call. = FALSE)
+  } else {
+    ext_file$label[ext_file$type == 'ome' & ext_file$diagonal] <- omega_names
+  }
+  
+  # Assign SIGMA labels
+  n_sigma     <- sum(ext_file$type == 'sig' & ext_file$diagonal, na.rm = TRUE)
+  sigma_names <- xpdb$code$comment[xpdb$code$subroutine == 'sig']
+  if (n_sigma != length(sigma_names)) {
+    warning('$SIGMA labels did not match the number of SIGMAs in the `.ext` file.', call. = FALSE)
+  } else {
+    ext_file$label[ext_file$type == 'sig' & ext_file$diagonal] <- sigma_names
+  }
+  
+  # Filter_all
+  if (!show_all) {
+    ext_file <- ext_file %>% 
+      filter(!(.$type %in% c('ome', 'sig') & .$value == 0 & !.$diagonal))
+  }
+  
+  structure(ext_file, class = c('xpose_prm', class(ext_file)))
+}
