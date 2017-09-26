@@ -4,7 +4,7 @@
 \alias{get_prm}
 \title{Access model parameters}
 \usage{
-get_prm(xpdb, problem = NULL, subprob = NULL, digits = 4,
+get_prm(xpdb, problem = NULL, subprob = NULL, method = NULL, digits = 4,
   show_all = FALSE, quiet)
 }
 \arguments{
@@ -13,6 +13,8 @@ get_prm(xpdb, problem = NULL, subprob = NULL, digits = 4,
 \item{problem}{The problem to be used, by default returns the last one for each file.}
 
 \item{subprob}{The subproblem to be used, by default returns the last one for each file.}
+
+\item{method}{The estimation method to be used, by default returns the last one for each file}
 
 \item{show_all}{Logical, whether the 0 fixed off-diagonal elements should be removed outputed or not.}
 

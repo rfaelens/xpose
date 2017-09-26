@@ -119,6 +119,8 @@ get_data <- function(xpdb, table = NULL, problem = NULL) {
 #' @param ext Extension of the file to be extracted from the xpdb e.g. 'phi'. Alternative to the 'file' argument.
 #' @param problem The problem to be used, by default returns the last one for each file.
 #' @param subprob The subproblem to be used, by default returns the last one for each file.
+#' @param method The estimation method to be used (e.g. 'foce', 'imp', 'saem'), by default returns the 
+#' last one for each file.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' 
 #' @return A tibble for single file or a named list for multiple files.
@@ -136,7 +138,13 @@ get_data <- function(xpdb, table = NULL, problem = NULL) {
 #' print(xpdb_ex_pk)
 #' 
 #' @export
-get_file <- function(xpdb, file = NULL, ext = NULL, problem = NULL, subprob = NULL, quiet) {
+get_file <- function(xpdb, 
+                     file      = NULL, 
+                     ext       = NULL, 
+                     problem   = NULL, 
+                     subprob   = NULL, 
+                     method    = NULL, 
+                     quiet) {
   check_xpdb(xpdb, check = 'files')
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
@@ -164,31 +172,44 @@ get_file <- function(xpdb, file = NULL, ext = NULL, problem = NULL, subprob = NU
   x <- xpdb$files[xpdb$files$name %in% file, ]
   
   # Filter by $problem
-  if (!is.null(problem)) {
-    if (!all(problem %in% x$problem)) {
-      stop('Problem no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
-           ' not found in model output files.', call. = FALSE)
-    }
-    x <- x[x$problem %in% problem, ]
+  if (is.null(problem)) {
+    problem <- last_file_problem(xpdb, ext = x$extension)
+  } else if (!all(problem %in% x$problem)) {
+    stop('Problem no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
+         ' not found in ', stringr::str_c(unique(x$name), collapse = ', '), ' files.', call. = FALSE)
   }
+  x <- x[x$problem %in% problem, ]
   
   # Filter by sub-problem
-  if (!is.null(subprob)) {
-    if (!all(subprob %in% x$subprob)) {
-      stop('Sub-problem no.', stringr::str_c(subprob[!subprob %in% x$subprob], collapse = ', '), 
-           ' not found in model output files.', call. = FALSE)
-    }
-    x <- x[x$subprob %in% subprob, ]
+  if (is.null(subprob)) {
+    subprob <- last_file_subprob(xpdb, ext = x$extension, problem = problem)
+  } else if (!all(subprob %in% x$subprob)) {
+    stop('Sub-problem no.', stringr::str_c(subprob[!subprob %in% x$subprob], collapse = ', '), 
+         ' not found in ', stringr::str_c(unique(x$name), collapse = ', '), ' files.', call. = FALSE)
   }
+  x <- x[x$subprob %in% subprob, ]
   
-  # Select final record
-  if (length(unique(x$name)) > 1) {
-    x <- x[!duplicated(x$name, fromLast = TRUE), ]
-    purrr::set_names(x$data, x$name)
+  # Filter by method
+  if (is.null(method)) {
+    method <- last_file_method(xpdb, ext = x$extension, problem = problem, subprob = subprob)
+  } else if (!all(method %in% x$method)) {
+    stop('Method ', stringr::str_c(method[!method %in% x$method], collapse = ', '), 
+         ' not found in ', stringr::str_c(unique(x$name), collapse = ', ') , ' files.', call. = FALSE)
+  }
+  x <- x[x$method %in% method, ]
+  
+  # Prepare output
+  if (nrow(x) > 1) {
+    msg(c('Returning data from ', stringr::str_c(unique(x$name), collapse = ', ')), quiet)
+    x$data %>% 
+      purrr::set_names(stringr::str_c(x$name, '_prob_', x$problem, 
+                                      '_subprob_', x$subprob, '_', 
+                                      x$method)) %>% 
+      return()
   } else {
-    last_row <- nrow(x)
-    msg(c('Returning data from problem no.', x$problem[last_row] , ' sub-problem no.', x$subprob[last_row]), quiet)
-    x$data[[last_row]]
+    msg(c('Returning data from problem no.', x$problem , 
+          ' sub-problem no.', x$subprob, ' ', x$method), quiet)
+    return(x$data[[1]])
   }
 }
 
@@ -246,6 +267,7 @@ get_summary <- function(xpdb, problem = NULL, subprob = NULL, only_last = FALSE)
 #' @param xpdb An \code{xpose_data} object from which the model output file data will be extracted.
 #' @param problem The problem to be used, by default returns the last one for each file.
 #' @param subprob The subproblem to be used, by default returns the last one for each file.
+#' @param method The estimation method to be used, by default returns the last one for each file
 #' @param signif The number of significant digits to be displayed.
 #' @param show_all Logical, whether the 0 fixed off-diagonal elements should be removed outputed or not.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
@@ -262,6 +284,7 @@ get_summary <- function(xpdb, problem = NULL, subprob = NULL, only_last = FALSE)
 get_prm <- function(xpdb, 
                     problem  = NULL, 
                     subprob  = NULL, 
+                    method   = NULL,
                     digits   = 4,
                     show_all = FALSE,
                     quiet) {
@@ -367,3 +390,4 @@ get_prm <- function(xpdb,
   
   structure(ext_file, class = c('xpose_prm', class(ext_file)))
 }
+
