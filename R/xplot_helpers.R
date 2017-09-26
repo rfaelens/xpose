@@ -221,7 +221,7 @@ default_plot_problem <- function(xpdb){
 #' @keywords internal
 #' @export
 all_file_problem <- function(xpdb, ext) {
-  prob_n <- xpdb$files$problem[xpdb$files$extension == ext]
+  prob_n <- xpdb$files$problem[xpdb$files$extension %in% ext]
   prob_n <- unique(prob_n)
   if (length(prob_n) == 0) return(NA_integer_)
   prob_n
@@ -254,12 +254,33 @@ last_file_problem <- function(xpdb, ext) {
 #' @keywords internal
 #' @export
 last_file_subprob <- function(xpdb, ext, problem) {
-  subprob_n <- xpdb$files$subprob[xpdb$files$extension == ext & xpdb$files$problem == problem]
+  subprob_n <- xpdb$files$subprob[xpdb$files$extension %in% ext & xpdb$files$problem %in% problem]
   subprob_n <- unique(subprob_n)
   if (length(subprob_n) == 0) return(NA_integer_)
   max(subprob_n)
 }
 
+
+#' Get last file estimation method
+#' 
+#' @param xpdb An xpose database object.
+#' @param ext The file extension to be used.
+#' @param problem The $problem number to be used.
+#' @param subprob The subproblem number to be used.
+#' 
+#' @return The number of the last file method as character 
+#' for the given `problem` and file `ext`.
+#' 
+#' @keywords internal
+#' @export
+last_file_method <- function(xpdb, ext, problem, subprob) {
+  method_n <- xpdb$files$method[xpdb$files$extension %in% ext & 
+                                  xpdb$files$problem %in% problem & 
+                                  xpdb$files$subprob %in% subprob]
+  method_n <- unique(method_n)
+  if (length(method_n) == 0) return(NA_integer_)
+  max(method_n)
+}
 
 #' Return names of columns having several unique values
 #' 
