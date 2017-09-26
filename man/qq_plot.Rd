@@ -10,24 +10,24 @@
 \title{QQ plots of ETA and residuals}
 \usage{
 prm_qq(xpdb, mapping = NULL, drop_static = TRUE, type = "p",
-  facets = NULL, title = "QQ plot of parameters | @run",
+  title = "QQ plot of parameters | @run",
   subtitle = "Based on @nind individuals", caption = "@dir", log = NULL,
-  guide = TRUE, problem, quiet, ...)
+  guide = TRUE, facets, problem, quiet, ...)
 
 eta_qq(xpdb, mapping = NULL, drop_static = TRUE, type = "p",
-  facets = NULL, title = "QQ plot of etas | @run",
+  title = "QQ plot of etas | @run",
   subtitle = "Based on @nind individuals, Eta shrink: @etashk",
-  caption = "@dir", log = NULL, guide = TRUE, problem, quiet, ...)
+  caption = "@dir", log = NULL, guide = TRUE, facets, problem, quiet, ...)
 
-res_qq(xpdb, mapping = NULL, res = "CWRES", type = "p", facets = NULL,
+res_qq(xpdb, mapping = NULL, res = "CWRES", type = "p",
   title = "QQ plot of @sample | @run",
   subtitle = "Based on @nobs observations", caption = "@dir", log = NULL,
-  guide = TRUE, problem, quiet, ...)
+  guide = TRUE, facets, problem, quiet, ...)
 
 cov_qq(xpdb, mapping = NULL, drop_static = TRUE, type = "p",
-  facets = NULL, title = "QQ plot of continuous covariates | @run",
+  title = "QQ plot of continuous covariates | @run",
   subtitle = "Based on @nind individuals", caption = "@dir", log = NULL,
-  guide = TRUE, problem, quiet, ...)
+  guide = TRUE, facets, problem, quiet, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -40,9 +40,6 @@ cov_qq(xpdb, mapping = NULL, drop_static = TRUE, type = "p",
 
 \item{type}{String setting the type of plot. Can only be points 'p'.}
 
-\item{facets}{Either a character string to use \link[ggplot2]{facet_wrap} 
-or a formula to use \link[ggplot2]{facet_grid}.}
-
 \item{title}{Plot title. Use \code{NULL} to remove.}
 
 \item{subtitle}{Plot subtitle. Use \code{NULL} to remove.}
@@ -53,6 +50,9 @@ or a formula to use \link[ggplot2]{facet_grid}.}
 'x', y' or 'xy'.}
 
 \item{guide}{Should the guide (e.g. reference line) be displayed.}
+
+\item{facets}{Either a character string to use \link[ggplot2]{facet_wrap} 
+or a formula to use \link[ggplot2]{facet_grid}.}
 
 \item{problem}{The $problem number to be used. By default returns 
 the last estimation problem.}
@@ -81,13 +81,23 @@ any option supported by this layer e.g. point_color = 'blue', etc.
 
 \section{Faceting}{
 
-Every xpose plot function has built-in facetting functionalities. Faceting arguments 
+Every xpose plot function has built-in faceting functionalities. Faceting arguments 
 are passed to the functions \link[ggforce]{facet_wrap_paginate} when the \code{facets} 
 argument is a character string (e.g. \code{facets = c('OCC', 'SEX')}) or 
 \link[ggforce]{facet_grid_paginate} when facets is a formula (e.g. \code{facets = OCC~SEX}).
 All xpose plot functions accept all the arguments for the \link[ggforce]{facet_wrap_paginate} 
 and \link[ggforce]{facet_grid_paginate} functions e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
 facets = OCC~SEX, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')}.
+
+Faceting options can either be defined in plot functions (e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
+facets = 'OCC')}) or assigned globally to an xpdb object via the \code{xp_theme} (e.g. \code{xpdb 
+<- update_themes(xpdb_ex_pk, xp_theme = list(facets = 'OCC'))}). In the latter example all plots 
+generate from this xpdb will automatically be stratified by `OCC`.
+
+By default, some plot functions use a custom stratyfiyng variable named `variable`, e.g. 
+\code{eta_distrib()}. When using the \code{facets} argument, `variable` needs to be added manually 
+e.g. \code{facets = c('OCC', 'variable')} or \code{facets = c('OCC', 'variable')}, but is optional, 
+when using the \code{facets} argument in \code{xp_theme} variable is automatically added whenever needed.
 }
 
 \section{Template titles}{

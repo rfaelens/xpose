@@ -35,7 +35,7 @@ test_that('get_psn_vpc_strat works properly', {
 test_that('vpc_data properly check input', {
   expect_error(vpc_data(), regexp = 'argument \"xpdb\" is missing')
   expect_error(vpc_data(xpdb_ex_pk, psn_folder = '.', quiet = TRUE), 
-                 regexp = 'No table file could be found')
+                 regexp = 'No table files could be found')
 })
 
 test_that('vpc_data works properly with xpdb tables', {
@@ -54,7 +54,7 @@ test_that('vpc_type categorical works properly', {
 test_that('vpc plot properly check input', {
   expect_error(vpc())
   expect_error(vpc(xpdb = 1, quiet = FALSE), regexp = 'Bad input')
-  expect_error(vpc(xpdb_ex_pk, quiet = FALSE), regexp = 'No special')
+  expect_error(vpc(xpdb_ex_pk, quiet = FALSE), regexp = 'No `special` slot')
   expect_error(vpc(ctrl_special, quiet = FALSE), regexp = 'Several vpc data')
   expect_error(vpc(ctrl_special, vpc_type = 'unknown', quiet = FALSE), 
                regexp = 'should be one of')

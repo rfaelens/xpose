@@ -20,17 +20,17 @@ q1 <- xplot_qq(xpdb = xpdb_ex_pk, aes_string(sample = 'PRED'), guide = TRUE, typ
 p2 <- xplot_scatter(xpdb = xpdb_ex_pk, aes_string(x = 'PRED', y = 'DV'), 
                     facets = 'SEX', quiet = TRUE)
 d2 <- xplot_distrib(xpdb = xpdb_ex_pk, aes_string(x = 'PRED'), 
-                    facets = 'SEX', quiet = TRUE)
+                    facets = 'SEX', quiet = TRUE, page = 1, ncol = 1, nrow = 1)
 q2 <- xplot_qq(xpdb = xpdb_ex_pk, aes_string(sample = 'PRED'), 
-               facets = 'SEX', quiet = TRUE)
+               facets = 'SEX', quiet = TRUE, page = 1:2, ncol = 1, nrow = 1)
 
 # Facet grid
 p3 <- xplot_scatter(xpdb = xpdb_ex_pk, aes_string(x = 'PRED', y = 'DV'), 
-                    facets = OCC~SEX, quiet = TRUE)
+                    facets = OCC~SEX, quiet = TRUE, page = 1, ncol = 1, nrow = 1)
 d3 <- xplot_distrib(xpdb = xpdb_ex_pk, aes_string(x = 'PRED'), 
                     facets = OCC~SEX, quiet = TRUE)
 q3 <- xplot_qq(xpdb = xpdb_ex_pk, aes_string(sample = 'PRED'), 
-               facets = OCC~SEX, quiet = TRUE)
+               facets = OCC~SEX, quiet = TRUE, page = 1:2, ncol = 1, nrow = 1)
 
 
 # Tests start here --------------------------------------------------------

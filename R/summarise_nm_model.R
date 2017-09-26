@@ -537,13 +537,26 @@ sum_shk <- function(model, software, type, rounding) {
     ## Method 3 (worse one)
     x <- model %>% 
       dplyr::filter(.$subroutine == 'lst') %>% 
-      dplyr::filter(stringr::str_detect(.$code, stringr::regex(
-        stringr::str_c(stringr::str_to_upper(type), 'SHRINK[^V]'), 
-        ignore_case = TRUE)))
-
+      dplyr::group_by_(.dots = 'problem') %>% 
+      tidyr::nest() %>% 
+      dplyr::mutate(start = purrr::map_int(.x = .$data, .f = function(x) {
+        stringr::str_c(stringr::str_to_upper(type), 'SHRINK[^V]') %>% 
+          stringr::regex(ignore_case = TRUE) %>% 
+          {stringr::str_detect(string = x$code, pattern = .)} %>% 
+          which() %>% 
+          {ifelse(length(.) == 0, NA_integer_, .)}
+      })) %>% 
+      filter(!is.na(.$start))
+    
     if (nrow(x) == 0) return(sum_tpl(stringr::str_c(type, 'shk'), 'na'))
     
     x %>% 
+      dplyr::mutate(rows = purrr::map2(.x = .$data, .y = .$start, .f = function(x, start) {
+        x$code[start:nrow(x)] %>% 
+        {start + (which.max(stringr::str_detect(., '^\\s+\\D')[-1]) - 1)} %>% 
+        {seq(start, .)}})) %>%
+      dplyr::mutate(code = purrr::map2_chr(.x = .$data, .y = .$rows, 
+                                           ~stringr::str_c(.x$code[.y], collapse = ' '))) %>% 
       dplyr::mutate(code = stringr::str_match(.$code, '\\Q(%)\\E:*\\s*(.+)')[, 2]) %>% 
       dplyr::mutate(code = stringr::str_split(.$code, '\\s+')) %>% 
       dplyr::mutate(value = purrr::map(.$code, ~round(as.numeric(.), digits = rounding)),

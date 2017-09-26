@@ -5,6 +5,7 @@ context('Check xpose_save')
 
 plot <- dv_vs_ipred(xpdb = xpdb_ex_pk, quiet = TRUE)
 
+plot_multiple <- dv_vs_ipred(xpdb = xpdb_ex_pk, quiet = TRUE, facet = c('SEX', 'OCC'), ncol = 1, nrow = 1, page = 1:2)
 
 # Tests start here --------------------------------------------------------
 
@@ -64,4 +65,17 @@ test_that('template filenames and auto file extension work properly', {
              dir = tempdir(),
              device = 'pdf')
   expect_true(file.exists(paths_3))
+})
+
+test_that('mutlitple pages are properly saved', {
+  paths_4 <- file.path(tempdir(), 'run001_dv_vs_ipred.pdf') 
+  on.exit(unlink(paths_4))
+  
+  expect_false(file.exists(paths_4))
+  
+  xpose_save(plot = plot_multiple, 
+             file = '@run_@plotfun',
+             dir = tempdir(),
+             device = 'pdf')
+  expect_true(file.exists(paths_4))
 })

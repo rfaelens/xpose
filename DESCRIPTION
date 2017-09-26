@@ -4,25 +4,35 @@ Title: Graphical diagnostics for pharmacometric models
 Version: 0.2.0.9000
 Authors@R: c(
       person('Benjamin', 'Guiastrennec',
-             role = c('aut', 'cre', 'cph'),
+             role  = c('aut', 'cre', 'cph'),
              email = 'guiastrennec@gmail.com'),
       person('Andrew C.', 'Hooker', 
-             role = c('aut', 'cph'),
+             role  = c('aut', 'cph'),
              email = 'andrew.hooker@farmbio.uu.se'),
-      person('Anna', 'Olofsson', role = c('aut', 'cph')),
+      person('Anna', 'Olofsson', 
+             role  = c('aut', 'cph'),
+             email = 'anna.olofsson@pharmetheus.com'),
       person('Sebastian', 'Ueckert',
-             role = c('aut', 'cph'),
+             role  = c('aut', 'cph'),
              email = 'sebastian.ueckert@farmbio.uu.se'),
       person('Ron', 'Keizer', 
-             role = 'aut',
+             role  = 'aut',
              email = 'ronkeizer@gmail.com'),
-      person('Kajsa', 'Harling', role = 'ctb'),
-      person('Mike K.', 'Smith', role = 'ctb'),
-      person('Elodie', 'Plan', role = 'ctb'),
+      person('Kajsa', 'Harling', 
+             role  = 'ctb',
+             email = 'kajsa.harling@pharmetheus.com'),
+      person('Mike K.', 'Smith', 
+             role  = 'ctb',
+             email = 'mike.k.smith@pfizer.com'),
+      person('Elodie', 'Plan', 
+             role  = 'ctb',
+             email = 'elodie.plan@pharmetheus.com'),
       person('Mats O.', 'Karlsson',
-             role = c('aut', 'cph'),
+             role  = c('aut', 'cph'),
              email = 'mats.karlsson@farmbio.uu.se'),
-      person('Pharmetheus', role = 'ctb'),
+      person('Pharmetheus', 
+             role  = 'ctb',
+             email = 'info@pharmetheus.com'),
       person('Pfizer', role = 'ctb'))
 Description: Automated generation of graphical diagnostics for non-linear mixed effect models.
 Depends:
@@ -40,15 +50,13 @@ Imports:
   tidyr (>= 0.6),
   utils,
   stats,
-  vpc
+  vpc (>= 1.0.0)
 Suggests:
   rmarkdown,
   knitr,
   testthat,
   plotly,
   webshot
-Remotes:
- ronkeizer/vpc
 License: LGPL-3 + file LICENSE
 URL: https://github.com/UUPharmacometrics/xpose
 BugReports: https://github.com/UUPharmacometrics/xpose/issues

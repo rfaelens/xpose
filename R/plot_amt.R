@@ -1,6 +1,6 @@
 #' Compartment kinetics
 #'
-#' @description Plot of the change in compartments' amount over the independent variable
+#' @description Plot of the change in compartment amounts over the independent variable
 #'
 #' @inheritParams dv_vs_pred
 #' @param drop_static Should columns that only have a single unique value 
@@ -19,11 +19,11 @@ amt_vs_idv <- function(xpdb,
                        group    = 'ID',
                        drop_static = TRUE,
                        type     = 'l',
-                       facets   = NULL,
                        title    = 'Compartments amount vs. @x | @run',
                        subtitle = 'Ofv: @ofv',
                        caption  = '@dir',
                        log      = NULL,
+                       facets,
                        problem,
                        quiet,
                        ...) {
@@ -31,7 +31,8 @@ amt_vs_idv <- function(xpdb,
   check_xpdb(xpdb, check = 'data')
   if (missing(problem)) problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
-  if (is.null(facets)) facets <- 'variable'
+  if (missing(facets)) facets <- add_facet_var(facets = xpdb$xp_theme$facets, 
+                                               variable = 'variable')
   
   extra_args <- list(...)
   if (!any(names(extra_args) == 'nrow')) extra_args$nrow <- 3
@@ -52,7 +53,7 @@ amt_vs_idv <- function(xpdb,
                                 filter = function(x) {
                                   dplyr::select_if(.tbl = x, .predicate = function(x) dplyr::n_distinct(x) > 1)
                                 }, tidy = TRUE, value_col = amt_col,
-                                post_processing = reorder_factors(type = 'Comp. ')),
+                                post_processing = reorder_factors(prefix = 'Comp. ')),
                  mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
                                             y = 'value'), mapping),
                  type = type, facets = facets, 

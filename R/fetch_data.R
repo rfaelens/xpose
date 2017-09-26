@@ -39,9 +39,22 @@ data_opt <- function(problem         = NULL,
        post_processing = post_processing)
 }
 
-# Create shortcut functions on the fly to filter observations
+
+#' Create functions to drop non observation records
+#' 
+#' @description Create shortcut functions on the fly to remove records 
+#' not associated with an observation.
+#' 
+#' @param xpdb An xpose database object.
+#' @param problem The $problem number to be used.
+#' @param quiet Should messages be displayed to the console.
+#' 
+#' @return A function
+#' 
+#' @keywords internal
+#' @export
 only_obs <- function(xpdb, problem, quiet) {
-  mdv_var <- xp_var(xpdb, problem, type = c('evid', 'mdv'))$col[1]
+  mdv_var <- xp_var(xpdb, problem, type = c('evid', 'mdv'), silent = TRUE)$col[1]
   fun <- function(x) {}
   if (!is.null(mdv_var)) {
     string <- c('Filtering data by ', mdv_var, ' == 0')
@@ -59,7 +72,21 @@ only_obs <- function(xpdb, problem, quiet) {
   fun
 }
 
-# Create shortcut functions on the fly to remove duplicates
+
+#' Create record deduplicating functions
+#' 
+#' @description Create shortcut functions on the fly to remove duplicated records in data.
+#' 
+#' @param xpdb An xpose database object.
+#' @param problem The $problem number to be used.
+#' @param facets The plot faceting variable. The `facets` variables along with the `id` column 
+#' type will be as grouping factors during deduplication process.
+#' @param quiet Should messages be displayed to the console.
+#' 
+#' @return A function
+#' 
+#' @keywords internal
+#' @export
 only_distinct <- function(xpdb, problem, facets, quiet) {
   if (is.formula(facets)) facets <- all.vars(facets)
   vars <- c(xp_var(xpdb, problem, type = c('id'))$col[1], facets)
@@ -72,18 +99,42 @@ only_distinct <- function(xpdb, problem, facets, quiet) {
   fun
 }
 
-# Reorder panels numerically
-reorder_factors <- function(type) {
+
+#' Reorder factors by numerical order
+#' 
+#' @description Will for example convert `ETA(1)` to 1 create factors then generate labels
+#' by wrapping the digits with prefix and suffix.
+#' 
+#' @param prefix A prefix to be added in front of the factor digits.
+#' @param suffix A suffix to be added after the factor digits.
+#' 
+#' @return A modified tibble
+#' 
+#' @keywords internal
+#' @export
+reorder_factors <- function(prefix, suffix = NULL) {
   function(x) {
     x %>% 
       dplyr::mutate(variable = as.numeric(gsub('\\D', '', .$variable))) %>% 
       dplyr::mutate(variable = factor(.$variable, levels = sort(unique(.$variable)),
-                                      labels = stringr::str_c(type, sort(unique(.$variable)), 
-                                                              sep = ' ')))
+                                      labels = stringr::str_c(prefix, sort(unique(.$variable)), suffix)))
   }
 }
 
-# Main function to get the data from different source and prepare it for plotting
+
+#' Fetch data
+#' 
+#' @description Main internal function to get the data from different source and 
+#' prepare it for plotting. Arguments are usually provided by `data_opt()`.
+#' 
+#' @inheritParams data_opt
+#' @param xpdb An xpose database object.
+#' @param quiet Should messages be displayed to the console.
+#' 
+#' @return A tibble
+#' 
+#' @keywords internal
+#' @export
 fetch_data <- function(xpdb, 
                        problem   = NULL, 
                        subprob   = NULL,

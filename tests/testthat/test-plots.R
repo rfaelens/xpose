@@ -16,7 +16,7 @@ plot_functions <- c(prediction_plot_functions, residual_plot_functions,
                     eta_plot_functions, cov_plot_functions, 
                     individual_plot_functions, kinetic_plot_functions)
 
-not_sim_functions <- plot_functions[!grepl('iteration|prm_|eta_|cov_|res_qq|res_distrib|amt_', plot_functions)]
+not_sim_functions <- plot_functions[!grepl('iteration|prm_|eta_|cov_|res_qq|res_distrib|amt_|pred|ind_plots', plot_functions)]
 distribution_functions <- plot_functions[grepl('(prm|eta|cov|res)_(distrib|qq)', plot_functions)]
 
 # Simulation only xpdb
@@ -24,11 +24,11 @@ xpdb_sim_only <- xpose_data(file = 'sim.lst', dir = 'data', quiet = TRUE)
 
 # Missing all output files except grd
 xpdb_mis_file <- xpose_data(file = 'sim.lst', dir = 'data', 
-                            skip = c('data', 'summary'), quiet = TRUE,
+                            ignore = c('data', 'summary'), quiet = TRUE,
                             extra_files = '.phi')
 # No output files at all
 xpdb_no_file <- xpose_data(file = 'sim.lst', dir = 'data', quiet = TRUE,
-                           skip = c('data', 'files', 'summary'))
+                           ignore = c('data', 'files', 'summary'))
 
 # Tests start here --------------------------------------------------------
 
@@ -50,14 +50,14 @@ test_that_for_all(not_sim_functions, 'no error occurs when xpdb is from a simula
 
 test_that_for_all(iteration_plot_functions, 'have proper error check', {
   expect_error(.iteration_plot_function(xpdb_no_file), 
-               regexp = 'No files could be found in this xpdb')
+               regexp = 'No `files` slot could be found in this xpdb')
   expect_error(.iteration_plot_function(xpdb_mis_file), 
                regexp = 'File extension.+not found in model output files')
 })  
 
 test_that_for_all(distribution_functions, 'have proper error check', {
   expect_error(.distribution_function(xpdb_sim_only), 
-               regexp = 'No.+column found in the xpdb data index')
+               regexp = 'Column.+ not available')
   expect_error(.distribution_function(xpdb_no_file), 
-               regexp = 'No data could be found in this xpdb')
+               regexp = 'No `data` slot could be found in this xpdb')
 })

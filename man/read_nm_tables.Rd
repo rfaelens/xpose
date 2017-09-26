@@ -31,6 +31,18 @@ Default \code{NULL} reads all tables.}
 Quickly import NONMEM output tables into R. This function automatically 
 detects the optimal settings to import the tables from nonmem.
 }
+\section{Table format requirement}{
+
+When using \code{read_nm_tables} with the \code{combined} argument set to \code{FALSE} an \code{ID} column 
+must be present in all data tables. When \code{combined} is set to \code{TRUE} instead an \code{ID} column must be 
+present in at least one table for each problem and for each `firstonly` category. \code{ID} columns are required 
+to properly combine/merge tables and removing \code{NA} records. If the \code{ID} column is missing from a table and 
+\code{combined = FALSE} \code{read_nm_tables} will return the following warning: \code{Unknown variables: `ID`}. While
+the data is returned beware that \code{NA} records might be left in the data and the output should be checked carefully.
+If \code{combined = TRUE} \code{read_nm_tables} xpose is more strict and will return the following warning instead: 
+\code{Dropped `<tablenames>` due to missing required `ID` column.}.
+}
+
 \examples{
 \dontrun{
 # Import tables manually and return them as a list of individual tables

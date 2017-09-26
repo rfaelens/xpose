@@ -75,6 +75,9 @@
       <a href="../articles/customize_plots.html">Customize plots</a>
     </li>
     <li>
+      <a href="../articles/multiple_pages.html">Multiple pages</a>
+    </li>
+    <li>
       <a href="../articles/interactive_plots.html">Create interactive plots (beta)</a>
     </li>
   </ul>
@@ -161,8 +164,8 @@ defined xpose (<code>xp_theme</code>) and ggplot2 (<code>gg_theme</code>) themes
 <span class='co'># Updating the gg_theme and xp_theme</span>
 <span class='no'>xpdb_ex_pk</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>update_themes</span>(<span class='kw'>gg_theme</span> <span class='kw'>=</span> <span class='fu'>theme_bw</span>(),
-                <span class='kw'>xp_theme</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>point_color</span> <span class='kw'>=</span> <span class='st'>'blue'</span>,
-                             <span class='kw'>line_color</span>  <span class='kw'>=</span> <span class='st'>'blue'</span>)) <span class='kw'>%&gt;%</span>
+                <span class='kw'>xp_theme</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>point_color</span> <span class='kw'>=</span> <span class='st'>'blue'</span>,
+                                <span class='kw'>line_color</span>  <span class='kw'>=</span> <span class='st'>'blue'</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='dv_vs_pred.html'>dv_vs_ipred</a></span>()</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Filtering data by EVID == 0</span></div><div class='img'><img src='update_themes-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>  
 </div></pre>
   </div>

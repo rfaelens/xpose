@@ -155,6 +155,21 @@ mutate.xpose_data <- function(.data, ..., .problem, .source) {
 }
 
 
+#' Check quoted variables
+#' 
+#' @description Ensure that variables used in quos are present in the 
+#' data and return informative error messages otherwise.
+#' 
+#' @param xpdb An xpose database object.
+#' @param ... Name-value pairs of expressions.
+#' @param .problem The problem from which the data will be modified
+#' @param .source The source of the data in the xpdb. Can either be 'data' or an output 
+#' file extension e.g. 'phi'.
+#' 
+#' @return Silent if checks are successful, returns errors otherwise.
+#' 
+#' @keywords internal
+#' @export
 check_quo_vars <- function(xpdb, ..., .source, .problem) {
   quo_vars <- rlang::quos(...) %>% 
     purrr::map(all.vars) %>% 

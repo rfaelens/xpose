@@ -34,12 +34,16 @@ Not yet but we are actively working on it
 ## Are xpose and xpose4 cross compatible packages?
 No. While the philosophy behind xpose and xpose4 is similar these are two different packages.
 
+## Are all xpose4 functionalities present in xpose?
+Not yet. The new xpose package has been fully redesigned around ggplot2 and the focus is currently on establishing the bases with basic PK diagnostic plots. New functionalities will be added through future updates.
+
+## I would like to suggest an idea for a future version of xpose what should I do?
+1. Check on [github](https://github.com/UUPharmacometrics/xpose/issues) if this idea has not been discussed already
+2. Open a new issue on [github](https://github.com/UUPharmacometrics/xpose/issues) describing your idea
+
 ## I found a bug in xpose what should I do?
 1. Make sure you are running the latest version of xpose
 2. Check on [github](https://github.com/UUPharmacometrics/xpose/issues) if this issue has not been reported before
 3. Create a minimal reproductive example (reprex) of your issue
 4. Open a new issue on [github](https://github.com/UUPharmacometrics/xpose/issues)
 
-## I would like to suggest an idea for a future version of xpose what should I do?
-1. Check on [github](https://github.com/UUPharmacometrics/xpose/issues) if this idea has not been discussed already
-2. Open a new issue on [github](https://github.com/UUPharmacometrics/xpose/issues) describing your idea

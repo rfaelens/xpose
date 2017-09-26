@@ -6,14 +6,13 @@
 \title{Residuals plotted against the independent variable}
 \usage{
 res_vs_idv(xpdb, mapping = NULL, res = "CWRES", group = "ID",
-  type = "pls", facets = NULL, title = "@y vs. @x | @run",
-  subtitle = "Ofv: @ofv", caption = "@dir", log = NULL, guide = TRUE,
-  problem, quiet, ...)
+  type = "pls", title = "@y vs. @x | @run", subtitle = "Ofv: @ofv",
+  caption = "@dir", log = NULL, guide = TRUE, facets, problem, quiet, ...)
 
 absval_res_vs_idv(xpdb, mapping = NULL, res = "CWRES", group = "ID",
-  type = "pls", facets = NULL, title = "@y vs. @x  | @run",
-  subtitle = "Ofv: @ofv", caption = "@dir", log = NULL, guide = FALSE,
-  problem, quiet, ...)
+  type = "pls", title = "@y vs. @x  | @run", subtitle = "Ofv: @ofv",
+  caption = "@dir", log = NULL, guide = FALSE, facets, problem, quiet,
+  ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -28,9 +27,6 @@ absval_res_vs_idv(xpdb, mapping = NULL, res = "CWRES", group = "ID",
 \item{type}{String setting the type of plot to be used. Can be points 'p',
 line 'l', smooth 's' and text 't' or any combination of the four.}
 
-\item{facets}{Either a character string to use \link[ggplot2]{facet_wrap} 
-or a formula to use \link[ggplot2]{facet_grid}.}
-
 \item{title}{Plot title. Use \code{NULL} to remove.}
 
 \item{subtitle}{Plot subtitle. Use \code{NULL} to remove.}
@@ -41,6 +37,9 @@ or a formula to use \link[ggplot2]{facet_grid}.}
 'x', y' or 'xy'.}
 
 \item{guide}{Enable guide display (e.g. unity line).}
+
+\item{facets}{Either a character string to use \link[ggplot2]{facet_wrap} 
+or a formula to use \link[ggplot2]{facet_grid}.}
 
 \item{problem}{The $problem number to be used. By default returns 
 the last estimation problem.}

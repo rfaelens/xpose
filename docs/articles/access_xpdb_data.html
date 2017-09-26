@@ -53,6 +53,9 @@
       <a href="../articles/customize_plots.html">Customize plots</a>
     </li>
     <li>
+      <a href="../articles/multiple_pages.html">Multiple pages</a>
+    </li>
+    <li>
       <a href="../articles/interactive_plots.html">Create interactive plots (beta)</a>
     </li>
   </ul>
@@ -101,7 +104,7 @@
       <h1>Access the xpdb data</h1>
                         <h4 class="author">Benjamin Guiastrennec</h4>
             
-            <h4 class="date">01 September, 2017</h4>
+            <h4 class="date">22 September, 2017</h4>
           </div>
 
     
@@ -150,7 +153,7 @@ code</code></pre></div>
 <h3 class="hasAnchor">
 <a href="#access-the-output-data" class="anchor"></a>Access the output data</h3>
 <p>The <code><a href="../reference/get_data.html">get_data()</a></code> function can be used to access the imported table files. Tables can be accessed by <code>table</code> name or by <code>problem</code>. In the latter a single dataset containing all aggregated tables is returned. If more than one <code>table</code> name or <code>problem</code> number is provided a named list is returned.</p>
-<p><em>Note when providing a table name it is not garanteed that the table will be identical to its file (i.e. the order of the columns may have been changed and tables with <code>FIRSTONLY</code> will no longer be deduplicated).</em></p>
+<p><em>Note when providing a table name it is not guaranteed that the table will be identical to its file (i.e. the order of the columns may have been changed and tables with <code>FIRSTONLY</code> will no longer be deduplicated).</em></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_data.html">get_data</a></span>(xpdb, <span class="dt">table =</span> <span class="st">'cotab001'</span>)
 data</code></pre></div>
 <pre><code># A tibble: 1,166 x 4
