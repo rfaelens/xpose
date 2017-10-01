@@ -36,8 +36,12 @@ get_code <- function(xpdb, problem = NULL) {
 #' @param table Name of the output table to be extracted from the xpdb e.g. 'sdtab001'. Alternative to 
 #' the `problem` argument.
 #' @param problem Accesses all tables from the specified problem. Alternative to the `table` argument.
+#' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' 
-#' @return A tibble for single file or a named list for multiple files.
+#' @return By default returns data from the last estimation problem. If only simulation problems are present 
+#' then the data from last simulation will be returned instead. Object returned as tibble for single 
+#' tables/problems or a named list for multiple tables/problems.
+#' 
 #' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_tables}}
 #' @examples
 #' # By table name
@@ -52,11 +56,16 @@ get_code <- function(xpdb, problem = NULL) {
 #' print(xpdb_ex_pk)
 #' 
 #' @export
-get_data <- function(xpdb, table = NULL, problem = NULL) {
+get_data <- function(xpdb, 
+                     table   = NULL, 
+                     problem = NULL,
+                     quiet) {
   check_xpdb(xpdb, check = 'data')
+  if (missing(quiet)) quiet <- xpdb$options$quiet
   
   if (is.null(table) && is.null(problem)) {
-    stop('Argument `table` or `problem` required.', call. = FALSE) 
+    problem <- default_plot_problem(xpdb)
+    msg(c('Returning data from $prob no.', problem), quiet)
   }
   
   if (!is.null(table) && !is.null(problem)) {
@@ -80,7 +89,6 @@ get_data <- function(xpdb, table = NULL, problem = NULL) {
     } else {
       x[[1]]
     }
-    
   } else {
     # When selecting tables based on their name
     full_index <- x %>% 

@@ -27,9 +27,6 @@ test_that('get_data checks input properly', {
   # Error with missing xpdb
   expect_error(get_data(), regexp = '"xpdb" is missing')
   
-  # Error with missing table and problems
-  expect_error(get_data(xpdb_ex_pk), regexp = '`table` or `problem` required')
-  
   # Error with simulataneous table and problems
   expect_error(get_data(xpdb_ex_pk, table = 'sdtab001', problem = 1), regexp = 'together')
   
@@ -41,6 +38,10 @@ test_that('get_data checks input properly', {
 })
 
 test_that('get_data works properly', {
+  # Default return works properly
+  expect_message(tmp_get_data_1 <- get_data(xpdb_ex_pk), regexp = 'Returning data from \\$prob no\\.1')
+  expect_equal(tmp_get_data_1, xpdb_ex_pk$data$data[[1]])
+  
   # Return single problem
   expect_equal(get_data(xpdb_ex_pk, problem = 1), xpdb_ex_pk$data$data[[1]])
   
