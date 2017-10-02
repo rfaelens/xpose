@@ -19,27 +19,33 @@
 #' @export
 print.xpose_prm <- function(x, ...) {
   
-  ###### TEMP
-  problem = 1
-  ######
-  
-  header <- x[1, c('name','label','value','rse', 'fixed')]
-  header[1,] <- c('Parameter', 'Label', 'Value', 'RSE', '   ')
-  
   cat('\nThe relative standard errors for omega and sigma are reported on the approximate
 standard deviation scale (SE/variance estimate)/2.\n')
   
-  cat('\nParameter estimates for problem no.', problem, '\n')
+  # Convert single prm_df to list
+  if (dplyr::is.tbl(x)) x <- list(x)
   
-  x %>% 
-    dplyr::mutate_all(.funs = 'as.character') %>% 
-    dplyr::mutate(fixed = ifelse(.$fixed, 'fix', '   ')) %>% 
-    {dplyr::bind_rows(header, .)} %>% 
-    dplyr::mutate(name  = stringr::str_pad(.$name, max(nchar(.$name)), 'right'),
-                  label = stringr::str_pad(.$label, max(nchar(.$label)), 'right'),
-                  value = stringr::str_pad(.$value, max(nchar(.$value)), 'right'),
-                  rse   = ifelse(is.na(.$rse), ' - ', .$rse)) %>%
-    dplyr::mutate(string = stringr::str_c('', .$name, .$label, .$value, .$fixed, .$rse, sep = ' ')) %>% 
-    {purrr::flatten_chr(.[,'string'])} %>% 
-    cat(sep = '\n')
+  # Generate output to console
+  out <- purrr::map(.x = x, function(prm) {
+    prm_attr <- attributes(prm)
+    header <- dplyr::data_frame(name = 'Parameter', label = 'Label', 
+                                value = 'Value', rse = 'RSE', fixed = '   ')
+    
+    cat('\nEstimates for $prob no.', prm_attr$problem, 
+        ' subprob no.', prm_attr$subprob, ', method ', prm_attr$method, '\n', sep = '')
+    
+    prm %>% 
+      dplyr::mutate_all(.funs = 'as.character') %>% 
+      dplyr::mutate(fixed = ifelse(.$fixed, 'fix', '   ')) %>% 
+      {dplyr::bind_rows(header, .)} %>% 
+      dplyr::mutate(name  = stringr::str_pad(.$name, max(nchar(.$name)), 'right'),
+                    label = stringr::str_pad(.$label, max(nchar(.$label)), 'right'),
+                    value = stringr::str_pad(.$value, max(nchar(.$value)), 'right'),
+                    rse   = ifelse(is.na(.$rse), ' - ', .$rse)) %>%
+      dplyr::mutate(string = stringr::str_c('', .$name, .$label, .$value, .$fixed, .$rse, sep = ' ')) %>% 
+      {purrr::flatten_chr(.[,'string'])} %>% 
+      cat(sep = '\n')
+  })
 }
+  
+  
