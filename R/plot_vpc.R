@@ -222,7 +222,7 @@ vpc <- function(xpdb,
   # Define panels
   if (!is.null(facets)) {
     xp <- xp + xpose_panels(xp_theme = xpdb$xp_theme, 
-                            extra_args = c(facets = facets, list(...)))
+                            extra_args = c(list(facets = facets), list(...)))
   }
   
   # Add labels

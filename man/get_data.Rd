@@ -4,7 +4,7 @@
 \alias{get_data}
 \title{Access model output table data}
 \usage{
-get_data(xpdb, table = NULL, problem = NULL)
+get_data(xpdb, table = NULL, problem = NULL, quiet)
 }
 \arguments{
 \item{xpdb}{An \code{xpose_data} object from which the model output file data will be extracted.}
@@ -13,9 +13,13 @@ get_data(xpdb, table = NULL, problem = NULL)
 the `problem` argument.}
 
 \item{problem}{Accesses all tables from the specified problem. Alternative to the `table` argument.}
+
+\item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 }
 \value{
-A tibble for single file or a named list for multiple files.
+By default returns data from the last estimation problem. If only simulation problems are present 
+then the data from last simulation will be returned instead. Object returned as tibble for single 
+tables/problems or a named list for multiple tables/problems.
 }
 \description{
 Access model output table data from an xpdb object.
