@@ -62,6 +62,16 @@ file <- get_file(xpdb, file = 'run001.ext')
 file
 ```
 
+
+### Access the parameter estimates
+The `get_prm()` function can be used to access the parameter estimates. The parameters can be outputted to the console or stored into R object. 
+
+```{r demo get_prm}
+prm <- get_prm(xpdb, digits = 4)
+prm
+```
+
+
 ### Access the run summary
 The `get_summary()` function can be used to access the generated run summary from which the `template_titles`. If the argument `problem` is specified a subset of the summary can be returned based on `$PROBLEM`. 
 
