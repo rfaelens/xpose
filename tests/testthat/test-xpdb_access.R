@@ -112,3 +112,27 @@ test_that('get_summary works properly', {
   # Return multiple problems
   expect_equal(get_summary(xpdb_ex_pk, problem = 0:1), xpdb_ex_pk$summary[xpdb_ex_pk$summary$problem %in% 0:1, ])
 })
+
+
+# Tests for get_prm -------------------------------------------------------
+
+test_that('get_prm checks input properly', {
+  # Error with missing xpdb
+  expect_error(get_prm(), regexp = '"xpdb" is missing')
+  
+  # Error with bad problem input
+  expect_error(get_prm(xpdb_ex_pk, problem = 99), regexp = 'No parameter estimates found for \\$prob no\\.99')
+})
+
+test_that('get_prm works properly', {
+  
+  # Load control parameter table
+  # get_prm_ctrl <- get_prm(xpdb_ex_pk)
+  # save(get_prm_ctrl, file = 'data/get_prm_ctrl.Rdata')
+  load('data/get_prm_ctrl.Rdata')
+  
+  # Test
+  get_prm_test <- get_prm(xpdb_ex_pk)
+  expect_true('xpose_prm' %in% class(get_prm_test))
+  expect_identical(get_prm_test, get_prm_ctrl)
+})
