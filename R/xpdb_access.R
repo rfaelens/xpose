@@ -293,7 +293,7 @@ get_prm <- function(xpdb,
                     problem  = NULL, 
                     subprob  = NULL, 
                     method   = NULL,
-                    digits   = 4,
+                    signif   = 4,
                     show_all = FALSE,
                     quiet) {
   

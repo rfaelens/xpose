@@ -47,5 +47,3 @@ standard deviation scale (SE/variance estimate)/2.\n')
       cat(sep = '\n')
   })
 }
-  
-  
