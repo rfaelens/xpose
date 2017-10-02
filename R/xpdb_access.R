@@ -301,101 +301,136 @@ get_prm <- function(xpdb,
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (is.null(problem)) problem <- last_file_problem(xpdb, ext = 'ext')
   if (is.null(subprob)) subprob <- last_file_subprob(xpdb, ext = 'ext', problem = problem)
+  if (is.null(method))  method  <- last_file_method(xpdb, ext = 'ext', problem = problem, subprob = subprob)
   
-  # Initate raw ext file formating
-  ext_file <- get_file(xpdb = xpdb, ext = 'ext', problem = problem, 
-                       subprob = subprob, quiet = quiet) %>% 
-    dplyr::filter(.$ITERATION %in% c(-1000000000, -1000000001, -1000000006)) %>% 
-    dplyr::mutate(name = dplyr::case_when(.$ITERATION == -1000000000 ~ 'value', 
-                                          .$ITERATION == -1000000001 ~ 'rse',
-                                          TRUE ~ 'fixed')) %>% 
-    dplyr::select(colnames(.)[!colnames(.) %in% c('ITERATION', 'OBJ')]) %>% 
-    {as.data.frame(t(.), stringsAsFactors = FALSE)} %>% 
-    {purrr::set_names(x = ., nm = purrr::flatten_chr(.[nrow(.),]))} %>% 
-    dplyr::mutate(name  = row.names(.)) %>% 
-    dplyr::slice(-nrow(.)) %>% 
-    dplyr::mutate(value = as.numeric(.$value),
-                  fixed = as.logical(as.numeric(.$fixed)))
-  
-  # Check RSE column
-  if (any(colnames(ext_file) == 'rse')) {
-    has_rse  <- TRUE
-    ext_file <- dplyr::mutate(.data = ext_file, rse = as.numeric(ext_file$rse))
-  } else {
-    has_rse      <- FALSE
-    ext_file$rse <- NA
+  prm_df <- xpdb$files
+  prm_df <- prm_df[prm_df$extension == 'ext' & prm_df$problem %in% problem &
+                     prm_df$subprob %in% subprob & prm_df$method %in% method, ]
+
+  if (nrow(prm_df) == 0) {
+    stop('No parameter estimates found for $prob no.', 
+         stringr::str_c(problem, collapse = '/'), ', subprob no. ',
+         stringr::str_c(subprob, collapse = '/'), ', method ',
+         stringr::str_c(method, collapse = '/'), '.', call. = FALSE) 
   }
+    
+  prm_df <- prm_df %>% 
+    dplyr::mutate(prm_names = purrr::map(.x = as.list(.$problem), .f = function(x, code) {
+      
+      # Collect parameter names from the model code
+      code <- code[code$problem == x,]
+      list(theta = code$comment[code$subroutine == 'the'],
+           omega = code[code$subroutine == 'ome', ] %>%
+             dplyr::filter(!(stringr::str_detect(.$code, 'BLOCK\\(\\d+') & .$comment == '')) %>% 
+             {purrr::flatten_chr(.[, 'comment'])},
+           sigma = code$comment[code$subroutine == 'sig'])
+      
+    }, code = xpdb$code)) %>% 
+    dplyr::mutate(n = 1:n()) %>% 
+    dplyr::group_by_(.dots = 'n') %>% 
+    tidyr::nest(.key = 'out') %>% 
+    dplyr::mutate(prm = purrr::map(.x = .$out, .f = function(data, show_all) {
+      
+      # Gather prm files
+      prm_tmp <- data$data[[1]] %>% 
+        dplyr::filter(.$ITERATION %in% c(-1000000000, -1000000001, -1000000006)) %>% 
+        dplyr::mutate(name = dplyr::case_when(.$ITERATION == -1000000000 ~ 'value', 
+                                              .$ITERATION == -1000000001 ~ 'rse',
+                                              TRUE ~ 'fixed')) %>% 
+        dplyr::select(colnames(.)[!colnames(.) %in% c('ITERATION', 'OBJ')]) %>% 
+        {as.data.frame(t(.), stringsAsFactors = FALSE)} %>% 
+        {purrr::set_names(x = ., nm = purrr::flatten_chr(.[nrow(.),]))} %>% 
+        dplyr::mutate(name  = row.names(.)) %>% 
+        dplyr::slice(-nrow(.)) %>% 
+        dplyr::mutate(value = as.numeric(.$value),
+                      fixed = as.logical(as.numeric(.$fixed)))
+      
+      # Check RSE column
+      if (any(colnames(prm_tmp) == 'rse')) {
+        has_rse  <- TRUE
+        prm_tmp  <- dplyr::mutate(.data = prm_tmp, rse = as.numeric(prm_tmp$rse))
+      } else {
+        has_rse     <- FALSE
+        prm_tmp$rse <- NA
+      }
+      
+      # Add flag for diagonal elements identification
+      prm_tmp <- prm_tmp %>% 
+        dplyr::mutate(type = dplyr::case_when(stringr::str_detect(.$name, 'THETA') ~ 'the',
+                                              stringr::str_detect(.$name, 'OMEGA') ~ 'ome',
+                                              stringr::str_detect(.$name, 'SIGMA') ~ 'sig'),
+                      number = stringr::str_replace_all(.$name, '[^\\d,]+', '')) %>% 
+        tidyr::separate(col = 'number', into = c('m', 'n'), sep = ',', 
+                        fill = 'right') %>% 
+        dplyr::mutate(diagonal = dplyr::if_else(.$m == .$n, TRUE, FALSE),
+                      m = NULL, n = NULL)
+      
+      # Convert RSE to CV%
+      if (has_rse) {
+        prm_tmp <- prm_tmp %>% 
+          dplyr::mutate(rse = dplyr::case_when(.$fixed ~ NA_real_,
+                                               .$type == 'the' ~ abs(.$rse / .$value),
+                                               TRUE ~ abs(.$rse / .$value) / 2)) # Approximate standard deviation scale
+      }
+      
+      # Change variances to CV%, round values and reorder row/cols
+      prm_tmp$value[prm_tmp$type %in% c('ome', 'sig') & prm_tmp$diagonal] <- 
+        sqrt(prm_tmp$value[prm_tmp$type %in% c('ome', 'sig') & prm_tmp$diagonal])
+      
+      prm_tmp <- prm_tmp %>%
+        dplyr::mutate(label = '',
+                      value = signif(.$value, digits = digits),
+                      rse   = signif(.$rse, digits = digits),
+                      order = dplyr::case_when(.$type == 'the' ~ 1,
+                                               .$type == 'ome' ~ 2,
+                                               TRUE ~ 3)) %>% 
+        dplyr::arrange_(.dots = 'order') %>% 
+        dplyr::select(dplyr::one_of('type', 'name', 'label', 'value', 'rse', 'fixed', 'diagonal'))
+      
+      # Assign THETA labels
+      n_theta     <- sum(prm_tmp$type == 'the')
+      theta_names <- data$prm_names[[1]]$theta
+      if (n_theta != length(theta_names)) {
+        warning('[$prob no.', data$problem[[1]], ', subprob no.', data$subprob[[1]], ', ', data$method[[1]], 
+                '] $THETA labels did not match the number of THETAs in the `.ext` file.', call. = FALSE)
+      } else {
+        prm_tmp$label[prm_tmp$type == 'the'] <- theta_names
+      }
+      
+      # Assign OMEGA labels
+      n_omega     <- sum(prm_tmp$type == 'ome' & prm_tmp$diagonal, na.rm = TRUE)
+      omega_names <- data$prm_names[[1]]$omega
+      if (n_omega != length(omega_names)) {
+        warning('[$prob no.', data$problem[[1]], ', subprob no.', data$subprob[[1]], ', ', data$method[[1]], 
+                '] $OMEGA labels did not match the number of OMEGAs in the `.ext` file.', call. = FALSE)
+      } else {
+        prm_tmp$label[prm_tmp$type == 'ome' & prm_tmp$diagonal] <- omega_names
+      }
+      
+      # Assign SIGMA labels
+      n_sigma     <- sum(prm_tmp$type == 'sig' & prm_tmp$diagonal, na.rm = TRUE)
+      sigma_names <- data$prm_names[[1]]$sigma
+      if (n_sigma != length(sigma_names)) {
+        warning('[$prob no.', data$problem[[1]], ', subprob no.', data$subprob[[1]], ', ', data$method[[1]], 
+                '] $SIGMA labels did not match the number of SIGMAs in the `.ext` file.', call. = FALSE)
+      } else {
+        prm_tmp$label[prm_tmp$type == 'sig' & prm_tmp$diagonal] <- sigma_names
+      }
+      
+      # Filter_all
+      if (!show_all) {
+        prm_tmp <- dplyr::filter(.data = prm_tmp, !(prm_tmp$type %in% c('ome', 'sig') & 
+                                                      prm_tmp$value == 0 & !prm_tmp$diagonal))
+      }
+      
+      # Add metadata to output
+      structure(.Data = prm_tmp, file = data$name[[1]], problem = data$problem[[1]], 
+                subprob = data$subprob[[1]], method = data$method[[1]])
+    }, show_all = show_all)) %>% 
+    .$prm
   
-  # Add flag for diagonal elements identification
-  ext_file <- ext_file %>% 
-    dplyr::mutate(type = dplyr::case_when(stringr::str_detect(.$name, 'THETA') ~ 'the',
-                                          stringr::str_detect(.$name, 'OMEGA') ~ 'ome',
-                                          stringr::str_detect(.$name, 'SIGMA') ~ 'sig'),
-                  number = stringr::str_replace_all(.$name, '[^\\d,]+', '')) %>% 
-    tidyr::separate(col = 'number', into = c('m', 'n'), sep = ',', 
-                    fill = 'right') %>% 
-    dplyr::mutate(diagonal = dplyr::if_else(.$m == .$n, TRUE, FALSE),
-                  m = NULL, n = NULL)
-  
-  # Convert RSE to CV%
-  if (has_rse) {
-    ext_file <- ext_file %>% 
-      dplyr::mutate(rse = dplyr::case_when(.$fixed ~ NA_real_,
-                                           .$type == 'the' ~ abs(.$rse / .$value),
-                                           TRUE ~ abs(.$rse / .$value) / 2)) # Approximate standard deviation scale
-  }
-  
-  # Change variances to CV%, round values and reorder row/cols
-  ext_file$value[ext_file$type %in% c('ome', 'sig') & ext_file$diagonal] <- 
-    sqrt(ext_file$value[ext_file$type %in% c('ome', 'sig') & ext_file$diagonal])
-  
-  ext_file <- ext_file %>%
-    dplyr::mutate(label = '',
-                  value = signif(.$value, digits = digits),
-                  rse   = signif(.$rse, digits = digits),
-                  order = dplyr::case_when(.$type == 'the' ~ 1,
-                                           .$type == 'ome' ~ 2,
-                                           TRUE ~ 3)) %>% 
-    dplyr::arrange_(.dots = 'order') %>% 
-    dplyr::select(dplyr::one_of('type', 'name', 'label', 'value', 'rse', 'fixed', 'diagonal'))
-  
-  # Assign THETA labels
-  n_theta     <- sum(ext_file$type == 'the')
-  theta_names <- xpdb$code$comment[xpdb$code$subroutine == 'the']
-  if (n_theta != length(theta_names)) {
-    warning('$THETA labels did not match the number of THETAs in the `.ext` file.', call. = FALSE)
-  } else {
-    ext_file$label[ext_file$type == 'the'] <- theta_names
-  }
-  
-  # Assign OMEGA labels
-  n_omega     <- sum(ext_file$type == 'ome' & ext_file$diagonal, na.rm = TRUE)
-  omega_names <- xpdb$code %>% 
-    dplyr::filter(.$subroutine == 'ome') %>% 
-    dplyr::filter(!(stringr::str_detect(.$code, 'BLOCK\\(\\d+') & .$comment == '')) %>% 
-    {purrr::flatten_chr(.[, 'comment'])}
-  
-  if (n_omega != length(omega_names)) {
-    warning('$OMEGA labels did not match the number of OMEGAs in the `.ext` file.', call. = FALSE)
-  } else {
-    ext_file$label[ext_file$type == 'ome' & ext_file$diagonal] <- omega_names
-  }
-  
-  # Assign SIGMA labels
-  n_sigma     <- sum(ext_file$type == 'sig' & ext_file$diagonal, na.rm = TRUE)
-  sigma_names <- xpdb$code$comment[xpdb$code$subroutine == 'sig']
-  if (n_sigma != length(sigma_names)) {
-    warning('$SIGMA labels did not match the number of SIGMAs in the `.ext` file.', call. = FALSE)
-  } else {
-    ext_file$label[ext_file$type == 'sig' & ext_file$diagonal] <- sigma_names
-  }
-  
-  # Filter_all
-  if (!show_all) {
-    ext_file <- ext_file %>% 
-      filter(!(.$type %in% c('ome', 'sig') & .$value == 0 & !.$diagonal))
-  }
-  
-  structure(ext_file, class = c('xpose_prm', class(ext_file)))
+  # Format output
+  if (length(prm_df) == 1) prm_df <- prm_df[[1]]
+  structure(prm_df, class = c('xpose_prm', class(prm_df)))
 }
 
