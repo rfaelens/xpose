@@ -276,7 +276,7 @@ get_summary <- function(xpdb, problem = NULL, subprob = NULL, only_last = FALSE)
 #' @param problem The problem to be used, by default returns the last one for each file.
 #' @param subprob The subproblem to be used, by default returns the last one for each file.
 #' @param method The estimation method to be used, by default returns the last one for each file
-#' @param signif The number of significant digits to be displayed.
+#' @param digits The number of significant digits to be displayed.
 #' @param show_all Logical, whether the 0 fixed off-diagonal elements should be removed outputed or not.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' 
@@ -293,7 +293,7 @@ get_prm <- function(xpdb,
                     problem  = NULL, 
                     subprob  = NULL, 
                     method   = NULL,
-                    signif   = 4,
+                    digits   = 4,
                     show_all = FALSE,
                     quiet) {
   
@@ -362,8 +362,7 @@ get_prm <- function(xpdb,
                       number = stringr::str_replace_all(.$name, '[^\\d,]+', '')) %>% 
         tidyr::separate(col = 'number', into = c('m', 'n'), sep = ',', 
                         fill = 'right') %>% 
-        dplyr::mutate(diagonal = dplyr::if_else(.$m == .$n, TRUE, FALSE),
-                      m = NULL, n = NULL)
+        dplyr::mutate(diagonal = dplyr::if_else(.$m == .$n, TRUE, FALSE))
       
       # Convert RSE to CV%
       if (has_rse) {
@@ -372,6 +371,18 @@ get_prm <- function(xpdb,
                                                .$type == 'the' ~ abs(.$rse / .$value),
                                                TRUE ~ abs(.$rse / .$value) / 2)) # Approximate standard deviation scale
       }
+      
+      # Convert Off diagonal to correlations
+      ref_n <- prm_tmp %>% 
+        dplyr::filter(!is.na(.$diagonal) & .$diagonal == TRUE & !.$fixed) %>% 
+        dplyr::select_(.dots = list('n', 'type', 'value_n' = 'value'))
+      ref_m <- dplyr::select_(.data = ref_n, .dots = list('m' = 'n', 'type', 'value_m' = 'value_n'))
+      
+      prm_tmp <- prm_tmp %>% 
+        dplyr::left_join(ref_n, by = c('n', 'type')) %>% 
+        dplyr::left_join(ref_m, by = c('m', 'type')) %>% 
+        dplyr::mutate(value = ifelse(!is.na(.$value_n) & !is.na(.$value_m) & !.$diagonal & !.$fixed, 
+                                     .$value/(sqrt(.$value_n)*sqrt(.$value_m)), .$value))
       
       # Change variances to CV%, round values and reorder row/cols
       prm_tmp$value[prm_tmp$type %in% c('ome', 'sig') & prm_tmp$diagonal] <- 

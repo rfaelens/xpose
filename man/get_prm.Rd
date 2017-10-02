@@ -4,7 +4,7 @@
 \alias{get_prm}
 \title{Access model parameters}
 \usage{
-get_prm(xpdb, problem = NULL, subprob = NULL, method = NULL, signif = 4,
+get_prm(xpdb, problem = NULL, subprob = NULL, method = NULL, digits = 4,
   show_all = FALSE, quiet)
 }
 \arguments{
@@ -16,7 +16,7 @@ get_prm(xpdb, problem = NULL, subprob = NULL, method = NULL, signif = 4,
 
 \item{method}{The estimation method to be used, by default returns the last one for each file}
 
-\item{signif}{The number of significant digits to be displayed.}
+\item{digits}{The number of significant digits to be displayed.}
 
 \item{show_all}{Logical, whether the 0 fixed off-diagonal elements should be removed outputed or not.}
 
