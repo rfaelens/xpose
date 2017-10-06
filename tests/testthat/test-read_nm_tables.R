@@ -33,13 +33,13 @@ test_that('error is returned when missing file argument', {
 
 test_that('error is returned when all provided files are missing', {
   expect_error(read_nm_tables(file = 'fake_table.tab', quiet = TRUE), 
-               regexp = 'No table file could be found')
+               regexp = 'No table files could be found')
 })
 
 test_that('error is returned when tables exist but are duplicated', {
   expect_error(read_nm_tables(file = c('sdtab001', 'patab001', 'sdtab001'), 
                               dir = 'data', quiet = TRUE),
-               regexp = 'No tables imported due to duplicated names')
+               regexp = 'No table imported due to duplicated names')
 })
 
 test_that('error is returned when missing table header', {

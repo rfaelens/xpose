@@ -10,7 +10,7 @@ vignette: >
 ---
 
 ### Warning
-**Please note that this feature is experimental and not all aspects of ggplot2 are supported by ploty!**
+**Please note that this feature is experimental and not all aspects of ggplot2 are supported by plotly!**
 
 To learn more about plotly you visit this [page](https://plot.ly).
 
@@ -37,7 +37,7 @@ gof_plot <- dv_vs_ipred(xpdb_ex_pk, type = 'pl',
 ```
 
 ### Convert the plot from ggplot2 to plotly
-The ggplot2 object is now automatically conveted to a plotly graph. The scales can now be changed interactively, groups can be hidden by clicking on the legend
+The ggplot2 object is now automatically converted to a plotly graph. The scales can now be changed interactively, groups can be hidden by clicking on the legend
 
 ```{r render plotly, fig.width = 6, fig.height = 5, out.width = '100%', warning = FALSE, message=FALSE}
 plotly::ggplotly(gof_plot)

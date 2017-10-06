@@ -75,6 +75,9 @@
       <a href="../articles/customize_plots.html">Customize plots</a>
     </li>
     <li>
+      <a href="../articles/multiple_pages.html">Multiple pages</a>
+    </li>
+    <li>
       <a href="../articles/interactive_plots.html">Create interactive plots (beta)</a>
     </li>
   </ul>
@@ -167,9 +170,21 @@ Default <code>NULL</code> reads all tables.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional arguments to be passed to the <code><a href='http://www.rdocumentation.org/packages/readr/topics/read_table'>read_table</a></code> or <code><a href='http://www.rdocumentation.org/packages/readr/topics/read_delim'>read_csv</a></code> functions.</p></td>
+      <td><p>Additional arguments to be passed to the <code><a href='http://www.rdocumentation.org/packages/readr/topics/read_table'>read_table2</a></code> or <code><a href='http://www.rdocumentation.org/packages/readr/topics/read_delim'>read_csv</a></code> functions.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="table-format-requirement"><a class="anchor" href="#table-format-requirement"></a>Table format requirement</h2>
+
+    
+    <p>When using <code>read_nm_tables</code> with the <code>combined</code> argument set to <code>FALSE</code> an <code>ID</code> column 
+must be present in all data tables. When <code>combined</code> is set to <code>TRUE</code> instead an <code>ID</code> column must be 
+present in at least one table for each problem and for each `firstonly` category. <code>ID</code> columns are required 
+to properly combine/merge tables and removing <code>NA</code> records. If the <code>ID</code> column is missing from a table and 
+<code>combined = FALSE</code> <code>read_nm_tables</code> will return the following warning: <code>Unknown variables: `ID`</code>. While
+the data is returned beware that <code>NA</code> records might be left in the data and the output should be checked carefully.
+If <code>combined = TRUE</code> <code>read_nm_tables</code> xpose is more strict and will return the following warning instead: 
+<code>Dropped `&lt;tablenames&gt;` due to missing required `ID` column.</code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -199,7 +214,9 @@ Default <code>NULL</code> reads all tables.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#table-format-requirement">Table format requirement</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

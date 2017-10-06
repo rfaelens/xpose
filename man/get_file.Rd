@@ -5,7 +5,7 @@
 \title{Access model output file data}
 \usage{
 get_file(xpdb, file = NULL, ext = NULL, problem = NULL, subprob = NULL,
-  quiet)
+  method = NULL, quiet)
 }
 \arguments{
 \item{xpdb}{An \code{xpose_data} object from which the model output file data will be extracted.}
@@ -17,6 +17,9 @@ get_file(xpdb, file = NULL, ext = NULL, problem = NULL, subprob = NULL,
 \item{problem}{The problem to be used, by default returns the last one for each file.}
 
 \item{subprob}{The subproblem to be used, by default returns the last one for each file.}
+
+\item{method}{The estimation method to be used (e.g. 'foce', 'imp', 'saem'), by default returns the 
+last one for each file.}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 }

@@ -22,7 +22,6 @@
 #' ext_file <- read_nm_files(runno = '001', ext = '.ext', dir = 'models')
 #' }
 #' @export
-
 read_nm_files <- function(runno  = NULL,
                           prefix = 'run',
                           ext    = c('.ext', '.cor', '.cov', '.phi', '.grd', '.shk'),
@@ -50,7 +49,7 @@ read_nm_files <- function(runno  = NULL,
   msg('\nLooking for nonmem output files', quiet)
   
   if (!any(file.exists(full_path))) {
-    stop('No output file could be found.', call. = FALSE)
+    stop('No output files could be found.', call. = FALSE)
   }
   
   msg(c('Reading: ', stringr::str_c(bases[file.exists(full_path)], collapse = ', ')), quiet)
@@ -77,6 +76,21 @@ read_nm_files <- function(runno  = NULL,
                                 'method', 'data', 'modified'))
 }
 
+
+#' Parse NONMEM output files
+#' 
+#' @description Function parsing NONMEM output files from their 
+#' raw input.
+#' 
+#' @param dat A list containing the raw data as vector of strings (`dat$raw`)
+#' and their respective file names (`dat$name`).
+#' @param quiet Logical, if \code{FALSE} messages are printed to the console.
+#' 
+#' @return A tibble containing the parsed `data` along with `name`, `problem`, 
+#' `subprob`, and `method`.
+#' 
+#' @keywords internal
+#' @export
 parse_nm_files <- function(dat, quiet) {
   if (length(unlist(dat$raw)) == 0) {
     tab_rows <- NULL 
@@ -87,7 +101,7 @@ parse_nm_files <- function(dat, quiet) {
   }
   
   if (length(tab_rows) == 0) {
-    warning(c('Dropping ', dat$name, ' due to inappropriate format.'), call. = FALSE)
+    warning(c('Dropped `', dat$name, '` due to inappropriate format.'), call. = FALSE)
     return()
   }
   
@@ -118,10 +132,23 @@ parse_nm_files <- function(dat, quiet) {
                   raw = stringr::str_trim(.$raw, side = 'both')) %>% 
     dplyr::group_by_(.dots = c('problem', 'subprob', 'method')) %>% 
     tidyr::nest() %>% 
-    dplyr::mutate(data = purrr::map(.$data, .f = raw_to_tibble, sep, quiet, file = dat$name))
+    dplyr::mutate(data = purrr::map(.$data, .f = raw_to_tibble, sep = sep, file = dat$name))
 }  
 
-raw_to_tibble <- function(x, sep, quiet, file) {
+
+#' Convert raw strings to tibble
+#' 
+#' @description Convert raw data strings to a tibble format.
+#' 
+#' @param x A list containing the raw data as vector of strings (`x$raw`).
+#' @param sep A separator which will be used to create columns.
+#' @param file The name of the file to be parsed.
+#' 
+#' @return A tibble.
+#' 
+#' @keywords internal
+#' @export
+raw_to_tibble <- function(x, sep, file) {
   header <- x$raw[x$header] %>% 
     stringr::str_split(pattern = sep) %>% 
     purrr::flatten_chr()

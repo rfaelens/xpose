@@ -27,6 +27,10 @@ data
 file <- get_file(xpdb, file = 'run001.ext')
 file
 
+## ----demo get_prm---------------------------------------------------------------------------------
+prm <- get_prm(xpdb, digits = 4)
+prm
+
 ## ----demo get_summary-----------------------------------------------------------------------------
 run_sum <- get_summary(xpdb, problem = 0)
 run_sum

@@ -51,7 +51,6 @@ vpc <- function(xpdb,
                 mapping  = NULL,
                 type     = 'alr',
                 smooth   = TRUE,
-                facets,
                 title    = 'Visual predictive checks | @run',
                 subtitle = NULL,
                 caption  = '@dir',
@@ -59,6 +58,7 @@ vpc <- function(xpdb,
                 vpc_type = NULL,
                 gg_theme,
                 xp_theme,
+                facets,
                 quiet,
                 ...) {
   # Check input
@@ -222,7 +222,7 @@ vpc <- function(xpdb,
   # Define panels
   if (!is.null(facets)) {
     xp <- xp + xpose_panels(xp_theme = xpdb$xp_theme, 
-                            extra_args = c(facets = facets, list(...)))
+                            extra_args = c(list(facets = facets), list(...)))
   }
   
   # Add labels

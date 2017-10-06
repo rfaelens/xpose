@@ -33,6 +33,7 @@ Many key variables are available:
  \item{@nsig}{Number of significant digits}
  \item{@nsim}{Number of simulations}
  \item{@ofv}{Objective function value}
+ \item{@page and @lastpage}{Are respectively the page number and the number of the last page when facetting on multiple pages}
  \item{@probn}{Problem number}
  \item{@plotfun}{Name of the plot function}
  \item{@ref}{Reference model}

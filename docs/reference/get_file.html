@@ -75,6 +75,9 @@
       <a href="../articles/customize_plots.html">Customize plots</a>
     </li>
     <li>
+      <a href="../articles/multiple_pages.html">Multiple pages</a>
+    </li>
+    <li>
       <a href="../articles/interactive_plots.html">Create interactive plots (beta)</a>
     </li>
   </ul>
@@ -128,7 +131,7 @@
     
 
     <pre class="usage"><span class='fu'>get_file</span>(<span class='no'>xpdb</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ext</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subprob</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>quiet</span>)</pre>
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>quiet</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -154,6 +157,11 @@
       <td><p>The subproblem to be used, by default returns the last one for each file.</p></td>
     </tr>
     <tr>
+      <th>method</th>
+      <td><p>The estimation method to be used (e.g. 'foce', 'imp', 'saem'), by default returns the 
+last one for each file.</p></td>
+    </tr>
+    <tr>
       <th>quiet</th>
       <td><p>Logical, if <code>FALSE</code> messages are printed to the console.</p></td>
     </tr>
@@ -170,7 +178,7 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Single file (returns a tibble)</span>
-<span class='no'>ext_file</span> <span class='kw'>&lt;-</span> <span class='fu'>get_file</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>'run001.ext'</span>)</div><div class='output co'>#&gt; <span class='message'>Returning data from problem no.1 sub-problem no.0</span></div><div class='input'><span class='no'>ext_file</span></div><div class='output co'>#&gt; # A tibble: 30 x 15
+<span class='no'>ext_file</span> <span class='kw'>&lt;-</span> <span class='fu'>get_file</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>'run001.ext'</span>)</div><div class='output co'>#&gt; <span class='message'>Returning data from problem no.1 sub-problem no.0 foce</span></div><div class='input'><span class='no'>ext_file</span></div><div class='output co'>#&gt; # A tibble: 30 x 15
 #&gt;    ITERATION  THETA1  THETA2  THETA3   THETA4   THETA5     THETA6 `SIGMA(1,1)`
 #&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;
 #&gt;  1         0 27.5000 1.56500 2.10000 0.254000 0.230000 0.00800000            1
@@ -187,8 +195,7 @@
 #&gt; #   `OMEGA(2,1)` &lt;dbl&gt;, `OMEGA(2,2)` &lt;dbl&gt;, `OMEGA(3,1)` &lt;dbl&gt;,
 #&gt; #   `OMEGA(3,2)` &lt;dbl&gt;, `OMEGA(3,3)` &lt;dbl&gt;, OBJ &lt;dbl&gt;</div><div class='input'>
 <span class='co'># Multiple files (returns a list)</span>
-<span class='no'>files</span> <span class='kw'>&lt;-</span> <span class='fu'>get_file</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>'run001.ext'</span>, <span class='st'>'run001.phi'</span>))
-<span class='no'>files</span></div><div class='output co'>#&gt; $run001.ext
+<span class='no'>files</span> <span class='kw'>&lt;-</span> <span class='fu'>get_file</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>'run001.ext'</span>, <span class='st'>'run001.phi'</span>))</div><div class='output co'>#&gt; <span class='message'>Returning data from run001.ext, run001.phi</span></div><div class='input'><span class='no'>files</span></div><div class='output co'>#&gt; $run001.ext_prob_1_subprob_0_foce
 #&gt; # A tibble: 30 x 15
 #&gt;    ITERATION  THETA1  THETA2  THETA3   THETA4   THETA5     THETA6 `SIGMA(1,1)`
 #&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;
@@ -206,7 +213,7 @@
 #&gt; #   `OMEGA(2,1)` &lt;dbl&gt;, `OMEGA(2,2)` &lt;dbl&gt;, `OMEGA(3,1)` &lt;dbl&gt;,
 #&gt; #   `OMEGA(3,2)` &lt;dbl&gt;, `OMEGA(3,3)` &lt;dbl&gt;, OBJ &lt;dbl&gt;
 #&gt; 
-#&gt; $run001.phi
+#&gt; $run001.phi_prob_1_subprob_0_foce
 #&gt; # A tibble: 74 x 12
 #&gt;    SUBJECT_NO    ID   `ETA(1)`   `ETA(2)`    `ETA(3)` `ETC(1,1)`   `ETC(2,1)`
 #&gt;         &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;

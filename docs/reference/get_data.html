@@ -75,6 +75,9 @@
       <a href="../articles/customize_plots.html">Customize plots</a>
     </li>
     <li>
+      <a href="../articles/multiple_pages.html">Multiple pages</a>
+    </li>
+    <li>
       <a href="../articles/interactive_plots.html">Create interactive plots (beta)</a>
     </li>
   </ul>
@@ -127,7 +130,7 @@
     <p>Access model output table data from an xpdb object.</p>
     
 
-    <pre class="usage"><span class='fu'>get_data</span>(<span class='no'>xpdb</span>, <span class='kw'>table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>get_data</span>(<span class='no'>xpdb</span>, <span class='kw'>table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>quiet</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -145,11 +148,17 @@ the `problem` argument.</p></td>
       <th>problem</th>
       <td><p>Accesses all tables from the specified problem. Alternative to the `table` argument.</p></td>
     </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Logical, if <code>FALSE</code> messages are printed to the console.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A tibble for single file or a named list for multiple files.</p>
+    <p>By default returns data from the last estimation problem. If only simulation problems are present 
+then the data from last simulation will be returned instead. Object returned as tibble for single 
+tables/problems or a named list for multiple tables/problems.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

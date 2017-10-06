@@ -45,7 +45,7 @@ dv_vs_ipred(xpdb,
 dv_vs_ipred(xpdb, title = NULL, subtitle = NULL, caption = NULL)
 
 # Edit title suffix from the xp_theme for a specific plot
-dv_vs_ipred(xpdb, title = 'A title', xp_theme = c(title_suffix = ' | a suffix for @run'))
+dv_vs_ipred(xpdb, title = 'A title', xp_theme = list(title_suffix = ' | a suffix for @run'))
 
 ## ----demo xpose_labs-----------------------------------------------------
 dv_vs_ipred(xpdb) +
@@ -72,7 +72,8 @@ dv_vs_ipred(xpdb, type = 'p', aes(point_color = SEX))
 
 ## ----demo panels, fig.width = 6, fig.height = 6, out.width = '75%'-------
 # Example with a string
-dv_vs_ipred(xpdb, facets = c('SEX', 'OCC'), ncol = 2, nrow = 1, page = 1)
+dv_vs_ipred(xpdb, facets = c('SEX', 'OCC'), labeller = 'label_both', 
+            ncol = 2, nrow = 1, page = 1)
 
 # Example with a formula
 dv_vs_ipred(xpdb, facets = SEX~OCC, labeller = 'label_both', margins = TRUE)
@@ -106,8 +107,8 @@ dv_vs_ipred(xpdb,
 #  # Update a pre-existing xpdb
 #  xpdb <- update_themes(xpdb     = xpdb,
 #                        gg_theme = theme_bw(),
-#                        xp_theme = c(point_color = 'dodgerblue4',
-#                                     line_color  = 'dodgerblue4'))
+#                        xp_theme = list(point_color = 'dodgerblue4',
+#                                        line_color  = 'dodgerblue4'))
 
 ## ----demo gg_theme, echo = FALSE, fig.height = 6, fig.width = 6, out.width = '75%'----
 gridExtra::grid.arrange(

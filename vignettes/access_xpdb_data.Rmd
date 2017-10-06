@@ -47,7 +47,7 @@ code
 ### Access the output data
 The `get_data()` function can be used to access the imported table files. Tables can be accessed by `table` name or by `problem`. In the latter a single dataset containing all aggregated tables is returned. If more than one `table` name or `problem` number is provided a named list is returned. 
 
-*Note when providing a table name it is not garanteed that the table will be identical to its file (i.e. the order of the columns may have been changed and tables with `FIRSTONLY` will no longer be deduplicated).*
+*Note when providing a table name it is not guaranteed that the table will be identical to its file (i.e. the order of the columns may have been changed and tables with `FIRSTONLY` will no longer be deduplicated).*
 
 ```{r demo get_data}
 data <- get_data(xpdb, table = 'cotab001')
@@ -61,6 +61,16 @@ The `get_file()` function can be used to access the imported output files. Files
 file <- get_file(xpdb, file = 'run001.ext')
 file
 ```
+
+
+### Access the parameter estimates
+The `get_prm()` function can be used to access the parameter estimates. The parameters can be outputted to the console or stored into R object. 
+
+```{r demo get_prm}
+prm <- get_prm(xpdb, digits = 4)
+prm
+```
+
 
 ### Access the run summary
 The `get_summary()` function can be used to access the generated run summary from which the `template_titles`. If the argument `problem` is specified a subset of the summary can be returned based on `$PROBLEM`. 

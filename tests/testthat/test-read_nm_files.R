@@ -21,7 +21,7 @@ test_that('error is returned when missing file argument', {
 
 test_that('error is returned when all provided files are missing', {
   expect_error(read_nm_files(runno = 'run999', dir = 'data', quiet = TRUE),
-               regexp = 'No output file could be found')
+               regexp = 'No output files could be found')
 })
 
 test_that('read_nm_files handles one file with inappropriate format', {
@@ -34,7 +34,7 @@ test_that('read_nm_files handles one file with inappropriate format', {
   writeLines(text = test_file2, con = file2)
   writeLines(text = test_file2, con = file3) 
   expect_warning(tmp_file_A <- read_nm_files(file = c(file1, file2, file3), quiet = TRUE), 
-                 regexp = 'Dropping.+inappropriate format')
+                 regexp = 'Dropped.+inappropriate format')
   expect_is(tmp_file_A, class = 'tbl_df')
 })
 

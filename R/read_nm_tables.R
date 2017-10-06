@@ -13,6 +13,17 @@
 #' Default \code{NULL} reads all tables.
 #' @param ziptab If \code{TRUE} search for the tables that have been compressed and renamed ´<file>.zip'.
 #' @param ... Additional arguments to be passed to the \code{\link[readr]{read_table2}} or \code{\link[readr]{read_csv}} functions.
+#' 
+#' @section Table format requirement:
+#' When using \code{read_nm_tables} with the \code{combined} argument set to \code{FALSE} an \code{ID} column 
+#' must be present in all data tables. When \code{combined} is set to \code{TRUE} instead an \code{ID} column must be 
+#' present in at least one table for each problem and for each `firstonly` category. \code{ID} columns are required 
+#' to properly combine/merge tables and removing \code{NA} records. If the \code{ID} column is missing from a table and 
+#' \code{combined = FALSE} \code{read_nm_tables} will return the following warning: \code{Unknown variables: `ID`}. While
+#' the data is returned beware that \code{NA} records might be left in the data and the output should be checked carefully.
+#' If \code{combined = TRUE} \code{read_nm_tables} xpose is more strict and will return the following warning instead: 
+#' \code{Dropped `<tablenames>` due to missing required `ID` column.}.
+#' 
 #' @examples
 #' \dontrun{
 #' # Import tables manually and return them as a list of individual tables
@@ -62,11 +73,11 @@ read_nm_tables <- function(file          = NULL,
   
   # Check that file exists
   if (is.null(file) || !any(file.exists(file$file))) {
-    stop('No table file could be found.', call. = FALSE)
+    stop('No table files could be found.', call. = FALSE)
   }
   
   if (any(duplicated(file$file))) {
-    stop('No tables imported due to duplicated names.', call. = FALSE)
+    stop('No table imported due to duplicated names.', call. = FALSE)
   }
   
   tables <- file[file.exists(file$file), ]
@@ -137,7 +148,7 @@ read_nm_tables <- function(file          = NULL,
   tables <- tables %>% 
     dplyr::group_by_(.dots = c('problem', 'simtab', 'firstonly')) %>% 
     tidyr::nest(.key = 'tmp') %>% 
-    dplyr::mutate(out = purrr::map(.$tmp, combine_tables, quiet)) %>% 
+    dplyr::mutate(out = purrr::map(.$tmp, combine_tables)) %>% 
     tidyr::unnest_(unnest_cols = 'out') %>% 
     dplyr::select(dplyr::one_of('problem', 'simtab', 'firstonly', 'data', 'index'))
   
@@ -190,12 +201,39 @@ read_nm_tables <- function(file          = NULL,
 }
 
 
+#' Define data import functions
+#' 
+#' @param fun Abbreviated `readr` data import function. 
+#' Can be `csv`, `csv2` or `table`.
+#' 
+#' @return A data import function.
+#' 
+#' @keywords internal
+#' @export
 read_funs <- function(fun) {
   c(csv   = readr::read_csv,
     csv2  = readr::read_csv2,
     table = readr::read_table2)[fun]
 }
 
+
+#' Define data import arguments
+#' 
+#' @param x A list containing a the 3 first records of a 
+#' dataset under `[[1]]`.
+#' @param quiet Should messages be displayed to the console.
+#' @param col_types Defines the type of each to be passed to 
+#' the `readr` import function.
+#' @param na Character string defining the values to be treated as `NA`.
+#' @param comment Character string defining the value to mark comments.
+#' @param skip Number of rows to be skipped before reading the data.
+#' @param ... Additional arguments to be passed to the `readr` function
+#' 
+#' @return A list of 2 levels fun (the import function) and params (a list 
+#' of arguments to be used when calling fun).
+#' 
+#' @keywords internal
+#' @export
 read_args <- function(x, quiet, col_types = readr::cols(.default = 'd'), 
                       na = 'NA', comment = 'TABLE', skip = 1, ...) {
   
@@ -231,13 +269,34 @@ read_args <- function(x, quiet, col_types = readr::cols(.default = 'd'),
                                    col_types = col_types, ...)))
 }
 
-combine_tables <- function(x, quiet) {
+
+#' Combine tables
+#' 
+#' @param x A list containing the tables (`x$data`) to be 
+#' combined, their names (`x$name`), their number of rows (`x$nrow`) 
+#' and their respective index (`x$index`).
+#' 
+#' @return A list containing `data` and `index` of the combined table.
+#' 
+#' @keywords internal
+#' @export
+combine_tables <- function(x) {
+  # Check for matching length
   if (length(unique(x$nrow)) > 1) {
-    warning(c('Dropped: ', stringr::str_c(x$name, collapse = ', '), 
+    warning(c('Dropped ', stringr::str_c('`', x$name, '`', collapse = ', '), 
               ' due to missmatch in row number.'), call. = FALSE)
     return(dplyr::tibble(data = list(), index = list()))
     
   }
+  
+  # Check for ID column
+  if (!any(purrr::map_lgl(x$index, ~any(.$type == 'id')))) {
+    warning(c('Dropped ', stringr::str_c('`', x$name, '`', collapse = ', '), 
+              ' due to missing required `ID` column.'), call. = FALSE)
+    return(dplyr::tibble(data = list(), index = list()))
+  }
+  
+  # Combine tables
   dplyr::tibble(data = x$data %>%
                   dplyr::bind_cols() %>%
                   purrr::set_names(make.unique(names(.))) %>%
@@ -246,6 +305,18 @@ combine_tables <- function(x, quiet) {
                 index = list(dplyr::bind_rows(x$index)))
 }
 
+
+#' Merge firstonly table with full length tables
+#' 
+#' @param x A list containing the tables (`x$data`) to be 
+#' merged, the firstonly flag (`x$firstonly`) and the 
+#' indexes (`x$index`).
+#' @param quiet Should messages be displayed to the console.
+#' 
+#' @return A list containing `data` and `index` of the merged table.
+#' 
+#' @keywords internal
+#' @export
 merge_firstonly <- function(x, quiet) {
   if (nrow(x) == 1) {
     # No merge needed
@@ -268,6 +339,16 @@ merge_firstonly <- function(x, quiet) {
                   list())
 }
 
+
+#' Index table columns
+#' 
+#' @param x A list containing the tables (`x$data`) to be 
+#' combined along with their respective names (`x$name`).
+#' 
+#' @return A tibble of the index.
+#' 
+#' @keywords internal
+#' @export
 index_table <- function(x) {
   tab_type <- dplyr::case_when(
     stringr::str_detect(x$name, 'patab') ~ 'param',   # model parameters
@@ -280,8 +361,8 @@ index_table <- function(x) {
     dplyr::tibble(table = x$name,
                   col   = ., 
                   type  = NA_character_, 
-                  label = NA_character_,     # Feature to be added in future release
-                  units = NA_character_) %>% # Feature to be added in future release
+                  label = NA_character_,     # Feature to be added in future releases
+                  units = NA_character_) %>% # Feature to be added in future releases
     dplyr::mutate(type = dplyr::case_when(
       .$col == 'ID' ~ 'id',
       .$col == 'DV' ~ 'dv',
