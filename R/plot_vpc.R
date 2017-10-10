@@ -33,7 +33,6 @@
 #'   \item line: options to \code{geom_line}
 #'   \item area: options to \code{geom_ribbon} (smooth = TRUE) or \code{geom_rect} (smooth = FALSE)
 #'   \item rug: options to \code{geom_rug}
-#'   \item smooth: options to \code{geom_smooth}
 #'   \item text: options to \code{geom_text}
 #'   \item xscale: options to \code{scale_x_continuous} or \code{scale_x_log10}
 #'   \item yscale: options to \code{scale_y_continuous} or \code{scale_y_log10}
