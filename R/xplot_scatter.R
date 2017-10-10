@@ -131,8 +131,7 @@ xplot_scatter <- function(xpdb,
   
   # Add text
   if (stringr::str_detect(type, stringr::fixed('t', ignore_case = TRUE))) {
-    xp <- xp + xp_geoms(mapping  = c(mapping, aes_string(text_label = xp_var(xpdb, attr(data, 'problem'), 
-                                                                             type = 'id')$col)),
+    xp <- xp + xp_geoms(mapping  = c(mapping, aes_string(text_label = group)),
                         xp_theme = xpdb$xp_theme,
                         name     = 'text',
                         ggfun    = 'geom_text',
