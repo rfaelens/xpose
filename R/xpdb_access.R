@@ -337,7 +337,7 @@ get_prm <- function(xpdb,
         dplyr::mutate(name = dplyr::case_when(.$ITERATION == -1000000000 ~ 'value', 
                                               .$ITERATION == -1000000001 ~ 'rse',
                                               TRUE ~ 'fixed')) %>% 
-        dplyr::select(colnames(.)[!colnames(.) %in% c('ITERATION', 'OBJ')]) %>% 
+        dplyr::select(colnames(.)[!stringr::str_detect(colnames(.), 'ITERATION|OBJ')]) %>% 
         {as.data.frame(t(.), stringsAsFactors = FALSE)} %>% 
         {purrr::set_names(x = ., nm = purrr::flatten_chr(.[nrow(.),]))} %>% 
         dplyr::mutate(name  = row.names(.)) %>% 
