@@ -113,11 +113,28 @@ only_distinct <- function(xpdb, problem, facets, quiet) {
 #' @keywords internal
 #' @export
 reorder_factors <- function(prefix, suffix = NULL) {
-  function(x) {
-    x %>% 
-      dplyr::mutate(variable = as.numeric(gsub('\\D', '', .$variable))) %>% 
-      dplyr::mutate(variable = factor(.$variable, levels = sort(unique(.$variable)),
-                                      labels = stringr::str_c(prefix, sort(unique(.$variable)), suffix)))
+  if (!is.na(prefix)) {
+    # Sort and reformat factors
+    function(x) {
+      x %>% 
+        dplyr::mutate(variable = as.numeric(gsub('\\D', '', .$variable))) %>% 
+        dplyr::mutate(variable = factor(.$variable, levels = sort(unique(.$variable)),
+                                        labels = stringr::str_c(prefix, sort(unique(.$variable)), suffix)))
+    }
+  } else {
+    # Only sort factors
+    function(x) {
+      levels <- x %>%
+        dplyr::distinct_(.dots = 'variable') %>%
+        dplyr::mutate(variable_order = substring(.$variable, 1, 2)) %>%
+        dplyr::mutate(variable_order = dplyr::case_when(.$variable_order == 'TH' ~ 1,
+                                                        .$variable_order == 'OM' ~ 2,
+                                                        .$variable_order == 'SI' ~ 3,
+                                                        TRUE ~ 0)) %>%
+        dplyr::arrange_(.dots = 'variable_order')
+      
+      dplyr::mutate(.data = x, variable = factor(x$variable, levels = levels$variable))
+    }
   }
 }
 
