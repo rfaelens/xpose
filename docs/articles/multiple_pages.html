@@ -39,7 +39,7 @@
 <li class="divider">
     <li class="dropdown-header">Getting started</li>
     <li>
-      <a href="../articles/cheatsheet.pdf">Cheat sheet</a>
+      <a href="../articles/cheatsheet.pdf">Cheat sheet (pdf)</a>
     </li>
     <li>
       <a href="../articles/introduction.html">Introduction</a>
@@ -107,7 +107,7 @@
       <h1>Plots with multiple pages</h1>
                         <h4 class="author">Benjamin Guiastrennec</h4>
             
-            <h4 class="date">11 October, 2017</h4>
+            <h4 class="date">12 October, 2017</h4>
           </div>
 
     
@@ -139,14 +139,14 @@
 <a href="#setting-the-layout" class="anchor"></a>Setting the layout</h2>
 <p>When the arguments <code>ncol</code> and <code>nrow</code> are set and under the condition that they are more panels to be drawn that can fit on a single page given the selected layout, the multiple page functionality will automatically be enabled.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">facets =</span> <span class="kw">c</span>(<span class="st">'SEX'</span>, <span class="st">'OCC'</span>), <span class="dt">labeller =</span> <span class="st">'label_both'</span>, <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">nrow =</span> <span class="dv">1</span>)</code></pre></div>
-<p><img src="multiple_pages_files/figure-html/unnamed-chunk-2-1.png" width="75%" style="display: block; margin: auto;"></p>
+<p><img src="multiple_pages_files/figure-html/unnamed-chunk-2-1.png" width="75%" style="display: block; margin: auto;"><img src="multiple_pages_files/figure-html/unnamed-chunk-2-2.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="selecting-pages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#selecting-pages" class="anchor"></a>Selecting pages</h2>
-<p>By default only the first page will be shown in order to minimize plotting time. The page(s) to be drawn can be set with the argument <code>page</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">facets =</span> <span class="kw">c</span>(<span class="st">'SEX'</span>, <span class="st">'OCC'</span>), <span class="dt">labeller =</span> <span class="st">'label_both'</span>, <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">nrow =</span> <span class="dv">1</span>, <span class="dt">page =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)</code></pre></div>
-<p><img src="multiple_pages_files/figure-html/unnamed-chunk-3-1.png" width="75%" style="display: block; margin: auto;"><img src="multiple_pages_files/figure-html/unnamed-chunk-3-2.png" width="75%" style="display: block; margin: auto;"></p>
+<p>By default all pages will be shown but this can be time consuming. To select only specific pages to be drawn, use the argument <code>page</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">facets =</span> <span class="kw">c</span>(<span class="st">'SEX'</span>, <span class="st">'OCC'</span>), <span class="dt">labeller =</span> <span class="st">'label_both'</span>, <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">nrow =</span> <span class="dv">1</span>, <span class="dt">page =</span> <span class="dv">1</span>)</code></pre></div>
+<p><img src="multiple_pages_files/figure-html/unnamed-chunk-3-1.png" width="75%" style="display: block; margin: auto;"></p>
 <p>It is also possible to change the page(s) to be drawn from an already existing <code>xpose_plot</code> object via the <code>print()</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create an xpose_plot, by default page = 1</span>
 p1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb, <span class="dt">facets =</span> <span class="kw">c</span>(<span class="st">'SEX'</span>, <span class="st">'OCC'</span>), <span class="dt">labeller =</span> <span class="st">'label_both'</span>, <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">nrow =</span> <span class="dv">1</span>)
@@ -171,10 +171,10 @@ p1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/dv_vs_pr
 <h1 class="hasAnchor">
 <a href="#saving-multiple-pages-plots" class="anchor"></a>Saving multiple pages plots</h1>
 <p>Multiple pages graphs can simply be saved by using the <code><a href="../reference/xpose_save.html">xpose_save()</a></code> function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb_numbered, <span class="dt">facets =</span> <span class="kw">c</span>(<span class="st">'SEX'</span>, <span class="st">'OCC'</span>), <span class="dt">labeller =</span> <span class="st">'label_both'</span>, <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">nrow =</span> <span class="dv">1</span>, <span class="dt">page =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb_numbered, <span class="dt">facets =</span> <span class="kw">c</span>(<span class="st">'SEX'</span>, <span class="st">'OCC'</span>), <span class="dt">labeller =</span> <span class="st">'label_both'</span>, <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">nrow =</span> <span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="kw"><a href="../reference/xpose_save.html">xpose_save</a></span>()</code></pre></div>
 <p>By default plots are saved as <code>pdf</code> which conveniently can store multiple pages within a single document. However other graphical devices (e.g. <code>'png'</code>, <code>'jpg'</code>) can also be used, simply ensure to have a page counter (i.e. <code>'%03d'</code>) added the file name.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb_numbered, <span class="dt">facets =</span> <span class="kw">c</span>(<span class="st">'SEX'</span>, <span class="st">'OCC'</span>), <span class="dt">labeller =</span> <span class="st">'label_both'</span>, <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">nrow =</span> <span class="dv">1</span>, <span class="dt">page =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb_numbered, <span class="dt">facets =</span> <span class="kw">c</span>(<span class="st">'SEX'</span>, <span class="st">'OCC'</span>), <span class="dt">labeller =</span> <span class="st">'label_both'</span>, <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">nrow =</span> <span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="kw"><a href="../reference/xpose_save.html">xpose_save</a></span>(<span class="dt">file =</span> <span class="st">'@run_@plotfun_%03d.png'</span>)</code></pre></div>
 </div>
 </div>
