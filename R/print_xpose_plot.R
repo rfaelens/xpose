@@ -42,15 +42,17 @@ print.xpose_plot <- function(x, page, ...) {
   # Print multiple pages
   if (class(x$facet)[1] %in% c('FacetWrapPaginate', 'FacetGridPaginate')) {
     
-    # Get and check the page number to be drawn
-    if (missing(page)) {
-      page_2_draw <- x$facet$params$page
-    } else {
-      page_2_draw <- page
-    }
-    
     # Get total number of pages
     page_tot <- ggforce::n_pages(repair_facet(x))
+    
+    # Get and check the page number to be drawn
+    if (!missing(page)) {
+      page_2_draw <- page
+    } else if (!is.null(x$facet$params$page)) {
+      page_2_draw <- x$facet$params$page
+    } else {
+      page_2_draw <- 1:page_tot
+    }
     
     if (any(page_2_draw > page_tot)) {
       page_2_draw <- page_2_draw[page_2_draw <= page_tot]
@@ -65,7 +67,7 @@ print.xpose_plot <- function(x, page, ...) {
     n_page_2_draw <- length(page_2_draw)
     
     if (interactive() && !x$xpose$quiet) {
-      message('Printing ', n_page_2_draw, ' selected page(s) out of ', page_tot, '.')
+      message('Rendering ', n_page_2_draw, ' selected page(s) out of ', page_tot, '.')
     }
     
     if (n_page_2_draw == 1) {
