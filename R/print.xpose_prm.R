@@ -32,7 +32,7 @@ standard deviation scale (SE/variance estimate)/2.\n')
                                 value = 'Value', rse = 'RSE', fixed = '   ')
     
     cat('\nEstimates for $prob no.', prm_attr$problem, 
-        ' subprob no.', prm_attr$subprob, ', method ', prm_attr$method, '\n', sep = '')
+        ', subprob no.', prm_attr$subprob, ', method ', prm_attr$method, '\n', sep = '')
     
     prm %>% 
       dplyr::mutate_all(.funs = 'as.character') %>% 

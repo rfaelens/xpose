@@ -61,6 +61,9 @@
     <li class="divider"></li>
     <li class="dropdown-header">Getting started</li>
     <li>
+      <a href="../articles/cheatsheet.pdf">Cheat sheet (pdf)</a>
+    </li>
+    <li>
       <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
@@ -134,13 +137,13 @@
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Parameter @y vs. @x | @run"</span>,
   <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Method: @method, minimization time: @runtime\nTermination message: @term"</span>,
   <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guide</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>facets</span>, <span class='no'>problem</span>, <span class='no'>subprob</span>,
-  <span class='no'>quiet</span>, <span class='no'>...</span>)
+  <span class='no'>method</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)
 
 <span class='fu'>grd_vs_iteration</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"variable"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"l"</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Gradient @y vs. @x | @run"</span>,
   <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Method: @method, minimization time: @runtime\nTermination message: @term"</span>,
   <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guide</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>facets</span>, <span class='no'>problem</span>, <span class='no'>subprob</span>,
-  <span class='no'>quiet</span>, <span class='no'>...</span>)</pre>
+  <span class='no'>method</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -198,6 +201,10 @@ the last estimation problem.</p></td>
       <th>subprob</th>
       <td><p>The sub-problem number to be used. By default returns 
 the last sub-problem associated with the selected problem.</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>The estimation method to be used, by default returns the last one for each file</p></td>
     </tr>
     <tr>
       <th>quiet</th>
@@ -260,8 +267,8 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>prm_vs_iteration</span>(<span class='no'>xpdb_ex_pk</span>)</div><div class='output co'>#&gt; <span class='message'>Using run001.ext $prob no.1 subprob no.0.</span></div><div class='output co'>#&gt; <span class='message'>Tidying data by ITERATION</span></div><div class='img'><img src='minimization_plots-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
-<span class='fu'>grd_vs_iteration</span>(<span class='no'>xpdb_ex_pk</span>)</div><div class='output co'>#&gt; <span class='message'>Using run001.grd $prob no.1 subprob no.0.</span></div><div class='output co'>#&gt; <span class='message'>Tidying data by ITERATION</span></div><div class='img'><img src='minimization_plots-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>prm_vs_iteration</span>(<span class='no'>xpdb_ex_pk</span>)</div><div class='output co'>#&gt; <span class='message'>Using run001.ext $prob no.1, subprob no.0, method foce.</span></div><div class='output co'>#&gt; <span class='message'>Tidying data by ITERATION</span></div><div class='img'><img src='minimization_plots-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>grd_vs_iteration</span>(<span class='no'>xpdb_ex_pk</span>)</div><div class='output co'>#&gt; <span class='message'>Static parameters not shown.</span></div><div class='output co'>#&gt; <span class='message'>Using run001.grd $prob no.1, subprob no.0, method foce.</span></div><div class='output co'>#&gt; <span class='message'>Tidying data by ITERATION</span></div><div class='img'><img src='minimization_plots-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

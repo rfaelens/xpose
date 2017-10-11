@@ -279,7 +279,7 @@ last_file_method <- function(xpdb, ext, problem, subprob) {
                                   xpdb$files$subprob %in% subprob]
   method_n <- unique(method_n)
   if (length(method_n) == 0) return(NA_integer_)
-  max(method_n)
+  method_n[length(method_n)]
 }
 
 #' Return names of columns having several unique values

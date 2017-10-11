@@ -7,7 +7,7 @@ test_that('get_code checks input properly', {
   expect_error(get_code(), regexp = '"xpdb" is missing')
   
   # Error with bad problem input
-  expect_error(get_code(xpdb_ex_pk, problem = 99), regexp = 'Problem no.99 not found in model code')
+  expect_error(get_code(xpdb_ex_pk, problem = 99), regexp = '\\$prob no.99 not found in model code')
 })
 
 test_that('get_code works properly', {
@@ -31,7 +31,7 @@ test_that('get_data checks input properly', {
   expect_error(get_data(xpdb_ex_pk, table = 'sdtab001', problem = 1), regexp = 'together')
   
   # Error with bad problem input
-  expect_error(get_data(xpdb_ex_pk, problem = 99), regexp = 'Problem no.99 not found')
+  expect_error(get_data(xpdb_ex_pk, problem = 99), regexp = '\\$prob no.99 not found')
   
   # Error with bad table input
   expect_error(get_data(xpdb_ex_pk, table = 'faketab'), regexp = 'faketab not found')
@@ -67,10 +67,10 @@ test_that('get_file checks input properly', {
   expect_error(get_file(xpdb_ex_pk, file = 'fakefile'), regexp = 'fakefile not found')
   
   # Error with bad problem input
-  expect_error(get_file(xpdb_ex_pk, file = 'run001.ext', problem = 99), regexp = 'Problem no.99 not found')
+  expect_error(get_file(xpdb_ex_pk, file = 'run001.ext', problem = 99), regexp = '\\$prob no.99 not found')
   
   # Error with bad sub-problem input
-  expect_error(get_file(xpdb_ex_pk, file = 'run001.ext', subprob = 99), regexp = 'Sub-problem no.99 not found')
+  expect_error(get_file(xpdb_ex_pk, file = 'run001.ext', subprob = 99), regexp = 'Subprob no.99 not found')
 })
 
 test_that('get_file works properly', {
@@ -99,10 +99,10 @@ test_that('get_summary checks input properly', {
   expect_error(get_summary(), regexp = '"xpdb" is missing')
   
   # Error with bad problem input
-  expect_error(get_summary(xpdb_ex_pk, problem = 99), regexp = 'Problem no.99 not found')
+  expect_error(get_summary(xpdb_ex_pk, problem = 99), regexp = '\\$prob no.99 not found')
   
   # Error with bad sub-problem input
-  expect_error(get_summary(xpdb_ex_pk, subprob = 99), regexp = 'Sub-problem no.99 not found')
+  expect_error(get_summary(xpdb_ex_pk, subprob = 99), regexp = 'Subprob no.99 not found')
 })
 
 test_that('get_summary works properly', {

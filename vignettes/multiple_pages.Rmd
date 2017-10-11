@@ -51,10 +51,10 @@ dv_vs_ipred(xpdb, facets = c('SEX', 'OCC'), labeller = 'label_both', ncol = 2, n
 
 
 ## Selecting pages
-By default only the first page will be shown in order to minimize plotting time. The page(s) to be drawn can be set with the argument `page`.
+By default all pages will be shown but this can be time consuming. To select only specific pages to be drawn, use the argument `page`.
 
 ```{r, messages = TRUE}
-dv_vs_ipred(xpdb, facets = c('SEX', 'OCC'), labeller = 'label_both', ncol = 2, nrow = 1, page = 1:2)
+dv_vs_ipred(xpdb, facets = c('SEX', 'OCC'), labeller = 'label_both', ncol = 2, nrow = 1, page = 1)
 ```
 
 It is also possible to change the page(s) to be drawn from an already existing `xpose_plot` object via the `print()` function. 
@@ -85,13 +85,13 @@ dv_vs_ipred(xpdb_numbered, facets = c('SEX', 'OCC'), labeller = 'label_both', nc
 Multiple pages graphs can simply be saved by using the `xpose_save()` function. 
 
 ```{r, eval = FALSE}
-dv_vs_ipred(xpdb_numbered, facets = c('SEX', 'OCC'), labeller = 'label_both', ncol = 2, nrow = 1, page = 1:2) %>% 
+dv_vs_ipred(xpdb_numbered, facets = c('SEX', 'OCC'), labeller = 'label_both', ncol = 2, nrow = 1) %>% 
 xpose_save()
 ```
 
 By default plots are saved as `pdf` which conveniently can store multiple pages within a single document. However other graphical devices (e.g. `'png'`, `'jpg'`) can also be used, simply ensure to have a page counter (i.e. `'%03d'`) added the file name.
 
 ```{r, eval = FALSE}
-dv_vs_ipred(xpdb_numbered, facets = c('SEX', 'OCC'), labeller = 'label_both', ncol = 2, nrow = 1, page = 1:2) %>% 
+dv_vs_ipred(xpdb_numbered, facets = c('SEX', 'OCC'), labeller = 'label_both', ncol = 2, nrow = 1) %>% 
 xpose_save(file = '@run_@plotfun_%03d.png')
 ```

@@ -10,13 +10,13 @@ prm_vs_iteration(xpdb, mapping = NULL, group = "variable", type = "l",
   title = "Parameter @y vs. @x | @run",
   subtitle = "Method: @method, minimization time: @runtime\\nTermination message: @term",
   caption = "@dir", log = NULL, guide = FALSE, facets, problem, subprob,
-  quiet, ...)
+  method, quiet, ...)
 
 grd_vs_iteration(xpdb, mapping = NULL, group = "variable", type = "l",
   title = "Gradient @y vs. @x | @run",
   subtitle = "Method: @method, minimization time: @runtime\\nTermination message: @term",
   caption = "@dir", log = NULL, guide = FALSE, facets, problem, subprob,
-  quiet, ...)
+  method, quiet, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -48,6 +48,8 @@ the last estimation problem.}
 
 \item{subprob}{The sub-problem number to be used. By default returns 
 the last sub-problem associated with the selected problem.}
+
+\item{method}{The estimation method to be used, by default returns the last one for each file}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 

@@ -6,8 +6,8 @@
 #' @param mapping List of aesthetics mappings to be used for the xpose plot 
 #' (e.g. \code{point_color}).
 #' @param group Grouping variable to be used for lines.
-#' @param type String setting the type of plot to be used. Can be points 'p',
-#' line 'l', smooth 's' and text 't' or any combination of the four.
+#' @param type String setting the type of plot to be used. Can be line 'l', 
+#' point 'p', smooth 's' and text 't' or any combination of the four.
 #' @param guide Should the guide (e.g. unity line) be displayed.
 #' @param xscale Scale type for x axis (e.g. 'continuous', 'discrete', 'log10').
 #' @param yscale Scale type for y axis (e.g. 'continuous', 'discrete', 'log10').
@@ -92,17 +92,17 @@ xplot_scatter <- function(xpdb,
   
   # Fetch data
   if (missing(opt)) opt <- data_opt()
-  data <- fetch_data(xpdb, quiet = quiet, problem = opt$problem, subprob = opt$subprob, 
-                     source = opt$source, simtab = opt$simtab, filter = opt$filter, 
-                     tidy = opt$tidy, index_col = opt$index_col, value_col = opt$value_col,
-                     post_processing = opt$post_processing)
+  data <- fetch_data(xpdb, quiet = quiet, problem = opt$problem, subprob = opt$subprob,
+                     method = opt$method, source = opt$source, simtab = opt$simtab, 
+                     filter = opt$filter, tidy = opt$tidy, index_col = opt$index_col, 
+                     value_col = opt$value_col, post_processing = opt$post_processing)
   if (is.null(data) || nrow(data) == 0) {
     stop('No data available for plotting. Please check the variable mapping and filering options.', 
          call. = FALSE)
   }
   
   # Check type
-  check_plot_type(type, allowed = c('p', 'l', 's', 't'))
+  check_plot_type(type, allowed = c('l', 'p', 's', 't'))
   
   # Assing xp_theme and gg_theme
   if (!missing(xp_theme)) xpdb <- update_themes(xpdb = xpdb, xp_theme = xp_theme)
@@ -131,8 +131,7 @@ xplot_scatter <- function(xpdb,
   
   # Add text
   if (stringr::str_detect(type, stringr::fixed('t', ignore_case = TRUE))) {
-    xp <- xp + xp_geoms(mapping  = c(mapping, aes_string(text_label = xp_var(xpdb, attr(data, 'problem'), 
-                                                                             type = 'id')$col)),
+    xp <- xp + xp_geoms(mapping  = c(mapping, aes_string(text_label = group)),
                         xp_theme = xpdb$xp_theme,
                         name     = 'text',
                         ggfun    = 'geom_text',
@@ -182,6 +181,8 @@ xplot_scatter <- function(xpdb,
   xp$xpose <- list(fun      = plot_name,
                    summary  = xpdb$summary,
                    problem  = attr(data, 'problem'),
+                   subprob  = attr(data, 'subprob'),
+                   method   = attr(data, 'method'),
                    quiet    = quiet,
                    xp_theme = xpdb$xp_theme[stringr::str_c(c('title', 'subtitle', 'caption'), '_suffix')])
   
