@@ -47,7 +47,7 @@ theme_xp_default <- function() {
     
     # Guide
     guide_alpha     = 1,
-    guide_color     = 'tomato',
+    guide_color     = 'grey70',
     guide_linetype  = 'solid',
     guide_size      = 0.8,
     
