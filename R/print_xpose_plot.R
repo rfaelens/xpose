@@ -63,6 +63,9 @@ print.xpose_plot <- function(x, page, ...) {
               call. = FALSE)
     }
     
+    # Prevent issue with facet_repair when page = NULL
+    x$facet$params$page <- page_2_draw
+    
     # Begin multiple page ploting
     n_page_2_draw <- length(page_2_draw)
     
