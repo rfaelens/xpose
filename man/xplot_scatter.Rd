@@ -17,8 +17,8 @@ xplot_scatter(xpdb, mapping = NULL, group = "ID", type = "pls",
 
 \item{group}{Grouping variable to be used for lines.}
 
-\item{type}{String setting the type of plot to be used. Can be points 'p',
-line 'l', smooth 's' and text 't' or any combination of the four.}
+\item{type}{String setting the type of plot to be used. Can be line 'l', 
+point 'p', smooth 's' and text 't' or any combination of the four.}
 
 \item{guide}{Should the guide (e.g. unity line) be displayed.}
 

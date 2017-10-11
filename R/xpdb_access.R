@@ -19,7 +19,7 @@ get_code <- function(xpdb, problem = NULL) {
   
   if (!is.null(problem)) {
     if (!all(problem %in% x$problem)) {
-      stop('Problem no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
+      stop('$prob no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
            ' not found in model code.', call. = FALSE)
     }
     x <- x[x$problem %in% problem, ]
@@ -79,7 +79,7 @@ get_data <- function(xpdb,
   if (!is.null(problem)) {
     # When selecting tables based on problem level
     if (!all(problem %in% x$problem)) {
-      stop('Problem no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
+      stop('$prob no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
            ' not found in model output data.', call. = FALSE)
     }
     x <- x$data[x$problem %in% problem]
@@ -183,7 +183,7 @@ get_file <- function(xpdb,
   if (is.null(problem)) {
     problem <- last_file_problem(xpdb, ext = x$extension)
   } else if (!all(problem %in% x$problem)) {
-    stop('Problem no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
+    stop('$prob no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
          ' not found in ', stringr::str_c(unique(x$name), collapse = ', '), ' files.', call. = FALSE)
   }
   x <- x[x$problem %in% problem, ]
@@ -192,7 +192,7 @@ get_file <- function(xpdb,
   if (is.null(subprob)) {
     subprob <- last_file_subprob(xpdb, ext = x$extension, problem = problem)
   } else if (!all(subprob %in% x$subprob)) {
-    stop('Sub-problem no.', stringr::str_c(subprob[!subprob %in% x$subprob], collapse = ', '), 
+    stop('Subprob no.', stringr::str_c(subprob[!subprob %in% x$subprob], collapse = ', '), 
          ' not found in ', stringr::str_c(unique(x$name), collapse = ', '), ' files.', call. = FALSE)
   }
   x <- x[x$subprob %in% subprob, ]
@@ -215,8 +215,8 @@ get_file <- function(xpdb,
                                       x$method)) %>% 
       return()
   } else {
-    msg(c('Returning data from problem no.', x$problem , 
-          ' sub-problem no.', x$subprob, ' ', x$method), quiet)
+    msg(c('Returning data from ', x$name, ', $prob no.', x$problem , 
+          ', subprob no.', x$subprob, ', method ', x$method), quiet)
     return(x$data[[1]])
   }
 }
@@ -246,7 +246,7 @@ get_summary <- function(xpdb, problem = NULL, subprob = NULL, only_last = FALSE)
   # Filter by $problem
   if (!is.null(problem)) {
     if (!all(problem %in% x$problem)) {
-      stop('Problem no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
+      stop('$prob no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
            ' not found in model summary.', call. = FALSE)
     }
     x <- x[x$problem %in% problem, ]
@@ -255,7 +255,7 @@ get_summary <- function(xpdb, problem = NULL, subprob = NULL, only_last = FALSE)
   # Filter by sub-problem
   if (!is.null(subprob)) {
     if (!all(subprob %in% x$subprob)) {
-      stop('Sub-problem no.', stringr::str_c(subprob[!subprob %in% x$subprob], collapse = ', '), 
+      stop('Subprob no.', stringr::str_c(subprob[!subprob %in% x$subprob], collapse = ', '), 
            ' not found in model summary.', call. = FALSE)
     }
     x <- x[x$subprob %in% subprob, ]

@@ -4,7 +4,7 @@
 \alias{data_opt}
 \title{Create options for data import}
 \usage{
-data_opt(problem = NULL, subprob = NULL, source = "data",
+data_opt(problem = NULL, subprob = NULL, method = NULL, source = "data",
   simtab = FALSE, filter = NULL, tidy = FALSE, index_col = NULL,
   value_col = NULL, post_processing = NULL)
 }
@@ -12,6 +12,8 @@ data_opt(problem = NULL, subprob = NULL, source = "data",
 \item{problem}{The problem to be used, by default returns the last one.}
 
 \item{subprob}{The subproblem to be used, by default returns the last one.}
+
+\item{method}{The estimation method to be used, by default returns the last one.}
 
 \item{source}{Define the location of the data in the xpdb. Should be either 'data' 
 to use the output tables or the name of an output file attached to the xpdb.}
