@@ -7,8 +7,9 @@ the independent variable for every individual}
 \usage{
 ind_plots(xpdb, mapping = NULL, group = "variable", type = "lp",
   title = "Individual plots | @run",
-  subtitle = "Ofv: @ofv, Eps shrink: @epsshk", caption = "@dir",
-  log = NULL, facets, problem, quiet, ...)
+  subtitle = "Ofv: @ofv, Eps shrink: @epsshk",
+  caption = "@dir | Page @page of @lastpage", log = NULL, facets, problem,
+  quiet, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
