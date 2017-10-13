@@ -36,7 +36,7 @@ summary.xpose_data <- function(object, problem = NULL, ...) {
     dplyr::group_by_(.dots = 'grouping') %>% 
     tidyr::nest() %>% 
     {purrr::map(.$data, function(x) {
-      x <- dplyr::filter(.data = x, !stringr::str_detect(x$descr, 'Problem number|Run number'))
+      x <- dplyr::filter(.data = x, !stringr::str_detect(x$descr, 'Problem number'))
       if (x$problem[1] == 0) {
         lab <- '[Global information]'
       } else {
