@@ -59,6 +59,10 @@ vpc_data <- function(xpdb,
     }
   } else {
     # When using PsN
+    psn_folder <- parse_title(string = psn_folder, xpdb = xpdb,
+                              problem = default_plot_problem(xpdb), 
+                              quiet = xpdb$options$quiet)
+    
     if (!dir.exists(psn_folder)) {
       stop('The `psn_folder`:', psn_folder, ' could not be found.', call. = FALSE)
     }
