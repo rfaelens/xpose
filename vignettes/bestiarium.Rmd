@@ -22,85 +22,77 @@ knitr::opts_chunk$set(fig.dpi = 96,
                       
 ```
 
-## Create example xpdb
-```{r}
-xpdb <- xpdb_ex_pk %>% 
-filter(OCC == 3, .problem = 1) # Only look at occasion 3
-```
-
-
 ## Basic goodness-of-fit plots
 ### Plots of the independent variable (IDV)
 ```{r}
-dv_vs_idv(xpdb)
-ipred_vs_idv(xpdb)
-pred_vs_idv(xpdb)
-dv_preds_vs_idv(xpdb)
+dv_vs_idv(xpdb_ex_pk)
+ipred_vs_idv(xpdb_ex_pk)
+pred_vs_idv(xpdb_ex_pk)
+dv_preds_vs_idv(xpdb_ex_pk)
 ```
 
 ### DV vs. PREDs plots
 ```{r}
-dv_vs_pred(xpdb)
-dv_vs_ipred(xpdb)
+dv_vs_pred(xpdb_ex_pk)
+dv_vs_ipred(xpdb_ex_pk)
 ```
 
 ### Residual plots
 ```{r}
-res_vs_idv(xpdb, res = 'CWRES')
-res_vs_pred(xpdb, res = 'CWRES')
-absval_res_vs_idv(xpdb, res = 'CWRES')
-absval_res_vs_pred(xpdb, res = 'CWRES')
+res_vs_idv(xpdb_ex_pk, res = 'CWRES')
+res_vs_pred(xpdb_ex_pk, res = 'CWRES')
+absval_res_vs_idv(xpdb_ex_pk, res = 'CWRES')
+absval_res_vs_pred(xpdb_ex_pk, res = 'CWRES')
 ```
 
 ## Minimization plots
 ```{r}
-prm_vs_iteration(xpdb)
-grd_vs_iteration(xpdb)
+prm_vs_iteration(xpdb_ex_pk)
+grd_vs_iteration(xpdb_ex_pk)
 ```
 
 ## Individual plots
 ```{r}
-ind_plots(xpdb, page = 1)
+ind_plots(xpdb_ex_pk, page = 1)
 ```
 
 ## Distributions
 ### Histograms and density plots
 ```{r}
-prm_distrib(xpdb)
-eta_distrib(xpdb)
-res_distrib(xpdb)
-cov_distrib(xpdb)
+prm_distrib(xpdb_ex_pk)
+eta_distrib(xpdb_ex_pk)
+res_distrib(xpdb_ex_pk)
+cov_distrib(xpdb_ex_pk)
 ```
 
 ### QQ plots
 ```{r}
-prm_qq(xpdb)
-eta_qq(xpdb)
-res_qq(xpdb)
-cov_qq(xpdb)
+prm_qq(xpdb_ex_pk)
+eta_qq(xpdb_ex_pk)
+res_qq(xpdb_ex_pk)
+cov_qq(xpdb_ex_pk)
 ```
 
 ## Kinetic plots
 ### Compartment's amount
 ```{r}
-amt_vs_idv(xpdb)
+amt_vs_idv(xpdb_ex_pk)
 ```
 
 ## Visual predictive checks (VPC)
 ### Continuous vpc
 ```{r}
 xpdb_ex_pk %>% 
- vpc_data() %>% 
+ vpc_data(opt = vpc_opt(n_bins = 7)) %>% 
  vpc()
 ```
 
 ### Censored vpc
 ```{r}
 xpdb_ex_pk %>% 
- vpc_data(vpc_type = 'censored', opt = vpc_opt(lloq = 1)) %>% 
+ vpc_data(vpc_type = 'censored', opt = vpc_opt(lloq = 1, n_bins = 7)) %>% 
  vpc()
 ```
-
 
 ### Categorical vpc
 ```{r, eval=FALSE}
@@ -108,5 +100,3 @@ xpdb_ex_pk %>%
  vpc_data(vpc_type = 'categorical') %>% 
  vpc()
 ```
-
-
