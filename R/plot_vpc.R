@@ -47,7 +47,7 @@
 #' @seealso \code{vpc_data}
 #' @examples
 #' xpdb_ex_pk %>% 
-#'  vpc_data() %>% 
+#'  vpc_data(opt = vpc_opt(n_bins = 7)) %>% 
 #'  vpc()
 #' @export
 vpc <- function(xpdb,
@@ -55,7 +55,7 @@ vpc <- function(xpdb,
                 type     = 'alr',
                 smooth   = TRUE,
                 title    = 'Visual predictive checks | @run',
-                subtitle = NULL,
+                subtitle = 'Number of simulations: @vpcnsim, confidence interval: @vpcci%',
                 caption  = '@vpcdir',
                 log      = NULL,
                 guide    = TRUE,
@@ -83,11 +83,13 @@ vpc <- function(xpdb,
         stop(c('No data are available for ', vpc_type, ' VPC. Change `vpc_type` to one of: ', 
                stringr::str_c(xpdb$special[xpdb$special$method == 'vpc', ]$type, collapse = ', '), '.'), call. = FALSE)
       }
-      vpc_dat  <- xpdb$special[xpdb$special$method == 'vpc' & xpdb$special$type == vpc_type, ]$data[[1]]
+      vpc_dat  <- xpdb$special[xpdb$special$method == 'vpc' & xpdb$special$type == vpc_type, ]
     }
   } else {
-    vpc_dat <- xpdb$special[xpdb$special$method == 'vpc', ]$data[[1]]
+    vpc_dat <- xpdb$special[xpdb$special$method == 'vpc', ]
   }
+  vpc_prob <- vpc_dat$problem 
+  vpc_dat  <- vpc_dat$data[[1]]
   
   # Check that all faceting variable are present vpc_dat
   if (missing(facets)) facets <- vpc_dat$facets
@@ -251,13 +253,16 @@ vpc <- function(xpdb,
     scale_linetype_manual(values = line_linetype)
   
   # Add metadata to plots
-  xp$xpose <- dplyr::data_frame(problem = 0L, subprob = 0L, 
-                                descr = 'VPC directory', label = 'vpcdir',
-                                value = vpc_dat$vpc_dir) %>% 
+  xp$xpose <- dplyr::data_frame(problem = vpc_prob, subprob = 0L, 
+                                descr = c('VPC directory', 'Number of simulations for VPC', 
+                                          'VPC confidence interval', 'VPC prediction interval'),
+                                label = c('vpcdir', 'vpcnsim', 'vpcci', 'vpcpi'),
+                                value = c(vpc_dat$vpc_dir, vpc_dat$nsim, 
+                                          100*diff(vpc_dat$opt$ci), 100*diff(vpc_dat$opt$pi))) %>% 
     dplyr::bind_rows(xpdb$summary) %>% 
     {list(fun = stringr::str_c('vpc_', vpc_dat$type),
           summary  = .,
-          problem  = dplyr::if_else(is.null(vpc_dat$psn_folder), 0L, vpc_dat$sim_problem),
+          problem  = vpc_prob,
           quiet    = quiet,
           xp_theme = xpdb$xp_theme[stringr::str_c(c('title', 'subtitle', 'caption'), '_suffix')])}
   

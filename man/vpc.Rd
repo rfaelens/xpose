@@ -5,7 +5,8 @@
 \title{Visual predictive checks}
 \usage{
 vpc(xpdb, mapping = NULL, type = "alr", smooth = TRUE,
-  title = "Visual predictive checks | @run", subtitle = NULL,
+  title = "Visual predictive checks | @run",
+  subtitle = "Number of simulations: @vpcnsim, confidence interval: @vpcci\%",
   caption = "@vpcdir", log = NULL, guide = TRUE, vpc_type = NULL,
   gg_theme, xp_theme, facets, quiet, area_fill = c("steelblue3", "grey60",
   "steelblue3"), line_linetype = c("93", "solid", "93"), ...)
@@ -125,7 +126,7 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 
 \examples{
 xpdb_ex_pk \%>\% 
- vpc_data() \%>\% 
+ vpc_data(opt = vpc_opt(n_bins = 7)) \%>\% 
  vpc()
 }
 \seealso{
