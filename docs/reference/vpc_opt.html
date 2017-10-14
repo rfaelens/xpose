@@ -134,8 +134,8 @@
     
 
     <pre class="usage"><span class='fu'>vpc_opt</span>(<span class='kw'>bins</span> <span class='kw'>=</span> <span class='st'>"jenks"</span>, <span class='kw'>n_bins</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>bin_mid</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
-  <span class='kw'>pred_corr</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pred_corr_lower_bnd</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>pi</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.05</span>, <span class='fl'>0.95</span>),
-  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.05</span>, <span class='fl'>0.95</span>), <span class='kw'>lloq</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>uloq</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rtte</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>pred_corr</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pred_corr_lower_bnd</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>pi</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.025</span>, <span class='fl'>0.975</span>),
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.025</span>, <span class='fl'>0.975</span>), <span class='kw'>lloq</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>uloq</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rtte</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>rtte_calc_diff</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>events</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>kmmc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>reverse_prob</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>as_percentage</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
@@ -228,16 +228,16 @@ for a KMMC plot (e.g. 'WT').</p></td>
 #&gt; [1] "mean"
 #&gt; 
 #&gt; $pred_corr
-#&gt; NULL
+#&gt; [1] FALSE
 #&gt; 
 #&gt; $pred_corr_lower_bnd
 #&gt; [1] 0
 #&gt; 
 #&gt; $pi
-#&gt; [1] 0.05 0.95
+#&gt; [1] 0.025 0.975
 #&gt; 
 #&gt; $ci
-#&gt; [1] 0.05 0.95
+#&gt; [1] 0.025 0.975
 #&gt; 
 #&gt; $lloq
 #&gt; NULL
@@ -262,6 +262,9 @@ for a KMMC plot (e.g. 'WT').</p></td>
 #&gt; 
 #&gt; $as_percentage
 #&gt; [1] TRUE
+#&gt; 
+#&gt; $usr_call
+#&gt; NULL
 #&gt; </div><div class='input'>
 </div></pre>
   </div>
