@@ -131,7 +131,7 @@ psn_vpc_parser <- function(xpdb, psn_folder, psn_bins, opt, quiet) {
   if (file.exists(file_path(psn_folder, 'vpc_bins.txt')) && !any(opt$usr_call == 'bins') && psn_bins) {
     psn_bins <- readr::read_lines(file = file_path(psn_folder, 'vpc_bins.txt')) %>% 
       .[nchar(.) > 0] %>% 
-      tail(n = 1) %>% 
+      utils::tail(n = 1) %>% 
       stringr::str_replace('^.+=', '') %>% 
       {stringr::str_split(., ':')[[1]]} %>% 
       {stringr::str_split(., ',')} %>% 
