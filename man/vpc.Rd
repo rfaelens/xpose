@@ -6,8 +6,9 @@
 \usage{
 vpc(xpdb, mapping = NULL, type = "alr", smooth = TRUE,
   title = "Visual predictive checks | @run", subtitle = NULL,
-  caption = "@dir", log = NULL, vpc_type = NULL, gg_theme, xp_theme,
-  facets, quiet, ...)
+  caption = "@vpcdir", log = NULL, guide = TRUE, vpc_type = NULL,
+  gg_theme, xp_theme, facets, quiet, area_fill = c("steelblue3", "grey60",
+  "steelblue3"), line_linetype = c("93", "solid", "93"), ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -29,6 +30,8 @@ line 'l', area 'a', rug 'r' and text 't' or any combination of the five.}
 \item{log}{String assigning logarithmic scale to axes, can be either '', 
 'x', y' or 'xy'.}
 
+\item{guide}{Enable guide display (e.g. lloq and uloq lines).}
+
 \item{vpc_type}{Only used when multiple vpc data are present in the same xpdb. The type of 
 vpc to be created. Can be one of can be one of: 'continuous', 'categorical', 
 'censored' or 'time-to-event'.}
@@ -42,6 +45,10 @@ vpc to be created. Can be one of can be one of: 'continuous', 'categorical',
 or a formula to use \link[ggplot2]{facet_grid}.}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
+
+\item{area_fill}{Shadded area filling color, should be a vector of 3 values (i.e. low, med, high).}
+
+\item{line_linetype}{Lines linetype, should be a vector of 3 values (i.e. low, med, high).}
 
 \item{...}{any additional aesthetics.}
 }
@@ -59,6 +66,7 @@ any option supported by this layer e.g. point_color = 'blue', area_fill = 'green
   \item area: options to \code{geom_ribbon} (smooth = TRUE) or \code{geom_rect} (smooth = FALSE)
   \item rug: options to \code{geom_rug}
   \item text: options to \code{geom_text}
+  \item guide: options to \code{geom_hline}
   \item xscale: options to \code{scale_x_continuous} or \code{scale_x_log10}
   \item yscale: options to \code{scale_y_continuous} or \code{scale_y_log10}
 }
