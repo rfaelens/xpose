@@ -163,6 +163,7 @@ vpc <- function(xpdb,
   
   # Add points
   if (stringr::str_detect(type, stringr::fixed('p', ignore_case = TRUE))) {
+    if (vpc_dat$type == 'continuous') {
     xp <- xp + xp_geoms(mapping    = aes_c(aes_string(point_x = 'idv',
                                                       point_y = 'dv'), mapping),
                         xp_theme   = xpdb$xp_theme,
@@ -170,10 +171,14 @@ vpc <- function(xpdb,
                         ggfun      = 'geom_point',
                         point_data = vpc_dat$obs,
                         ...)
+    } else {
+      warning('Points (type = \'p\') can only be added with continuous VPC.', call. = FALSE)
+    }
   }
   
   # Add text
   if (stringr::str_detect(type, stringr::fixed('t', ignore_case = TRUE))) {
+    if (vpc_dat$type == 'continuous') {
     xp <- xp + xp_geoms(mapping   = aes_c(aes_string(text_x = 'idv',
                                                      text_y = 'dv',
                                                      text_label = 'id'), mapping),
@@ -182,6 +187,9 @@ vpc <- function(xpdb,
                         ggfun     = 'geom_text',
                         text_data = vpc_dat$obs,
                         ...)
+  } else { 
+    warning('Text (type = \'t\') can only be added with continuous VPC.', call. = FALSE)
+  }
   }
   
   # Add guides
