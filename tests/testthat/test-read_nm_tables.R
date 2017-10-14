@@ -2,7 +2,8 @@ context('Check read_nm_tables')
 
 # Define files to be tested -----------------------------------------------
 
-test_tab <- read_nm_tables(file = 'sdtab001', dir = 'data', quiet = TRUE)
+test_tab <- read_nm_tables(file = 'sdtab001', dir = 'data', quiet = TRUE) %>% 
+  dplyr::filter(.$OCC == 3)
 ctrl_tab <- get_data(xpdb_ex_pk, table = 'sdtab001')
 
 test_file <- c('TABLE NO.  4',
@@ -62,7 +63,7 @@ test_that('returns a tibble when user mode is used', {
 
 test_that('tables with firstonly are properly handled', {
   expect_message(tmp_table <- read_nm_tables(firstonly_test, quiet = FALSE), regexp = 'Consolidating|Joining')
-  expect_equal(tmp_table$data[[1]], 
+  expect_equal(tmp_table$data[[1]] %>% dplyr::filter(.$OCC == 3), 
                xpdb_ex_pk$data$data[[1]][, unlist(xpdb_ex_pk$data$index[[1]][xpdb_ex_pk$data$index[[1]]$table %in% c('sdtab001', 'patab001'),]$col) ])
 })
 
