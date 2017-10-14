@@ -5,10 +5,10 @@
 #' @param xpdb An xpose database object.
 #' @param opt A list of options regarding binning, pi and ci computation. 
 #' For more information see \code{\link{vpc_opt}}.
-#' @param vpc_type A string specifying the type of VPC to be created, can be one of: 
-#' 'continuous', 'categorical', 'censored' or 'time-to-event'.
 #' @param stratify Either a character string or a formula to stratify the data. For 'categorical' vpcs the 
 #' stratification fixed to the different categories.
+#' @param vpc_type A string specifying the type of VPC to be created, can be one of: 
+#' 'continuous', 'categorical', 'censored' or 'time-to-event'.
 #' @param psn_folder Specify a PsN-generated VPC-folder.
 #' @param obs_problem Alternative to the option `psn_folder`. The $problem number to 
 #' be used for observations. By default returns the last estimation problem.
@@ -26,9 +26,9 @@
 #' }
 #' @export
 vpc_data <- function(xpdb,
-                     opt         = NULL,
+                     opt,
+                     stratify,
                      vpc_type    = c('continuous', 'categorical', 'censored', 'time-to-event'),
-                     stratify    = NULL,
                      psn_folder  = NULL,
                      obs_problem = NULL,
                      sim_problem = NULL,
@@ -36,16 +36,15 @@ vpc_data <- function(xpdb,
   # Check input
   check_xpdb(xpdb, check = ifelse(is.null(psn_folder), 'data', FALSE))
   if (missing(quiet)) quiet <- xpdb$options$quiet
-  
-  # Set vpc_data options
-  if (is.null(opt)) opt <- vpc_opt()
+  if (missing(opt)) opt <- vpc_opt()
   
   # Get raw data
+  msg('1. Gathering data & settings', quiet)
   if (is.null(psn_folder)) {
     # When using xpdb tables
     if (is.null(obs_problem)) obs_problem <- last_data_problem(xpdb, simtab = FALSE)
     if (is.null(sim_problem)) sim_problem <- last_data_problem(xpdb, simtab = TRUE)
-    msg(c('Using xpdb simulation problem ', ifelse(is.na(sim_problem), '<na>', sim_problem), 
+    msg(c(' - Using xpdb simulation problem ', ifelse(is.na(sim_problem), '<na>', sim_problem), 
           ' and observation problem ', ifelse(is.na(obs_problem), '<na>', obs_problem), '.'), quiet)
     obs_data <- get_data(xpdb, problem = obs_problem) 
     sim_data <- get_data(xpdb, problem = sim_problem)
@@ -59,74 +58,47 @@ vpc_data <- function(xpdb,
     }
   } else {
     # When using PsN
-    psn_folder <- parse_title(string = psn_folder, xpdb = xpdb,
-                              problem = default_plot_problem(xpdb), 
-                              quiet = xpdb$options$quiet)
-    
-    if (!dir.exists(psn_folder)) {
-      stop('The `psn_folder`:', psn_folder, ' could not be found.', call. = FALSE)
-    }
-    msg('Importing PsN generated data', quiet)
-    
-    if (!dir.exists(file_path(psn_folder, 'm1')) &
-        file.exists(file_path(psn_folder, 'm1.zip'))) {
-      msg('Unziping PsN m1 folder', quiet)
-      utils::unzip(zipfile = file_path(psn_folder, 'm1.zip'), 
-                   exdir   = file_path(psn_folder, ''))
-      unzip <- TRUE
-    } else {
-      unzip <- FALSE 
-    }
-    obs_data <- read_nm_tables(file = dir(file_path(psn_folder, 'm1'), pattern = 'original.npctab')[1],
-                               dir = file.path(psn_folder, 'm1'), quiet = TRUE)
-    sim_data <- read_nm_tables(file = dir(file_path(psn_folder, 'm1'), pattern = 'simulation.1.npctab')[1],
-                               dir = file.path(psn_folder, 'm1'), quiet = TRUE)
-    if (unzip) unlink(x = file_path(psn_folder, 'm1'), recursive = TRUE, force = TRUE)
-    
-    # Getting multiple options form the psn command
-    if (file.exists(file_path(psn_folder, 'command.txt'))) {
-      psn_cmd  <- readr::read_lines(file = file_path(psn_folder, 'command.txt'))
-      obs_cols <- get_psn_vpc_cols(psn_cmd)
-      sim_cols <- obs_cols
-      if (is.null(stratify)) stratify <- get_psn_vpc_strat(psn_cmd)
-      if (is.null(opt$pred_corr)) {
-        opt$pred_corr <- dplyr::if_else(stringr::str_detect(psn_cmd, '-predcorr'), TRUE, FALSE)
-      }
-      if (is.null(opt$lloq)) {
-        lloq <- as.numeric(stringr::str_match(psn_cmd, '-lloq=([^\\s]+)')[1, 2])
-        if (!is.na(lloq)) opt$lloq <- lloq
-      }
-      if (is.null(opt$uloq)) {
-        uloq <- as.numeric(stringr::str_match(psn_cmd, '-uloq=([^\\s]+)')[1, 2])
-        if (!is.na(uloq)) opt$uloq <- uloq
-      }
-    } else {
-      msg('File `command.txt` not found. Using default column names: ID, TIME, DV, PRED.', quiet)
-      obs_cols <- c(id = 'ID', idv = 'TIME', dv = 'DV', pred = 'PRED')
-      sim_cols <- obs_cols
-    }
-  } 
+    parsed_psn_vpc <- psn_vpc_parser(xpdb = xpdb, psn_folder = psn_folder, 
+                                     opt = opt, quiet = quiet)
+    obs_data   <- parsed_psn_vpc$obs_data
+    obs_cols   <- parsed_psn_vpc$obs_cols
+    sim_data   <- parsed_psn_vpc$sim_data
+    sim_cols   <- parsed_psn_vpc$sim_cols
+    opt        <- parsed_psn_vpc$opt
+    psn_folder <- parsed_psn_vpc$psn_folder
+  }
   
   if (is.null(obs_data) && is.null(sim_data)) {
     stop('No data table found.', call. = FALSE)
   }
   
-  if (is.null(opt$pred_corr)) opt$pred_corr <- FALSE
-  
-  # Get the type of vpc
+  # Get the vpc_type
   vpc_type <- match.arg(vpc_type)
   
-  # Info on stratification
-  if (vpc_type == 'categorical') stratify <- 'group'
-  facets <- stratify
-  if (is.formula(stratify)) stratify <- all.vars(stratify)
-  if (!is.null(stratify) && vpc_type != 'categorical') {
-    msg(c('Stratifying by ', stringr::str_c(stratify, collapse = ', ')), quiet)
+  # Get info on stratification
+  if (missing(stratify)) {
+    if (is.null(psn_folder)) { 
+      stratify <- NULL 
+    } else {
+      stratify <- get_psn_vpc_strat(parsed_psn_vpc$psn_cmd)
+    }
   }
-  if (!is.null(opt$lloq)) msg(c('Setting lloq to ', opt$lloq, '.'), quiet)
-  if (!is.null(opt$uloq)) msg(c('Setting uloq to ', opt$uloq, '.'), quiet)
+  if (vpc_type == 'categorical') stratify <- add_facet_var(stratify, 'group')
+  if (is.formula(stratify)) {
+    facets <- all.vars(stratify)
+  } else {
+    facets <- stratify
+  }
+  if (!is.null(stratify)) {
+    msg(c(' - Setting stratifying variable to ', stringr::str_c(stratify, collapse = ', ')), quiet)
+  }
+  
+  # Messages for lloq and uloq
+  if (!is.null(opt$lloq)) msg(c(' - Setting lloq to ', opt$lloq, '.'), quiet)
+  if (!is.null(opt$uloq)) msg(c(' - Setting uloq to ', opt$uloq, '.'), quiet)
   
   # Generate vpc data
+  msg('\n2. Computing VPC data', quiet)
   if (vpc_type == 'continuous') {
     vpc_dat <- vpc::vpc(obs = obs_data, sim = sim_data, psn_folder = NULL, bins = opt$bins, 
                         n_bins = opt$n_bins, bin_mid = opt$bin_mid, obs_cols = obs_cols, 
@@ -202,11 +174,12 @@ vpc_data <- function(xpdb,
       }
       dplyr::mutate(.data = x, group = as.numeric(interaction(x$strat, x$Observations)))
     }) %>% 
-    c(.,list(opt = opt, facets = facets, psn_folder = psn_folder,
+    c(.,list(opt = opt, vpc_dir = ifelse(!is.null(psn_folder), psn_folder, xpdb$options$dir), facets = facets,
              obs_problem = obs_problem, sim_problem = sim_problem, 
              obs_cols = obs_cols, sim_cols = sim_cols)) %>%
              {dplyr::tibble(problem = 0, method = 'vpc', type = vpc_type, data = list(.))} %>%
     dplyr::bind_rows(xpdb$special) %>%
     dplyr::distinct_(.dots = c('problem', 'method', 'type'), .keep_all = TRUE)
+  msg('\nVPC done', quiet)
   xpdb
 }

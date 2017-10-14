@@ -4,9 +4,9 @@
 \alias{vpc_data}
 \title{Visual predictive checks data}
 \usage{
-vpc_data(xpdb, opt = NULL, vpc_type = c("continuous", "categorical",
-  "censored", "time-to-event"), stratify = NULL, psn_folder = NULL,
-  obs_problem = NULL, sim_problem = NULL, quiet)
+vpc_data(xpdb, opt, stratify, vpc_type = c("continuous", "categorical",
+  "censored", "time-to-event"), psn_folder = NULL, obs_problem = NULL,
+  sim_problem = NULL, quiet)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -14,11 +14,11 @@ vpc_data(xpdb, opt = NULL, vpc_type = c("continuous", "categorical",
 \item{opt}{A list of options regarding binning, pi and ci computation. 
 For more information see \code{\link{vpc_opt}}.}
 
-\item{vpc_type}{A string specifying the type of VPC to be created, can be one of: 
-'continuous', 'categorical', 'censored' or 'time-to-event'.}
-
 \item{stratify}{Either a character string or a formula to stratify the data. For 'categorical' vpcs the 
 stratification fixed to the different categories.}
+
+\item{vpc_type}{A string specifying the type of VPC to be created, can be one of: 
+'continuous', 'categorical', 'censored' or 'time-to-event'.}
 
 \item{psn_folder}{Specify a PsN-generated VPC-folder.}
 
