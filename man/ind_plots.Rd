@@ -9,7 +9,9 @@ ind_plots(xpdb, mapping = NULL, group = "variable", type = "lp",
   title = "Individual plots | @run",
   subtitle = "Ofv: @ofv, Eps shrink: @epsshk",
   caption = "@dir | Page @page of @lastpage", log = NULL, facets, problem,
-  quiet, ...)
+  quiet, point_alpha = c(0.8, 0, 0), point_color = c("grey60",
+  "deepskyblue4", "deepskyblue3"), line_linetype = c("blank", "solid", "55"),
+  ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -38,6 +40,12 @@ or a formula to use \link[ggplot2]{facet_grid}.}
 the last estimation problem.}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
+
+\item{point_alpha}{Points alpha, should be a vector of 3 values (i.e. DV, IPRED, PRED).}
+
+\item{point_color}{Points (and lines) color, should be a vector of 3 values (i.e. DV, IPRED, PRED).}
+
+\item{line_linetype}{Lines linetype, should be a vector of 3 values (i.e. DV, IPRED, PRED).}
 
 \item{...}{Any additional aesthetics to be passed on \code{xplot_scatter}.}
 }
