@@ -160,7 +160,9 @@ vpc_data <- function(xpdb,
       } else if (!is.null(vpc_dat$stratify)) {
         x[, vpc_dat$stratify] <- stringr::str_replace(x$strat, stringr::str_c(vpc_dat$stratify, '='), '')
       }
-      dplyr::mutate(.data = x, group = as.numeric(interaction(x$strat, x$Simulations)))
+      x %>% 
+        dplyr::mutate(group = as.numeric(interaction(x$strat, x$Simulations))) %>% 
+        tidyr::drop_na()
     }) %>% 
     purrr::map_at('aggr_obs', function(x) {
       if (vpc_type == 'continuous') {
@@ -183,7 +185,9 @@ vpc_data <- function(xpdb,
       } else if (!is.null(vpc_dat$stratify)) {
         x[, vpc_dat$stratify] <- stringr::str_replace(x$strat, stringr::str_c(vpc_dat$stratify, '='), '')
       }
-      dplyr::mutate(.data = x, group = as.numeric(interaction(x$strat, x$Observations)))
+      x %>% 
+        dplyr::mutate(group = as.numeric(interaction(x$strat, x$Observations))) %>% 
+        tidyr::drop_na()
     }) %>% 
     c(list(opt = opt, psn = ifelse(!is.null(psn_folder), TRUE, FALSE), psn_bins = psn_bins,
            vpc_dir = ifelse(!is.null(psn_folder), psn_folder, xpdb$options$dir), 
