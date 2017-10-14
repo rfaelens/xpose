@@ -47,8 +47,8 @@ absval_res_vs_pred(xpdb_ex_pk, res = 'CWRES')
 
 ## Minimization plots
 ```{r}
-prm_vs_iteration(xpdb_ex_pk)
-grd_vs_iteration(xpdb_ex_pk)
+prm_vs_iteration(xpdb_ex_pk, labeller = 'label_value')
+grd_vs_iteration(xpdb_ex_pk, labeller = 'label_value')
 ```
 
 ## Individual plots
