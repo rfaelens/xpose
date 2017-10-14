@@ -130,6 +130,10 @@ vpc <- function(xpdb,
                           area_data = vpc_dat$vpc_dat,
                           ...)
     } else {
+      if (vpc_dat$psn_bins) {
+        warning('Using `smooth = FALSE` along with `psn_bins = TRUE` may yield to misaligned obs and sim data.',
+                ' Check the output carefully or use `vpc_data(psn_bins = FALSE)`', call. = FALSE)
+      }
       xp <- xp + xp_geoms(mapping  = aes_c(aes_string(area_xmin  = 'bin_min',
                                                       area_xmax  = 'bin_max',
                                                       area_ymin  = 'low',
