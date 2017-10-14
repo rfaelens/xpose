@@ -4,7 +4,8 @@
 \alias{vpc_data}
 \title{Visual predictive checks data}
 \usage{
-vpc_data(xpdb, opt, stratify, vpc_type, psn_folder = NULL, psn_bins = FALSE,
+vpc_data(xpdb, opt, stratify, vpc_type = c("continuous", "categorical",
+  "censored", "time-to-event"), psn_folder = NULL, psn_bins = FALSE,
   obs_problem = NULL, sim_problem = NULL, quiet)
 }
 \arguments{

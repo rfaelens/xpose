@@ -34,7 +34,7 @@
 vpc_data <- function(xpdb,
                      opt,
                      stratify,
-                     vpc_type,
+                     vpc_type    = c('continuous', 'categorical', 'censored', 'time-to-event'),
                      psn_folder  = NULL,
                      psn_bins    = FALSE,
                      obs_problem = NULL,
@@ -44,13 +44,13 @@ vpc_data <- function(xpdb,
   check_xpdb(xpdb, check = ifelse(is.null(psn_folder), 'data', FALSE))
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (missing(opt)) opt <- vpc_opt()
-  if (missing(vpc_type)) { 
-    stop('Argument `vpc_type` is missing, with no default.', call. = FALSE)
-  } else if (is.na(pmatch(vpc_type, table = c('continuous', 'categorical', 'censored', 'time-to-event')))) {
-    stop('Argument `vpc_type` must be one of `continuous`, `categorical`, `censored` or `time-to-event`', call. = FALSE)
-  } else {
-    vpc_type <- match.arg(arg = vpc_type, choices = c('continuous', 'categorical', 'censored', 'time-to-event'))
-  }
+  # if (missing(vpc_type)) { 
+  #   vpc_type <- 'continuous'
+  # } else if (is.na(pmatch(vpc_type, table = ))) {
+  #   stop('Argument `vpc_type` must be one of `continuous`, `categorical`, `censored` or `time-to-event`', call. = FALSE)
+  # } else {
+  vpc_type <- match.arg(arg = vpc_type, choices = c('continuous', 'categorical', 'censored', 'time-to-event'))
+  # }
   
   # Get raw data
   msg(c('VPC ', vpc_type, '\n1. Gathering data & settings'), quiet)
@@ -58,7 +58,7 @@ vpc_data <- function(xpdb,
     # When using xpdb tables
     if (is.null(obs_problem)) obs_problem <- last_data_problem(xpdb, simtab = FALSE)
     if (is.null(sim_problem)) sim_problem <- last_data_problem(xpdb, simtab = TRUE)
-    msg(c(' - Using xpdb simulation problem ', ifelse(is.na(sim_problem), '<na>', sim_problem), 
+    msg(c('Using xpdb simulation problem ', ifelse(is.na(sim_problem), '<na>', sim_problem), 
           ' and observation problem ', ifelse(is.na(obs_problem), '<na>', obs_problem), '.'), quiet)
     obs_data <- get_data(xpdb, problem = obs_problem) 
     sim_data <- get_data(xpdb, problem = sim_problem)
@@ -70,6 +70,9 @@ vpc_data <- function(xpdb,
       sim_cols <- xp_var(xpdb, sim_problem, type = c('id', 'idv', 'dv', 'pred'))
       sim_cols <- purrr::set_names(sim_cols$col, nm = sim_cols$type)
     }
+    vpc_nsim <- xpdb %>% 
+      get_summary(sim_problem) %>% 
+      {dplyr::filter(.data = ., .$label == 'nsim')$value}
   } else {
     # When using PsN
     parsed_psn_vpc <- psn_vpc_parser(xpdb = xpdb, psn_folder = psn_folder, 
@@ -80,6 +83,7 @@ vpc_data <- function(xpdb,
     sim_cols   <- parsed_psn_vpc$sim_cols
     opt        <- parsed_psn_vpc$opt
     psn_folder <- parsed_psn_vpc$psn_folder
+    vpc_nsim   <- parsed_psn_vpc$nsim
   }
   
   if (is.null(obs_data) && is.null(sim_data)) {
@@ -101,12 +105,12 @@ vpc_data <- function(xpdb,
     facets <- stratify
   }
   if (!is.null(stratify)) {
-    msg(c(' - Setting stratifying variable to ', stringr::str_c(stratify, collapse = ', ')), quiet)
+    msg(c('Setting stratifying variable to ', stringr::str_c(stratify, collapse = ', ')), quiet)
   }
   
   # Messages for lloq and uloq
-  if (!is.null(opt$lloq)) msg(c(' - Setting lloq to ', opt$lloq, '.'), quiet)
-  if (!is.null(opt$uloq)) msg(c(' - Setting uloq to ', opt$uloq, '.'), quiet)
+  if (!is.null(opt$lloq)) msg(c('Setting lloq to ', opt$lloq, '.'), quiet)
+  if (!is.null(opt$uloq)) msg(c('Setting uloq to ', opt$uloq, '.'), quiet)
   
   # Generate vpc data
   msg('\n2. Computing VPC data', quiet)
@@ -135,6 +139,17 @@ vpc_data <- function(xpdb,
     #                         as_percentage = opt$as_percentage, vpcdb = TRUE, verbose = !quiet) 
   } 
   
+  # Assign a problem number to the vpc
+  if (!is.null(xpdb$special$problem)) {
+    if (!is.null(xpdb$special) && length(xpdb$special$problem[xpdb$special$method == 'vpc' & xpdb$special$type == vpc_type])) {
+      vpc_prob <- xpdb$special$problem[xpdb$special$method == 'vpc' & xpdb$special$type == vpc_type] # Overwrite
+    } else {
+      vpc_prob <- max(xpdb$special$problem) + 1 # Add new problem
+    }
+  } else {
+    vpc_prob <- ifelse(!is.null(xpdb$data$problem), max(xpdb$data$problem) + 1, 1) # Start new numbering
+  }
+  
   # Format vpc output
   xpdb$special <- vpc_dat %>%
     purrr::discard(names(.) %in% c('sim', 'stratify_original', 'stratify_color', 'facet', 'as_percentage')) %>%
@@ -162,7 +177,7 @@ vpc_data <- function(xpdb,
       }
       x %>% 
         dplyr::mutate(group = as.numeric(interaction(x$strat, x$Simulations))) %>% 
-        tidyr::drop_na()
+        dplyr::filter(!is.na(.$bin))
     }) %>% 
     purrr::map_at('aggr_obs', function(x) {
       if (vpc_type == 'continuous') {
@@ -187,14 +202,14 @@ vpc_data <- function(xpdb,
       }
       x %>% 
         dplyr::mutate(group = as.numeric(interaction(x$strat, x$Observations))) %>% 
-        tidyr::drop_na()
+        dplyr::filter(!is.na(.$bin))
     }) %>% 
     c(list(opt = opt, psn = ifelse(!is.null(psn_folder), TRUE, FALSE), psn_bins = psn_bins,
            vpc_dir = ifelse(!is.null(psn_folder), psn_folder, xpdb$options$dir), 
            facets = facets, obs_problem = obs_problem, sim_problem = sim_problem, 
-           obs_cols = obs_cols, sim_cols = sim_cols)) %>%
-           {dplyr::tibble(problem = 0, method = 'vpc', type = vpc_type, data = list(.))} %>%
-    dplyr::bind_rows(xpdb$special) %>%
+           obs_cols = obs_cols, sim_cols = sim_cols, nsim = vpc_nsim)) %>%
+           {dplyr::tibble(problem = vpc_prob, method = 'vpc', type = vpc_type, data = list(.))} %>%
+           {dplyr::bind_rows(xpdb$special, .)} %>% 
     dplyr::distinct_(.dots = c('problem', 'method', 'type'), .keep_all = TRUE)
   msg('\nVPC done', quiet)
   xpdb

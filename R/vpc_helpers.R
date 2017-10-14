@@ -75,11 +75,11 @@ psn_vpc_parser <- function(xpdb, psn_folder, psn_bins, opt, quiet) {
   if (!dir.exists(psn_folder)) {
     stop('The `psn_folder`:', psn_folder, ' could not be found.', call. = FALSE)
   }
-  msg(' - Importing PsN generated data', quiet)
+  msg('Importing PsN generated data', quiet)
   
   if (!dir.exists(file_path(psn_folder, 'm1')) &
       file.exists(file_path(psn_folder, 'm1.zip'))) {
-    msg(' - Unziping PsN m1 folder', quiet)
+    msg('Unziping PsN m1 folder', quiet)
     utils::unzip(zipfile = file_path(psn_folder, 'm1.zip'), 
                  exdir   = file_path(psn_folder, ''))
     unzip <- TRUE
@@ -119,8 +119,12 @@ psn_vpc_parser <- function(xpdb, psn_folder, psn_bins, opt, quiet) {
       uloq <- as.numeric(psn_opt$value[psn_opt$arg == 'uloq'])
       if (length(uloq) > 0 && !is.na(uloq)) opt$uloq <- uloq
     }
+    
+    # Get number of samples [would be better to compute and use IREP in the future]
+    nsim <- ifelse(!stringr::str_detect(psn_cmd, '-sampl'), 'na',
+                   stringr::str_match(psn_cmd, '-sampl[a-z]+=\\s*([^\\s]+)')[1, 2])
   } else {
-    msg(' - PsN file `version_and_option_info.txt` not found. Using default options.', quiet)
+    msg('PsN file `version_and_option_info.txt` not found. Using default options.', quiet)
     obs_cols <- c(id = 'ID', idv = 'TIME', dv = 'DV', pred = 'PRED')
     sim_cols <- obs_cols
   }
@@ -134,11 +138,12 @@ psn_vpc_parser <- function(xpdb, psn_folder, psn_bins, opt, quiet) {
       purrr::map(~as.numeric(.x))
     
     opt$bins <- psn_bins[[1]] # vpc does not handle panel based binning yet so take the first one
-    msg(c(' - Using PsN-defined binning', ifelse(length(unique(psn_bins)) == 1 , '',
+    msg(c('Using PsN-defined binning', ifelse(length(unique(psn_bins)) == 1 , '',
                                               '. Only a single bin_array (i.e. first) can be used by xpose.')), quiet)
   }
   
   list(obs_data = obs_data, obs_cols = obs_cols, 
        sim_data = sim_data, sim_cols = sim_cols,
-       opt = opt, psn_folder = psn_folder, psn_cmd = psn_cmd)
+       opt = opt, psn_folder = psn_folder, 
+       psn_cmd = psn_cmd, nsim = nsim)
 }
