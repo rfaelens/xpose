@@ -61,7 +61,7 @@ xplot_distrib <- function(xpdb,
   }
   
   # Check type
-  check_plot_type(type, allowed = c('h', 'd', 'r'))
+  check_plot_type(type, allowed = c('d', 'h', 'r'))
   
   # Assing xp_theme and gg_theme
   if (!missing(xp_theme)) xpdb <- update_themes(xpdb = xpdb, xp_theme = xp_theme)
