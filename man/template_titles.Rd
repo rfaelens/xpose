@@ -47,6 +47,7 @@ Many key variables are available:
  \item{@timeplot}{Time of the plot rendering}
  \item{@term}{Termination message}
  \item{@version}{Software version (e.g. 7.3)}
+ \item{@vpcdir}{VPC data directory}
  \item{@warnings}{Run warnings (e.g. boundary)}
  \item{@x @y etc.}{Name of any ggplot2 variable used for mapping in an \code{aes()} type function}
 }
