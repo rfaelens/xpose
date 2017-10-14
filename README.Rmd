@@ -69,12 +69,12 @@ ind_plots(xpdb, page = 1)
 
 ##### Distribution plots
 ```{r readme_example_figure_3, fig.width = 6, out.width = '75%'}
-eta_distrib(xpdb)
+eta_distrib(xpdb, labeller = 'label_value')
 ```
 
 ##### Minimization diagnostics
 ```{r readme_example_figure_4, fig.width = 6, out.width = '75%'}
-prm_vs_iteration(xpdb)
+prm_vs_iteration(xpdb, labeller = 'label_value')
 ```
 
 ##### And much more !

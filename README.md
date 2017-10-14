@@ -92,7 +92,7 @@ ind_plots(xpdb, page = 1)
 ##### Distribution plots
 
 ``` r
-eta_distrib(xpdb)
+eta_distrib(xpdb, labeller = 'label_value')
 ```
 
 <img src="inst/img/readme_example_figure_3-1.png" width="75%" style="display: block; margin: auto;" />
@@ -100,7 +100,7 @@ eta_distrib(xpdb)
 ##### Minimization diagnostics
 
 ``` r
-prm_vs_iteration(xpdb)
+prm_vs_iteration(xpdb, labeller = 'label_value')
 ```
 
 <img src="inst/img/readme_example_figure_4-1.png" width="75%" style="display: block; margin: auto;" />
