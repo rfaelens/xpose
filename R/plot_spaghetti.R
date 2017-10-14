@@ -9,13 +9,13 @@
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
-#' dv_vs_idv(xpdb_ex_pk, aes(x = TAD))
+#' dv_vs_idv(xpdb_ex_pk)
 #' 
-#' ipred_vs_idv(xpdb_ex_pk, aes(x = TAD))
+#' ipred_vs_idv(xpdb_ex_pk)
 #' 
-#' pred_vs_idv(xpdb_ex_pk, aes(x = TAD))
+#' pred_vs_idv(xpdb_ex_pk)
 #' 
-#' dv_preds_vs_idv(xpdb_ex_pk, aes(x = TAD))
+#' dv_preds_vs_idv(xpdb_ex_pk)
 #' 
 #' @name pred_vs_idv
 #' @export

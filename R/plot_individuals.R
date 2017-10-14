@@ -19,8 +19,7 @@
 #' 
 #' # Example with custom mapping and faceting
 #' ind_plots(xpdb_ex_pk, aes(x = TAD), 
-#'           facets = OCC~ID, 
-#'           labeller = 'label_both')
+#'           facets = SEX~ID)
 #' 
 #' @export
 ind_plots <- function(xpdb,
