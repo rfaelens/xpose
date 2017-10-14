@@ -10,6 +10,12 @@
 #' @param vpc_type A string specifying the type of VPC to be created, can be one of: 
 #' 'continuous', 'categorical', 'censored' or 'time-to-event'.
 #' @param psn_folder Specify a PsN-generated VPC-folder.
+#' @param psn_bins Only used with argument \code{psn_folder}. If \code{TRUE} bins will be inputed from the 
+#' PsN vpc_bins.txt file. If \code{FALSE} (default) bins will be re-calculated in R. Note that when 
+#' \code{psn_bins = TRUE} only the first bin array will be used and applied to all panels as it is not 
+#' currently possible to define per panel binning in xpose. In addition when \code{psn_bins = TRUE} is 
+#' used along with \code{vpc(smooth = FALSE)} the observations lines may not be centered in the bins. 
+#' Check the output carefully.
 #' @param obs_problem Alternative to the option `psn_folder`. The $problem number to 
 #' be used for observations. By default returns the last estimation problem.
 #' @param sim_problem Alternative to the option `psn_folder`. The $problem number to 
@@ -28,8 +34,9 @@
 vpc_data <- function(xpdb,
                      opt,
                      stratify,
-                     vpc_type    = c('continuous', 'categorical', 'censored', 'time-to-event'),
+                     vpc_type,
                      psn_folder  = NULL,
+                     psn_bins    = FALSE,
                      obs_problem = NULL,
                      sim_problem = NULL,
                      quiet) {
@@ -37,9 +44,16 @@ vpc_data <- function(xpdb,
   check_xpdb(xpdb, check = ifelse(is.null(psn_folder), 'data', FALSE))
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (missing(opt)) opt <- vpc_opt()
+  if (missing(vpc_type)) { 
+    stop('Argument `vpc_type` is missing, with no default.', call. = FALSE)
+  } else if (is.na(pmatch(vpc_type, table = c('continuous', 'categorical', 'censored', 'time-to-event')))) {
+    stop('Argument `vpc_type` must be one of `continuous`, `categorical`, `censored` or `time-to-event`', call. = FALSE)
+  } else {
+    vpc_type <- match.arg(arg = vpc_type, choices = c('continuous', 'categorical', 'censored', 'time-to-event'))
+  }
   
   # Get raw data
-  msg('1. Gathering data & settings', quiet)
+  msg(c('VPC ', vpc_type, '\n1. Gathering data & settings'), quiet)
   if (is.null(psn_folder)) {
     # When using xpdb tables
     if (is.null(obs_problem)) obs_problem <- last_data_problem(xpdb, simtab = FALSE)
@@ -59,7 +73,7 @@ vpc_data <- function(xpdb,
   } else {
     # When using PsN
     parsed_psn_vpc <- psn_vpc_parser(xpdb = xpdb, psn_folder = psn_folder, 
-                                     opt = opt, quiet = quiet)
+                                     psn_bins = psn_bins, opt = opt, quiet = quiet)
     obs_data   <- parsed_psn_vpc$obs_data
     obs_cols   <- parsed_psn_vpc$obs_cols
     sim_data   <- parsed_psn_vpc$sim_data
@@ -71,9 +85,6 @@ vpc_data <- function(xpdb,
   if (is.null(obs_data) && is.null(sim_data)) {
     stop('No data table found.', call. = FALSE)
   }
-  
-  # Get the vpc_type
-  vpc_type <- match.arg(vpc_type)
   
   # Get info on stratification
   if (missing(stratify)) {
@@ -174,10 +185,11 @@ vpc_data <- function(xpdb,
       }
       dplyr::mutate(.data = x, group = as.numeric(interaction(x$strat, x$Observations)))
     }) %>% 
-    c(.,list(opt = opt, vpc_dir = ifelse(!is.null(psn_folder), psn_folder, xpdb$options$dir), facets = facets,
-             obs_problem = obs_problem, sim_problem = sim_problem, 
-             obs_cols = obs_cols, sim_cols = sim_cols)) %>%
-             {dplyr::tibble(problem = 0, method = 'vpc', type = vpc_type, data = list(.))} %>%
+    c(list(opt = opt, psn = ifelse(!is.null(psn_folder), TRUE, FALSE), psn_bins = psn_bins,
+           vpc_dir = ifelse(!is.null(psn_folder), psn_folder, xpdb$options$dir), 
+           facets = facets, obs_problem = obs_problem, sim_problem = sim_problem, 
+           obs_cols = obs_cols, sim_cols = sim_cols)) %>%
+           {dplyr::tibble(problem = 0, method = 'vpc', type = vpc_type, data = list(.))} %>%
     dplyr::bind_rows(xpdb$special) %>%
     dplyr::distinct_(.dots = c('problem', 'method', 'type'), .keep_all = TRUE)
   msg('\nVPC done', quiet)

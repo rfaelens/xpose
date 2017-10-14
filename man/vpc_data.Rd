@@ -4,9 +4,8 @@
 \alias{vpc_data}
 \title{Visual predictive checks data}
 \usage{
-vpc_data(xpdb, opt, stratify, vpc_type = c("continuous", "categorical",
-  "censored", "time-to-event"), psn_folder = NULL, obs_problem = NULL,
-  sim_problem = NULL, quiet)
+vpc_data(xpdb, opt, stratify, vpc_type, psn_folder = NULL, psn_bins = FALSE,
+  obs_problem = NULL, sim_problem = NULL, quiet)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -21,6 +20,13 @@ stratification fixed to the different categories.}
 'continuous', 'categorical', 'censored' or 'time-to-event'.}
 
 \item{psn_folder}{Specify a PsN-generated VPC-folder.}
+
+\item{psn_bins}{Only used with argument \code{psn_folder}. If \code{TRUE} bins will be inputed from the 
+PsN vpc_bins.txt file. If \code{FALSE} (default) bins will be re-calculated in R. Note that when 
+\code{psn_bins = TRUE} only the first bin array will be used and applied to all panels as it is not 
+currently possible to define per panel binning in xpose. In addition when \code{psn_bins = TRUE} is 
+used along with \code{vpc(smooth = FALSE)} the observations lines may not be centered in the bins. 
+Check the output carefully.}
 
 \item{obs_problem}{Alternative to the option `psn_folder`. The $problem number to 
 be used for observations. By default returns the last estimation problem.}

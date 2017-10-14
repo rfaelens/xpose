@@ -67,7 +67,7 @@ get_psn_vpc_strat <- function(psn_cmd) {
 }
 
 # Gets vpc options from PsN directory
-psn_vpc_parser <- function(xpdb, psn_folder, opt, quiet) {
+psn_vpc_parser <- function(xpdb, psn_folder, psn_bins, opt, quiet) {
   
   psn_folder <- parse_title(string = psn_folder, xpdb = xpdb, quiet = quiet,
                             problem = default_plot_problem(xpdb))
@@ -124,7 +124,7 @@ psn_vpc_parser <- function(xpdb, psn_folder, opt, quiet) {
     obs_cols <- c(id = 'ID', idv = 'TIME', dv = 'DV', pred = 'PRED')
     sim_cols <- obs_cols
   }
-  if (file.exists(file_path(psn_folder, 'vpc_bins.txt')) && !any(opt$usr_call == 'bins')) {
+  if (file.exists(file_path(psn_folder, 'vpc_bins.txt')) && !any(opt$usr_call == 'bins') && psn_bins) {
     psn_bins <- readr::read_lines(file = file_path(psn_folder, 'vpc_bins.txt')) %>% 
       .[nchar(.) > 0] %>% 
       tail(n = 1) %>% 
