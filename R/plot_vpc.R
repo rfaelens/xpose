@@ -15,7 +15,7 @@
 #' @param caption Page caption. Use \code{NULL} to remove.
 #' @param log String assigning logarithmic scale to axes, can be either '', 
 #' 'x', y' or 'xy'.   
-#' @param guide Enable guide display (e.g. lloq and uloq lines).
+#' @param guide Enable guide display in vpc continuous (e.g. lloq and uloq lines).
 #' @param vpc_type Only used when multiple vpc data are present in the same xpdb. The type of 
 #' vpc to be created. Can be one of can be one of: 'continuous', 'categorical', 
 #' 'censored' or 'time-to-event'.
@@ -52,7 +52,7 @@
 #' @export
 vpc <- function(xpdb,
                 mapping  = NULL,
-                type     = 'alr',
+                type     = 'alpr',
                 smooth   = TRUE,
                 title    = 'Visual predictive checks | @run',
                 subtitle = 'Number of simulations: @vpcnsim, confidence interval: @vpcci%',
@@ -195,7 +195,7 @@ vpc <- function(xpdb,
   }
   
   # Add guides
-  if (guide && (!is.null(vpc_dat$lloq) | !is.null(vpc_dat$uloq))) {
+  if (guide && vpc_type == 'continuous' && (!is.null(vpc_dat$lloq) | !is.null(vpc_dat$uloq))) {
     xp <- xp + xp_geoms(xp_theme = xpdb$xp_theme,
                         name     = 'guide',
                         ggfun    = 'geom_hline',

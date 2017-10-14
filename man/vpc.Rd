@@ -4,7 +4,7 @@
 \alias{vpc}
 \title{Visual predictive checks}
 \usage{
-vpc(xpdb, mapping = NULL, type = "alr", smooth = TRUE,
+vpc(xpdb, mapping = NULL, type = "alpr", smooth = TRUE,
   title = "Visual predictive checks | @run",
   subtitle = "Number of simulations: @vpcnsim, confidence interval: @vpcci\%",
   caption = "@vpcdir", log = NULL, guide = TRUE, vpc_type = NULL,
@@ -31,7 +31,7 @@ line 'l', area 'a', rug 'r' and text 't' or any combination of the five.}
 \item{log}{String assigning logarithmic scale to axes, can be either '', 
 'x', y' or 'xy'.}
 
-\item{guide}{Enable guide display (e.g. lloq and uloq lines).}
+\item{guide}{Enable guide display in vpc continuous (e.g. lloq and uloq lines).}
 
 \item{vpc_type}{Only used when multiple vpc data are present in the same xpdb. The type of 
 vpc to be created. Can be one of can be one of: 'continuous', 'categorical', 
