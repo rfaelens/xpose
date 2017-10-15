@@ -143,7 +143,7 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xpdb_ex_pk <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st"> </span><span class="kw"><a href="../reference/vpc_data.html">vpc_data</a></span>() <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># Compute the vpc data</span>
 <span class="st"> </span><span class="kw"><a href="../reference/vpc.html">vpc</a></span>()            <span class="co"># Plot the vpc</span></code></pre></div>
-<p><img src="vpc_files/figure-html/unnamed-chunk-2-1.png" width="50%" style="display: block; margin: auto;"></p>
+<p><img src="vpc_files/figure-html/unnamed-chunk-2-1.png" width="75%" style="display: block; margin: auto;"></p>
 <p>The generated VPC data is stored in the xpdb under specials datasets and can be used later on.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xpdb_w_vpc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/vpc_data.html">vpc_data</a></span>(xpdb_ex_pk) <span class="co"># Compute and store VPC data</span>
 
@@ -159,16 +159,16 @@ xpdb_w_vpc <span class="co"># The vpc data is now listed under the xpdb "special
  - xp_theme: theme_xp_default 
  - Options: dir = analysis/models/pk/, quiet = FALSE, manual_import = NULL</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/vpc.html">vpc</a></span>(xpdb_w_vpc) <span class="co"># Plot the vpc from the stored data</span></code></pre></div>
-<p><img src="vpc_files/figure-html/unnamed-chunk-3-1.png" width="50%" style="display: block; margin: auto;"></p>
+<p><img src="vpc_files/figure-html/unnamed-chunk-3-1.png" width="75%" style="display: block; margin: auto;"></p>
 <p>Multiple VPC data can be stored in an xpdb, but only one of each <code>vpc_type</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xpdb_w_multi_vpc &lt;-<span class="st"> </span>xpdb_ex_pk <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st"> </span><span class="kw"><a href="../reference/vpc_data.html">vpc_data</a></span>(<span class="dt">vpc_type =</span> <span class="st">'continuous'</span>, <span class="dt">opt =</span> <span class="kw"><a href="../reference/vpc_opt.html">vpc_opt</a></span>(<span class="dt">n_bins =</span> <span class="dv">6</span>, <span class="dt">lloq =</span> <span class="fl">0.1</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st"> </span><span class="kw"><a href="../reference/vpc_data.html">vpc_data</a></span>(<span class="dt">vpc_type =</span> <span class="st">'censored'</span>, <span class="dt">opt =</span> <span class="kw"><a href="../reference/vpc_opt.html">vpc_opt</a></span>(<span class="dt">n_bins =</span> <span class="dv">6</span>, <span class="dt">lloq =</span> <span class="fl">0.1</span>))
 
 <span class="kw"><a href="../reference/vpc.html">vpc</a></span>(xpdb_w_multi_vpc, <span class="dt">vpc_type =</span> <span class="st">'continuous'</span>)</code></pre></div>
-<p><img src="vpc_files/figure-html/unnamed-chunk-4-1.png" width="50%" style="display: block; margin: auto;"></p>
+<p><img src="vpc_files/figure-html/unnamed-chunk-4-1.png" width="75%" style="display: block; margin: auto;"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/vpc.html">vpc</a></span>(xpdb_w_multi_vpc, <span class="dt">vpc_type =</span> <span class="st">'censored'</span>)</code></pre></div>
-<p><img src="vpc_files/figure-html/unnamed-chunk-4-2.png" width="50%" style="display: block; margin: auto;"></p>
+<p><img src="vpc_files/figure-html/unnamed-chunk-4-2.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="common-options" class="section level3">
 <h3 class="hasAnchor">
@@ -186,7 +186,7 @@ xpdb_w_vpc <span class="co"># The vpc data is now listed under the xpdb "special
 <span class="st"> </span><span class="kw"><a href="../reference/vpc_data.html">vpc_data</a></span>(<span class="dt">vpc_type =</span> <span class="st">'censored'</span>, <span class="dt">stratify =</span> <span class="st">'SEX'</span>,
           <span class="dt">opt =</span> <span class="kw"><a href="../reference/vpc_opt.html">vpc_opt</a></span>(<span class="dt">bins =</span> <span class="st">'jenks'</span>, <span class="dt">n_bins =</span> <span class="dv">7</span>, <span class="dt">lloq =</span> <span class="fl">0.5</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st"> </span><span class="kw"><a href="../reference/vpc.html">vpc</a></span>()</code></pre></div>
-<p><img src="vpc_files/figure-html/unnamed-chunk-5-1.png" width="50%" style="display: block; margin: auto;"></p>
+<p><img src="vpc_files/figure-html/unnamed-chunk-5-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="vpc" class="section level4">
 <h4 class="hasAnchor">
@@ -219,7 +219,7 @@ xpdb_ex_pk</code></pre></div>
 xpdb_ex_pk <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st"> </span><span class="kw"><a href="../reference/vpc_data.html">vpc_data</a></span>(<span class="dt">vpc_type =</span> <span class="st">'continuous'</span>, <span class="dt">obs_problem =</span> <span class="dv">1</span>, <span class="dt">sim_problem =</span> <span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st"> </span><span class="kw"><a href="../reference/vpc.html">vpc</a></span>()</code></pre></div>
-<p><img src="vpc_files/figure-html/unnamed-chunk-6-1.png" width="50%" style="display: block; margin: auto;"></p>
+<p><img src="vpc_files/figure-html/unnamed-chunk-6-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="creating-the-vpc-using-a-psn-folder" class="section level3">
 <h3 class="hasAnchor">
