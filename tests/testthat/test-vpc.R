@@ -1,18 +1,22 @@
 context('Check VPCs')
 
 # Define files to be tested -----------------------------------------------
-psn_cmd_1 <- '/opt/local64/PsN/bin/vpc -seed=221287 -samples=1000 -stratify_on=VAR1,VAR2 -lst=run001.lst run001.mod'
-psn_cmd_2 <- '/opt/local64/PsN/bin/vpc -seed=221287 -samples=1000 -idv=TAD -dv=IDV -lst=run001.lst run001.mod'
 
 # ctrl_special <- xpdb_ex_pk %>%
-#   vpc_data(opt = vpc_opt(n_bins = 3)) %>%
-#   vpc_data(vpc_type = 'cens', opt = vpc_opt(n_bins = 3, lloq = 1))
+#   vpc_data(opt = vpc_opt(n_bins = 3, lloq = 0.1)) %>%
+#   vpc_data(vpc_type = 'cens', opt = vpc_opt(n_bins = 3, lloq = 0.4))
 #  save(ctrl_special, file = 'data/ctrl_special.RData', compress = 'xz')
 load(file = file.path('data', 'ctrl_special.RData'))
 
+# ctrl_psn_vpc_dat <- psn_vpc_parser(xpdb = xpdb_ex_pk, psn_folder = 'data/psn_vpc/', 
+#                                    psn_bins = TRUE, opt = vpc_opt(), quiet = TRUE)
+# save(ctrl_psn_vpc_dat, file = 'data/ctrl_psn_vpc.RData', compress = 'xz')
+load(file = file.path('data', 'ctrl_psn_vpc.RData'))
+
+
 xpdb_vpc_test <- xpdb_ex_pk %>%
-  vpc_data(opt = vpc_opt(n_bins = 3), quiet = TRUE) %>%
-  vpc_data(vpc_type = 'cens', opt = vpc_opt(n_bins = 3, lloq = 1), quiet = TRUE)
+  vpc_data(opt = vpc_opt(n_bins = 3, lloq = 0.1), quiet = TRUE) %>%
+  vpc_data(vpc_type = 'cens', opt = vpc_opt(n_bins = 3, lloq = 0.4), quiet = TRUE)
 
 
 # Tests start here --------------------------------------------------------
@@ -36,6 +40,17 @@ test_that('vpc_data works properly with xpdb tables', {
   expect_identical(xpdb_vpc_test$special, ctrl_special$special)
 })
 
+test_that('vpc_data works properly with psn_folder', {
+  # Check psn_vpc_parser
+  parsed_psn_vpc <- psn_vpc_parser(xpdb = xpdb_ex_pk, psn_folder = 'data/psn_vpc/', 
+                                   psn_bins = TRUE, opt = vpc_opt(), quiet = TRUE)
+  expect_equal(parsed_psn_vpc, ctrl_psn_vpc_dat)
+  test_psn_vpc <- vpc_data(xpdb_ex_pk, psn_folder = 'data/psn_vpc/', quiet = TRUE)
+  expect_true(is.xpdb(test_psn_vpc))
+  expect_error(psn_vpc_plot <- test_psn_vpc %>% vpc(), NA)
+})
+
+
 test_that('vpc plot properly check input', {
   expect_error(vpc())
   expect_error(vpc(xpdb = 1, quiet = FALSE), regexp = 'Bad input')
@@ -56,9 +71,16 @@ test_that('vpc plot are properly generated', {
   expect_equal(class(p_cont$layers[[2]]$geom)[1], 'GeomLine')
   expect_equal(class(p_cont$layers[[3]]$geom)[1], 'GeomPoint')
   expect_equal(class(p_cont$layers[[4]]$geom)[1], 'GeomText')
-  expect_equal(class(p_cont$layers[[5]]$geom)[1], 'GeomRug')
+  expect_equal(class(p_cont$layers[[5]]$geom)[1], 'GeomHline')
+  expect_equal(class(p_cont$layers[[6]]$geom)[1], 'GeomRug')
   expect_equal(class(p_cont$facet)[1], 'FacetNull')
   expect_equal(class(p_cont2$facet)[1], 'FacetGrid')
   expect_equal(class(p_cens$layers[[1]]$geom)[1], 'GeomRect')
   expect_equal(class(p_cens$facet)[1], 'FacetWrap')
+  expect_equal(p_cont$xpose$fun, 'vpc_continuous')
+  expect_equal(p_cens$xpose$fun, 'vpc_censored')
+  expect_equal(p_cont$xpose$problem, 3)
+  expect_equal(p_cens$xpose$problem, 4)
+  expect_equal(p_cont$xpose$summary$value[p_cont$xpose$summary$label %in% c('vpcdir', 'vpcnsim', 'vpcci', 'vpcpi')], 
+              c('analysis/models/pk/', '20', '95', '95'))
 })
