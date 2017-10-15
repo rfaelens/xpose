@@ -1,3 +1,26 @@
+# xpose 0.2.9
+### General
+* Improved documentation and testing
+* Improved compatibility with NONMEM 7.4.1
+* Improved website look, and content with new FAQ, Plot sections and a cheatsheet
+* Multiple bug small bug fixes and code improvements
+* Added multiple page functionality to all plots and `xpose_save()`
+* Added `get_prm()` function
+
+### Data import
+* Improved `dir` and `file` arguments usage
+* Improved error robustness of `xpose_data()` 
+* Bug fix in `read_nm_files()` not properly reporting FO method
+* Bug fix in `read_nm_tables()` not properly parsing data (missing minus signs) in some very specific cases
+
+### Plots
+* Small modifications to `xp_theme()` defaults
+* Faceting options can now be defined globally in the `xp_theme`
+* Added `amt_vs_idv()` plot
+* Improved faceting of minimization plots
+* Multiples improvements to the `vpc_data()` and `vpc()` functions.
+* More keywords added to `template_titles`
+
 # xpose 0.2
 ### General
 * Renamed package `xpose`
