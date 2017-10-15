@@ -137,9 +137,13 @@ psn_vpc_parser <- function(xpdb, psn_folder, psn_bins, opt, quiet) {
       {stringr::str_split(., ',')} %>% 
       purrr::map(~as.numeric(.x))
     
-    opt$bins <- psn_bins[[1]] # vpc does not handle panel based binning yet so take the first one
-    msg(c('Using PsN-defined binning', ifelse(length(unique(psn_bins)) == 1 , '',
+    if (!any(is.na(psn_bins[[1]]))) {
+      opt$bins <- psn_bins[[1]] # vpc does not handle panel based binning yet so take the first one
+      msg(c('Using PsN-defined binning', ifelse(length(unique(psn_bins)) == 1 , '',
                                               '. Only a single bin_array (i.e. first) can be used by xpose.')), quiet)
+    } else {
+      warning('Failed to read PsN-defined binning.', call. = FALSE)
+    }
   }
   
   list(obs_data = obs_data, obs_cols = obs_cols, 
