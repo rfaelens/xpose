@@ -61,7 +61,7 @@ test_that('vpc plot properly check input', {
   expect_error(vpc(ctrl_special, vpc_type = 'unknown', quiet = FALSE), 
                regexp = 'should be one of')
   expect_error(test_psn_vpc %>% vpc(vpc_type = 'cens'),
-               regexp = 'No cens VPC data found')
+               regexp = 'Change `vpc_type` to continuous')
 })
 
 test_that('vpc plot are properly generated', {
