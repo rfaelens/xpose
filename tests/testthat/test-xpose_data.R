@@ -16,7 +16,7 @@ test_that('error is returned for bad ext input', {
 
 test_that('properly creates the xpdb when using the file argument', {
   xpdb_1 <- xpose_data(file = 'run001.lst', dir = 'data', quiet = TRUE) %>% 
-    set_var_types(idv = 'TAD')
+    filter(OCC == 3)
   expect_true(inherits(xpdb_1, 'xpose_data'))
   
   # Correct path and quiet option for identical comparison with xpdb_ex_pk
@@ -24,12 +24,13 @@ test_that('properly creates the xpdb when using the file argument', {
   xpdb_1$options$dir <- 'analysis/models/pk/'
   attr(xpdb_1$code, 'dir') <- 'analysis/models/pk/'
   xpdb_1$options$quiet <- FALSE
+  xpdb_1$xp_theme$labeller <- xpdb_ex_pk$xp_theme$labeller
   expect_identical(xpdb_1, xpdb_ex_pk)
 })
 
 test_that('properly creates the xpdb when using the runno argument', {
   xpdb_2 <- xpose_data(runno = '001', ext = '.lst', dir = 'data', quiet = TRUE) %>% 
-    set_var_types(idv = 'TAD')
+    filter(OCC == 3)
   expect_true(inherits(xpdb_2, 'xpose_data'))
   
   # Correct path and quiet option for identical comparison with xpdb_ex_pk
@@ -37,6 +38,7 @@ test_that('properly creates the xpdb when using the runno argument', {
   xpdb_2$options$dir <- 'analysis/models/pk/'
   attr(xpdb_2$code, 'dir') <- 'analysis/models/pk/'
   xpdb_2$options$quiet <- FALSE
+  xpdb_2$xp_theme$labeller <- xpdb_ex_pk$xp_theme$labeller
   expect_identical(xpdb_2, xpdb_ex_pk)
 })
 

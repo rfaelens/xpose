@@ -107,67 +107,61 @@
       <h1>The xpose plots</h1>
                         <h4 class="author">Benjamin Guiastrennec</h4>
             
-            <h4 class="date">12 October, 2017</h4>
+            <h4 class="date">15 October, 2017</h4>
           </div>
 
     
     
 <div class="contents">
-<div id="create-example-xpdb" class="section level2">
-<h2 class="hasAnchor">
-<a href="#create-example-xpdb" class="anchor"></a>Create example xpdb</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xpdb &lt;-<span class="st"> </span>xpdb_ex_pk <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(OCC <span class="op">==</span><span class="st"> </span><span class="dv">3</span>, <span class="dt">.problem =</span> <span class="dv">1</span>) <span class="co"># Only look at occasion 3</span></code></pre></div>
-</div>
 <div id="basic-goodness-of-fit-plots" class="section level2">
 <h2 class="hasAnchor">
 <a href="#basic-goodness-of-fit-plots" class="anchor"></a>Basic goodness-of-fit plots</h2>
 <div id="plots-of-the-independent-variable-idv" class="section level3">
 <h3 class="hasAnchor">
 <a href="#plots-of-the-independent-variable-idv" class="anchor"></a>Plots of the independent variable (IDV)</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pred_vs_idv.html">dv_vs_idv</a></span>(xpdb)</code></pre></div>
-<p><img src="bestiarium_files/figure-html/unnamed-chunk-3-1.png" width="75%" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pred_vs_idv.html">ipred_vs_idv</a></span>(xpdb)</code></pre></div>
-<p><img src="bestiarium_files/figure-html/unnamed-chunk-3-2.png" width="75%" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pred_vs_idv</span>(xpdb)</code></pre></div>
-<p><img src="bestiarium_files/figure-html/unnamed-chunk-3-3.png" width="75%" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pred_vs_idv.html">dv_preds_vs_idv</a></span>(xpdb)</code></pre></div>
-<p><img src="bestiarium_files/figure-html/unnamed-chunk-3-4.png" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pred_vs_idv.html">dv_vs_idv</a></span>(xpdb_ex_pk)</code></pre></div>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-2-1.png" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pred_vs_idv.html">ipred_vs_idv</a></span>(xpdb_ex_pk)</code></pre></div>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-2-2.png" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pred_vs_idv</span>(xpdb_ex_pk)</code></pre></div>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-2-3.png" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pred_vs_idv.html">dv_preds_vs_idv</a></span>(xpdb_ex_pk)</code></pre></div>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-2-4.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="dv-vs-preds-plots" class="section level3">
 <h3 class="hasAnchor">
 <a href="#dv-vs-preds-plots" class="anchor"></a>DV vs. PREDs plots</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dv_vs_pred</span>(xpdb)</code></pre></div>
-<p><img src="bestiarium_files/figure-html/unnamed-chunk-4-1.png" width="75%" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb)</code></pre></div>
-<p><img src="bestiarium_files/figure-html/unnamed-chunk-4-2.png" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dv_vs_pred</span>(xpdb_ex_pk)</code></pre></div>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-3-1.png" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb_ex_pk)</code></pre></div>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-3-2.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="residual-plots" class="section level3">
 <h3 class="hasAnchor">
 <a href="#residual-plots" class="anchor"></a>Residual plots</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/res_vs_idv.html">res_vs_idv</a></span>(xpdb, <span class="dt">res =</span> <span class="st">'CWRES'</span>)</code></pre></div>
-<p><img src="bestiarium_files/figure-html/unnamed-chunk-5-1.png" width="75%" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/res_vs_pred.html">res_vs_pred</a></span>(xpdb, <span class="dt">res =</span> <span class="st">'CWRES'</span>)</code></pre></div>
-<p><img src="bestiarium_files/figure-html/unnamed-chunk-5-2.png" width="75%" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/res_vs_idv.html">absval_res_vs_idv</a></span>(xpdb, <span class="dt">res =</span> <span class="st">'CWRES'</span>)</code></pre></div>
-<p><img src="bestiarium_files/figure-html/unnamed-chunk-5-3.png" width="75%" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/res_vs_pred.html">absval_res_vs_pred</a></span>(xpdb, <span class="dt">res =</span> <span class="st">'CWRES'</span>)</code></pre></div>
-<p><img src="bestiarium_files/figure-html/unnamed-chunk-5-4.png" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/res_vs_idv.html">res_vs_idv</a></span>(xpdb_ex_pk, <span class="dt">res =</span> <span class="st">'CWRES'</span>)</code></pre></div>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-4-1.png" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/res_vs_pred.html">res_vs_pred</a></span>(xpdb_ex_pk, <span class="dt">res =</span> <span class="st">'CWRES'</span>)</code></pre></div>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-4-2.png" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/res_vs_idv.html">absval_res_vs_idv</a></span>(xpdb_ex_pk, <span class="dt">res =</span> <span class="st">'CWRES'</span>)</code></pre></div>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-4-3.png" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/res_vs_pred.html">absval_res_vs_pred</a></span>(xpdb_ex_pk, <span class="dt">res =</span> <span class="st">'CWRES'</span>)</code></pre></div>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-4-4.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="minimization-plots" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minimization-plots" class="anchor"></a>Minimization plots</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/minimization_plots.html">prm_vs_iteration</a></span>(xpdb)</code></pre></div>
-<p><img src="bestiarium_files/figure-html/unnamed-chunk-6-1.png" width="75%" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/minimization_plots.html">grd_vs_iteration</a></span>(xpdb)</code></pre></div>
-<p><img src="bestiarium_files/figure-html/unnamed-chunk-6-2.png" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/minimization_plots.html">prm_vs_iteration</a></span>(xpdb_ex_pk, <span class="dt">labeller =</span> <span class="st">'label_value'</span>)</code></pre></div>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-5-1.png" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/minimization_plots.html">grd_vs_iteration</a></span>(xpdb_ex_pk, <span class="dt">labeller =</span> <span class="st">'label_value'</span>)</code></pre></div>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-5-2.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="individual-plots" class="section level2">
 <h2 class="hasAnchor">
 <a href="#individual-plots" class="anchor"></a>Individual plots</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/ind_plots.html">ind_plots</a></span>(xpdb, <span class="dt">page =</span> <span class="dv">1</span>)</code></pre></div>
-<p><img src="bestiarium_files/figure-html/unnamed-chunk-7-1.png" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/ind_plots.html">ind_plots</a></span>(xpdb_ex_pk, <span class="dt">page =</span> <span class="dv">1</span>)</code></pre></div>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-6-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="distributions" class="section level2">
 <h2 class="hasAnchor">
@@ -175,26 +169,26 @@
 <div id="histograms-and-density-plots" class="section level3">
 <h3 class="hasAnchor">
 <a href="#histograms-and-density-plots" class="anchor"></a>Histograms and density plots</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/distrib_plot.html">prm_distrib</a></span>(xpdb)</code></pre></div>
-<p><img src="bestiarium_files/figure-html/unnamed-chunk-8-1.png" width="75%" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/distrib_plot.html">eta_distrib</a></span>(xpdb)</code></pre></div>
-<p><img src="bestiarium_files/figure-html/unnamed-chunk-8-2.png" width="75%" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/distrib_plot.html">res_distrib</a></span>(xpdb)</code></pre></div>
-<p><img src="bestiarium_files/figure-html/unnamed-chunk-8-3.png" width="75%" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/distrib_plot.html">cov_distrib</a></span>(xpdb)</code></pre></div>
-<p><img src="bestiarium_files/figure-html/unnamed-chunk-8-4.png" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/distrib_plot.html">prm_distrib</a></span>(xpdb_ex_pk)</code></pre></div>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-7-1.png" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/distrib_plot.html">eta_distrib</a></span>(xpdb_ex_pk)</code></pre></div>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-7-2.png" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/distrib_plot.html">res_distrib</a></span>(xpdb_ex_pk)</code></pre></div>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-7-3.png" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/distrib_plot.html">cov_distrib</a></span>(xpdb_ex_pk)</code></pre></div>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-7-4.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="qq-plots" class="section level3">
 <h3 class="hasAnchor">
 <a href="#qq-plots" class="anchor"></a>QQ plots</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/qq_plot.html">prm_qq</a></span>(xpdb)</code></pre></div>
-<p><img src="bestiarium_files/figure-html/unnamed-chunk-9-1.png" width="75%" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/qq_plot.html">eta_qq</a></span>(xpdb)</code></pre></div>
-<p><img src="bestiarium_files/figure-html/unnamed-chunk-9-2.png" width="75%" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/qq_plot.html">res_qq</a></span>(xpdb)</code></pre></div>
-<p><img src="bestiarium_files/figure-html/unnamed-chunk-9-3.png" width="75%" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/qq_plot.html">cov_qq</a></span>(xpdb)</code></pre></div>
-<p><img src="bestiarium_files/figure-html/unnamed-chunk-9-4.png" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/qq_plot.html">prm_qq</a></span>(xpdb_ex_pk)</code></pre></div>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-8-1.png" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/qq_plot.html">eta_qq</a></span>(xpdb_ex_pk)</code></pre></div>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-8-2.png" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/qq_plot.html">res_qq</a></span>(xpdb_ex_pk)</code></pre></div>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-8-3.png" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/qq_plot.html">cov_qq</a></span>(xpdb_ex_pk)</code></pre></div>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-8-4.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="kinetic-plots" class="section level2">
@@ -203,8 +197,8 @@
 <div id="compartments-amount" class="section level3">
 <h3 class="hasAnchor">
 <a href="#compartments-amount" class="anchor"></a>Compartment’s amount</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/amt_vs_idv.html">amt_vs_idv</a></span>(xpdb)</code></pre></div>
-<p><img src="bestiarium_files/figure-html/unnamed-chunk-10-1.png" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/amt_vs_idv.html">amt_vs_idv</a></span>(xpdb_ex_pk)</code></pre></div>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-9-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="visual-predictive-checks-vpc" class="section level2">
@@ -214,17 +208,18 @@
 <h3 class="hasAnchor">
 <a href="#continuous-vpc" class="anchor"></a>Continuous vpc</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xpdb_ex_pk <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st"> </span><span class="kw"><a href="../reference/vpc_data.html">vpc_data</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st"> </span><span class="kw"><a href="../reference/vpc_data.html">vpc_data</a></span>(<span class="dt">opt =</span> <span class="kw"><a href="../reference/vpc_opt.html">vpc_opt</a></span>(<span class="dt">n_bins =</span> <span class="dv">7</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st"> </span><span class="kw"><a href="../reference/vpc.html">vpc</a></span>()</code></pre></div>
-<p><img src="bestiarium_files/figure-html/unnamed-chunk-11-1.png" width="75%" style="display: block; margin: auto;"></p>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-10-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="censored-vpc" class="section level3">
 <h3 class="hasAnchor">
 <a href="#censored-vpc" class="anchor"></a>Censored vpc</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xpdb_ex_pk <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st"> </span><span class="kw"><a href="../reference/vpc_data.html">vpc_data</a></span>(<span class="dt">vpc_type =</span> <span class="st">'censored'</span>, <span class="dt">opt =</span> <span class="kw"><a href="../reference/vpc_opt.html">vpc_opt</a></span>(<span class="dt">lloq =</span> <span class="dv">1</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st"> </span><span class="kw"><a href="../reference/vpc_data.html">vpc_data</a></span>(<span class="dt">vpc_type =</span> <span class="st">'censored'</span>, <span class="dt">opt =</span> <span class="kw"><a href="../reference/vpc_opt.html">vpc_opt</a></span>(<span class="dt">lloq =</span> <span class="dv">1</span>, <span class="dt">n_bins =</span> <span class="dv">7</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st"> </span><span class="kw"><a href="../reference/vpc.html">vpc</a></span>()</code></pre></div>
-<p><img src="bestiarium_files/figure-html/unnamed-chunk-12-1.png" width="75%" style="display: block; margin: auto;"></p>
+<pre><code>Warning: Points (type = 'p') can only be added with continuous VPC.</code></pre>
+<p><img src="bestiarium_files/figure-html/unnamed-chunk-11-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="categorical-vpc" class="section level3">
 <h3 class="hasAnchor">
@@ -242,8 +237,7 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#create-example-xpdb">Create example xpdb</a></li>
-      <li><a href="#basic-goodness-of-fit-plots">Basic goodness-of-fit plots</a></li>
+<li><a href="#basic-goodness-of-fit-plots">Basic goodness-of-fit plots</a></li>
       <li><a href="#minimization-plots">Minimization plots</a></li>
       <li><a href="#individual-plots">Individual plots</a></li>
       <li><a href="#distributions">Distributions</a></li>

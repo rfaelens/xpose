@@ -11,7 +11,7 @@ output: github_document
 ```{r, include = FALSE}
 library(xpose)
 
-xpdb <- xpdb_ex_pk
+xpdb <- xpdb_ex_pk %>% filter(OCC == 3)
 xpdb$options$quiet <- TRUE
 
 knitr::opts_chunk$set(fig.path = 'inst/img/', 
@@ -62,14 +62,19 @@ summary(xpdb, problem = 1)
 dv_vs_ipred(xpdb)
 ```
 
-##### Distribution plots
+##### Individual plots
 ```{r readme_example_figure_2, fig.width = 6, out.width = '75%'}
-eta_distrib(xpdb)
+ind_plots(xpdb, page = 1)
+```
+
+##### Distribution plots
+```{r readme_example_figure_3, fig.width = 6, out.width = '75%'}
+eta_distrib(xpdb, labeller = 'label_value')
 ```
 
 ##### Minimization diagnostics
-```{r readme_example_figure_3, fig.width = 6, out.width = '75%'}
-prm_vs_iteration(xpdb)
+```{r readme_example_figure_4, fig.width = 6, out.width = '75%'}
+prm_vs_iteration(xpdb, labeller = 'label_value')
 ```
 
 ##### And much more !

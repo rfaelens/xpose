@@ -20,7 +20,7 @@
 #' # Density plot of etas with a rug
 #' eta_distrib(xpdb_ex_pk, type = 'dr')
 #' 
-#' # Histogram of residuals by occasion
+#' # Histogram of different residuals
 #' res_distrib(xpdb_ex_pk, type = 'hr', res = c('IWRES', 'CWRES'))
 #' 
 #' # Density plot of continuous covariates

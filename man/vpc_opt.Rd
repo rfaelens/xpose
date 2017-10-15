@@ -5,8 +5,8 @@
 \title{Generate a list of options for VPC data generation}
 \usage{
 vpc_opt(bins = "jenks", n_bins = "auto", bin_mid = "mean",
-  pred_corr = NULL, pred_corr_lower_bnd = 0, pi = c(0.05, 0.95),
-  ci = c(0.05, 0.95), lloq = NULL, uloq = NULL, rtte = FALSE,
+  pred_corr = FALSE, pred_corr_lower_bnd = 0, pi = c(0.025, 0.975),
+  ci = c(0.025, 0.975), lloq = NULL, uloq = NULL, rtte = FALSE,
   rtte_calc_diff = TRUE, events = NULL, kmmc = NULL,
   reverse_prob = FALSE, as_percentage = TRUE)
 }
