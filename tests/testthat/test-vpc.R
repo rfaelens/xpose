@@ -18,6 +18,7 @@ xpdb_vpc_test <- xpdb_ex_pk %>%
   vpc_data(opt = vpc_opt(n_bins = 3, lloq = 0.1), quiet = TRUE) %>%
   vpc_data(vpc_type = 'cens', opt = vpc_opt(n_bins = 3, lloq = 0.4), quiet = TRUE)
 
+test_psn_vpc <- vpc_data(xpdb_ex_pk, psn_folder = 'data/psn_vpc/', quiet = TRUE)
 
 # Tests start here --------------------------------------------------------
 test_that('vpc_opt works properly', {
@@ -33,6 +34,8 @@ test_that('vpc_data properly check input', {
   expect_error(vpc_data(), regexp = 'argument \"xpdb\" is missing')
   expect_error(vpc_data(xpdb_ex_pk, psn_folder = '.', quiet = TRUE), 
                  regexp = 'No table files could be found')
+  expect_error(vpc_data(xpdb_ex_pk, psn_folder = 'fake', quiet = TRUE), 
+               regexp = 'fake could not be found')
 })
 
 test_that('vpc_data works properly with xpdb tables', {
@@ -45,7 +48,6 @@ test_that('vpc_data works properly with psn_folder', {
   parsed_psn_vpc <- psn_vpc_parser(xpdb = xpdb_ex_pk, psn_folder = 'data/psn_vpc/', 
                                    psn_bins = TRUE, opt = vpc_opt(), quiet = TRUE)
   expect_equal(parsed_psn_vpc, ctrl_psn_vpc_dat)
-  test_psn_vpc <- vpc_data(xpdb_ex_pk, psn_folder = 'data/psn_vpc/', quiet = TRUE)
   expect_true(is.xpdb(test_psn_vpc))
   expect_error(psn_vpc_plot <- test_psn_vpc %>% vpc(), NA)
 })
@@ -58,6 +60,8 @@ test_that('vpc plot properly check input', {
   expect_error(vpc(ctrl_special, quiet = FALSE), regexp = 'Several VPC data')
   expect_error(vpc(ctrl_special, vpc_type = 'unknown', quiet = FALSE), 
                regexp = 'should be one of')
+  expect_error(test_psn_vpc %>% vpc(vpc_type = 'cens'),
+               regexp = 'No cens VPC data found')
 })
 
 test_that('vpc plot are properly generated', {
