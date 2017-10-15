@@ -61,6 +61,9 @@
     <li class="divider"></li>
     <li class="dropdown-header">Getting started</li>
     <li>
+      <a href="../articles/cheatsheet.pdf">Cheat sheet (pdf)</a>
+    </li>
+    <li>
       <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
@@ -153,8 +156,8 @@
     </tr>
     <tr>
       <th>type</th>
-      <td><p>String setting the type of plot to be used. Can be points 'p',
-line 'l', smooth 's' and text 't' or any combination of the four.</p></td>
+      <td><p>String setting the type of plot to be used. Can be line 'l', 
+point 'p', smooth 's' and text 't' or any combination of the four.</p></td>
     </tr>
     <tr>
       <th>guide</th>
@@ -228,18 +231,18 @@ any option supported by this layer e.g. point_color = 'blue', smooth_method = 'l
     
     <p>Every xpose plot function has built-in faceting functionalities. Faceting arguments 
 are passed to the functions <a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a> when the <code>facets</code> 
-argument is a character string (e.g. <code>facets = c('OCC', 'SEX')</code>) or 
-<a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a> when facets is a formula (e.g. <code>facets = OCC~SEX</code>).
+argument is a character string (e.g. <code>facets = c('SEX', 'MED1')</code>) or 
+<a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a> when facets is a formula (e.g. <code>facets = SEX~MED1</code>).
 All xpose plot functions accept all the arguments for the <a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a> 
 and <a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a> functions e.g. <code><a href='dv_vs_pred.html'>dv_vs_ipred(xpdb_ex_pk, 
-facets = OCC~SEX, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')</a></code>.</p>
+facets = SEX~MED1, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')</a></code>.</p>
 <p>Faceting options can either be defined in plot functions (e.g. <code><a href='dv_vs_pred.html'>dv_vs_ipred(xpdb_ex_pk, 
-facets = 'OCC')</a></code>) or assigned globally to an xpdb object via the <code>xp_theme</code> (e.g. <code>xpdb 
-&lt;- update_themes(xpdb_ex_pk, xp_theme = list(facets = 'OCC'))</code>). In the latter example all plots 
-generate from this xpdb will automatically be stratified by `OCC`.</p>
+facets = 'SEX')</a></code>) or assigned globally to an xpdb object via the <code>xp_theme</code> (e.g. <code>xpdb 
+&lt;- update_themes(xpdb_ex_pk, xp_theme = list(facets = 'SEX'))</code>). In the latter example all plots 
+generate from this xpdb will automatically be stratified by `SEX`.</p>
 <p>By default, some plot functions use a custom stratyfiyng variable named `variable`, e.g. 
 <code><a href='distrib_plot.html'>eta_distrib()</a></code>. When using the <code>facets</code> argument, `variable` needs to be added manually 
-e.g. <code>facets = c('OCC', 'variable')</code> or <code>facets = c('OCC', 'variable')</code>, but is optional, 
+e.g. <code>facets = c('SEX', 'variable')</code> or <code>facets = c('SEX', 'variable')</code>, but is optional, 
 when using the <code>facets</code> argument in <code>xp_theme</code> variable is automatically added whenever needed.</p>
     
     <h2 class="hasAnchor" id="template-titles"><a class="anchor" href="#template-titles"></a>Template titles</h2>

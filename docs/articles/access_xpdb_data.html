@@ -39,6 +39,9 @@
 <li class="divider">
     <li class="dropdown-header">Getting started</li>
     <li>
+      <a href="../articles/cheatsheet.pdf">Cheat sheet (pdf)</a>
+    </li>
+    <li>
       <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
@@ -104,7 +107,7 @@
       <h1>Access the xpdb data</h1>
                         <h4 class="author">Benjamin Guiastrennec</h4>
             
-            <h4 class="date">22 September, 2017</h4>
+            <h4 class="date">15 October, 2017</h4>
           </div>
 
     
@@ -119,8 +122,8 @@
 <pre><code>run001.lst overview: 
  - Software: nonmem 7.3.0 
  - Attached files: 
-   + obs tabs: $prob no.1: catab001.csv, cotab001, patab001, sdtab001 
-   + sim tabs: $prob no.2: simtab001.zip 
+   + obs tabs: $prob no.1 (modified): catab001.csv, cotab001, patab001, sdtab001 
+   + sim tabs: $prob no.2 (modified): simtab001.zip 
    + output files: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi, run001.shk 
    + special: &lt;none&gt; 
  - gg_theme: theme_readable 
@@ -156,7 +159,7 @@ code</code></pre></div>
 <p><em>Note when providing a table name it is not guaranteed that the table will be identical to its file (i.e. the order of the columns may have been changed and tables with <code>FIRSTONLY</code> will no longer be deduplicated).</em></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_data.html">get_data</a></span>(xpdb, <span class="dt">table =</span> <span class="st">'cotab001'</span>)
 data</code></pre></div>
-<pre><code># A tibble: 1,166 x 4
+<pre><code># A tibble: 550 x 4
        ID  CLCR   AGE    WT
    &lt;fctr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
  1    110    66    68   105
@@ -166,10 +169,10 @@ data</code></pre></div>
  5    110    66    68   105
  6    110    66    68   105
  7    110    66    68   105
- 8    110    66    68   105
- 9    110    66    68   105
-10    110    66    68   105
-# ... with 1,156 more rows</code></pre>
+ 8    112    47    73    80
+ 9    112    47    73    80
+10    112    47    73    80
+# ... with 540 more rows</code></pre>
 </div>
 <div id="access-the-run-files" class="section level3">
 <h3 class="hasAnchor">
@@ -192,6 +195,29 @@ file</code></pre></div>
 10         9 24.6701 1.45429 7.04078 0.413384 0.259226 0.00574881            1    0.0404368
 # ... with 20 more rows, and 6 more variables: `OMEGA(2,1)` &lt;dbl&gt;, `OMEGA(2,2)` &lt;dbl&gt;,
 #   `OMEGA(3,1)` &lt;dbl&gt;, `OMEGA(3,2)` &lt;dbl&gt;, `OMEGA(3,3)` &lt;dbl&gt;, OBJ &lt;dbl&gt;</code></pre>
+</div>
+<div id="access-the-parameter-estimates" class="section level3">
+<h3 class="hasAnchor">
+<a href="#access-the-parameter-estimates" class="anchor"></a>Access the parameter estimates</h3>
+<p>The <code><a href="../reference/get_prm.html">get_prm()</a></code> function can be used to access the parameter estimates. The parameters can be outputted to the console or stored into R object.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_prm.html">get_prm</a></span>(xpdb, <span class="dt">digits =</span> <span class="dv">4</span>)
+prm</code></pre></div>
+<pre><code>
+The relative standard errors for omega and sigma are reported on the approximate
+standard deviation scale (SE/variance estimate)/2.
+
+Estimates for $prob no.1, subprob no.0, method foce
+ Parameter  Label      Value       RSE
+ THETA1     TVCL       25.58       0.02991
+ THETA2     TVV        1.388       0.04342
+ THETA3     TVKA       4.735       0.1718
+ THETA4     LAG        0.4068      0.01883
+ THETA5     RES ERR    0.2455      0.07365
+ THETA6     CRCL on CL 0.00857     0.1653
+ OMEGA(1,1) IIV CL     0.2034      0.1364
+ OMEGA(2,2) IIV V      0.2697      0.1174
+ OMEGA(3,3) IIV KA     1.385       0.1159
+ SIGMA(1,1)            1       fix  - </code></pre>
 </div>
 <div id="access-the-run-summary" class="section level3">
 <h3 class="hasAnchor">

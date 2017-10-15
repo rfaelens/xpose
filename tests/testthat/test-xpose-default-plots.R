@@ -108,7 +108,7 @@ test_that('faceting works properly', {
 test_that('xpose_geom mapping works properly', {
   expect_equal(p1$layers[[2]]$aes_params$colour, 'red')
   expect_equal(p1$layers[[3]]$aes_params$colour, 'yellow')
-  expect_equal(p1$layers[[4]]$aes_params$colour, 'tomato')
+  expect_equal(p1$layers[[4]]$aes_params$colour, 'grey70')
   expect_equal(p1$layers[[5]]$aes_params$colour, 'green')
   
   expect_equal(d1$layers[[1]]$aes_params$colour, 'red')

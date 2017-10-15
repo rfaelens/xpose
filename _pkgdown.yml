@@ -39,6 +39,7 @@ reference:
     - get_code
     - get_data
     - get_file
+    - get_prm
     - get_summary
   - title: Basic gof
     desc:  Basic goodness-of-fit plots.
@@ -138,6 +139,8 @@ navbar:
     menu:
         - text: "--------------------------"
         - text: "Getting started"
+        - text: Cheat sheet (pdf)
+          href: articles/cheatsheet.pdf
         - text: Introduction
           href: articles/introduction.html
         - text: Import model outputs

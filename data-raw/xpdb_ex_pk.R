@@ -8,7 +8,7 @@ library(xpose)
 
 # Generate xpdb
 xpdb_ex_pk <- xpose_data(runno = '001', dir = 'inst/extdata/', quiet = FALSE) %>% 
-  set_var_types(idv = 'TAD')
+  filter(OCC == 3)
 
 # Overwrite directory paths
 xpdb_ex_pk$summary$value[xpdb_ex_pk$summary$label == 'dir'] <- 'analysis/models/pk/'

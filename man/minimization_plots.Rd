@@ -10,13 +10,13 @@ prm_vs_iteration(xpdb, mapping = NULL, group = "variable", type = "l",
   title = "Parameter @y vs. @x | @run",
   subtitle = "Method: @method, minimization time: @runtime\\nTermination message: @term",
   caption = "@dir", log = NULL, guide = FALSE, facets, problem, subprob,
-  quiet, ...)
+  method, quiet, ...)
 
 grd_vs_iteration(xpdb, mapping = NULL, group = "variable", type = "l",
   title = "Gradient @y vs. @x | @run",
   subtitle = "Method: @method, minimization time: @runtime\\nTermination message: @term",
   caption = "@dir", log = NULL, guide = FALSE, facets, problem, subprob,
-  quiet, ...)
+  method, quiet, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -49,6 +49,8 @@ the last estimation problem.}
 \item{subprob}{The sub-problem number to be used. By default returns 
 the last sub-problem associated with the selected problem.}
 
+\item{method}{The estimation method to be used, by default returns the last one for each file}
+
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 
 \item{...}{Any additional aesthetics to be passed on \code{xplot_scatter}.}
@@ -76,20 +78,20 @@ any option supported by this layer e.g. point_color = 'blue', smooth_method = 'l
 
 Every xpose plot function has built-in faceting functionalities. Faceting arguments 
 are passed to the functions \link[ggforce]{facet_wrap_paginate} when the \code{facets} 
-argument is a character string (e.g. \code{facets = c('OCC', 'SEX')}) or 
-\link[ggforce]{facet_grid_paginate} when facets is a formula (e.g. \code{facets = OCC~SEX}).
+argument is a character string (e.g. \code{facets = c('SEX', 'MED1')}) or 
+\link[ggforce]{facet_grid_paginate} when facets is a formula (e.g. \code{facets = SEX~MED1}).
 All xpose plot functions accept all the arguments for the \link[ggforce]{facet_wrap_paginate} 
 and \link[ggforce]{facet_grid_paginate} functions e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
-facets = OCC~SEX, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')}.
+facets = SEX~MED1, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')}.
 
 Faceting options can either be defined in plot functions (e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
-facets = 'OCC')}) or assigned globally to an xpdb object via the \code{xp_theme} (e.g. \code{xpdb 
-<- update_themes(xpdb_ex_pk, xp_theme = list(facets = 'OCC'))}). In the latter example all plots 
-generate from this xpdb will automatically be stratified by `OCC`.
+facets = 'SEX')}) or assigned globally to an xpdb object via the \code{xp_theme} (e.g. \code{xpdb 
+<- update_themes(xpdb_ex_pk, xp_theme = list(facets = 'SEX'))}). In the latter example all plots 
+generate from this xpdb will automatically be stratified by `SEX`.
 
 By default, some plot functions use a custom stratyfiyng variable named `variable`, e.g. 
 \code{eta_distrib()}. When using the \code{facets} argument, `variable` needs to be added manually 
-e.g. \code{facets = c('OCC', 'variable')} or \code{facets = c('OCC', 'variable')}, but is optional, 
+e.g. \code{facets = c('SEX', 'variable')} or \code{facets = c('SEX', 'variable')}, but is optional, 
 when using the \code{facets} argument in \code{xp_theme} variable is automatically added whenever needed.
 }
 

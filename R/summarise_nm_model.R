@@ -365,7 +365,7 @@ sum_term <- function(model, software) {
         drop <- min(which(stringr::str_detect(y$code, 'NO. OF')))
         dplyr::slice(.data = y, seq(1, (drop - 1))) %>% 
         {stringr::str_trim(.$code)} %>% 
-          stringr::str_trunc(56) %>% 
+          stringr::str_trunc(width = 56) %>% 
           stringr::str_c(collapse = '\n') %>% 
           stringr::str_replace('0MINIM', 'MINIM')})) %>% 
       dplyr::mutate(subprob = 0, label = 'term') %>% 
@@ -389,7 +389,7 @@ sum_warnings <- function(model, software) {
       dplyr::mutate(problem = as.numeric(.$problem)) %>% 
       dplyr::filter(!stringr::str_detect(.$code, 'FOR PROBLEM\\s+(\\d+)')) %>% 
       dplyr::mutate(code = stringr::str_trim(.$code)) %>% 
-      dplyr::mutate(code = stringr::str_trunc(.$code, 56)) %>% 
+      dplyr::mutate(code = stringr::str_trunc(.$code, width = 56)) %>% 
       dplyr::distinct_(.dots = c('problem', 'code')) %>%
       dplyr::group_by_(.dots = 'problem') %>% 
       tidyr::nest() %>% 

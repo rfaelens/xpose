@@ -61,6 +61,9 @@
     <li class="divider"></li>
     <li class="dropdown-header">Getting started</li>
     <li>
+      <a href="../articles/cheatsheet.pdf">Cheat sheet (pdf)</a>
+    </li>
+    <li>
       <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
@@ -130,8 +133,8 @@
     <p>Generate visual predictive checks (VPC) data</p>
     
 
-    <pre class="usage"><span class='fu'>vpc_data</span>(<span class='no'>xpdb</span>, <span class='kw'>opt</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>vpc_type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"continuous"</span>, <span class='st'>"categorical"</span>,
-  <span class='st'>"censored"</span>, <span class='st'>"time-to-event"</span>), <span class='kw'>stratify</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>psn_folder</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>vpc_data</span>(<span class='no'>xpdb</span>, <span class='no'>opt</span>, <span class='no'>stratify</span>, <span class='kw'>vpc_type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"continuous"</span>, <span class='st'>"categorical"</span>,
+  <span class='st'>"censored"</span>, <span class='st'>"time-to-event"</span>), <span class='kw'>psn_folder</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>psn_bins</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>obs_problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sim_problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>quiet</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -147,18 +150,27 @@
 For more information see <code><a href='vpc_opt.html'>vpc_opt</a></code>.</p></td>
     </tr>
     <tr>
-      <th>vpc_type</th>
-      <td><p>A string specifying the type of VPC to be created, can be one of: 
-'continuous', 'categorical', 'censored' or 'time-to-event'.</p></td>
-    </tr>
-    <tr>
       <th>stratify</th>
       <td><p>Either a character string or a formula to stratify the data. For 'categorical' vpcs the 
 stratification fixed to the different categories.</p></td>
     </tr>
     <tr>
+      <th>vpc_type</th>
+      <td><p>A string specifying the type of VPC to be created, can be one of: 
+'continuous', 'categorical', 'censored' or 'time-to-event'.</p></td>
+    </tr>
+    <tr>
       <th>psn_folder</th>
       <td><p>Specify a PsN-generated VPC-folder.</p></td>
+    </tr>
+    <tr>
+      <th>psn_bins</th>
+      <td><p>Only used with argument <code>psn_folder</code>. If <code>TRUE</code> bins will be inputed from the 
+PsN vpc_bins.txt file. If <code>FALSE</code> (default) bins will be re-calculated in R. Note that when 
+<code>psn_bins = TRUE</code> only the first bin array will be used and applied to all panels as it is not 
+currently possible to define per panel binning in xpose. In addition when <code>psn_bins = TRUE</code> is 
+used along with <code><a href='vpc.html'>vpc(smooth = FALSE)</a></code> the observations lines may not be centered in the bins. 
+Check the output carefully.</p></td>
     </tr>
     <tr>
       <th>obs_problem</th>

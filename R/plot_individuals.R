@@ -5,6 +5,9 @@
 #' the independent variable for every individual
 #' 
 #' @inheritParams dv_vs_pred
+#' @param point_alpha Points alpha, should be a vector of 3 values (i.e. DV, IPRED, PRED).
+#' @param point_color Points (and lines) color, should be a vector of 3 values (i.e. DV, IPRED, PRED).
+#' @param line_linetype Lines linetype, should be a vector of 3 values (i.e. DV, IPRED, PRED).
 #' @inheritSection xplot_scatter Layers mapping
 #' @inheritSection xplot_scatter Faceting
 #' @inheritSection xplot_scatter Template titles
@@ -16,8 +19,7 @@
 #' 
 #' # Example with custom mapping and faceting
 #' ind_plots(xpdb_ex_pk, aes(x = TAD), 
-#'           facets = OCC~ID, 
-#'           labeller = 'label_both')
+#'           facets = SEX~ID)
 #' 
 #' @export
 ind_plots <- function(xpdb,
@@ -26,11 +28,14 @@ ind_plots <- function(xpdb,
                       type     = 'lp',
                       title    = 'Individual plots | @run',
                       subtitle = 'Ofv: @ofv, Eps shrink: @epsshk',
-                      caption  = '@dir',
+                      caption  = '@dir | Page @page of @lastpage',
                       log      = NULL,
                       facets,
                       problem,
                       quiet,
+                      point_alpha   = c(0.8, 0, 0),
+                      point_color   = c('grey60', 'deepskyblue4', 'deepskyblue3'),
+                      line_linetype = c('blank', 'solid', '55'),
                       ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
@@ -60,7 +65,7 @@ ind_plots <- function(xpdb,
                  yscale = check_scales('y', log), 
                  title = title, subtitle = subtitle, caption = caption,
                  plot_name = as.character(match.call()[[1]])))) +
-    scale_alpha_manual(values = c(0.8, 0, 0)) +
-    scale_color_manual(values = c('grey60', 'deepskyblue4', 'deepskyblue3')) +
-    scale_linetype_manual(values = c('blank', 'solid', '55'))
+    scale_alpha_manual(values = point_alpha) +
+    scale_color_manual(values = point_color) +
+    scale_linetype_manual(values = line_linetype)
 }

@@ -46,9 +46,9 @@ xplot_qq <- function(xpdb,
   # Fetch data
   if (missing(opt)) opt <- data_opt()
   data <- fetch_data(xpdb, quiet = quiet, problem = opt$problem, subprob = opt$subprob, 
-                     source = opt$source, simtab = opt$simtab, filter = opt$filter, 
-                     tidy = opt$tidy, index_col = opt$index_col, value_col = opt$value_col,
-                     post_processing = opt$post_processing)
+                     method = opt$method, source = opt$source, simtab = opt$simtab, 
+                     filter = opt$filter, tidy = opt$tidy, index_col = opt$index_col, 
+                     value_col = opt$value_col, post_processing = opt$post_processing)
   if (is.null(data) || nrow(data) == 0) {
     stop('No data available for plotting. Please check the variable mapping and filering options.', 
          call. = FALSE)
@@ -108,6 +108,8 @@ xplot_qq <- function(xpdb,
   xp$xpose <- list(fun      = plot_name,
                    summary  = xpdb$summary,
                    problem  = attr(data, 'problem'),
+                   subprob  = attr(data, 'subprob'),
+                   method   = attr(data, 'method'),
                    quiet    = quiet,
                    xp_theme = xpdb$xp_theme[stringr::str_c(c('title', 'subtitle', 'caption'), 
                                                            '_suffix')])

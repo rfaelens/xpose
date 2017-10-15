@@ -5,6 +5,7 @@
 #' @inheritParams dv_vs_pred
 #' @param subprob The sub-problem number to be used. By default returns 
 #' the last sub-problem associated with the selected problem.
+#' @param method The estimation method to be used, by default returns the last one for each file
 #' 
 #' @inheritSection xplot_scatter Layers mapping
 #' @inheritSection xplot_scatter Faceting
@@ -29,24 +30,28 @@ prm_vs_iteration <- function(xpdb,
                              facets,
                              problem,
                              subprob,
+                             method,
                              quiet,
                              ...) {
   # Check input
   check_xpdb(xpdb, check = 'files')
   if (missing(problem)) problem <- last_file_problem(xpdb, 'ext')
   if (missing(subprob)) subprob <- last_file_subprob(xpdb, 'ext', problem)
+  if (missing(method)) method  <- last_file_method(xpdb, ext = 'ext', 
+                                                   problem = problem, subprob = subprob)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (missing(facets)) facets <- 'variable'
   x_var <- 'ITERATION'
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
-                opt = data_opt(problem = problem, 
-                               source = 'ext',
+                opt = data_opt(problem = problem, subprob = subprob,
+                               method = method, source = 'ext',
                                filter = function(x) {
                                  x %>% 
                                    dplyr::filter(.[, x_var] >= 0) %>% 
                                    dplyr::select_if(.predicate = function(x) dplyr::n_distinct(x) > 1)
-                               }, tidy = TRUE, index_col = x_var),
+                               }, tidy = TRUE, index_col = x_var,
+                               post_processing = reorder_factors(prefix = NA)),
                 mapping = aes_c(aes_string(x = x_var, y = 'value'), mapping),
                 type = type, guide = guide, facets = facets, 
                 xscale = check_scales('x', log), 
@@ -70,19 +75,23 @@ grd_vs_iteration <- function(xpdb,
                              facets,
                              problem,
                              subprob,
+                             method,
                              quiet,
                              ...) {
   # Check input
   check_xpdb(xpdb, check = 'files')
   if (missing(problem)) problem <- last_file_problem(xpdb, 'grd')
   if (missing(subprob)) subprob <- last_file_subprob(xpdb, 'grd', problem)
+  if (missing(method)) method  <- last_file_method(xpdb, ext = 'grd', 
+                                                   problem = problem, subprob = subprob)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (missing(facets)) facets <- 'variable'
   x_var <- 'ITERATION'
+  msg('Static parameters not shown.', quiet)
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
-                opt = data_opt(problem = problem, 
-                               source = 'grd',
+                opt = data_opt(problem = problem, subprob = subprob, 
+                               method = method, source = 'grd',
                                filter = function(x) {
                                  x %>% 
                                    dplyr::filter(.[, x_var] >= 0) %>% 

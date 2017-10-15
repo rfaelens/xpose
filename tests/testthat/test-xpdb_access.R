@@ -7,7 +7,7 @@ test_that('get_code checks input properly', {
   expect_error(get_code(), regexp = '"xpdb" is missing')
   
   # Error with bad problem input
-  expect_error(get_code(xpdb_ex_pk, problem = 99), regexp = 'Problem no.99 not found in model code')
+  expect_error(get_code(xpdb_ex_pk, problem = 99), regexp = '\\$prob no.99 not found in model code')
 })
 
 test_that('get_code works properly', {
@@ -27,20 +27,21 @@ test_that('get_data checks input properly', {
   # Error with missing xpdb
   expect_error(get_data(), regexp = '"xpdb" is missing')
   
-  # Error with missing table and problems
-  expect_error(get_data(xpdb_ex_pk), regexp = '`table` or `problem` required')
-  
   # Error with simulataneous table and problems
   expect_error(get_data(xpdb_ex_pk, table = 'sdtab001', problem = 1), regexp = 'together')
   
   # Error with bad problem input
-  expect_error(get_data(xpdb_ex_pk, problem = 99), regexp = 'Problem no.99 not found')
+  expect_error(get_data(xpdb_ex_pk, problem = 99), regexp = '\\$prob no.99 not found')
   
   # Error with bad table input
   expect_error(get_data(xpdb_ex_pk, table = 'faketab'), regexp = 'faketab not found')
 })
 
 test_that('get_data works properly', {
+  # Default return works properly
+  expect_message(tmp_get_data_1 <- get_data(xpdb_ex_pk), regexp = 'Returning data from \\$prob no\\.1')
+  expect_equal(tmp_get_data_1, xpdb_ex_pk$data$data[[1]])
+  
   # Return single problem
   expect_equal(get_data(xpdb_ex_pk, problem = 1), xpdb_ex_pk$data$data[[1]])
   
@@ -66,10 +67,10 @@ test_that('get_file checks input properly', {
   expect_error(get_file(xpdb_ex_pk, file = 'fakefile'), regexp = 'fakefile not found')
   
   # Error with bad problem input
-  expect_error(get_file(xpdb_ex_pk, file = 'run001.ext', problem = 99), regexp = 'Problem no.99 not found')
+  expect_error(get_file(xpdb_ex_pk, file = 'run001.ext', problem = 99), regexp = '\\$prob no.99 not found')
   
   # Error with bad sub-problem input
-  expect_error(get_file(xpdb_ex_pk, file = 'run001.ext', subprob = 99), regexp = 'Sub-problem no.99 not found')
+  expect_error(get_file(xpdb_ex_pk, file = 'run001.ext', subprob = 99), regexp = 'Subprob no.99 not found')
 })
 
 test_that('get_file works properly', {
@@ -79,11 +80,13 @@ test_that('get_file works properly', {
   
   # Return multiple files
   expect_equal(get_file(xpdb_ex_pk, file = c('run001.ext', 'run001.phi')), 
-                        list(`run001.ext` = xpdb_ex_pk$files[xpdb_ex_pk$files$name == 'run001.ext', ]$data[[1]],
-                             `run001.phi` = xpdb_ex_pk$files[xpdb_ex_pk$files$name == 'run001.phi', ]$data[[1]]))
+                        list(`run001.ext_prob_1_subprob_0_foce` = 
+                               xpdb_ex_pk$files[xpdb_ex_pk$files$name == 'run001.ext', ]$data[[1]],
+                             `run001.phi_prob_1_subprob_0_foce` = 
+                               xpdb_ex_pk$files[xpdb_ex_pk$files$name == 'run001.phi', ]$data[[1]]))
 })
 
-test_that('get_file is quite when option is set in xpdb', {
+test_that('get_file is quiet when option is set in xpdb', {
   # ensure option is set
   xpdb_ex_pk$options$quiet <- TRUE
   expect_silent(get_file(xpdb_ex_pk, file = 'run001.ext'))
@@ -96,10 +99,10 @@ test_that('get_summary checks input properly', {
   expect_error(get_summary(), regexp = '"xpdb" is missing')
   
   # Error with bad problem input
-  expect_error(get_summary(xpdb_ex_pk, problem = 99), regexp = 'Problem no.99 not found')
+  expect_error(get_summary(xpdb_ex_pk, problem = 99), regexp = '\\$prob no.99 not found')
   
   # Error with bad sub-problem input
-  expect_error(get_summary(xpdb_ex_pk, subprob = 99), regexp = 'Sub-problem no.99 not found')
+  expect_error(get_summary(xpdb_ex_pk, subprob = 99), regexp = 'Subprob no.99 not found')
 })
 
 test_that('get_summary works properly', {
@@ -108,4 +111,28 @@ test_that('get_summary works properly', {
   
   # Return multiple problems
   expect_equal(get_summary(xpdb_ex_pk, problem = 0:1), xpdb_ex_pk$summary[xpdb_ex_pk$summary$problem %in% 0:1, ])
+})
+
+
+# Tests for get_prm -------------------------------------------------------
+
+test_that('get_prm checks input properly', {
+  # Error with missing xpdb
+  expect_error(get_prm(), regexp = '"xpdb" is missing')
+  
+  # Error with bad problem input
+  expect_error(get_prm(xpdb_ex_pk, problem = 99), regexp = 'No parameter estimates found for \\$prob no\\.99')
+})
+
+test_that('get_prm works properly', {
+  
+  # Load control parameter table
+  # get_prm_ctrl <- get_prm(xpdb_ex_pk)
+  # save(get_prm_ctrl, file = 'data/get_prm_ctrl.Rdata')
+  load('data/get_prm_ctrl.Rdata')
+  
+  # Test
+  get_prm_test <- get_prm(xpdb_ex_pk)
+  expect_true('xpose_prm' %in% class(get_prm_test))
+  expect_identical(get_prm_test, get_prm_ctrl)
 })

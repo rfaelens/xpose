@@ -61,6 +61,9 @@
     <li class="divider"></li>
     <li class="dropdown-header">Getting started</li>
     <li>
+      <a href="../articles/cheatsheet.pdf">Cheat sheet (pdf)</a>
+    </li>
+    <li>
       <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
@@ -236,18 +239,18 @@ any option supported by this layer e.g. histogram_fill = 'blue', rug_sides = 'b'
     
     <p>Every xpose plot function has built-in faceting functionalities. Faceting arguments 
 are passed to the functions <a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a> when the <code>facets</code> 
-argument is a character string (e.g. <code>facets = c('OCC', 'SEX')</code>) or 
-<a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a> when facets is a formula (e.g. <code>facets = OCC~SEX</code>).
+argument is a character string (e.g. <code>facets = c('SEX', 'MED1')</code>) or 
+<a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a> when facets is a formula (e.g. <code>facets = SEX~MED1</code>).
 All xpose plot functions accept all the arguments for the <a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a> 
 and <a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a> functions e.g. <code><a href='dv_vs_pred.html'>dv_vs_ipred(xpdb_ex_pk, 
-facets = OCC~SEX, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')</a></code>.</p>
+facets = SEX~MED1, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')</a></code>.</p>
 <p>Faceting options can either be defined in plot functions (e.g. <code><a href='dv_vs_pred.html'>dv_vs_ipred(xpdb_ex_pk, 
-facets = 'OCC')</a></code>) or assigned globally to an xpdb object via the <code>xp_theme</code> (e.g. <code>xpdb 
-&lt;- update_themes(xpdb_ex_pk, xp_theme = list(facets = 'OCC'))</code>). In the latter example all plots 
-generate from this xpdb will automatically be stratified by `OCC`.</p>
+facets = 'SEX')</a></code>) or assigned globally to an xpdb object via the <code>xp_theme</code> (e.g. <code>xpdb 
+&lt;- update_themes(xpdb_ex_pk, xp_theme = list(facets = 'SEX'))</code>). In the latter example all plots 
+generate from this xpdb will automatically be stratified by `SEX`.</p>
 <p>By default, some plot functions use a custom stratyfiyng variable named `variable`, e.g. 
 <code>eta_distrib()</code>. When using the <code>facets</code> argument, `variable` needs to be added manually 
-e.g. <code>facets = c('OCC', 'variable')</code> or <code>facets = c('OCC', 'variable')</code>, but is optional, 
+e.g. <code>facets = c('SEX', 'variable')</code> or <code>facets = c('SEX', 'variable')</code>, but is optional, 
 when using the <code>facets</code> argument in <code>xp_theme</code> variable is automatically added whenever needed.</p>
     
     <h2 class="hasAnchor" id="template-titles"><a class="anchor" href="#template-titles"></a>Template titles</h2>
@@ -271,7 +274,7 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 <span class='fu'>prm_distrib</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'h'</span>)</div><div class='output co'>#&gt; <span class='message'>Dropped static variables ALAG1.</span></div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Removing duplicated rows based on: ID, variable</span></div><div class='output co'>#&gt; <span class='message'>Tidying data by ID, SEX, MED1, MED2, OCC ... and 24 more variables</span></div><div class='img'><img src='distrib_plot-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># Density plot of etas with a rug</span>
 <span class='fu'>eta_distrib</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'dr'</span>)</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Removing duplicated rows based on: ID, variable</span></div><div class='output co'>#&gt; <span class='message'>Tidying data by ID, SEX, MED1, MED2, OCC ... and 24 more variables</span></div><div class='img'><img src='distrib_plot-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
-<span class='co'># Histogram of residuals by occasion</span>
+<span class='co'># Histogram of different residuals</span>
 <span class='fu'>res_distrib</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'hr'</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>'IWRES'</span>, <span class='st'>'CWRES'</span>))</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Filtering data by EVID == 0</span></div><div class='output co'>#&gt; <span class='message'>Tidying data by ID, SEX, MED1, MED2, OCC ... and 25 more variables</span></div><div class='img'><img src='distrib_plot-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># Density plot of continuous covariates</span>
 <span class='fu'>cov_distrib</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'d'</span>)</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Removing duplicated rows based on: ID, variable</span></div><div class='output co'>#&gt; <span class='message'>Tidying data by ID, SEX, MED1, MED2, OCC ... and 24 more variables</span></div><div class='img'><img src='distrib_plot-4.png' alt='' width='700' height='432.632880098887' /></div></pre>

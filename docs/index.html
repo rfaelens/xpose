@@ -40,6 +40,9 @@
     </li>
 <li class="dropdown-header">Getting started</li>
     <li>
+      <a href="articles/cheatsheet.pdf">Cheat sheet (pdf)</a>
+    </li>
+    <li>
       <a href="articles/introduction.html">Introduction</a>
     </li>
     <li>
@@ -144,8 +147,8 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <pre><code>run001.lst overview: 
  - Software: nonmem 7.3.0 
  - Attached files: 
-   + obs tabs: $prob no.1: catab001.csv, cotab001, patab001, sdtab001 
-   + sim tabs: $prob no.2: simtab001.zip 
+   + obs tabs: $prob no.1 (modified): catab001.csv, cotab001, patab001, sdtab001 
+   + sim tabs: $prob no.2 (modified): simtab001.zip 
    + output files: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi, run001.shk 
    + special: &lt;none&gt; 
  - gg_theme: theme_readable 
@@ -157,20 +160,20 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(xpdb, <span class="dt">problem =</span> <span class="dv">1</span>)</code></pre></div>
 <pre><code>
 Summary for problem no. 1 [Parameter estimation] 
- - Input data                   : mx19_1.csv
- - Number of individuals        : 74
- - Number of observations       : 1022
- - ADVAN                        : 2
- - Estimation method            : foce-i
- - Termination message          : MINIMIZATION SUCCESSFUL
- - Estimation runtime           : 00:00:04
- - Objective function value     : -1518.108
- - Number of significant digits : 3.6
- - Covariance step runtime      : 00:00:04
- - Condition number             : 6.1
- - Eta shrinkage                : 22 [1], 20.9 [2], 20.5 [3]
- - Epsilon shrinkage            : 7 [1]
- - Run warnings                 : (WARNING 2) NM-TRAN INFERS THAT THE DATA ARE POPULATION.</code></pre>
+ - Input data                    @data       : mx19_1.csv
+ - Number of individuals         @nind       : 74
+ - Number of observations        @nobs       : 1022
+ - ADVAN                         @subroutine : 2
+ - Estimation method             @method     : foce-i
+ - Termination message           @term       : MINIMIZATION SUCCESSFUL
+ - Estimation runtime            @runtime    : 00:00:04
+ - Objective function value      @ofv        : -1518.108
+ - Number of significant digits  @nsig       : 3.6
+ - Covariance step runtime       @covtime    : 00:00:04
+ - Condition number              @condn      : 6.1
+ - Eta shrinkage                 @etashk     : 22 [1], 20.9 [2], 20.5 [3]
+ - Epsilon shrinkage             @epsshk     : 7 [1]
+ - Run warnings                  @warnings   : (WARNING 2) NM-TRAN INFERS THAT THE DATA ARE POPULATION.</code></pre>
 </div>
 </div>
 <div id="generate-diagnostics" class="section level4">
@@ -182,17 +185,23 @@ Summary for problem no. 1 [Parameter estimation]
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb)</code></pre></div>
 <p><img src="inst/img/readme_example_figure_1-1.png" width="50%" style="display: block; margin: auto;"></p>
 </div>
+<div id="individual-plots" class="section level5">
+<h5 class="hasAnchor">
+<a href="#individual-plots" class="anchor"></a>Individual plots</h5>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/ind_plots.html">ind_plots</a></span>(xpdb, <span class="dt">page =</span> <span class="dv">1</span>)</code></pre></div>
+<p><img src="inst/img/readme_example_figure_2-1.png" width="75%" style="display: block; margin: auto;"></p>
+</div>
 <div id="distribution-plots" class="section level5">
 <h5 class="hasAnchor">
 <a href="#distribution-plots" class="anchor"></a>Distribution plots</h5>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/distrib_plot.html">eta_distrib</a></span>(xpdb)</code></pre></div>
-<p><img src="inst/img/readme_example_figure_2-1.png" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/distrib_plot.html">eta_distrib</a></span>(xpdb, <span class="dt">labeller =</span> <span class="st">'label_value'</span>)</code></pre></div>
+<p><img src="inst/img/readme_example_figure_3-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="minimization-diagnostics" class="section level5">
 <h5 class="hasAnchor">
 <a href="#minimization-diagnostics" class="anchor"></a>Minimization diagnostics</h5>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/minimization_plots.html">prm_vs_iteration</a></span>(xpdb)</code></pre></div>
-<p><img src="inst/img/readme_example_figure_3-1.png" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/minimization_plots.html">prm_vs_iteration</a></span>(xpdb, <span class="dt">labeller =</span> <span class="st">'label_value'</span>)</code></pre></div>
+<p><img src="inst/img/readme_example_figure_4-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="and-much-more" class="section level5">
 <h5 class="hasAnchor">

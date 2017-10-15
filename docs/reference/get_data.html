@@ -61,6 +61,9 @@
     <li class="divider"></li>
     <li class="dropdown-header">Getting started</li>
     <li>
+      <a href="../articles/cheatsheet.pdf">Cheat sheet (pdf)</a>
+    </li>
+    <li>
       <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
@@ -130,7 +133,7 @@
     <p>Access model output table data from an xpdb object.</p>
     
 
-    <pre class="usage"><span class='fu'>get_data</span>(<span class='no'>xpdb</span>, <span class='kw'>table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>get_data</span>(<span class='no'>xpdb</span>, <span class='kw'>table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>quiet</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -148,11 +151,17 @@ the `problem` argument.</p></td>
       <th>problem</th>
       <td><p>Accesses all tables from the specified problem. Alternative to the `table` argument.</p></td>
     </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Logical, if <code>FALSE</code> messages are printed to the console.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A tibble for single file or a named list for multiple files.</p>
+    <p>By default returns data from the last estimation problem. If only simulation problems are present 
+then the data from last simulation will be returned instead. Object returned as tibble for single 
+tables/problems or a named list for multiple tables/problems.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -162,7 +171,7 @@ the `problem` argument.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># By table name</span>
 <span class='no'>sdtab</span> <span class='kw'>&lt;-</span> <span class='fu'>get_data</span>(<span class='no'>xpdb_ex_pk</span>, <span class='st'>'sdtab001'</span>)
-<span class='no'>sdtab</span></div><div class='output co'>#&gt; # A tibble: 1,166 x 19
+<span class='no'>sdtab</span></div><div class='output co'>#&gt; # A tibble: 550 x 19
 #&gt;        ID    OCC  DOSE   AMT    SS    II  TIME   TAD   IPRED     CWRES   CPRED
 #&gt;    &lt;fctr&gt; &lt;fctr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
 #&gt;  1    110      3   200   100     0     0   0.0   0.0 0.00000  0.000000 0.00000
@@ -172,14 +181,14 @@ the `problem` argument.</p></td>
 #&gt;  5    110      3   200     0     0     0   4.0   4.0 0.44686  0.135520 0.45982
 #&gt;  6    110      3   200     0     0     0   6.0   6.0 0.34140  0.055376 0.23124
 #&gt;  7    110      3   200     0     0     0   8.0   8.0 0.24633  0.122000 0.12925
-#&gt;  8    110      8   400   200     1    12  40.0   0.0 0.26111  0.000000 0.10035
-#&gt;  9    110      8   400     0     0     0  40.0   0.0 0.26111  0.586710 0.10035
-#&gt; 10    110      8   400     0     0     0  40.5   0.5 0.34962 -0.027288 0.38476
-#&gt; # ... with 1,156 more rows, and 8 more variables: IWRES &lt;dbl&gt;, EVID &lt;dbl&gt;,
+#&gt;  8    112      3   200   100     0     0   0.0   0.0 0.00000  0.000000 0.00000
+#&gt;  9    112      3   200     0     0     0   0.5   0.5 0.12782  1.814100 0.25247
+#&gt; 10    112      3   200     0     0     0   1.0   1.0 0.54182  0.427330 0.87195
+#&gt; # ... with 540 more rows, and 8 more variables: IWRES &lt;dbl&gt;, EVID &lt;dbl&gt;,
 #&gt; #   A1 &lt;dbl&gt;, A2 &lt;dbl&gt;, DV &lt;dbl&gt;, PRED &lt;dbl&gt;, RES &lt;dbl&gt;, WRES &lt;dbl&gt;</div><div class='input'>
 <span class='co'># By problem</span>
 <span class='no'>tables</span> <span class='kw'>&lt;-</span> <span class='fu'>get_data</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='no'>tables</span></div><div class='output co'>#&gt; # A tibble: 1,166 x 32
+<span class='no'>tables</span></div><div class='output co'>#&gt; # A tibble: 550 x 32
 #&gt;        ID    SEX   MED1   MED2    OCC  DOSE   AMT    SS    II  TIME   TAD
 #&gt;    &lt;fctr&gt; &lt;fctr&gt; &lt;fctr&gt; &lt;fctr&gt; &lt;fctr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 #&gt;  1    110      1      0      1      3   200   100     0     0   0.0   0.0
@@ -189,10 +198,10 @@ the `problem` argument.</p></td>
 #&gt;  5    110      1      0      1      3   200     0     0     0   4.0   4.0
 #&gt;  6    110      1      0      1      3   200     0     0     0   6.0   6.0
 #&gt;  7    110      1      0      1      3   200     0     0     0   8.0   8.0
-#&gt;  8    110      1      0      1      8   400   200     1    12  40.0   0.0
-#&gt;  9    110      1      0      1      8   400     0     0     0  40.0   0.0
-#&gt; 10    110      1      0      1      8   400     0     0     0  40.5   0.5
-#&gt; # ... with 1,156 more rows, and 21 more variables: IPRED &lt;dbl&gt;, CWRES &lt;dbl&gt;,
+#&gt;  8    112      1      1      1      3   200   100     0     0   0.0   0.0
+#&gt;  9    112      1      1      1      3   200     0     0     0   0.5   0.5
+#&gt; 10    112      1      1      1      3   200     0     0     0   1.0   1.0
+#&gt; # ... with 540 more rows, and 21 more variables: IPRED &lt;dbl&gt;, CWRES &lt;dbl&gt;,
 #&gt; #   CPRED &lt;dbl&gt;, IWRES &lt;dbl&gt;, EVID &lt;dbl&gt;, A1 &lt;dbl&gt;, A2 &lt;dbl&gt;, DV &lt;dbl&gt;,
 #&gt; #   PRED &lt;dbl&gt;, RES &lt;dbl&gt;, WRES &lt;dbl&gt;, CLCR &lt;dbl&gt;, AGE &lt;dbl&gt;, WT &lt;dbl&gt;,
 #&gt; #   KA &lt;dbl&gt;, CL &lt;dbl&gt;, V &lt;dbl&gt;, ALAG1 &lt;dbl&gt;, ETA1 &lt;dbl&gt;, ETA2 &lt;dbl&gt;,
@@ -201,8 +210,8 @@ the `problem` argument.</p></td>
 <span class='fu'>print</span>(<span class='no'>xpdb_ex_pk</span>)</div><div class='output co'>#&gt; run001.lst overview: 
 #&gt;  - Software: nonmem 7.3.0 
 #&gt;  - Attached files: 
-#&gt;    + obs tabs: $prob no.1: catab001.csv, cotab001, patab001, sdtab001 
-#&gt;    + sim tabs: $prob no.2: simtab001.zip 
+#&gt;    + obs tabs: $prob no.1 (modified): catab001.csv, cotab001, patab001, sdtab001 
+#&gt;    + sim tabs: $prob no.2 (modified): simtab001.zip 
 #&gt;    + output files: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi, run001.shk 
 #&gt;    + special: &lt;none&gt; 
 #&gt;  - gg_theme: theme_readable 
