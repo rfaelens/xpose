@@ -87,7 +87,8 @@ vpc <- function(xpdb,
     }
   } else {
     if (!is.null(vpc_type) && !stringr::str_detect(xpdb$special$type, vpc_type)) {
-      stop('No ', vpc_type,' VPC data found.', call. = FALSE)
+      stop(c('No data are available for ', vpc_type, ' VPC. Change `vpc_type` to ', 
+             xpdb$special[xpdb$special$method == 'vpc', ]$type, '.'), call. = FALSE)
     }
     vpc_dat  <- xpdb$special[xpdb$special$method == 'vpc', ]
     vpc_type <- vpc_dat$type
