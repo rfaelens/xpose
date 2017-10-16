@@ -50,5 +50,5 @@ xpdb_ex_pk \%>\%
 }
 }
 \seealso{
-\code{vpc} \code{vpc_opt} \code{\link[vpc]{vpc}}
+\code{\link{vpc}} \code{\link{vpc_opt}}
 }

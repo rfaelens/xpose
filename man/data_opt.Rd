@@ -31,7 +31,7 @@ Column names to use as index when tidying the data.}
 \item{value_col}{Only used when 'tidy' is defined a \code{TRUE} and \code{index_col} is \code{NULL}. 
 Column names to be stacked when tidying the data.}
 
-\item{post_processing}{A function used to modify the data after it has been tidyied e.g. post_processing = function(x) 
+\item{post_processing}{A function used to modify the data after it has been tidied up e.g. post_processing = function(x) 
 dplyr::mutate(.data = x, variable = as.factor(.$variable)) where x is the tidy data.}
 }
 \description{
@@ -43,5 +43,5 @@ data_opt(problem = 1, source = 'data', simtab = TRUE)
 
 }
 \seealso{
-\code{{xplot_scatter}}
+\code{\link{xplot_distrib}} \code{\link{xplot_qq}} \code{\link{xplot_scatter}}
 }

@@ -15,8 +15,7 @@ test_that('error is returned for bad ext input', {
 })
 
 test_that('properly creates the xpdb when using the file argument', {
-  xpdb_1 <- xpose_data(file = 'run001.lst', dir = 'data', quiet = TRUE) %>% 
-    filter(OCC == 3)
+  xpdb_1 <- xpose_data(file = 'run001.lst', dir = 'data', quiet = TRUE)
   expect_true(inherits(xpdb_1, 'xpose_data'))
   
   # Correct path and quiet option for identical comparison with xpdb_ex_pk
@@ -29,8 +28,7 @@ test_that('properly creates the xpdb when using the file argument', {
 })
 
 test_that('properly creates the xpdb when using the runno argument', {
-  xpdb_2 <- xpose_data(runno = '001', ext = '.lst', dir = 'data', quiet = TRUE) %>% 
-    filter(OCC == 3)
+  xpdb_2 <- xpose_data(runno = '001', ext = '.lst', dir = 'data', quiet = TRUE)
   expect_true(inherits(xpdb_2, 'xpose_data'))
   
   # Correct path and quiet option for identical comparison with xpdb_ex_pk

@@ -26,7 +26,7 @@
 #' @param reverse_prob Option reserved to time-to-event VPC. Should the probability be reversed (i.e. plot 1-probability).
 #' @param as_percentage Should the Y-scale be in percent (0-100) \code{TRUE} (default), or standard (0-1) \code{FALSE}.
 #'
-#' @seealso \code{vpc_data} \code{\link[vpc]{vpc}}
+#' @seealso \code{\link{vpc}} \code{\link{vpc_data}}
 #' 
 #' @examples
 #' vpc_opt()

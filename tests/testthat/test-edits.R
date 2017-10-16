@@ -19,7 +19,14 @@ test_that('filter works error properly', {
 })
 
 test_that('variable added with mutate is available in all problems', {
-  xpdb_mod <- mutate.xpose_data(xpdb_ex_pk, VAR=1)
+  xpdb_mod <- mutate.xpose_data(xpdb_ex_pk, VAR = 1)
   expect_true(exists('VAR', xpdb_mod$data$data[[1]]))
   expect_true(exists('VAR', xpdb_mod$data$data[[2]]))
+})
+
+
+test_that('irep works properly', {
+  expect_message(irep_out <- irep(rep(1:5, time = 3), quiet = FALSE),
+                 regexp = '3 simulations found')
+  expect_equal(irep_out, rep(1:3, each = 5))
 })

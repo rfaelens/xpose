@@ -2,7 +2,7 @@
 ### General
 * Improved documentation and testing
 * Improved compatibility with NONMEM 7.4.1
-* Improved website look, and content with new FAQ, Plot sections and a cheatsheet
+* Improved website look, and content with new 'FAQ' and 'Plot' sections and a cheat-sheet
 * Multiple bug small bug fixes and code improvements
 * Added multiple page functionality to all plots and `xpose_save()`
 * Added `get_prm()` function
@@ -36,7 +36,7 @@
 * Added indexing of variable and convenience functions to edit it: `set_vars_type()`, `set_vars_label()`, `set_vars_units()`
 
 #### `read_nm_files()`
-* Now imports multiple $PROB and subproblems
+* Now imports multiple $PROB and sub-problems
 
 ### Summary
 * Added `print()` and `summary()` methods for xpdb

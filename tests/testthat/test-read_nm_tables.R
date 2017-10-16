@@ -2,14 +2,14 @@ context('Check read_nm_tables')
 
 # Define files to be tested -----------------------------------------------
 
-test_tab <- read_nm_tables(file = 'sdtab001', dir = 'data', quiet = TRUE) %>% 
-  dplyr::filter(.$OCC == 3)
+test_tab <- read_nm_tables(file = 'sdtab001', dir = 'data', quiet = TRUE)
 ctrl_tab <- get_data(xpdb_ex_pk, table = 'sdtab001')
 
 test_file <- c('TABLE NO.  4',
                ' ID         ,KA         ,CL         ,V          ,ALAG1      ,ETA1       ,ETA2       ,ETA3',
-               '  1.1000E+02, 8.1158E-01, 2.3804E+01, 1.3717E+02, 4.0685E-01,-8.0674E-02,-6.0741E-02,-1.7638E+00',
-               '  1.1200E+02, 1.5299E+00, 2.0440E+01, 1.0293E+02, 4.0685E-01,-5.6995E-02,-7.5959E-02,-1.1298E+00')
+               '  1.1000E+02, 4.9578E-01, 2.5517E+01, 1.4071E+02, 2.0796E-01,-3.7021E-02,-5.9613E-03,-2.1376E+00',
+               '  1.1200E+02, 4.1061E+00, 2.1792E+01, 1.2183E+02, 2.0796E-01,-4.9451E-02, 1.2194E-01,-2.3484E-02')
+
 ctrl_file <- get_data(xpdb_ex_pk, table = 'patab001') %>% 
   dplyr::distinct_(.dots = 'ID', .keep_all = TRUE) %>% 
   dplyr::slice(1:2) %>% 
@@ -63,7 +63,7 @@ test_that('returns a tibble when user mode is used', {
 
 test_that('tables with firstonly are properly handled', {
   expect_message(tmp_table <- read_nm_tables(firstonly_test, quiet = FALSE), regexp = 'Consolidating|Joining')
-  expect_equal(tmp_table$data[[1]] %>% dplyr::filter(.$OCC == 3), 
+  expect_equal(tmp_table$data[[1]], 
                xpdb_ex_pk$data$data[[1]][, unlist(xpdb_ex_pk$data$index[[1]][xpdb_ex_pk$data$index[[1]]$table %in% c('sdtab001', 'patab001'),]$col) ])
 })
 

@@ -4,23 +4,27 @@
 \alias{vpc}
 \title{Visual predictive checks}
 \usage{
-vpc(xpdb, mapping = NULL, type = "alpr", smooth = TRUE,
+vpc(xpdb, vpc_type = NULL, mapping = NULL, smooth = TRUE, type = "alpr",
   title = "Visual predictive checks | @run",
   subtitle = "Number of simulations: @vpcnsim, confidence interval: @vpcci\%",
-  caption = "@vpcdir", log = NULL, guide = TRUE, vpc_type = NULL,
-  gg_theme, xp_theme, facets, quiet, area_fill = c("steelblue3", "grey60",
-  "steelblue3"), line_linetype = c("93", "solid", "93"), ...)
+  caption = "@vpcdir", log = NULL, guide = TRUE, gg_theme, xp_theme,
+  facets, quiet, area_fill = c("steelblue3", "grey60", "steelblue3"),
+  line_linetype = c("93", "solid", "93"), ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
 
+\item{vpc_type}{Only used when multiple vpc data are present in the same xpdb. The type of 
+vpc to be created. Can be one of can be one of: 'continuous', 'categorical', 
+'censored' or 'time-to-event'.}
+
 \item{mapping}{List of aesthetics mappings to be used for the xpose plot 
 (e.g. \code{point_color}).}
 
+\item{smooth}{Should the bins be smoothed (connect bin midpoints, default) or shown as rectangular boxes.}
+
 \item{type}{String setting the type of plot to be used. Can be points 'p',
 line 'l', area 'a', rug 'r' and text 't' or any combination of the five.}
-
-\item{smooth}{Should the bins be smoothed (connect bin midpoints, default) or shown as rectangular boxes.}
 
 \item{title}{Plot title. Use \code{NULL} to remove.}
 
@@ -33,21 +37,17 @@ line 'l', area 'a', rug 'r' and text 't' or any combination of the five.}
 
 \item{guide}{Enable guide display in vpc continuous (e.g. lloq and uloq lines).}
 
-\item{vpc_type}{Only used when multiple vpc data are present in the same xpdb. The type of 
-vpc to be created. Can be one of can be one of: 'continuous', 'categorical', 
-'censored' or 'time-to-event'.}
-
-\item{gg_theme}{A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).}
+\item{gg_theme}{A ggplot2 theme object (e.g. \code{\link[ggplot2]{theme_classic}}).}
 
 \item{xp_theme}{An xpose theme or vector of modifications to the xpose theme
-(eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).}
+(e.g. \code{c(point_color = 'red', line_linetype = 'dashed')}).}
 
 \item{facets}{Either a character string to use \link[ggplot2]{facet_wrap} 
 or a formula to use \link[ggplot2]{facet_grid}.}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 
-\item{area_fill}{Shadded area filling color, should be a vector of 3 values (i.e. low, med, high).}
+\item{area_fill}{Shaded areas filling color, should be a vector of 3 values (i.e. low, med, high).}
 
 \item{line_linetype}{Lines linetype, should be a vector of 3 values (i.e. low, med, high).}
 
@@ -76,11 +76,11 @@ any option supported by this layer e.g. point_color = 'blue', area_fill = 'green
 \section{Faceting}{
 
 Every xpose plot function has built-in faceting functionalities. Faceting arguments 
-are passed to the functions \link[ggforce]{facet_wrap_paginate} when the \code{facets} 
+are passed to the functions \code{\link[ggforce]{facet_wrap_paginate}} when the \code{facets} 
 argument is a character string (e.g. \code{facets = c('SEX', 'MED1')}) or 
-\link[ggforce]{facet_grid_paginate} when facets is a formula (e.g. \code{facets = SEX~MED1}).
-All xpose plot functions accept all the arguments for the \link[ggforce]{facet_wrap_paginate} 
-and \link[ggforce]{facet_grid_paginate} functions e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
+\code{\link[ggforce]{facet_grid_paginate}} when facets is a formula (e.g. \code{facets = SEX~MED1}).
+All xpose plot functions accept all the arguments for the \code{\link[ggforce]{facet_wrap_paginate}} 
+and \code{\link[ggforce]{facet_grid_paginate}} functions e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
 facets = SEX~MED1, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')}.
 
 Faceting options can either be defined in plot functions (e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
@@ -88,18 +88,18 @@ facets = 'SEX')}) or assigned globally to an xpdb object via the \code{xp_theme}
 <- update_themes(xpdb_ex_pk, xp_theme = list(facets = 'SEX'))}). In the latter example all plots 
 generate from this xpdb will automatically be stratified by `SEX`.
 
-By default, some plot functions use a custom stratyfiyng variable named `variable`, e.g. 
+By default, some plot functions use a custom stratifying variable named `variable`, e.g. 
 \code{eta_distrib()}. When using the \code{facets} argument, `variable` needs to be added manually 
 e.g. \code{facets = c('SEX', 'variable')} or \code{facets = c('SEX', 'variable')}, but is optional, 
 when using the \code{facets} argument in \code{xp_theme} variable is automatically added whenever needed.
 
 
 Every xpose plot function has built-in faceting functionalities. Faceting arguments 
-are passed to the functions \link[ggforce]{facet_wrap_paginate} when the \code{facets} 
+are passed to the functions \code{\link[ggforce]{facet_wrap_paginate}} when the \code{facets} 
 argument is a character string (e.g. \code{facets = c('SEX', 'MED1')}) or 
-\link[ggforce]{facet_grid_paginate} when facets is a formula (e.g. \code{facets = SEX~MED1}).
-All xpose plot functions accept all the arguments for the \link[ggforce]{facet_wrap_paginate} 
-and \link[ggforce]{facet_grid_paginate} functions e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
+\code{\link[ggforce]{facet_grid_paginate}} when facets is a formula (e.g. \code{facets = SEX~MED1}).
+All xpose plot functions accept all the arguments for the \code{\link[ggforce]{facet_wrap_paginate}} 
+and \code{\link[ggforce]{facet_grid_paginate}} functions e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
 facets = SEX~MED1, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')}.
 
 Faceting options can either be defined in plot functions (e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
@@ -107,7 +107,7 @@ facets = 'SEX')}) or assigned globally to an xpdb object via the \code{xp_theme}
 <- update_themes(xpdb_ex_pk, xp_theme = list(facets = 'SEX'))}). In the latter example all plots 
 generate from this xpdb will automatically be stratified by `SEX`.
 
-By default, some plot functions use a custom stratyfiyng variable named `variable`, e.g. 
+By default, some plot functions use a custom stratifying variable named `variable`, e.g. 
 \code{eta_distrib()}. When using the \code{facets} argument, `variable` needs to be added manually 
 e.g. \code{facets = c('SEX', 'variable')} or \code{facets = c('SEX', 'variable')}, but is optional, 
 when using the \code{facets} argument in \code{xp_theme} variable is automatically added whenever needed.
@@ -117,11 +117,11 @@ when using the \code{facets} argument in \code{xp_theme} variable is automatical
 
 Template titles can be used to create highly informative diagnostics plots. 
 They can be applied to any plot title, subtitle and caption. Template titles 
-are defined via a single string containing key variables staring with a @ (e.g. @ofv)
+are defined via a single string containing key variables staring with a `@` (e.g. `@ofv`)
 which will be replaced by their actual value when rendering the plot.
-For example '@run, @nobs observations in @nind subjects' would become 'run001, 
-1022 observations in 74 subjects'. The available key variables are listed under 
-\code{\link{template_titles}}.
+For example `'@run, @nobs observations in @nind subjects'` would become 
+`'run001, 1022 observations in 74 subjects'`. The available key variables 
+are listed under \code{\link{template_titles}}.
 }
 
 \examples{
@@ -130,5 +130,5 @@ xpdb_ex_pk \%>\%
  vpc()
 }
 \seealso{
-\code{vpc_data}
+\code{\link{vpc_data}}
 }

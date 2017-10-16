@@ -40,8 +40,8 @@ xpdb
     run001.lst overview: 
      - Software: nonmem 7.3.0 
      - Attached files: 
-       + obs tabs: $prob no.1 (modified): catab001.csv, cotab001, patab001, sdtab001 
-       + sim tabs: $prob no.2 (modified): simtab001.zip 
+       + obs tabs: $prob no.1: catab001.csv, cotab001, patab001, sdtab001 
+       + sim tabs: $prob no.2: simtab001.zip 
        + output files: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi, run001.shk 
        + special: <none> 
      - gg_theme: theme_readable 
@@ -56,19 +56,19 @@ summary(xpdb, problem = 1)
 
 
     Summary for problem no. 1 [Parameter estimation] 
-     - Input data                    @data       : mx19_1.csv
+     - Input data                    @data       : ../../mx19_2.csv
      - Number of individuals         @nind       : 74
-     - Number of observations        @nobs       : 1022
+     - Number of observations        @nobs       : 476
      - ADVAN                         @subroutine : 2
      - Estimation method             @method     : foce-i
      - Termination message           @term       : MINIMIZATION SUCCESSFUL
-     - Estimation runtime            @runtime    : 00:00:04
-     - Objective function value      @ofv        : -1518.108
-     - Number of significant digits  @nsig       : 3.6
-     - Covariance step runtime       @covtime    : 00:00:04
-     - Condition number              @condn      : 6.1
-     - Eta shrinkage                 @etashk     : 22 [1], 20.9 [2], 20.5 [3]
-     - Epsilon shrinkage             @epsshk     : 7 [1]
+     - Estimation runtime            @runtime    : 00:00:02
+     - Objective function value      @ofv        : -1403.905
+     - Number of significant digits  @nsig       : 3.3
+     - Covariance step runtime       @covtime    : 00:00:03
+     - Condition number              @condn      : 21.5
+     - Eta shrinkage                 @etashk     : 9.3 [1], 28.7 [2], 23.7 [3]
+     - Epsilon shrinkage             @epsshk     : 14.9 [1]
      - Run warnings                  @warnings   : (WARNING 2) NM-TRAN INFERS THAT THE DATA ARE POPULATION.
 
 #### Generate diagnostics
@@ -89,13 +89,23 @@ ind_plots(xpdb, page = 1)
 
 <img src="inst/img/readme_example_figure_2-1.png" width="75%" style="display: block; margin: auto;" />
 
+##### Individual plots
+
+``` r
+xpdb %>% 
+  vpc_data(stratify = 'SEX', opt = vpc_opt(n_bins = 7, lloq = 0.1)) %>% 
+  vpc()
+```
+
+<img src="inst/img/readme_example_figure_3-1.png" width="75%" style="display: block; margin: auto;" />
+
 ##### Distribution plots
 
 ``` r
 eta_distrib(xpdb, labeller = 'label_value')
 ```
 
-<img src="inst/img/readme_example_figure_3-1.png" width="75%" style="display: block; margin: auto;" />
+<img src="inst/img/readme_example_figure_4-1.png" width="75%" style="display: block; margin: auto;" />
 
 ##### Minimization diagnostics
 
@@ -103,9 +113,9 @@ eta_distrib(xpdb, labeller = 'label_value')
 prm_vs_iteration(xpdb, labeller = 'label_value')
 ```
 
-<img src="inst/img/readme_example_figure_4-1.png" width="75%" style="display: block; margin: auto;" />
+<img src="inst/img/readme_example_figure_5-1.png" width="75%" style="display: block; margin: auto;" />
 
-##### And much more !
+##### And many other features!
 
 ### Recommended reading
 

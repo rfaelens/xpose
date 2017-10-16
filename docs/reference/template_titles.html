@@ -81,6 +81,9 @@
       <a href="../articles/multiple_pages.html">Multiple pages</a>
     </li>
     <li>
+      <a href="../articles/vpc.html">Visual Predictive Checks (VPC)</a>
+    </li>
+    <li>
       <a href="../articles/interactive_plots.html">Create interactive plots (beta)</a>
     </li>
   </ul>
@@ -156,7 +159,8 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
  <dt>@nsig</dt><dd><p>Number of significant digits</p></dd>
  <dt>@nsim</dt><dd><p>Number of simulations</p></dd>
  <dt>@ofv</dt><dd><p>Objective function value</p></dd>
- <dt>@page and @lastpage</dt><dd><p>Are respectively the page number and the number of the last page when facetting on multiple pages</p></dd>
+ <dt>@page and @lastpage</dt><dd><p>Are respectively the page number and the number 
+ of the last page when faceting on multiple pages</p></dd>
  <dt>@probn</dt><dd><p>Problem number</p></dd>
  <dt>@plotfun</dt><dd><p>Name of the plot function</p></dd>
  <dt>@ref</dt><dd><p>Reference model</p></dd>
@@ -172,8 +176,10 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
  <dt>@version</dt><dd><p>Software version (e.g. 7.3)</p></dd>
  <dt>@vpcci</dt><dd><p>VPC confidence interval</p></dd>
  <dt>@vpcdir</dt><dd><p>VPC data directory</p></dd>
+ <dt>@vpclloq</dt><dd><p>VPC lower limit of quantification</p></dd>
  <dt>@vpcnsim</dt><dd><p>Number of simulations for VPC</p></dd>
  <dt>@vpcpi</dt><dd><p>VPC prediction interval</p></dd>  
+ <dt>@vpculoq</dt><dd><p>VPC upper limit of quantification</p></dd>
  <dt>@warnings</dt><dd><p>Run warnings (e.g. boundary)</p></dd>
  <dt>@x @y etc.</dt><dd><p>Name of any ggplot2 variable used for mapping in an <code>aes()</code> type function</p></dd>
 </dl>
@@ -188,7 +194,7 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Defined when creating a plot</span>
 <span class='fu'><a href='dv_vs_pred.html'>dv_vs_ipred</a></span>(<span class='no'>xpdb_ex_pk</span>,
-            <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>'DV vs. IPRED'</span>,
+            <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>'@x vs. @y'</span>,
             <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>'@ofv, @nind subjects, @nobs obs.'</span>,
             <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>'@run, @descr'</span>)</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Filtering data by EVID == 0</span></div><div class='img'><img src='template_titles-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># Any label can be modified later on</span>
@@ -196,7 +202,7 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
                             <span class='kw'>line_color</span> <span class='kw'>=</span> <span class='no'>SEX</span>)) +
  <span class='fu'>labs</span>(<span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>'This runs is: @descr'</span>,
       <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>'Color scale for @run'</span>,
-      <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>'IPRED for @nind subjects'</span>,
+      <span class='kw'>x</span>     <span class='kw'>=</span> <span class='st'>'IPRED for @nind subjects'</span>,
       <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Filtering data by EVID == 0</span></div><div class='img'><img src='template_titles-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>

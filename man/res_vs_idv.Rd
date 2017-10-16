@@ -38,8 +38,8 @@ line 'l', smooth 's' and text 't' or any combination of the four.}
 
 \item{guide}{Enable guide display (e.g. unity line).}
 
-\item{facets}{Either a character string to use \link[ggplot2]{facet_wrap} 
-or a formula to use \link[ggplot2]{facet_grid}.}
+\item{facets}{Either a character string to use \code{\link[ggforce]{facet_wrap_paginate}}
+or a formula to use \code{\link[ggforce]{facet_grid_paginate}}.}
 
 \item{problem}{The $problem number to be used. By default returns 
 the last estimation problem.}
@@ -80,19 +80,19 @@ any option supported by this layer e.g. point_color = 'blue', smooth_method = 'l
 
 Template titles can be used to create highly informative diagnostics plots. 
 They can be applied to any plot title, subtitle and caption. Template titles 
-are defined via a single string containing key variables staring with a @ (e.g. @ofv)
+are defined via a single string containing key variables staring with a `@` (e.g. `@ofv`)
 which will be replaced by their actual value when rendering the plot.
-For example '@run, @nobs observations in @nind subjects' would become 'run001, 
-1022 observations in 74 subjects'. The available key variables are listed under 
-\code{\link{template_titles}}.
+For example `'@run, @nobs observations in @nind subjects'` would become 
+`'run001, 1022 observations in 74 subjects'`. The available key variables 
+are listed under \code{\link{template_titles}}.
 }
 
 \examples{
 # Standard residual
-res_vs_idv(xpdb_ex_pk, res = c('IWRES', 'CWRES'), aes(x = TAD))
+res_vs_idv(xpdb_ex_pk, res = c('IWRES', 'CWRES'))
 
 # Absolute value of the residuals
-absval_res_vs_idv(xpdb_ex_pk, res = 'CWRES', aes(x = TAD))
+absval_res_vs_idv(xpdb_ex_pk, res = 'CWRES')
 
 }
 \seealso{

@@ -17,7 +17,7 @@ test_that('Check check_scales', {
 })
 
 test_that('Check parse_title', {
-  expect_equal(parse_title('OFV: @ofv', xpdb_ex_pk, problem = 1, quiet = TRUE), 'OFV: -1518.108')
+  expect_equal(parse_title('OFV: @ofv', xpdb_ex_pk, problem = 1, quiet = TRUE), 'OFV: -1403.905')
   expect_warning(tmp_title1 <- parse_title('OFV: @fake', xpdb_ex_pk, problem = 1, quiet = FALSE), 
                  regexp = 'not part of')
   expect_equal(tmp_title1, 'OFV: @fake')
@@ -25,7 +25,7 @@ test_that('Check parse_title', {
                            extra_value = '1987'), 'OFV: 1987')
   expect_warning(tmp_title2 <- parse_title('OFV: @ofv, @ignored', xpdb_ex_pk, problem = 1, quiet = TRUE, 
                              ignore_key = 'ignored'), NA)
-  expect_equal(tmp_title2, 'OFV: -1518.108, @ignored')
+  expect_equal(tmp_title2, 'OFV: -1403.905, @ignored')
 })
 
 test_that('Check filter_xp_theme', {

@@ -9,10 +9,10 @@ update_themes(xpdb = NULL, gg_theme = NULL, xp_theme = NULL, quiet)
 \arguments{
 \item{xpdb}{An \code{xpose_data} object generated with \code{\link{xpose_data}}.}
 
-\item{gg_theme}{A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).}
+\item{gg_theme}{A ggplot2 theme object (e.g. \code{\link[ggplot2]{theme_classic}}).}
 
 \item{xp_theme}{An xpose theme or vector of modifications to the xpose theme
-(eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).}
+(e.g. \code{c(point_color = 'red', line_linetype = 'dashed')}).}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 }
@@ -24,13 +24,13 @@ defined xpose (\code{xp_theme}) and ggplot2 (\code{gg_theme}) themes.
 }
 \examples{
 # Before default theme
-dv_vs_ipred(xpdb_ex_pk)
+dv_vs_ipred(xpdb_ex_pk, facets = 'SEX')
 
 # Updating the gg_theme and xp_theme
 xpdb_ex_pk \%>\% 
   update_themes(gg_theme = theme_bw(),
                 xp_theme = list(point_color = 'blue',
                                 line_color  = 'blue')) \%>\% 
-  dv_vs_ipred()
+  dv_vs_ipred(facets = 'SEX')
   
 }

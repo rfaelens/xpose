@@ -28,5 +28,5 @@ run_summary
 
 }
 \seealso{
-\code{\link{xpose_data}}, \code{\link{template_titles}}
+\code{\link{xpose_data}}, \code{\link{template_titles}}, \code{\link{summary.xpose_data}}
 }

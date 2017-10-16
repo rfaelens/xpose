@@ -16,7 +16,7 @@
 #' @method filter xpose_data
 #' @examples
 #' xpdb_ex_pk %>% 
-#'  filter(DV > -2, .problem = 1) %>% 
+#'  filter(DV < 1, .problem = 1) %>% 
 #'   dv_vs_ipred()
 #' @export
 filter.xpose_data <- function(.data, ..., .problem, .source) {
@@ -81,8 +81,8 @@ filter.xpose_data <- function(.data, ..., .problem, .source) {
 #' @method mutate xpose_data
 #' @examples
 #' xpdb_ex_pk %>% 
-#'  mutate(TAD2 = TIME %% 40, .problem = 1) %>% 
-#'  dv_vs_idv(aes(x = TAD2))
+#'  mutate(LNDV = log(DV), .problem = 1) %>% 
+#'  dv_vs_idv(aes(y = LNDV))
 #' @export
 mutate.xpose_data <- function(.data, ..., .problem, .source) {
   
@@ -195,4 +195,27 @@ check_quo_vars <- function(xpdb, ..., .source, .problem) {
                                               {stop(stringr::str_c(.$string, collapse = '\n       '), call. = FALSE)}
     }
   }
+}
+
+
+#' Add simulation counter
+#'
+#' @description Add a column containing a simulation counter (irep). A new simulation is counted everytime
+#' a value in x is lower than its previous value.
+#' 
+#' @param x The column to be used for computing simulation number, usually the ID column.
+#' @param quiet Logical, if \code{FALSE} messages are printed to the console.
+#'
+#' @examples
+#' xpdb_ex_pk_2 <- xpdb_ex_pk %>% 
+#'  mutate(sim_id = irep(ID), .problem = 2)
+#' 
+#' @export
+irep <- function(x, quiet = FALSE) {
+  if (missing(x)) stop('argument "x" is missing, with no default', call. = FALSE)
+  if (is.factor(x)) x <- as.numeric(as.character(x))
+  x <- dplyr::if_else(dplyr::lag(x, default = x[1]) > x, 1, 0)
+  x <- cumsum(x) + 1
+  msg(c('irep: ', max(x), ' simulations found.'), quiet)
+  x
 }

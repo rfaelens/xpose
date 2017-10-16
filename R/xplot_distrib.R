@@ -24,10 +24,10 @@
 #' 
 #' @examples
 #' # A simple histogram
-#' xplot_distrib(xpdb_ex_pk, aes(x = WT))
+#' xplot_distrib(xpdb_ex_pk, aes(x = WT), type = 'hr')
 #' 
 #' # A simple density plot
-#' xplot_distrib(xpdb_ex_pk, aes(x = CWRES))
+#' xplot_distrib(xpdb_ex_pk, aes(x = CWRES), type = 'dr')
 #' 
 #' @export
 xplot_distrib <- function(xpdb,

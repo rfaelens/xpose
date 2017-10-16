@@ -11,7 +11,7 @@
 #' @method print xpose_plot
 #' @examples
 #' my_plot <- dv_vs_ipred(xpdb_ex_pk) +
-#'             labs(title = 'A label with keywords @nind, @nobs')
+#'             labs(title = 'A label with keywords: @nind individuals & @nobs observations')
 
 #' # Using the print function
 #' print(my_plot)
