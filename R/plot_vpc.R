@@ -19,10 +19,10 @@
 #' @param log String assigning logarithmic scale to axes, can be either '', 
 #' 'x', y' or 'xy'.   
 #' @param guide Enable guide display in vpc continuous (e.g. lloq and uloq lines).
-#' @param gg_theme A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).
+#' @param gg_theme A ggplot2 theme object (e.g. \code{\link[ggplot2]{theme_classic}}).
 #' @param xp_theme An xpose theme or vector of modifications to the xpose theme
-#' (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).
-#' @param area_fill Shadded area filling color, should be a vector of 3 values (i.e. low, med, high).
+#' (e.g. \code{c(point_color = 'red', line_linetype = 'dashed')}).
+#' @param area_fill Shaded areas filling color, should be a vector of 3 values (i.e. low, med, high).
 #' @param line_linetype Lines linetype, should be a vector of 3 values (i.e. low, med, high).
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' @param ... any additional aesthetics.
@@ -44,7 +44,7 @@
 #' @inheritSection xplot_scatter Faceting
 #' @inheritSection xplot_scatter Faceting
 #' @inheritSection xplot_scatter Template titles
-#' @seealso \code{vpc_data}
+#' @seealso \code{\link{vpc_data}}
 #' @examples
 #' xpdb_ex_pk %>% 
 #'  vpc_data(opt = vpc_opt(n_bins = 7)) %>% 
@@ -260,10 +260,13 @@ vpc <- function(xpdb,
   # Add metadata to plots
   xp$xpose <- dplyr::data_frame(problem = vpc_prob, subprob = 0L, 
                                 descr = c('VPC directory', 'Number of simulations for VPC', 
-                                          'VPC confidence interval', 'VPC prediction interval'),
-                                label = c('vpcdir', 'vpcnsim', 'vpcci', 'vpcpi'),
+                                          'VPC confidence interval', 'VPC prediction interval', 
+                                          'VPC lower limit of quantification', 'VPC upper limit of quantification'),
+                                label = c('vpcdir', 'vpcnsim', 'vpcci', 'vpcpi', 'vpclloq', 'vpculoq'),
                                 value = c(vpc_dat$vpc_dir, vpc_dat$nsim, 
-                                          100*diff(vpc_dat$opt$ci), 100*diff(vpc_dat$opt$pi))) %>% 
+                                          100*diff(vpc_dat$opt$ci), 100*diff(vpc_dat$opt$pi),
+                                          ifelse(is.null(vpc_dat$lloq), 'na', vpc_dat$lloq),
+                                          ifelse(is.null(vpc_dat$uloq), 'na', vpc_dat$uloq))) %>% 
     dplyr::bind_rows(xpdb$summary) %>% 
     {list(fun = stringr::str_c('vpc_', vpc_dat$type),
           summary  = .,

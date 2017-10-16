@@ -81,7 +81,7 @@ facets = 'SEX')}) or assigned globally to an xpdb object via the \code{xp_theme}
 <- update_themes(xpdb_ex_pk, xp_theme = list(facets = 'SEX'))}). In the latter example all plots 
 generate from this xpdb will automatically be stratified by `SEX`.
 
-By default, some plot functions use a custom stratyfiyng variable named `variable`, e.g. 
+By default, some plot functions use a custom stratifying variable named `variable`, e.g. 
 \code{eta_distrib()}. When using the \code{facets} argument, `variable` needs to be added manually 
 e.g. \code{facets = c('SEX', 'variable')} or \code{facets = c('SEX', 'variable')}, but is optional, 
 when using the \code{facets} argument in \code{xp_theme} variable is automatically added whenever needed.

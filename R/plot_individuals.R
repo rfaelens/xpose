@@ -21,10 +21,6 @@
 #' ind_plots(xpdb_ex_pk, page = 1,
 #'           ncol = 3, nrow = 3)
 #' 
-#' # Example with custom mapping and faceting
-#' ind_plots(xpdb_ex_pk, aes(x = TAD), 
-#'           facets = SEX~ID)
-#' 
 #' @export
 ind_plots <- function(xpdb,
                       mapping  = NULL,

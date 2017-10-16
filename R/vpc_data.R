@@ -23,7 +23,7 @@
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' @param ... any additional aesthetics.
 #' 
-#' @seealso \code{vpc} \code{vpc_opt} \code{\link[vpc]{vpc}}
+#' @seealso \code{\link{vpc}} \code{\link{vpc_opt}}
 #' @examples
 #' \dontrun{
 #' xpdb_ex_pk %>% 

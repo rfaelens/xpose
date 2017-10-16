@@ -25,6 +25,6 @@ file extension e.g. 'phi'.}
 }
 \examples{
 xpdb_ex_pk \%>\% 
- mutate(TAD2 = TIME \%\% 40, .problem = 1) \%>\% 
- dv_vs_idv(aes(x = TAD2))
+ mutate(LNDV = log(DV), .problem = 1) \%>\% 
+ dv_vs_idv(aes(y = LNDV))
 }

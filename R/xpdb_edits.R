@@ -16,7 +16,7 @@
 #' @method filter xpose_data
 #' @examples
 #' xpdb_ex_pk %>% 
-#'  filter(DV > -2, .problem = 1) %>% 
+#'  filter(DV < 1, .problem = 1) %>% 
 #'   dv_vs_ipred()
 #' @export
 filter.xpose_data <- function(.data, ..., .problem, .source) {
@@ -81,8 +81,8 @@ filter.xpose_data <- function(.data, ..., .problem, .source) {
 #' @method mutate xpose_data
 #' @examples
 #' xpdb_ex_pk %>% 
-#'  mutate(TAD2 = TIME %% 40, .problem = 1) %>% 
-#'  dv_vs_idv(aes(x = TAD2))
+#'  mutate(LNDV = log(DV), .problem = 1) %>% 
+#'  dv_vs_idv(aes(y = LNDV))
 #' @export
 mutate.xpose_data <- function(.data, ..., .problem, .source) {
   

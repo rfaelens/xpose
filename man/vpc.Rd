@@ -37,17 +37,17 @@ line 'l', area 'a', rug 'r' and text 't' or any combination of the five.}
 
 \item{guide}{Enable guide display in vpc continuous (e.g. lloq and uloq lines).}
 
-\item{gg_theme}{A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).}
+\item{gg_theme}{A ggplot2 theme object (e.g. \code{\link[ggplot2]{theme_classic}}).}
 
 \item{xp_theme}{An xpose theme or vector of modifications to the xpose theme
-(eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).}
+(e.g. \code{c(point_color = 'red', line_linetype = 'dashed')}).}
 
 \item{facets}{Either a character string to use \link[ggplot2]{facet_wrap} 
 or a formula to use \link[ggplot2]{facet_grid}.}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 
-\item{area_fill}{Shadded area filling color, should be a vector of 3 values (i.e. low, med, high).}
+\item{area_fill}{Shaded areas filling color, should be a vector of 3 values (i.e. low, med, high).}
 
 \item{line_linetype}{Lines linetype, should be a vector of 3 values (i.e. low, med, high).}
 
@@ -88,7 +88,7 @@ facets = 'SEX')}) or assigned globally to an xpdb object via the \code{xp_theme}
 <- update_themes(xpdb_ex_pk, xp_theme = list(facets = 'SEX'))}). In the latter example all plots 
 generate from this xpdb will automatically be stratified by `SEX`.
 
-By default, some plot functions use a custom stratyfiyng variable named `variable`, e.g. 
+By default, some plot functions use a custom stratifying variable named `variable`, e.g. 
 \code{eta_distrib()}. When using the \code{facets} argument, `variable` needs to be added manually 
 e.g. \code{facets = c('SEX', 'variable')} or \code{facets = c('SEX', 'variable')}, but is optional, 
 when using the \code{facets} argument in \code{xp_theme} variable is automatically added whenever needed.
@@ -107,7 +107,7 @@ facets = 'SEX')}) or assigned globally to an xpdb object via the \code{xp_theme}
 <- update_themes(xpdb_ex_pk, xp_theme = list(facets = 'SEX'))}). In the latter example all plots 
 generate from this xpdb will automatically be stratified by `SEX`.
 
-By default, some plot functions use a custom stratyfiyng variable named `variable`, e.g. 
+By default, some plot functions use a custom stratifying variable named `variable`, e.g. 
 \code{eta_distrib()}. When using the \code{facets} argument, `variable` needs to be added manually 
 e.g. \code{facets = c('SEX', 'variable')} or \code{facets = c('SEX', 'variable')}, but is optional, 
 when using the \code{facets} argument in \code{xp_theme} variable is automatically added whenever needed.
@@ -130,5 +130,5 @@ xpdb_ex_pk \%>\%
  vpc()
 }
 \seealso{
-\code{vpc_data}
+\code{\link{vpc_data}}
 }

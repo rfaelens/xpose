@@ -277,7 +277,7 @@ get_summary <- function(xpdb, problem = NULL, subprob = NULL, only_last = FALSE)
 #' @param subprob The subproblem to be used, by default returns the last one for each file.
 #' @param method The estimation method to be used, by default returns the last one for each file
 #' @param digits The number of significant digits to be displayed.
-#' @param show_all Logical, whether the 0 fixed off-diagonal elements should be removed outputed or not.
+#' @param show_all Logical, whether the 0 fixed off-diagonal elements should be removed from the output.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' 
 #' @return A tibble for single problem/subprob or a named list for multiple problem|subprob.

@@ -139,10 +139,10 @@ absval_res_vs_pred <- function(xpdb,
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
 #' # Standard residual
-#' res_vs_idv(xpdb_ex_pk, res = c('IWRES', 'CWRES'), aes(x = TAD))
+#' res_vs_idv(xpdb_ex_pk, res = c('IWRES', 'CWRES'))
 #' 
 #' # Absolute value of the residuals
-#' absval_res_vs_idv(xpdb_ex_pk, res = 'CWRES', aes(x = TAD))
+#' absval_res_vs_idv(xpdb_ex_pk, res = 'CWRES')
 #' 
 #' @export
 res_vs_idv <- function(xpdb,

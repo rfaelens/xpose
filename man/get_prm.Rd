@@ -18,7 +18,7 @@ get_prm(xpdb, problem = NULL, subprob = NULL, method = NULL, digits = 4,
 
 \item{digits}{The number of significant digits to be displayed.}
 
-\item{show_all}{Logical, whether the 0 fixed off-diagonal elements should be removed outputed or not.}
+\item{show_all}{Logical, whether the 0 fixed off-diagonal elements should be removed from the output.}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 }

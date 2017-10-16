@@ -27,6 +27,6 @@ Unlike base subsetting, rows where the condition evaluates to NA are dropped.
 }
 \examples{
 xpdb_ex_pk \%>\% 
- filter(DV > -2, .problem = 1) \%>\% 
+ filter(DV < 1, .problem = 1) \%>\% 
   dv_vs_ipred()
 }
