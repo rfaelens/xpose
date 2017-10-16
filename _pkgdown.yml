@@ -30,6 +30,7 @@ reference:
     contents:
     - filter.xpose_data
     - mutate.xpose_data
+    - irep
     - set_var_types
     - set_var_labels
     - set_var_units

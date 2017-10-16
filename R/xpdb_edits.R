@@ -196,3 +196,26 @@ check_quo_vars <- function(xpdb, ..., .source, .problem) {
     }
   }
 }
+
+
+#' Add simulation counter
+#'
+#' @description Add a column containing a simulation counter (irep). A new simulation is counted everytime
+#' a value in x is lower than its previous value.
+#' 
+#' @param x The column to be used for computing simulation number, usually the ID column.
+#' @param quiet Logical, if \code{FALSE} messages are printed to the console.
+#'
+#' @examples
+#' xpdb_ex_pk_2 <- xpdb_ex_pk %>% 
+#'  mutate(sim_id = irep(ID), .problem = 2)
+#' 
+#' @export
+irep <- function(x, quiet = FALSE) {
+  if (missing(x)) stop('argument "x" is missing, with no default', call. = FALSE)
+  if (is.factor(x)) x <- as.numeric(as.character(x))
+  x <- dplyr::if_else(dplyr::lag(x, default = x[1]) > x, 1, 0)
+  x <- cumsum(x) + 1
+  msg(c('irep: ', max(x), ' simulations found.'), quiet)
+  x
+}
