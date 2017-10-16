@@ -15,8 +15,8 @@ library(xpose)
 knitr::opts_chunk$set(fig.dpi = 96,
 fig.align = 'center', 
 fig.height = 4, 
-fig.width = 4,
-out.width = '50%',
+fig.width = 6,
+out.width = '75%',
 comment = '',
 message = FALSE)
 ```
@@ -28,7 +28,7 @@ The Visual predictive checks (VPC) shown below are only intended to demonstrate 
 VPC can be created either by:
 
 1. Using an xpdb containing a simulation and an estimation problem
-2. Using a PsN generated VPC folder
+2. Using a [PsN](https://uupharmacometrics.github.io/PsN/) generated VPC folder
 
 The VPC functionality in xpose is build around the [vpc R package](https://cran.r-project.org/web/packages/vpc/index.html). For more details about the way the vpc package works, please check the [documentation website](http://vpc.ronkeizer.com).
 
@@ -65,9 +65,9 @@ vpc(xpdb_w_multi_vpc, vpc_type = 'censored')
 ```
 
 ### Common options
-#### `vpc_data()`
+#### Options in `vpc_data()`
 * The option `vpc_type` allows to specify the type of VPC to be computed: "continuous" (default), "categorical", "censored", "time-to-event".
-* The `stratify` options defines up to two stratifying variable to be used when computing the VPC data. The `stratify` variables can either be provided as a character vector (`stratify = c('SEX', 'MED1')`) or a formula (`stratify = SEX~MED1`) . The former will result in the use of `facet_wrap()` and the latter of `facet_grid()` when creating the plot. With "categorical" VPC the "group" variable will also be added by default.
+* The `stratify` options defines up to two stratifying variable to be used when computing the VPC data. The `stratify` variables can either be provided as a character vector (`stratify = c('SEX', 'MED1')`) or a formula (`stratify = SEX~MED1`) . The former will result in the use of `ggforce::facet_wrap_paginate()` and the latter of `ggforce::facet_grid_paginate()` when creating the plot. With "categorical" VPC the "group" variable will also be added by default.
 * More advanced options (i.e. binning, pi, ci, predcorr, lloq, etc.) are accessible via the `opt` argument. The `opt` argument expects the output from the `vpc_opt()` functions argument.
 
 ```{r, warning = FALSE}
@@ -77,7 +77,7 @@ xpdb_ex_pk %>%
  vpc()
 ```
 
-#### `vpc()`
+#### Options in `vpc()`
 * The option `vpc_type` works similarly to `vpc_data()` and is only required if several VPC data are associated with the xpdb.
 * The option `smooth = TRUE/FALSE` allows to switch between smooth and squared shaded areas.
 * The plot VPC function works similarly to all other xpose functions to map and customize aesthetics. However in this case the `area_fill` and `line_linetype` each require three values for the low, median and high percentiles respectively.
@@ -96,12 +96,12 @@ xpdb_ex_pk %>%
 ```
 
 ### Creating the VPC using a PsN folder
-The `vpc_data()` contains an argument `psn_foler` which can be used to point to a PsN generated VPC folder. As in most xpose function `template_titles` keywords can be used to automatize the process e.g. `psn_folder = '@dir/@run_vpc'` where `@dir` and `@run` will be automatically translated to initial (i.e. when the xpdb was generated) run directory and run number `'analysis/models/pk/run001_vpc'`. 
+The `vpc_data()` contains an argument `psn_foler` which can be used to point to a [PsN](https://uupharmacometrics.github.io/PsN/) generated VPC folder. As in most xpose function `template_titles` keywords can be used to automatize the process e.g. `psn_folder = '@dir/@run_vpc'` where `@dir` and `@run` will be automatically translated to initial (i.e. when the xpdb was generated) run directory and run number `'analysis/models/pk/run001_vpc'`. 
 
-In this case, the data will be read from the `/m1` sub-folder (or `m1.zip` if compressed). Note that PsN drops unused columns to reduce the simtab file size. Thus, in order to allow for more flexibility in R, it is recommended to use multiple stratifying variables (`-stratify_on=VAR1,VAR2`) and the prediction corrected (`-predcorr` adds the PRED column to the output) options in PsN to avoid having to rerun PsN to add these variables later on.
-In addition, `-dv`, `-idv`, `-lloq`, `-uloq`, `-predcorr` and `-stratify_on` PsN options are automatically applied to xpose VPC.
+In this case, the data will be read from the `/m1` sub-folder (or `m1.zip` if compressed). Note that [PsN](https://uupharmacometrics.github.io/PsN/) drops unused columns to reduce the simtab file size. Thus, in order to allow for more flexibility in R, it is recommended to use multiple stratifying variables (`-stratify_on=VAR1,VAR2`) and the prediction corrected (`-predcorr` adds the PRED column to the output) options in [PsN](https://uupharmacometrics.github.io/PsN/) to avoid having to rerun [PsN](https://uupharmacometrics.github.io/PsN/) to add these variables later on.
+In addition, `-dv`, `-idv`, `-lloq`, `-uloq`, `-predcorr` and `-stratify_on` [PsN](https://uupharmacometrics.github.io/PsN/) options are automatically applied to xpose VPC.
 
-The PsN generated binning can also applied to xpose VPC with the `vpc_data()` option `psn_bins = TRUE` (disabled by default). However PsN and the vpc package work slightly differently so the results may not be optimal and the output should be evaluated carefully.
+The PsN generated binning can also applied to xpose VPC with the `vpc_data()` option `psn_bins = TRUE` (disabled by default). However [PsN](https://uupharmacometrics.github.io/PsN/) and the vpc package work slightly differently so the results may not be optimal and the output should be evaluated carefully.
 
 ```{r, eval = FALSE}
 xpdb_ex_pk %>% 

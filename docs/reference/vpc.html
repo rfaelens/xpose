@@ -81,6 +81,9 @@
       <a href="../articles/multiple_pages.html">Multiple pages</a>
     </li>
     <li>
+      <a href="../articles/vpc.html">Visual Predictive Checks (VPC)</a>
+    </li>
+    <li>
       <a href="../articles/interactive_plots.html">Create interactive plots (beta)</a>
     </li>
   </ul>
@@ -133,12 +136,12 @@
     <p>Generate visual predictive checks (VPC)</p>
     
 
-    <pre class="usage"><span class='fu'>vpc</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"alpr"</span>, <span class='kw'>smooth</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+    <pre class="usage"><span class='fu'>vpc</span>(<span class='no'>xpdb</span>, <span class='kw'>vpc_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>smooth</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"alpr"</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Visual predictive checks | @run"</span>,
   <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Number of simulations: @vpcnsim, confidence interval: @vpcci%"</span>,
-  <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@vpcdir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guide</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>vpc_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>gg_theme</span>, <span class='no'>xp_theme</span>, <span class='no'>facets</span>, <span class='no'>quiet</span>, <span class='kw'>area_fill</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"steelblue3"</span>, <span class='st'>"grey60"</span>,
-  <span class='st'>"steelblue3"</span>), <span class='kw'>line_linetype</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"93"</span>, <span class='st'>"solid"</span>, <span class='st'>"93"</span>), <span class='no'>...</span>)</pre>
+  <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@vpcdir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guide</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>gg_theme</span>, <span class='no'>xp_theme</span>,
+  <span class='no'>facets</span>, <span class='no'>quiet</span>, <span class='kw'>area_fill</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"steelblue3"</span>, <span class='st'>"grey60"</span>, <span class='st'>"steelblue3"</span>),
+  <span class='kw'>line_linetype</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"93"</span>, <span class='st'>"solid"</span>, <span class='st'>"93"</span>), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -148,18 +151,24 @@
       <td><p>An xpose database object.</p></td>
     </tr>
     <tr>
+      <th>vpc_type</th>
+      <td><p>Only used when multiple vpc data are present in the same xpdb. The type of 
+vpc to be created. Can be one of can be one of: 'continuous', 'categorical', 
+'censored' or 'time-to-event'.</p></td>
+    </tr>
+    <tr>
       <th>mapping</th>
       <td><p>List of aesthetics mappings to be used for the xpose plot 
 (e.g. <code>point_color</code>).</p></td>
     </tr>
     <tr>
+      <th>smooth</th>
+      <td><p>Should the bins be smoothed (connect bin midpoints, default) or shown as rectangular boxes.</p></td>
+    </tr>
+    <tr>
       <th>type</th>
       <td><p>String setting the type of plot to be used. Can be points 'p',
 line 'l', area 'a', rug 'r' and text 't' or any combination of the five.</p></td>
-    </tr>
-    <tr>
-      <th>smooth</th>
-      <td><p>Should the bins be smoothed (connect bin midpoints, default) or shown as rectangular boxes.</p></td>
     </tr>
     <tr>
       <th>title</th>
@@ -183,19 +192,13 @@ line 'l', area 'a', rug 'r' and text 't' or any combination of the five.</p></td
       <td><p>Enable guide display in vpc continuous (e.g. lloq and uloq lines).</p></td>
     </tr>
     <tr>
-      <th>vpc_type</th>
-      <td><p>Only used when multiple vpc data are present in the same xpdb. The type of 
-vpc to be created. Can be one of can be one of: 'continuous', 'categorical', 
-'censored' or 'time-to-event'.</p></td>
-    </tr>
-    <tr>
       <th>gg_theme</th>
-      <td><p>A ggplot2 theme object (eg. <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_classic</a></code>).</p></td>
+      <td><p>A ggplot2 theme object (e.g. <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_classic</a></code>).</p></td>
     </tr>
     <tr>
       <th>xp_theme</th>
       <td><p>An xpose theme or vector of modifications to the xpose theme
-(eg. <code>c(point_color = 'red', line_linetype = 'dashed')</code>).</p></td>
+(e.g. <code>c(point_color = 'red', line_linetype = 'dashed')</code>).</p></td>
     </tr>
     <tr>
       <th>facets</th>
@@ -208,7 +211,7 @@ or a formula to use <a href='http://www.rdocumentation.org/packages/ggplot2/topi
     </tr>
     <tr>
       <th>area_fill</th>
-      <td><p>Shadded area filling color, should be a vector of 3 values (i.e. low, med, high).</p></td>
+      <td><p>Shaded areas filling color, should be a vector of 3 values (i.e. low, med, high).</p></td>
     </tr>
     <tr>
       <th>line_linetype</th>
@@ -240,32 +243,32 @@ any option supported by this layer e.g. point_color = 'blue', area_fill = 'green
 
     
     <p>Every xpose plot function has built-in faceting functionalities. Faceting arguments 
-are passed to the functions <a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a> when the <code>facets</code> 
+are passed to the functions <code><a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a></code> when the <code>facets</code> 
 argument is a character string (e.g. <code>facets = c('SEX', 'MED1')</code>) or 
-<a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a> when facets is a formula (e.g. <code>facets = SEX~MED1</code>).
-All xpose plot functions accept all the arguments for the <a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a> 
-and <a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a> functions e.g. <code><a href='dv_vs_pred.html'>dv_vs_ipred(xpdb_ex_pk, 
+<code><a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a></code> when facets is a formula (e.g. <code>facets = SEX~MED1</code>).
+All xpose plot functions accept all the arguments for the <code><a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a></code> 
+and <code><a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a></code> functions e.g. <code><a href='dv_vs_pred.html'>dv_vs_ipred(xpdb_ex_pk, 
 facets = SEX~MED1, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')</a></code>.</p>
 <p>Faceting options can either be defined in plot functions (e.g. <code><a href='dv_vs_pred.html'>dv_vs_ipred(xpdb_ex_pk, 
 facets = 'SEX')</a></code>) or assigned globally to an xpdb object via the <code>xp_theme</code> (e.g. <code>xpdb 
 &lt;- update_themes(xpdb_ex_pk, xp_theme = list(facets = 'SEX'))</code>). In the latter example all plots 
 generate from this xpdb will automatically be stratified by `SEX`.</p>
-<p>By default, some plot functions use a custom stratyfiyng variable named `variable`, e.g. 
+<p>By default, some plot functions use a custom stratifying variable named `variable`, e.g. 
 <code><a href='distrib_plot.html'>eta_distrib()</a></code>. When using the <code>facets</code> argument, `variable` needs to be added manually 
 e.g. <code>facets = c('SEX', 'variable')</code> or <code>facets = c('SEX', 'variable')</code>, but is optional, 
 when using the <code>facets</code> argument in <code>xp_theme</code> variable is automatically added whenever needed.</p>
     <p>Every xpose plot function has built-in faceting functionalities. Faceting arguments 
-are passed to the functions <a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a> when the <code>facets</code> 
+are passed to the functions <code><a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a></code> when the <code>facets</code> 
 argument is a character string (e.g. <code>facets = c('SEX', 'MED1')</code>) or 
-<a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a> when facets is a formula (e.g. <code>facets = SEX~MED1</code>).
-All xpose plot functions accept all the arguments for the <a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a> 
-and <a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a> functions e.g. <code><a href='dv_vs_pred.html'>dv_vs_ipred(xpdb_ex_pk, 
+<code><a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a></code> when facets is a formula (e.g. <code>facets = SEX~MED1</code>).
+All xpose plot functions accept all the arguments for the <code><a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a></code> 
+and <code><a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a></code> functions e.g. <code><a href='dv_vs_pred.html'>dv_vs_ipred(xpdb_ex_pk, 
 facets = SEX~MED1, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')</a></code>.</p>
 <p>Faceting options can either be defined in plot functions (e.g. <code><a href='dv_vs_pred.html'>dv_vs_ipred(xpdb_ex_pk, 
 facets = 'SEX')</a></code>) or assigned globally to an xpdb object via the <code>xp_theme</code> (e.g. <code>xpdb 
 &lt;- update_themes(xpdb_ex_pk, xp_theme = list(facets = 'SEX'))</code>). In the latter example all plots 
 generate from this xpdb will automatically be stratified by `SEX`.</p>
-<p>By default, some plot functions use a custom stratyfiyng variable named `variable`, e.g. 
+<p>By default, some plot functions use a custom stratifying variable named `variable`, e.g. 
 <code><a href='distrib_plot.html'>eta_distrib()</a></code>. When using the <code>facets</code> argument, `variable` needs to be added manually 
 e.g. <code>facets = c('SEX', 'variable')</code> or <code>facets = c('SEX', 'variable')</code>, but is optional, 
 when using the <code>facets</code> argument in <code>xp_theme</code> variable is automatically added whenever needed.</p>
@@ -275,21 +278,22 @@ when using the <code>facets</code> argument in <code>xp_theme</code> variable is
     
     <p>Template titles can be used to create highly informative diagnostics plots. 
 They can be applied to any plot title, subtitle and caption. Template titles 
-are defined via a single string containing key variables staring with a @ (e.g. @ofv)
+are defined via a single string containing key variables staring with a `@` (e.g. `@ofv`)
 which will be replaced by their actual value when rendering the plot.
-For example '@run, @nobs observations in @nind subjects' would become 'run001, 
-1022 observations in 74 subjects'. The available key variables are listed under 
-<code><a href='template_titles.html'>template_titles</a></code>.</p>
+For example `'@run, @nobs observations in @nind subjects'` would become 
+`'run001, 1022 observations in 74 subjects'`. The available key variables 
+are listed under <code><a href='template_titles.html'>template_titles</a></code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code>vpc_data</code></p>
+    <p><code><a href='vpc_data.html'>vpc_data</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>xpdb_ex_pk</span> <span class='kw'>%&gt;%</span>
  <span class='fu'><a href='vpc_data.html'>vpc_data</a></span>(<span class='kw'>opt</span> <span class='kw'>=</span> <span class='fu'><a href='vpc_opt.html'>vpc_opt</a></span>(<span class='kw'>n_bins</span> <span class='kw'>=</span> <span class='fl'>7</span>)) <span class='kw'>%&gt;%</span>
- <span class='fu'>vpc</span>()</div><div class='output co'>#&gt; <span class='message'>VPC continuous</span>
+ <span class='fu'>vpc</span>()</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>VPC continuous --------------------</span>
 #&gt; <span class='message'>1. Gathering data &amp; settings</span></div><div class='output co'>#&gt; <span class='message'>Using xpdb simulation problem 2 and observation problem 1.</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>2. Computing VPC data</span></div><div class='output co'>#&gt; <span class='message'>Configuring and initializing...</span></div><div class='output co'>#&gt; <span class='message'>Parsing observed data...</span></div><div class='output co'>#&gt; <span class='message'>Filtering rows where EVID not 0</span></div><div class='output co'>#&gt; <span class='message'>Parsing simulated data...</span></div><div class='output co'>#&gt; <span class='message'>Filtering rows where EVID not 0</span></div><div class='output co'>#&gt; <span class='message'>Binning: 0 0.66667 1.25 1.8 3 5 7 9</span></div><div class='output co'>#&gt; <span class='message'>Calculating statistics for simulated data...</span></div><div class='output co'>#&gt; <span class='message'>Calculating statistics for observed data...</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>VPC done</span></div><div class='img'><img src='vpc-1.png' alt='' width='700' height='432.632880098887' /></div></pre>

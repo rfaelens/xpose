@@ -2,7 +2,7 @@
 % Please edit documentation in R/fetch_data.R
 \name{only_distinct}
 \alias{only_distinct}
-\title{Create record deduplicating functions}
+\title{Create functions for data deduplication}
 \usage{
 only_distinct(xpdb, problem, facets, quiet)
 }
@@ -12,7 +12,7 @@ only_distinct(xpdb, problem, facets, quiet)
 \item{problem}{The $problem number to be used.}
 
 \item{facets}{The plot faceting variable. The `facets` variables along with the `id` column 
-type will be as grouping factors during deduplication process.}
+type will be as grouping factors during data deduplication process.}
 
 \item{quiet}{Should messages be displayed to the console.}
 }

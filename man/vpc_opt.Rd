@@ -57,5 +57,5 @@ vpc_opt()
 
 }
 \seealso{
-\code{vpc_data} \code{\link[vpc]{vpc}}
+\code{\link{vpc}} \code{\link{vpc_data}}
 }

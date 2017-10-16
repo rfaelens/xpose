@@ -32,11 +32,11 @@ intended to bring the focus on the data.
 }
 \examples{
 # With the gg_theme theme_readable() (default)
-dv_vs_ipred(xpdb_ex_pk)
+dv_vs_ipred(xpdb_ex_pk, facets = 'SEX')
 
 # With the gg_theme theme_bw2()
 xpdb_ex_pk \%>\% 
  update_themes(gg_theme = theme_bw2()) \%>\% 
- dv_vs_ipred()
+ dv_vs_ipred(facets = 'SEX')
  
 }

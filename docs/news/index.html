@@ -81,6 +81,9 @@
       <a href="../articles/multiple_pages.html">Multiple pages</a>
     </li>
     <li>
+      <a href="../articles/vpc.html">Visual Predictive Checks (VPC)</a>
+    </li>
+    <li>
       <a href="../articles/interactive_plots.html">Create interactive plots (beta)</a>
     </li>
   </ul>
@@ -131,12 +134,54 @@
     </div>
 
     <div class="contents">
-    <div id="xpose-0-2" class="section level1">
+    <div id="xpose-0-2-9" class="section level1">
 <h1 class="hasAnchor">
-<a href="#xpose-0-2" class="anchor"></a>xpose 0.2</h1>
+<a href="#xpose-0-2-9" class="anchor"></a>xpose 0.2.9</h1>
 <div id="general" class="section level3">
 <h3 class="hasAnchor">
 <a href="#general" class="anchor"></a>General</h3>
+<ul>
+<li>Improved documentation and testing</li>
+<li>Improved compatibility with NONMEM 7.4.1</li>
+<li>Improved website look, and content with new ‘FAQ’ and ‘Plot’ sections and a cheat-sheet</li>
+<li>Multiple bug small bug fixes and code improvements</li>
+<li>Added multiple page functionality to all plots and <code><a href="../reference/xpose_save.html">xpose_save()</a></code>
+</li>
+<li>Added <code><a href="../reference/get_prm.html">get_prm()</a></code> function</li>
+</ul>
+</div>
+<div id="data-import" class="section level3">
+<h3 class="hasAnchor">
+<a href="#data-import" class="anchor"></a>Data import</h3>
+<ul>
+<li>Improved <code>dir</code> and <code>file</code> arguments usage</li>
+<li>Improved error robustness of <code><a href="../reference/xpose_data.html">xpose_data()</a></code>
+</li>
+<li>Bug fix in <code><a href="../reference/read_nm_files.html">read_nm_files()</a></code> not properly reporting FO method</li>
+<li>Bug fix in <code><a href="../reference/read_nm_tables.html">read_nm_tables()</a></code> not properly parsing data (missing minus signs) in some very specific cases</li>
+</ul>
+</div>
+<div id="plots" class="section level3">
+<h3 class="hasAnchor">
+<a href="#plots" class="anchor"></a>Plots</h3>
+<ul>
+<li>Small modifications to <code>xp_theme()</code> defaults</li>
+<li>Faceting options can now be defined globally in the <code>xp_theme</code>
+</li>
+<li>Added <code><a href="../reference/amt_vs_idv.html">amt_vs_idv()</a></code> plot</li>
+<li>Improved faceting of minimization plots</li>
+<li>Multiples improvements to the <code><a href="../reference/vpc_data.html">vpc_data()</a></code> and <code><a href="../reference/vpc.html">vpc()</a></code> functions.</li>
+<li>More keywords added to <code>template_titles</code>
+</li>
+</ul>
+</div>
+</div>
+    <div id="xpose-0-2" class="section level1">
+<h1 class="hasAnchor">
+<a href="#xpose-0-2" class="anchor"></a>xpose 0.2</h1>
+<div id="general-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#general-1" class="anchor"></a>General</h3>
 <ul>
 <li>Renamed package <code>xpose</code>
 </li>
@@ -146,9 +191,9 @@
 <li>Improvement of documentation, and testing</li>
 </ul>
 </div>
-<div id="data-import" class="section level3">
+<div id="data-import-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#data-import" class="anchor"></a>Data import</h3>
+<a href="#data-import-1" class="anchor"></a>Data import</h3>
 <div id="read_nm_tables" class="section level4">
 <h4 class="hasAnchor">
 <a href="#read_nm_tables" class="anchor"></a><code><a href="../reference/read_nm_tables.html">read_nm_tables()</a></code>
@@ -167,7 +212,7 @@
 <a href="#read_nm_files" class="anchor"></a><code><a href="../reference/read_nm_files.html">read_nm_files()</a></code>
 </h4>
 <ul>
-<li>Now imports multiple $PROB and subproblems</li>
+<li>Now imports multiple $PROB and sub-problems</li>
 </ul>
 </div>
 </div>
@@ -186,13 +231,13 @@
 <a href="#access-xpdb" class="anchor"></a>Access xpdb</h3>
 <ul>
 <li>Added convenience functions to access data from xpdb <code><a href="../reference/get_code.html">get_code()</a></code>, <code><a href="../reference/get_data.html">get_data()</a></code>, <code><a href="../reference/get_file.html">get_file()</a></code>, <code><a href="../reference/get_summary.html">get_summary()</a></code>.</li>
-<li>Added a method for xpdb to <code><a href="http://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a></code>
+<li>Added a method for xpdb to <code><a href="http://www.rdocumentation.org/packages/dplyr/topics/filter">dplyr::filter()</a></code>
 </li>
 </ul>
 </div>
-<div id="plots" class="section level3">
+<div id="plots-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#plots" class="anchor"></a>Plots</h3>
+<a href="#plots-1" class="anchor"></a>Plots</h3>
 <ul>
 <li>Changed <code>cwres_vs_idv</code>, type residual functions to more general <code><a href="../reference/res_vs_idv.html">res_vs_idv(res = 'CWRES')</a></code> functions</li>
 <li>Implemented/improved general plotting functions: <code><a href="../reference/xplot_distrib.html">xplot_distrib()</a></code>, <code><a href="../reference/xplot_qq.html">xplot_qq()</a></code>, <code><a href="../reference/xplot_scatter.html">xplot_scatter()</a></code>, with convenience function to fetch data in xpdb <code>data_opt_set()</code>.</li>
@@ -239,6 +284,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#xpose-0-2-9">0.2.9</a></li>
         <li><a href="#xpose-0-2">0.2</a></li>
         <li><a href="#ggxpose-0-1">0.1</a></li>
       </ul>

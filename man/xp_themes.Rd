@@ -22,11 +22,11 @@ titles etc.
 }
 \examples{
 # With the xp_theme theme_xp_default() (default)
-dv_vs_ipred(xpdb_ex_pk)
+dv_vs_ipred(xpdb_ex_pk, facets = 'SEX')
 
 # With the xp_theme theme_xp_xpose4()
 xpdb_ex_pk \%>\%
   update_themes(xp_theme = theme_xp_xpose4()) \%>\%
-  dv_vs_ipred()
+  dv_vs_ipred(facets = 'SEX')
   
 }

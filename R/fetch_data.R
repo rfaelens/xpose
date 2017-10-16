@@ -16,10 +16,10 @@
 #' Column names to use as index when tidying the data.
 #' @param value_col Only used when 'tidy' is defined a \code{TRUE} and \code{index_col} is \code{NULL}. 
 #' Column names to be stacked when tidying the data.
-#' @param post_processing A function used to modify the data after it has been tidyied e.g. post_processing = function(x) 
+#' @param post_processing A function used to modify the data after it has been tidied up e.g. post_processing = function(x) 
 #' dplyr::mutate(.data = x, variable = as.factor(.$variable)) where x is the tidy data.
 #'
-#' @seealso \code{{xplot_scatter}}
+#' @seealso \code{\link{xplot_distrib}} \code{\link{xplot_qq}} \code{\link{xplot_scatter}} 
 #' 
 #' @examples
 #' data_opt(problem = 1, source = 'data', simtab = TRUE)
@@ -75,14 +75,14 @@ only_obs <- function(xpdb, problem, quiet) {
 }
 
 
-#' Create record deduplicating functions
+#' Create functions for data deduplication
 #' 
 #' @description Create shortcut functions on the fly to remove duplicated records in data.
 #' 
 #' @param xpdb An xpose database object.
 #' @param problem The $problem number to be used.
 #' @param facets The plot faceting variable. The `facets` variables along with the `id` column 
-#' type will be as grouping factors during deduplication process.
+#' type will be as grouping factors during data deduplication process.
 #' @param quiet Should messages be displayed to the console.
 #' 
 #' @return A function

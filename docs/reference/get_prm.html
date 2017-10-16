@@ -81,6 +81,9 @@
       <a href="../articles/multiple_pages.html">Multiple pages</a>
     </li>
     <li>
+      <a href="../articles/vpc.html">Visual Predictive Checks (VPC)</a>
+    </li>
+    <li>
       <a href="../articles/interactive_plots.html">Create interactive plots (beta)</a>
     </li>
   </ul>
@@ -161,7 +164,7 @@
     </tr>
     <tr>
       <th>show_all</th>
-      <td><p>Logical, whether the 0 fixed off-diagonal elements should be removed outputed or not.</p></td>
+      <td><p>Logical, whether the 0 fixed off-diagonal elements should be removed from the output.</p></td>
     </tr>
     <tr>
       <th>quiet</th>
@@ -181,17 +184,18 @@
 #&gt; standard deviation scale (SE/variance estimate)/2.
 #&gt; 
 #&gt; Estimates for $prob no.1, subprob no.0, method foce
-#&gt;  Parameter  Label      Value       RSE
-#&gt;  THETA1     TVCL       25.58       0.02991
-#&gt;  THETA2     TVV        1.388       0.04342
-#&gt;  THETA3     TVKA       4.735       0.1718
-#&gt;  THETA4     LAG        0.4068      0.01883
-#&gt;  THETA5     RES ERR    0.2455      0.07365
-#&gt;  THETA6     CRCL on CL 0.00857     0.1653
-#&gt;  OMEGA(1,1) IIV CL     0.2034      0.1364
-#&gt;  OMEGA(2,2) IIV V      0.2697      0.1174
-#&gt;  OMEGA(3,3) IIV KA     1.385       0.1159
-#&gt;  SIGMA(1,1)            1       fix  - </div><div class='input'>
+#&gt;  Parameter  Label      Value        RSE
+#&gt;  THETA1     TVCL       26.29        0.03391
+#&gt;  THETA2     TVV        1.348        0.0325
+#&gt;  THETA3     TVKA       4.204        0.1925
+#&gt;  THETA4     LAG        0.208        0.07554
+#&gt;  THETA5     Prop. Err  0.2046       0.1097
+#&gt;  THETA6     Add. Err   0.01055      0.3466
+#&gt;  THETA7     CRCL on CL 0.007172     0.2366
+#&gt;  OMEGA(1,1) IIV CL     0.2701       0.08616
+#&gt;  OMEGA(2,2) IIV V      0.195        0.1643
+#&gt;  OMEGA(3,3) IIV KA     1.381        0.1464
+#&gt;  SIGMA(1,1)            1        fix  - </div><div class='input'>
 <span class='co'># Store the parameters in an object</span>
 <span class='no'>prm</span> <span class='kw'>&lt;-</span> <span class='fu'>get_prm</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div></pre>
   </div>
