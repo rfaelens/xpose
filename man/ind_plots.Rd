@@ -9,8 +9,8 @@ ind_plots(xpdb, mapping = NULL, group = "variable", type = "lp",
   title = "Individual plots | @run",
   subtitle = "Ofv: @ofv, Eps shrink: @epsshk",
   caption = "@dir | Page @page of @lastpage", log = NULL, facets, problem,
-  quiet, point_alpha = c(0.8, 0, 0), point_color = c("grey60",
-  "deepskyblue4", "deepskyblue3"), line_linetype = c("blank", "solid", "55"),
+  quiet, color = c("grey60", "deepskyblue4", "deepskyblue3"),
+  point_alpha = c(0.8, 0, 0), line_linetype = c("blank", "solid", "55"),
   ...)
 }
 \arguments{
@@ -41,17 +41,21 @@ the last estimation problem.}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 
-\item{point_alpha}{Points alpha, should be a vector of 3 values (i.e. DV, IPRED, PRED).}
+\item{color}{Changes the **lines, points and text** color. Should be a vector of 3 values 
+(i.e. DV, IPRED, PRED). This \code{color} argument is a special case in xpose as it applies 
+to three different layers (\code{geom_line}, \code{geom_point} and \code{geom_text}). This 
+special case is due to the fact that in ggplot2 it is not possible to have two different 
+color scales for different layers.}
 
-\item{point_color}{Points (and lines) color, should be a vector of 3 values (i.e. DV, IPRED, PRED).}
+\item{point_alpha}{Points alpha, should be a vector of 3 values (i.e. DV, IPRED, PRED).}
 
 \item{line_linetype}{Lines linetype, should be a vector of 3 values (i.e. DV, IPRED, PRED).}
 
 \item{...}{Any additional aesthetics to be passed on \code{xplot_scatter}.}
 }
 \description{
-Observations (DV), individual predictions (IPRED) and population predictions (PRED) plotted against 
-the independent variable for every individual
+Observations (DV), individual predictions (IPRED) and population predictions 
+(PRED) plotted against the independent variable for every individual
 }
 \section{Layers mapping}{
 
