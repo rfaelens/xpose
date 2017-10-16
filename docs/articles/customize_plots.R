@@ -1,7 +1,9 @@
 ## ---- include = FALSE----------------------------------------------------
 library(xpose)
 
-xpdb <- xpdb_ex_pk %>% vpc_data(opt = vpc_opt(n_bins = 7))
+xpdb <- xpdb_ex_pk %>% 
+ vpc_data(opt = vpc_opt(n_bins = 7)) %>% 
+ mutate(VAR = 1)
 
 knitr::opts_chunk$set(fig.dpi = 96,
                       fig.align = 'center', 
@@ -32,7 +34,8 @@ gridExtra::grid.arrange(
   vpc(xpdb, title = "type = \'l\'", subtitle = NULL, caption = NULL, type = 'l') + theme(legend.position = 'none'),
   vpc(xpdb, title = "type = \'p\'", subtitle = NULL, caption = NULL, type = 'p'),
   vpc(xpdb, title = "type = \'t\'", subtitle = NULL, caption = NULL, type = 't'),
-  ncol = 2)
+  vpc(xpdb, title = "type = \'r\'", subtitle = NULL, caption = NULL, type = 'r'),
+  ncol = 3)
 
 ## ----demo titles---------------------------------------------------------
 # Using template titles
@@ -112,17 +115,17 @@ dv_vs_ipred(xpdb,
 
 ## ----demo gg_theme, echo = FALSE, fig.height = 6, fig.width = 6, out.width = '75%'----
 gridExtra::grid.arrange(
-  dv_vs_ipred(xpdb, subtitle = 'theme_grey() [default in ggplot2]', title = NULL, caption = '', facet = 'OCC') + theme_grey(),
-  dv_vs_ipred(xpdb, subtitle = 'theme_readable() [default in xpose]', title = NULL, caption = '', facet = 'OCC') + theme_readable(),
-  dv_vs_ipred(xpdb, subtitle = 'theme_bw2()', title = NULL, caption = NULL, facet = 'OCC') + theme_bw2(),
-  dv_vs_ipred(xpdb, subtitle = 'theme_dark()', title = NULL, caption = NULL, facet = 'OCC') + theme_dark(),
+  dv_vs_ipred(xpdb, subtitle = 'theme_grey() [default in ggplot2]', title = NULL, caption = '', facet = 'VAR') + theme_grey(),
+  dv_vs_ipred(xpdb, subtitle = 'theme_readable() [default in xpose]', title = NULL, caption = '', facet = 'VAR') + theme_readable(),
+  dv_vs_ipred(xpdb, subtitle = 'theme_bw2()', title = NULL, caption = NULL, facet = 'VAR') + theme_bw2(),
+  dv_vs_ipred(xpdb, subtitle = 'theme_dark()', title = NULL, caption = NULL, facet = 'VAR') + theme_dark(),
   ncol = 2)
 
 ## ----demo xp_theme, echo = FALSE, fig.height = 3.2, fig.width = 6, out.width = '75%'----
 gridExtra::grid.arrange(
   dv_vs_ipred(update_themes(xpdb = xpdb, xp_theme = theme_xp_default()),
-              subtitle = 'xp_theme = theme_xp_default()\nwith theme_bw2()', title = NULL, caption = '', facet = 'OCC') + theme_bw2(),
+              subtitle = 'xp_theme = theme_xp_default()\nwith theme_bw2()', title = NULL, caption = '', facet = 'VAR') + theme_bw2(),
   dv_vs_ipred(update_themes(xpdb = xpdb, xp_theme = theme_xp_xpose4()),
-              subtitle = 'xp_theme = theme_xp_xpose4()\nwith theme_bw2()', title = NULL, caption = '', facet = 'OCC') + theme_bw2(),
+              subtitle = 'xp_theme = theme_xp_xpose4()\nwith theme_bw2()', title = NULL, caption = '', facet = 'VAR') + theme_bw2(),
   ncol = 2)
 
