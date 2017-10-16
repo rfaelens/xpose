@@ -30,7 +30,7 @@ theme_bw2 <- function(base_size = 11, base_family = '', legend_position = 'right
   theme_bw(base_size = base_size, base_family = base_family) %+replace% 
     theme(plot.title = element_text(face = 'bold', size = rel(1.2), hjust = 0, 
                                     vjust = 1, margin = margin(b = base_size/2 * 1.2)),
-          strip.text = element_text(color = 'white'),
+          strip.text = element_text(color = 'white', size = rel(0.8)),
           strip.background = element_rect(color = 'black', fill = 'black'),
           legend.position = legend_position,
           legend.key = element_blank(),
