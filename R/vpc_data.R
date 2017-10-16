@@ -46,7 +46,7 @@ vpc_data <- function(xpdb,
   if (missing(opt)) opt <- vpc_opt()
   vpc_type <- match.arg(arg = vpc_type, choices = c('continuous', 'categorical', 
                                                     'censored', 'time-to-event'))
-
+  
   # Get raw data
   msg(c('\nVPC ', vpc_type, ' ', rep('-', 30 - nchar(vpc_type)), 
         '\n1. Gathering data & settings'), quiet)
@@ -168,9 +168,7 @@ vpc_data <- function(xpdb,
       } else if (!is.null(vpc_dat$stratify)) {
         x[, vpc_dat$stratify] <- stringr::str_replace(x$strat, stringr::str_c(vpc_dat$stratify, '='), '')
       }
-      x %>% 
-        dplyr::mutate(group = as.numeric(interaction(x$strat, x$Simulations))) #%>% 
-        #dplyr::filter(!is.na(.$bin))
+      dplyr::mutate(.data = x, group = as.numeric(interaction(x$strat, x$Simulations)))
     }) %>% 
     purrr::map_at('aggr_obs', function(x) {
       if (vpc_type == 'continuous') {
@@ -193,9 +191,7 @@ vpc_data <- function(xpdb,
       } else if (!is.null(vpc_dat$stratify)) {
         x[, vpc_dat$stratify] <- stringr::str_replace(x$strat, stringr::str_c(vpc_dat$stratify, '='), '')
       }
-      x %>% 
-        dplyr::mutate(group = as.numeric(interaction(x$strat, x$Observations))) #%>% 
-        #dplyr::filter(!is.na(.$bin))
+      dplyr::mutate(.data = x, group = as.numeric(interaction(x$strat, x$Observations)))
     }) %>% 
     c(list(opt = opt, psn = ifelse(!is.null(psn_folder), TRUE, FALSE), psn_bins = psn_bins,
            vpc_dir = ifelse(!is.null(psn_folder), psn_folder, xpdb$options$dir), 

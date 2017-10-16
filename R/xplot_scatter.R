@@ -39,11 +39,11 @@
 #' 
 #' @section Faceting:
 #' Every xpose plot function has built-in faceting functionalities. Faceting arguments 
-#' are passed to the functions \link[ggforce]{facet_wrap_paginate} when the \code{facets} 
+#' are passed to the functions \code{\link[ggforce]{facet_wrap_paginate}} when the \code{facets} 
 #' argument is a character string (e.g. \code{facets = c('SEX', 'MED1')}) or 
-#' \link[ggforce]{facet_grid_paginate} when facets is a formula (e.g. \code{facets = SEX~MED1}).
-#' All xpose plot functions accept all the arguments for the \link[ggforce]{facet_wrap_paginate} 
-#' and \link[ggforce]{facet_grid_paginate} functions e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
+#' \code{\link[ggforce]{facet_grid_paginate}} when facets is a formula (e.g. \code{facets = SEX~MED1}).
+#' All xpose plot functions accept all the arguments for the \code{\link[ggforce]{facet_wrap_paginate}} 
+#' and \code{\link[ggforce]{facet_grid_paginate}} functions e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
 #' facets = SEX~MED1, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')}.
 #' 
 #' Faceting options can either be defined in plot functions (e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
@@ -59,11 +59,11 @@
 #' @section Template titles:
 #' Template titles can be used to create highly informative diagnostics plots. 
 #' They can be applied to any plot title, subtitle and caption. Template titles 
-#' are defined via a single string containing key variables staring with a @ (e.g. @ofv)
+#' are defined via a single string containing key variables staring with a `@` (e.g. `@ofv`)
 #' which will be replaced by their actual value when rendering the plot.
-#' For example '@run, @nobs observations in @nind subjects' would become 'run001, 
-#' 1022 observations in 74 subjects'. The available key variables are listed under 
-#' \code{\link{template_titles}}.
+#' For example `'@run, @nobs observations in @nind subjects'` would become 
+#' `'run001, 1022 observations in 74 subjects'`. The available key variables 
+#' are listed under \code{\link{template_titles}}.
 #' 
 #' @seealso \code{\link{xplot_distrib}} \code{\link{xplot_qq}}
 #' @examples

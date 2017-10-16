@@ -233,7 +233,7 @@ get_file <- function(xpdb,
 #' of multiple problem and/or subproblem. If \code{FALSE} all values are returned.
 #' 
 #' @return A tibble of model summary.
-#' @seealso \code{\link{xpose_data}}, \code{\link{template_titles}}
+#' @seealso \code{\link{xpose_data}}, \code{\link{template_titles}}, \code{\link{summary.xpose_data}}
 #' @examples
 #' run_summary <- get_summary(xpdb_ex_pk)
 #' run_summary
