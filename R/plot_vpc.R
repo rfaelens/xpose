@@ -3,11 +3,14 @@
 #' @description Generate visual predictive checks (VPC)
 #' 
 #' @param xpdb An xpose database object.
+#' @param vpc_type Only used when multiple vpc data are present in the same xpdb. The type of 
+#' vpc to be created. Can be one of can be one of: 'continuous', 'categorical', 
+#' 'censored' or 'time-to-event'.
+#' @param smooth Should the bins be smoothed (connect bin midpoints, default) or shown as rectangular boxes.
 #' @param mapping List of aesthetics mappings to be used for the xpose plot 
 #' (e.g. \code{point_color}).
 #' @param type String setting the type of plot to be used. Can be points 'p',
 #' line 'l', area 'a', rug 'r' and text 't' or any combination of the five.
-#' @param smooth Should the bins be smoothed (connect bin midpoints, default) or shown as rectangular boxes.
 #' @param facets Either a character string to use \link[ggplot2]{facet_wrap} 
 #' or a formula to use \link[ggplot2]{facet_grid}.
 #' @param title Plot title. Use \code{NULL} to remove.
@@ -16,9 +19,6 @@
 #' @param log String assigning logarithmic scale to axes, can be either '', 
 #' 'x', y' or 'xy'.   
 #' @param guide Enable guide display in vpc continuous (e.g. lloq and uloq lines).
-#' @param vpc_type Only used when multiple vpc data are present in the same xpdb. The type of 
-#' vpc to be created. Can be one of can be one of: 'continuous', 'categorical', 
-#' 'censored' or 'time-to-event'.
 #' @param gg_theme A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).
 #' @param xp_theme An xpose theme or vector of modifications to the xpose theme
 #' (eg. \code{c(point_color = 'red', line_linetype = 'dashed')}).
@@ -51,15 +51,15 @@
 #'  vpc()
 #' @export
 vpc <- function(xpdb,
+                vpc_type = NULL,
                 mapping  = NULL,
-                type     = 'alpr',
                 smooth   = TRUE,
+                type     = 'alpr',
                 title    = 'Visual predictive checks | @run',
                 subtitle = 'Number of simulations: @vpcnsim, confidence interval: @vpcci%',
                 caption  = '@vpcdir',
                 log      = NULL,
                 guide    = TRUE,
-                vpc_type = NULL,
                 gg_theme,
                 xp_theme,
                 facets,

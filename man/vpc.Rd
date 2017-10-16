@@ -4,23 +4,27 @@
 \alias{vpc}
 \title{Visual predictive checks}
 \usage{
-vpc(xpdb, mapping = NULL, type = "alpr", smooth = TRUE,
+vpc(xpdb, vpc_type = NULL, mapping = NULL, smooth = TRUE, type = "alpr",
   title = "Visual predictive checks | @run",
   subtitle = "Number of simulations: @vpcnsim, confidence interval: @vpcci\%",
-  caption = "@vpcdir", log = NULL, guide = TRUE, vpc_type = NULL,
-  gg_theme, xp_theme, facets, quiet, area_fill = c("steelblue3", "grey60",
-  "steelblue3"), line_linetype = c("93", "solid", "93"), ...)
+  caption = "@vpcdir", log = NULL, guide = TRUE, gg_theme, xp_theme,
+  facets, quiet, area_fill = c("steelblue3", "grey60", "steelblue3"),
+  line_linetype = c("93", "solid", "93"), ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
 
+\item{vpc_type}{Only used when multiple vpc data are present in the same xpdb. The type of 
+vpc to be created. Can be one of can be one of: 'continuous', 'categorical', 
+'censored' or 'time-to-event'.}
+
 \item{mapping}{List of aesthetics mappings to be used for the xpose plot 
 (e.g. \code{point_color}).}
 
+\item{smooth}{Should the bins be smoothed (connect bin midpoints, default) or shown as rectangular boxes.}
+
 \item{type}{String setting the type of plot to be used. Can be points 'p',
 line 'l', area 'a', rug 'r' and text 't' or any combination of the five.}
-
-\item{smooth}{Should the bins be smoothed (connect bin midpoints, default) or shown as rectangular boxes.}
 
 \item{title}{Plot title. Use \code{NULL} to remove.}
 
@@ -32,10 +36,6 @@ line 'l', area 'a', rug 'r' and text 't' or any combination of the five.}
 'x', y' or 'xy'.}
 
 \item{guide}{Enable guide display in vpc continuous (e.g. lloq and uloq lines).}
-
-\item{vpc_type}{Only used when multiple vpc data are present in the same xpdb. The type of 
-vpc to be created. Can be one of can be one of: 'continuous', 'categorical', 
-'censored' or 'time-to-event'.}
 
 \item{gg_theme}{A ggplot2 theme object (eg. \code{\link[ggplot2]{theme_classic}}).}
 
