@@ -227,17 +227,17 @@ any option supported by this layer e.g. histogram_fill = 'blue', rug_sides = 'b'
 
     
     <p>Every xpose plot function has built-in faceting functionalities. Faceting arguments 
-are passed to the functions <a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a> when the <code>facets</code> 
+are passed to the functions <code><a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a></code> when the <code>facets</code> 
 argument is a character string (e.g. <code>facets = c('SEX', 'MED1')</code>) or 
-<a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a> when facets is a formula (e.g. <code>facets = SEX~MED1</code>).
-All xpose plot functions accept all the arguments for the <a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a> 
-and <a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a> functions e.g. <code><a href='dv_vs_pred.html'>dv_vs_ipred(xpdb_ex_pk, 
+<code><a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a></code> when facets is a formula (e.g. <code>facets = SEX~MED1</code>).
+All xpose plot functions accept all the arguments for the <code><a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a></code> 
+and <code><a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a></code> functions e.g. <code><a href='dv_vs_pred.html'>dv_vs_ipred(xpdb_ex_pk, 
 facets = SEX~MED1, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')</a></code>.</p>
 <p>Faceting options can either be defined in plot functions (e.g. <code><a href='dv_vs_pred.html'>dv_vs_ipred(xpdb_ex_pk, 
 facets = 'SEX')</a></code>) or assigned globally to an xpdb object via the <code>xp_theme</code> (e.g. <code>xpdb 
 &lt;- update_themes(xpdb_ex_pk, xp_theme = list(facets = 'SEX'))</code>). In the latter example all plots 
 generate from this xpdb will automatically be stratified by `SEX`.</p>
-<p>By default, some plot functions use a custom stratyfiyng variable named `variable`, e.g. 
+<p>By default, some plot functions use a custom stratifying variable named `variable`, e.g. 
 <code><a href='distrib_plot.html'>eta_distrib()</a></code>. When using the <code>facets</code> argument, `variable` needs to be added manually 
 e.g. <code>facets = c('SEX', 'variable')</code> or <code>facets = c('SEX', 'variable')</code>, but is optional, 
 when using the <code>facets</code> argument in <code>xp_theme</code> variable is automatically added whenever needed.</p>
@@ -247,11 +247,11 @@ when using the <code>facets</code> argument in <code>xp_theme</code> variable is
     
     <p>Template titles can be used to create highly informative diagnostics plots. 
 They can be applied to any plot title, subtitle and caption. Template titles 
-are defined via a single string containing key variables staring with a @ (e.g. @ofv)
+are defined via a single string containing key variables staring with a `@` (e.g. `@ofv`)
 which will be replaced by their actual value when rendering the plot.
-For example '@run, @nobs observations in @nind subjects' would become 'run001, 
-1022 observations in 74 subjects'. The available key variables are listed under 
-<code><a href='template_titles.html'>template_titles</a></code>.</p>
+For example `'@run, @nobs observations in @nind subjects'` would become 
+`'run001, 1022 observations in 74 subjects'`. The available key variables 
+are listed under <code><a href='template_titles.html'>template_titles</a></code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -260,9 +260,9 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># A simple histogram</span>
-<span class='fu'>xplot_distrib</span>(<span class='no'>xpdb_ex_pk</span>, <span class='fu'>aes</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>WT</span>))</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='img'><img src='xplot_distrib-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>xplot_distrib</span>(<span class='no'>xpdb_ex_pk</span>, <span class='fu'>aes</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>WT</span>), <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'hr'</span>)</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='img'><img src='xplot_distrib-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># A simple density plot</span>
-<span class='fu'>xplot_distrib</span>(<span class='no'>xpdb_ex_pk</span>, <span class='fu'>aes</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>CWRES</span>))</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='img'><img src='xplot_distrib-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>xplot_distrib</span>(<span class='no'>xpdb_ex_pk</span>, <span class='fu'>aes</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>CWRES</span>), <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'dr'</span>)</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='img'><img src='xplot_distrib-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
