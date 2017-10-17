@@ -39,7 +39,7 @@ xpdb_ex_pk \%>\%
  mutate(lnDV = log(DV), 
         sim_count = irep(ID), 
         .problem = 1) \%>\% 
- dv_vs_idv(aes(y = LNDV))
+ dv_vs_idv(aes(y = lnDV))
  
 # Rename/select columns
 xpdb_ex_pk \%>\% 

@@ -28,7 +28,7 @@
 #'  
 #' # Deduplicate rows
 #' xpdb_ex_pk %>% 
-#'  distinct(ID, .problem = 1) %>% 
+#'  distinct(TIME, .problem = 1) %>% 
 #'  dv_vs_ipred()
 #' @name subset_xpdb
 #' @export
@@ -78,7 +78,7 @@ distinct.xpose_data <- function(.data, ..., .problem, .source) {
 #'  mutate(lnDV = log(DV), 
 #'         sim_count = irep(ID), 
 #'         .problem = 1) %>% 
-#'  dv_vs_idv(aes(y = LNDV))
+#'  dv_vs_idv(aes(y = lnDV))
 #'  
 #' # Rename/select columns
 #' xpdb_ex_pk %>% 
@@ -118,6 +118,7 @@ rename.xpose_data <- function(.data, ..., .problem, .source) {
 #' \code{summarize()} reduces multiple values down to a single value.
 #' 
 #' @param .data An xpose database object.
+#' @param x Same as .data (used for consistency with dplyr functions).
 #' @param .problem The problem from which the data will be modified
 #' @param .source The source of the data in the xpdb. Can either be 'data' or an output 
 #' file extension e.g. 'phi'.
@@ -147,8 +148,8 @@ group_by.xpose_data <- function(.data, ..., .problem, .source) {
 #' @method ungroup xpose_data
 #' @name summarize_xpdb
 #' @export
-ungroup.xpose_data <- function(.data, ..., .problem, .source) {
-  edit_xpose_data(.fun = dplyr::ungroup, .fname = 'ungroup', .data = .data,
+ungroup.xpose_data <- function(x, ..., .problem, .source) {
+  edit_xpose_data(.fun = dplyr::ungroup, .fname = 'ungroup', .data = x,
                   .problem = .problem, .source = .source, ...)
 }
 

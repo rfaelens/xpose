@@ -13,7 +13,7 @@
 \usage{
 \method{group_by}{xpose_data}(.data, ..., .problem, .source)
 
-\method{ungroup}{xpose_data}(.data, ..., .problem, .source)
+\method{ungroup}{xpose_data}(x, ..., .problem, .source)
 
 \method{summarize}{xpose_data}(.data, ..., .problem, .source)
 
@@ -33,6 +33,8 @@ See the dplyr vignette("programming") for an introduction to these concepts.}
 
 \item{.source}{The source of the data in the xpdb. Can either be 'data' or an output 
 file extension e.g. 'phi'.}
+
+\item{x}{Same as .data (used for consistency with dplyr functions).}
 }
 \description{
 \code{group_by()} takes an existing table and converts it into a 

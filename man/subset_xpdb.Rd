@@ -48,6 +48,6 @@ xpdb_ex_pk \%>\%
  
 # Deduplicate rows
 xpdb_ex_pk \%>\% 
- distinct(ID, .problem = 1) \%>\% 
+ distinct(TIME, .problem = 1) \%>\% 
  dv_vs_ipred()
 }
