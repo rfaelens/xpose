@@ -52,7 +52,6 @@ test_that('xpdb_edits works properly', {
                                                   .where = c('fake1', 'fake2', 'vpc_dat'))$special$data[[1]],
                  regexp = 'elements fake1, fake2 not found in vpc continuous')
   expect_equal(test_xpdb_2, ctrl_xpdb_1$special$data[[1]])
-  )
 })
 
 test_that('variable added with mutate is available in all problems', {
