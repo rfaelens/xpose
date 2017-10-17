@@ -4,16 +4,7 @@
 #' Unlike base subsetting, rows where the condition evaluates to NA are dropped.
 #' Use \code{slice()} to select row/cases by their position
 #' 
-#' @param .data An xpose database object.
-#' @param .problem The problem from which the data will be modified
-#' @param .source The source of the data in the xpdb. Can either be 'data' or an output 
-#' file extension e.g. 'phi'.
-#' @param ... Logical predicates defined in terms of the variables in .data. 
-#' Multiple conditions are combined with &. Only rows where the condition evaluates 
-#' to \code{TRUE} are kept. 
-#' These arguments are automatically quoted and evaluated in the 
-#' context of the data frame. They support unquoting and splicing. 
-#' See the dplyr vignette("programming") for an introduction to these concepts.
+#' @inheritParams edit_xpose_data
 #' @method filter xpose_data
 #' @examples
 #' # Subset by condition
@@ -32,28 +23,28 @@
 #'  dv_vs_ipred()
 #' @name subset_xpdb
 #' @export
-filter.xpose_data <- function(.data, ..., .problem, .source) {
+filter.xpose_data <- function(.data, ..., .problem, .source, .where) {
   edit_xpose_data(.fun = dplyr::filter, .fname = 'filter', .data = .data,
-                  .problem = .problem, .source = .source, ...)
+                  .problem = .problem, .source = .source, .where = .where, ...)
 }
 
 
 #' @method slice xpose_data
 #' @name subset_xpdb
 #' @export
-slice.xpose_data <- function(.data, ..., .problem, .source) {
+slice.xpose_data <- function(.data, ..., .problem, .source, .where) {
   edit_xpose_data(.fun = dplyr::slice, .fname = 'slice', .data = .data,
-                  .problem = .problem, .source = .source, ...)
+                  .problem = .problem, .source = .source, .where = .where, ...)
 }
 
 
 #' @method distinct xpose_data
 #' @name subset_xpdb
 #' @export
-distinct.xpose_data <- function(.data, ..., .problem, .source) {
+distinct.xpose_data <- function(.data, ..., .problem, .source, .where) {
   edit_xpose_data(.fun = function(.data, ...) {dplyr::distinct(.data, ..., .keep_all = TRUE)}, 
-                  .fname = 'distinct', .data = .data,
-                  .problem = .problem, .source = .source, ...)
+                  .fname = 'distinct', .data = .data, .problem = .problem, 
+                  .source = .source, .where = .where, ...)
 }
 
 
@@ -62,15 +53,7 @@ distinct.xpose_data <- function(.data, ..., .problem, .source) {
 #' @description \code{mutate()} adds new variables and preserves existing ones. 
 #' \code{select()} keeps only the listed variables; \code{rename()} keeps all variables.
 #' 
-#' @param .data An xpose database object.
-#' @param .problem The problem from which the data will be modified
-#' @param .source The source of the data in the xpdb. Can either be 'data' or an output 
-#' file extension e.g. 'phi'.
-#' @param ... Name-value pairs of expressions. Use \code{NULL} to drop a variable.
-#' 
-#' These arguments are automatically quoted and evaluated in the 
-#' context of the data frame. They support unquoting and splicing. 
-#' See the dplyr vignette("programming") for an introduction to these concepts.
+#' @inheritParams edit_xpose_data
 #' @method mutate xpose_data
 #' @examples
 #' # Mutate columns
@@ -87,27 +70,27 @@ distinct.xpose_data <- function(.data, ..., .problem, .source) {
 #'  dv_vs_idv(aes(x = TSLD))
 #' @name modify_xpdb
 #' @export
-mutate.xpose_data <- function(.data, ..., .problem, .source) {
+mutate.xpose_data <- function(.data, ..., .problem, .source, .where) {
   edit_xpose_data(.fun = dplyr::mutate, .fname = 'mutate', .data = .data,
-                  .problem = .problem, .source = .source, ...)
+                  .problem = .problem, .source = .source, .where = .where, ...)
 }
 
 
 #' @method select xpose_data
 #' @name modify_xpdb
 #' @export
-select.xpose_data <- function(.data, ..., .problem, .source) {
+select.xpose_data <- function(.data, ..., .problem, .source, .where) {
   edit_xpose_data(.fun = dplyr::select, .fname = 'select', .data = .data,
-                  .problem = .problem, .source = .source, ...)
+                  .problem = .problem, .source = .source, .where = .where, ...)
 }
 
 
 #' @method rename xpose_data
 #' @name modify_xpdb
 #' @export
-rename.xpose_data <- function(.data, ..., .problem, .source) {
+rename.xpose_data <- function(.data, ..., .problem, .source, .where) {
   edit_xpose_data(.fun = dplyr::rename, .fname = 'rename', .data = .data,
-                  .problem = .problem, .source = .source, ...)
+                  .problem = .problem, .source = .source, .where = .where, ...)
 }
 
 
@@ -117,17 +100,8 @@ rename.xpose_data <- function(.data, ..., .problem, .source) {
 #' grouped table where operations are performed "by group". \code{ungroup()} removes grouping.
 #' \code{summarize()} reduces multiple values down to a single value.
 #' 
-#' @param .data An xpose database object.
+#' @inheritParams edit_xpose_data 
 #' @param x Same as .data (used for consistency with dplyr functions).
-#' @param .problem The problem from which the data will be modified
-#' @param .source The source of the data in the xpdb. Can either be 'data' or an output 
-#' file extension e.g. 'phi'.
-#' @param ... Logical predicates defined in terms of the variables in .data. 
-#' Multiple conditions are combined with &. Only rows where the condition evaluates 
-#' to \code{TRUE} are kept. 
-#' These arguments are automatically quoted and evaluated in the 
-#' context of the data frame. They support unquoting and splicing. 
-#' See the dplyr vignette("programming") for an introduction to these concepts.
 #' @method group_by xpose_data
 #' @examples
 #' # Create a distribution plot of Cmax
@@ -139,35 +113,35 @@ rename.xpose_data <- function(.data, ..., .problem, .source) {
 #'  
 #' @name summarize_xpdb
 #' @export
-group_by.xpose_data <- function(.data, ..., .problem, .source) {
+group_by.xpose_data <- function(.data, ..., .problem, .source, .where) {
   edit_xpose_data(.fun = dplyr::group_by, .fname = 'group_by', .data = .data,
-                  .problem = .problem, .source = .source, ...)
+                  .problem = .problem, .source = .source, .where = .where, ...)
 }
 
 
 #' @method ungroup xpose_data
 #' @name summarize_xpdb
 #' @export
-ungroup.xpose_data <- function(x, ..., .problem, .source) {
+ungroup.xpose_data <- function(x, ..., .problem, .source, .where) {
   edit_xpose_data(.fun = dplyr::ungroup, .fname = 'ungroup', .data = x,
-                  .problem = .problem, .source = .source, ...)
+                  .problem = .problem, .source = .source, .where = .where, ...)
 }
 
 
 #' @method summarize xpose_data
 #' @name summarize_xpdb
 #' @export
-summarize.xpose_data <- function(.data, ..., .problem, .source) {
+summarize.xpose_data <- function(.data, ..., .problem, .source, .where) {
   edit_xpose_data(.fun = dplyr::summarize, .fname = 'summarize', .data = .data,
-                  .problem = .problem, .source = .source, ...)
+                  .problem = .problem, .source = .source, .where = .where, ...)
 }
 
 #' @method summarise xpose_data
 #' @name summarize_xpdb
 #' @export
-summarise.xpose_data <- function(.data, ..., .problem, .source) {
+summarise.xpose_data <- function(.data, ..., .problem, .source, .where) {
   edit_xpose_data(.fun = dplyr::summarise, .fname = 'summarize', .data = .data,
-                  .problem = .problem, .source = .source, ...)
+                  .problem = .problem, .source = .source, .where = .where, ...)
 }
 
 
@@ -181,6 +155,8 @@ summarise.xpose_data <- function(.data, ..., .problem, .source) {
 #' @param .problem The problem from which the data will be modified
 #' @param .source The source of the data in the xpdb. Can either be 'data' or an output 
 #' file extension e.g. 'phi'.
+#' @param .where A vector of element names to be edite in special (e.g. 
+#' \code{.where = c('vpc_dat', 'aggr_obs')} with vpc).
 #' @param ... Name-value pairs of expressions. Use \code{NULL} to drop a variable.
 #' 
 #' These arguments are automatically quoted and evaluated in the 
@@ -188,7 +164,7 @@ summarise.xpose_data <- function(.data, ..., .problem, .source) {
 #' See the dplyr vignette("programming") for an introduction to these concepts.
 #' @keywords internal
 #' @export
-edit_xpose_data <- function(.fun, .fname, .data, ..., .problem, .source) {
+edit_xpose_data <- function(.fun, .fname, .data, ..., .problem, .source, .where) {
   
   # Check input
   xpdb <- .data # Avoids issues with dplyr arguments
@@ -214,6 +190,38 @@ edit_xpose_data <- function(.fun, .fname, .data, ..., .problem, .source) {
     if (.fname %in% c('mutate', 'select', 'rename')) {
       xpdb[['data']] <- xpdb_index_update(xpdb = xpdb, .problem = .problem) # Update index
     }
+  } else if (.source == 'special') {
+    if (missing(.problem)) {
+      .problem <- max(xpdb[['special']]$problem)
+      msg(c('Changes will be applied to `special` $prob no.', .problem), quiet = FALSE)
+    }
+    if (!all(.problem %in% xpdb[['special']]$problem)) {
+      stop('Problem no.', stringr::str_c(.problem[!.problem %in% xpdb[['special']]$problem], collapse = ', '), 
+           ' not found in `special` data.', call. = FALSE)
+    }
+    
+    check_quo_vars(xpdb = xpdb, ..., .source = .source, .problem = .problem)
+    
+    xpdb[['special']] <- xpdb[['special']] %>%
+      dplyr::group_by_('problem') %>% 
+      tidyr::nest(.key = 'tmp') %>% 
+      dplyr::mutate(tmp = purrr::map_if(.x = .$tmp, .p = xpdb[['special']]$problem %in% .problem,
+                                        .f = function(.x, .fun, .where, ...) {
+                                          if (.x$method == 'vpc') {
+                                            if (missing(.where)) .where <- c('vpc_dat', 'aggr_obs', 'obs')
+                                            if (any(!.where %in% names(.x$data[[1]]))) {
+                                              warning('elements ', stringr::str_c(.where[!.where %in% names(.x$data[[1]])]), 
+                                                      ' not found in ', .x$method, ' ', .x$type, call. = FALSE)
+                                            }
+                                            .x$data[[1]] <- .x$data[[1]] %>% 
+                                              purrr::map_at(.at = .where, .f = .fun, ...)
+                                            .x$modified <- TRUE
+                                            return(.x)
+                                          } else {
+                                            stop('edits of `', .x$method, '` data are not yet supported in xpose.', call. = FALSE)
+                                          }
+                                        }, .fun = .fun, .where = .where, rlang::UQS(rlang::quos(...)))) %>% 
+      tidyr::unnest()
   } else {
     if (missing(.problem)) .problem <- xpdb[['files']]$problem
     if (!all(.source %in% xpdb[['files']]$extension)) {
@@ -290,6 +298,8 @@ xpdb_index_update <- function(xpdb, .problem) {
 #' @keywords internal
 #' @export
 check_quo_vars <- function(xpdb, ..., .source, .problem) {
+  if (.source == 'special') return(invisible())
+  
   quo_vars <- rlang::quos(...) %>% 
     purrr::map(all.vars) %>% 
     purrr::flatten_chr()

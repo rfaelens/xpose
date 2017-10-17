@@ -9,11 +9,11 @@
 \alias{rename.xpose_data}
 \title{Add, remove or rename variables in an xpdb}
 \usage{
-\method{mutate}{xpose_data}(.data, ..., .problem, .source)
+\method{mutate}{xpose_data}(.data, ..., .problem, .source, .where)
 
-\method{select}{xpose_data}(.data, ..., .problem, .source)
+\method{select}{xpose_data}(.data, ..., .problem, .source, .where)
 
-\method{rename}{xpose_data}(.data, ..., .problem, .source)
+\method{rename}{xpose_data}(.data, ..., .problem, .source, .where)
 }
 \arguments{
 \item{.data}{An xpose database object.}
@@ -28,6 +28,9 @@ See the dplyr vignette("programming") for an introduction to these concepts.}
 
 \item{.source}{The source of the data in the xpdb. Can either be 'data' or an output 
 file extension e.g. 'phi'.}
+
+\item{.where}{A vector of element names to be edite in special (e.g. 
+\code{.where = c('vpc_dat', 'aggr_obs')} with vpc).}
 }
 \description{
 \code{mutate()} adds new variables and preserves existing ones. 

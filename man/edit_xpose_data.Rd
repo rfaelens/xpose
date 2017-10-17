@@ -4,7 +4,7 @@
 \alias{edit_xpose_data}
 \title{Master xpdb editing function}
 \usage{
-edit_xpose_data(.fun, .fname, .data, ..., .problem, .source)
+edit_xpose_data(.fun, .fname, .data, ..., .problem, .source, .where)
 }
 \arguments{
 \item{.fun}{An editing function to be applied to the data.}
@@ -23,6 +23,9 @@ See the dplyr vignette("programming") for an introduction to these concepts.}
 
 \item{.source}{The source of the data in the xpdb. Can either be 'data' or an output 
 file extension e.g. 'phi'.}
+
+\item{.where}{A vector of element names to be edite in special (e.g. 
+\code{.where = c('vpc_dat', 'aggr_obs')} with vpc).}
 }
 \description{
 Generic function used to build dedicated editing functions
