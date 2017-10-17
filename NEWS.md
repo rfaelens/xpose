@@ -1,4 +1,4 @@
-# xpose 0.2.9
+# xpose 0.3
 ### General
 * Improved documentation and testing
 * Improved compatibility with NONMEM 7.4.1
