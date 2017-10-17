@@ -197,7 +197,7 @@ vpc_data <- function(xpdb,
            vpc_dir = ifelse(!is.null(psn_folder), psn_folder, xpdb$options$dir), 
            facets = facets, obs_problem = obs_problem, sim_problem = sim_problem, 
            obs_cols = obs_cols, sim_cols = sim_cols, nsim = vpc_nsim)) %>%
-           {dplyr::tibble(problem = vpc_prob, method = 'vpc', type = vpc_type, data = list(.))} %>%
+           {dplyr::tibble(problem = vpc_prob, method = 'vpc', type = vpc_type, data = list(.), modified = FALSE)} %>%
            {dplyr::bind_rows(xpdb$special, .)} %>% 
     dplyr::distinct_(.dots = c('problem', 'method', 'type'), .keep_all = TRUE)
   msg('\nVPC done', quiet)

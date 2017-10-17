@@ -50,8 +50,10 @@ print.xpose_data <- function(x, ...) {
   }
   
   if (!is.null(x$special)) {
-    special_names <- stringr::str_c(x$special$method, x$special$type, 
-                                    sep = ' ', collapse = ', ')
+    special_names <- stringr::str_c(x$special$method, ' ', x$special$type, 
+                                    ' (#', x$special$problem,
+                                    ifelse(x$special$modified, ', modified', ''),
+                                    ')', collapse = ', ')
   } else {
     special_names <- '<none>'
   }

@@ -29,7 +29,14 @@ reference:
     desc:  Edit data, index or files within an xpdb
     contents:
     - filter.xpose_data
+    - slice.xpose_data
+    - distinct.xpose_data
     - mutate.xpose_data
+    - select.xpose_data
+    - rename.xpose_data
+    - group_by.xpose_data
+    - ungroup.xpose_data
+    - summarize.xpose_data
     - irep
     - set_var_types
     - set_var_labels
