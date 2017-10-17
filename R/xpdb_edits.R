@@ -208,9 +208,8 @@ edit_xpose_data <- function(.fun, .fname, .data, ..., .problem, .source, .where)
       dplyr::mutate(tmp = purrr::map_if(.x = .$tmp, .p = xpdb[['special']]$problem %in% .problem,
                                         .f = function(.x, .fun, .where, ...) {
                                           if (.x$method == 'vpc') {
-                                            if (missing(.where)) .where <- c('vpc_dat', 'aggr_obs', 'obs')
                                             if (any(!.where %in% names(.x$data[[1]]))) {
-                                              warning('elements ', stringr::str_c(.where[!.where %in% names(.x$data[[1]])]), 
+                                              warning('elements ', stringr::str_c(.where[!.where %in% names(.x$data[[1]])], collapse = ', '), 
                                                       ' not found in ', .x$method, ' ', .x$type, call. = FALSE)
                                             }
                                             .x$data[[1]] <- .x$data[[1]] %>% 
