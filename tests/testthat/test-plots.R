@@ -60,4 +60,11 @@ test_that_for_all(distribution_functions, 'have proper error check', {
                regexp = 'Column.+ not available')
   expect_error(.distribution_function(xpdb_no_file), 
                regexp = 'No `data` slot could be found in this xpdb')
+  expect_error(xpdb_ex_pk %>% filter(ITERATION == 0, .source = 'ext') %>% prm_vs_iteration(),
+               regexp = 'No parameters varying across ITERATION were found')
+  expect_error(xpdb_ex_pk %>% mutate(ETA1 = 0, ETA2 = 0, ETA3 = 0) %>% eta_qq(drop_fixed = TRUE),
+               regexp = 'No non-fixed variables available for plotting')
+  expect_true(is.xpose.plot(xpdb_ex_pk %>% 
+                              mutate(ETA1 = 0, ETA2 = 0, ETA3 = 0) %>% 
+                              eta_qq(drop_fixed = FALSE)))
 })

@@ -5,8 +5,8 @@
 #' @inheritParams dv_vs_pred
 #' @param type String setting the type of plot. Can only be points 'p'.
 #' @param guide Should the guide (e.g. reference line) be displayed.
-#' @param drop_static Should columns that only have a single unique value 
-#' (i.e. static) be dropped.
+#' @param drop_fixed Should columns that only have a single unique value 
+#' (i.e. fixed) be dropped.
 #' 
 #' @inheritSection xplot_qq Layers mapping
 #' @inheritSection xplot_scatter Faceting
@@ -29,7 +29,7 @@
 #' @export
 prm_qq <- function(xpdb,
                    mapping  = NULL,
-                   drop_static = TRUE,
+                   drop_fixed = TRUE,
                    type     = 'p',
                    title    = 'QQ plot of parameters | @run',
                    subtitle = 'Based on @nind individuals',
@@ -48,8 +48,8 @@ prm_qq <- function(xpdb,
                                                variable = 'variable')
   
   prm_col <- xp_var(xpdb, problem, type = 'param')$col
-  if (drop_static) {
-    prm_col <- drop_static_cols(xpdb, problem, cols = prm_col, quiet = quiet)
+  if (drop_fixed) {
+    prm_col <- drop_fixed_cols(xpdb, problem, cols = prm_col, quiet = quiet)
   }
   if (is.null(prm_col)) {
     stop('No parameter column found in the xpdb data index.', call. = FALSE)
@@ -73,7 +73,7 @@ prm_qq <- function(xpdb,
 #' @export
 eta_qq <- function(xpdb,
                    mapping  = NULL,
-                   drop_static = TRUE,
+                   drop_fixed = TRUE,
                    type     = 'p',
                    title    = 'QQ plot of etas | @run',
                    subtitle = 'Based on @nind individuals, Eta shrink: @etashk',
@@ -92,8 +92,8 @@ eta_qq <- function(xpdb,
                                                variable = 'variable')
   
   eta_col <- xp_var(xpdb, problem, type = 'eta')$col
-  if (drop_static) {
-    eta_col <- drop_static_cols(xpdb, problem, cols = eta_col, quiet = quiet)
+  if (drop_fixed) {
+    eta_col <- drop_fixed_cols(xpdb, problem, cols = eta_col, quiet = quiet)
   }
   if (is.null(eta_col)) {
     stop('No eta column found in the xpdb data index.', call. = FALSE)
@@ -169,7 +169,7 @@ res_qq <- function(xpdb,
 #' @export
 cov_qq <- function(xpdb,
                    mapping  = NULL,
-                   drop_static = TRUE,
+                   drop_fixed = TRUE,
                    type     = 'p',
                    title    = 'QQ plot of continuous covariates | @run',
                    subtitle = 'Based on @nind individuals',
@@ -188,8 +188,8 @@ cov_qq <- function(xpdb,
                                                variable = 'variable')
   
   cov_col <- xp_var(xpdb, problem, type = 'contcov')$col
-  if (drop_static) {
-    cov_col <- drop_static_cols(xpdb, problem, cols = cov_col, quiet = quiet)
+  if (drop_fixed) {
+    cov_col <- drop_fixed_cols(xpdb, problem, cols = cov_col, quiet = quiet)
   }
   if (is.null(cov_col)) {
     stop('No continuous covariate column found in the xpdb data index.', call. = FALSE)
