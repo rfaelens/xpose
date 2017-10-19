@@ -3,8 +3,8 @@
 #' @description Plot of the change in compartment amounts over the independent variable
 #'
 #' @inheritParams dv_vs_pred
-#' @param drop_static Should columns that only have a single unique value 
-#' (i.e. static) be dropped.
+#' @param drop_fixed Should columns that only have a single unique value 
+#' (i.e. fixed) be dropped.
 #' 
 #' @inheritSection xplot_scatter Layers mapping
 #' @inheritSection xplot_scatter Faceting
@@ -17,7 +17,7 @@
 amt_vs_idv <- function(xpdb,
                        mapping  = NULL,
                        group    = 'ID',
-                       drop_static = TRUE,
+                       drop_fixed = TRUE,
                        type     = 'l',
                        title    = 'Compartments amount vs. @x | @run',
                        subtitle = 'Ofv: @ofv',
@@ -39,8 +39,8 @@ amt_vs_idv <- function(xpdb,
   if (!any(names(extra_args) == 'ncol')) extra_args$ncol <- 3
   
   amt_col <- xp_var(xpdb, problem, type = 'a')$col
-  if (drop_static) {
-    amt_col <- drop_static_cols(xpdb, problem, cols = amt_col, quiet = quiet)
+  if (drop_fixed) {
+    amt_col <- drop_fixed_cols(xpdb, problem, cols = amt_col, quiet = quiet)
   }
   if (is.null(amt_col)) {
     stop('No compartment amount column found in the xpdb data index.', call. = FALSE)

@@ -4,7 +4,7 @@
 \alias{amt_vs_idv}
 \title{Compartment kinetics}
 \usage{
-amt_vs_idv(xpdb, mapping = NULL, group = "ID", drop_static = TRUE,
+amt_vs_idv(xpdb, mapping = NULL, group = "ID", drop_fixed = TRUE,
   type = "l", title = "Compartments amount vs. @x | @run",
   subtitle = "Ofv: @ofv", caption = "@dir", log = NULL, facets, problem,
   quiet, ...)
@@ -17,8 +17,8 @@ amt_vs_idv(xpdb, mapping = NULL, group = "ID", drop_static = TRUE,
 
 \item{group}{Grouping variable to be used for lines.}
 
-\item{drop_static}{Should columns that only have a single unique value 
-(i.e. static) be dropped.}
+\item{drop_fixed}{Should columns that only have a single unique value 
+(i.e. fixed) be dropped.}
 
 \item{type}{String setting the type of plot to be used. Can be points 'p',
 line 'l', smooth 's' and text 't' or any combination of the four.}
