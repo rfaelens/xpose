@@ -136,12 +136,12 @@
     <p>QQ plots of the ETA and model residuals.</p>
     
 
-    <pre class="usage"><span class='fu'>prm_qq</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>drop_static</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"p"</span>,
+    <pre class="usage"><span class='fu'>prm_qq</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>drop_fixed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"p"</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"QQ plot of parameters | @run"</span>,
   <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Based on @nind individuals"</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>guide</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>facets</span>, <span class='no'>problem</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)
 
-<span class='fu'>eta_qq</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>drop_static</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"p"</span>,
+<span class='fu'>eta_qq</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>drop_fixed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"p"</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"QQ plot of etas | @run"</span>,
   <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Based on @nind individuals, Eta shrink: @etashk"</span>,
   <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guide</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>facets</span>, <span class='no'>problem</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)
@@ -151,7 +151,7 @@
   <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Based on @nobs observations"</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>guide</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>facets</span>, <span class='no'>problem</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)
 
-<span class='fu'>cov_qq</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>drop_static</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"p"</span>,
+<span class='fu'>cov_qq</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>drop_fixed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"p"</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"QQ plot of continuous covariates | @run"</span>,
   <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Based on @nind individuals"</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>guide</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>facets</span>, <span class='no'>problem</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)</pre>
@@ -169,9 +169,9 @@
 (e.g. <code>point_color</code>).</p></td>
     </tr>
     <tr>
-      <th>drop_static</th>
+      <th>drop_fixed</th>
       <td><p>Should columns that only have a single unique value 
-(i.e. static) be dropped.</p></td>
+(i.e. fixed) be dropped.</p></td>
     </tr>
     <tr>
       <th>type</th>
@@ -271,7 +271,7 @@ are listed under <code><a href='template_titles.html'>template_titles</a></code>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># QQ plot of parameters</span>
-<span class='fu'>prm_qq</span>(<span class='no'>xpdb_ex_pk</span>)</div><div class='output co'>#&gt; <span class='message'>Dropped static variables ALAG1.</span></div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Removing duplicated rows based on: ID, variable</span></div><div class='output co'>#&gt; <span class='message'>Tidying data by ID, SEX, MED1, MED2, DOSE ... and 23 more variables</span></div><div class='img'><img src='qq_plot-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>prm_qq</span>(<span class='no'>xpdb_ex_pk</span>)</div><div class='output co'>#&gt; <span class='message'>Dropped fixed variables ALAG1.</span></div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Removing duplicated rows based on: ID, variable</span></div><div class='output co'>#&gt; <span class='message'>Tidying data by ID, SEX, MED1, MED2, DOSE ... and 23 more variables</span></div><div class='img'><img src='qq_plot-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># QQ plot of eta</span>
 <span class='fu'>eta_qq</span>(<span class='no'>xpdb_ex_pk</span>)</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Removing duplicated rows based on: ID, variable</span></div><div class='output co'>#&gt; <span class='message'>Tidying data by ID, SEX, MED1, MED2, DOSE ... and 23 more variables</span></div><div class='img'><img src='qq_plot-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># QQ plot of residuals</span>
