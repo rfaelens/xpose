@@ -42,14 +42,19 @@ prm_vs_iteration <- function(xpdb,
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (missing(facets)) facets <- 'variable'
   x_var <- 'ITERATION'
+  msg(c('Parameters non-varying across ', x_var, ' not shown.'), quiet)
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
                 opt = data_opt(problem = problem, subprob = subprob,
                                method = method, source = 'ext',
                                filter = function(x) {
-                                 x %>% 
+                                 x <- x %>% 
                                    dplyr::filter(.[, x_var] >= 0) %>% 
                                    dplyr::select_if(.predicate = function(x) dplyr::n_distinct(x) > 1)
+                                 if (ncol(x[, colnames(x) != x_var]) == 0) {
+                                   stop('No parameters varying across ', x_var, ' were found.', call. = FALSE)
+                                 }
+                                 x
                                }, tidy = TRUE, index_col = x_var,
                                post_processing = reorder_factors(prefix = NA)),
                 mapping = aes_c(aes_string(x = x_var, y = 'value'), mapping),
@@ -87,15 +92,19 @@ grd_vs_iteration <- function(xpdb,
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (missing(facets)) facets <- 'variable'
   x_var <- 'ITERATION'
-  msg('Static parameters not shown.', quiet)
+  msg(c('Parameters non-varying across ', x_var, ' not shown.'), quiet)
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
                 opt = data_opt(problem = problem, subprob = subprob, 
                                method = method, source = 'grd',
                                filter = function(x) {
-                                 x %>% 
+                                 x <- x %>% 
                                    dplyr::filter(.[, x_var] >= 0) %>% 
                                    dplyr::select_if(.predicate = function(x) dplyr::n_distinct(x) > 1)
+                                 if (ncol(x[, colnames(x) != x_var]) == 0) {
+                                   stop('No parameters varying across ', x_var, ' were found.', call. = FALSE)
+                                 }
+                                 x
                                }, tidy = TRUE, index_col = x_var, 
                                post_processing = reorder_factors(prefix = 'GRD(', suffix = ')')),
                 mapping = aes_c(aes_string(x = x_var, y = 'value'), mapping),

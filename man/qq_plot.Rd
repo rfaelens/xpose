@@ -9,12 +9,12 @@
 \alias{cov_qq}
 \title{QQ plots of ETA and residuals}
 \usage{
-prm_qq(xpdb, mapping = NULL, drop_static = TRUE, type = "p",
+prm_qq(xpdb, mapping = NULL, drop_fixed = TRUE, type = "p",
   title = "QQ plot of parameters | @run",
   subtitle = "Based on @nind individuals", caption = "@dir", log = NULL,
   guide = TRUE, facets, problem, quiet, ...)
 
-eta_qq(xpdb, mapping = NULL, drop_static = TRUE, type = "p",
+eta_qq(xpdb, mapping = NULL, drop_fixed = TRUE, type = "p",
   title = "QQ plot of etas | @run",
   subtitle = "Based on @nind individuals, Eta shrink: @etashk",
   caption = "@dir", log = NULL, guide = TRUE, facets, problem, quiet, ...)
@@ -24,7 +24,7 @@ res_qq(xpdb, mapping = NULL, res = "CWRES", type = "p",
   subtitle = "Based on @nobs observations", caption = "@dir", log = NULL,
   guide = TRUE, facets, problem, quiet, ...)
 
-cov_qq(xpdb, mapping = NULL, drop_static = TRUE, type = "p",
+cov_qq(xpdb, mapping = NULL, drop_fixed = TRUE, type = "p",
   title = "QQ plot of continuous covariates | @run",
   subtitle = "Based on @nind individuals", caption = "@dir", log = NULL,
   guide = TRUE, facets, problem, quiet, ...)
@@ -35,8 +35,8 @@ cov_qq(xpdb, mapping = NULL, drop_static = TRUE, type = "p",
 \item{mapping}{List of aesthetics mappings to be used for the xpose plot 
 (e.g. \code{point_color}).}
 
-\item{drop_static}{Should columns that only have a single unique value 
-(i.e. static) be dropped.}
+\item{drop_fixed}{Should columns that only have a single unique value 
+(i.e. fixed) be dropped.}
 
 \item{type}{String setting the type of plot. Can only be points 'p'.}
 
