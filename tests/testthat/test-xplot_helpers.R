@@ -17,15 +17,15 @@ test_that('Check check_scales', {
 })
 
 test_that('Check parse_title', {
-  expect_equal(parse_title('OFV: @ofv', xpdb_ex_pk, problem = 1, quiet = TRUE), 'OFV: -1518.108')
+  expect_equal(parse_title('OFV: @ofv', xpdb_ex_pk, problem = 1, quiet = TRUE), 'OFV: -1403.905')
   expect_warning(tmp_title1 <- parse_title('OFV: @fake', xpdb_ex_pk, problem = 1, quiet = FALSE), 
                  regexp = 'not part of')
   expect_equal(tmp_title1, 'OFV: @fake')
   expect_equal(parse_title('OFV: @fake', xpdb_ex_pk, problem = 1, quiet = TRUE, extra_key = 'fake', 
                            extra_value = '1987'), 'OFV: 1987')
   expect_warning(tmp_title2 <- parse_title('OFV: @ofv, @ignored', xpdb_ex_pk, problem = 1, quiet = TRUE, 
-                             ignore_key = 'ignored'), NA)
-  expect_equal(tmp_title2, 'OFV: -1518.108, @ignored')
+                                           ignore_key = 'ignored'), NA)
+  expect_equal(tmp_title2, 'OFV: -1403.905, @ignored')
 })
 
 test_that('Check filter_xp_theme', {
@@ -64,8 +64,8 @@ test_that('Check last_file_subprob', {
 })
 
 test_that('Check xp_var', {
-  expect_equal(xp_var(xpdb_ex_pk, 1, col = 'TAD')$type, 'idv')
-  expect_equal(xp_var(xpdb_ex_pk, 1, type = 'idv')$col, 'TAD')
+  expect_equal(xp_var(xpdb_ex_pk, 1, col = 'TIME')$type, 'idv')
+  expect_equal(xp_var(xpdb_ex_pk, 1, type = 'idv')$col, 'TIME')
   expect_null(xp_var(xpdb_ex_pk, 1, col = 'FAKE_COL', silent = TRUE))
   expect_error(xp_var(xpdb_ex_pk, 1, col = 'FAKE_COL', silent = FALSE),
                regexp = 'Column `FAKE_COL` not available')
@@ -94,16 +94,16 @@ test_that('Check check_plot_type', {
                  regexp = 'Plot type \"r\", \"z\" not recognized')
 })
 
-test_that('Check drop_static', {
-  expect_message(variable_cols <- drop_static_cols(xpdb_ex_pk, problem = 1, quiet = FALSE,
-                                                   cols = c('CL', 'V', 'KA', 'ALAG1')), 
-                 regexp = 'Dropped static variables ALAG1')
+test_that('Check drop_fixed', {
+  expect_message(variable_cols <- drop_fixed_cols(xpdb_ex_pk, problem = 1, quiet = FALSE,
+                                                  cols = c('CL', 'V', 'KA', 'ALAG1')), 
+                 regexp = 'Dropped fixed variables ALAG1')
   expect_equal(variable_cols, c('CL', 'V', 'KA'))
-  })
+})
 
 test_that('Check add_facets_var', {
   expect_equal(add_facet_var(facets = c('OCC', 'SEX'), variable = 'variable'),
                c('variable', 'OCC', 'SEX'))
   expect_equal(add_facet_var(facets = as.formula('OCC~SEX'), variable = 'variable'),
                as.formula('OCC~SEX+variable'))
-  })
+})

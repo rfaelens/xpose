@@ -19,7 +19,7 @@ get_code <- function(xpdb, problem = NULL) {
   
   if (!is.null(problem)) {
     if (!all(problem %in% x$problem)) {
-      stop('Problem no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
+      stop('$prob no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
            ' not found in model code.', call. = FALSE)
     }
     x <- x[x$problem %in% problem, ]
@@ -79,7 +79,7 @@ get_data <- function(xpdb,
   if (!is.null(problem)) {
     # When selecting tables based on problem level
     if (!all(problem %in% x$problem)) {
-      stop('Problem no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
+      stop('$prob no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
            ' not found in model output data.', call. = FALSE)
     }
     x <- x$data[x$problem %in% problem]
@@ -183,7 +183,7 @@ get_file <- function(xpdb,
   if (is.null(problem)) {
     problem <- last_file_problem(xpdb, ext = x$extension)
   } else if (!all(problem %in% x$problem)) {
-    stop('Problem no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
+    stop('$prob no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
          ' not found in ', stringr::str_c(unique(x$name), collapse = ', '), ' files.', call. = FALSE)
   }
   x <- x[x$problem %in% problem, ]
@@ -192,7 +192,7 @@ get_file <- function(xpdb,
   if (is.null(subprob)) {
     subprob <- last_file_subprob(xpdb, ext = x$extension, problem = problem)
   } else if (!all(subprob %in% x$subprob)) {
-    stop('Sub-problem no.', stringr::str_c(subprob[!subprob %in% x$subprob], collapse = ', '), 
+    stop('Subprob no.', stringr::str_c(subprob[!subprob %in% x$subprob], collapse = ', '), 
          ' not found in ', stringr::str_c(unique(x$name), collapse = ', '), ' files.', call. = FALSE)
   }
   x <- x[x$subprob %in% subprob, ]
@@ -215,8 +215,8 @@ get_file <- function(xpdb,
                                       x$method)) %>% 
       return()
   } else {
-    msg(c('Returning data from problem no.', x$problem , 
-          ' sub-problem no.', x$subprob, ' ', x$method), quiet)
+    msg(c('Returning data from ', x$name, ', $prob no.', x$problem , 
+          ', subprob no.', x$subprob, ', method ', x$method), quiet)
     return(x$data[[1]])
   }
 }
@@ -233,7 +233,7 @@ get_file <- function(xpdb,
 #' of multiple problem and/or subproblem. If \code{FALSE} all values are returned.
 #' 
 #' @return A tibble of model summary.
-#' @seealso \code{\link{xpose_data}}, \code{\link{template_titles}}
+#' @seealso \code{\link{xpose_data}}, \code{\link{template_titles}}, \code{\link{summary.xpose_data}}
 #' @examples
 #' run_summary <- get_summary(xpdb_ex_pk)
 #' run_summary
@@ -246,7 +246,7 @@ get_summary <- function(xpdb, problem = NULL, subprob = NULL, only_last = FALSE)
   # Filter by $problem
   if (!is.null(problem)) {
     if (!all(problem %in% x$problem)) {
-      stop('Problem no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
+      stop('$prob no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
            ' not found in model summary.', call. = FALSE)
     }
     x <- x[x$problem %in% problem, ]
@@ -255,7 +255,7 @@ get_summary <- function(xpdb, problem = NULL, subprob = NULL, only_last = FALSE)
   # Filter by sub-problem
   if (!is.null(subprob)) {
     if (!all(subprob %in% x$subprob)) {
-      stop('Sub-problem no.', stringr::str_c(subprob[!subprob %in% x$subprob], collapse = ', '), 
+      stop('Subprob no.', stringr::str_c(subprob[!subprob %in% x$subprob], collapse = ', '), 
            ' not found in model summary.', call. = FALSE)
     }
     x <- x[x$subprob %in% subprob, ]
@@ -277,7 +277,7 @@ get_summary <- function(xpdb, problem = NULL, subprob = NULL, only_last = FALSE)
 #' @param subprob The subproblem to be used, by default returns the last one for each file.
 #' @param method The estimation method to be used, by default returns the last one for each file
 #' @param digits The number of significant digits to be displayed.
-#' @param show_all Logical, whether the 0 fixed off-diagonal elements should be removed outputed or not.
+#' @param show_all Logical, whether the 0 fixed off-diagonal elements should be removed from the output.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' 
 #' @return A tibble for single problem/subprob or a named list for multiple problem|subprob.
@@ -337,7 +337,7 @@ get_prm <- function(xpdb,
         dplyr::mutate(name = dplyr::case_when(.$ITERATION == -1000000000 ~ 'value', 
                                               .$ITERATION == -1000000001 ~ 'rse',
                                               TRUE ~ 'fixed')) %>% 
-        dplyr::select(colnames(.)[!colnames(.) %in% c('ITERATION', 'OBJ')]) %>% 
+        dplyr::select(colnames(.)[!stringr::str_detect(colnames(.), 'ITERATION|OBJ')]) %>% 
         {as.data.frame(t(.), stringsAsFactors = FALSE)} %>% 
         {purrr::set_names(x = ., nm = purrr::flatten_chr(.[nrow(.),]))} %>% 
         dplyr::mutate(name  = row.names(.)) %>% 

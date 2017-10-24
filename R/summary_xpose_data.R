@@ -12,7 +12,6 @@
 #'
 #' @export
 summary.xpose_data <- function(object, problem = NULL, ...) {
-  padding <- 28 # Characters
   order <- c('software', 'version', 'dir', 'file', 'run', 'ref', 'descr', 'timestart', 
              'timestop', 'probn', 'label', 'data', 'nind', 'nobs', 'subroutine', 'method',
              'term', 'runtime', 'ofv', 'nsig', 'covtime', 'condn','etashk', 'epsshk', 
@@ -28,15 +27,16 @@ summary.xpose_data <- function(object, problem = NULL, ...) {
       value <- stringr::str_c(x$value, ' (subprob no.', x$subprob, ')', sep = '')
       stringr::str_c(value, collapse = '\n')
     })) %>% 
-    dplyr::mutate(descr = stringr::str_pad(.$descr, width = padding, 'right'),
-                  value = stringr::str_replace_all(.$value, '\n', 
-                                                   stringr::str_pad('\n', padding + 6, 'right'))) %>% 
+    dplyr::mutate(descr = stringr::str_pad(.$descr, width = max(nchar(.$descr)) + 2, 'right'),
+                  label = stringr::str_pad(.$label, width = max(nchar(.$label)), 'right'),
+                  value = stringr::str_replace_all(.$value, '\n', stringr::str_pad('\n', max(nchar(.$descr)) + max(nchar(.$label)) + 9, 'right'))) %>% 
+    dplyr::mutate(descr = stringr::str_c(.$descr, '@', .$label, '')) %>% 
     dplyr::mutate(string = stringr::str_c(' -', .$descr, ':', .$value, sep = ' '),
                   grouping = as.character(.$problem)) %>% 
     dplyr::group_by_(.dots = 'grouping') %>% 
     tidyr::nest() %>% 
     {purrr::map(.$data, function(x) {
-      x <- dplyr::filter(.data = x, !stringr::str_detect(x$descr, 'Problem number|Run number'))
+      x <- dplyr::filter(.data = x, !stringr::str_detect(x$descr, 'Problem number'))
       if (x$problem[1] == 0) {
         lab <- '[Global information]'
       } else {

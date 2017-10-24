@@ -5,6 +5,7 @@
 #' 
 #' @param problem The problem to be used, by default returns the last one.
 #' @param subprob The subproblem to be used, by default returns the last one.
+#' @param method The estimation method to be used, by default returns the last one.
 #' @param source Define the location of the data in the xpdb. Should be either 'data' 
 #' to use the output tables or the name of an output file attached to the xpdb.
 #' @param simtab Only used when 'data' is defined as the source and `problem` is default. Should the data be coming 
@@ -15,10 +16,10 @@
 #' Column names to use as index when tidying the data.
 #' @param value_col Only used when 'tidy' is defined a \code{TRUE} and \code{index_col} is \code{NULL}. 
 #' Column names to be stacked when tidying the data.
-#' @param post_processing A function used to modify the data after it has been tidyied e.g. post_processing = function(x) 
+#' @param post_processing A function used to modify the data after it has been tidied up e.g. post_processing = function(x) 
 #' dplyr::mutate(.data = x, variable = as.factor(.$variable)) where x is the tidy data.
 #'
-#' @seealso \code{{xplot_scatter}}
+#' @seealso \code{\link{xplot_distrib}} \code{\link{xplot_qq}} \code{\link{xplot_scatter}} 
 #' 
 #' @examples
 #' data_opt(problem = 1, source = 'data', simtab = TRUE)
@@ -26,6 +27,7 @@
 #' @export
 data_opt <- function(problem         = NULL, 
                      subprob         = NULL, 
+                     method          = NULL,
                      source          = 'data', 
                      simtab          = FALSE,
                      filter          = NULL,
@@ -33,8 +35,8 @@ data_opt <- function(problem         = NULL,
                      index_col       = NULL,
                      value_col       = NULL,
                      post_processing = NULL) {
-  list(problem = problem, subprob = subprob, source = source, 
-       simtab = simtab, filter = filter, tidy = tidy, 
+  list(problem = problem, subprob = subprob, method = method, 
+       source = source, simtab = simtab, filter = filter, tidy = tidy, 
        index_col = index_col, value_col = value_col,
        post_processing = post_processing)
 }
@@ -73,14 +75,14 @@ only_obs <- function(xpdb, problem, quiet) {
 }
 
 
-#' Create record deduplicating functions
+#' Create functions for data deduplication
 #' 
 #' @description Create shortcut functions on the fly to remove duplicated records in data.
 #' 
 #' @param xpdb An xpose database object.
 #' @param problem The $problem number to be used.
 #' @param facets The plot faceting variable. The `facets` variables along with the `id` column 
-#' type will be as grouping factors during deduplication process.
+#' type will be as grouping factors during data deduplication process.
 #' @param quiet Should messages be displayed to the console.
 #' 
 #' @return A function
@@ -113,11 +115,28 @@ only_distinct <- function(xpdb, problem, facets, quiet) {
 #' @keywords internal
 #' @export
 reorder_factors <- function(prefix, suffix = NULL) {
-  function(x) {
-    x %>% 
-      dplyr::mutate(variable = as.numeric(gsub('\\D', '', .$variable))) %>% 
-      dplyr::mutate(variable = factor(.$variable, levels = sort(unique(.$variable)),
-                                      labels = stringr::str_c(prefix, sort(unique(.$variable)), suffix)))
+  if (!is.na(prefix)) {
+    # Sort and reformat factors
+    function(x) {
+      x %>% 
+        dplyr::mutate(variable = as.numeric(gsub('\\D', '', .$variable))) %>% 
+        dplyr::mutate(variable = factor(.$variable, levels = sort(unique(.$variable)),
+                                        labels = stringr::str_c(prefix, sort(unique(.$variable)), suffix)))
+    }
+  } else {
+    # Only sort factors
+    function(x) {
+      levels <- x %>%
+        dplyr::distinct_(.dots = 'variable') %>%
+        dplyr::mutate(variable_order = substring(.$variable, 1, 2)) %>%
+        dplyr::mutate(variable_order = dplyr::case_when(.$variable_order == 'TH' ~ 1,
+                                                        .$variable_order == 'OM' ~ 2,
+                                                        .$variable_order == 'SI' ~ 3,
+                                                        TRUE ~ 0)) %>%
+        dplyr::arrange_(.dots = 'variable_order')
+      
+      dplyr::mutate(.data = x, variable = factor(x$variable, levels = levels$variable))
+    }
   }
 }
 
@@ -138,6 +157,7 @@ reorder_factors <- function(prefix, suffix = NULL) {
 fetch_data <- function(xpdb, 
                        problem   = NULL, 
                        subprob   = NULL,
+                       method    = NULL,
                        source    = 'data', 
                        simtab    = FALSE,
                        filter    = NULL,
@@ -160,8 +180,11 @@ fetch_data <- function(xpdb,
     }
     if (is.null(problem)) problem <- last_file_problem(xpdb, source)
     if (is.null(subprob)) subprob <- last_file_subprob(xpdb, source, problem)
-    msg(c('Using ', xpdb$files$name[xpdb$files$extension == source] , ' $prob no.', problem, ' subprob no.', subprob, '.'), quiet)
-    data <- get_file(xpdb, file = NULL, ext = source, problem = problem, subprob = subprob, quiet = TRUE)
+    if (is.null(method)) method  <- last_file_method(xpdb, source, problem, subprob)
+    msg(c('Using ', xpdb$files$name[xpdb$files$extension == source][1] , ' $prob no.', problem, 
+          ', subprob no.', subprob, ', method ', method, '.'), quiet)
+    data <- get_file(xpdb, file = NULL, ext = source, problem = problem, 
+                     subprob = subprob, method = method, quiet = TRUE)
   }
   
   if (is.function(filter)) data <- filter(data)
@@ -185,6 +208,7 @@ fetch_data <- function(xpdb,
   # Add metadata to output
   attributes(data) <- c(attributes(data), 
                         list(problem = problem, simtab = simtab,
-                             subprob = subprob, source = source))
+                             subprob = subprob, method = method, 
+                             source = source))
   data
 }

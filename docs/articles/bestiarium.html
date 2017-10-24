@@ -39,6 +39,9 @@
 <li class="divider">
     <li class="dropdown-header">Getting started</li>
     <li>
+      <a href="../articles/cheatsheet.pdf">Cheat sheet (pdf)</a>
+    </li>
+    <li>
       <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
@@ -54,6 +57,9 @@
     </li>
     <li>
       <a href="../articles/multiple_pages.html">Multiple pages</a>
+    </li>
+    <li>
+      <a href="../articles/vpc.html">Visual Predictive Checks (VPC)</a>
     </li>
     <li>
       <a href="../articles/interactive_plots.html">Create interactive plots (beta)</a>
@@ -104,7 +110,7 @@
       <h1>The xpose plots</h1>
                         <h4 class="author">Benjamin Guiastrennec</h4>
             
-            <h4 class="date">02 October, 2017</h4>
+            <h4 class="date">19 October, 2017</h4>
           </div>
 
     
@@ -149,15 +155,15 @@
 <div id="minimization-plots" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minimization-plots" class="anchor"></a>Minimization plots</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/minimization_plots.html">prm_vs_iteration</a></span>(xpdb_ex_pk)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/minimization_plots.html">prm_vs_iteration</a></span>(xpdb_ex_pk, <span class="dt">labeller =</span> <span class="st">'label_value'</span>)</code></pre></div>
 <p><img src="bestiarium_files/figure-html/unnamed-chunk-5-1.png" width="75%" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/minimization_plots.html">grd_vs_iteration</a></span>(xpdb_ex_pk)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/minimization_plots.html">grd_vs_iteration</a></span>(xpdb_ex_pk, <span class="dt">labeller =</span> <span class="st">'label_value'</span>)</code></pre></div>
 <p><img src="bestiarium_files/figure-html/unnamed-chunk-5-2.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="individual-plots" class="section level2">
 <h2 class="hasAnchor">
 <a href="#individual-plots" class="anchor"></a>Individual plots</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/ind_plots.html">ind_plots</a></span>(xpdb_ex_pk)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/ind_plots.html">ind_plots</a></span>(xpdb_ex_pk, <span class="dt">page =</span> <span class="dv">1</span>)</code></pre></div>
 <p><img src="bestiarium_files/figure-html/unnamed-chunk-6-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="distributions" class="section level2">
@@ -205,7 +211,7 @@
 <h3 class="hasAnchor">
 <a href="#continuous-vpc" class="anchor"></a>Continuous vpc</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xpdb_ex_pk <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st"> </span><span class="kw"><a href="../reference/vpc_data.html">vpc_data</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st"> </span><span class="kw"><a href="../reference/vpc_data.html">vpc_data</a></span>(<span class="dt">opt =</span> <span class="kw"><a href="../reference/vpc_opt.html">vpc_opt</a></span>(<span class="dt">n_bins =</span> <span class="dv">7</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st"> </span><span class="kw"><a href="../reference/vpc.html">vpc</a></span>()</code></pre></div>
 <p><img src="bestiarium_files/figure-html/unnamed-chunk-10-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
@@ -213,8 +219,9 @@
 <h3 class="hasAnchor">
 <a href="#censored-vpc" class="anchor"></a>Censored vpc</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xpdb_ex_pk <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st"> </span><span class="kw"><a href="../reference/vpc_data.html">vpc_data</a></span>(<span class="dt">vpc_type =</span> <span class="st">'censored'</span>, <span class="dt">opt =</span> <span class="kw"><a href="../reference/vpc_opt.html">vpc_opt</a></span>(<span class="dt">lloq =</span> <span class="dv">1</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st"> </span><span class="kw"><a href="../reference/vpc_data.html">vpc_data</a></span>(<span class="dt">vpc_type =</span> <span class="st">'censored'</span>, <span class="dt">opt =</span> <span class="kw"><a href="../reference/vpc_opt.html">vpc_opt</a></span>(<span class="dt">lloq =</span> <span class="dv">1</span>, <span class="dt">n_bins =</span> <span class="dv">7</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st"> </span><span class="kw"><a href="../reference/vpc.html">vpc</a></span>()</code></pre></div>
+<pre><code>Warning: Points (type = 'p') can only be added with continuous VPC.</code></pre>
 <p><img src="bestiarium_files/figure-html/unnamed-chunk-11-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="categorical-vpc" class="section level3">

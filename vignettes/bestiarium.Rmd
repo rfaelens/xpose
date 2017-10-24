@@ -19,8 +19,8 @@ knitr::opts_chunk$set(fig.dpi = 96,
                       out.width = '75%',
                       comment = '',
                       message = FALSE)
+                      
 ```
-
 
 ## Basic goodness-of-fit plots
 ### Plots of the independent variable (IDV)
@@ -47,13 +47,13 @@ absval_res_vs_pred(xpdb_ex_pk, res = 'CWRES')
 
 ## Minimization plots
 ```{r}
-prm_vs_iteration(xpdb_ex_pk)
-grd_vs_iteration(xpdb_ex_pk)
+prm_vs_iteration(xpdb_ex_pk, labeller = 'label_value')
+grd_vs_iteration(xpdb_ex_pk, labeller = 'label_value')
 ```
 
 ## Individual plots
 ```{r}
-ind_plots(xpdb_ex_pk)
+ind_plots(xpdb_ex_pk, page = 1)
 ```
 
 ## Distributions
@@ -83,17 +83,16 @@ amt_vs_idv(xpdb_ex_pk)
 ### Continuous vpc
 ```{r}
 xpdb_ex_pk %>% 
- vpc_data() %>% 
+ vpc_data(opt = vpc_opt(n_bins = 7)) %>% 
  vpc()
 ```
 
 ### Censored vpc
 ```{r}
 xpdb_ex_pk %>% 
- vpc_data(vpc_type = 'censored', opt = vpc_opt(lloq = 1)) %>% 
+ vpc_data(vpc_type = 'censored', opt = vpc_opt(lloq = 1, n_bins = 7)) %>% 
  vpc()
 ```
-
 
 ### Categorical vpc
 ```{r, eval=FALSE}
@@ -101,5 +100,3 @@ xpdb_ex_pk %>%
  vpc_data(vpc_type = 'categorical') %>% 
  vpc()
 ```
-
-

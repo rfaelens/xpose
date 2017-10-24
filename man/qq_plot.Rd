@@ -9,12 +9,12 @@
 \alias{cov_qq}
 \title{QQ plots of ETA and residuals}
 \usage{
-prm_qq(xpdb, mapping = NULL, drop_static = TRUE, type = "p",
+prm_qq(xpdb, mapping = NULL, drop_fixed = TRUE, type = "p",
   title = "QQ plot of parameters | @run",
   subtitle = "Based on @nind individuals", caption = "@dir", log = NULL,
   guide = TRUE, facets, problem, quiet, ...)
 
-eta_qq(xpdb, mapping = NULL, drop_static = TRUE, type = "p",
+eta_qq(xpdb, mapping = NULL, drop_fixed = TRUE, type = "p",
   title = "QQ plot of etas | @run",
   subtitle = "Based on @nind individuals, Eta shrink: @etashk",
   caption = "@dir", log = NULL, guide = TRUE, facets, problem, quiet, ...)
@@ -24,7 +24,7 @@ res_qq(xpdb, mapping = NULL, res = "CWRES", type = "p",
   subtitle = "Based on @nobs observations", caption = "@dir", log = NULL,
   guide = TRUE, facets, problem, quiet, ...)
 
-cov_qq(xpdb, mapping = NULL, drop_static = TRUE, type = "p",
+cov_qq(xpdb, mapping = NULL, drop_fixed = TRUE, type = "p",
   title = "QQ plot of continuous covariates | @run",
   subtitle = "Based on @nind individuals", caption = "@dir", log = NULL,
   guide = TRUE, facets, problem, quiet, ...)
@@ -35,8 +35,8 @@ cov_qq(xpdb, mapping = NULL, drop_static = TRUE, type = "p",
 \item{mapping}{List of aesthetics mappings to be used for the xpose plot 
 (e.g. \code{point_color}).}
 
-\item{drop_static}{Should columns that only have a single unique value 
-(i.e. static) be dropped.}
+\item{drop_fixed}{Should columns that only have a single unique value 
+(i.e. fixed) be dropped.}
 
 \item{type}{String setting the type of plot. Can only be points 'p'.}
 
@@ -51,8 +51,8 @@ cov_qq(xpdb, mapping = NULL, drop_static = TRUE, type = "p",
 
 \item{guide}{Should the guide (e.g. reference line) be displayed.}
 
-\item{facets}{Either a character string to use \link[ggplot2]{facet_wrap} 
-or a formula to use \link[ggplot2]{facet_grid}.}
+\item{facets}{Either a character string to use \code{\link[ggforce]{facet_wrap_paginate}}
+or a formula to use \code{\link[ggforce]{facet_grid_paginate}}.}
 
 \item{problem}{The $problem number to be used. By default returns 
 the last estimation problem.}
@@ -82,21 +82,21 @@ any option supported by this layer e.g. point_color = 'blue', etc.
 \section{Faceting}{
 
 Every xpose plot function has built-in faceting functionalities. Faceting arguments 
-are passed to the functions \link[ggforce]{facet_wrap_paginate} when the \code{facets} 
-argument is a character string (e.g. \code{facets = c('OCC', 'SEX')}) or 
-\link[ggforce]{facet_grid_paginate} when facets is a formula (e.g. \code{facets = OCC~SEX}).
-All xpose plot functions accept all the arguments for the \link[ggforce]{facet_wrap_paginate} 
-and \link[ggforce]{facet_grid_paginate} functions e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
-facets = OCC~SEX, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')}.
+are passed to the functions \code{\link[ggforce]{facet_wrap_paginate}} when the \code{facets} 
+argument is a character string (e.g. \code{facets = c('SEX', 'MED1')}) or 
+\code{\link[ggforce]{facet_grid_paginate}} when facets is a formula (e.g. \code{facets = SEX~MED1}).
+All xpose plot functions accept all the arguments for the \code{\link[ggforce]{facet_wrap_paginate}} 
+and \code{\link[ggforce]{facet_grid_paginate}} functions e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
+facets = SEX~MED1, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')}.
 
 Faceting options can either be defined in plot functions (e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
-facets = 'OCC')}) or assigned globally to an xpdb object via the \code{xp_theme} (e.g. \code{xpdb 
-<- update_themes(xpdb_ex_pk, xp_theme = list(facets = 'OCC'))}). In the latter example all plots 
-generate from this xpdb will automatically be stratified by `OCC`.
+facets = 'SEX')}) or assigned globally to an xpdb object via the \code{xp_theme} (e.g. \code{xpdb 
+<- update_themes(xpdb_ex_pk, xp_theme = list(facets = 'SEX'))}). In the latter example all plots 
+generate from this xpdb will automatically be stratified by `SEX`.
 
-By default, some plot functions use a custom stratyfiyng variable named `variable`, e.g. 
+By default, some plot functions use a custom stratifying variable named `variable`, e.g. 
 \code{eta_distrib()}. When using the \code{facets} argument, `variable` needs to be added manually 
-e.g. \code{facets = c('OCC', 'variable')} or \code{facets = c('OCC', 'variable')}, but is optional, 
+e.g. \code{facets = c('SEX', 'variable')} or \code{facets = c('SEX', 'variable')}, but is optional, 
 when using the \code{facets} argument in \code{xp_theme} variable is automatically added whenever needed.
 }
 
@@ -104,11 +104,11 @@ when using the \code{facets} argument in \code{xp_theme} variable is automatical
 
 Template titles can be used to create highly informative diagnostics plots. 
 They can be applied to any plot title, subtitle and caption. Template titles 
-are defined via a single string containing key variables staring with a @ (e.g. @ofv)
+are defined via a single string containing key variables staring with a `@` (e.g. `@ofv`)
 which will be replaced by their actual value when rendering the plot.
-For example '@run, @nobs observations in @nind subjects' would become 'run001, 
-1022 observations in 74 subjects'. The available key variables are listed under 
-\code{\link{template_titles}}.
+For example `'@run, @nobs observations in @nind subjects'` would become 
+`'run001, 1022 observations in 74 subjects'`. The available key variables 
+are listed under \code{\link{template_titles}}.
 }
 
 \examples{

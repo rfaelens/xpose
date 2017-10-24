@@ -61,6 +61,9 @@
     <li class="divider"></li>
     <li class="dropdown-header">Getting started</li>
     <li>
+      <a href="../articles/cheatsheet.pdf">Cheat sheet (pdf)</a>
+    </li>
+    <li>
       <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
@@ -76,6 +79,9 @@
     </li>
     <li>
       <a href="../articles/multiple_pages.html">Multiple pages</a>
+    </li>
+    <li>
+      <a href="../articles/vpc.html">Visual Predictive Checks (VPC)</a>
     </li>
     <li>
       <a href="../articles/interactive_plots.html">Create interactive plots (beta)</a>
@@ -130,12 +136,12 @@
     <p>Histograms and density plots of the ETA and parameter values.</p>
     
 
-    <pre class="usage"><span class='fu'>prm_distrib</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>drop_static</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"hr"</span>,
+    <pre class="usage"><span class='fu'>prm_distrib</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>drop_fixed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"hr"</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Parameter distribution | @run"</span>,
   <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Based on @nind individuals"</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>guide</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>facets</span>, <span class='no'>problem</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)
 
-<span class='fu'>eta_distrib</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>drop_static</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"hr"</span>,
+<span class='fu'>eta_distrib</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>drop_fixed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"hr"</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Eta distribution | @run"</span>,
   <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Based on @nind individuals, Eta shrink: @etashk"</span>,
   <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>guide</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>facets</span>, <span class='no'>problem</span>, <span class='no'>quiet</span>,
@@ -146,7 +152,7 @@
   <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Based on @nobs observations"</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>guide</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>facets</span>, <span class='no'>problem</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)
 
-<span class='fu'>cov_distrib</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>drop_static</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"hr"</span>,
+<span class='fu'>cov_distrib</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>drop_fixed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"hr"</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Continuous covariates distribution | @run"</span>,
   <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Based on @nind individuals"</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>guide</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>facets</span>, <span class='no'>problem</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)</pre>
@@ -164,9 +170,9 @@
 (e.g. <code>point_color</code>).</p></td>
     </tr>
     <tr>
-      <th>drop_static</th>
+      <th>drop_fixed</th>
       <td><p>Should columns that only have a single unique value 
-(i.e. static) be dropped.</p></td>
+(i.e. fixed) be dropped.</p></td>
     </tr>
     <tr>
       <th>type</th>
@@ -196,8 +202,8 @@ density 'd', rug 'r' or any combination of the three.</p></td>
     </tr>
     <tr>
       <th>facets</th>
-      <td><p>Either a character string to use <a href='http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap'>facet_wrap</a> 
-or a formula to use <a href='http://www.rdocumentation.org/packages/ggplot2/topics/facet_grid'>facet_grid</a>.</p></td>
+      <td><p>Either a character string to use <code><a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a></code>
+or a formula to use <code><a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a></code>.</p></td>
     </tr>
     <tr>
       <th>problem</th>
@@ -235,19 +241,19 @@ any option supported by this layer e.g. histogram_fill = 'blue', rug_sides = 'b'
 
     
     <p>Every xpose plot function has built-in faceting functionalities. Faceting arguments 
-are passed to the functions <a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a> when the <code>facets</code> 
-argument is a character string (e.g. <code>facets = c('OCC', 'SEX')</code>) or 
-<a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a> when facets is a formula (e.g. <code>facets = OCC~SEX</code>).
-All xpose plot functions accept all the arguments for the <a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a> 
-and <a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a> functions e.g. <code><a href='dv_vs_pred.html'>dv_vs_ipred(xpdb_ex_pk, 
-facets = OCC~SEX, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')</a></code>.</p>
+are passed to the functions <code><a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a></code> when the <code>facets</code> 
+argument is a character string (e.g. <code>facets = c('SEX', 'MED1')</code>) or 
+<code><a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a></code> when facets is a formula (e.g. <code>facets = SEX~MED1</code>).
+All xpose plot functions accept all the arguments for the <code><a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a></code> 
+and <code><a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a></code> functions e.g. <code><a href='dv_vs_pred.html'>dv_vs_ipred(xpdb_ex_pk, 
+facets = SEX~MED1, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')</a></code>.</p>
 <p>Faceting options can either be defined in plot functions (e.g. <code><a href='dv_vs_pred.html'>dv_vs_ipred(xpdb_ex_pk, 
-facets = 'OCC')</a></code>) or assigned globally to an xpdb object via the <code>xp_theme</code> (e.g. <code>xpdb 
-&lt;- update_themes(xpdb_ex_pk, xp_theme = list(facets = 'OCC'))</code>). In the latter example all plots 
-generate from this xpdb will automatically be stratified by `OCC`.</p>
-<p>By default, some plot functions use a custom stratyfiyng variable named `variable`, e.g. 
+facets = 'SEX')</a></code>) or assigned globally to an xpdb object via the <code>xp_theme</code> (e.g. <code>xpdb 
+&lt;- update_themes(xpdb_ex_pk, xp_theme = list(facets = 'SEX'))</code>). In the latter example all plots 
+generate from this xpdb will automatically be stratified by `SEX`.</p>
+<p>By default, some plot functions use a custom stratifying variable named `variable`, e.g. 
 <code>eta_distrib()</code>. When using the <code>facets</code> argument, `variable` needs to be added manually 
-e.g. <code>facets = c('OCC', 'variable')</code> or <code>facets = c('OCC', 'variable')</code>, but is optional, 
+e.g. <code>facets = c('SEX', 'variable')</code> or <code>facets = c('SEX', 'variable')</code>, but is optional, 
 when using the <code>facets</code> argument in <code>xp_theme</code> variable is automatically added whenever needed.</p>
     
     <h2 class="hasAnchor" id="template-titles"><a class="anchor" href="#template-titles"></a>Template titles</h2>
@@ -255,11 +261,11 @@ when using the <code>facets</code> argument in <code>xp_theme</code> variable is
     
     <p>Template titles can be used to create highly informative diagnostics plots. 
 They can be applied to any plot title, subtitle and caption. Template titles 
-are defined via a single string containing key variables staring with a @ (e.g. @ofv)
+are defined via a single string containing key variables staring with a `@` (e.g. `@ofv`)
 which will be replaced by their actual value when rendering the plot.
-For example '@run, @nobs observations in @nind subjects' would become 'run001, 
-1022 observations in 74 subjects'. The available key variables are listed under 
-<code><a href='template_titles.html'>template_titles</a></code>.</p>
+For example `'@run, @nobs observations in @nind subjects'` would become 
+`'run001, 1022 observations in 74 subjects'`. The available key variables 
+are listed under <code><a href='template_titles.html'>template_titles</a></code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -268,13 +274,13 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Histogram of parameters</span>
-<span class='fu'>prm_distrib</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'h'</span>)</div><div class='output co'>#&gt; <span class='message'>Dropped static variables ALAG1.</span></div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Removing duplicated rows based on: ID, variable</span></div><div class='output co'>#&gt; <span class='message'>Tidying data by ID, SEX, MED1, MED2, OCC ... and 24 more variables</span></div><div class='img'><img src='distrib_plot-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>prm_distrib</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'h'</span>)</div><div class='output co'>#&gt; <span class='message'>Dropped fixed variables ALAG1.</span></div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Removing duplicated rows based on: ID, variable</span></div><div class='output co'>#&gt; <span class='message'>Tidying data by ID, SEX, MED1, MED2, DOSE ... and 23 more variables</span></div><div class='img'><img src='distrib_plot-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># Density plot of etas with a rug</span>
-<span class='fu'>eta_distrib</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'dr'</span>)</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Removing duplicated rows based on: ID, variable</span></div><div class='output co'>#&gt; <span class='message'>Tidying data by ID, SEX, MED1, MED2, OCC ... and 24 more variables</span></div><div class='img'><img src='distrib_plot-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
-<span class='co'># Histogram of residuals by occasion</span>
-<span class='fu'>res_distrib</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'hr'</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>'IWRES'</span>, <span class='st'>'CWRES'</span>))</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Filtering data by EVID == 0</span></div><div class='output co'>#&gt; <span class='message'>Tidying data by ID, SEX, MED1, MED2, OCC ... and 25 more variables</span></div><div class='img'><img src='distrib_plot-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>eta_distrib</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'dr'</span>)</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Removing duplicated rows based on: ID, variable</span></div><div class='output co'>#&gt; <span class='message'>Tidying data by ID, SEX, MED1, MED2, DOSE ... and 23 more variables</span></div><div class='img'><img src='distrib_plot-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='co'># Histogram of different residuals</span>
+<span class='fu'>res_distrib</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'hr'</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>'IWRES'</span>, <span class='st'>'CWRES'</span>))</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Filtering data by EVID == 0</span></div><div class='output co'>#&gt; <span class='message'>Tidying data by ID, SEX, MED1, MED2, DOSE ... and 24 more variables</span></div><div class='img'><img src='distrib_plot-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># Density plot of continuous covariates</span>
-<span class='fu'>cov_distrib</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'d'</span>)</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Removing duplicated rows based on: ID, variable</span></div><div class='output co'>#&gt; <span class='message'>Tidying data by ID, SEX, MED1, MED2, OCC ... and 24 more variables</span></div><div class='img'><img src='distrib_plot-4.png' alt='' width='700' height='432.632880098887' /></div></pre>
+<span class='fu'>cov_distrib</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'d'</span>)</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Removing duplicated rows based on: ID, variable</span></div><div class='output co'>#&gt; <span class='message'>Tidying data by ID, SEX, MED1, MED2, DOSE ... and 23 more variables</span></div><div class='img'><img src='distrib_plot-4.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -1,7 +1,9 @@
 ## ---- include = FALSE----------------------------------------------------
 library(xpose)
 
-xpdb <- xpdb_ex_pk %>% vpc_data()
+xpdb <- xpdb_ex_pk %>% 
+ vpc_data(opt = vpc_opt(n_bins = 7)) %>% 
+ mutate(VAR = 1)
 
 knitr::opts_chunk$set(fig.dpi = 96,
                       fig.align = 'center', 
@@ -32,7 +34,8 @@ gridExtra::grid.arrange(
   vpc(xpdb, title = "type = \'l\'", subtitle = NULL, caption = NULL, type = 'l') + theme(legend.position = 'none'),
   vpc(xpdb, title = "type = \'p\'", subtitle = NULL, caption = NULL, type = 'p'),
   vpc(xpdb, title = "type = \'t\'", subtitle = NULL, caption = NULL, type = 't'),
-  ncol = 2)
+  vpc(xpdb, title = "type = \'r\'", subtitle = NULL, caption = NULL, type = 'r'),
+  ncol = 3)
 
 ## ----demo titles---------------------------------------------------------
 # Using template titles
@@ -72,11 +75,10 @@ dv_vs_ipred(xpdb, type = 'p', aes(point_color = SEX))
 
 ## ----demo panels, fig.width = 6, fig.height = 6, out.width = '75%'-------
 # Example with a string
-dv_vs_ipred(xpdb, facets = c('SEX', 'OCC'), labeller = 'label_both', 
-            ncol = 2, nrow = 1, page = 1)
+dv_vs_ipred(xpdb, facets = c('SEX', 'MED1'), ncol = 2, nrow = 1, page = 1)
 
 # Example with a formula
-dv_vs_ipred(xpdb, facets = SEX~OCC, labeller = 'label_both', margins = TRUE)
+dv_vs_ipred(xpdb, facets = SEX~MED1, margins = TRUE)
 
 ## ----demo layers---------------------------------------------------------
 dv_vs_ipred(xpdb) +
@@ -85,15 +87,16 @@ dv_vs_ipred(xpdb) +
   annotate(geom = 'text',
            fontface = 'bold',
            color = 'darkred',
-           label = 'Toxic', x = 3.7, y = 4.8) +
+           size  = 3,
+           label = 'Toxic concentrations', x = 1.35, y = 1.75) +
   annotate(geom = 'rect',
            alpha = 0.2, fill = 'red',
-           xmin = 3, xmax = Inf,
-           ymin = 3, ymax = Inf)
+           xmin = 1, xmax = Inf,
+           ymin = 1, ymax = Inf)
 
 ## ----scales demo---------------------------------------------------------
 dv_vs_ipred(xpdb, 
-            xscale_breaks = c(1, 2, 3),
+            xscale_breaks = c(0.3, 0.8, 1.3),
             xscale_labels = c('Low', 'Med', 'High'),
             xscale_expand = c(0.2, 0),
             xscale_name = 'Individual model predictions')
@@ -101,28 +104,28 @@ dv_vs_ipred(xpdb,
 ## ----demo themes xpdb, eval = FALSE--------------------------------------
 #  # While creating the xpdb
 #  xpdb <- xpose_data(runno = '001',
-#                     gg_theme = theme_classic(),
+#                     gg_theme = theme_minimal(),
 #                     xp_theme = theme_xp_xpose4())
 #  
 #  # Update a pre-existing xpdb
 #  xpdb <- update_themes(xpdb     = xpdb,
-#                        gg_theme = theme_bw(),
+#                        gg_theme = theme_bw2(),
 #                        xp_theme = list(point_color = 'dodgerblue4',
 #                                        line_color  = 'dodgerblue4'))
 
 ## ----demo gg_theme, echo = FALSE, fig.height = 6, fig.width = 6, out.width = '75%'----
 gridExtra::grid.arrange(
-  dv_vs_ipred(xpdb, subtitle = 'theme_grey() [default in ggplot2]', title = NULL, caption = '') + theme_grey(),
-  dv_vs_ipred(xpdb, subtitle = 'theme_readable() [default in xpose]', title = NULL, caption = '') + theme_readable(),
-  dv_vs_ipred(xpdb, subtitle = 'theme_bw2()', title = NULL, caption = NULL) + theme_bw2(),
-  dv_vs_ipred(xpdb, subtitle = 'theme_dark()', title = NULL, caption = NULL) + theme_dark(),
+  dv_vs_ipred(xpdb, subtitle = 'theme_grey() [default in ggplot2]', title = NULL, caption = '', facet = 'VAR') + theme_grey(),
+  dv_vs_ipred(xpdb, subtitle = 'theme_readable() [default in xpose]', title = NULL, caption = '', facet = 'VAR') + theme_readable(),
+  dv_vs_ipred(xpdb, subtitle = 'theme_bw2()', title = NULL, caption = NULL, facet = 'VAR') + theme_bw2(),
+  dv_vs_ipred(xpdb, subtitle = 'theme_dark()', title = NULL, caption = NULL, facet = 'VAR') + theme_dark(),
   ncol = 2)
 
 ## ----demo xp_theme, echo = FALSE, fig.height = 3.2, fig.width = 6, out.width = '75%'----
 gridExtra::grid.arrange(
   dv_vs_ipred(update_themes(xpdb = xpdb, xp_theme = theme_xp_default()),
-              subtitle = 'xp_theme = theme_xp_default()\nwith theme_bw2()', title = NULL, caption = '') + theme_bw2(),
+              subtitle = 'xp_theme = theme_xp_default()\nwith theme_bw2()', title = NULL, caption = '', facet = 'VAR') + theme_bw2(),
   dv_vs_ipred(update_themes(xpdb = xpdb, xp_theme = theme_xp_xpose4()),
-              subtitle = 'xp_theme = theme_xp_xpose4()\nwith theme_bw2()', title = NULL, caption = '') + theme_bw2(),
+              subtitle = 'xp_theme = theme_xp_xpose4()\nwith theme_bw2()', title = NULL, caption = '', facet = 'VAR') + theme_bw2(),
   ncol = 2)
 

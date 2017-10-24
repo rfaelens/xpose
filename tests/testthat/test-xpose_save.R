@@ -5,7 +5,7 @@ context('Check xpose_save')
 
 plot <- dv_vs_ipred(xpdb = xpdb_ex_pk, quiet = TRUE)
 
-plot_multiple <- dv_vs_ipred(xpdb = xpdb_ex_pk, quiet = TRUE, facet = c('SEX', 'OCC'), ncol = 1, nrow = 1, page = 1:2)
+plot_multiple <- dv_vs_ipred(xpdb = xpdb_ex_pk, quiet = TRUE, facet = c('SEX', 'MED1'), ncol = 1, nrow = 1, page = 1:2)
 
 # Tests start here --------------------------------------------------------
 

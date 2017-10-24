@@ -29,7 +29,8 @@
 #'  \item{@nsig}{Number of significant digits}
 #'  \item{@nsim}{Number of simulations}
 #'  \item{@ofv}{Objective function value}
-#'  \item{@page and @lastpage}{Are respectively the page number and the number of the last page when facetting on multiple pages}
+#'  \item{@page and @lastpage}{Are respectively the page number and the number 
+#'  of the last page when faceting on multiple pages}
 #'  \item{@probn}{Problem number}
 #'  \item{@plotfun}{Name of the plot function}
 #'  \item{@ref}{Reference model}
@@ -43,6 +44,12 @@
 #'  \item{@timeplot}{Time of the plot rendering}
 #'  \item{@term}{Termination message}
 #'  \item{@version}{Software version (e.g. 7.3)}
+#'  \item{@vpcci}{VPC confidence interval}
+#'  \item{@vpcdir}{VPC data directory}
+#'  \item{@vpclloq}{VPC lower limit of quantification}
+#'  \item{@vpcnsim}{Number of simulations for VPC}
+#'  \item{@vpcpi}{VPC prediction interval}  
+#'  \item{@vpculoq}{VPC upper limit of quantification}
 #'  \item{@warnings}{Run warnings (e.g. boundary)}
 #'  \item{@x @y etc.}{Name of any ggplot2 variable used for mapping in an \code{aes()} type function}
 #' }
@@ -50,7 +57,7 @@
 #' @examples
 #' # Defined when creating a plot
 #' dv_vs_ipred(xpdb_ex_pk, 
-#'             title = 'DV vs. IPRED',
+#'             title = '@x vs. @y',
 #'             subtitle = '@ofv, @nind subjects, @nobs obs.',
 #'             caption = '@run, @descr')
 #'             
@@ -59,7 +66,7 @@
 #'                             line_color = SEX)) + 
 #'  labs(title = 'This runs is: @descr', 
 #'       color = 'Color scale for @run',
-#'       x = 'IPRED for @nind subjects',
+#'       x     = 'IPRED for @nind subjects',
 #'       subtitle = NULL)
 #' 
 #' @name template_titles

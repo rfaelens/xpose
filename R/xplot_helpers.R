@@ -279,7 +279,7 @@ last_file_method <- function(xpdb, ext, problem, subprob) {
                                   xpdb$files$subprob %in% subprob]
   method_n <- unique(method_n)
   if (length(method_n) == 0) return(NA_integer_)
-  max(method_n)
+  method_n[length(method_n)]
 }
 
 #' Return names of columns having several unique values
@@ -294,19 +294,30 @@ last_file_method <- function(xpdb, ext, problem, subprob) {
 #' 
 #' @keywords internal
 #' @export
-drop_static_cols <- function(xpdb, problem, cols, quiet) {
+drop_fixed_cols <- function(xpdb, problem, cols, quiet) {
   if (is.null(cols)) return()
+  
+  # Get the column names to be removed
   cols_rm <- get_data(xpdb, problem = problem) %>% 
     dplyr::select_(.dots = cols) %>%
     dplyr::select_if(.predicate = function(x) length(unique(x)) == 1) %>% 
     colnames()
   if (length(cols_rm) == 0) return(cols)
+  
+  # Get the column names to be kept
+  cols <- dplyr::setdiff(x = cols, y = cols_rm)
+  if (length(cols) == 0) {
+    stop('No non-fixed variables available for plotting.', call. = FALSE)
+  }
+  
+  # Print message
   dplyr::if_else(length(cols_rm) > 5, 
                  stringr::str_c(stringr::str_c(cols_rm[1:5], collapse = ', '), 
                                 '... and', length(cols_rm) - 5 , 'more', sep = ' '),
                  stringr::str_c(cols_rm , collapse = ', ')) %>%
-                 {msg(c('Dropped static variables ', .,'.'), quiet)}
-  dplyr::setdiff(x = cols, y = cols_rm)
+                 {msg(c('Dropped fixed variables ', .,'.'), quiet)}
+  
+  cols
 }
 
 

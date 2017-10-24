@@ -56,20 +56,20 @@ summary(xpdb, problem = 1)
 
 
     Summary for problem no. 1 [Parameter estimation] 
-     - Input data                   : mx19_1.csv
-     - Number of individuals        : 74
-     - Number of observations       : 1022
-     - ADVAN                        : 2
-     - Estimation method            : foce-i
-     - Termination message          : MINIMIZATION SUCCESSFUL
-     - Estimation runtime           : 00:00:04
-     - Objective function value     : -1518.108
-     - Number of significant digits : 3.6
-     - Covariance step runtime      : 00:00:04
-     - Condition number             : 6.1
-     - Eta shrinkage                : 22 [1], 20.9 [2], 20.5 [3]
-     - Epsilon shrinkage            : 7 [1]
-     - Run warnings                 : (WARNING 2) NM-TRAN INFERS THAT THE DATA ARE POPULATION.
+     - Input data                    @data       : ../../mx19_2.csv
+     - Number of individuals         @nind       : 74
+     - Number of observations        @nobs       : 476
+     - ADVAN                         @subroutine : 2
+     - Estimation method             @method     : foce-i
+     - Termination message           @term       : MINIMIZATION SUCCESSFUL
+     - Estimation runtime            @runtime    : 00:00:02
+     - Objective function value      @ofv        : -1403.905
+     - Number of significant digits  @nsig       : 3.3
+     - Covariance step runtime       @covtime    : 00:00:03
+     - Condition number              @condn      : 21.5
+     - Eta shrinkage                 @etashk     : 9.3 [1], 28.7 [2], 23.7 [3]
+     - Epsilon shrinkage             @epsshk     : 14.9 [1]
+     - Run warnings                  @warnings   : (WARNING 2) NM-TRAN INFERS THAT THE DATA ARE POPULATION.
 
 #### Generate diagnostics
 
@@ -81,23 +81,41 @@ dv_vs_ipred(xpdb)
 
 <img src="inst/img/readme_example_figure_1-1.png" width="50%" style="display: block; margin: auto;" />
 
-##### Distribution plots
+##### Individual plots
 
 ``` r
-eta_distrib(xpdb)
+ind_plots(xpdb, page = 1)
 ```
 
 <img src="inst/img/readme_example_figure_2-1.png" width="75%" style="display: block; margin: auto;" />
 
-##### Minimization diagnostics
+##### Individual plots
 
 ``` r
-prm_vs_iteration(xpdb)
+xpdb %>% 
+  vpc_data(stratify = 'SEX', opt = vpc_opt(n_bins = 7, lloq = 0.1)) %>% 
+  vpc()
 ```
 
 <img src="inst/img/readme_example_figure_3-1.png" width="75%" style="display: block; margin: auto;" />
 
-##### And much more !
+##### Distribution plots
+
+``` r
+eta_distrib(xpdb, labeller = 'label_value')
+```
+
+<img src="inst/img/readme_example_figure_4-1.png" width="75%" style="display: block; margin: auto;" />
+
+##### Minimization diagnostics
+
+``` r
+prm_vs_iteration(xpdb, labeller = 'label_value')
+```
+
+<img src="inst/img/readme_example_figure_5-1.png" width="75%" style="display: block; margin: auto;" />
+
+##### And many other features!
 
 ### Recommended reading
 

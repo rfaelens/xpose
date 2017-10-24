@@ -11,12 +11,12 @@
 #'
 #' @examples
 #' # With the xp_theme theme_xp_default() (default)
-#' dv_vs_ipred(xpdb_ex_pk)
+#' dv_vs_ipred(xpdb_ex_pk, facets = 'SEX')
 #' 
 #' # With the xp_theme theme_xp_xpose4()
 #' xpdb_ex_pk %>%
 #'   update_themes(xp_theme = theme_xp_xpose4()) %>%
-#'   dv_vs_ipred()
+#'   dv_vs_ipred(facets = 'SEX')
 #'   
 #' @name xp_themes
 #' @export
@@ -32,10 +32,10 @@ theme_xp_default <- function() {
     facets          = NULL,
     ncol            = NULL,
     nrow            = NULL,
-    page            = 1,
+    page            = NULL,
     scales          = 'free',
     shrink          = TRUE,
-    labeller        = 'label_value',
+    labeller        = labeller(.default = label_both, .multi_line = FALSE),
     as.table        = TRUE,
     switch          = NULL,
     drop            = TRUE,
@@ -47,7 +47,7 @@ theme_xp_default <- function() {
     
     # Guide
     guide_alpha     = 1,
-    guide_color     = 'tomato',
+    guide_color     = 'grey70',
     guide_linetype  = 'solid',
     guide_size      = 0.8,
     
@@ -132,10 +132,10 @@ theme_xp_xpose4 <- function() {
     facets          = NULL,
     ncol            = NULL,
     nrow            = NULL,
-    page            = 1,
+    page            = NULL,
     scales          = 'free',
     shrink          = TRUE,
-    labeller        = 'label_value',
+    labeller        = labeller(.default = label_both, .multi_line = FALSE),
     as.table        = TRUE,
     switch          = NULL,
     drop            = TRUE,

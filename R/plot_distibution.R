@@ -6,8 +6,8 @@
 #' @param type String setting the type of plot to be used. Can be histogram 'h',
 #' density 'd', rug 'r' or any combination of the three.
 #' @param guide Should the guide (e.g. reference distribution) be displayed.
-#' @param drop_static Should columns that only have a single unique value 
-#' (i.e. static) be dropped.
+#' @param drop_fixed Should columns that only have a single unique value 
+#' (i.e. fixed) be dropped.
 #' 
 #' @inheritSection xplot_distrib Layers mapping
 #' @inheritSection xplot_scatter Faceting
@@ -20,7 +20,7 @@
 #' # Density plot of etas with a rug
 #' eta_distrib(xpdb_ex_pk, type = 'dr')
 #' 
-#' # Histogram of residuals by occasion
+#' # Histogram of different residuals
 #' res_distrib(xpdb_ex_pk, type = 'hr', res = c('IWRES', 'CWRES'))
 #' 
 #' # Density plot of continuous covariates
@@ -29,7 +29,7 @@
 #' @export
 prm_distrib <- function(xpdb,
                         mapping  = NULL,
-                        drop_static = TRUE,
+                        drop_fixed = TRUE,
                         type     = 'hr',
                         title    = 'Parameter distribution | @run',
                         subtitle = 'Based on @nind individuals',
@@ -48,8 +48,8 @@ prm_distrib <- function(xpdb,
                                                variable = 'variable')
   
   prm_col <- xp_var(xpdb, problem, type = 'param')$col
-  if (drop_static) {
-    prm_col <- drop_static_cols(xpdb, problem, cols = prm_col, quiet = quiet)
+  if (drop_fixed) {
+    prm_col <- drop_fixed_cols(xpdb, problem, cols = prm_col, quiet = quiet)
   }
   if (is.null(prm_col)) {
     stop('No parameter column found in the xpdb data index.', call. = FALSE)
@@ -71,7 +71,7 @@ prm_distrib <- function(xpdb,
 #' @export
 eta_distrib <- function(xpdb,
                         mapping  = NULL,
-                        drop_static = TRUE,
+                        drop_fixed = TRUE,
                         type     = 'hr',
                         title    = 'Eta distribution | @run',
                         subtitle = 'Based on @nind individuals, Eta shrink: @etashk',
@@ -90,8 +90,8 @@ eta_distrib <- function(xpdb,
                                                variable = 'variable')
   
   eta_col <- xp_var(xpdb, problem, type = 'eta')$col
-  if (drop_static) {
-    eta_col <- drop_static_cols(xpdb, problem, cols = eta_col, quiet = quiet)
+  if (drop_fixed) {
+    eta_col <- drop_fixed_cols(xpdb, problem, cols = eta_col, quiet = quiet)
   }
   if (is.null(eta_col)) {
     stop('No eta column found in the xpdb data index.', call. = FALSE)
@@ -163,7 +163,7 @@ res_distrib <- function(xpdb,
 #' @export
 cov_distrib <- function(xpdb,
                         mapping  = NULL,
-                        drop_static = TRUE,
+                        drop_fixed = TRUE,
                         type     = 'hr',
                         title    = 'Continuous covariates distribution | @run',
                         subtitle = 'Based on @nind individuals',
@@ -182,8 +182,8 @@ cov_distrib <- function(xpdb,
                                                variable = 'variable')
   
   cov_col <- xp_var(xpdb, problem, type = 'contcov')$col
-  if (drop_static) {
-    cov_col <- drop_static_cols(xpdb, problem, cols = cov_col, quiet = quiet)
+  if (drop_fixed) {
+    cov_col <- drop_fixed_cols(xpdb, problem, cols = cov_col, quiet = quiet)
   }
   if (is.null(cov_col)) {
     stop('No continuous covariate column found in the xpdb data index.', call. = FALSE)

@@ -15,8 +15,8 @@
 #' @param log String assigning logarithmic scale to axes, can be either '', 
 #' 'x', y' or 'xy'.
 #' @param guide Enable guide display (e.g. unity line).
-#' @param facets Either a character string to use \link[ggplot2]{facet_wrap} 
-#' or a formula to use \link[ggplot2]{facet_grid}.
+#' @param facets Either a character string to use \code{\link[ggforce]{facet_wrap_paginate}}
+#' or a formula to use \code{\link[ggforce]{facet_grid_paginate}}.
 #' @param problem The $problem number to be used. By default returns 
 #' the last estimation problem.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.

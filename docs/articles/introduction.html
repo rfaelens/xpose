@@ -39,6 +39,9 @@
 <li class="divider">
     <li class="dropdown-header">Getting started</li>
     <li>
+      <a href="../articles/cheatsheet.pdf">Cheat sheet (pdf)</a>
+    </li>
+    <li>
       <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
@@ -54,6 +57,9 @@
     </li>
     <li>
       <a href="../articles/multiple_pages.html">Multiple pages</a>
+    </li>
+    <li>
+      <a href="../articles/vpc.html">Visual Predictive Checks (VPC)</a>
     </li>
     <li>
       <a href="../articles/interactive_plots.html">Create interactive plots (beta)</a>
@@ -104,7 +110,7 @@
       <h1>Introduction</h1>
                         <h4 class="author">Benjamin Guiastrennec</h4>
             
-            <h4 class="date">02 October, 2017</h4>
+            <h4 class="date">19 October, 2017</h4>
           </div>
 
     
@@ -145,40 +151,41 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(xpdb)</code></pre></div>
 <pre><code>
 Summary for problem no. 0 [Global information] 
- - Software                     : nonmem
- - Software version             : 7.3.0
- - Run directory                : analysis/models/pk/
- - Run file                     : run001.lst
- - Reference model              : 000
- - Run description              : NONMEM PK example for xpose
- - Run start time               : Fri Sep 1 01:27:25 CEST 2017
- - Run stop time                : Fri Sep 1 01:27:36 CEST 2017
+ - Software                      @software   : nonmem
+ - Software version              @version    : 7.3.0
+ - Run directory                 @dir        : analysis/models/pk/
+ - Run file                      @file       : run001.lst
+ - Run number                    @run        : run001
+ - Reference model               @ref        : 000
+ - Run description               @descr      : NONMEM PK example for xpose
+ - Run start time                @timestart  : Mon Oct 16 13:34:28 CEST 2017
+ - Run stop time                 @timestop   : Mon Oct 16 13:34:35 CEST 2017
 
 Summary for problem no. 1 [Parameter estimation] 
- - Input data                   : mx19_1.csv
- - Number of individuals        : 74
- - Number of observations       : 1022
- - ADVAN                        : 2
- - Estimation method            : foce-i
- - Termination message          : MINIMIZATION SUCCESSFUL
- - Estimation runtime           : 00:00:04
- - Objective function value     : -1518.108
- - Number of significant digits : 3.6
- - Covariance step runtime      : 00:00:04
- - Condition number             : 6.1
- - Eta shrinkage                : 22 [1], 20.9 [2], 20.5 [3]
- - Epsilon shrinkage            : 7 [1]
- - Run warnings                 : (WARNING 2) NM-TRAN INFERS THAT THE DATA ARE POPULATION.
+ - Input data                    @data       : ../../mx19_2.csv
+ - Number of individuals         @nind       : 74
+ - Number of observations        @nobs       : 476
+ - ADVAN                         @subroutine : 2
+ - Estimation method             @method     : foce-i
+ - Termination message           @term       : MINIMIZATION SUCCESSFUL
+ - Estimation runtime            @runtime    : 00:00:02
+ - Objective function value      @ofv        : -1403.905
+ - Number of significant digits  @nsig       : 3.3
+ - Covariance step runtime       @covtime    : 00:00:03
+ - Condition number              @condn      : 21.5
+ - Eta shrinkage                 @etashk     : 9.3 [1], 28.7 [2], 23.7 [3]
+ - Epsilon shrinkage             @epsshk     : 14.9 [1]
+ - Run warnings                  @warnings   : (WARNING 2) NM-TRAN INFERS THAT THE DATA ARE POPULATION.
 
 Summary for problem no. 2 [Model simulations] 
- - Input data                   : mx19_1.csv
- - Number of individuals        : 74
- - Number of observations       : 1022
- - Estimation method            : sim
- - Number of simulations        : 20
- - Simulation seed              : 221287
- - Run warnings                 : (WARNING 2) NM-TRAN INFERS THAT THE DATA ARE POPULATION.
-                                  (WARNING 22) WITH $MSFI AND "SUBPROBS", "TRUE=FINAL" ...</code></pre>
+ - Input data                    @data       : ../../mx19_2.csv
+ - Number of individuals         @nind       : 74
+ - Number of observations        @nobs       : 476
+ - Estimation method             @method     : sim
+ - Number of simulations         @nsim       : 20
+ - Simulation seed               @simseed    : 221287
+ - Run warnings                  @warnings   : (WARNING 2) NM-TRAN INFERS THAT THE DATA ARE POPULATION.
+                                               (WARNING 22) WITH $MSFI AND "SUBPROBS", "TRUE=FINAL" ...</code></pre>
 </div>
 <div id="listing-variables" class="section level3">
 <h3 class="hasAnchor">
@@ -190,7 +197,6 @@ List of available variables for problem no. 1
  - Subject identifier (id)               : ID
  - Dependent variable (dv)               : DV
  - Independent variable (idv)            : TIME
- - Occasion flag (occ)                   : OCC
  - Dose amount (amt)                     : AMT
  - Event identifier (evid)               : EVID
  - Model typical predictions (pred)      : PRED
@@ -207,7 +213,6 @@ List of available variables for problem no. 2
  - Subject identifier (id)               : ID
  - Dependent variable (dv)               : DV
  - Independent variable (idv)            : TIME
- - Occasion flag (occ)                   : OCC
  - Dose amount (amt)                     : AMT
  - Event identifier (evid)               : EVID
  - Model individual predictions (ipred)  : IPRED
@@ -246,10 +251,10 @@ xpdb <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="kw"><a href="../reference/res_vs_pred.html">res_vs_pred</a></span>(xpdb, <span class="dt">res =</span> <span class="st">'CWRES'</span>)</code></pre></div>
 <p><img src="introduction_files/figure-html/demo%20basic%20gof-2.png" width="50%" style="display: block; margin: auto;"></p>
 </div>
-<div id="exporting-plots" class="section level3">
+<div id="savinging-plots" class="section level3">
 <h3 class="hasAnchor">
-<a href="#exporting-plots" class="anchor"></a>Exporting plots</h3>
-<p>The <code>xpose_save</code> function was designed to facilitate the export of plots from R to files. xpose will automatically save plots according to their run number (<code>@run</code>) and the plotting function (<code>@plotfun</code>) using keywords preceded by a <code>@</code> you can learn more about these keywords using <code>help('template_titles')</code>. The file extension is guessed from the file name and must match one of .pdf, .jpeg, .png, .bmp or .tiff, if missing a pdf will be generated by default. Finally, if the <code>plot</code> argument is left empty <code>xpose_save</code> will automatically save the last plot that was generated by ggplot2.</p>
+<a href="#savinging-plots" class="anchor"></a>Savinging plots</h3>
+<p>The <code>xpose_save</code> function was designed automatically save plots according to their run number (<code>@run</code>) and the plotting function (<code>@plotfun</code>) using keywords preceded by a <code>@</code>. You can learn more about these keywords using <code>help('template_titles')</code>. The file extension is guessed from the file name and must match one of .pdf, .jpeg, .png, .bmp or .tiff, if missing a pdf will be generated by default. Finally, if the <code>plot</code> argument is left empty <code>xpose_save</code> will automatically save the last plot that was created or modified.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Save the last plot</span>
 <span class="kw"><a href="../reference/xpose_save.html">xpose_save</a></span>()
 

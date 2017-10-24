@@ -61,6 +61,9 @@
     <li class="divider"></li>
     <li class="dropdown-header">Getting started</li>
     <li>
+      <a href="../articles/cheatsheet.pdf">Cheat sheet (pdf)</a>
+    </li>
+    <li>
       <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
@@ -76,6 +79,9 @@
     </li>
     <li>
       <a href="../articles/multiple_pages.html">Multiple pages</a>
+    </li>
+    <li>
+      <a href="../articles/vpc.html">Visual Predictive Checks (VPC)</a>
     </li>
     <li>
       <a href="../articles/interactive_plots.html">Create interactive plots (beta)</a>
@@ -131,8 +137,8 @@
     
 
     <pre class="usage"><span class='fu'>vpc_opt</span>(<span class='kw'>bins</span> <span class='kw'>=</span> <span class='st'>"jenks"</span>, <span class='kw'>n_bins</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>bin_mid</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
-  <span class='kw'>pred_corr</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pred_corr_lower_bnd</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>pi</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.05</span>, <span class='fl'>0.95</span>),
-  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.05</span>, <span class='fl'>0.95</span>), <span class='kw'>lloq</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>uloq</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rtte</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>pred_corr</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pred_corr_lower_bnd</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>pi</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.025</span>, <span class='fl'>0.975</span>),
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.025</span>, <span class='fl'>0.975</span>), <span class='kw'>lloq</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>uloq</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rtte</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>rtte_calc_diff</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>events</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>kmmc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>reverse_prob</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>as_percentage</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
@@ -211,7 +217,7 @@ for a KMMC plot (e.g. 'WT').</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code>vpc_data</code> <code><a href='http://www.rdocumentation.org/packages/vpc/topics/vpc'>vpc</a></code></p>
+    <p><code><a href='vpc.html'>vpc</a></code> <code><a href='vpc_data.html'>vpc_data</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -225,16 +231,16 @@ for a KMMC plot (e.g. 'WT').</p></td>
 #&gt; [1] "mean"
 #&gt; 
 #&gt; $pred_corr
-#&gt; NULL
+#&gt; [1] FALSE
 #&gt; 
 #&gt; $pred_corr_lower_bnd
 #&gt; [1] 0
 #&gt; 
 #&gt; $pi
-#&gt; [1] 0.05 0.95
+#&gt; [1] 0.025 0.975
 #&gt; 
 #&gt; $ci
-#&gt; [1] 0.05 0.95
+#&gt; [1] 0.025 0.975
 #&gt; 
 #&gt; $lloq
 #&gt; NULL
@@ -259,6 +265,9 @@ for a KMMC plot (e.g. 'WT').</p></td>
 #&gt; 
 #&gt; $as_percentage
 #&gt; [1] TRUE
+#&gt; 
+#&gt; $usr_call
+#&gt; NULL
 #&gt; </div><div class='input'>
 </div></pre>
   </div>

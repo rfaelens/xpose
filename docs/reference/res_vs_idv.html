@@ -61,6 +61,9 @@
     <li class="divider"></li>
     <li class="dropdown-header">Getting started</li>
     <li>
+      <a href="../articles/cheatsheet.pdf">Cheat sheet (pdf)</a>
+    </li>
+    <li>
       <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
@@ -76,6 +79,9 @@
     </li>
     <li>
       <a href="../articles/multiple_pages.html">Multiple pages</a>
+    </li>
+    <li>
+      <a href="../articles/vpc.html">Visual Predictive Checks (VPC)</a>
     </li>
     <li>
       <a href="../articles/interactive_plots.html">Create interactive plots (beta)</a>
@@ -194,8 +200,8 @@ line 'l', smooth 's' and text 't' or any combination of the four.</p></td>
     </tr>
     <tr>
       <th>facets</th>
-      <td><p>Either a character string to use <a href='http://www.rdocumentation.org/packages/ggplot2/topics/facet_wrap'>facet_wrap</a> 
-or a formula to use <a href='http://www.rdocumentation.org/packages/ggplot2/topics/facet_grid'>facet_grid</a>.</p></td>
+      <td><p>Either a character string to use <code><a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_wrap_paginate'>facet_wrap_paginate</a></code>
+or a formula to use <code><a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a></code>.</p></td>
     </tr>
     <tr>
       <th>problem</th>
@@ -232,11 +238,11 @@ any option supported by this layer e.g. point_color = 'blue', smooth_method = 'l
     
     <p>Template titles can be used to create highly informative diagnostics plots. 
 They can be applied to any plot title, subtitle and caption. Template titles 
-are defined via a single string containing key variables staring with a @ (e.g. @ofv)
+are defined via a single string containing key variables staring with a `@` (e.g. `@ofv`)
 which will be replaced by their actual value when rendering the plot.
-For example '@run, @nobs observations in @nind subjects' would become 'run001, 
-1022 observations in 74 subjects'. The available key variables are listed under 
-<code><a href='template_titles.html'>template_titles</a></code>.</p>
+For example `'@run, @nobs observations in @nind subjects'` would become 
+`'run001, 1022 observations in 74 subjects'`. The available key variables 
+are listed under <code><a href='template_titles.html'>template_titles</a></code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -245,9 +251,9 @@ For example '@run, @nobs observations in @nind subjects' would become 'run001,
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Standard residual</span>
-<span class='fu'>res_vs_idv</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>'IWRES'</span>, <span class='st'>'CWRES'</span>), <span class='fu'>aes</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>TAD</span>))</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Filtering data by EVID == 0</span></div><div class='output co'>#&gt; <span class='message'>Tidying data by ID, SEX, MED1, MED2, OCC ... and 25 more variables</span></div><div class='img'><img src='res_vs_idv-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>res_vs_idv</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>'IWRES'</span>, <span class='st'>'CWRES'</span>))</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Filtering data by EVID == 0</span></div><div class='output co'>#&gt; <span class='message'>Tidying data by ID, SEX, MED1, MED2, DOSE ... and 24 more variables</span></div><div class='img'><img src='res_vs_idv-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># Absolute value of the residuals</span>
-<span class='fu'>absval_res_vs_idv</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='st'>'CWRES'</span>, <span class='fu'>aes</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>TAD</span>))</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Filtering data by EVID == 0</span></div><div class='img'><img src='res_vs_idv-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>absval_res_vs_idv</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='st'>'CWRES'</span>)</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Filtering data by EVID == 0</span></div><div class='img'><img src='res_vs_idv-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

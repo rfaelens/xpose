@@ -29,7 +29,15 @@ reference:
     desc:  Edit data, index or files within an xpdb
     contents:
     - filter.xpose_data
+    - slice.xpose_data
+    - distinct.xpose_data
     - mutate.xpose_data
+    - select.xpose_data
+    - rename.xpose_data
+    - group_by.xpose_data
+    - ungroup.xpose_data
+    - summarize.xpose_data
+    - irep
     - set_var_types
     - set_var_labels
     - set_var_units
@@ -139,6 +147,8 @@ navbar:
     menu:
         - text: "--------------------------"
         - text: "Getting started"
+        - text: Cheat sheet (pdf)
+          href: articles/cheatsheet.pdf
         - text: Introduction
           href: articles/introduction.html
         - text: Import model outputs
@@ -151,6 +161,8 @@ navbar:
           href: articles/customize_plots.html
         - text: Multiple pages
           href: articles/multiple_pages.html
+        - text: Visual Predictive Checks (VPC)
+          href: articles/vpc.html
         - text: Create interactive plots (beta)
           href: articles/interactive_plots.html
   - text: Functions

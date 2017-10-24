@@ -54,7 +54,7 @@ xpdb_ex_pk %>%
 #### VPC
 ```{r vpc example, fig.width = 6, fig.height = 5, out.width = '100%', warning = FALSE, message=FALSE}
 xpdb_ex_pk %>% 
-  vpc_data(stratify = 'OCC') %>% 
+  vpc_data() %>% 
   vpc(title = 'Visual predictive checks', type = 'alpr') %>% 
   plotly::ggplotly()
 ```
