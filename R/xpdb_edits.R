@@ -182,10 +182,11 @@ edit_xpose_data <- function(.fun, .fname, .data, ..., .problem, .source, .where)
     
     check_quo_vars(xpdb = xpdb, ..., .source = .source, .problem = .problem)
     
+    # do dplyr operation outside of mutate to avoid problems with n()
+    xpdb[['data']]$data <- purrr::map_if(xpdb[['data']]$data, xpdb[['data']]$problem %in% .problem,
+                         .f = .fun, rlang::UQS(rlang::quos(...)))
     xpdb[['data']] <- xpdb[['data']] %>%
-      dplyr::mutate(data = purrr::map_if(.$data, xpdb[['data']]$problem %in% .problem,
-                                         .f = .fun, rlang::UQS(rlang::quos(...))),
-                    modified = dplyr::if_else(.$problem %in% .problem, TRUE, .$modified))
+      dplyr::mutate(modified = dplyr::if_else(.$problem %in% .problem, TRUE, .$modified))
     
     if (.fname %in% c('mutate', 'select', 'rename')) {
       xpdb[['data']] <- xpdb_index_update(xpdb = xpdb, .problem = .problem) # Update index
