@@ -205,8 +205,9 @@ edit_xpose_data <- function(.fun, .fname, .data, ..., .problem, .source, .where)
     
     xpdb[['special']] <- xpdb[['special']] %>%
       dplyr::group_by_('problem') %>% 
-      tidyr::nest(.key = 'tmp') %>% 
-      dplyr::mutate(tmp = purrr::map_if(.x = .$tmp, .p = xpdb[['special']]$problem %in% .problem,
+      tidyr::nest(.key = 'tmp')
+    
+    xpdb[['special']]$tmp <- purrr::map_if(.x = xpdb[['special']]$tmp, .p = xpdb[['special']]$problem %in% .problem,
                                         .f = function(.x, .fun, .where, ...) {
                                           if (.x$method == 'vpc') {
                                             if (any(!.where %in% names(.x$data[[1]]))) {
@@ -220,8 +221,9 @@ edit_xpose_data <- function(.fun, .fname, .data, ..., .problem, .source, .where)
                                           } else {
                                             stop('edits of `', .x$method, '` data are not yet supported in xpose.', call. = FALSE)
                                           }
-                                        }, .fun = .fun, .where = .where, rlang::UQS(rlang::quos(...)))) %>% 
-      tidyr::unnest()
+                                        }, .fun = .fun, .where = .where, rlang::UQS(rlang::quos(...))) 
+    
+    xpdb[['special']] <- tidyr::unnest(xpdb[['special']])
   } else {
     if (missing(.problem)) .problem <- xpdb[['files']]$problem
     if (!all(.source %in% xpdb[['files']]$extension)) {
@@ -236,11 +238,11 @@ edit_xpose_data <- function(.fun, .fname, .data, ..., .problem, .source, .where)
     
     check_quo_vars(xpdb = xpdb, ..., .source = .source, .problem = .problem)
     
+    xpdb[['files']]$data <- purrr::map_if(xpdb[['files']]$data, xpdb[['files']]$problem %in% .problem &
+                                       xpdb[['files']]$extension %in% .source,
+                                     .f = dplyr::filter, rlang::UQS(rlang::quos(...)))
     xpdb[['files']] <- xpdb[['files']] %>%
-      dplyr::mutate(data = purrr::map_if(.$data, xpdb[['files']]$problem %in% .problem &
-                                           xpdb[['files']]$extension %in% .source,
-                                         .f = dplyr::filter, rlang::UQS(rlang::quos(...))),
-                    modified = dplyr::if_else(.$problem %in% .problem & .$extension %in% .source, TRUE, .$modified))
+      dplyr::mutate(modified = dplyr::if_else(.$problem %in% .problem & .$extension %in% .source, TRUE, .$modified))
   }
   xpdb
 }
