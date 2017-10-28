@@ -35,8 +35,11 @@ test_that('xpdb_edits works properly', {
   expect_equal(filter.xpose_data(.data = xpdb_ex_pk, ID == 110, TIME > 10, .problem = 1) %>% get_data(problem = 1), 
                xpdb_ex_pk %>% get_data(problem = 1) %>% filter(.$ID == 110, .$TIME > 10))
   expect_equal(filter.xpose_data(.data = xpdb_ex_pk, ID == 110, .problem = 1, .source = 'phi') %>% 
-                 slice.xpose_data(1:3) %>% get_file(ext = 'phi', quiet = TRUE), 
-               xpdb_ex_pk %>% get_file(ext = 'phi', quiet = TRUE) %>% filter(.$ID == 110) %>% slice(1:3))
+                 slice.xpose_data(1:3, .source = 'phi') %>% 
+                 mutate.xpose_data(TEST = 'Ok', .source = 'phi') %>% 
+                 get_file(ext = 'phi', quiet = TRUE), 
+               xpdb_ex_pk %>% get_file(ext = 'phi', quiet = TRUE) %>% filter(.$ID == 110) 
+               %>% slice(1:3) %>% mutate(TEST = 'Ok'))
   expect_equal(ctrl_tab_1, xpdb_ex_pk %>% 
                  get_data(problem = 1) %>% 
                  mutate(DV = log(DV)) %>% 
@@ -75,4 +78,6 @@ test_that('n() works', {
   xpdb_sum <- xpdb_ex_pk %>% group_by(ID, .problem = 1) %>% summarise(n(), .problem = 1)
   expect_equal(xpdb_sum %>% get_data(problem = 1), 
                xpdb_ex_pk %>% get_data(problem = 1) %>% group_by(ID) %>% summarise(n()))
+  expect_equal(xpdb_ex_pk %>% mutate(N = 1:n(), .source = 'ext') %>% get_file(ext = 'ext', quiet = TRUE),
+               xpdb_ex_pk %>% get_file(ext = 'ext', quiet = TRUE) %>% mutate(N = 1:n()))
 })
