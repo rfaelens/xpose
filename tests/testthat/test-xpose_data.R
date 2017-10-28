@@ -3,16 +3,28 @@ context('Check xpose_data')
 # Tests start here --------------------------------------------------------
 
 test_that('error is returned when missing file and runno arguments', {
-  expect_error(xpose_data())
+  expect_error(xpose_data(), regexp = 'Argument `runno` or `file` required')
 })
 
 test_that('error is returned when file does not exist', {
-  expect_error(xpose_data(file = 'fake_mod.lst', dir = 'data'))
+  expect_error(xpose_data(file = 'fake_mod.lst', dir = 'data'), 
+               regexp = 'Model file fake_mod.lst not found')
 })
 
 test_that('error is returned for bad ext input', {
-  expect_error(xpose_data(runno = '001', ext = 'pdf', dir = 'data'))
+  expect_error(xpose_data(runno = '001', ext = 'pdf', dir = 'data'),
+               regexp = 'Model file currently not supported by xpose')
 })
+
+test_that('error is returned for bad themes input', {
+  expect_error(xpose_data(runno = '001', dir = 'data', xp_theme = list()),
+               regexp = 'Argument `xp_theme` must be a full xpose theme')
+  expect_error(xpose_data(runno = '001', dir = 'data', gg_theme = list()),
+               regexp = 'Argument `gg_theme` must be a full ggplot2 theme')
+  expect_error(xpose_data(runno = '001', dir = 'data', gg_theme = theme(legend.position = 'top')),
+               regexp = 'Argument `gg_theme` must be a full ggplot2 theme')
+})
+
 
 test_that('properly creates the xpdb when using the file argument', {
   xpdb_1 <- xpose_data(file = 'run001.lst', dir = 'data', quiet = TRUE)
@@ -49,9 +61,11 @@ test_that('properly handles errors in tables', {
 })  
 
 test_that('properly handles errors in summary', {
+  broken_theme <- theme_xp_default()
+  broken_theme$rounding <- 'No'
   expect_warning(xpdb_4 <- xpose_data(runno = '001', ext = '.lst', dir = 'data', 
                                       ignore = c('data', 'files'),
-                                      quiet = TRUE, xp_theme = c(rounding = 'No')),
+                                      quiet = TRUE, xp_theme = broken_theme),
                  regexp = 'Failed to create run summary')
   expect_error(summary(xpdb_4), regex = 'No `summary` slot could be found in this xpdb')
 })  
