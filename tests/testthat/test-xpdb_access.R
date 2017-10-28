@@ -117,8 +117,13 @@ test_that('get_summary works properly', {
 # Tests for get_prm -------------------------------------------------------
 
 test_that('get_prm checks input properly', {
+  xpdb_no_ext <- xpdb_ex_pk
+  xpdb_no_ext$files <- xpdb_no_ext$files[xpdb_no_ext$files$extension != 'ext', ]
   # Error with missing xpdb
   expect_error(get_prm(), regexp = '"xpdb" is missing')
+
+  # Error with no ext file
+  expect_error(get_prm(xpdb_no_ext), regexp = 'File extension `ext` not found in model output files')
   
   # Error with bad problem input
   expect_error(get_prm(xpdb_ex_pk, problem = 99), regexp = 'No parameter estimates found for \\$prob no\\.99')
@@ -135,4 +140,32 @@ test_that('get_prm works properly', {
   get_prm_test <- get_prm(xpdb_ex_pk)
   expect_true('xpose_prm' %in% class(get_prm_test))
   expect_identical(get_prm_test, get_prm_ctrl)
+})
+
+
+# Tests for get_special ---------------------------------------------------
+test_that('get_special checks input properly', {
+  xpdb_vpc <- xpdb_ex_pk %>% 
+    vpc_data() %>% 
+    vpc_data(vpc_type = 'censored', opt = vpc_opt(lloq = 0.4))
+  
+  # Error with missing xpdb
+  expect_error(get_special(), regexp = '"xpdb" is missing')
+  
+  # Error with bad problem input
+  expect_error(get_special(xpdb_vpc, problem = 99), regexp = '\\$prob no.99 not found')
+})
+
+test_that('get_data works properly', {
+  # Default return works properly
+  expect_message(tmp_get_special_1 <- get_special(xpdb_vpc), regexp = 'Returning vpc censored data from \\$prob no\\.4')
+  expect_equal(tmp_get_special_1, xpdb_vpc$special$data[[2]])
+  
+  # Return single problem
+  expect_equal(get_special(xpdb_vpc, problem = 3), xpdb_vpc$special$data[[1]])
+  
+  # Return multiple problems
+  expect_equal(get_special(xpdb_vpc, problem = 3:4), 
+               list(problem_3_vpc_continuous = xpdb_vpc$special$data[[1]],
+                    problem_4_vpc_censored = xpdb_vpc$special$data[[2]]))
 })
