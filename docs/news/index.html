@@ -150,13 +150,17 @@
 <li>Added <code><a href="../reference/get_prm.html">get_prm()</a></code> function</li>
 </ul>
 </div>
-<div id="data-import" class="section level3">
+<div id="data-importedit" class="section level3">
 <h3 class="hasAnchor">
-<a href="#data-import" class="anchor"></a>Data import</h3>
+<a href="#data-importedit" class="anchor"></a>Data import/edit</h3>
 <ul>
 <li>Improved <code>dir</code> and <code>file</code> arguments usage</li>
 <li>Improved error robustness of <code><a href="../reference/xpose_data.html">xpose_data()</a></code>
 </li>
+<li>Added new dplyr verbs for xpdb editing: <code><a href="http://dplyr.tidyverse.org/reference/slice.html">slice()</a></code>, <code><a href="http://dplyr.tidyverse.org/reference/select.html">select()</a></code>, <code><a href="http://dplyr.tidyverse.org/reference/select.html">rename()</a></code>, <code><a href="http://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code>, <code><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>, <code><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> and <code><a href="http://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code>
+</li>
+<li>dplyr verbs can now also be used to edit vpc data</li>
+<li>Added <code><a href="../reference/irep.html">irep()</a></code> function to add simulation counter to any dataset</li>
 <li>Bug fix in <code><a href="../reference/read_nm_files.html">read_nm_files()</a></code> not properly reporting FO method</li>
 <li>Bug fix in <code><a href="../reference/read_nm_tables.html">read_nm_tables()</a></code> not properly parsing data (missing minus signs) in some very specific cases</li>
 </ul>
@@ -191,9 +195,9 @@
 <li>Improvement of documentation, and testing</li>
 </ul>
 </div>
-<div id="data-import-1" class="section level3">
+<div id="data-import" class="section level3">
 <h3 class="hasAnchor">
-<a href="#data-import-1" class="anchor"></a>Data import</h3>
+<a href="#data-import" class="anchor"></a>Data import</h3>
 <div id="read_nm_tables" class="section level4">
 <h4 class="hasAnchor">
 <a href="#read_nm_tables" class="anchor"></a><code><a href="../reference/read_nm_tables.html">read_nm_tables()</a></code>
