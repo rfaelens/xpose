@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Add, remove or rename variables in an xpdb — modify_xpdb • xpose</title>
+<title>Access special model data — get_special • xpose</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -129,72 +129,68 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add, remove or rename variables in an xpdb</h1>
+    <h1>Access special model data</h1>
     </div>
 
     
-    <p><code><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> adds new variables and preserves existing ones. 
-<code><a href='http://dplyr.tidyverse.org/reference/select.html'>select()</a></code> keeps only the listed variables; <code><a href='http://dplyr.tidyverse.org/reference/select.html'>rename()</a></code> keeps all variables.</p>
+    <p>Access special model data from an xpdb object.</p>
     
 
-    <pre class="usage"><span class='co'># S3 method for xpose_data</span>
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='no'>.problem</span>, <span class='no'>.source</span>, <span class='no'>.where</span>)
-
-<span class='co'># S3 method for xpose_data</span>
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='no'>.problem</span>, <span class='no'>.source</span>, <span class='no'>.where</span>)
-
-<span class='co'># S3 method for xpose_data</span>
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>rename</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='no'>.problem</span>, <span class='no'>.source</span>, <span class='no'>.where</span>)</pre>
+    <pre class="usage"><span class='fu'>get_special</span>(<span class='no'>xpdb</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>quiet</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.data</th>
-      <td><p>An xpose database object.</p></td>
+      <th>xpdb</th>
+      <td><p>An <code>xpose_data</code> object from which the special data will be extracted.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Name-value pairs of expressions. Use <code>NULL</code> to drop a variable.</p>
-<p>These arguments are automatically quoted and evaluated in the 
-context of the data frame. They support unquoting and splicing. 
-See the dplyr vignette("programming") for an introduction to these concepts.</p></td>
+      <th>problem</th>
+      <td><p>The problem to be used, by default returns the last one.</p></td>
     </tr>
     <tr>
-      <th>.problem</th>
-      <td><p>The problem from which the data will be modified</p></td>
-    </tr>
-    <tr>
-      <th>.source</th>
-      <td><p>The source of the data in the xpdb. Can either be 'data' or an output 
-file extension e.g. 'phi'.</p></td>
-    </tr>
-    <tr>
-      <th>.where</th>
-      <td><p>A vector of element names to be edited in special (e.g. 
-<code>.where = c('vpc_dat', 'aggr_obs')</code> with vpc).</p></td>
+      <th>quiet</th>
+      <td><p>Logical, if <code>FALSE</code> messages are printed to the console.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A list.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <p><code><a href='xpose_data.html'>xpose_data</a></code></p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Mutate columns</span>
-<span class='no'>xpdb_ex_pk</span> <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>lnDV</span> <span class='kw'>=</span> <span class='fu'>log</span>(<span class='no'>DV</span>),
-        <span class='kw'>sim_count</span> <span class='kw'>=</span> <span class='fu'><a href='irep.html'>irep</a></span>(<span class='no'>ID</span>),
-        <span class='kw'>.problem</span> <span class='kw'>=</span> <span class='fl'>1</span>) <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='pred_vs_idv.html'>dv_vs_idv</a></span>(<span class='fu'>aes</span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>lnDV</span>))</div><div class='output co'>#&gt; <span class='message'>irep: 1 simulations found.</span></div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Filtering data by EVID == 0</span></div><div class='img'><img src='modify_xpdb-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
-<span class='co'># Rename/select columns</span>
-<span class='no'>xpdb_ex_pk</span> <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>ID</span>:<span class='no'>TAD</span>, <span class='no'>DV</span>, <span class='no'>EVID</span>) <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>rename</a></span>(<span class='kw'>TSLD</span> <span class='kw'>=</span> <span class='no'>TAD</span>) <span class='kw'>%&gt;%</span>
- <span class='fu'><a href='pred_vs_idv.html'>dv_vs_idv</a></span>(<span class='fu'>aes</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>TSLD</span>))</div><div class='output co'>#&gt; <span class='message'>Using data from $prob no.1</span></div><div class='output co'>#&gt; <span class='message'>Filtering data by EVID == 0</span></div><div class='img'><img src='modify_xpdb-2.png' alt='' width='700' height='432.632880098887' /></div></pre>
+    <pre class="examples"><div class='input'><span class='no'>special</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_summary.html'>get_summary</a></span>(<span class='no'>xpdb_ex_pk</span>)
+<span class='no'>special</span></div><div class='output co'>#&gt; # A tibble: 48 x 5
+#&gt;    problem subprob               descr       label
+#&gt;      &lt;dbl&gt;   &lt;dbl&gt;               &lt;chr&gt;       &lt;chr&gt;
+#&gt;  1       0       0     Run description       descr
+#&gt;  2       0       0       Run directory         dir
+#&gt;  3       0       0          Run errors      errors
+#&gt;  4       0       0 ESAMPLE seed number esampleseed
+#&gt;  5       0       0            Run file        file
+#&gt;  6       0       0   Number of ESAMPLE    nesample
+#&gt;  7       0       0     Reference model         ref
+#&gt;  8       0       0          Run number         run
+#&gt;  9       0       0            Software    software
+#&gt; 10       0       0      Run start time   timestart
+#&gt; # ... with 38 more rows, and 1 more variables: value &lt;chr&gt;</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#see-also">See also</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
