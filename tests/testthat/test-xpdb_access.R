@@ -1,5 +1,10 @@
 context('Check xpdb_access functions')
 
+# Define files to be tested -----------------------------------------------
+xpdb_vpc <- xpdb_ex_pk %>% 
+  vpc_data() %>% 
+  vpc_data(vpc_type = 'censored', opt = vpc_opt(lloq = 0.4))
+
 # Tests for get_code ------------------------------------------------------
 
 test_that('get_code checks input properly', {
@@ -145,10 +150,6 @@ test_that('get_prm works properly', {
 
 # Tests for get_special ---------------------------------------------------
 test_that('get_special checks input properly', {
-  xpdb_vpc <- xpdb_ex_pk %>% 
-    vpc_data() %>% 
-    vpc_data(vpc_type = 'censored', opt = vpc_opt(lloq = 0.4))
-  
   # Error with missing xpdb
   expect_error(get_special(), regexp = '"xpdb" is missing')
   
