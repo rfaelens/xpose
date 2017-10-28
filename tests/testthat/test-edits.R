@@ -70,3 +70,9 @@ test_that('irep works properly', {
                  regexp = '3 simulations found')
   expect_equal(irep_out, rep(1:3, each = 5))
 })
+
+test_that('n() works', {
+  xpdb_sum <- xpdb_ex_pk %>% group_by(ID, .problem = 1) %>% summarise(n(), .problem = 1)
+  expect_equal(xpdb_sum %>% get_data(problem = 1), 
+               xpdb_ex_pk %>% get_data(problem = 1) %>% group_by(ID) %>% summarise(n()))
+})
