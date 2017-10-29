@@ -75,6 +75,14 @@ xpose_data <- function(runno         = NULL,
     stop('Argument `runno` or `file` required.', call. = FALSE)
   }
   
+  if (!is.theme(gg_theme) || !attr(gg_theme, 'complete')) {
+    stop('Argument `gg_theme` must be a full ggplot2 theme. To modify a theme use update_themes() instead.', call. = FALSE) 
+  }
+  
+  if (!is.xp.theme(xp_theme)) {
+   stop('Argument `xp_theme` must be a full xpose theme. To modify a theme use update_themes() instead.', call. = FALSE) 
+  }
+  
   if (missing(quiet)) quiet <- !interactive()
   
   # Check extensions

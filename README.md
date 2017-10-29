@@ -89,7 +89,7 @@ ind_plots(xpdb, page = 1)
 
 <img src="inst/img/readme_example_figure_2-1.png" width="75%" style="display: block; margin: auto;" />
 
-##### Individual plots
+##### Visual predictive checks
 
 ``` r
 xpdb %>% 

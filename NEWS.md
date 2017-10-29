@@ -1,3 +1,11 @@
+# xpose 0.3.1
+* Added compatibility with `dplyr::n()` when editing xpdb #51
+* Added `get_special()` convenience function
+* Improved error checking for themes in `xpose_data`
+* Improved error checking in `get_prm()`
+* Fixed documentation
+*
+
 # xpose 0.3
 ### General
 * Improved documentation and testing
@@ -7,9 +15,12 @@
 * Added multiple page functionality to all plots and `xpose_save()`
 * Added `get_prm()` function
 
-### Data import
+### Data import/edit
 * Improved `dir` and `file` arguments usage
 * Improved error robustness of `xpose_data()` 
+* Added new dplyr verbs for xpdb editing: `slice()`, `select()`, `rename()`, `distinct()`, `summarize()`, `group_by()` and `ungroup()`
+* dplyr verbs can now also be used to edit vpc data
+* Added `irep()` function to add simulation counter to any dataset
 * Bug fix in `read_nm_files()` not properly reporting FO method
 * Bug fix in `read_nm_tables()` not properly parsing data (missing minus signs) in some very specific cases
 
