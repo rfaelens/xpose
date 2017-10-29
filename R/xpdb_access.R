@@ -299,21 +299,26 @@ get_prm <- function(xpdb,
   
   check_xpdb(xpdb, check = 'files')
   if (missing(quiet)) quiet <- xpdb$options$quiet
+  prm_df <- xpdb$files
+  
+  if (!any(prm_df$extension == 'ext')) {
+    stop('File extension `ext` not found in model output files.' , call. = FALSE) 
+  }
+  
   if (is.null(problem)) problem <- last_file_problem(xpdb, ext = 'ext')
   if (is.null(subprob)) subprob <- last_file_subprob(xpdb, ext = 'ext', problem = problem)
   if (is.null(method))  method  <- last_file_method(xpdb, ext = 'ext', problem = problem, subprob = subprob)
   
-  prm_df <- xpdb$files
   prm_df <- prm_df[prm_df$extension == 'ext' & prm_df$problem %in% problem &
                      prm_df$subprob %in% subprob & prm_df$method %in% method, ]
-
+  
   if (nrow(prm_df) == 0) {
     stop('No parameter estimates found for $prob no.', 
          stringr::str_c(problem, collapse = '/'), ', subprob no. ',
          stringr::str_c(subprob, collapse = '/'), ', method ',
          stringr::str_c(method, collapse = '/'), '.', call. = FALSE) 
   }
-    
+  
   prm_df <- prm_df %>% 
     dplyr::mutate(prm_names = purrr::map(.x = as.list(.$problem), .f = function(x, code) {
       
@@ -396,7 +401,7 @@ get_prm <- function(xpdb,
                                                .$type == 'ome' ~ 2,
                                                TRUE ~ 3)) %>% 
         dplyr::arrange_(.dots = 'order') %>% 
-        dplyr::select(dplyr::one_of('type', 'name', 'label', 'value', 'rse', 'fixed', 'diagonal'))
+        dplyr::select(dplyr::one_of('type', 'name', 'label', 'value', 'rse', 'fixed', 'diagonal', 'm', 'n'))
       
       # Assign THETA labels
       n_theta     <- sum(prm_tmp$type == 'the')
@@ -445,3 +450,38 @@ get_prm <- function(xpdb,
   structure(prm_df, class = c('xpose_prm', class(prm_df)))
 }
 
+
+#' Access special model data
+#'
+#' @description Access special model data from an xpdb object.
+#' 
+#' @param xpdb An \code{xpose_data} object from which the special data will be extracted.
+#' @param problem The problem to be used, by default returns the last one.
+#' @param quiet Logical, if \code{FALSE} messages are printed to the console.
+#' 
+#' @return A list.
+#' @seealso \code{\link{xpose_data}}
+#' @examples
+#' special <- get_summary(xpdb_ex_pk)
+#' special
+#' 
+#' @export
+get_special <- function(xpdb, problem = NULL, quiet) {
+  check_xpdb(xpdb, check = 'special')
+  if (missing(quiet)) quiet <- xpdb$options$quiet
+  x <- xpdb$special
+  if (is.null(problem)) problem <- max(x$problem)
+  
+  if (!all(problem %in% x$problem)) {
+    stop('$prob no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
+         ' not found in special data.', call. = FALSE)
+  }
+  x <- x[x$problem %in% problem, ]
+  
+  if (length(problem) > 1) {
+    purrr::set_names(x$data, stringr::str_c('problem_', x$problem, '_', x$method, '_', x$type))
+  } else {
+    msg(c('Returning ', x$method, ' ' , x$type, ' data from $prob no.', x$problem), quiet)
+    x$data[[1]]
+  }
+}

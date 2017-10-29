@@ -194,9 +194,9 @@ Summary for problem no. 1 [Parameter estimation]
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/ind_plots.html">ind_plots</a></span>(xpdb, <span class="dt">page =</span> <span class="dv">1</span>)</code></pre></div>
 <p><img src="inst/img/readme_example_figure_2-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
-<div id="individual-plots-1" class="section level5">
+<div id="visual-predictive-checks" class="section level5">
 <h5 class="hasAnchor">
-<a href="#individual-plots-1" class="anchor"></a>Individual plots</h5>
+<a href="#visual-predictive-checks" class="anchor"></a>Visual predictive checks</h5>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xpdb <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="reference/vpc_data.html">vpc_data</a></span>(<span class="dt">stratify =</span> <span class="st">'SEX'</span>, <span class="dt">opt =</span> <span class="kw"><a href="reference/vpc_opt.html">vpc_opt</a></span>(<span class="dt">n_bins =</span> <span class="dv">7</span>, <span class="dt">lloq =</span> <span class="fl">0.1</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="reference/vpc.html">vpc</a></span>()</code></pre></div>

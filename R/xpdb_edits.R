@@ -155,7 +155,7 @@ summarise.xpose_data <- function(.data, ..., .problem, .source, .where) {
 #' @param .problem The problem from which the data will be modified
 #' @param .source The source of the data in the xpdb. Can either be 'data' or an output 
 #' file extension e.g. 'phi'.
-#' @param .where A vector of element names to be edite in special (e.g. 
+#' @param .where A vector of element names to be edited in special (e.g. 
 #' \code{.where = c('vpc_dat', 'aggr_obs')} with vpc).
 #' @param ... Name-value pairs of expressions. Use \code{NULL} to drop a variable.
 #' 
@@ -225,7 +225,7 @@ edit_xpose_data <- function(.fun, .fname, .data, ..., .problem, .source, .where)
     
     xpdb[['special']] <- tidyr::unnest(xpdb[['special']])
   } else {
-    if (missing(.problem)) .problem <- xpdb[['files']]$problem
+    if (missing(.problem)) .problem <- max(xpdb[['files']]$problem)
     if (!all(.source %in% xpdb[['files']]$extension)) {
       stop('File extension ', stringr::str_c(.source[!.source %in% xpdb[['files']]$extension], collapse = ', '), 
            ' not found in model output files.', call. = FALSE)
@@ -238,9 +238,9 @@ edit_xpose_data <- function(.fun, .fname, .data, ..., .problem, .source, .where)
     
     check_quo_vars(xpdb = xpdb, ..., .source = .source, .problem = .problem)
     
-    xpdb[['files']]$data <- purrr::map_if(xpdb[['files']]$data, xpdb[['files']]$problem %in% .problem &
+    xpdb[['files']]$data <- purrr::map_if(.x = xpdb[['files']]$data, .p = xpdb[['files']]$problem %in% .problem &
                                        xpdb[['files']]$extension %in% .source,
-                                     .f = dplyr::filter, rlang::UQS(rlang::quos(...)))
+                                     .f = .fun, rlang::UQS(rlang::quos(...)))
     xpdb[['files']] <- xpdb[['files']] %>%
       dplyr::mutate(modified = dplyr::if_else(.$problem %in% .problem & .$extension %in% .source, TRUE, .$modified))
   }

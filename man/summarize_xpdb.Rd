@@ -33,7 +33,7 @@ See the dplyr vignette("programming") for an introduction to these concepts.}
 \item{.source}{The source of the data in the xpdb. Can either be 'data' or an output 
 file extension e.g. 'phi'.}
 
-\item{.where}{A vector of element names to be edite in special (e.g. 
+\item{.where}{A vector of element names to be edited in special (e.g. 
 \code{.where = c('vpc_dat', 'aggr_obs')} with vpc).}
 
 \item{x}{Same as .data (used for consistency with dplyr functions).}
