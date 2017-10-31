@@ -3,7 +3,7 @@
 #' @description This function returns a summary of an \code{\link{xpose_data}} 
 #' to the console.
 #' @param object An \code{xpose_data} object generated with \code{\link{xpose_data}}.
-#' @param problem The problem to be used, by default returns the last one for each label.
+#' @param .problem The problem to be used, by default returns the last one for each label.
 #' @param ... Ignored in this function
 #'
 #' @method summary xpose_data
@@ -11,13 +11,13 @@
 #' summary(xpdb_ex_pk)
 #'
 #' @export
-summary.xpose_data <- function(object, problem = NULL, ...) {
+summary.xpose_data <- function(object, .problem = NULL, ...) {
   order <- c('software', 'version', 'dir', 'file', 'run', 'ref', 'descr', 'timestart', 
              'timestop', 'probn', 'label', 'data', 'nind', 'nobs', 'subroutine', 'method',
              'term', 'runtime', 'ofv', 'nsig', 'covtime', 'condn','etashk', 'epsshk', 
              'nsim', 'simseed', 'nesample', 'esampleseed', 'errors', 'warnings')
   
-  out <- get_summary(object, problem, only_last = FALSE) %>% 
+  out <- get_summary(object, .problem, only_last = FALSE) %>% 
     dplyr::filter(.$value != 'na') %>% 
     dplyr::slice(order(match(.$label, order))) %>% 
     dplyr::group_by_(.dots = c('problem', 'label', 'descr')) %>% 

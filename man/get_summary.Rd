@@ -4,14 +4,14 @@
 \alias{get_summary}
 \title{Access model summary data}
 \usage{
-get_summary(xpdb, problem = NULL, subprob = NULL, only_last = FALSE)
+get_summary(xpdb, .problem = NULL, .subprob = NULL, only_last = FALSE)
 }
 \arguments{
 \item{xpdb}{An \code{xpose_data} object from which the summary data will be extracted.}
 
-\item{problem}{The problem to be used, by default returns the last one for each label.}
+\item{.problem}{The .problem to be used, by default returns the last one for each label.}
 
-\item{subprob}{The subproblem to be used, by default returns the last one for each label.}
+\item{.subprob}{The subproblem to be used, by default returns the last one for each label.}
 
 \item{only_last}{Logical, if \code{TRUE} only the last record for each label is returned in case 
 of multiple problem and/or subproblem. If \code{FALSE} all values are returned.}

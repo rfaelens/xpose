@@ -4,17 +4,17 @@
 \alias{get_prm}
 \title{Access model parameters}
 \usage{
-get_prm(xpdb, problem = NULL, subprob = NULL, method = NULL, digits = 4,
-  show_all = FALSE, quiet)
+get_prm(xpdb, .problem = NULL, .subprob = NULL, .method = NULL,
+  digits = 4, show_all = FALSE, quiet)
 }
 \arguments{
 \item{xpdb}{An \code{xpose_data} object from which the model output file data will be extracted.}
 
-\item{problem}{The problem to be used, by default returns the last one for each file.}
+\item{.problem}{The problem to be used, by default returns the last one for each file.}
 
-\item{subprob}{The subproblem to be used, by default returns the last one for each file.}
+\item{.subprob}{The subproblem to be used, by default returns the last one for each file.}
 
-\item{method}{The estimation method to be used, by default returns the last one for each file}
+\item{.method}{The estimation method to be used, by default returns the last one for each file}
 
 \item{digits}{The number of significant digits to be displayed.}
 
@@ -30,9 +30,9 @@ Access model parameter estimates from an xpdb object.
 }
 \examples{
 # Display to the console
-get_prm(xpdb_ex_pk, problem = 1)
+get_prm(xpdb_ex_pk, .problem = 1)
 
 # Store the parameters in an object
-prm <- get_prm(xpdb_ex_pk, problem = 1)
+prm <- get_prm(xpdb_ex_pk, .problem = 1)
 
 }

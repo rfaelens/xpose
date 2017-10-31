@@ -4,12 +4,12 @@
 \alias{xp_var}
 \title{Access xpdb index information for a given variable or variable type}
 \usage{
-xp_var(xpdb, problem, col = NULL, type = NULL, silent = FALSE)
+xp_var(xpdb, .problem, col = NULL, type = NULL, silent = FALSE)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
 
-\item{problem}{The $problem number to be used.}
+\item{.problem}{The $problem number to be used.}
 
 \item{col}{The column name to be searched in the index. Alternative to arg `type`.}
 

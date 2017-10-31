@@ -4,12 +4,12 @@
 \alias{list_vars}
 \title{List available variables}
 \usage{
-list_vars(xpdb, problem = NULL)
+list_vars(xpdb, .problem = NULL)
 }
 \arguments{
 \item{xpdb}{An \code{xpose_data} object from which the model code will be extracted.}
 
-\item{problem}{The problem to be used, by lists all available problems.}
+\item{.problem}{The problem to be used, by lists all available problems.}
 }
 \description{
 Function listing all available variables in an xpdb object.

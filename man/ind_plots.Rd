@@ -8,7 +8,7 @@ the independent variable for every individual}
 ind_plots(xpdb, mapping = NULL, group = "variable", type = "lp",
   title = "Individual plots | @run",
   subtitle = "Ofv: @ofv, Eps shrink: @epsshk",
-  caption = "@dir | Page @page of @lastpage", log = NULL, facets, problem,
+  caption = "@dir | Page @page of @lastpage", log = NULL, facets, .problem,
   quiet, color = c("grey60", "deepskyblue4", "deepskyblue3"),
   point_alpha = c(0.8, 0, 0), line_linetype = c("blank", "solid", "55"),
   ...)
@@ -36,7 +36,7 @@ line 'l', smooth 's' and text 't' or any combination of the four.}
 \item{facets}{Either a character string to use \code{\link[ggforce]{facet_wrap_paginate}}
 or a formula to use \code{\link[ggforce]{facet_grid_paginate}}.}
 
-\item{problem}{The $problem number to be used. By default returns 
+\item{.problem}{The $problem number to be used. By default returns 
 the last estimation problem.}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}

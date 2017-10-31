@@ -4,12 +4,12 @@
 \alias{drop_fixed_cols}
 \title{Return names of columns having several unique values}
 \usage{
-drop_fixed_cols(xpdb, problem, cols, quiet)
+drop_fixed_cols(xpdb, .problem, cols, quiet)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
 
-\item{problem}{The $problem number to be used.}
+\item{.problem}{The $problem number to be used.}
 
 \item{cols}{A vector of column names to be checked.}
 

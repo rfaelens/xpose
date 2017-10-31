@@ -3,7 +3,7 @@
 #' @description Access model code from an xpdb object.
 #' 
 #' @param xpdb An \code{xpose_data} object from which the model code will be extracted.
-#' @param problem The problem to be used, in addition, problem 0 is attributed to 
+#' @param .problem The problem to be used, in addition, problem 0 is attributed to 
 #' general output (e.g. NM-TRAN warnings in NONMEM). By default returns the 
 #' entire code.
 #' @return A tibble of the parsed model.
@@ -13,16 +13,16 @@
 #' parsed_model
 #' 
 #' @export
-get_code <- function(xpdb, problem = NULL) {
+get_code <- function(xpdb, .problem = NULL) {
   check_xpdb(xpdb, check = 'code')
   x <- xpdb$code
   
-  if (!is.null(problem)) {
-    if (!all(problem %in% x$problem)) {
-      stop('$prob no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
+  if (!is.null(.problem)) {
+    if (!all(.problem %in% x$problem)) {
+      stop('$prob no.', stringr::str_c(.problem[!.problem %in% x$problem], collapse = ', '), 
            ' not found in model code.', call. = FALSE)
     }
-    x <- x[x$problem %in% problem, ]
+    x <- x[x$problem %in% .problem, ]
   }
   x
 }
@@ -34,8 +34,8 @@ get_code <- function(xpdb, problem = NULL) {
 #' 
 #' @param xpdb An \code{xpose_data} object from which the model output file data will be extracted.
 #' @param table Name of the output table to be extracted from the xpdb e.g. 'sdtab001'. Alternative to 
-#' the `problem` argument.
-#' @param problem Accesses all tables from the specified problem. Alternative to the `table` argument.
+#' the `.problem` argument.
+#' @param .problem Accesses all tables from the specified problem. Alternative to the `table` argument.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' 
 #' @return By default returns data from the last estimation problem. If only simulation problems are present 
@@ -49,7 +49,7 @@ get_code <- function(xpdb, problem = NULL) {
 #' sdtab
 #' 
 #' # By problem
-#' tables <- get_data(xpdb_ex_pk, problem = 1)
+#' tables <- get_data(xpdb_ex_pk, .problem = 1)
 #' tables
 #' 
 #' # Tip to list available tables in the xpdb
@@ -57,35 +57,35 @@ get_code <- function(xpdb, problem = NULL) {
 #' 
 #' @export
 get_data <- function(xpdb, 
-                     table   = NULL, 
-                     problem = NULL,
+                     table    = NULL, 
+                     .problem = NULL,
                      quiet) {
   check_xpdb(xpdb, check = 'data')
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
-  if (is.null(table) && is.null(problem)) {
-    problem <- default_plot_problem(xpdb)
-    msg(c('Returning data from $prob no.', problem), quiet)
+  if (is.null(table) && is.null(.problem)) {
+    .problem <- default_plot_problem(xpdb)
+    msg(c('Returning data from $prob no.', .problem), quiet)
   }
   
-  if (!is.null(table) && !is.null(problem)) {
-    stop('Arguments `table` and `problem` cannot be used together.', call. = FALSE) 
+  if (!is.null(table) && !is.null(.problem)) {
+    stop('Arguments `table` and `.problem` cannot be used together.', call. = FALSE) 
   }
   
-  if (!is.null(problem) && is.na(problem)) return() # For internal use
+  if (!is.null(.problem) && is.na(.problem)) return() # For internal use
   
   x <- xpdb$data
   
-  if (!is.null(problem)) {
+  if (!is.null(.problem)) {
     # When selecting tables based on problem level
-    if (!all(problem %in% x$problem)) {
-      stop('$prob no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
+    if (!all(.problem %in% x$problem)) {
+      stop('$prob no.', stringr::str_c(.problem[!.problem %in% x$problem], collapse = ', '), 
            ' not found in model output data.', call. = FALSE)
     }
-    x <- x$data[x$problem %in% problem]
+    x <- x$data[x$problem %in% .problem]
     
-    if (length(problem) > 1) {
-      purrr::set_names(x, stringr::str_c('problem_', sort(problem), sep = ''))
+    if (length(.problem) > 1) {
+      purrr::set_names(x, stringr::str_c('problem_', sort(.problem), sep = ''))
     } else {
       x[[1]]
     }
@@ -125,9 +125,9 @@ get_data <- function(xpdb,
 #' @param xpdb An \code{xpose_data} object from which the model output file data will be extracted.
 #' @param file Full name of the file to be extracted from the xpdb e.g. 'run001.phi'. Alternative to the 'ext' argument.
 #' @param ext Extension of the file to be extracted from the xpdb e.g. 'phi'. Alternative to the 'file' argument.
-#' @param problem The problem to be used, by default returns the last one for each file.
-#' @param subprob The subproblem to be used, by default returns the last one for each file.
-#' @param method The estimation method to be used (e.g. 'foce', 'imp', 'saem'), by default returns the 
+#' @param .problem The problem to be used, by default returns the last one for each file.
+#' @param .subprob The subproblem to be used, by default returns the last one for each file.
+#' @param .method The estimation method to be used (e.g. 'foce', 'imp', 'saem'), by default returns the 
 #' last one for each file.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' 
@@ -147,11 +147,11 @@ get_data <- function(xpdb,
 #' 
 #' @export
 get_file <- function(xpdb, 
-                     file      = NULL, 
-                     ext       = NULL, 
-                     problem   = NULL, 
-                     subprob   = NULL, 
-                     method    = NULL, 
+                     file     = NULL, 
+                     ext      = NULL, 
+                     .problem = NULL, 
+                     .subprob = NULL, 
+                     .method  = NULL, 
                      quiet) {
   check_xpdb(xpdb, check = 'files')
   if (missing(quiet)) quiet <- xpdb$options$quiet
@@ -180,31 +180,31 @@ get_file <- function(xpdb,
   x <- xpdb$files[xpdb$files$name %in% file, ]
   
   # Filter by $problem
-  if (is.null(problem)) {
-    problem <- last_file_problem(xpdb, ext = x$extension)
-  } else if (!all(problem %in% x$problem)) {
-    stop('$prob no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
+  if (is.null(.problem)) {
+    .problem <- last_file_problem(xpdb, ext = x$extension)
+  } else if (!all(.problem %in% x$problem)) {
+    stop('$prob no.', stringr::str_c(.problem[!.problem %in% x$problem], collapse = ', '), 
          ' not found in ', stringr::str_c(unique(x$name), collapse = ', '), ' files.', call. = FALSE)
   }
-  x <- x[x$problem %in% problem, ]
+  x <- x[x$problem %in% .problem, ]
   
   # Filter by sub-problem
-  if (is.null(subprob)) {
-    subprob <- last_file_subprob(xpdb, ext = x$extension, problem = problem)
-  } else if (!all(subprob %in% x$subprob)) {
-    stop('Subprob no.', stringr::str_c(subprob[!subprob %in% x$subprob], collapse = ', '), 
+  if (is.null(.subprob)) {
+    .subprob <- last_file_subprob(xpdb, ext = x$extension, .problem = .problem)
+  } else if (!all(.subprob %in% x$subprob)) {
+    stop('Subprob no.', stringr::str_c(.subprob[!.subprob %in% x$subprob], collapse = ', '), 
          ' not found in ', stringr::str_c(unique(x$name), collapse = ', '), ' files.', call. = FALSE)
   }
-  x <- x[x$subprob %in% subprob, ]
+  x <- x[x$subprob %in% .subprob, ]
   
   # Filter by method
-  if (is.null(method)) {
-    method <- last_file_method(xpdb, ext = x$extension, problem = problem, subprob = subprob)
-  } else if (!all(method %in% x$method)) {
-    stop('Method ', stringr::str_c(method[!method %in% x$method], collapse = ', '), 
+  if (is.null(.method)) {
+    .method <- last_file_method(xpdb, ext = x$extension, .problem = .problem, .subprob = .subprob)
+  } else if (!all(.method %in% x$method)) {
+    stop('Method ', stringr::str_c(.method[!.method %in% x$method], collapse = ', '), 
          ' not found in ', stringr::str_c(unique(x$name), collapse = ', ') , ' files.', call. = FALSE)
   }
-  x <- x[x$method %in% method, ]
+  x <- x[x$method %in% .method, ]
   
   # Prepare output
   if (nrow(x) > 1) {
@@ -227,8 +227,8 @@ get_file <- function(xpdb,
 #' @description Access model summary data from an xpdb object.
 #' 
 #' @param xpdb An \code{xpose_data} object from which the summary data will be extracted.
-#' @param problem The problem to be used, by default returns the last one for each label.
-#' @param subprob The subproblem to be used, by default returns the last one for each label.
+#' @param .problem The .problem to be used, by default returns the last one for each label.
+#' @param .subprob The subproblem to be used, by default returns the last one for each label.
 #' @param only_last Logical, if \code{TRUE} only the last record for each label is returned in case 
 #' of multiple problem and/or subproblem. If \code{FALSE} all values are returned.
 #' 
@@ -239,26 +239,29 @@ get_file <- function(xpdb,
 #' run_summary
 #' 
 #' @export
-get_summary <- function(xpdb, problem = NULL, subprob = NULL, only_last = FALSE) {
+get_summary <- function(xpdb, 
+                        .problem  = NULL, 
+                        .subprob  = NULL, 
+                        only_last = FALSE) {
   check_xpdb(xpdb, check = 'summary')
   x <- xpdb$summary
   
   # Filter by $problem
-  if (!is.null(problem)) {
-    if (!all(problem %in% x$problem)) {
-      stop('$prob no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
+  if (!is.null(.problem)) {
+    if (!all(.problem %in% x$problem)) {
+      stop('$prob no.', stringr::str_c(.problem[!.problem %in% x$problem], collapse = ', '), 
            ' not found in model summary.', call. = FALSE)
     }
-    x <- x[x$problem %in% problem, ]
+    x <- x[x$problem %in% .problem, ]
   }
   
   # Filter by sub-problem
-  if (!is.null(subprob)) {
-    if (!all(subprob %in% x$subprob)) {
-      stop('Subprob no.', stringr::str_c(subprob[!subprob %in% x$subprob], collapse = ', '), 
+  if (!is.null(.subprob)) {
+    if (!all(.subprob %in% x$subprob)) {
+      stop('Subprob no.', stringr::str_c(.subprob[!.subprob %in% x$subprob], collapse = ', '), 
            ' not found in model summary.', call. = FALSE)
     }
-    x <- x[x$subprob %in% subprob, ]
+    x <- x[x$subprob %in% .subprob, ]
   }
   
   # Remove duplicates
@@ -273,9 +276,9 @@ get_summary <- function(xpdb, problem = NULL, subprob = NULL, only_last = FALSE)
 #' @description Access model parameter estimates from an xpdb object.
 #' 
 #' @param xpdb An \code{xpose_data} object from which the model output file data will be extracted.
-#' @param problem The problem to be used, by default returns the last one for each file.
-#' @param subprob The subproblem to be used, by default returns the last one for each file.
-#' @param method The estimation method to be used, by default returns the last one for each file
+#' @param .problem The problem to be used, by default returns the last one for each file.
+#' @param .subprob The subproblem to be used, by default returns the last one for each file.
+#' @param .method The estimation method to be used, by default returns the last one for each file
 #' @param digits The number of significant digits to be displayed.
 #' @param show_all Logical, whether the 0 fixed off-diagonal elements should be removed from the output.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
@@ -283,18 +286,18 @@ get_summary <- function(xpdb, problem = NULL, subprob = NULL, only_last = FALSE)
 #' @return A tibble for single problem/subprob or a named list for multiple problem|subprob.
 #' @examples
 #' # Display to the console
-#' get_prm(xpdb_ex_pk, problem = 1)
+#' get_prm(xpdb_ex_pk, .problem = 1)
 #' 
 #' # Store the parameters in an object
-#' prm <- get_prm(xpdb_ex_pk, problem = 1)
+#' prm <- get_prm(xpdb_ex_pk, .problem = 1)
 #' 
 #' @export
 get_prm <- function(xpdb, 
-                    problem  = NULL, 
-                    subprob  = NULL, 
-                    method   = NULL,
-                    digits   = 4,
-                    show_all = FALSE,
+                    .problem  = NULL, 
+                    .subprob  = NULL, 
+                    .method   = NULL,
+                    digits    = 4,
+                    show_all  = FALSE,
                     quiet) {
   
   check_xpdb(xpdb, check = 'files')
@@ -305,19 +308,23 @@ get_prm <- function(xpdb,
     stop('File extension `ext` not found in model output files.' , call. = FALSE) 
   }
   
-  if (is.null(problem)) problem <- last_file_problem(xpdb, ext = 'ext')
-  if (is.null(subprob)) subprob <- last_file_subprob(xpdb, ext = 'ext', problem = problem)
-  if (is.null(method))  method  <- last_file_method(xpdb, ext = 'ext', problem = problem, subprob = subprob)
+  if (is.null(.problem)) .problem <- last_file_problem(xpdb, ext = 'ext')
+  if (is.null(.subprob)) .subprob <- last_file_subprob(xpdb, ext = 'ext', .problem = .problem)
+  if (is.null(.method))  .method  <- last_file_method(xpdb, ext = 'ext', .problem = .problem, .subprob = .subprob)
   
-  prm_df <- prm_df[prm_df$extension == 'ext' & prm_df$problem %in% problem &
-                     prm_df$subprob %in% subprob & prm_df$method %in% method, ]
+  prm_df <- prm_df[prm_df$extension == 'ext' & prm_df$problem %in% .problem &
+                     prm_df$subprob %in% .subprob & prm_df$method %in% .method, ]
   
   if (nrow(prm_df) == 0) {
     stop('No parameter estimates found for $prob no.', 
-         stringr::str_c(problem, collapse = '/'), ', subprob no. ',
-         stringr::str_c(subprob, collapse = '/'), ', method ',
-         stringr::str_c(method, collapse = '/'), '.', call. = FALSE) 
+         stringr::str_c(.problem, collapse = '/'), ', subprob no. ',
+         stringr::str_c(.subprob, collapse = '/'), ', method ',
+         stringr::str_c(.method, collapse = '/'), '.', call. = FALSE) 
   }
+  
+  msg(c('Returning parameter estimates from $prob no.', stringr::str_c(unique(prm_df$problem), collapse = ', '), 
+        ', subprob no.', stringr::str_c(unique(prm_df$subprob), collapse = ', '), 
+        ', method ', stringr::str_c(unique(prm_df$method), collapse = ', ')), quiet)
   
   prm_df <- prm_df %>% 
     dplyr::mutate(prm_names = purrr::map(.x = as.list(.$problem), .f = function(x, code) {
@@ -456,7 +463,7 @@ get_prm <- function(xpdb,
 #' @description Access special model data from an xpdb object.
 #' 
 #' @param xpdb An \code{xpose_data} object from which the special data will be extracted.
-#' @param problem The problem to be used, by default returns the last one.
+#' @param .problem The problem to be used, by default returns the last one.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' 
 #' @return A list.
@@ -466,19 +473,19 @@ get_prm <- function(xpdb,
 #' special
 #' 
 #' @export
-get_special <- function(xpdb, problem = NULL, quiet) {
+get_special <- function(xpdb, .problem = NULL, quiet) {
   check_xpdb(xpdb, check = 'special')
   if (missing(quiet)) quiet <- xpdb$options$quiet
   x <- xpdb$special
-  if (is.null(problem)) problem <- max(x$problem)
+  if (is.null(.problem)) .problem <- max(x$problem)
   
-  if (!all(problem %in% x$problem)) {
-    stop('$prob no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
+  if (!all(.problem %in% x$problem)) {
+    stop('$prob no.', stringr::str_c(.problem[!.problem %in% x$problem], collapse = ', '), 
          ' not found in special data.', call. = FALSE)
   }
-  x <- x[x$problem %in% problem, ]
+  x <- x[x$problem %in% .problem, ]
   
-  if (length(problem) > 1) {
+  if (length(.problem) > 1) {
     purrr::set_names(x$data, stringr::str_c('problem_', x$problem, '_', x$method, '_', x$type))
   } else {
     msg(c('Returning ', x$method, ' ' , x$type, ' data from $prob no.', x$problem), quiet)

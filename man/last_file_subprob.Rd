@@ -4,18 +4,18 @@
 \alias{last_file_subprob}
 \title{Get last file subproblem}
 \usage{
-last_file_subprob(xpdb, ext, problem)
+last_file_subprob(xpdb, ext, .problem)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
 
 \item{ext}{The file extension to be used.}
 
-\item{problem}{The $problem number to be used.}
+\item{.problem}{The $problem number to be used.}
 }
 \value{
 The number of the last file subproblem as an integer 
-for the given `problem` and file `ext`.
+for the given `.problem` and file `ext`.
 }
 \description{
 Get last file subproblem

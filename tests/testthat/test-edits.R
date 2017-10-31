@@ -6,13 +6,13 @@ ctrl_tab_1 <- xpdb_ex_pk %>%
   distinct.xpose_data(DV, .problem = 1) %>% 
   select.xpose_data(ID:TAD, DV, EVID, .problem = 1) %>% 
   rename.xpose_data(TSLD = TAD, .problem = 1) %>% 
-  get_data(problem = 1)
+  get_data(.problem = 1)
 
 ctrl_tab_2 <- xpdb_ex_pk %>% 
   group_by(ID, SEX, .problem = 1) %>% 
   summarize(CMAX = max(DV), .problem = 1) %>% 
   ungroup(.problem = 1) %>% 
-  get_data(problem = 1)
+  get_data(.problem = 1)
 
 test_xpdb_1 <- vpc_data(xpdb_ex_pk, opt = vpc_opt(n_bins = 2), quiet = TRUE)
 ctrl_xpdb_1 <- test_xpdb_1
@@ -32,8 +32,8 @@ test_that('xpdb_edits checks error properly', {
 })
 
 test_that('xpdb_edits works properly', {
-  expect_equal(filter.xpose_data(.data = xpdb_ex_pk, ID == 110, TIME > 10, .problem = 1) %>% get_data(problem = 1), 
-               xpdb_ex_pk %>% get_data(problem = 1) %>% filter(.$ID == 110, .$TIME > 10))
+  expect_equal(filter.xpose_data(.data = xpdb_ex_pk, ID == 110, TIME > 10, .problem = 1) %>% get_data(.problem = 1), 
+               xpdb_ex_pk %>% get_data(.problem = 1) %>% filter(.$ID == 110, .$TIME > 10))
   expect_equal(filter.xpose_data(.data = xpdb_ex_pk, ID == 110, .problem = 1, .source = 'phi') %>% 
                  slice.xpose_data(1:3, .source = 'phi') %>% 
                  mutate.xpose_data(TEST = 'Ok', .source = 'phi') %>% 
@@ -41,13 +41,13 @@ test_that('xpdb_edits works properly', {
                xpdb_ex_pk %>% get_file(ext = 'phi', quiet = TRUE) %>% filter(.$ID == 110) 
                %>% slice(1:3) %>% mutate(TEST = 'Ok'))
   expect_equal(ctrl_tab_1, xpdb_ex_pk %>% 
-                 get_data(problem = 1) %>% 
+                 get_data(.problem = 1) %>% 
                  mutate(DV = log(DV)) %>% 
                  distinct(DV, .keep_all = TRUE) %>% 
                  select(ID:TAD, DV, EVID) %>% 
                  rename(TSLD = TAD))
   expect_equal(ctrl_tab_2, xpdb_ex_pk %>% 
-                 get_data(problem = 1) %>% 
+                 get_data(.problem = 1) %>% 
                  group_by(ID, SEX) %>% 
                  summarize(CMAX = max(DV)) %>% 
                  ungroup())
@@ -76,8 +76,8 @@ test_that('irep works properly', {
 
 test_that('n() works', {
   xpdb_sum <- xpdb_ex_pk %>% group_by(ID, .problem = 1) %>% summarise(n(), .problem = 1)
-  expect_equal(xpdb_sum %>% get_data(problem = 1), 
-               xpdb_ex_pk %>% get_data(problem = 1) %>% group_by(ID) %>% summarise(n()))
+  expect_equal(xpdb_sum %>% get_data(.problem = 1), 
+               xpdb_ex_pk %>% get_data(.problem = 1) %>% group_by(ID) %>% summarise(n()))
   expect_equal(xpdb_ex_pk %>% mutate(N = 1:n(), .source = 'ext') %>% get_file(ext = 'ext', quiet = TRUE),
                xpdb_ex_pk %>% get_file(ext = 'ext', quiet = TRUE) %>% mutate(N = 1:n()))
 })

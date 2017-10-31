@@ -6,7 +6,7 @@
 \usage{
 amt_vs_idv(xpdb, mapping = NULL, group = "ID", drop_fixed = TRUE,
   type = "l", title = "Compartments amount vs. @x | @run",
-  subtitle = "Ofv: @ofv", caption = "@dir", log = NULL, facets, problem,
+  subtitle = "Ofv: @ofv", caption = "@dir", log = NULL, facets, .problem,
   quiet, ...)
 }
 \arguments{
@@ -35,7 +35,7 @@ line 'l', smooth 's' and text 't' or any combination of the four.}
 \item{facets}{Either a character string to use \code{\link[ggforce]{facet_wrap_paginate}}
 or a formula to use \code{\link[ggforce]{facet_grid_paginate}}.}
 
-\item{problem}{The $problem number to be used. By default returns 
+\item{.problem}{The $problem number to be used. By default returns 
 the last estimation problem.}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}

@@ -4,12 +4,12 @@
 \alias{summary.xpose_data}
 \title{Summarizing xpose_data}
 \usage{
-\method{summary}{xpose_data}(object, problem = NULL, ...)
+\method{summary}{xpose_data}(object, .problem = NULL, ...)
 }
 \arguments{
 \item{object}{An \code{xpose_data} object generated with \code{\link{xpose_data}}.}
 
-\item{problem}{The problem to be used, by default returns the last one for each label.}
+\item{.problem}{The problem to be used, by default returns the last one for each label.}
 
 \item{...}{Ignored in this function}
 }

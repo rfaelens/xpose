@@ -17,7 +17,7 @@
 #' @param guide Enable guide display (e.g. unity line).
 #' @param facets Either a character string to use \code{\link[ggforce]{facet_wrap_paginate}}
 #' or a formula to use \code{\link[ggforce]{facet_grid_paginate}}.
-#' @param problem The $problem number to be used. By default returns 
+#' @param .problem The $problem number to be used. By default returns 
 #' the last estimation problem.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' @param ... Any additional aesthetics to be passed on \code{xplot_scatter}.
@@ -43,19 +43,19 @@ dv_vs_ipred <- function(xpdb,
                         log      = NULL,
                         guide    = TRUE,
                         facets,
-                        problem,
+                        .problem,
                         quiet,
                         ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- default_plot_problem(xpdb)
+  if (missing(.problem)) .problem <- default_plot_problem(xpdb)
   if (missing(quiet))   quiet <- xpdb$options$quiet
   if (missing(facets))  facets <- xpdb$xp_theme$facets
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
-                opt = data_opt(problem = problem, filter = only_obs(xpdb, problem, quiet)),
-                mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'ipred')$col, 
-                                           y = xp_var(xpdb, problem, type = 'dv')$col), mapping),
+                opt = data_opt(.problem = .problem, filter = only_obs(xpdb, .problem, quiet)),
+                mapping = aes_c(aes_string(x = xp_var(xpdb, .problem, type = 'ipred')$col, 
+                                           y = xp_var(xpdb, .problem, type = 'dv')$col), mapping),
                 type = type, guide = guide, facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
@@ -76,19 +76,19 @@ dv_vs_pred <- function(xpdb,
                        log      = NULL,
                        guide    = TRUE,
                        facets,
-                       problem,
+                       .problem,
                        quiet,
                        ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- default_plot_problem(xpdb)
+  if (missing(.problem)) .problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (missing(facets))  facets <- xpdb$xp_theme$facets
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
-                opt = data_opt(problem = problem, filter = only_obs(xpdb, problem, quiet)),
-                mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'pred')$col, 
-                                           y = xp_var(xpdb, problem, type = 'dv')$col), mapping),
+                opt = data_opt(.problem = .problem, filter = only_obs(xpdb, .problem, quiet)),
+                mapping = aes_c(aes_string(x = xp_var(xpdb, .problem, type = 'pred')$col, 
+                                           y = xp_var(xpdb, .problem, type = 'dv')$col), mapping),
                 type = type, guide = guide, facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
