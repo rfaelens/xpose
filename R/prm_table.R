@@ -1,18 +1,10 @@
-#' Display a parameter table to the console
+#' Display a parameter estimates to the console
 #' 
 #' @description Display parameter estimates from an xpdb object to the console.
 #' 
-#' @param xpdb An \code{xpose_data} object from which the model output file data will be extracted.
-#' @param .problem The problem to be used, by default returns the last one for each file.
-#' @param .subprob The subproblem to be used, by default returns the last one for each file.
-#' @param .method The estimation method to be used, by default returns the last one for each file
-#' @param digits The number of significant digits to be displayed.
-#' @param show_all Logical, whether the 0 fixed off-diagonal elements should be removed from the output.
-#' @param quiet Logical, if \code{FALSE} messages are printed to the console.
-#' 
-#' @return A tibble for single problem/subprob or a named list for multiple problem|subprob.
+#' @inheritParams get_prm
 #' @examples
-#' # Display to the console
+#' # Display parameters to the console
 #' prm_table(xpdb_ex_pk, .problem = 1)
 #' 
 #' @export

@@ -19,8 +19,6 @@ prm_table(xpdb, .problem = NULL, .subprob = NULL, .method = NULL,
 \item{digits}{The number of significant digits to be displayed.}
 
 \item{show_all}{Logical, whether the 0 fixed off-diagonal elements should be removed from the output.}
-
-\item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 }
 \value{
 A tibble for single problem/subprob or a named list for multiple problem|subprob.
