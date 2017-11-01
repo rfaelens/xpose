@@ -333,7 +333,7 @@ get_prm <- function(xpdb,
       code <- code[code$problem == x,]
       list(theta = code$comment[code$subroutine == 'the'],
            omega = code[code$subroutine == 'ome', ] %>%
-             dplyr::filter(!(stringr::str_detect(.$code, 'BLOCK\\(\\d+') & .$comment == '')) %>% 
+             dplyr::filter(!(stringr::str_detect(.$code, 'BLOCK\\(\\d+\\)(?!.*SAME)') & .$comment == '')) %>% 
              {purrr::flatten_chr(.[, 'comment'])},
            sigma = code$comment[code$subroutine == 'sig'])
       
