@@ -137,7 +137,7 @@
     
 
     <pre class="usage"><span class='fu'>prm_table</span>(<span class='no'>xpdb</span>, <span class='kw'>.problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>.subprob</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>.method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>show_all</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>transform</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show_all</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -161,6 +161,12 @@
     <tr>
       <th>digits</th>
       <td><p>The number of significant digits to be displayed.</p></td>
+    </tr>
+    <tr>
+      <th>transform</th>
+      <td><p>Should diagonal OMEGA and SIGMA elements be transformed to coeficient of variation, 
+off diagonal elements be transformed to coorelations and the standard error represented as relative 
+standard error (RSE).</p></td>
     </tr>
     <tr>
       <th>show_all</th>

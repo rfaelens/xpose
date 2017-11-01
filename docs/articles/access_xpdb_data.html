@@ -110,7 +110,7 @@
       <h1>Access the xpdb data</h1>
                         <h4 class="author">Benjamin Guiastrennec</h4>
             
-            <h4 class="date">01 November, 2017</h4>
+            <h4 class="date">02 November, 2017</h4>
           </div>
 
     
@@ -206,20 +206,20 @@ file</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Raw output for editing</span>
 prm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_prm.html">get_prm</a></span>(xpdb, <span class="dt">digits =</span> <span class="dv">4</span>)
 prm</code></pre></div>
-<pre><code># A tibble: 11 x 9
-    type       name      label     value     rse fixed diagonal     m     n
- * &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;lgl&gt;    &lt;lgl&gt; &lt;chr&gt; &lt;chr&gt;
- 1   the     THETA1       TVCL 26.290000 0.03391 FALSE       NA     1  &lt;NA&gt;
- 2   the     THETA2        TVV  1.348000 0.03250 FALSE       NA     2  &lt;NA&gt;
- 3   the     THETA3       TVKA  4.204000 0.19250 FALSE       NA     3  &lt;NA&gt;
- 4   the     THETA4        LAG  0.208000 0.07554 FALSE       NA     4  &lt;NA&gt;
- 5   the     THETA5  Prop. Err  0.204600 0.10970 FALSE       NA     5  &lt;NA&gt;
- 6   the     THETA6   Add. Err  0.010550 0.34660 FALSE       NA     6  &lt;NA&gt;
- 7   the     THETA7 CRCL on CL  0.007172 0.23660 FALSE       NA     7  &lt;NA&gt;
- 8   ome OMEGA(1,1)     IIV CL  0.270100 0.08616 FALSE     TRUE     1     1
- 9   ome OMEGA(2,2)      IIV V  0.195000 0.16430 FALSE     TRUE     2     2
-10   ome OMEGA(3,3)     IIV KA  1.381000 0.14640 FALSE     TRUE     3     3
-11   sig SIGMA(1,1)             1.000000      NA  TRUE     TRUE     1     1</code></pre>
+<pre><code># A tibble: 11 x 10
+    type       name      label     value       se     rse fixed diagonal     m     n
+ * &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;     &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;lgl&gt;    &lt;lgl&gt; &lt;chr&gt; &lt;chr&gt;
+ 1   the     THETA1       TVCL 26.290000 0.891500 0.03391 FALSE       NA     1  &lt;NA&gt;
+ 2   the     THETA2        TVV  1.348000 0.043810 0.03250 FALSE       NA     2  &lt;NA&gt;
+ 3   the     THETA3       TVKA  4.204000 0.809100 0.19250 FALSE       NA     3  &lt;NA&gt;
+ 4   the     THETA4        LAG  0.208000 0.015710 0.07554 FALSE       NA     4  &lt;NA&gt;
+ 5   the     THETA5  Prop. Err  0.204600 0.022440 0.10970 FALSE       NA     5  &lt;NA&gt;
+ 6   the     THETA6   Add. Err  0.010550 0.003658 0.34660 FALSE       NA     6  &lt;NA&gt;
+ 7   the     THETA7 CRCL on CL  0.007172 0.001697 0.23660 FALSE       NA     7  &lt;NA&gt;
+ 8   ome OMEGA(1,1)     IIV CL  0.270100 0.012570 0.08616 FALSE     TRUE     1     1
+ 9   ome OMEGA(2,2)      IIV V  0.195000 0.012500 0.16430 FALSE     TRUE     2     2
+10   ome OMEGA(3,3)     IIV KA  1.381000 0.558200 0.14640 FALSE     TRUE     3     3
+11   sig SIGMA(1,1)             1.000000       NA      NA  TRUE     TRUE     1     1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Nicely formated table</span>
 <span class="kw"><a href="../reference/prm_table.html">prm_table</a></span>(xpdb, <span class="dt">digits =</span> <span class="dv">4</span>)</code></pre></div>
 <pre><code>
