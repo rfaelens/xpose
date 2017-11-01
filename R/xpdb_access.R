@@ -280,6 +280,9 @@ get_summary <- function(xpdb,
 #' @param .subprob The subproblem to be used, by default returns the last one for each file.
 #' @param .method The estimation method to be used, by default returns the last one for each file
 #' @param digits The number of significant digits to be displayed.
+#' @param transform Should diagonal OMEGA and SIGMA elements be transformed to coeficient of variation, 
+#' off diagonal elements be transformed to coorelations and the standard error represented as relative 
+#' standard error (RSE). 
 #' @param show_all Logical, whether the 0 fixed off-diagonal elements should be removed from the output.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' 
@@ -297,6 +300,7 @@ get_prm <- function(xpdb,
                     .subprob  = NULL, 
                     .method   = NULL,
                     digits    = 4,
+                    transform = TRUE,
                     show_all  = FALSE,
                     quiet) {
   
@@ -347,7 +351,7 @@ get_prm <- function(xpdb,
       prm_tmp <- data$data[[1]] %>% 
         dplyr::filter(.$ITERATION %in% c(-1000000000, -1000000001, -1000000006)) %>% 
         dplyr::mutate(name = dplyr::case_when(.$ITERATION == -1000000000 ~ 'value', 
-                                              .$ITERATION == -1000000001 ~ 'rse',
+                                              .$ITERATION == -1000000001 ~ 'se',
                                               TRUE ~ 'fixed')) %>% 
         dplyr::select(colnames(.)[!stringr::str_detect(colnames(.), 'ITERATION|OBJ')]) %>% 
         {as.data.frame(t(.), stringsAsFactors = FALSE)} %>% 
@@ -357,13 +361,12 @@ get_prm <- function(xpdb,
         dplyr::mutate(value = as.numeric(.$value),
                       fixed = as.logical(as.numeric(.$fixed)))
       
-      # Check RSE column
-      if (any(colnames(prm_tmp) == 'rse')) {
-        has_rse  <- TRUE
-        prm_tmp  <- dplyr::mutate(.data = prm_tmp, rse = as.numeric(prm_tmp$rse))
+      # Check SE column
+      if (any(colnames(prm_tmp) == 'se')) {
+        prm_tmp$se <- ifelse(prm_tmp$fixed, NA_real_, as.numeric(prm_tmp$se))
+        has_se <- TRUE
       } else {
-        has_rse     <- FALSE
-        prm_tmp$rse <- NA
+        has_se <- FALSE
       }
       
       # Add flag for diagonal elements identification
@@ -376,15 +379,18 @@ get_prm <- function(xpdb,
                         fill = 'right') %>% 
         dplyr::mutate(diagonal = dplyr::if_else(.$m == .$n, TRUE, FALSE))
       
-      # Convert RSE to CV%
-      if (has_rse) {
+      # Create RSE column as CV%
+      if (has_se & transform) {
         prm_tmp <- prm_tmp %>% 
           dplyr::mutate(rse = dplyr::case_when(.$fixed ~ NA_real_,
-                                               .$type == 'the' ~ abs(.$rse / .$value),
-                                               TRUE ~ abs(.$rse / .$value) / 2)) # Approximate standard deviation scale
+                                               .$type == 'the' ~ abs(.$se / .$value),
+                                               TRUE ~ abs(.$se / .$value) / 2)) # Approximate standard deviation scale
+      } else {
+        prm_tmp$rse <- NA
       }
       
       # Convert Off diagonal to correlations
+      if (transform) {
       ref_n <- prm_tmp %>% 
         dplyr::filter(!is.na(.$diagonal) & .$diagonal == TRUE & !.$fixed) %>% 
         dplyr::select_(.dots = list('n', 'type', 'value_n' = 'value'))
@@ -395,20 +401,25 @@ get_prm <- function(xpdb,
         dplyr::left_join(ref_m, by = c('m', 'type')) %>% 
         dplyr::mutate(value = ifelse(!is.na(.$value_n) & !is.na(.$value_m) & !.$diagonal & !.$fixed, 
                                      .$value/(sqrt(.$value_n)*sqrt(.$value_m)), .$value))
+      }
       
-      # Change variances to CV%, round values and reorder row/cols
+      # Change variances to CV%
+      if (transform) {
       prm_tmp$value[prm_tmp$type %in% c('ome', 'sig') & prm_tmp$diagonal] <- 
         sqrt(prm_tmp$value[prm_tmp$type %in% c('ome', 'sig') & prm_tmp$diagonal])
+      }
       
+      # Round values and reorder row/cols
       prm_tmp <- prm_tmp %>%
         dplyr::mutate(label = '',
                       value = signif(.$value, digits = digits),
+                      se    = signif(.$se, digits = digits),
                       rse   = signif(.$rse, digits = digits),
                       order = dplyr::case_when(.$type == 'the' ~ 1,
                                                .$type == 'ome' ~ 2,
                                                TRUE ~ 3)) %>% 
         dplyr::arrange_(.dots = 'order') %>% 
-        dplyr::select(dplyr::one_of('type', 'name', 'label', 'value', 'rse', 'fixed', 'diagonal', 'm', 'n'))
+        dplyr::select(dplyr::one_of('type', 'name', 'label', 'value', 'se', 'rse', 'fixed', 'diagonal', 'm', 'n'))
       
       # Assign THETA labels
       n_theta     <- sum(prm_tmp$type == 'the')

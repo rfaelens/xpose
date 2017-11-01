@@ -9,26 +9,35 @@
 #' 
 #' @export
 prm_table <- function(xpdb,
-                      .problem = NULL, 
-                      .subprob = NULL, 
-                      .method  = NULL,
-                      digits   = 4,
-                      show_all = FALSE) {
+                      .problem  = NULL, 
+                      .subprob  = NULL, 
+                      .method   = NULL,
+                      digits    = 4,
+                      transform = TRUE,
+                      show_all  = FALSE) {
   
   x <- get_prm(xpdb = xpdb, .problem = .problem, .subprob = .subprob, 
-               .method = .method, digits = digits, show_all = show_all, quiet = TRUE)
+               .method = .method, digits = digits, transform = transform, 
+               show_all = show_all, quiet = TRUE)
   
-  cat('\nThe relative standard errors for omega and sigma are reported on the approximate
+  if (transform) {
+    cat('\nThe relative standard errors for omega and sigma are reported on the approximate
 standard deviation scale (SE/variance estimate)/2.\n')
+  } else {
+    cat('\nReporting untransformed parameters.\n')
+  }
   
   # Convert single prm_df to list
   if (dplyr::is.tbl(x)) x <- list(x)
   
   # Generate output to console
-  purrr::map(.x = x, function(prm) {
-    prm_attr <- attributes(prm)
+  purrr::map(.x = x, function(prm, transform) {
+    prm_attr        <- attributes(prm)
+    uncertainty_lab <- ifelse(transform, 'RSE', 'SE')
+    if (!transform) prm$rse <- prm$se
+    
     header <- dplyr::data_frame(name = 'Parameter', label = 'Label', 
-                                value = 'Value', rse = 'RSE', fixed = '   ')
+                                value = 'Value', rse = uncertainty_lab, fixed = '   ')
     
     cat('\nEstimates for $prob no.', prm_attr$problem, 
         ', subprob no.', prm_attr$subprob, ', method ', prm_attr$method, '\n', sep = '')
@@ -44,6 +53,7 @@ standard deviation scale (SE/variance estimate)/2.\n')
       dplyr::mutate(string = stringr::str_c('', .$name, .$label, .$value, .$fixed, .$rse, sep = ' ')) %>% 
       {purrr::flatten_chr(.[,'string'])} %>% 
       cat(sep = '\n')
-  }) %>% 
+  },
+  transform = transform) %>% 
     invisible()
 }

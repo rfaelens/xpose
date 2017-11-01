@@ -5,7 +5,7 @@
 \title{Display a parameter estimates to the console}
 \usage{
 prm_table(xpdb, .problem = NULL, .subprob = NULL, .method = NULL,
-  digits = 4, show_all = FALSE)
+  digits = 4, transform = TRUE, show_all = FALSE)
 }
 \arguments{
 \item{xpdb}{An \code{xpose_data} object from which the model output file data will be extracted.}
@@ -17,6 +17,10 @@ prm_table(xpdb, .problem = NULL, .subprob = NULL, .method = NULL,
 \item{.method}{The estimation method to be used, by default returns the last one for each file}
 
 \item{digits}{The number of significant digits to be displayed.}
+
+\item{transform}{Should diagonal OMEGA and SIGMA elements be transformed to coeficient of variation, 
+off diagonal elements be transformed to coorelations and the standard error represented as relative 
+standard error (RSE).}
 
 \item{show_all}{Logical, whether the 0 fixed off-diagonal elements should be removed from the output.}
 }
