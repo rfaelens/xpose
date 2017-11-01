@@ -137,14 +137,23 @@ test_that('get_prm checks input properly', {
 test_that('get_prm works properly', {
   
   # Load control parameter table
-  # get_prm_ctrl <- get_prm(xpdb_ex_pk)
-  # save(get_prm_ctrl, file = 'data/get_prm_ctrl.Rdata')
-  load('data/get_prm_ctrl.Rdata')
+  # get_prm_ctrl_tr <- get_prm(xpdb_ex_pk, transform = TRUE)
+  # save(get_prm_ctrl_tr, file = 'data/get_prm_ctrl_tr.Rdata')
+  load('data/get_prm_ctrl_tr.Rdata')
   
-  # Test
-  get_prm_test <- get_prm(xpdb_ex_pk)
-  expect_true('xpose_prm' %in% class(get_prm_test))
-  expect_identical(get_prm_test, get_prm_ctrl)
+  # get_prm_ctrl_ntr <- get_prm(xpdb_ex_pk, transform = FALSE)
+  # save(get_prm_ctrl_ntr, file = 'data/get_prm_ctrl_ntr.Rdata')
+  load('data/get_prm_ctrl_ntr.Rdata')
+  
+  # Test w/ transform
+  get_prm_test_tr <- get_prm(xpdb_ex_pk, transform = TRUE)
+  expect_true('xpose_prm' %in% class(get_prm_test_tr))
+  expect_identical(get_prm_test_tr, get_prm_ctrl_tr)
+  
+  # Test w/o transform
+  get_prm_test_ntr <- get_prm(xpdb_ex_pk, transform = FALSE)
+  expect_true('xpose_prm' %in% class(get_prm_test_ntr))
+  expect_identical(get_prm_test_ntr, get_prm_ctrl_ntr)
 })
 
 

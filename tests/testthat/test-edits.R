@@ -65,7 +65,7 @@ test_that('variable added with mutate is available in all problems', {
 
 test_that('index is properly updated', {
   xpdb_mod <- mutate.xpose_data(.data = xpdb_ex_pk, TAD = NULL, DV2 = DV * 2)
-  expect_equal(capture_output(list_vars(xpdb_mod)), ctrl_list_vars_1)
+  expect_equal(capture_output(list_vars(xpdb_mod, .problem = 1:2)), ctrl_list_vars_1)
 })
 
 test_that('irep works properly', {
