@@ -141,20 +141,20 @@ plotted against the independent variable</p>
 
     <pre class="usage"><span class='fu'>dv_vs_idv</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pls"</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"@y vs. @x | @run"</span>, <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Ofv: @ofv"</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>,
-  <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>facets</span>, <span class='no'>problem</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)
+  <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>facets</span>, <span class='no'>.problem</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)
 
 <span class='fu'>ipred_vs_idv</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pls"</span>, <span class='no'>facets</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"@y vs. @x | @run"</span>, <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Ofv: @ofv, Eps shrink: @epsshk"</span>,
-  <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>problem</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)
+  <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>.problem</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)
 
 <span class='fu'>pred_vs_idv</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pls"</span>, <span class='no'>facets</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"@y vs. @x | @run"</span>, <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Ofv: @ofv"</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>,
-  <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>problem</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)
+  <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>.problem</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)
 
 <span class='fu'>dv_preds_vs_idv</span>(<span class='no'>xpdb</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pls"</span>, <span class='no'>facets</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Observations, Individual predictions and Population predictions vs. @x | @run"</span>,
   <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"Ofv: @ofv, Eps shrink: @epsshk"</span>, <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>"@dir"</span>,
-  <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>problem</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>log</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>.problem</span>, <span class='no'>quiet</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -200,7 +200,7 @@ line 'l', smooth 's' and text 't' or any combination of the four.</p></td>
 or a formula to use <code><a href='http://www.rdocumentation.org/packages/ggforce/topics/facet_grid_paginate'>facet_grid_paginate</a></code>.</p></td>
     </tr>
     <tr>
-      <th>problem</th>
+      <th>.problem</th>
       <td><p>The $problem number to be used. By default returns 
 the last estimation problem.</p></td>
     </tr>

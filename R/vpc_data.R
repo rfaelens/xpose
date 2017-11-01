@@ -56,8 +56,8 @@ vpc_data <- function(xpdb,
     if (is.null(sim_problem)) sim_problem <- last_data_problem(xpdb, simtab = TRUE)
     msg(c('Using xpdb simulation problem ', ifelse(is.na(sim_problem), '<na>', sim_problem), 
           ' and observation problem ', ifelse(is.na(obs_problem), '<na>', obs_problem), '.'), quiet)
-    obs_data <- get_data(xpdb, problem = obs_problem) 
-    sim_data <- get_data(xpdb, problem = sim_problem)
+    obs_data <- get_data(xpdb, .problem = obs_problem) 
+    sim_data <- get_data(xpdb, .problem = sim_problem)
     if (is.null(opt$obs_cols)) {
       obs_cols <- xp_var(xpdb, obs_problem, type = c('id', 'idv', 'dv', 'pred'))
       obs_cols <- purrr::set_names(obs_cols$col, nm = obs_cols$type)

@@ -37,27 +37,27 @@ prm_qq <- function(xpdb,
                    log      = NULL,
                    guide    = TRUE,
                    facets,
-                   problem,
+                   .problem,
                    quiet,
                    ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- default_plot_problem(xpdb)
+  if (missing(.problem)) .problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (missing(facets)) facets <- add_facet_var(facets = xpdb$xp_theme$facets, 
                                                variable = 'variable')
   
-  prm_col <- xp_var(xpdb, problem, type = 'param')$col
+  prm_col <- xp_var(xpdb, .problem, type = 'param')$col
   if (drop_fixed) {
-    prm_col <- drop_fixed_cols(xpdb, problem, cols = prm_col, quiet = quiet)
+    prm_col <- drop_fixed_cols(xpdb, .problem, cols = prm_col, quiet = quiet)
   }
   if (is.null(prm_col)) {
     stop('No parameter column found in the xpdb data index.', call. = FALSE)
   }
   
   xplot_qq(xpdb = xpdb, quiet = quiet,
-           opt = data_opt(problem = problem, 
-                          filter = only_distinct(xpdb, problem, facets, quiet), 
+           opt = data_opt(.problem = .problem, 
+                          filter = only_distinct(xpdb, .problem, facets, quiet), 
                           tidy = TRUE, value_col = prm_col),
            mapping = aes_c(aes_string(sample = 'value'), mapping), 
            type = type, guide = guide, facets = facets,
@@ -81,27 +81,27 @@ eta_qq <- function(xpdb,
                    log      = NULL,
                    guide    = TRUE,
                    facets,
-                   problem,
+                   .problem,
                    quiet,
                    ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- default_plot_problem(xpdb)
+  if (missing(.problem)) .problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (missing(facets)) facets <- add_facet_var(facets = xpdb$xp_theme$facets, 
                                                variable = 'variable')
   
-  eta_col <- xp_var(xpdb, problem, type = 'eta')$col
+  eta_col <- xp_var(xpdb, .problem, type = 'eta')$col
   if (drop_fixed) {
-    eta_col <- drop_fixed_cols(xpdb, problem, cols = eta_col, quiet = quiet)
+    eta_col <- drop_fixed_cols(xpdb, .problem, cols = eta_col, quiet = quiet)
   }
   if (is.null(eta_col)) {
     stop('No eta column found in the xpdb data index.', call. = FALSE)
   }
   
   xplot_qq(xpdb = xpdb, quiet = quiet,
-           opt = data_opt(problem = problem, 
-                          filter = only_distinct(xpdb, problem, facets, quiet), 
+           opt = data_opt(.problem = .problem, 
+                          filter = only_distinct(xpdb, .problem, facets, quiet), 
                           tidy = TRUE, value_col = eta_col,
                           post_processing = reorder_factors(prefix = 'ETA(', suffix = ')')),
            mapping = aes_c(aes_string(sample = 'value'), mapping), 
@@ -127,15 +127,15 @@ res_qq <- function(xpdb,
                    log      = NULL,
                    guide    = TRUE,
                    facets,
-                   problem,
+                   .problem,
                    quiet,
                    ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- default_plot_problem(xpdb)
+  if (missing(.problem)) .problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
-  if (is.null(xp_var(xpdb, problem, col = res))) {
+  if (is.null(xp_var(xpdb, .problem, col = res))) {
     stop('No ', stringr::str_c(res, collapse = ', '), 
          ' column found in the xpdb data index.', call. = FALSE)
   }
@@ -143,14 +143,14 @@ res_qq <- function(xpdb,
   if (length(res) > 1) {
     if (missing(facets)) facets <- add_facet_var(facets = xpdb$xp_theme$facets, 
                                                  variable = 'variable')
-    opt <- data_opt(problem = problem, 
-                    filter = only_obs(xpdb, problem, quiet),
+    opt <- data_opt(.problem = .problem, 
+                    filter = only_obs(xpdb, .problem, quiet),
                     tidy = TRUE, value_col = res)
     vars <- aes_c(aes_string(sample = 'value'), mapping)
   } else {
     if (missing(facets)) facets <- xpdb$xp_theme$facets
-    opt <- data_opt(problem = problem, 
-                    filter = only_obs(xpdb, problem, quiet))
+    opt <- data_opt(.problem = .problem, 
+                    filter = only_obs(xpdb, .problem, quiet))
     vars <- aes_c(aes_string(sample = toupper(res)), mapping)
   }
   
@@ -177,27 +177,27 @@ cov_qq <- function(xpdb,
                    log      = NULL,
                    guide    = TRUE,
                    facets,
-                   problem,
+                   .problem,
                    quiet,
                    ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- default_plot_problem(xpdb)
+  if (missing(.problem)) .problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (missing(facets)) facets <- add_facet_var(facets = xpdb$xp_theme$facets, 
                                                variable = 'variable')
   
-  cov_col <- xp_var(xpdb, problem, type = 'contcov')$col
+  cov_col <- xp_var(xpdb, .problem, type = 'contcov')$col
   if (drop_fixed) {
-    cov_col <- drop_fixed_cols(xpdb, problem, cols = cov_col, quiet = quiet)
+    cov_col <- drop_fixed_cols(xpdb, .problem, cols = cov_col, quiet = quiet)
   }
   if (is.null(cov_col)) {
     stop('No continuous covariate column found in the xpdb data index.', call. = FALSE)
   }
   
   xplot_qq(xpdb = xpdb, quiet = quiet,
-           opt = data_opt(problem = problem, 
-                          filter = only_distinct(xpdb, problem, facets, quiet), 
+           opt = data_opt(.problem = .problem, 
+                          filter = only_distinct(xpdb, .problem, facets, quiet), 
                           tidy = TRUE, value_col = cov_col),
            mapping = aes_c(aes_string(sample = 'value'), mapping), 
            type = type, guide = guide, facets = facets,

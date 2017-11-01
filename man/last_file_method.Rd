@@ -4,20 +4,20 @@
 \alias{last_file_method}
 \title{Get last file estimation method}
 \usage{
-last_file_method(xpdb, ext, problem, subprob)
+last_file_method(xpdb, ext, .problem, .subprob)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
 
 \item{ext}{The file extension to be used.}
 
-\item{problem}{The $problem number to be used.}
+\item{.problem}{The $problem number to be used.}
 
-\item{subprob}{The subproblem number to be used.}
+\item{.subprob}{The subproblem number to be used.}
 }
 \value{
 The number of the last file method as character 
-for the given `problem` and file `ext`.
+for the given `.problem` and file `ext`.
 }
 \description{
 Get last file estimation method

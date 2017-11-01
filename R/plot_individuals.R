@@ -23,15 +23,15 @@
 #' 
 #' @export
 ind_plots <- function(xpdb,
-                      mapping  = NULL,
-                      group    = 'variable',
-                      type     = 'lp',
-                      title    = 'Individual plots | @run',
-                      subtitle = 'Ofv: @ofv, Eps shrink: @epsshk',
-                      caption  = '@dir | Page @page of @lastpage',
-                      log      = NULL,
+                      mapping       = NULL,
+                      group         = 'variable',
+                      type          = 'lp',
+                      title         = 'Individual plots | @run',
+                      subtitle      = 'Ofv: @ofv, Eps shrink: @epsshk',
+                      caption       = '@dir | Page @page of @lastpage',
+                      log           = NULL,
                       facets,
-                      problem,
+                      .problem,
                       quiet,
                       color         = c('grey60', 'deepskyblue4', 'deepskyblue3'),
                       point_alpha   = c(0.8, 0, 0),
@@ -39,11 +39,11 @@ ind_plots <- function(xpdb,
                       ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- default_plot_problem(xpdb)
+  if (missing(.problem)) .problem <- default_plot_problem(xpdb)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (missing(facets)) facets <- add_facet_var(facets = xpdb$xp_theme$facets,
-                                               variable = xp_var(xpdb, problem, type = 'id')$col)
-
+                                               variable = xp_var(xpdb, .problem, type = 'id')$col)
+  
   extra_args <- list(...)
   if (!any(names(extra_args) == 'nrow')) extra_args$nrow <- 3
   if (!any(names(extra_args) == 'ncol')) extra_args$ncol <- 3
@@ -54,12 +54,11 @@ ind_plots <- function(xpdb,
   do.call('xplot_scatter', 
           c(extra_args, 
             list(xpdb = xpdb, group = group, quiet = quiet,
-                 opt = data_opt(problem = problem, source = 'data',
-                                filter = only_obs(xpdb, problem, quiet),
-                                tidy = TRUE,
-                                value_col = xp_var(xpdb, problem, 
+                 opt = data_opt(.problem = .problem, tidy = TRUE,
+                                filter = only_obs(xpdb, .problem, quiet),
+                                value_col = xp_var(xpdb, .problem, 
                                                    type = c('dv', 'pred', 'ipred'))$col),
-                 mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
+                 mapping = aes_c(aes_string(x = xp_var(xpdb, .problem, type = 'idv')$col, 
                                             y = 'value', line_color = 'variable', text_color = 'variable',
                                             line_linetype = 'variable', point_color = 'variable', 
                                             point_alpha = 'variable'), mapping),

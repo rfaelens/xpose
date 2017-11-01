@@ -39,7 +39,7 @@ xpdb
 
     run001.lst overview: 
      - Software: nonmem 7.3.0 
-     - Attached files: 
+     - Attached files (memory usage 1.3 Mb): 
        + obs tabs: $prob no.1: catab001.csv, cotab001, patab001, sdtab001 
        + sim tabs: $prob no.2: simtab001.zip 
        + output files: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi, run001.shk 
@@ -54,6 +54,17 @@ xpdb
 summary(xpdb, problem = 1)
 ```
 
+
+    Summary for problem no. 0 [Global information] 
+     - Software                      @software   : nonmem
+     - Software version              @version    : 7.3.0
+     - Run directory                 @dir        : analysis/models/pk/
+     - Run file                      @file       : run001.lst
+     - Run number                    @run        : run001
+     - Reference model               @ref        : 000
+     - Run description               @descr      : NONMEM PK example for xpose
+     - Run start time                @timestart  : Mon Oct 16 13:34:28 CEST 2017
+     - Run stop time                 @timestop   : Mon Oct 16 13:34:35 CEST 2017
 
     Summary for problem no. 1 [Parameter estimation] 
      - Input data                    @data       : ../../mx19_2.csv
@@ -70,6 +81,16 @@ summary(xpdb, problem = 1)
      - Eta shrinkage                 @etashk     : 9.3 [1], 28.7 [2], 23.7 [3]
      - Epsilon shrinkage             @epsshk     : 14.9 [1]
      - Run warnings                  @warnings   : (WARNING 2) NM-TRAN INFERS THAT THE DATA ARE POPULATION.
+
+    Summary for problem no. 2 [Model simulations] 
+     - Input data                    @data       : ../../mx19_2.csv
+     - Number of individuals         @nind       : 74
+     - Number of observations        @nobs       : 476
+     - Estimation method             @method     : sim
+     - Number of simulations         @nsim       : 20
+     - Simulation seed               @simseed    : 221287
+     - Run warnings                  @warnings   : (WARNING 2) NM-TRAN INFERS THAT THE DATA ARE POPULATION.
+                                                   (WARNING 22) WITH $MSFI AND "SUBPROBS", "TRUE=FINAL" ...
 
 #### Generate diagnostics
 

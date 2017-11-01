@@ -4,15 +4,15 @@
 \alias{get_data}
 \title{Access model output table data}
 \usage{
-get_data(xpdb, table = NULL, problem = NULL, quiet)
+get_data(xpdb, table = NULL, .problem = NULL, quiet)
 }
 \arguments{
 \item{xpdb}{An \code{xpose_data} object from which the model output file data will be extracted.}
 
 \item{table}{Name of the output table to be extracted from the xpdb e.g. 'sdtab001'. Alternative to 
-the `problem` argument.}
+the `.problem` argument.}
 
-\item{problem}{Accesses all tables from the specified problem. Alternative to the `table` argument.}
+\item{.problem}{Accesses all tables from the specified problem. Alternative to the `table` argument.}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 }
@@ -30,7 +30,7 @@ sdtab <- get_data(xpdb_ex_pk, 'sdtab001')
 sdtab
 
 # By problem
-tables <- get_data(xpdb_ex_pk, problem = 1)
+tables <- get_data(xpdb_ex_pk, .problem = 1)
 tables
 
 # Tip to list available tables in the xpdb

@@ -24,7 +24,11 @@ reference:
     contents:
     - print.xpose_data
     - summary.xpose_data
+    - prm_table
     - list_vars
+    - list_data
+    - list_files
+    - list_special
   - title: Edit xpdb content
     desc:  Edit data, index or files within an xpdb
     contents:

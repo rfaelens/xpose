@@ -1,10 +1,13 @@
-# xpose 0.3.1
+# xpose 0.3.2
 * Added compatibility with `dplyr::n()` when editing xpdb #51
 * Added `get_special()` convenience function
+* Added `list_data()`, `list_file()` and `list_special()` to get info on the data structure in the xpdb
+* Added xpdb memory usage to `print_xpose_data()`
+* Replaced `print.prm.data()` to `prm_table()`
+* Renamed the arguments `problem`, `subprob`, `method` and `source` to `.problem`, `.subprob`, etc. for consistency with dplyr functions.
 * Improved error checking for themes in `xpose_data`
 * Improved error checking in `get_prm()`
 * Fixed documentation
-*
 
 # xpose 0.3
 ### General

@@ -7,16 +7,16 @@
 \alias{set_var_units}
 \title{Set variable type, label or units}
 \usage{
-set_var_types(xpdb, problem = NULL, ..., auto_factor = TRUE, quiet)
+set_var_types(xpdb, .problem = NULL, ..., auto_factor = TRUE, quiet)
 
-set_var_labels(xpdb, problem = NULL, ..., quiet)
+set_var_labels(xpdb, .problem = NULL, ..., quiet)
 
-set_var_units(xpdb, problem = NULL, ..., quiet)
+set_var_units(xpdb, .problem = NULL, ..., quiet)
 }
 \arguments{
 \item{xpdb}{An \code{xpose_data} object.}
 
-\item{problem}{The problem number to which the edits will be applied.}
+\item{.problem}{The problem number to which the edits will be applied.}
 
 \item{...}{Specifications of the edits to be made to the xpdb index. Edits are made as 
 type and variable pairs e.g. idv = 'TAD' will assign TAD to the type idv (independent variable).}
@@ -57,13 +57,13 @@ Function designed to change the type, label or unit associated with variables.
 
 \examples{
 # Change variable type
-xpdb_2 <- set_var_types(xpdb_ex_pk, problem = 1, idv = 'TAD')
+xpdb_2 <- set_var_types(xpdb_ex_pk, .problem = 1, idv = 'TAD')
 
 # Change labels
-xpdb_2 <- set_var_labels(xpdb_2, problem = 1, ALAG1 = 'Lag time', CL = 'Clearance', V = 'Volume')
+xpdb_2 <- set_var_labels(xpdb_2, .problem = 1, ALAG1 = 'Lag time', CL = 'Clearance', V = 'Volume')
 
 # Change units
-xpdb_2 <- set_var_units(xpdb_2, problem = 1, ALAG1 = 'h', CL = 'L/h', V = 'L')
+xpdb_2 <- set_var_units(xpdb_2, .problem = 1, ALAG1 = 'h', CL = 'L/h', V = 'L')
 
 }
 \seealso{

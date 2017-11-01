@@ -11,23 +11,23 @@
 prm_distrib(xpdb, mapping = NULL, drop_fixed = TRUE, type = "hr",
   title = "Parameter distribution | @run",
   subtitle = "Based on @nind individuals", caption = "@dir", log = NULL,
-  guide = FALSE, facets, problem, quiet, ...)
+  guide = FALSE, facets, .problem, quiet, ...)
 
 eta_distrib(xpdb, mapping = NULL, drop_fixed = TRUE, type = "hr",
   title = "Eta distribution | @run",
   subtitle = "Based on @nind individuals, Eta shrink: @etashk",
-  caption = "@dir", log = NULL, guide = FALSE, facets, problem, quiet,
+  caption = "@dir", log = NULL, guide = FALSE, facets, .problem, quiet,
   ...)
 
 res_distrib(xpdb, mapping = NULL, res = "CWRES", type = "hr",
   title = "@x distribution | @run",
   subtitle = "Based on @nobs observations", caption = "@dir", log = NULL,
-  guide = FALSE, facets, problem, quiet, ...)
+  guide = FALSE, facets, .problem, quiet, ...)
 
 cov_distrib(xpdb, mapping = NULL, drop_fixed = TRUE, type = "hr",
   title = "Continuous covariates distribution | @run",
   subtitle = "Based on @nind individuals", caption = "@dir", log = NULL,
-  guide = FALSE, facets, problem, quiet, ...)
+  guide = FALSE, facets, .problem, quiet, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -55,7 +55,7 @@ density 'd', rug 'r' or any combination of the three.}
 \item{facets}{Either a character string to use \code{\link[ggforce]{facet_wrap_paginate}}
 or a formula to use \code{\link[ggforce]{facet_grid_paginate}}.}
 
-\item{problem}{The $problem number to be used. By default returns 
+\item{.problem}{The $problem number to be used. By default returns 
 the last estimation problem.}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}

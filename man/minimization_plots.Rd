@@ -9,14 +9,14 @@
 prm_vs_iteration(xpdb, mapping = NULL, group = "variable", type = "l",
   title = "Parameter @y vs. @x | @run",
   subtitle = "Method: @method, minimization time: @runtime\\nTermination message: @term",
-  caption = "@dir", log = NULL, guide = FALSE, facets, problem, subprob,
-  method, quiet, ...)
+  caption = "@dir", log = NULL, guide = FALSE, facets, .problem, .subprob,
+  .method, quiet, ...)
 
 grd_vs_iteration(xpdb, mapping = NULL, group = "variable", type = "l",
   title = "Gradient @y vs. @x | @run",
   subtitle = "Method: @method, minimization time: @runtime\\nTermination message: @term",
-  caption = "@dir", log = NULL, guide = FALSE, facets, problem, subprob,
-  method, quiet, ...)
+  caption = "@dir", log = NULL, guide = FALSE, facets, .problem, .subprob,
+  .method, quiet, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -43,13 +43,13 @@ line 'l', smooth 's' and text 't' or any combination of the four.}
 \item{facets}{Either a character string to use \code{\link[ggforce]{facet_wrap_paginate}}
 or a formula to use \code{\link[ggforce]{facet_grid_paginate}}.}
 
-\item{problem}{The $problem number to be used. By default returns 
+\item{.problem}{The $problem number to be used. By default returns 
 the last estimation problem.}
 
-\item{subprob}{The sub-problem number to be used. By default returns 
+\item{.subprob}{The sub-problem number to be used. By default returns 
 the last sub-problem associated with the selected problem.}
 
-\item{method}{The estimation method to be used, by default returns the last one for each file}
+\item{.method}{The estimation method to be used, by default returns the last one for each file}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 

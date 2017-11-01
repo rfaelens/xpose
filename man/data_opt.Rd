@@ -4,21 +4,21 @@
 \alias{data_opt}
 \title{Create options for data import}
 \usage{
-data_opt(problem = NULL, subprob = NULL, method = NULL, source = "data",
-  simtab = FALSE, filter = NULL, tidy = FALSE, index_col = NULL,
-  value_col = NULL, post_processing = NULL)
+data_opt(.problem = NULL, .subprob = NULL, .method = NULL,
+  .source = "data", simtab = FALSE, filter = NULL, tidy = FALSE,
+  index_col = NULL, value_col = NULL, post_processing = NULL)
 }
 \arguments{
-\item{problem}{The problem to be used, by default returns the last one.}
+\item{.problem}{The problem to be used, by default returns the last one.}
 
-\item{subprob}{The subproblem to be used, by default returns the last one.}
+\item{.subprob}{The subproblem to be used, by default returns the last one.}
 
-\item{method}{The estimation method to be used, by default returns the last one.}
+\item{.method}{The estimation method to be used, by default returns the last one.}
 
-\item{source}{Define the location of the data in the xpdb. Should be either 'data' 
+\item{.source}{Define the location of the data in the xpdb. Should be either 'data' 
 to use the output tables or the name of an output file attached to the xpdb.}
 
-\item{simtab}{Only used when 'data' is defined as the source and `problem` is default. Should the data be coming 
+\item{simtab}{Only used when 'data' is defined as the source and `.problem` is default. Should the data be coming 
 from an estimation or a simulation table.}
 
 \item{filter}{A function used to filter the data e.g. filter = function(x) x[x$TIME > 20, ] where x is the data.}
@@ -39,7 +39,7 @@ Provide a list of options to the general plotting functions such as
 \code{xplot_scatter} in order to create appropriate data input for ggplot2.
 }
 \examples{
-data_opt(problem = 1, source = 'data', simtab = TRUE)
+data_opt(.problem = 1, .source = 'data', simtab = TRUE)
 
 }
 \seealso{

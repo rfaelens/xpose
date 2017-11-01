@@ -11,20 +11,20 @@
 \usage{
 dv_vs_idv(xpdb, mapping = NULL, group = "ID", type = "pls",
   title = "@y vs. @x | @run", subtitle = "Ofv: @ofv", caption = "@dir",
-  log = NULL, facets, problem, quiet, ...)
+  log = NULL, facets, .problem, quiet, ...)
 
 ipred_vs_idv(xpdb, mapping = NULL, group = "ID", type = "pls", facets,
   title = "@y vs. @x | @run", subtitle = "Ofv: @ofv, Eps shrink: @epsshk",
-  caption = "@dir", log = NULL, problem, quiet, ...)
+  caption = "@dir", log = NULL, .problem, quiet, ...)
 
 pred_vs_idv(xpdb, mapping = NULL, group = "ID", type = "pls", facets,
   title = "@y vs. @x | @run", subtitle = "Ofv: @ofv", caption = "@dir",
-  log = NULL, problem, quiet, ...)
+  log = NULL, .problem, quiet, ...)
 
 dv_preds_vs_idv(xpdb, mapping = NULL, group = "ID", type = "pls", facets,
   title = "Observations, Individual predictions and Population predictions vs. @x | @run",
   subtitle = "Ofv: @ofv, Eps shrink: @epsshk", caption = "@dir",
-  log = NULL, problem, quiet, ...)
+  log = NULL, .problem, quiet, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -49,7 +49,7 @@ line 'l', smooth 's' and text 't' or any combination of the four.}
 \item{facets}{Either a character string to use \code{\link[ggforce]{facet_wrap_paginate}}
 or a formula to use \code{\link[ggforce]{facet_grid_paginate}}.}
 
-\item{problem}{The $problem number to be used. By default returns 
+\item{.problem}{The $problem number to be used. By default returns 
 the last estimation problem.}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}

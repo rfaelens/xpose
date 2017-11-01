@@ -18,6 +18,9 @@ xpdb # or print(xpdb)
 ## ----demo xpose summary--------------------------------------------------
 summary(xpdb)
 
+## ----demo prm_table------------------------------------------------------
+prm_table(xpdb)
+
 ## ----demo list_vars------------------------------------------------------
 list_vars(xpdb)
 

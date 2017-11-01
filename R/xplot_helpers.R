@@ -99,7 +99,7 @@ parse_title <- function(string, xpdb, problem, quiet, extra_key = NULL,
     stringr::str_extract_all('@[[:alnum:]]+') %>% 
     purrr::flatten_chr() %>% 
     stringr::str_replace(stringr::fixed('@'), '') %>% 
-    subset(!.%in% ignore_key)
+    subset(!. %in% ignore_key)
   
   # Get the associated values in the summart
   values <- xpdb$summary[xpdb$summary$problem %in% c(0, problem) & 
@@ -246,15 +246,15 @@ last_file_problem <- function(xpdb, ext) {
 #' 
 #' @param xpdb An xpose database object.
 #' @param ext The file extension to be used.
-#' @param problem The $problem number to be used.
+#' @param .problem The $problem number to be used.
 #' 
 #' @return The number of the last file subproblem as an integer 
-#' for the given `problem` and file `ext`.
+#' for the given `.problem` and file `ext`.
 #' 
 #' @keywords internal
 #' @export
-last_file_subprob <- function(xpdb, ext, problem) {
-  subprob_n <- xpdb$files$subprob[xpdb$files$extension %in% ext & xpdb$files$problem %in% problem]
+last_file_subprob <- function(xpdb, ext, .problem) {
+  subprob_n <- xpdb$files$subprob[xpdb$files$extension %in% ext & xpdb$files$problem %in% .problem]
   subprob_n <- unique(subprob_n)
   if (length(subprob_n) == 0) return(NA_integer_)
   max(subprob_n)
@@ -265,18 +265,18 @@ last_file_subprob <- function(xpdb, ext, problem) {
 #' 
 #' @param xpdb An xpose database object.
 #' @param ext The file extension to be used.
-#' @param problem The $problem number to be used.
-#' @param subprob The subproblem number to be used.
+#' @param .problem The $problem number to be used.
+#' @param .subprob The subproblem number to be used.
 #' 
 #' @return The number of the last file method as character 
-#' for the given `problem` and file `ext`.
+#' for the given `.problem` and file `ext`.
 #' 
 #' @keywords internal
 #' @export
-last_file_method <- function(xpdb, ext, problem, subprob) {
+last_file_method <- function(xpdb, ext, .problem, .subprob) {
   method_n <- xpdb$files$method[xpdb$files$extension %in% ext & 
-                                  xpdb$files$problem %in% problem & 
-                                  xpdb$files$subprob %in% subprob]
+                                  xpdb$files$problem %in% .problem & 
+                                  xpdb$files$subprob %in% .subprob]
   method_n <- unique(method_n)
   if (length(method_n) == 0) return(NA_integer_)
   method_n[length(method_n)]
@@ -285,7 +285,7 @@ last_file_method <- function(xpdb, ext, problem, subprob) {
 #' Return names of columns having several unique values
 #' 
 #' @param xpdb An xpose database object.
-#' @param problem The $problem number to be used.
+#' @param .problem The $problem number to be used.
 #' @param cols A vector of column names to be checked.
 #' @param quiet Should messages be displayed to the console.
 #' 
@@ -294,11 +294,11 @@ last_file_method <- function(xpdb, ext, problem, subprob) {
 #' 
 #' @keywords internal
 #' @export
-drop_fixed_cols <- function(xpdb, problem, cols, quiet) {
+drop_fixed_cols <- function(xpdb, .problem, cols, quiet) {
   if (is.null(cols)) return()
   
   # Get the column names to be removed
-  cols_rm <- get_data(xpdb, problem = problem) %>% 
+  cols_rm <- get_data(xpdb, .problem = .problem) %>% 
     dplyr::select_(.dots = cols) %>%
     dplyr::select_if(.predicate = function(x) length(unique(x)) == 1) %>% 
     colnames()
@@ -324,7 +324,7 @@ drop_fixed_cols <- function(xpdb, problem, cols, quiet) {
 #' Access xpdb index information for a given variable or variable type
 #' 
 #' @param xpdb An xpose database object.
-#' @param problem The $problem number to be used.
+#' @param .problem The $problem number to be used.
 #' @param col The column name to be searched in the index. Alternative to arg `type`.
 #' @param type The type of column to searched in the index. Alternative to `col`.
 #' @param silent Should the function be silent or return errors.
@@ -336,8 +336,8 @@ drop_fixed_cols <- function(xpdb, problem, cols, quiet) {
 #' 
 #' @keywords internal
 #' @export
-xp_var <- function(xpdb, problem, col = NULL, type = NULL, silent = FALSE) {
-  index <- xpdb$data[xpdb$data$problem == problem, ]$index[[1]]
+xp_var <- function(xpdb, .problem, col = NULL, type = NULL, silent = FALSE) {
+  index <- xpdb$data[xpdb$data$problem == .problem, ]$index[[1]]
   if (!is.null(type)) {
     index <- index[index$type %in% type, ] 
   } else {
@@ -350,7 +350,7 @@ xp_var <- function(xpdb, problem, col = NULL, type = NULL, silent = FALSE) {
          ifelse(!is.null(type), 
                 stringr::str_c('type ', stringr::str_c('`',type, '`', collapse = ', ')),
                 stringr::str_c('`',col, '`', collapse = ', ')),
-         ' not available in data for problem no.', problem, 
+         ' not available in data for problem no.', .problem, 
          '. Check `list_vars()` for an exhaustive list of available columns.', 
          call. = FALSE)
   }

@@ -3,24 +3,24 @@
 #' @description Function listing all available variables in an xpdb object.
 #' 
 #' @param xpdb An \code{xpose_data} object from which the model code will be extracted.
-#' @param problem The problem to be used, by lists all available problems.
+#' @param .problem The problem to be used, by lists all available problems.
 #' 
 #' @seealso \code{\link{set_var_types}}
 #' @examples
 #' list_vars(xpdb_ex_pk)
 #' @export
-list_vars <- function(xpdb, problem = NULL) {
+list_vars <- function(xpdb, .problem = NULL) {
   # Check input
   check_xpdb(xpdb, check = 'data')
   
   x <- xpdb$data
   
-  if (!is.null(problem)) {
-    if (!all(problem %in% x$problem)) {
-      stop('Problem no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
+  if (!is.null(.problem)) {
+    if (!all(.problem %in% x$problem)) {
+      stop('Problem no.', stringr::str_c(.problem[!.problem %in% x$problem], collapse = ', '), 
            ' not found in the data.', call. = FALSE)
     }
-    x <- x[x$problem %in% problem, ]
+    x <- x[x$problem %in% .problem, ]
   }
   
   order <- c('id', 'dv', 'idv', 'dvid', 'occ', 'amt', 'evid', 'mdv', 'pred', 'ipred', 

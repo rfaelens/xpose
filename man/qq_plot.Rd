@@ -12,22 +12,23 @@
 prm_qq(xpdb, mapping = NULL, drop_fixed = TRUE, type = "p",
   title = "QQ plot of parameters | @run",
   subtitle = "Based on @nind individuals", caption = "@dir", log = NULL,
-  guide = TRUE, facets, problem, quiet, ...)
+  guide = TRUE, facets, .problem, quiet, ...)
 
 eta_qq(xpdb, mapping = NULL, drop_fixed = TRUE, type = "p",
   title = "QQ plot of etas | @run",
   subtitle = "Based on @nind individuals, Eta shrink: @etashk",
-  caption = "@dir", log = NULL, guide = TRUE, facets, problem, quiet, ...)
+  caption = "@dir", log = NULL, guide = TRUE, facets, .problem, quiet,
+  ...)
 
 res_qq(xpdb, mapping = NULL, res = "CWRES", type = "p",
   title = "QQ plot of @sample | @run",
   subtitle = "Based on @nobs observations", caption = "@dir", log = NULL,
-  guide = TRUE, facets, problem, quiet, ...)
+  guide = TRUE, facets, .problem, quiet, ...)
 
 cov_qq(xpdb, mapping = NULL, drop_fixed = TRUE, type = "p",
   title = "QQ plot of continuous covariates | @run",
   subtitle = "Based on @nind individuals", caption = "@dir", log = NULL,
-  guide = TRUE, facets, problem, quiet, ...)
+  guide = TRUE, facets, .problem, quiet, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -54,7 +55,7 @@ cov_qq(xpdb, mapping = NULL, drop_fixed = TRUE, type = "p",
 \item{facets}{Either a character string to use \code{\link[ggforce]{facet_wrap_paginate}}
 or a formula to use \code{\link[ggforce]{facet_grid_paginate}}.}
 
-\item{problem}{The $problem number to be used. By default returns 
+\item{.problem}{The $problem number to be used. By default returns 
 the last estimation problem.}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}

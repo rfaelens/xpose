@@ -2,8 +2,8 @@ context('Check xpdb_access functions')
 
 # Define files to be tested -----------------------------------------------
 xpdb_vpc <- xpdb_ex_pk %>% 
-  vpc_data() %>% 
-  vpc_data(vpc_type = 'censored', opt = vpc_opt(lloq = 0.4))
+  vpc_data(quiet = TRUE) %>% 
+  vpc_data(vpc_type = 'censored', opt = vpc_opt(lloq = 0.4), quiet = TRUE)
 
 # Tests for get_code ------------------------------------------------------
 
@@ -12,7 +12,7 @@ test_that('get_code checks input properly', {
   expect_error(get_code(), regexp = '"xpdb" is missing')
   
   # Error with bad problem input
-  expect_error(get_code(xpdb_ex_pk, problem = 99), regexp = '\\$prob no.99 not found in model code')
+  expect_error(get_code(xpdb_ex_pk, .problem = 99), regexp = '\\$prob no.99 not found in model code')
 })
 
 test_that('get_code works properly', {
@@ -20,10 +20,10 @@ test_that('get_code works properly', {
   expect_equal(get_code(xpdb_ex_pk), xpdb_ex_pk$code)
   
   # Return single problem
-  expect_equal(get_code(xpdb_ex_pk, problem = 1), xpdb_ex_pk$code[xpdb_ex_pk$code$problem == 1, ])
+  expect_equal(get_code(xpdb_ex_pk, .problem = 1), xpdb_ex_pk$code[xpdb_ex_pk$code$problem == 1, ])
   
   # Return multiple problems
-  expect_equal(get_code(xpdb_ex_pk, problem = 0:1), xpdb_ex_pk$code[xpdb_ex_pk$code$problem %in% 0:1, ])
+  expect_equal(get_code(xpdb_ex_pk, .problem = 0:1), xpdb_ex_pk$code[xpdb_ex_pk$code$problem %in% 0:1, ])
 })
 
 
@@ -33,10 +33,10 @@ test_that('get_data checks input properly', {
   expect_error(get_data(), regexp = '"xpdb" is missing')
   
   # Error with simulataneous table and problems
-  expect_error(get_data(xpdb_ex_pk, table = 'sdtab001', problem = 1), regexp = 'together')
+  expect_error(get_data(xpdb_ex_pk, table = 'sdtab001', .problem = 1), regexp = 'together')
   
   # Error with bad problem input
-  expect_error(get_data(xpdb_ex_pk, problem = 99), regexp = '\\$prob no.99 not found')
+  expect_error(get_data(xpdb_ex_pk, .problem = 99), regexp = '\\$prob no.99 not found')
   
   # Error with bad table input
   expect_error(get_data(xpdb_ex_pk, table = 'faketab'), regexp = 'faketab not found')
@@ -48,7 +48,7 @@ test_that('get_data works properly', {
   expect_equal(tmp_get_data_1, xpdb_ex_pk$data$data[[1]])
   
   # Return single problem
-  expect_equal(get_data(xpdb_ex_pk, problem = 1), xpdb_ex_pk$data$data[[1]])
+  expect_equal(get_data(xpdb_ex_pk, .problem = 1), xpdb_ex_pk$data$data[[1]])
   
   # Return single table
   expect_equal(get_data(xpdb_ex_pk, table = 'sdtab001'), 
@@ -72,15 +72,15 @@ test_that('get_file checks input properly', {
   expect_error(get_file(xpdb_ex_pk, file = 'fakefile'), regexp = 'fakefile not found')
   
   # Error with bad problem input
-  expect_error(get_file(xpdb_ex_pk, file = 'run001.ext', problem = 99), regexp = '\\$prob no.99 not found')
+  expect_error(get_file(xpdb_ex_pk, file = 'run001.ext', .problem = 99), regexp = '\\$prob no.99 not found')
   
   # Error with bad sub-problem input
-  expect_error(get_file(xpdb_ex_pk, file = 'run001.ext', subprob = 99), regexp = 'Subprob no.99 not found')
+  expect_error(get_file(xpdb_ex_pk, file = 'run001.ext', .subprob = 99), regexp = 'Subprob no.99 not found')
 })
 
 test_that('get_file works properly', {
   # Return single file
-  expect_equal(get_file(xpdb_ex_pk, file = 'run001.ext', problem = 1, subprob = 0, quiet = TRUE), 
+  expect_equal(get_file(xpdb_ex_pk, file = 'run001.ext', .problem = 1, .subprob = 0, quiet = TRUE), 
                xpdb_ex_pk$files[xpdb_ex_pk$files$name == 'run001.ext', ]$data[[1]])
   
   # Return multiple files
@@ -104,18 +104,18 @@ test_that('get_summary checks input properly', {
   expect_error(get_summary(), regexp = '"xpdb" is missing')
   
   # Error with bad problem input
-  expect_error(get_summary(xpdb_ex_pk, problem = 99), regexp = '\\$prob no.99 not found')
+  expect_error(get_summary(xpdb_ex_pk, .problem = 99), regexp = '\\$prob no.99 not found')
   
   # Error with bad sub-problem input
-  expect_error(get_summary(xpdb_ex_pk, subprob = 99), regexp = 'Subprob no.99 not found')
+  expect_error(get_summary(xpdb_ex_pk, .subprob = 99), regexp = 'Subprob no.99 not found')
 })
 
 test_that('get_summary works properly', {
   # Return single problem
-  expect_equal(get_summary(xpdb_ex_pk, problem = 1), xpdb_ex_pk$summary[xpdb_ex_pk$summary$problem == 1, ])
+  expect_equal(get_summary(xpdb_ex_pk, .problem = 1), xpdb_ex_pk$summary[xpdb_ex_pk$summary$problem == 1, ])
   
   # Return multiple problems
-  expect_equal(get_summary(xpdb_ex_pk, problem = 0:1), xpdb_ex_pk$summary[xpdb_ex_pk$summary$problem %in% 0:1, ])
+  expect_equal(get_summary(xpdb_ex_pk, .problem = 0:1), xpdb_ex_pk$summary[xpdb_ex_pk$summary$problem %in% 0:1, ])
 })
 
 
@@ -131,20 +131,29 @@ test_that('get_prm checks input properly', {
   expect_error(get_prm(xpdb_no_ext), regexp = 'File extension `ext` not found in model output files')
   
   # Error with bad problem input
-  expect_error(get_prm(xpdb_ex_pk, problem = 99), regexp = 'No parameter estimates found for \\$prob no\\.99')
+  expect_error(get_prm(xpdb_ex_pk, .problem = 99), regexp = 'No parameter estimates found for \\$prob no\\.99')
 })
 
 test_that('get_prm works properly', {
   
   # Load control parameter table
-  # get_prm_ctrl <- get_prm(xpdb_ex_pk)
-  # save(get_prm_ctrl, file = 'data/get_prm_ctrl.Rdata')
-  load('data/get_prm_ctrl.Rdata')
+  # get_prm_ctrl_tr <- get_prm(xpdb_ex_pk, transform = TRUE)
+  # save(get_prm_ctrl_tr, file = 'data/get_prm_ctrl_tr.Rdata')
+  load('data/get_prm_ctrl_tr.Rdata')
   
-  # Test
-  get_prm_test <- get_prm(xpdb_ex_pk)
-  expect_true('xpose_prm' %in% class(get_prm_test))
-  expect_identical(get_prm_test, get_prm_ctrl)
+  # get_prm_ctrl_ntr <- get_prm(xpdb_ex_pk, transform = FALSE)
+  # save(get_prm_ctrl_ntr, file = 'data/get_prm_ctrl_ntr.Rdata')
+  load('data/get_prm_ctrl_ntr.Rdata')
+  
+  # Test w/ transform
+  get_prm_test_tr <- get_prm(xpdb_ex_pk, transform = TRUE)
+  expect_true('xpose_prm' %in% class(get_prm_test_tr))
+  expect_identical(get_prm_test_tr, get_prm_ctrl_tr)
+  
+  # Test w/o transform
+  get_prm_test_ntr <- get_prm(xpdb_ex_pk, transform = FALSE)
+  expect_true('xpose_prm' %in% class(get_prm_test_ntr))
+  expect_identical(get_prm_test_ntr, get_prm_ctrl_ntr)
 })
 
 
@@ -154,7 +163,7 @@ test_that('get_special checks input properly', {
   expect_error(get_special(), regexp = '"xpdb" is missing')
   
   # Error with bad problem input
-  expect_error(get_special(xpdb_vpc, problem = 99), regexp = '\\$prob no.99 not found')
+  expect_error(get_special(xpdb_vpc, .problem = 99), regexp = '\\$prob no.99 not found')
 })
 
 test_that('get_data works properly', {
@@ -163,10 +172,10 @@ test_that('get_data works properly', {
   expect_equal(tmp_get_special_1, xpdb_vpc$special$data[[2]])
   
   # Return single problem
-  expect_equal(get_special(xpdb_vpc, problem = 3), xpdb_vpc$special$data[[1]])
+  expect_equal(get_special(xpdb_vpc, .problem = 3), xpdb_vpc$special$data[[1]])
   
   # Return multiple problems
-  expect_equal(get_special(xpdb_vpc, problem = 3:4), 
+  expect_equal(get_special(xpdb_vpc, .problem = 3:4), 
                list(problem_3_vpc_continuous = xpdb_vpc$special$data[[1]],
                     problem_4_vpc_censored = xpdb_vpc$special$data[[2]]))
 })

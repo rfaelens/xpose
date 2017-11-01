@@ -101,6 +101,16 @@ print.xpose_plot <- function(x, page, ...) {
   } else {
     if (!missing(page)) warning('Faceting not set. Ignoring `page` argument.', call. = FALSE)
     
+    # Warn for big plots
+    n_panels <- ggplot2::ggplot_build(x) %>% 
+    {nrow(.$layout$panel_layout)}
+    
+    if (n_panels > 20) {
+      msg(c('The faceting resulted in ', n_panels, 
+            ' panels. The plot may take a while to render.'), 
+          quiet = x$xpose$quiet)
+    }
+    
     # Print without multiple pages
     x %>% 
       paginate(page_2_draw = 1, page_tot = 1) %>% 

@@ -92,8 +92,8 @@ xplot_scatter <- function(xpdb,
   
   # Fetch data
   if (missing(opt)) opt <- data_opt()
-  data <- fetch_data(xpdb, quiet = quiet, problem = opt$problem, subprob = opt$subprob,
-                     method = opt$method, source = opt$source, simtab = opt$simtab, 
+  data <- fetch_data(xpdb, quiet = quiet, .problem = opt$problem, .subprob = opt$subprob,
+                     .method = opt$method, .source = opt$source, simtab = opt$simtab, 
                      filter = opt$filter, tidy = opt$tidy, index_col = opt$index_col, 
                      value_col = opt$value_col, post_processing = opt$post_processing)
   if (is.null(data) || nrow(data) == 0) {
@@ -107,7 +107,7 @@ xplot_scatter <- function(xpdb,
   # Assing xp_theme and gg_theme
   if (!missing(xp_theme)) xpdb <- update_themes(xpdb = xpdb, xp_theme = xp_theme)
   if (missing(gg_theme)) gg_theme <- xpdb$gg_theme
-
+  
   # Create ggplot base
   xp <- ggplot(data = data, mapping) + gg_theme 
   
@@ -173,7 +173,7 @@ xplot_scatter <- function(xpdb,
     xp <- xp + xpose_panels(xp_theme = xpdb$xp_theme, 
                             extra_args = list(...))
   }
-
+  
   # Add labels
   xp <- xp + labs(title = title, subtitle = subtitle, caption = caption)
   
