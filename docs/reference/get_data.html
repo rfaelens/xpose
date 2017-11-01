@@ -136,7 +136,7 @@
     <p>Access model output table data from an xpdb object.</p>
     
 
-    <pre class="usage"><span class='fu'>get_data</span>(<span class='no'>xpdb</span>, <span class='kw'>table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>quiet</span>)</pre>
+    <pre class="usage"><span class='fu'>get_data</span>(<span class='no'>xpdb</span>, <span class='kw'>table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>.problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>quiet</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -148,10 +148,10 @@
     <tr>
       <th>table</th>
       <td><p>Name of the output table to be extracted from the xpdb e.g. 'sdtab001'. Alternative to 
-the `problem` argument.</p></td>
+the `.problem` argument.</p></td>
     </tr>
     <tr>
-      <th>problem</th>
+      <th>.problem</th>
       <td><p>Accesses all tables from the specified problem. Alternative to the `table` argument.</p></td>
     </tr>
     <tr>
@@ -190,7 +190,7 @@ tables/problems or a named list for multiple tables/problems.</p>
 #&gt; # ... with 540 more rows, and 8 more variables: IWRES &lt;dbl&gt;, EVID &lt;dbl&gt;,
 #&gt; #   A1 &lt;dbl&gt;, A2 &lt;dbl&gt;, DV &lt;dbl&gt;, PRED &lt;dbl&gt;, RES &lt;dbl&gt;, WRES &lt;dbl&gt;</div><div class='input'>
 <span class='co'># By problem</span>
-<span class='no'>tables</span> <span class='kw'>&lt;-</span> <span class='fu'>get_data</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='no'>tables</span> <span class='kw'>&lt;-</span> <span class='fu'>get_data</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>.problem</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>tables</span></div><div class='output co'>#&gt; # A tibble: 550 x 31
 #&gt;        ID    SEX   MED1   MED2  DOSE   AMT    SS    II  TIME   TAD   IPRED
 #&gt;    &lt;fctr&gt; &lt;fctr&gt; &lt;fctr&gt; &lt;fctr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
@@ -211,7 +211,7 @@ tables/problems or a named list for multiple tables/problems.</p>
 <span class='co'># Tip to list available tables in the xpdb</span>
 <span class='fu'>print</span>(<span class='no'>xpdb_ex_pk</span>)</div><div class='output co'>#&gt; run001.lst overview: 
 #&gt;  - Software: nonmem 7.3.0 
-#&gt;  - Attached files: 
+#&gt;  - Attached files (memory usage 1.3 Mb): 
 #&gt;    + obs tabs: $prob no.1: catab001.csv, cotab001, patab001, sdtab001 
 #&gt;    + sim tabs: $prob no.2: simtab001.zip 
 #&gt;    + output files: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi, run001.shk 

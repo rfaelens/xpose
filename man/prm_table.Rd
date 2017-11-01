@@ -2,7 +2,7 @@
 % Please edit documentation in R/prm_table.R
 \name{prm_table}
 \alias{prm_table}
-\title{Display a parameter table to the console}
+\title{Display a parameter estimates to the console}
 \usage{
 prm_table(xpdb, .problem = NULL, .subprob = NULL, .method = NULL,
   digits = 4, show_all = FALSE)
@@ -20,14 +20,11 @@ prm_table(xpdb, .problem = NULL, .subprob = NULL, .method = NULL,
 
 \item{show_all}{Logical, whether the 0 fixed off-diagonal elements should be removed from the output.}
 }
-\value{
-A tibble for single problem/subprob or a named list for multiple problem|subprob.
-}
 \description{
 Display parameter estimates from an xpdb object to the console.
 }
 \examples{
-# Display to the console
+# Display parameters to the console
 prm_table(xpdb_ex_pk, .problem = 1)
 
 }

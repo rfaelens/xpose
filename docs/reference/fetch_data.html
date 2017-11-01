@@ -137,8 +137,8 @@
 prepare it for plotting. Arguments are usually provided by `data_opt()`.</p>
     
 
-    <pre class="usage"><span class='fu'>fetch_data</span>(<span class='no'>xpdb</span>, <span class='kw'>problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subprob</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>source</span> <span class='kw'>=</span> <span class='st'>"data"</span>, <span class='kw'>simtab</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>filter</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tidy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+    <pre class="usage"><span class='fu'>fetch_data</span>(<span class='no'>xpdb</span>, <span class='kw'>.problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>.subprob</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>.method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>.source</span> <span class='kw'>=</span> <span class='st'>"data"</span>, <span class='kw'>simtab</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>filter</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tidy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>index_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>value_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>post_processing</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
@@ -150,25 +150,25 @@ prepare it for plotting. Arguments are usually provided by `data_opt()`.</p>
       <td><p>An xpose database object.</p></td>
     </tr>
     <tr>
-      <th>problem</th>
+      <th>.problem</th>
       <td><p>The problem to be used, by default returns the last one.</p></td>
     </tr>
     <tr>
-      <th>subprob</th>
+      <th>.subprob</th>
       <td><p>The subproblem to be used, by default returns the last one.</p></td>
     </tr>
     <tr>
-      <th>method</th>
+      <th>.method</th>
       <td><p>The estimation method to be used, by default returns the last one.</p></td>
     </tr>
     <tr>
-      <th>source</th>
+      <th>.source</th>
       <td><p>Define the location of the data in the xpdb. Should be either 'data' 
 to use the output tables or the name of an output file attached to the xpdb.</p></td>
     </tr>
     <tr>
       <th>simtab</th>
-      <td><p>Only used when 'data' is defined as the source and `problem` is default. Should the data be coming 
+      <td><p>Only used when 'data' is defined as the source and `.problem` is default. Should the data be coming 
 from an estimation or a simulation table.</p></td>
     </tr>
     <tr>
