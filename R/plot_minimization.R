@@ -39,6 +39,7 @@ prm_vs_iteration <- function(xpdb,
   if (missing(.subprob)) .subprob <- last_file_subprob(xpdb, 'ext', .problem)
   if (missing(.method)) .method  <- last_file_method(xpdb, ext = 'ext', 
                                                      .problem = .problem, .subprob = .subprob)
+  check_problem(.problem, .subprob, .method)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (missing(facets)) facets <- 'variable'
   x_var <- 'ITERATION'
@@ -89,6 +90,7 @@ grd_vs_iteration <- function(xpdb,
   if (missing(.subprob)) .subprob <- last_file_subprob(xpdb, 'grd', .problem)
   if (missing(.method)) .method  <- last_file_method(xpdb, ext = 'grd', 
                                                      .problem = .problem, .subprob = .subprob)
+  check_problem(.problem, .subprob, .method)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (missing(facets)) facets <- 'variable'
   x_var <- 'ITERATION'
