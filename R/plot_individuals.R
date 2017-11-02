@@ -40,6 +40,7 @@ ind_plots <- function(xpdb,
   # Check input
   check_xpdb(xpdb, check = 'data')
   if (missing(.problem)) .problem <- default_plot_problem(xpdb)
+  check_problem(.problem, .subprob = NULL, .method = NULL)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (missing(facets)) facets <- add_facet_var(facets = xpdb$xp_theme$facets,
                                                variable = xp_var(xpdb, .problem, type = 'id')$col)

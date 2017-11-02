@@ -36,6 +36,15 @@ test_that_for_all(plot_functions, 'errors are returned when xpdb_ex_pk is missin
   expect_error(.plot_function())
 })
 
+test_that_for_all(plot_functions, 'errors are returned when length .problem is > 1', {
+  expect_error(.plot_function(xpdb_ex_pk, .problem = 1:2),  regexp = 'must be of length 1')
+})
+
+test_that_for_all(plot_functions, 'errors are returned a .problem not in the data', {
+  expect_error(.plot_function(xpdb_ex_pk, .problem = 99),  regexp = '99 not found in')
+})
+
+
 test_that_for_all(plot_functions, 'xpose plot objects are returned with appropriate xpdb_ex_pk', {
   expect_true(is.xpose.plot(.plot_function(xpdb_ex_pk)))
 })

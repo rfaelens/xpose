@@ -172,8 +172,8 @@ fetch_data <- function(xpdb,
     if (is.na(.problem)) {
       stop(c('No data associated with $prob no.', .problem, ' could be found.'), call. = FALSE)
     }
-    msg(c('Using data from $prob no.', .problem), quiet)
     data <- get_data(xpdb, .problem = .problem)
+    msg(c('Using data from $prob no.', .problem), quiet)
   } else {
     if (!any(xpdb$files$extension == .source)) {
       stop(c('File extension `.', .source, '` not found in model output files.'), call. = FALSE) 
@@ -181,10 +181,10 @@ fetch_data <- function(xpdb,
     if (is.null(.problem)) .problem <- last_file_problem(xpdb, .source)
     if (is.null(.subprob)) .subprob <- last_file_subprob(xpdb, .source, .problem)
     if (is.null(.method)) .method  <- last_file_method(xpdb, .source, .problem, .subprob)
-    msg(c('Using ', xpdb$files$name[xpdb$files$extension == .source][1] , ' $prob no.', .problem, 
-          ', subprob no.', .subprob, ', method ', .method, '.'), quiet)
     data <- get_file(xpdb, file = NULL, ext = .source, .problem = .problem, 
                      .subprob = .subprob, .method = .method, quiet = TRUE)
+    msg(c('Using ', xpdb$files$name[xpdb$files$extension == .source][1] , ' $prob no.', .problem, 
+          ', subprob no.', .subprob, ', method ', .method, '.'), quiet)
   }
   
   if (is.function(filter)) data <- filter(data)

@@ -1,3 +1,25 @@
+#' Check .problem, .subprob and .method
+#' 
+#' @param xpdb An xpose database object.
+#' @param .problem The problem to be checked.
+#' @param .subprob The subproblem to be checked.
+#' @param .method The estimation method to be checked.
+#' 
+#' @keywords internal
+#' @export
+check_problem <- function(.problem, .subprob, .method) {
+  bad_input <- list(.problem = .problem, .subprob = .subprob, .method = .method) %>% 
+    purrr::keep(.p = ~length(.x) > 1) %>% 
+    names()
+  
+  if (length(bad_input) > 0) {
+    bad_input %>% 
+      stringr::str_c('`', ., '`', collapse = ', ') %>% 
+      {stop('Argument', ., ' must be of length 1.', call. = FALSE)}
+  }
+}
+
+
 #' Check xpdb
 #' 
 #' @param xpdb An xpose database object.
@@ -337,6 +359,11 @@ drop_fixed_cols <- function(xpdb, .problem, cols, quiet) {
 #' @keywords internal
 #' @export
 xp_var <- function(xpdb, .problem, col = NULL, type = NULL, silent = FALSE) {
+  if (!all(.problem %in% xpdb$data$problem)) {
+    stop('$prob no.', stringr::str_c(.problem[!.problem %in% xpdb$data$problem], collapse = ', '), 
+         ' not found in model output data.', call. = FALSE)
+  }
+  
   index <- xpdb$data[xpdb$data$problem == .problem, ]$index[[1]]
   if (!is.null(type)) {
     index <- index[index$type %in% type, ] 
