@@ -1,13 +1,22 @@
 # xpose 0.3.2
-* Added compatibility with `dplyr::n()` when editing xpdb #51
-* Added `get_special()` convenience function
-* Added `list_data()`, `list_file()` and `list_special()` to get info on the data structure in the xpdb
-* Added xpdb memory usage to `print_xpose_data()`
+### General
+* Added xpdb memory usage to `print.xpose_data()`
 * Replaced `print.prm.data()` to `prm_table()`
+* Fixed documentation
+
+### Data import/edit
+* Added compatibility with `dplyr::n()` when editing xpdb #51
+* Added `get_special()` to access special data
+* Improved `get_prm()` labeller parsing with OMEGA and SIGMA BLOCKS
+* `get_prm()` and `prm_table()` both gained a `transform` argument to disable parameter transformation
+* Added `list_data()`, `list_files()` and `list_special()` to get info on the data structure in the xpdb
 * Renamed the arguments `problem`, `subprob`, `method` and `source` to `.problem`, `.subprob`, etc. for consistency with dplyr functions.
 * Improved error checking for themes in `xpose_data`
 * Improved error checking in `get_prm()`
-* Fixed documentation
+
+### Plots
+* `print.xpose_plot()` now displays a message when the number of facets is > 20, informing that many panels are being printed and that it may take a while to render the plot
+* Improved `.problem`, `.subprob` and `.method` error checking
 
 # xpose 0.3
 ### General
