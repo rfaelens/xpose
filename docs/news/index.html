@@ -137,28 +137,50 @@
     <div id="xpose-0-3-2" class="section level1">
 <h1 class="hasAnchor">
 <a href="#xpose-0-3-2" class="anchor"></a>xpose 0.3.2</h1>
+<div id="general" class="section level3">
+<h3 class="hasAnchor">
+<a href="#general" class="anchor"></a>General</h3>
 <ul>
-<li>Added compatibility with <code><a href="http://dplyr.tidyverse.org/reference/n.html">dplyr::n()</a></code> when editing xpdb #51</li>
-<li>Added <code><a href="../reference/get_special.html">get_special()</a></code> convenience function</li>
-<li>Added <code>list_data()</code>, <code>list_file()</code> and <code><a href="../reference/list_data.html">list_special()</a></code> to get info on the data structure in the xpdb</li>
-<li>Added xpdb memory usage to <code>print_xpose_data()</code>
+<li>Added xpdb memory usage to <code><a href="../reference/print.xpose_data.html">print.xpose_data()</a></code>
 </li>
 <li>Replaced <code>print.prm.data()</code> to <code><a href="../reference/prm_table.html">prm_table()</a></code>
 </li>
+<li>Fixed documentation</li>
+</ul>
+</div>
+<div id="data-importedit" class="section level3">
+<h3 class="hasAnchor">
+<a href="#data-importedit" class="anchor"></a>Data import/edit</h3>
+<ul>
+<li>Added compatibility with <code><a href="http://dplyr.tidyverse.org/reference/n.html">dplyr::n()</a></code> when editing xpdb #51</li>
+<li>Added <code><a href="../reference/get_special.html">get_special()</a></code> to access special data</li>
+<li>Improved <code><a href="../reference/get_prm.html">get_prm()</a></code> labeller parsing with OMEGA and SIGMA BLOCKS</li>
+<li>
+<code><a href="../reference/get_prm.html">get_prm()</a></code> and <code><a href="../reference/prm_table.html">prm_table()</a></code> both gained a <code>transform</code> argument to disable parameter transformation</li>
+<li>Added <code>list_data()</code>, <code><a href="../reference/list_data.html">list_files()</a></code> and <code><a href="../reference/list_data.html">list_special()</a></code> to get info on the data structure in the xpdb</li>
 <li>Renamed the arguments <code>problem</code>, <code>subprob</code>, <code>method</code> and <code>source</code> to <code>.problem</code>, <code>.subprob</code>, etc. for consistency with dplyr functions.</li>
 <li>Improved error checking for themes in <code>xpose_data</code>
 </li>
 <li>Improved error checking in <code><a href="../reference/get_prm.html">get_prm()</a></code>
 </li>
-<li>Fixed documentation</li>
 </ul>
+</div>
+<div id="plots" class="section level3">
+<h3 class="hasAnchor">
+<a href="#plots" class="anchor"></a>Plots</h3>
+<ul>
+<li>
+<code><a href="../reference/print.xpose_plot.html">print.xpose_plot()</a></code> now displays a message when the number of facets is &gt; 20, informing that many panels are being printed and that it may take a while to render the plot</li>
+<li>Improved <code>.problem</code>, <code>.subprob</code> and <code>.method</code> error checking</li>
+</ul>
+</div>
 </div>
     <div id="xpose-0-3" class="section level1">
 <h1 class="hasAnchor">
 <a href="#xpose-0-3" class="anchor"></a>xpose 0.3</h1>
-<div id="general" class="section level3">
+<div id="general-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#general" class="anchor"></a>General</h3>
+<a href="#general-1" class="anchor"></a>General</h3>
 <ul>
 <li>Improved documentation and testing</li>
 <li>Improved compatibility with NONMEM 7.4.1</li>
@@ -169,9 +191,9 @@
 <li>Added <code><a href="../reference/get_prm.html">get_prm()</a></code> function</li>
 </ul>
 </div>
-<div id="data-importedit" class="section level3">
+<div id="data-importedit-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#data-importedit" class="anchor"></a>Data import/edit</h3>
+<a href="#data-importedit-1" class="anchor"></a>Data import/edit</h3>
 <ul>
 <li>Improved <code>dir</code> and <code>file</code> arguments usage</li>
 <li>Improved error robustness of <code><a href="../reference/xpose_data.html">xpose_data()</a></code>
@@ -184,9 +206,9 @@
 <li>Bug fix in <code><a href="../reference/read_nm_tables.html">read_nm_tables()</a></code> not properly parsing data (missing minus signs) in some very specific cases</li>
 </ul>
 </div>
-<div id="plots" class="section level3">
+<div id="plots-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#plots" class="anchor"></a>Plots</h3>
+<a href="#plots-1" class="anchor"></a>Plots</h3>
 <ul>
 <li>Small modifications to <code>xp_theme()</code> defaults</li>
 <li>Faceting options can now be defined globally in the <code>xp_theme</code>
@@ -202,9 +224,9 @@
     <div id="xpose-0-2" class="section level1">
 <h1 class="hasAnchor">
 <a href="#xpose-0-2" class="anchor"></a>xpose 0.2</h1>
-<div id="general-1" class="section level3">
+<div id="general-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#general-1" class="anchor"></a>General</h3>
+<a href="#general-2" class="anchor"></a>General</h3>
 <ul>
 <li>Renamed package <code>xpose</code>
 </li>
@@ -258,9 +280,9 @@
 </li>
 </ul>
 </div>
-<div id="plots-1" class="section level3">
+<div id="plots-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#plots-1" class="anchor"></a>Plots</h3>
+<a href="#plots-2" class="anchor"></a>Plots</h3>
 <ul>
 <li>Changed <code>cwres_vs_idv</code>, type residual functions to more general <code><a href="../reference/res_vs_idv.html">res_vs_idv(res = 'CWRES')</a></code> functions</li>
 <li>Implemented/improved general plotting functions: <code><a href="../reference/xplot_distrib.html">xplot_distrib()</a></code>, <code><a href="../reference/xplot_qq.html">xplot_qq()</a></code>, <code><a href="../reference/xplot_scatter.html">xplot_scatter()</a></code>, with convenience function to fetch data in xpdb <code>data_opt_set()</code>.</li>
