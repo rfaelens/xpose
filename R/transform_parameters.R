@@ -37,7 +37,7 @@ transform_prm <- function(formula, mu, sigma, method = 'delta', samples = 1000){
     t_var <- {grad %*% sigma %*% t(grad)}[1,1]
     return(list(mean = t_mean, variance = t_var, rse = sqrt(t_var)/t_mean))
   }else if(method == 'mc'){
-    if(!require("mvtnorm")) stop("Package 'mvtnorm' needs to installed for this method to work.")
+    if(!requireNamespace("mvtnorm", quietly = TRUE)) stop("Package 'mvtnorm' needs to installed for this method to work.")
     mvtnorm::rmvnorm(samples, mean = mu, sigma = sigma) %>% 
       tibble::as_tibble() %>% 
       dplyr::mutate(f = eval(ex, .)) %>% 
