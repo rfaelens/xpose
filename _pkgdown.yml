@@ -52,6 +52,7 @@ reference:
     - get_data
     - get_file
     - get_prm
+    - get_special
     - get_summary
   - title: Basic gof
     desc:  Basic goodness-of-fit plots.
