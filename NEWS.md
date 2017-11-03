@@ -21,7 +21,7 @@
 * `print.xpose_plot()` now displays a message when the number of facets is > 20, informing that many panels are being printed and that it may take a while to render the plot
 * Improved `.problem`, `.subprob` and `.method` error checking
 
-# xpose 0.3
+# xpose 0.3.0
 ### General
 * Improved documentation and testing
 * Improved compatibility with NONMEM 7.4.1
@@ -47,7 +47,7 @@
 * Multiples improvements to the `vpc_data()` and `vpc()` functions.
 * More keywords added to `template_titles`
 
-# xpose 0.2
+# xpose 0.2.0
 ### General
 * Renamed package `xpose`
 * Added example dataset `xpdb_ex_pk`
@@ -85,7 +85,7 @@
 * Added wrapper around [`ronkeizer/vpc`](https://github.com/ronkeizer/vpc) inside `vpc_data()`.
 
 
-# ggxpose 0.1
+# ggxpose 0.1.0
 ### First commit
 * Proof of concept pre-release around simple goodness-of-fit functions like `dv_vs_ipred()`
 
