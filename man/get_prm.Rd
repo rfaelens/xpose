@@ -4,19 +4,22 @@
 \alias{get_prm}
 \title{Access model parameters}
 \usage{
-get_prm(xpdb, problem = NULL, subprob = NULL, method = NULL, digits = 4,
-  show_all = FALSE, quiet)
+get_prm(xpdb, .problem = NULL, .subprob = NULL, .method = NULL,
+  digits = 4, transform = TRUE, show_all = FALSE, quiet)
 }
 \arguments{
 \item{xpdb}{An \code{xpose_data} object from which the model output file data will be extracted.}
 
-\item{problem}{The problem to be used, by default returns the last one for each file.}
+\item{.problem}{The problem to be used, by default returns the last one for each file.}
 
-\item{subprob}{The subproblem to be used, by default returns the last one for each file.}
+\item{.subprob}{The subproblem to be used, by default returns the last one for each file.}
 
-\item{method}{The estimation method to be used, by default returns the last one for each file}
+\item{.method}{The estimation method to be used, by default returns the last one for each file}
 
 \item{digits}{The number of significant digits to be displayed.}
+
+\item{transform}{Should diagonal OMEGA and SIGMA elements be transformed to coeficient of variation, 
+off diagonal elements be transformed to correlations.}
 
 \item{show_all}{Logical, whether the 0 fixed off-diagonal elements should be removed from the output.}
 
@@ -29,10 +32,13 @@ A tibble for single problem/subprob or a named list for multiple problem|subprob
 Access model parameter estimates from an xpdb object.
 }
 \examples{
-# Display to the console
-get_prm(xpdb_ex_pk, problem = 1)
+# Store the parameter table
+prm <- get_prm(xpdb_ex_pk, .problem = 1)
 
-# Store the parameters in an object
-prm <- get_prm(xpdb_ex_pk, problem = 1)
+# Display parameters to the console
+prm_table(xpdb_ex_pk, .problem = 1)
 
+}
+\seealso{
+\code{\link{prm_table}}
 }

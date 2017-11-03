@@ -4,12 +4,12 @@
 \alias{only_distinct}
 \title{Create functions for data deduplication}
 \usage{
-only_distinct(xpdb, problem, facets, quiet)
+only_distinct(xpdb, .problem, facets, quiet)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
 
-\item{problem}{The $problem number to be used.}
+\item{.problem}{The $problem number to be used.}
 
 \item{facets}{The plot faceting variable. The `facets` variables along with the `id` column 
 type will be as grouping factors during data deduplication process.}

@@ -59,8 +59,8 @@ test_that('Check last_file_problem', {
 })
 
 test_that('Check last_file_subprob', {
-  expect_equal(last_file_subprob(xpdb_ex_pk, ext = 'ext', problem = 1), 0)
-  expect_equal(last_file_subprob(xpdb_ex_pk, ext = 'fake', problem = 1), NA_integer_)
+  expect_equal(last_file_subprob(xpdb_ex_pk, ext = 'ext', .problem = 1), 0)
+  expect_equal(last_file_subprob(xpdb_ex_pk, ext = 'fake', .problem = 1), NA_integer_)
 })
 
 test_that('Check xp_var', {
@@ -95,7 +95,7 @@ test_that('Check check_plot_type', {
 })
 
 test_that('Check drop_fixed', {
-  expect_message(variable_cols <- drop_fixed_cols(xpdb_ex_pk, problem = 1, quiet = FALSE,
+  expect_message(variable_cols <- drop_fixed_cols(xpdb_ex_pk, .problem = 1, quiet = FALSE,
                                                   cols = c('CL', 'V', 'KA', 'ALAG1')), 
                  regexp = 'Dropped fixed variables ALAG1')
   expect_equal(variable_cols, c('CL', 'V', 'KA'))

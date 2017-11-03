@@ -60,7 +60,7 @@ print.xpose_data <- function(x, ...) {
   
   cat(x$summary$value[x$summary$label == 'file'], 'overview:',
       '\n - Software:', x$summary$value[x$summary$label %in% c('software', 'version') & x$summary$value != 'na'],
-      '\n - Attached files:', 
+      stringr::str_c('\n - Attached files (memory usage ', format(utils::object.size(x), units = 'auto'), '):'),  
       '\n   + obs tabs:', tab_names,
       '\n   + sim tabs:', sim_names,
       '\n   + output files:', out_names,

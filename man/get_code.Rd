@@ -4,12 +4,12 @@
 \alias{get_code}
 \title{Access model code}
 \usage{
-get_code(xpdb, problem = NULL)
+get_code(xpdb, .problem = NULL)
 }
 \arguments{
 \item{xpdb}{An \code{xpose_data} object from which the model code will be extracted.}
 
-\item{problem}{The problem to be used, in addition, problem 0 is attributed to 
+\item{.problem}{The problem to be used, in addition, problem 0 is attributed to 
 general output (e.g. NM-TRAN warnings in NONMEM). By default returns the 
 entire code.}
 }

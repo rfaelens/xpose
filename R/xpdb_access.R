@@ -3,7 +3,7 @@
 #' @description Access model code from an xpdb object.
 #' 
 #' @param xpdb An \code{xpose_data} object from which the model code will be extracted.
-#' @param problem The problem to be used, in addition, problem 0 is attributed to 
+#' @param .problem The problem to be used, in addition, problem 0 is attributed to 
 #' general output (e.g. NM-TRAN warnings in NONMEM). By default returns the 
 #' entire code.
 #' @return A tibble of the parsed model.
@@ -13,16 +13,16 @@
 #' parsed_model
 #' 
 #' @export
-get_code <- function(xpdb, problem = NULL) {
+get_code <- function(xpdb, .problem = NULL) {
   check_xpdb(xpdb, check = 'code')
   x <- xpdb$code
   
-  if (!is.null(problem)) {
-    if (!all(problem %in% x$problem)) {
-      stop('$prob no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
+  if (!is.null(.problem)) {
+    if (!all(.problem %in% x$problem)) {
+      stop('$prob no.', stringr::str_c(.problem[!.problem %in% x$problem], collapse = ', '), 
            ' not found in model code.', call. = FALSE)
     }
-    x <- x[x$problem %in% problem, ]
+    x <- x[x$problem %in% .problem, ]
   }
   x
 }
@@ -34,22 +34,22 @@ get_code <- function(xpdb, problem = NULL) {
 #' 
 #' @param xpdb An \code{xpose_data} object from which the model output file data will be extracted.
 #' @param table Name of the output table to be extracted from the xpdb e.g. 'sdtab001'. Alternative to 
-#' the `problem` argument.
-#' @param problem Accesses all tables from the specified problem. Alternative to the `table` argument.
+#' the `.problem` argument.
+#' @param .problem Accesses all tables from the specified problem. Alternative to the `table` argument.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' 
 #' @return By default returns data from the last estimation problem. If only simulation problems are present 
 #' then the data from last simulation will be returned instead. Object returned as tibble for single 
 #' tables/problems or a named list for multiple tables/problems.
 #' 
-#' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_tables}}
+#' @seealso  \code{\link{list_data}}, \code{\link{xpose_data}}, \code{\link{read_nm_tables}}
 #' @examples
 #' # By table name
 #' sdtab <- get_data(xpdb_ex_pk, 'sdtab001')
 #' sdtab
 #' 
 #' # By problem
-#' tables <- get_data(xpdb_ex_pk, problem = 1)
+#' tables <- get_data(xpdb_ex_pk, .problem = 1)
 #' tables
 #' 
 #' # Tip to list available tables in the xpdb
@@ -57,35 +57,35 @@ get_code <- function(xpdb, problem = NULL) {
 #' 
 #' @export
 get_data <- function(xpdb, 
-                     table   = NULL, 
-                     problem = NULL,
+                     table    = NULL, 
+                     .problem = NULL,
                      quiet) {
   check_xpdb(xpdb, check = 'data')
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
-  if (is.null(table) && is.null(problem)) {
-    problem <- default_plot_problem(xpdb)
-    msg(c('Returning data from $prob no.', problem), quiet)
+  if (is.null(table) && is.null(.problem)) {
+    .problem <- default_plot_problem(xpdb)
+    msg(c('Returning data from $prob no.', .problem), quiet)
   }
   
-  if (!is.null(table) && !is.null(problem)) {
-    stop('Arguments `table` and `problem` cannot be used together.', call. = FALSE) 
+  if (!is.null(table) && !is.null(.problem)) {
+    stop('Arguments `table` and `.problem` cannot be used together.', call. = FALSE) 
   }
   
-  if (!is.null(problem) && is.na(problem)) return() # For internal use
+  if (!is.null(.problem) && is.na(.problem)) return() # For internal use
   
   x <- xpdb$data
   
-  if (!is.null(problem)) {
+  if (!is.null(.problem)) {
     # When selecting tables based on problem level
-    if (!all(problem %in% x$problem)) {
-      stop('$prob no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
+    if (!all(.problem %in% x$problem)) {
+      stop('$prob no.', stringr::str_c(.problem[!.problem %in% x$problem], collapse = ', '), 
            ' not found in model output data.', call. = FALSE)
     }
-    x <- x$data[x$problem %in% problem]
+    x <- x$data[x$problem %in% .problem]
     
-    if (length(problem) > 1) {
-      purrr::set_names(x, stringr::str_c('problem_', sort(problem), sep = ''))
+    if (length(.problem) > 1) {
+      purrr::set_names(x, stringr::str_c('problem_', sort(.problem), sep = ''))
     } else {
       x[[1]]
     }
@@ -125,14 +125,14 @@ get_data <- function(xpdb,
 #' @param xpdb An \code{xpose_data} object from which the model output file data will be extracted.
 #' @param file Full name of the file to be extracted from the xpdb e.g. 'run001.phi'. Alternative to the 'ext' argument.
 #' @param ext Extension of the file to be extracted from the xpdb e.g. 'phi'. Alternative to the 'file' argument.
-#' @param problem The problem to be used, by default returns the last one for each file.
-#' @param subprob The subproblem to be used, by default returns the last one for each file.
-#' @param method The estimation method to be used (e.g. 'foce', 'imp', 'saem'), by default returns the 
+#' @param .problem The problem to be used, by default returns the last one for each file.
+#' @param .subprob The subproblem to be used, by default returns the last one for each file.
+#' @param .method The estimation method to be used (e.g. 'foce', 'imp', 'saem'), by default returns the 
 #' last one for each file.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' 
 #' @return A tibble for single file or a named list for multiple files.
-#' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_files}}
+#' @seealso  \code{\link{list_files}}, \code{\link{xpose_data}}, \code{\link{read_nm_files}}
 #' @examples
 #' # Single file (returns a tibble)
 #' ext_file <- get_file(xpdb_ex_pk, file = 'run001.ext')
@@ -147,11 +147,11 @@ get_data <- function(xpdb,
 #' 
 #' @export
 get_file <- function(xpdb, 
-                     file      = NULL, 
-                     ext       = NULL, 
-                     problem   = NULL, 
-                     subprob   = NULL, 
-                     method    = NULL, 
+                     file     = NULL, 
+                     ext      = NULL, 
+                     .problem = NULL, 
+                     .subprob = NULL, 
+                     .method  = NULL, 
                      quiet) {
   check_xpdb(xpdb, check = 'files')
   if (missing(quiet)) quiet <- xpdb$options$quiet
@@ -180,31 +180,31 @@ get_file <- function(xpdb,
   x <- xpdb$files[xpdb$files$name %in% file, ]
   
   # Filter by $problem
-  if (is.null(problem)) {
-    problem <- last_file_problem(xpdb, ext = x$extension)
-  } else if (!all(problem %in% x$problem)) {
-    stop('$prob no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
+  if (is.null(.problem)) {
+    .problem <- last_file_problem(xpdb, ext = x$extension)
+  } else if (!all(.problem %in% x$problem)) {
+    stop('$prob no.', stringr::str_c(.problem[!.problem %in% x$problem], collapse = ', '), 
          ' not found in ', stringr::str_c(unique(x$name), collapse = ', '), ' files.', call. = FALSE)
   }
-  x <- x[x$problem %in% problem, ]
+  x <- x[x$problem %in% .problem, ]
   
   # Filter by sub-problem
-  if (is.null(subprob)) {
-    subprob <- last_file_subprob(xpdb, ext = x$extension, problem = problem)
-  } else if (!all(subprob %in% x$subprob)) {
-    stop('Subprob no.', stringr::str_c(subprob[!subprob %in% x$subprob], collapse = ', '), 
+  if (is.null(.subprob)) {
+    .subprob <- last_file_subprob(xpdb, ext = x$extension, .problem = .problem)
+  } else if (!all(.subprob %in% x$subprob)) {
+    stop('Subprob no.', stringr::str_c(.subprob[!.subprob %in% x$subprob], collapse = ', '), 
          ' not found in ', stringr::str_c(unique(x$name), collapse = ', '), ' files.', call. = FALSE)
   }
-  x <- x[x$subprob %in% subprob, ]
+  x <- x[x$subprob %in% .subprob, ]
   
   # Filter by method
-  if (is.null(method)) {
-    method <- last_file_method(xpdb, ext = x$extension, problem = problem, subprob = subprob)
-  } else if (!all(method %in% x$method)) {
-    stop('Method ', stringr::str_c(method[!method %in% x$method], collapse = ', '), 
+  if (is.null(.method)) {
+    .method <- last_file_method(xpdb, ext = x$extension, .problem = .problem, .subprob = .subprob)
+  } else if (!all(.method %in% x$method)) {
+    stop('Method ', stringr::str_c(.method[!.method %in% x$method], collapse = ', '), 
          ' not found in ', stringr::str_c(unique(x$name), collapse = ', ') , ' files.', call. = FALSE)
   }
-  x <- x[x$method %in% method, ]
+  x <- x[x$method %in% .method, ]
   
   # Prepare output
   if (nrow(x) > 1) {
@@ -227,8 +227,8 @@ get_file <- function(xpdb,
 #' @description Access model summary data from an xpdb object.
 #' 
 #' @param xpdb An \code{xpose_data} object from which the summary data will be extracted.
-#' @param problem The problem to be used, by default returns the last one for each label.
-#' @param subprob The subproblem to be used, by default returns the last one for each label.
+#' @param .problem The .problem to be used, by default returns the last one for each label.
+#' @param .subprob The subproblem to be used, by default returns the last one for each label.
 #' @param only_last Logical, if \code{TRUE} only the last record for each label is returned in case 
 #' of multiple problem and/or subproblem. If \code{FALSE} all values are returned.
 #' 
@@ -239,26 +239,29 @@ get_file <- function(xpdb,
 #' run_summary
 #' 
 #' @export
-get_summary <- function(xpdb, problem = NULL, subprob = NULL, only_last = FALSE) {
+get_summary <- function(xpdb, 
+                        .problem  = NULL, 
+                        .subprob  = NULL, 
+                        only_last = FALSE) {
   check_xpdb(xpdb, check = 'summary')
   x <- xpdb$summary
   
   # Filter by $problem
-  if (!is.null(problem)) {
-    if (!all(problem %in% x$problem)) {
-      stop('$prob no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
+  if (!is.null(.problem)) {
+    if (!all(.problem %in% x$problem)) {
+      stop('$prob no.', stringr::str_c(.problem[!.problem %in% x$problem], collapse = ', '), 
            ' not found in model summary.', call. = FALSE)
     }
-    x <- x[x$problem %in% problem, ]
+    x <- x[x$problem %in% .problem, ]
   }
   
   # Filter by sub-problem
-  if (!is.null(subprob)) {
-    if (!all(subprob %in% x$subprob)) {
-      stop('Subprob no.', stringr::str_c(subprob[!subprob %in% x$subprob], collapse = ', '), 
+  if (!is.null(.subprob)) {
+    if (!all(.subprob %in% x$subprob)) {
+      stop('Subprob no.', stringr::str_c(.subprob[!.subprob %in% x$subprob], collapse = ', '), 
            ' not found in model summary.', call. = FALSE)
     }
-    x <- x[x$subprob %in% subprob, ]
+    x <- x[x$subprob %in% .subprob, ]
   }
   
   # Remove duplicates
@@ -273,28 +276,32 @@ get_summary <- function(xpdb, problem = NULL, subprob = NULL, only_last = FALSE)
 #' @description Access model parameter estimates from an xpdb object.
 #' 
 #' @param xpdb An \code{xpose_data} object from which the model output file data will be extracted.
-#' @param problem The problem to be used, by default returns the last one for each file.
-#' @param subprob The subproblem to be used, by default returns the last one for each file.
-#' @param method The estimation method to be used, by default returns the last one for each file
+#' @param .problem The problem to be used, by default returns the last one for each file.
+#' @param .subprob The subproblem to be used, by default returns the last one for each file.
+#' @param .method The estimation method to be used, by default returns the last one for each file
 #' @param digits The number of significant digits to be displayed.
+#' @param transform Should diagonal OMEGA and SIGMA elements be transformed to coeficient of variation, 
+#' off diagonal elements be transformed to correlations. 
 #' @param show_all Logical, whether the 0 fixed off-diagonal elements should be removed from the output.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' 
 #' @return A tibble for single problem/subprob or a named list for multiple problem|subprob.
+#' @seealso \code{\link{prm_table}}
 #' @examples
-#' # Display to the console
-#' get_prm(xpdb_ex_pk, problem = 1)
+#' # Store the parameter table
+#' prm <- get_prm(xpdb_ex_pk, .problem = 1)
 #' 
-#' # Store the parameters in an object
-#' prm <- get_prm(xpdb_ex_pk, problem = 1)
+#' # Display parameters to the console
+#' prm_table(xpdb_ex_pk, .problem = 1)
 #' 
 #' @export
 get_prm <- function(xpdb, 
-                    problem  = NULL, 
-                    subprob  = NULL, 
-                    method   = NULL,
-                    digits   = 4,
-                    show_all = FALSE,
+                    .problem  = NULL, 
+                    .subprob  = NULL, 
+                    .method   = NULL,
+                    digits    = 4,
+                    transform = TRUE,
+                    show_all  = FALSE,
                     quiet) {
   
   check_xpdb(xpdb, check = 'files')
@@ -305,19 +312,31 @@ get_prm <- function(xpdb,
     stop('File extension `ext` not found in model output files.' , call. = FALSE) 
   }
   
-  if (is.null(problem)) problem <- last_file_problem(xpdb, ext = 'ext')
-  if (is.null(subprob)) subprob <- last_file_subprob(xpdb, ext = 'ext', problem = problem)
-  if (is.null(method))  method  <- last_file_method(xpdb, ext = 'ext', problem = problem, subprob = subprob)
+  if (is.null(.problem)) .problem <- last_file_problem(xpdb, ext = 'ext')
+  if (is.null(.subprob)) .subprob <- last_file_subprob(xpdb, ext = 'ext', .problem = .problem)
+  if (is.null(.method))  .method  <- last_file_method(xpdb, ext = 'ext', .problem = .problem, .subprob = .subprob)
   
-  prm_df <- prm_df[prm_df$extension == 'ext' & prm_df$problem %in% problem &
-                     prm_df$subprob %in% subprob & prm_df$method %in% method, ]
+  prm_df <- prm_df %>%  
+    dplyr::filter(.$extension %in% c('ext', 'cov'), 
+                  .$problem %in% .problem,                    
+                  .$subprob %in% .subprob, 
+                  .$method %in% .method)
   
-  if (nrow(prm_df) == 0) {
+  
+  if (!any(prm_df$extension == 'ext')) {
     stop('No parameter estimates found for $prob no.', 
-         stringr::str_c(problem, collapse = '/'), ', subprob no. ',
-         stringr::str_c(subprob, collapse = '/'), ', method ',
-         stringr::str_c(method, collapse = '/'), '.', call. = FALSE) 
+         stringr::str_c(.problem, collapse = '/'), ', subprob no. ',
+         stringr::str_c(.subprob, collapse = '/'), ', method ',
+         stringr::str_c(.method, collapse = '/'), '.', call. = FALSE) 
   }
+  
+  prm_df <- prm_df %>% 
+    dplyr::select(-dplyr::one_of('name', 'modified')) %>% 
+    tidyr::spread(key = 'extension', value = 'data')
+  
+  msg(c('Returning parameter estimates from $prob no.', stringr::str_c(unique(prm_df$problem), collapse = ', '), 
+        ', subprob no.', stringr::str_c(unique(prm_df$subprob), collapse = ', '), 
+        ', method ', stringr::str_c(unique(prm_df$method), collapse = ', ')), quiet)
   
   prm_df <- prm_df %>% 
     dplyr::mutate(prm_names = purrr::map(.x = as.list(.$problem), .f = function(x, code) {
@@ -326,128 +345,155 @@ get_prm <- function(xpdb,
       code <- code[code$problem == x,]
       list(theta = code$comment[code$subroutine == 'the'],
            omega = code[code$subroutine == 'ome', ] %>%
-             dplyr::filter(!(stringr::str_detect(.$code, 'BLOCK\\(\\d+') & .$comment == '')) %>% 
+             dplyr::filter(!(stringr::str_detect(.$code, 'BLOCK\\(\\d+\\)(?!.*SAME)') & .$comment == '')) %>% 
              {purrr::flatten_chr(.[, 'comment'])},
            sigma = code$comment[code$subroutine == 'sig'])
       
     }, code = xpdb$code)) %>% 
-    dplyr::mutate(n = 1:n()) %>% 
-    dplyr::group_by_(.dots = 'n') %>% 
-    tidyr::nest(.key = 'out') %>% 
-    dplyr::mutate(prm = purrr::map(.x = .$out, .f = function(data, show_all) {
+    purrr::transpose() %>% 
+    purrr::map(.f = function(data) {
+      prm_mean <- grab_iter(ext = data$ext, iter = -1000000000)
+      prm_se   <- grab_iter(ext = data$ext, iter = -1000000001)
+      prm_fix  <- grab_iter(ext = data$ext, iter = -1000000006)
       
-      # Gather prm files
-      prm_tmp <- data$data[[1]] %>% 
-        dplyr::filter(.$ITERATION %in% c(-1000000000, -1000000001, -1000000006)) %>% 
-        dplyr::mutate(name = dplyr::case_when(.$ITERATION == -1000000000 ~ 'value', 
-                                              .$ITERATION == -1000000001 ~ 'rse',
-                                              TRUE ~ 'fixed')) %>% 
-        dplyr::select(colnames(.)[!stringr::str_detect(colnames(.), 'ITERATION|OBJ')]) %>% 
-        {as.data.frame(t(.), stringsAsFactors = FALSE)} %>% 
-        {purrr::set_names(x = ., nm = purrr::flatten_chr(.[nrow(.),]))} %>% 
-        dplyr::mutate(name  = row.names(.)) %>% 
-        dplyr::slice(-nrow(.)) %>% 
-        dplyr::mutate(value = as.numeric(.$value),
-                      fixed = as.logical(as.numeric(.$fixed)))
-      
-      # Check RSE column
-      if (any(colnames(prm_tmp) == 'rse')) {
-        has_rse  <- TRUE
-        prm_tmp  <- dplyr::mutate(.data = prm_tmp, rse = as.numeric(prm_tmp$rse))
+      if (transform) {
+        if (!is.null(data$cov)) {
+          # build covariance matrix from `.cov` file
+          prm_cov <- as.data.frame(data$cov) %>% 
+            tibble::column_to_rownames('NAME') %>% 
+            as.matrix()
+        } else {
+          # build covariance matrix from `.ext` se
+          prm_cov <- diag(prm_se)^2
+          attr(prm_cov, 'dimnames') <- list(names(prm_se), names(prm_se))
+          
+          # No warning when .ext SE not available
+          if (!all(is.na(prm_se))) {
+            warning('Covariance matrix (`.cov`) not available, RSE for covariance parameters will be incorrect.', call. = FALSE)
+          }
+        }
+        # obtain transformation formulas 
+        prm_trans_formula <- get_prm_transformation_formulas(names(prm_mean))
+        # transform parameters & calculate var, rse for transformation
+        prms <- purrr::map_df(prm_trans_formula, ~transform_prm(.x, mu = prm_mean, sigma = prm_cov, method = 'delta')) %>% 
+          dplyr::mutate(se = sqrt(.$variance))
       } else {
-        has_rse     <- FALSE
-        prm_tmp$rse <- NA
+        prms <- dplyr::data_frame(mean = purrr::flatten_dbl(prm_mean), 
+                                  se   = purrr::flatten_dbl(prm_se)) %>% 
+          dplyr::mutate(rse = .$se/abs(.$mean))
       }
       
-      # Add flag for diagonal elements identification
-      prm_tmp <- prm_tmp %>% 
+      prms <- prms %>% 
+        dplyr::mutate(fixed = as.logical(as.numeric(prm_fix)),
+                      name  = names(prm_mean)) %>%
         dplyr::mutate(type = dplyr::case_when(stringr::str_detect(.$name, 'THETA') ~ 'the',
                                               stringr::str_detect(.$name, 'OMEGA') ~ 'ome',
                                               stringr::str_detect(.$name, 'SIGMA') ~ 'sig'),
-                      number = stringr::str_replace_all(.$name, '[^\\d,]+', '')) %>% 
-        tidyr::separate(col = 'number', into = c('m', 'n'), sep = ',', 
-                        fill = 'right') %>% 
-        dplyr::mutate(diagonal = dplyr::if_else(.$m == .$n, TRUE, FALSE))
-      
-      # Convert RSE to CV%
-      if (has_rse) {
-        prm_tmp <- prm_tmp %>% 
-          dplyr::mutate(rse = dplyr::case_when(.$fixed ~ NA_real_,
-                                               .$type == 'the' ~ abs(.$rse / .$value),
-                                               TRUE ~ abs(.$rse / .$value) / 2)) # Approximate standard deviation scale
-      }
-      
-      # Convert Off diagonal to correlations
-      ref_n <- prm_tmp %>% 
-        dplyr::filter(!is.na(.$diagonal) & .$diagonal == TRUE & !.$fixed) %>% 
-        dplyr::select_(.dots = list('n', 'type', 'value_n' = 'value'))
-      ref_m <- dplyr::select_(.data = ref_n, .dots = list('m' = 'n', 'type', 'value_m' = 'value_n'))
-      
-      prm_tmp <- prm_tmp %>% 
-        dplyr::left_join(ref_n, by = c('n', 'type')) %>% 
-        dplyr::left_join(ref_m, by = c('m', 'type')) %>% 
-        dplyr::mutate(value = ifelse(!is.na(.$value_n) & !is.na(.$value_m) & !.$diagonal & !.$fixed, 
-                                     .$value/(sqrt(.$value_n)*sqrt(.$value_m)), .$value))
-      
-      # Change variances to CV%, round values and reorder row/cols
-      prm_tmp$value[prm_tmp$type %in% c('ome', 'sig') & prm_tmp$diagonal] <- 
-        sqrt(prm_tmp$value[prm_tmp$type %in% c('ome', 'sig') & prm_tmp$diagonal])
-      
-      prm_tmp <- prm_tmp %>%
+                      number = stringr::str_replace_all(.$name, '[^\\d,]+', ''),
+                      se     = ifelse(.$fixed, NA_real_, as.numeric(.$se)),
+                      rse    = ifelse(.$fixed, NA_real_, as.numeric(.$rse))) %>%
+        tidyr::separate(col = 'number', into = c('m', 'n'), sep = ',', fill = 'right') %>% 
+        dplyr::mutate(diagonal = dplyr::if_else(.$m == .$n, TRUE, FALSE)) %>% 
+        dplyr::rename_(.dots = list(value = 'mean')) %>% 
         dplyr::mutate(label = '',
                       value = signif(.$value, digits = digits),
+                      se    = signif(.$se, digits = digits),
                       rse   = signif(.$rse, digits = digits),
-                      order = dplyr::case_when(.$type == 'the' ~ 1,
-                                               .$type == 'ome' ~ 2,
+                      n     = as.numeric(.$n),
+                      m     = as.numeric(.$m),
+                      order = dplyr::case_when(type == 'the' ~ 1,
+                                               type == 'ome' ~ 2,
                                                TRUE ~ 3)) %>% 
         dplyr::arrange_(.dots = 'order') %>% 
-        dplyr::select(dplyr::one_of('type', 'name', 'label', 'value', 'rse', 'fixed', 'diagonal', 'm', 'n'))
+        dplyr::select(dplyr::one_of('type', 'name', 'label', 'value', 'se', 'rse', 'fixed', 'diagonal', 'm', 'n'))
       
       # Assign THETA labels
-      n_theta     <- sum(prm_tmp$type == 'the')
-      theta_names <- data$prm_names[[1]]$theta
+      n_theta     <- sum(prms$type == 'the')
+      theta_names <- data$prm_names$theta
       if (n_theta != length(theta_names)) {
-        warning('[$prob no.', data$problem[[1]], ', subprob no.', data$subprob[[1]], ', ', data$method[[1]], 
+        warning('[$prob no.', data$problem, ', subprob no.', data$subprob, ', ', data$method, 
                 '] $THETA labels did not match the number of THETAs in the `.ext` file.', call. = FALSE)
       } else {
-        prm_tmp$label[prm_tmp$type == 'the'] <- theta_names
+        prms$label[prms$type == 'the'] <- theta_names
       }
       
       # Assign OMEGA labels
-      n_omega     <- sum(prm_tmp$type == 'ome' & prm_tmp$diagonal, na.rm = TRUE)
-      omega_names <- data$prm_names[[1]]$omega
+      n_omega     <- sum(prms$type == 'ome' & prms$diagonal, na.rm = TRUE)
+      omega_names <- data$prm_names$omega
       if (n_omega != length(omega_names)) {
-        warning('[$prob no.', data$problem[[1]], ', subprob no.', data$subprob[[1]], ', ', data$method[[1]], 
+        warning('[$prob no.', data$problem, ', subprob no.', data$subprob, ', ', data$method, 
                 '] $OMEGA labels did not match the number of OMEGAs in the `.ext` file.', call. = FALSE)
       } else {
-        prm_tmp$label[prm_tmp$type == 'ome' & prm_tmp$diagonal] <- omega_names
+        prms$label[prms$type == 'ome' & prms$diagonal] <- omega_names
       }
       
       # Assign SIGMA labels
-      n_sigma     <- sum(prm_tmp$type == 'sig' & prm_tmp$diagonal, na.rm = TRUE)
-      sigma_names <- data$prm_names[[1]]$sigma
+      n_sigma     <- sum(prms$type == 'sig' & prms$diagonal, na.rm = TRUE)
+      sigma_names <- data$prm_names$sigma
       if (n_sigma != length(sigma_names)) {
-        warning('[$prob no.', data$problem[[1]], ', subprob no.', data$subprob[[1]], ', ', data$method[[1]], 
+        warning('[$prob no.', data$problem, ', subprob no.', data$subprob, ', ', data$method, 
                 '] $SIGMA labels did not match the number of SIGMAs in the `.ext` file.', call. = FALSE)
       } else {
-        prm_tmp$label[prm_tmp$type == 'sig' & prm_tmp$diagonal] <- sigma_names
+        prms$label[prms$type == 'sig' & prms$diagonal] <- sigma_names
       }
       
       # Filter_all
       if (!show_all) {
-        prm_tmp <- dplyr::filter(.data = prm_tmp, !(prm_tmp$type %in% c('ome', 'sig') & 
-                                                      prm_tmp$value == 0 & !prm_tmp$diagonal))
+        prms <- dplyr::filter(.data = prms, !(prms$type %in% c('ome', 'sig') & 
+                                                prms$value == 0 & !prms$diagonal))
       }
       
       # Add metadata to output
-      structure(.Data = prm_tmp, file = data$name[[1]], problem = data$problem[[1]], 
-                subprob = data$subprob[[1]], method = data$method[[1]])
-    }, show_all = show_all)) %>% 
-    .$prm
+      structure(.Data = prms, file = 'ext', problem = data$problem, 
+                subprob = data$subprob, method = data$method)
+      
+    })
   
   # Format output
   if (length(prm_df) == 1) prm_df <- prm_df[[1]]
   structure(prm_df, class = c('xpose_prm', class(prm_df)))
+}
+
+
+#' Grab parameter for a given iteration number
+#' @param ext parameter vs. iteration table
+#' @param iter iteration number
+#'
+#' @keywords internal
+#' @export
+grab_iter <- function(ext, iter) {
+  out <- ext %>% 
+    dplyr::filter(.$ITERATION == iter) %>% 
+    dplyr::select(-dplyr::one_of('ITERATION', 'OBJ'))
+  
+  if (nrow(out) == 0) out[1,] <- NA_real_
+  
+  purrr::flatten(out)
+}
+
+
+#' Generate default transformation formulas for parameters
+#'
+#' @param prm_names Vector of parameter names as found in .ext 
+#'
+#' @return List of formulas decribing the transformation
+#' @keywords internal
+#' @export
+get_prm_transformation_formulas <- function(prm_names) {
+  prm_names %>% 
+    purrr::set_names() %>% 
+    purrr::map_if(~stringr::str_detect(.x, "^THETA"), 
+                  ~substitute(~par, list(par = rlang::sym(.x)))) %>% 
+    purrr::map_if(~purrr::is_character(.x) && stringr::str_detect(.x, '^(OMEGA|SIGMA)\\((\\d+),\\2\\)$'), 
+                  ~substitute(~sqrt(par), list(par = rlang::sym(.x)))) %>% 
+    purrr::map_if(~purrr::is_character(.x) && stringr::str_detect(.x, '^(OMEGA|SIGMA)\\(\\d+,\\d+\\)$'), 
+                  ~substitute(~cov/(sqrt(var1)/sqrt(var2)), 
+                              list(cov = rlang::sym(.x),
+                                   var1 = stringr::str_replace(.x, '\\((\\d+),(\\d+)\\)', 
+                                                               '(\\1,\\1)') %>% rlang::sym(),
+                                   var2 = stringr::str_replace(.x, '\\((\\d+),(\\d+)\\)', 
+                                                               '(\\2,\\2)') %>% rlang::sym())))
+  
 }
 
 
@@ -456,29 +502,29 @@ get_prm <- function(xpdb,
 #' @description Access special model data from an xpdb object.
 #' 
 #' @param xpdb An \code{xpose_data} object from which the special data will be extracted.
-#' @param problem The problem to be used, by default returns the last one.
+#' @param .problem The problem to be used, by default returns the last one.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' 
 #' @return A list.
-#' @seealso \code{\link{xpose_data}}
+#' @seealso  \code{\link{list_special}}, \code{\link{xpose_data}}
 #' @examples
 #' special <- get_summary(xpdb_ex_pk)
 #' special
 #' 
 #' @export
-get_special <- function(xpdb, problem = NULL, quiet) {
+get_special <- function(xpdb, .problem = NULL, quiet) {
   check_xpdb(xpdb, check = 'special')
   if (missing(quiet)) quiet <- xpdb$options$quiet
   x <- xpdb$special
-  if (is.null(problem)) problem <- max(x$problem)
+  if (is.null(.problem)) .problem <- max(x$problem)
   
-  if (!all(problem %in% x$problem)) {
-    stop('$prob no.', stringr::str_c(problem[!problem %in% x$problem], collapse = ', '), 
+  if (!all(.problem %in% x$problem)) {
+    stop('$prob no.', stringr::str_c(.problem[!.problem %in% x$problem], collapse = ', '), 
          ' not found in special data.', call. = FALSE)
   }
-  x <- x[x$problem %in% problem, ]
+  x <- x[x$problem %in% .problem, ]
   
-  if (length(problem) > 1) {
+  if (length(.problem) > 1) {
     purrr::set_names(x$data, stringr::str_c('problem_', x$problem, '_', x$method, '_', x$type))
   } else {
     msg(c('Returning ', x$method, ' ' , x$type, ' data from $prob no.', x$problem), quiet)

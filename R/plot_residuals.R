@@ -36,27 +36,28 @@ res_vs_pred <- function(xpdb,
                         log      = NULL,
                         guide    = TRUE,
                         facets,
-                        problem,
+                        .problem,
                         quiet,
                         ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- default_plot_problem(xpdb)
+  if (missing(.problem)) .problem <- default_plot_problem(xpdb)
+  check_problem(.problem, .subprob = NULL, .method = NULL)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   if (length(res) > 1) {
     if (missing(facets)) facets <- add_facet_var(facets = xpdb$xp_theme$facets, 
                                                  variable = 'variable')
-    opt <- data_opt(problem = problem, 
-                    filter = only_obs(xpdb, problem, quiet),
+    opt <- data_opt(.problem = .problem, 
+                    filter = only_obs(xpdb, .problem, quiet),
                     tidy = TRUE, value_col = res)
-    vars <- aes_c(aes_string(x = xp_var(xpdb, problem, type = 'pred')$col, 
+    vars <- aes_c(aes_string(x = xp_var(xpdb, .problem, type = 'pred')$col, 
                              y = 'value'), mapping)
   } else {
     if (missing(facets)) facets <- xpdb$xp_theme$facets
-    opt <- data_opt(problem = problem, 
-                    filter = only_obs(xpdb, problem, quiet))
-    vars <- aes_c(aes_string(x = xp_var(xpdb, problem, type = 'pred')$col, 
+    opt <- data_opt(.problem = .problem, 
+                    filter = only_obs(xpdb, .problem, quiet))
+    vars <- aes_c(aes_string(x = xp_var(xpdb, .problem, type = 'pred')$col, 
                              y = toupper(res)), mapping)
   }
   
@@ -84,27 +85,28 @@ absval_res_vs_pred <- function(xpdb,
                                log      = NULL,
                                guide    = FALSE,
                                facets,
-                               problem,
+                               .problem,
                                quiet,
                                ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- default_plot_problem(xpdb)
+  if (missing(.problem)) .problem <- default_plot_problem(xpdb)
+  check_problem(.problem, .subprob = NULL, .method = NULL)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   if (length(res) > 1) {
     if (missing(facets)) facets <- add_facet_var(facets = xpdb$xp_theme$facets, 
                                                  variable = 'variable')
-    opt <- data_opt(problem = problem, 
-                    filter = only_obs(xpdb, problem, quiet),
+    opt <- data_opt(.problem = .problem, 
+                    filter = only_obs(xpdb, .problem, quiet),
                     tidy = TRUE, value_col = res)
-    vars <- aes_c(aes_string(x = xp_var(xpdb, problem, type = 'pred')$col, 
+    vars <- aes_c(aes_string(x = xp_var(xpdb, .problem, type = 'pred')$col, 
                              y = 'abs(value)'), mapping)
   } else {
     if (missing(facets)) facets <- xpdb$xp_theme$facets
-    opt <- data_opt(problem = problem, 
-                    filter = only_obs(xpdb, problem, quiet))
-    vars <- aes_c(aes_string(x = xp_var(xpdb, problem, type = 'pred')$col, 
+    opt <- data_opt(.problem = .problem, 
+                    filter = only_obs(xpdb, .problem, quiet))
+    vars <- aes_c(aes_string(x = xp_var(xpdb, .problem, type = 'pred')$col, 
                              y =  stringr::str_c('abs(', toupper(res), ')')), mapping)
   }
   
@@ -156,27 +158,28 @@ res_vs_idv <- function(xpdb,
                        log      = NULL,
                        guide    = TRUE,
                        facets,
-                       problem,
+                       .problem,
                        quiet,
                        ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- default_plot_problem(xpdb)
+  if (missing(.problem)) .problem <- default_plot_problem(xpdb)
+  check_problem(.problem, .subprob = NULL, .method = NULL)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   if (length(res) > 1) {
     if (missing(facets)) facets <- add_facet_var(facets = xpdb$xp_theme$facets, 
                                                  variable = 'variable')
-    opt <- data_opt(problem = problem, 
-                    filter = only_obs(xpdb, problem, quiet),
+    opt <- data_opt(.problem = .problem, 
+                    filter = only_obs(xpdb, .problem, quiet),
                     tidy = TRUE, value_col = res)
-    vars <- aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
+    vars <- aes_c(aes_string(x = xp_var(xpdb, .problem, type = 'idv')$col, 
                              y = 'value'), mapping)
   } else {
     if (missing(facets)) facets <- xpdb$xp_theme$facets
-    opt <- data_opt(problem = problem, 
-                    filter = only_obs(xpdb, problem, quiet))
-    vars <- aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
+    opt <- data_opt(.problem = .problem, 
+                    filter = only_obs(xpdb, .problem, quiet))
+    vars <- aes_c(aes_string(x = xp_var(xpdb, .problem, type = 'idv')$col, 
                              y = toupper(res)), mapping)
   }
   
@@ -204,27 +207,28 @@ absval_res_vs_idv <- function(xpdb,
                               log      = NULL,
                               guide    = FALSE,
                               facets,
-                              problem,
+                              .problem,
                               quiet,
                               ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- default_plot_problem(xpdb)
+  if (missing(.problem)) .problem <- default_plot_problem(xpdb)
+  check_problem(.problem, .subprob = NULL, .method = NULL)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   
   if (length(res) > 1) {
     if (missing(facets)) facets <- add_facet_var(facets = xpdb$xp_theme$facets, 
                                                  variable = 'variable')
-    opt <- data_opt(problem = problem, 
-                    filter = only_obs(xpdb, problem, quiet),
+    opt <- data_opt(.problem = .problem, 
+                    filter = only_obs(xpdb, .problem, quiet),
                     tidy = TRUE, value_col = res)
-    vars <- aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
+    vars <- aes_c(aes_string(x = xp_var(xpdb, .problem, type = 'idv')$col, 
                              y = 'abs(value)'), mapping)
   } else {
     if (missing(facets)) facets <- xpdb$xp_theme$facets
-    opt <- data_opt(problem = problem, 
-                    filter = only_obs(xpdb, problem, quiet))
-    vars <- aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
+    opt <- data_opt(.problem = .problem, 
+                    filter = only_obs(xpdb, .problem, quiet))
+    vars <- aes_c(aes_string(x = xp_var(xpdb, .problem, type = 'idv')$col, 
                              y =  stringr::str_c('abs(', toupper(res), ')')), mapping)
   }
   

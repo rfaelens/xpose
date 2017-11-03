@@ -28,21 +28,21 @@ dv_vs_idv <- function(xpdb,
                       caption  = '@dir',
                       log      = NULL,
                       facets,
-                      problem,
+                      .problem,
                       quiet,
                       ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  # use last estimation problem unless there is only one problem
-  if (missing(problem)) problem <- default_plot_problem(xpdb)
+  if (missing(.problem)) .problem <- default_plot_problem(xpdb)
+  check_problem(.problem, .subprob = NULL, .method = NULL)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (missing(facets)) facets <- xpdb$xp_theme$facets
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
-                opt = data_opt(problem = problem, 
-                               filter = only_obs(xpdb, problem, quiet)),
-                mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
-                                           y = xp_var(xpdb, problem, type = 'dv')$col), mapping),
+                opt = data_opt(.problem = .problem, 
+                               filter = only_obs(xpdb, .problem, quiet)),
+                mapping = aes_c(aes_string(x = xp_var(xpdb, .problem, type = 'idv')$col, 
+                                           y = xp_var(xpdb, .problem, type = 'dv')$col), mapping),
                 type = type, facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
@@ -62,20 +62,21 @@ ipred_vs_idv <- function(xpdb,
                          subtitle = 'Ofv: @ofv, Eps shrink: @epsshk',
                          caption  = '@dir',
                          log      = NULL,
-                         problem,
+                         .problem,
                          quiet,
                          ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- default_plot_problem(xpdb)
+  if (missing(.problem)) .problem <- default_plot_problem(xpdb)
+  check_problem(.problem, .subprob = NULL, .method = NULL)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (missing(facets)) facets <- xpdb$xp_theme$facets
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
-                opt = data_opt(problem = problem, 
-                               filter = only_obs(xpdb, problem, quiet)),
-                mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
-                                           y = xp_var(xpdb, problem, type = 'ipred')$col), mapping),
+                opt = data_opt(.problem = .problem, 
+                               filter = only_obs(xpdb, .problem, quiet)),
+                mapping = aes_c(aes_string(x = xp_var(xpdb, .problem, type = 'idv')$col, 
+                                           y = xp_var(xpdb, .problem, type = 'ipred')$col), mapping),
                 type = type, facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
@@ -95,20 +96,21 @@ pred_vs_idv <- function(xpdb,
                         subtitle = 'Ofv: @ofv',
                         caption  = '@dir',
                         log      = NULL,
-                        problem,
+                        .problem,
                         quiet,
                         ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- default_plot_problem(xpdb)
+  if (missing(.problem)) .problem <- default_plot_problem(xpdb)
+  check_problem(.problem, .subprob = NULL, .method = NULL)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (missing(facets)) facets <- xpdb$xp_theme$facets
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
-                opt = data_opt(problem = problem, 
-                               filter = only_obs(xpdb, problem, quiet)),
-                mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
-                                           y = xp_var(xpdb, problem, type = 'pred')$col), mapping),
+                opt = data_opt(.problem = .problem, 
+                               filter = only_obs(xpdb, .problem, quiet)),
+                mapping = aes_c(aes_string(x = xp_var(xpdb, .problem, type = 'idv')$col, 
+                                           y = xp_var(xpdb, .problem, type = 'pred')$col), mapping),
                 type = type, facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
@@ -131,22 +133,23 @@ dv_preds_vs_idv <- function(xpdb,
                             subtitle = 'Ofv: @ofv, Eps shrink: @epsshk',
                             caption  = '@dir',
                             log      = NULL,
-                            problem,
+                            .problem,
                             quiet,
                             ...) {
   # Check input
   check_xpdb(xpdb, check = 'data')
-  if (missing(problem)) problem <- default_plot_problem(xpdb)
+  if (missing(.problem)) .problem <- default_plot_problem(xpdb)
+  check_problem(.problem, .subprob = NULL, .method = NULL)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (missing(facets)) facets <- add_facet_var(facets = xpdb$xp_theme$facets, 
                                                variable = 'variable')
   
   xplot_scatter(xpdb = xpdb, group = group, quiet = quiet,
-                opt = data_opt(problem = problem, tidy = TRUE, 
-                               filter = only_obs(xpdb, problem, quiet),
-                               value_col = xp_var(xpdb, problem, 
+                opt = data_opt(.problem = .problem, tidy = TRUE, 
+                               filter = only_obs(xpdb, .problem, quiet),
+                               value_col = xp_var(xpdb, .problem, 
                                                   type = c('dv', 'pred', 'ipred'))$col),
-                mapping = aes_c(aes_string(x = xp_var(xpdb, problem, type = 'idv')$col, 
+                mapping = aes_c(aes_string(x = xp_var(xpdb, .problem, type = 'idv')$col, 
                                            y = 'value'), mapping), 
                 type = type, guide = FALSE, facets = facets,
                 xscale = check_scales('x', log), 

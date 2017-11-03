@@ -45,8 +45,8 @@ xplot_qq <- function(xpdb,
   
   # Fetch data
   if (missing(opt)) opt <- data_opt()
-  data <- fetch_data(xpdb, quiet = quiet, problem = opt$problem, subprob = opt$subprob, 
-                     method = opt$method, source = opt$source, simtab = opt$simtab, 
+  data <- fetch_data(xpdb, quiet = quiet, .problem = opt$problem, .subprob = opt$subprob, 
+                     .method = opt$method, .source = opt$source, simtab = opt$simtab, 
                      filter = opt$filter, tidy = opt$tidy, index_col = opt$index_col, 
                      value_col = opt$value_col, post_processing = opt$post_processing)
   if (is.null(data) || nrow(data) == 0) {

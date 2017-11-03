@@ -8,11 +8,12 @@
 \usage{
 dv_vs_ipred(xpdb, mapping = NULL, group = "ID", type = "pls",
   title = "@y vs. @x | @run", subtitle = "Ofv: @ofv, Eps shrink: @epsshk",
-  caption = "@dir", log = NULL, guide = TRUE, facets, problem, quiet, ...)
+  caption = "@dir", log = NULL, guide = TRUE, facets, .problem, quiet,
+  ...)
 
 dv_vs_pred(xpdb, mapping = NULL, group = "ID", type = "pls",
   title = "@y vs. @x | @run", subtitle = "Ofv: @ofv", caption = "@dir",
-  log = NULL, guide = TRUE, facets, problem, quiet, ...)
+  log = NULL, guide = TRUE, facets, .problem, quiet, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -39,7 +40,7 @@ line 'l', smooth 's' and text 't' or any combination of the four.}
 \item{facets}{Either a character string to use \code{\link[ggforce]{facet_wrap_paginate}}
 or a formula to use \code{\link[ggforce]{facet_grid_paginate}}.}
 
-\item{problem}{The $problem number to be used. By default returns 
+\item{.problem}{The $problem number to be used. By default returns 
 the last estimation problem.}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}

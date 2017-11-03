@@ -24,7 +24,11 @@ reference:
     contents:
     - print.xpose_data
     - summary.xpose_data
+    - prm_table
     - list_vars
+    - list_data
+    - list_files
+    - list_special
   - title: Edit xpdb content
     desc:  Edit data, index or files within an xpdb
     contents:
@@ -48,6 +52,7 @@ reference:
     - get_data
     - get_file
     - get_prm
+    - get_special
     - get_summary
   - title: Basic gof
     desc:  Basic goodness-of-fit plots.

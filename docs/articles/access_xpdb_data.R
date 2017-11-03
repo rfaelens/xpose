@@ -28,10 +28,14 @@ file <- get_file(xpdb, file = 'run001.ext')
 file
 
 ## ----demo get_prm---------------------------------------------------------------------------------
+# Raw output for editing
 prm <- get_prm(xpdb, digits = 4)
 prm
 
+# Nicely formated table
+prm_table(xpdb, digits = 4)
+
 ## ----demo get_summary-----------------------------------------------------------------------------
-run_sum <- get_summary(xpdb, problem = 0)
+run_sum <- get_summary(xpdb, .problem = 0)
 run_sum
 
