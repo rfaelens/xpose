@@ -1,4 +1,4 @@
-# xpose 0.3.2
+# xpose 0.4.0
 ### General
 * Added xpdb memory usage to `print.xpose_data()`
 * Replaced `print.prm.data()` to `prm_table()`
@@ -8,7 +8,10 @@
 * Added compatibility with `dplyr::n()` when editing xpdb #51
 * Added `get_special()` to access special data
 * Improved `get_prm()` labeller parsing with OMEGA and SIGMA BLOCKS
-* `get_prm()` and `prm_table()` both gained a `transform` argument to disable parameter transformation
+* `get_prm()` and `prm_table()`:
+    - Both gained a `transform` argument to disable parameter transformation
+    - RSE is now always reported (also for untransformed)
+    - Corrected RSE for off-diagonal elements from OMEGA and SIGMA when output as correlation and SE when output as standard deviation
 * Added `list_data()`, `list_files()` and `list_special()` to get info on the data structure in the xpdb
 * Renamed the arguments `problem`, `subprob`, `method` and `source` to `.problem`, `.subprob`, etc. for consistency with dplyr functions.
 * Improved error checking for themes in `xpose_data`
