@@ -19,8 +19,7 @@ prm_table(xpdb, .problem = NULL, .subprob = NULL, .method = NULL,
 \item{digits}{The number of significant digits to be displayed.}
 
 \item{transform}{Should diagonal OMEGA and SIGMA elements be transformed to coeficient of variation, 
-off diagonal elements be transformed to coorelations and the standard error represented as relative 
-standard error (RSE).}
+off diagonal elements be transformed to correlations.}
 
 \item{show_all}{Logical, whether the 0 fixed off-diagonal elements should be removed from the output.}
 }
