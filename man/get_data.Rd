@@ -38,5 +38,5 @@ print(xpdb_ex_pk)
 
 }
 \seealso{
-\code{\link{xpose_data}}, \code{\link{read_nm_tables}}
+\code{\link{list_data}}, \code{\link{xpose_data}}, \code{\link{read_nm_tables}}
 }

@@ -25,5 +25,5 @@ special
 
 }
 \seealso{
-\code{\link{xpose_data}}
+\code{\link{list_special}}, \code{\link{xpose_data}}
 }

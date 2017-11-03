@@ -33,3 +33,6 @@ vpc_data(quiet = TRUE) \%>\%
 list_special()
 
 }
+\seealso{
+\code{\link{get_data}}, \code{\link{get_file}}, \code{\link{get_special}}
+}
