@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Diagnostics for pharmacometric models • xpose</title>
+<title>Diagnostics for Pharmacometric Models • xpose</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
@@ -113,9 +113,10 @@
     
     
 <div class="contents">
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 <div id="xpose" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#xpose" class="anchor"></a>xpose <a href="https://UUPharmacometrics.github.io/xpose/"><img src="logo.png" align="right"></a>
+<a href="#xpose" class="anchor"></a>xpose <a href="https://UUPharmacometrics.github.io/xpose/"><img src="reference/figures/logo.png" align="right"></a>
 </h1></div>
 
 <div id="overview" class="section level3">
@@ -207,13 +208,13 @@ Summary for problem no. 2 [Model simulations]
 <h5 class="hasAnchor">
 <a href="#standard-goodness-of-fit-plots" class="anchor"></a>Standard goodness-of-fit plots</h5>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb)</code></pre></div>
-<p><img src="inst/img/readme_example_figure_1-1.png" width="50%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/readme_example_figure_1-1.png" width="50%" style="display: block; margin: auto;"></p>
 </div>
 <div id="individual-plots" class="section level5">
 <h5 class="hasAnchor">
 <a href="#individual-plots" class="anchor"></a>Individual plots</h5>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/ind_plots.html">ind_plots</a></span>(xpdb, <span class="dt">page =</span> <span class="dv">1</span>)</code></pre></div>
-<p><img src="inst/img/readme_example_figure_2-1.png" width="75%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/readme_example_figure_2-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="visual-predictive-checks" class="section level5">
 <h5 class="hasAnchor">
@@ -221,19 +222,19 @@ Summary for problem no. 2 [Model simulations]
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xpdb <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="reference/vpc_data.html">vpc_data</a></span>(<span class="dt">stratify =</span> <span class="st">'SEX'</span>, <span class="dt">opt =</span> <span class="kw"><a href="reference/vpc_opt.html">vpc_opt</a></span>(<span class="dt">n_bins =</span> <span class="dv">7</span>, <span class="dt">lloq =</span> <span class="fl">0.1</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="reference/vpc.html">vpc</a></span>()</code></pre></div>
-<p><img src="inst/img/readme_example_figure_3-1.png" width="75%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/readme_example_figure_3-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="distribution-plots" class="section level5">
 <h5 class="hasAnchor">
 <a href="#distribution-plots" class="anchor"></a>Distribution plots</h5>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/distrib_plot.html">eta_distrib</a></span>(xpdb, <span class="dt">labeller =</span> <span class="st">'label_value'</span>)</code></pre></div>
-<p><img src="inst/img/readme_example_figure_4-1.png" width="75%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/readme_example_figure_4-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="minimization-diagnostics" class="section level5">
 <h5 class="hasAnchor">
 <a href="#minimization-diagnostics" class="anchor"></a>Minimization diagnostics</h5>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/minimization_plots.html">prm_vs_iteration</a></span>(xpdb, <span class="dt">labeller =</span> <span class="st">'label_value'</span>)</code></pre></div>
-<p><img src="inst/img/readme_example_figure_5-1.png" width="75%" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/readme_example_figure_5-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="and-many-other-features" class="section level5">
 <h5 class="hasAnchor">
