@@ -316,13 +316,13 @@ get_prm <- function(xpdb,
   if (is.null(.method))  .method  <- last_file_method(xpdb, ext = 'ext', .problem = .problem, .subprob = .subprob)
   
   prm_df <- prm_df %>%  
-    dplyr::filter(extension %in% c('ext', 'cov'), 
-           problem %in% .problem,                    
-           subprob %in% .subprob, 
-           method %in% .method)
+    dplyr::filter(.$extension %in% c('ext', 'cov'), 
+                  .$problem %in% .problem,                    
+                  .$subprob %in% .subprob, 
+                  .$method %in% .method)
   
   
-  if (sum(prm_df$extension == 'ext') == 0) {
+  if (!any(prm_df$extension == 'ext')) {
     stop('No parameter estimates found for $prob no.', 
          stringr::str_c(.problem, collapse = '/'), ', subprob no. ',
          stringr::str_c(.subprob, collapse = '/'), ', method ',
@@ -330,13 +330,13 @@ get_prm <- function(xpdb,
   }
   
   prm_df <- prm_df %>% 
-    dplyr::select(-name) %>% 
-    tidyr::spread(extension, data)
-
-    msg(c('Returning parameter estimates from $prob no.', stringr::str_c(unique(prm_df$problem), collapse = ', '), 
+    dplyr::select(-dplyr::one_of('name')) %>% 
+    tidyr::spread(key = 'extension', value = 'data')
+  
+  msg(c('Returning parameter estimates from $prob no.', stringr::str_c(unique(prm_df$problem), collapse = ', '), 
         ', subprob no.', stringr::str_c(unique(prm_df$subprob), collapse = ', '), 
         ', method ', stringr::str_c(unique(prm_df$method), collapse = ', ')), quiet)
-
+  
   prm_df <- prm_df %>% 
     dplyr::mutate(prm_names = purrr::map(.x = as.list(.$problem), .f = function(x, code) {
       
@@ -350,55 +350,60 @@ get_prm <- function(xpdb,
       
     }, code = xpdb$code)) %>% 
     purrr::transpose() %>% 
-    purrr::map(function(data){
-      grab_iter <- function(iter) dplyr::filter(data$ext, ITERATION==iter) %>% 
-        dplyr::select(-ITERATION, -OBJ) %>% 
-        purrr::flatten()
+    purrr::map(.f = function(data) {
+      grab_iter <- function(iter) {
+        data$ext %>% 
+          dplyr::filter(.$ITERATION == iter) %>% 
+          dplyr::select(-dplyr::one_of('ITERATION', 'OBJ')) %>% 
+          purrr::flatten()
+      }
       
       prm_mean <- grab_iter(-1000000000) 
-      prm_se <- grab_iter(-1000000001) 
-      prm_fix <- grab_iter(-1000000006)
+      prm_se   <- grab_iter(-1000000001) 
+      prm_fix  <- grab_iter(-1000000006)
       
-      if(transform){
-        if(!is.null(data$cov)){
-          # build covariance matrix from cov file
+      if (transform) {
+        if (!is.null(data$cov)) {
+          # build covariance matrix from `.cov` file
           prm_cov <- as.data.frame(data$cov) %>% 
-            tibble::column_to_rownames("NAME") %>% 
+            tibble::column_to_rownames('NAME') %>% 
             as.matrix()
-        }else{
-          # build covariance matrix from .ext se
+        } else {
+          # build covariance matrix from `.ext` se
           prm_cov <- diag(prm_se)^2
-          attr(prm_cov, "dimnames") <- list(names(prm_se), names(prm_se))
-          warning("Covariance matrix not available, RSE for covariance parameters is incorrect.")
+          attr(prm_cov, 'dimnames') <- list(names(prm_se), names(prm_se))
+          warning('Covariance matrix not available, RSE for covariance parameters will be incorrect.', call. = FALSE)
         }
         # obtain transformation formulas 
         prm_trans_formula <- get_prm_transformation_formulas(names(prm_mean))
         # transform parameters & calculate var, rse for transformation
-        prms <- purrr::map_df(prm_trans_formula, ~transform_prm(.x, mu = prm_mean, sigma = prm_cov, method = "delta")) %>% 
-          dplyr::mutate(se = sqrt(variance))
-      }else{
+        prms <- purrr::map_df(prm_trans_formula, ~transform_prm(.x, mu = prm_mean, sigma = prm_cov, method = 'delta')) %>% 
+          dplyr::mutate(se = sqrt(.$variance))
+      } else {
         prms <- list(mean = prm_mean, se = prm_se) %>% 
           purrr::transpose() %>% 
           dplyr::bind_rows() %>% 
-          dplyr::mutate(rse = se/abs(mean))
+          dplyr::mutate(rse = .$se/abs(.$mean))
       }
       
       prms <- prms %>% 
         dplyr::mutate(fixed = as.logical(as.numeric(prm_fix)),
-               name = names(prm_mean),
-               type = dplyr::case_when(stringr::str_detect(name, 'THETA') ~ 'the',
-                                       stringr::str_detect(name, 'OMEGA') ~ 'ome',
-                                       stringr::str_detect(name, 'SIGMA') ~ 'sig'),
-               number = stringr::str_replace_all(name, '[^\\d,]+', '')) %>%
-        dplyr::mutate_at(c("se", "rse"), dplyr::funs(ifelse(fixed, NA_real_, as.numeric(.)))) %>% 
-        tidyr::separate(col = 'number', into = c('m', 'n'), sep = ',', 
-                        fill = 'right') %>% 
-        dplyr::mutate(diagonal = dplyr::if_else(m == n, TRUE, FALSE)) %>% 
-        dplyr::rename(value = mean) %>% 
+                      name  = names(prm_mean)) %>%
+        dplyr::mutate(type = dplyr::case_when(stringr::str_detect(.$name, 'THETA') ~ 'the',
+                                               stringr::str_detect(.$name, 'OMEGA') ~ 'ome',
+                                               stringr::str_detect(.$name, 'SIGMA') ~ 'sig'),
+                      number = stringr::str_replace_all(.$name, '[^\\d,]+', ''),
+                      se     = ifelse(.$fixed, NA_real_, as.numeric(.$se)),
+                      rse    = ifelse(.$fixed, NA_real_, as.numeric(.$rse))) %>%
+        tidyr::separate(col = 'number', into = c('m', 'n'), sep = ',', fill = 'right') %>% 
+        dplyr::mutate(diagonal = dplyr::if_else(.$m == .$n, TRUE, FALSE)) %>% 
+        dplyr::rename_(.dots = list(value = 'mean')) %>% 
         dplyr::mutate(label = '',
-                      value = signif(value, digits = digits),
-                      se    = signif(se, digits = digits),
-                      rse   = signif(rse, digits = digits),
+                      value = signif(.$value, digits = digits),
+                      se    = signif(.$se, digits = digits),
+                      rse   = signif(.$rse, digits = digits),
+                      n     = as.numeric(.$n),
+                      m     = as.numeric(.$m),
                       order = dplyr::case_when(type == 'the' ~ 1,
                                                type == 'ome' ~ 2,
                                                TRUE ~ 3)) %>% 
@@ -438,7 +443,7 @@ get_prm <- function(xpdb,
       # Filter_all
       if (!show_all) {
         prms <- dplyr::filter(.data = prms, !(prms$type %in% c('ome', 'sig') & 
-                                                      prms$value == 0 & !prms$diagonal))
+                                                prms$value == 0 & !prms$diagonal))
       }
       
       # Add metadata to output
@@ -458,15 +463,22 @@ get_prm <- function(xpdb,
 #' @param prm_names Vector of parameter names as found in .ext 
 #'
 #' @return List of formulas decribing the transformation
-get_prm_transformation_formulas <- function(prm_names){
+#' @keywords internal
+#' @export
+get_prm_transformation_formulas <- function(prm_names) {
   prm_names %>% 
     purrr::set_names() %>% 
-    purrr::map_if(~stringr::str_detect(.x, "^THETA"), ~substitute(~par, list(par = rlang::sym(.x)))) %>% 
-    purrr::map_if(~purrr::is_character(.x) && stringr::str_detect(.x, "^(OMEGA|SIGMA)\\((\\d+),\\2\\)$"), ~substitute(~sqrt(par), list(par = rlang::sym(.x)))) %>% 
-    purrr::map_if(~purrr::is_character(.x) && stringr::str_detect(.x, "^(OMEGA|SIGMA)\\(\\d+,\\d+\\)$"), ~substitute(~cov/(sqrt(var1)/sqrt(var2)), 
-                                                                                                                     list(cov = rlang::sym(.x),
-                                                                                                                          var1 = stringr::str_replace(.x, "\\((\\d+),(\\d+)\\)", "(\\1,\\1)") %>% rlang::sym(),
-                                                                                                                          var2 = stringr::str_replace(.x, "\\((\\d+),(\\d+)\\)", "(\\2,\\2)") %>% rlang::sym())))
+    purrr::map_if(~stringr::str_detect(.x, "^THETA"), 
+                  ~substitute(~par, list(par = rlang::sym(.x)))) %>% 
+    purrr::map_if(~purrr::is_character(.x) && stringr::str_detect(.x, '^(OMEGA|SIGMA)\\((\\d+),\\2\\)$'), 
+                  ~substitute(~sqrt(par), list(par = rlang::sym(.x)))) %>% 
+    purrr::map_if(~purrr::is_character(.x) && stringr::str_detect(.x, '^(OMEGA|SIGMA)\\(\\d+,\\d+\\)$'), 
+                  ~substitute(~cov/(sqrt(var1)/sqrt(var2)), 
+                              list(cov = rlang::sym(.x),
+                                   var1 = stringr::str_replace(.x, '\\((\\d+),(\\d+)\\)', 
+                                                               '(\\1,\\1)') %>% rlang::sym(),
+                                   var2 = stringr::str_replace(.x, '\\((\\d+),(\\d+)\\)', 
+                                                               '(\\2,\\2)') %>% rlang::sym())))
   
 }
 
