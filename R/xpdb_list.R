@@ -3,7 +3,7 @@
 #' @description Function providing a detailed listing of all available datasets in an xpdb object.
 #' 
 #' @param xpdb An \code{xpose_data} object to be evaluated
-#' 
+#' @seealso \code{\link{get_data}}, \code{\link{get_file}}, \code{\link{get_special}}
 #' @examples
 #' # List output tables data
 #' list_data(xpdb_ex_pk)

@@ -85,10 +85,10 @@ test_that('get_file works properly', {
   
   # Return multiple files
   expect_equal(get_file(xpdb_ex_pk, file = c('run001.ext', 'run001.phi')), 
-                        list(`run001.ext_prob_1_subprob_0_foce` = 
-                               xpdb_ex_pk$files[xpdb_ex_pk$files$name == 'run001.ext', ]$data[[1]],
-                             `run001.phi_prob_1_subprob_0_foce` = 
-                               xpdb_ex_pk$files[xpdb_ex_pk$files$name == 'run001.phi', ]$data[[1]]))
+               list(`run001.ext_prob_1_subprob_0_foce` = 
+                      xpdb_ex_pk$files[xpdb_ex_pk$files$name == 'run001.ext', ]$data[[1]],
+                    `run001.phi_prob_1_subprob_0_foce` = 
+                      xpdb_ex_pk$files[xpdb_ex_pk$files$name == 'run001.phi', ]$data[[1]]))
 })
 
 test_that('get_file is quiet when option is set in xpdb', {
@@ -126,15 +126,17 @@ test_that('get_prm checks input properly', {
   xpdb_no_ext$files <- xpdb_no_ext$files[xpdb_no_ext$files$extension != 'ext', ]
   # Error with missing xpdb
   expect_error(get_prm(), regexp = '"xpdb" is missing')
-
+  
   # Error with no ext file
   expect_error(get_prm(xpdb_no_ext), regexp = 'File extension `ext` not found in model output files')
   
   # Error with bad problem input
-  expect_error(get_prm(xpdb_ex_pk, .problem = 99), regexp = 'No parameter estimates found for \\$prob no\\.99')
+  expect_error(get_prm(xpdb_ex_pk, .problem = 99), 
+               regexp = 'No parameter estimates found for \\$prob no\\.99')
   
-  xpdb_wo_cov <- purrr::modify_at(xpdb_ex_pk, "files", ~dplyr::filter(.x, extension != "cov"))
-  expect_warning(get_prm(xpdb_wo_cov), regex = 'Covariance matrix not available, RSE for covariance parameters will be incorrect.')
+  xpdb_wo_cov <- purrr::modify_at(xpdb_ex_pk, 'files', ~dplyr::filter(.x, extension != 'cov'))
+  expect_warning(get_prm(xpdb_wo_cov, quiet = TRUE), 
+                 regex = 'Covariance matrix.+not available')
 })
 
 
@@ -149,15 +151,28 @@ test_that('get_prm works properly', {
   # save(get_prm_ctrl_ntr, file = 'data/get_prm_ctrl_ntr.Rdata')
   load('data/get_prm_ctrl_ntr.Rdata')
   
+  # get_prm_ctrl_no_se <- xpdb_ex_pk %>%
+  #   filter(.source = 'ext', .problem = 1, ITERATION != '-1000000001') %>% 
+  #   get_prm(transform = FALSE)
+  # save(get_prm_ctrl_no_se, file = 'data/get_prm_ctrl_no_se.Rdata')
+  load('data/get_prm_ctrl_no_se.Rdata')
+  
   # Test w/ transform
-  get_prm_test_tr <- get_prm(xpdb_ex_pk, transform = TRUE)
+  get_prm_test_tr <- get_prm(xpdb_ex_pk, transform = TRUE, quiet = TRUE)
   expect_true('xpose_prm' %in% class(get_prm_test_tr))
   expect_identical(get_prm_test_tr, get_prm_ctrl_tr)
   
   # Test w/o transform
-  get_prm_test_ntr <- get_prm(xpdb_ex_pk, transform = FALSE)
+  get_prm_test_ntr <- get_prm(xpdb_ex_pk, transform = FALSE, quiet = TRUE)
   expect_true('xpose_prm' %in% class(get_prm_test_ntr))
   expect_identical(get_prm_test_ntr, get_prm_ctrl_ntr)
+  
+  # Test w/o SE
+  get_prm_test_no_se <- xpdb_ex_pk %>% 
+    filter(.source = 'ext', .problem = 1, ITERATION != '-1000000001') %>% 
+    get_prm(transform = FALSE, quiet = TRUE)
+  expect_true('xpose_prm' %in% class(get_prm_test_no_se))
+  expect_identical(get_prm_test_no_se, get_prm_ctrl_no_se)
 })
 
 

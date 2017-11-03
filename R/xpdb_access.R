@@ -42,7 +42,7 @@ get_code <- function(xpdb, .problem = NULL) {
 #' then the data from last simulation will be returned instead. Object returned as tibble for single 
 #' tables/problems or a named list for multiple tables/problems.
 #' 
-#' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_tables}}
+#' @seealso  \code{\link{list_data}}, \code{\link{xpose_data}}, \code{\link{read_nm_tables}}
 #' @examples
 #' # By table name
 #' sdtab <- get_data(xpdb_ex_pk, 'sdtab001')
@@ -132,7 +132,7 @@ get_data <- function(xpdb,
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' 
 #' @return A tibble for single file or a named list for multiple files.
-#' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_files}}
+#' @seealso  \code{\link{list_files}}, \code{\link{xpose_data}}, \code{\link{read_nm_files}}
 #' @examples
 #' # Single file (returns a tibble)
 #' ext_file <- get_file(xpdb_ex_pk, file = 'run001.ext')
@@ -286,12 +286,13 @@ get_summary <- function(xpdb,
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' 
 #' @return A tibble for single problem/subprob or a named list for multiple problem|subprob.
+#' @seealso \code{\link{prm_table}}
 #' @examples
-#' # Display to the console
-#' get_prm(xpdb_ex_pk, .problem = 1)
-#' 
-#' # Store the parameters in an object
+#' # Store the parameter table
 #' prm <- get_prm(xpdb_ex_pk, .problem = 1)
+#' 
+#' # Display parameters to the console
+#' prm_table(xpdb_ex_pk, .problem = 1)
 #' 
 #' @export
 get_prm <- function(xpdb, 
@@ -330,7 +331,7 @@ get_prm <- function(xpdb,
   }
   
   prm_df <- prm_df %>% 
-    dplyr::select(-dplyr::one_of('name')) %>% 
+    dplyr::select(-dplyr::one_of('name', 'modified')) %>% 
     tidyr::spread(key = 'extension', value = 'data')
   
   msg(c('Returning parameter estimates from $prob no.', stringr::str_c(unique(prm_df$problem), collapse = ', '), 
@@ -351,16 +352,9 @@ get_prm <- function(xpdb,
     }, code = xpdb$code)) %>% 
     purrr::transpose() %>% 
     purrr::map(.f = function(data) {
-      grab_iter <- function(iter) {
-        data$ext %>% 
-          dplyr::filter(.$ITERATION == iter) %>% 
-          dplyr::select(-dplyr::one_of('ITERATION', 'OBJ')) %>% 
-          purrr::flatten()
-      }
-      
-      prm_mean <- grab_iter(-1000000000) 
-      prm_se   <- grab_iter(-1000000001) 
-      prm_fix  <- grab_iter(-1000000006)
+      prm_mean <- grab_iter(ext = data$ext, iter = -1000000000)
+      prm_se   <- grab_iter(ext = data$ext, iter = -1000000001)
+      prm_fix  <- grab_iter(ext = data$ext, iter = -1000000006)
       
       if (transform) {
         if (!is.null(data$cov)) {
@@ -372,7 +366,11 @@ get_prm <- function(xpdb,
           # build covariance matrix from `.ext` se
           prm_cov <- diag(prm_se)^2
           attr(prm_cov, 'dimnames') <- list(names(prm_se), names(prm_se))
-          warning('Covariance matrix not available, RSE for covariance parameters will be incorrect.', call. = FALSE)
+          
+          # No warning when .ext SE not available
+          if (!all(is.na(prm_se))) {
+            warning('Covariance matrix (`.cov`) not available, RSE for covariance parameters will be incorrect.', call. = FALSE)
+          }
         }
         # obtain transformation formulas 
         prm_trans_formula <- get_prm_transformation_formulas(names(prm_mean))
@@ -380,9 +378,8 @@ get_prm <- function(xpdb,
         prms <- purrr::map_df(prm_trans_formula, ~transform_prm(.x, mu = prm_mean, sigma = prm_cov, method = 'delta')) %>% 
           dplyr::mutate(se = sqrt(.$variance))
       } else {
-        prms <- list(mean = prm_mean, se = prm_se) %>% 
-          purrr::transpose() %>% 
-          dplyr::bind_rows() %>% 
+        prms <- dplyr::data_frame(mean = purrr::flatten_dbl(prm_mean), 
+                                  se   = purrr::flatten_dbl(prm_se)) %>% 
           dplyr::mutate(rse = .$se/abs(.$mean))
       }
       
@@ -390,8 +387,8 @@ get_prm <- function(xpdb,
         dplyr::mutate(fixed = as.logical(as.numeric(prm_fix)),
                       name  = names(prm_mean)) %>%
         dplyr::mutate(type = dplyr::case_when(stringr::str_detect(.$name, 'THETA') ~ 'the',
-                                               stringr::str_detect(.$name, 'OMEGA') ~ 'ome',
-                                               stringr::str_detect(.$name, 'SIGMA') ~ 'sig'),
+                                              stringr::str_detect(.$name, 'OMEGA') ~ 'ome',
+                                              stringr::str_detect(.$name, 'SIGMA') ~ 'sig'),
                       number = stringr::str_replace_all(.$name, '[^\\d,]+', ''),
                       se     = ifelse(.$fixed, NA_real_, as.numeric(.$se)),
                       rse    = ifelse(.$fixed, NA_real_, as.numeric(.$rse))) %>%
@@ -458,6 +455,23 @@ get_prm <- function(xpdb,
 }
 
 
+#' Grab parameter for a given iteration number
+#' @param ext parameter vs. iteration table
+#' @param iter iteration number
+#'
+#' @keywords internal
+#' @export
+grab_iter <- function(ext, iter) {
+  out <- ext %>% 
+    dplyr::filter(.$ITERATION == iter) %>% 
+    dplyr::select(-dplyr::one_of('ITERATION', 'OBJ'))
+  
+  if (nrow(out) == 0) out[1,] <- NA_real_
+  
+  purrr::flatten(out)
+}
+
+
 #' Generate default transformation formulas for parameters
 #'
 #' @param prm_names Vector of parameter names as found in .ext 
@@ -492,7 +506,7 @@ get_prm_transformation_formulas <- function(prm_names) {
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' 
 #' @return A list.
-#' @seealso \code{\link{xpose_data}}
+#' @seealso  \code{\link{list_special}}, \code{\link{xpose_data}}
 #' @examples
 #' special <- get_summary(xpdb_ex_pk)
 #' special
