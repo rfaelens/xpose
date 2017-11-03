@@ -1,6 +1,6 @@
 Package: xpose
 Type: Package
-Title: Diagnostics for pharmacometric models
+Title: Diagnostics for Pharmacometric Models
 Version: 0.4.0
 Authors@R: c(
       person('Benjamin', 'Guiastrennec',
@@ -34,7 +34,7 @@ Authors@R: c(
              role  = 'ctb',
              email = 'info@pharmetheus.com'),
       person('Pfizer', role = 'ctb'))
-Description: Automated generation of graphical diagnostics for non-linear mixed effect models.
+Description: Automated diagnostics generation for non-linear mixed effect models.
 Depends:
   R (>= 3.1.2),
   ggplot2 (>= 2.2.1)
