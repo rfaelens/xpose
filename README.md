@@ -1,6 +1,7 @@
 
-xpose <a href="https://UUPharmacometrics.github.io/xpose/"><img src="logo.png" align="right" /></a>
-===================================================================================================
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+xpose <a href="https://UUPharmacometrics.github.io/xpose/"><img src="man/figures/logo.png" align="right" /></a>
+===============================================================================================================
 
 [![travis\_status](https://travis-ci.org/UUPharmacometrics/xpose.svg?branch=master)](https://travis-ci.org/UUPharmacometrics/xpose) [![appveyor status](https://ci.appveyor.com/api/projects/status/f6k09rf2cfi3vcs2?svg=true)](https://ci.appveyor.com/project/guiastrennec/xpose)[![cran\_version](http://www.r-pkg.org/badges/version/xpose)]() [![codecov](https://codecov.io/gh/UUPharmacometrics/xpose/branch/master/graph/badge.svg)](https://codecov.io/gh/UUPharmacometrics/xpose)
 
@@ -100,7 +101,7 @@ summary(xpdb, problem = 1)
 dv_vs_ipred(xpdb)
 ```
 
-<img src="inst/img/readme_example_figure_1-1.png" width="50%" style="display: block; margin: auto;" />
+<img src="man/figures/readme_example_figure_1-1.png" width="50%" style="display: block; margin: auto;" />
 
 ##### Individual plots
 
@@ -108,7 +109,7 @@ dv_vs_ipred(xpdb)
 ind_plots(xpdb, page = 1)
 ```
 
-<img src="inst/img/readme_example_figure_2-1.png" width="75%" style="display: block; margin: auto;" />
+<img src="man/figures/readme_example_figure_2-1.png" width="75%" style="display: block; margin: auto;" />
 
 ##### Visual predictive checks
 
@@ -118,7 +119,7 @@ xpdb %>%
   vpc()
 ```
 
-<img src="inst/img/readme_example_figure_3-1.png" width="75%" style="display: block; margin: auto;" />
+<img src="man/figures/readme_example_figure_3-1.png" width="75%" style="display: block; margin: auto;" />
 
 ##### Distribution plots
 
@@ -126,7 +127,7 @@ xpdb %>%
 eta_distrib(xpdb, labeller = 'label_value')
 ```
 
-<img src="inst/img/readme_example_figure_4-1.png" width="75%" style="display: block; margin: auto;" />
+<img src="man/figures/readme_example_figure_4-1.png" width="75%" style="display: block; margin: auto;" />
 
 ##### Minimization diagnostics
 
@@ -134,7 +135,7 @@ eta_distrib(xpdb, labeller = 'label_value')
 prm_vs_iteration(xpdb, labeller = 'label_value')
 ```
 
-<img src="inst/img/readme_example_figure_5-1.png" width="75%" style="display: block; margin: auto;" />
+<img src="man/figures/readme_example_figure_5-1.png" width="75%" style="display: block; margin: auto;" />
 
 ##### And many other features!
 
