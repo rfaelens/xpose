@@ -134,7 +134,7 @@ test_that('get_prm checks input properly', {
   expect_error(get_prm(xpdb_ex_pk, .problem = 99), regexp = 'No parameter estimates found for \\$prob no\\.99')
   
   xpdb_wo_cov <- purrr::modify_at(xpdb_ex_pk, "files", ~dplyr::filter(.x, extension != "cov"))
-  expect_warning(get_prm(xpdb_wo_cov), regex = "Covariance matrix not available, RSE for covariance parameters is incorrect.")
+  expect_warning(get_prm(xpdb_wo_cov), regex = 'Covariance matrix not available, RSE for covariance parameters will be incorrect.')
 })
 
 
