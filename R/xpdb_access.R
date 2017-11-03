@@ -281,8 +281,7 @@ get_summary <- function(xpdb,
 #' @param .method The estimation method to be used, by default returns the last one for each file
 #' @param digits The number of significant digits to be displayed.
 #' @param transform Should diagonal OMEGA and SIGMA elements be transformed to coeficient of variation, 
-#' off diagonal elements be transformed to coorelations and the standard error represented as relative 
-#' standard error (RSE). 
+#' off diagonal elements be transformed to correlations. 
 #' @param show_all Logical, whether the 0 fixed off-diagonal elements should be removed from the output.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' 
@@ -316,20 +315,28 @@ get_prm <- function(xpdb,
   if (is.null(.subprob)) .subprob <- last_file_subprob(xpdb, ext = 'ext', .problem = .problem)
   if (is.null(.method))  .method  <- last_file_method(xpdb, ext = 'ext', .problem = .problem, .subprob = .subprob)
   
-  prm_df <- prm_df[prm_df$extension == 'ext' & prm_df$problem %in% .problem &
-                     prm_df$subprob %in% .subprob & prm_df$method %in% .method, ]
+  prm_df <- prm_df %>%  
+    dplyr::filter(extension %in% c('ext', 'cov'), 
+           problem %in% .problem,                    
+           subprob %in% .subprob, 
+           method %in% .method)
   
-  if (nrow(prm_df) == 0) {
+  
+  if (sum(prm_df$extension == 'ext') == 0) {
     stop('No parameter estimates found for $prob no.', 
          stringr::str_c(.problem, collapse = '/'), ', subprob no. ',
          stringr::str_c(.subprob, collapse = '/'), ', method ',
          stringr::str_c(.method, collapse = '/'), '.', call. = FALSE) 
   }
   
-  msg(c('Returning parameter estimates from $prob no.', stringr::str_c(unique(prm_df$problem), collapse = ', '), 
+  prm_df <- prm_df %>% 
+    dplyr::select(-name) %>% 
+    tidyr::spread(extension, data)
+
+    msg(c('Returning parameter estimates from $prob no.', stringr::str_c(unique(prm_df$problem), collapse = ', '), 
         ', subprob no.', stringr::str_c(unique(prm_df$subprob), collapse = ', '), 
         ', method ', stringr::str_c(unique(prm_df$method), collapse = ', ')), quiet)
-  
+
   prm_df <- prm_df %>% 
     dplyr::mutate(prm_names = purrr::map(.x = as.list(.$problem), .f = function(x, code) {
       
@@ -342,130 +349,125 @@ get_prm <- function(xpdb,
            sigma = code$comment[code$subroutine == 'sig'])
       
     }, code = xpdb$code)) %>% 
-    dplyr::mutate(n = 1:n()) %>% 
-    dplyr::group_by_(.dots = 'n') %>% 
-    tidyr::nest(.key = 'out') %>% 
-    dplyr::mutate(prm = purrr::map(.x = .$out, .f = function(data, show_all) {
+    purrr::transpose() %>% 
+    purrr::map(function(data){
+      grab_iter <- function(iter) dplyr::filter(data$ext, ITERATION==iter) %>% 
+        dplyr::select(-ITERATION, -OBJ) %>% 
+        purrr::flatten()
       
-      # Gather prm files
-      prm_tmp <- data$data[[1]] %>% 
-        dplyr::filter(.$ITERATION %in% c(-1000000000, -1000000001, -1000000006)) %>% 
-        dplyr::mutate(name = dplyr::case_when(.$ITERATION == -1000000000 ~ 'value', 
-                                              .$ITERATION == -1000000001 ~ 'se',
-                                              TRUE ~ 'fixed')) %>% 
-        dplyr::select(colnames(.)[!stringr::str_detect(colnames(.), 'ITERATION|OBJ')]) %>% 
-        {as.data.frame(t(.), stringsAsFactors = FALSE)} %>% 
-        {purrr::set_names(x = ., nm = purrr::flatten_chr(.[nrow(.),]))} %>% 
-        dplyr::mutate(name  = row.names(.)) %>% 
-        dplyr::slice(-nrow(.)) %>% 
-        dplyr::mutate(value = as.numeric(.$value),
-                      fixed = as.logical(as.numeric(.$fixed)))
+      prm_mean <- grab_iter(-1000000000) 
+      prm_se <- grab_iter(-1000000001) 
+      prm_fix <- grab_iter(-1000000006)
       
-      # Check SE column
-      if (any(colnames(prm_tmp) == 'se')) {
-        prm_tmp$se <- ifelse(prm_tmp$fixed, NA_real_, as.numeric(prm_tmp$se))
-        has_se <- TRUE
-      } else {
-        has_se <- FALSE
+      if(transform){
+        if(!is.null(data$cov)){
+          # build covariance matrix from cov file
+          prm_cov <- as.data.frame(data$cov) %>% 
+            tibble::column_to_rownames("NAME") %>% 
+            as.matrix()
+        }else{
+          # build covariance matrix from .ext se
+          prm_cov <- diag(prm_se)^2
+          attr(prm_cov, "dimnames") <- list(names(prm_se), names(prm_se))
+          warning("Covariance matrix not available, RSE for covariance parameters is incorrect.")
+        }
+        # obtain transformation formulas 
+        prm_trans_formula <- get_prm_transformation_formulas(names(prm_mean))
+        # transform parameters & calculate var, rse for transformation
+        prms <- purrr::map_df(prm_trans_formula, ~transform_prm(.x, mu = prm_mean, sigma = prm_cov, method = "delta")) %>% 
+          dplyr::mutate(se = sqrt(variance))
+      }else{
+        prms <- list(mean = prm_mean, se = prm_se) %>% 
+          purrr::transpose() %>% 
+          dplyr::bind_rows() %>% 
+          dplyr::mutate(rse = se/abs(mean))
       }
       
-      # Add flag for diagonal elements identification
-      prm_tmp <- prm_tmp %>% 
-        dplyr::mutate(type = dplyr::case_when(stringr::str_detect(.$name, 'THETA') ~ 'the',
-                                              stringr::str_detect(.$name, 'OMEGA') ~ 'ome',
-                                              stringr::str_detect(.$name, 'SIGMA') ~ 'sig'),
-                      number = stringr::str_replace_all(.$name, '[^\\d,]+', '')) %>% 
+      prms <- prms %>% 
+        dplyr::mutate(fixed = as.logical(as.numeric(prm_fix)),
+               name = names(prm_mean),
+               type = dplyr::case_when(stringr::str_detect(name, 'THETA') ~ 'the',
+                                       stringr::str_detect(name, 'OMEGA') ~ 'ome',
+                                       stringr::str_detect(name, 'SIGMA') ~ 'sig'),
+               number = stringr::str_replace_all(name, '[^\\d,]+', '')) %>%
+        dplyr::mutate_at(c("se", "rse"), dplyr::funs(ifelse(fixed, NA_real_, as.numeric(.)))) %>% 
         tidyr::separate(col = 'number', into = c('m', 'n'), sep = ',', 
                         fill = 'right') %>% 
-        dplyr::mutate(diagonal = dplyr::if_else(.$m == .$n, TRUE, FALSE))
-      
-      # Create RSE column as CV%
-      if (has_se & transform) {
-        prm_tmp <- prm_tmp %>% 
-          dplyr::mutate(rse = dplyr::case_when(.$fixed ~ NA_real_,
-                                               .$type == 'the' ~ abs(.$se / .$value),
-                                               TRUE ~ abs(.$se / .$value) / 2)) # Approximate standard deviation scale
-      } else {
-        prm_tmp$rse <- NA
-      }
-      
-      # Convert Off diagonal to correlations
-      if (transform) {
-      ref_n <- prm_tmp %>% 
-        dplyr::filter(!is.na(.$diagonal) & .$diagonal == TRUE & !.$fixed) %>% 
-        dplyr::select_(.dots = list('n', 'type', 'value_n' = 'value'))
-      ref_m <- dplyr::select_(.data = ref_n, .dots = list('m' = 'n', 'type', 'value_m' = 'value_n'))
-      
-      prm_tmp <- prm_tmp %>% 
-        dplyr::left_join(ref_n, by = c('n', 'type')) %>% 
-        dplyr::left_join(ref_m, by = c('m', 'type')) %>% 
-        dplyr::mutate(value = ifelse(!is.na(.$value_n) & !is.na(.$value_m) & !.$diagonal & !.$fixed, 
-                                     .$value/(sqrt(.$value_n)*sqrt(.$value_m)), .$value))
-      }
-      
-      # Change variances to CV%
-      if (transform) {
-      prm_tmp$value[prm_tmp$type %in% c('ome', 'sig') & prm_tmp$diagonal] <- 
-        sqrt(prm_tmp$value[prm_tmp$type %in% c('ome', 'sig') & prm_tmp$diagonal])
-      }
-      
-      # Round values and reorder row/cols
-      prm_tmp <- prm_tmp %>%
+        dplyr::mutate(diagonal = dplyr::if_else(m == n, TRUE, FALSE)) %>% 
+        dplyr::rename(value = mean) %>% 
         dplyr::mutate(label = '',
-                      value = signif(.$value, digits = digits),
-                      se    = signif(.$se, digits = digits),
-                      rse   = signif(.$rse, digits = digits),
-                      order = dplyr::case_when(.$type == 'the' ~ 1,
-                                               .$type == 'ome' ~ 2,
+                      value = signif(value, digits = digits),
+                      se    = signif(se, digits = digits),
+                      rse   = signif(rse, digits = digits),
+                      order = dplyr::case_when(type == 'the' ~ 1,
+                                               type == 'ome' ~ 2,
                                                TRUE ~ 3)) %>% 
         dplyr::arrange_(.dots = 'order') %>% 
         dplyr::select(dplyr::one_of('type', 'name', 'label', 'value', 'se', 'rse', 'fixed', 'diagonal', 'm', 'n'))
       
       # Assign THETA labels
-      n_theta     <- sum(prm_tmp$type == 'the')
-      theta_names <- data$prm_names[[1]]$theta
+      n_theta     <- sum(prms$type == 'the')
+      theta_names <- data$prm_names$theta
       if (n_theta != length(theta_names)) {
-        warning('[$prob no.', data$problem[[1]], ', subprob no.', data$subprob[[1]], ', ', data$method[[1]], 
+        warning('[$prob no.', data$problem, ', subprob no.', data$subprob, ', ', data$method, 
                 '] $THETA labels did not match the number of THETAs in the `.ext` file.', call. = FALSE)
       } else {
-        prm_tmp$label[prm_tmp$type == 'the'] <- theta_names
+        prms$label[prms$type == 'the'] <- theta_names
       }
       
       # Assign OMEGA labels
-      n_omega     <- sum(prm_tmp$type == 'ome' & prm_tmp$diagonal, na.rm = TRUE)
-      omega_names <- data$prm_names[[1]]$omega
+      n_omega     <- sum(prms$type == 'ome' & prms$diagonal, na.rm = TRUE)
+      omega_names <- data$prm_names$omega
       if (n_omega != length(omega_names)) {
-        warning('[$prob no.', data$problem[[1]], ', subprob no.', data$subprob[[1]], ', ', data$method[[1]], 
+        warning('[$prob no.', data$problem, ', subprob no.', data$subprob, ', ', data$method, 
                 '] $OMEGA labels did not match the number of OMEGAs in the `.ext` file.', call. = FALSE)
       } else {
-        prm_tmp$label[prm_tmp$type == 'ome' & prm_tmp$diagonal] <- omega_names
+        prms$label[prms$type == 'ome' & prms$diagonal] <- omega_names
       }
       
       # Assign SIGMA labels
-      n_sigma     <- sum(prm_tmp$type == 'sig' & prm_tmp$diagonal, na.rm = TRUE)
-      sigma_names <- data$prm_names[[1]]$sigma
+      n_sigma     <- sum(prms$type == 'sig' & prms$diagonal, na.rm = TRUE)
+      sigma_names <- data$prm_names$sigma
       if (n_sigma != length(sigma_names)) {
-        warning('[$prob no.', data$problem[[1]], ', subprob no.', data$subprob[[1]], ', ', data$method[[1]], 
+        warning('[$prob no.', data$problem, ', subprob no.', data$subprob, ', ', data$method, 
                 '] $SIGMA labels did not match the number of SIGMAs in the `.ext` file.', call. = FALSE)
       } else {
-        prm_tmp$label[prm_tmp$type == 'sig' & prm_tmp$diagonal] <- sigma_names
+        prms$label[prms$type == 'sig' & prms$diagonal] <- sigma_names
       }
       
       # Filter_all
       if (!show_all) {
-        prm_tmp <- dplyr::filter(.data = prm_tmp, !(prm_tmp$type %in% c('ome', 'sig') & 
-                                                      prm_tmp$value == 0 & !prm_tmp$diagonal))
+        prms <- dplyr::filter(.data = prms, !(prms$type %in% c('ome', 'sig') & 
+                                                      prms$value == 0 & !prms$diagonal))
       }
       
       # Add metadata to output
-      structure(.Data = prm_tmp, file = data$name[[1]], problem = data$problem[[1]], 
-                subprob = data$subprob[[1]], method = data$method[[1]])
-    }, show_all = show_all)) %>% 
-    .$prm
+      structure(.Data = prms, file = 'ext', problem = data$problem, 
+                subprob = data$subprob, method = data$method)
+      
+    })
   
   # Format output
   if (length(prm_df) == 1) prm_df <- prm_df[[1]]
   structure(prm_df, class = c('xpose_prm', class(prm_df)))
+}
+
+
+#' Generate default transformation formulas for parameters
+#'
+#' @param prm_names Vector of parameter names as found in .ext 
+#'
+#' @return List of formulas decribing the transformation
+get_prm_transformation_formulas <- function(prm_names){
+  prm_names %>% 
+    purrr::set_names() %>% 
+    purrr::map_if(~stringr::str_detect(.x, "^THETA"), ~substitute(~par, list(par = rlang::sym(.x)))) %>% 
+    purrr::map_if(~purrr::is_character(.x) && stringr::str_detect(.x, "^(OMEGA|SIGMA)\\((\\d+),\\2\\)$"), ~substitute(~sqrt(par), list(par = rlang::sym(.x)))) %>% 
+    purrr::map_if(~purrr::is_character(.x) && stringr::str_detect(.x, "^(OMEGA|SIGMA)\\(\\d+,\\d+\\)$"), ~substitute(~cov/(sqrt(var1)/sqrt(var2)), 
+                                                                                                                     list(cov = rlang::sym(.x),
+                                                                                                                          var1 = stringr::str_replace(.x, "\\((\\d+),(\\d+)\\)", "(\\1,\\1)") %>% rlang::sym(),
+                                                                                                                          var2 = stringr::str_replace(.x, "\\((\\d+),(\\d+)\\)", "(\\2,\\2)") %>% rlang::sym())))
+  
 }
 
 
