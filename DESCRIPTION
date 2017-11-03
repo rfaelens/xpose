@@ -1,7 +1,7 @@
 Package: xpose
 Type: Package
-Title: Graphical diagnostics for pharmacometric models
-Version: 0.3.2
+Title: Diagnostics for pharmacometric models
+Version: 0.4.0
 Authors@R: c(
       person('Benjamin', 'Guiastrennec',
              role  = c('aut', 'cre', 'cph'),
@@ -45,8 +45,9 @@ Imports:
   gridExtra,
   purrr (>= 0.2.0),
   readr,
-  rlang,
+  rlang (>= 0.1.2),
   stringr,
+  tibble (>= 1.3.1),
   tidyr (>= 0.6),
   utils,
   stats,
@@ -57,7 +58,7 @@ Suggests:
   testthat,
   plotly,
   webshot,
-    mvtnorm
+  mvtnorm
 License: LGPL-3 + file LICENSE
 URL: https://github.com/UUPharmacometrics/xpose
 BugReports: https://github.com/UUPharmacometrics/xpose/issues

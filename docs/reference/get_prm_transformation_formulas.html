@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Display a parameter estimates to the console — prm_table • xpose</title>
+<title>Generate default transformation formulas for parameters — get_prm_transformation_formulas • xpose</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -129,87 +129,37 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Display a parameter estimates to the console</h1>
+    <h1>Generate default transformation formulas for parameters</h1>
     </div>
 
     
-    <p>Display parameter estimates from an xpdb object to the console.</p>
+    <p>Generate default transformation formulas for parameters</p>
     
 
-    <pre class="usage"><span class='fu'>prm_table</span>(<span class='no'>xpdb</span>, <span class='kw'>.problem</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>.subprob</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>.method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>transform</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show_all</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>get_prm_transformation_formulas</span>(<span class='no'>prm_names</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>xpdb</th>
-      <td><p>An <code>xpose_data</code> object from which the model output file data will be extracted.</p></td>
-    </tr>
-    <tr>
-      <th>.problem</th>
-      <td><p>The problem to be used, by default returns the last one for each file.</p></td>
-    </tr>
-    <tr>
-      <th>.subprob</th>
-      <td><p>The subproblem to be used, by default returns the last one for each file.</p></td>
-    </tr>
-    <tr>
-      <th>.method</th>
-      <td><p>The estimation method to be used, by default returns the last one for each file</p></td>
-    </tr>
-    <tr>
-      <th>digits</th>
-      <td><p>The number of significant digits to be displayed.</p></td>
-    </tr>
-    <tr>
-      <th>transform</th>
-      <td><p>Should diagonal OMEGA and SIGMA elements be transformed to coeficient of variation, 
-off diagonal elements be transformed to correlations.</p></td>
-    </tr>
-    <tr>
-      <th>show_all</th>
-      <td><p>Logical, whether the 0 fixed off-diagonal elements should be removed from the output.</p></td>
+      <th>prm_names</th>
+      <td><p>Vector of parameter names as found in .ext</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code><a href='get_prm.html'>get_prm</a></code>,</p>
+    <p>List of formulas decribing the transformation</p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Store the parameter table</span>
-<span class='no'>prm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_prm.html'>get_prm</a></span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>.problem</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='message'>Returning parameter estimates from $prob no.1, subprob no.0, method foce</span></div><div class='input'>
-<span class='co'># Display parameters to the console</span>
-<span class='fu'>prm_table</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>.problem</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; 
-#&gt; The relative standard errors for omega and sigma are reported on the approximate
-#&gt; standard deviation scale (SE/variance estimate)/2.
-#&gt; 
-#&gt; Estimates for $prob no.1, subprob no.0, method foce
-#&gt;  Parameter  Label      Value        RSE
-#&gt;  THETA1     TVCL       26.29        0.03391
-#&gt;  THETA2     TVV        1.348        0.0325
-#&gt;  THETA3     TVKA       4.204        0.1925
-#&gt;  THETA4     LAG        0.208        0.07554
-#&gt;  THETA5     Prop. Err  0.2046       0.1097
-#&gt;  THETA6     Add. Err   0.01055      0.3466
-#&gt;  THETA7     CRCL on CL 0.007172     0.2366
-#&gt;  OMEGA(1,1) IIV CL     0.2701       0.08616
-#&gt;  OMEGA(2,2) IIV V      0.195        0.1643
-#&gt;  OMEGA(3,3) IIV KA     1.381        0.1463
-#&gt;  SIGMA(1,1)            1        fix  - </div><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+      <li><a href="#value">Value</a></li>
+          </ul>
 
   </div>
 </div>

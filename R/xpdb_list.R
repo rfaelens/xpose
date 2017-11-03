@@ -3,7 +3,7 @@
 #' @description Function providing a detailed listing of all available datasets in an xpdb object.
 #' 
 #' @param xpdb An \code{xpose_data} object to be evaluated
-#' 
+#' @seealso \code{\link{get_data}}, \code{\link{get_file}}, \code{\link{get_special}}
 #' @examples
 #' # List output tables data
 #' list_data(xpdb_ex_pk)
@@ -16,6 +16,7 @@
 #' vpc_data(quiet = TRUE) %>% 
 #' list_special()
 #' 
+#' @name list_xpdb
 #' @export
 list_data <- function(xpdb) {
   check_xpdb(xpdb, check = 'data')
@@ -26,7 +27,7 @@ list_data <- function(xpdb) {
     cat(sep = '\n')
 }
 
-#' @name list_data
+#' @name list_xpdb
 #' @export
 list_files <- function(xpdb) {
   check_xpdb(xpdb, check = 'files')
@@ -37,7 +38,7 @@ list_files <- function(xpdb) {
     cat(sep = '\n')
 }
 
-#' @name list_data
+#' @name list_xpdb
 #' @export
 list_special <- function(xpdb) {
   check_xpdb(xpdb, check = 'special')

@@ -19,8 +19,7 @@ get_prm(xpdb, .problem = NULL, .subprob = NULL, .method = NULL,
 \item{digits}{The number of significant digits to be displayed.}
 
 \item{transform}{Should diagonal OMEGA and SIGMA elements be transformed to coeficient of variation, 
-off diagonal elements be transformed to coorelations and the standard error represented as relative 
-standard error (RSE).}
+off diagonal elements be transformed to correlations.}
 
 \item{show_all}{Logical, whether the 0 fixed off-diagonal elements should be removed from the output.}
 
@@ -33,10 +32,13 @@ A tibble for single problem/subprob or a named list for multiple problem|subprob
 Access model parameter estimates from an xpdb object.
 }
 \examples{
-# Display to the console
-get_prm(xpdb_ex_pk, .problem = 1)
-
-# Store the parameters in an object
+# Store the parameter table
 prm <- get_prm(xpdb_ex_pk, .problem = 1)
 
+# Display parameters to the console
+prm_table(xpdb_ex_pk, .problem = 1)
+
+}
+\seealso{
+\code{\link{prm_table}}
 }
