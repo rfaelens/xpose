@@ -3,7 +3,7 @@
 ^_pkgdown\.yml$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^logo\.png$
+^LICENSE$
 ^README\.Rmd$
 ^temporary$
 ^inst/models$
