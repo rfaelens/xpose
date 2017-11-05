@@ -34,8 +34,8 @@ Authors@R: c(
              role  = 'ctb',
              email = 'info@pharmetheus.com'),
       person('Pfizer', role = 'ctb'))
-Description: A set of functions to help diagnose non-linear mixed-effects 
-    (population) models from NONMEM. It facilitates data import, 
+Description: Diagnostics for non-linear mixed-effects 
+    (population) models from NONMEM. 'xpose' facilitates data import, 
     creation of numerical run summary and provide 'ggplot2'-based 
     graphics for data exploration and model diagnostics.
 Depends:
