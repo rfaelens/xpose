@@ -1,6 +1,6 @@
 Package: xpose
 Type: Package
-Title: Diagnostics for pharmacometric models
+Title: Diagnostics for Pharmacometric Models
 Version: 0.4.0
 Authors@R: c(
       person('Benjamin', 'Guiastrennec',
@@ -34,7 +34,10 @@ Authors@R: c(
              role  = 'ctb',
              email = 'info@pharmetheus.com'),
       person('Pfizer', role = 'ctb'))
-Description: Automated generation of graphical diagnostics for non-linear mixed effect models.
+Description: Diagnostics for non-linear mixed-effects (population) 
+    models from NONMEM. 'xpose' facilitates data import, 
+    creation of numerical run summary and provide 'ggplot2'-based 
+    graphics for data exploration and model diagnostics.
 Depends:
   R (>= 3.1.2),
   ggplot2 (>= 2.2.1)
@@ -59,7 +62,7 @@ Suggests:
   plotly,
   webshot,
   mvtnorm
-License: LGPL-3 + file LICENSE
+License: LGPL-3
 URL: https://github.com/UUPharmacometrics/xpose
 BugReports: https://github.com/UUPharmacometrics/xpose/issues
 Encoding: UTF-8
