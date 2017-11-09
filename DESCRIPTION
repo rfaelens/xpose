@@ -18,6 +18,10 @@ Authors@R: c(
       person('Ron', 'Keizer', 
              role  = 'aut',
              email = 'ronkeizer@gmail.com'),
+      person('Nick', 'Solomon', 
+             role    = 'ctb',
+             comment = 'Wrote the geom_qq_line function',
+             email   = 'nick@nicksolomon.me'),
       person('Kajsa', 'Harling', 
              role  = 'ctb',
              email = 'kajsa.harling@pharmetheus.com'),
@@ -35,9 +39,10 @@ Authors@R: c(
              email = 'info@pharmetheus.com'),
       person('Pfizer', role = 'ctb'))
 Description: Diagnostics for non-linear mixed-effects (population) 
-    models from NONMEM. 'xpose' facilitates data import, 
-    creation of numerical run summary and provide 'ggplot2'-based 
-    graphics for data exploration and model diagnostics.
+    models from 'NONMEM'<http://www.iconplc.com/innovation/nonmem/>. 
+    'xpose' facilitates data import, creation of numerical run summary 
+    and provide 'ggplot2'-based graphics for data exploration and model 
+    diagnostics.
 Depends:
   R (>= 3.1.2),
   ggplot2 (>= 2.2.1)
