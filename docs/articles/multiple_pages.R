@@ -42,7 +42,7 @@ dv_vs_ipred(xpdb_numbered, facets = c('SEX', 'MED1'), ncol = 2, nrow = 1, page =
 
 ## ---- eval = FALSE--------------------------------------------------------------------------------
 #  dv_vs_ipred(xpdb_numbered, facets = c('SEX', 'MED1'), ncol = 2, nrow = 1) %>%
-#  xpose_save()
+#  xpose_save(file = 'dv_vs_ipred_multiple.pdf')
 
 ## ---- eval = FALSE--------------------------------------------------------------------------------
 #  dv_vs_ipred(xpdb_numbered, facets = c('SEX', 'MED1'), ncol = 2, nrow = 1) %>%

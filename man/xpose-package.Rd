@@ -33,6 +33,7 @@ Authors:
 
 Other contributors:
 \itemize{
+  \item Nick Solomon \email{nick@nicksolomon.me} (Wrote the geom_qq_line function) [contributor]
   \item Kajsa Harling \email{kajsa.harling@pharmetheus.com} [contributor]
   \item Mike K. Smith \email{mike.k.smith@pfizer.com} [contributor]
   \item Elodie Plan \email{elodie.plan@pharmetheus.com} [contributor]

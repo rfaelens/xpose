@@ -10,24 +10,28 @@ plot_multiple <- dv_vs_ipred(xpdb = xpdb_ex_pk, quiet = TRUE, facet = c('SEX', '
 # Tests start here --------------------------------------------------------
 
 test_that('errors are returned for bad plot input', {
-  expect_error(xpose_save(plot = NULL), regexp = 'The `plot` argument is NULL')
+  expect_error(xpose_save(plot = NULL), regexp = 'Argument `plot` required')
 })
 
 test_that('errors are returned for bad filename input', {
   paths_1 <- file.path(tempdir(), paste0('test_plot', c('.abcd', '.bcde', '')))
   on.exit(unlink(paths_1))
   
+  # Missing filename
+  expect_error(xpose_save(plot = plot), 
+               regexp = 'Argument `file` required')
+  
   # Unrecognized extension
-  expect_error(xpose_save(plot = plot, file = paths_1[1]))
+  expect_error(xpose_save(plot = plot, file = paths_1[1]), 
+               regexp = 'Unknown graphics device \'abcd\'')
   
   # Missing extension
-  expect_error(xpose_save(plot = plot, file = paths_1[3]))
-  
-  # Missing filename
-  expect_error(xpose_save(plot = plot, file = NULL))
+  expect_error(xpose_save(plot = plot, file = paths_1[3]),
+               regexp = 'Unknown graphics device \'\'')
   
   # Length filename > 1
-  expect_error(xpose_save(plot = plot, file = paths_1))
+  expect_error(xpose_save(plot = plot, file = paths_1),
+               regexp = '`device` must be NULL, a string or a function.')
 })
 
 
