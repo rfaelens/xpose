@@ -11,8 +11,9 @@ xpose_save(plot = last_plot(), file = NULL, dir = NULL, device = NULL,
 \item{plot}{A xpose plot object.}
 
 \item{file}{A name with file extension (if device is \code{NULL}) to be given to the 
-output file. Template variables such as \code{@run_@plotfun.pdf} can be used to generate 
-template names for the files.}
+output file. Template variables such as \code{@run} (run number) and \code{@plotfun} 
+(plot function) can be used to automatically name files e.g. 
+\code{file = '@run_@plotfun.pdf'}.}
 
 \item{dir}{Directory under which the xpose plots will be saved. Template variables 
 such as \code{@dir} can be used to generate template names.}

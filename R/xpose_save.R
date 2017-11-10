@@ -5,8 +5,9 @@
 #'
 #' @param plot A xpose plot object.
 #' @param file A name with file extension (if device is \code{NULL}) to be given to the 
-#' output file. Template variables such as \code{@run_@plotfun.pdf} can be used to generate 
-#' template names for the files.
+#' output file. Template variables such as \code{@run} (run number) and \code{@plotfun} 
+#' (plot function) can be used to automatically name files e.g. 
+#' \code{file = '@run_@plotfun.pdf'}.
 #' @param dir Directory under which the xpose plots will be saved. Template variables 
 #' such as \code{@dir} can be used to generate template names.
 #' @param device Graphical device to use. Can be either be a device function
