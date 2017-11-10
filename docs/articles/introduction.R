@@ -27,7 +27,7 @@ list_vars(xpdb)
 ## ---- eval = FALSE-------------------------------------------------------
 #  xpose_data(runno = '001') %>%
 #    dv_vs_ipred() %>%
-#    xpose_save()
+#    xpose_save(file = 'run001_dv_vs_ipred.pdf')
 
 ## ---- change idv---------------------------------------------------------
 # With the TIME default
@@ -47,9 +47,12 @@ dv_vs_ipred(xpdb)
 res_vs_pred(xpdb, res = 'CWRES')
 
 ## ---- eval = FALSE-------------------------------------------------------
-#  # Save the last plot
-#  xpose_save()
+#  # Save the last generated plot
+#  dv_vs_ipred(xpdb)
+#  xpose_save(file = 'run001_dv_vs_ipred.pdf')
 #  
-#  # Change file name and extension
-#  xpose_save(file = '@run_@plotfun_[@ofv].jpeg', dir = 'pk/diagnostics')
+#  # Template titles can also be used in filename and the directory
+#  xpdb %>%
+#   dv_vs_ipred() %>%
+#   xpose_save(file = '@run_@plotfun_[@ofv].jpeg', dir = '@dir')
 
