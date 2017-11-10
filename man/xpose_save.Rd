@@ -10,11 +10,12 @@ xpose_save(plot = last_plot(), file = NULL, dir = NULL, device = NULL,
 \arguments{
 \item{plot}{A xpose plot object.}
 
-\item{file}{A name to be given to the output file. Template variables such as 
-\code{@run_@plotfun.pdf} can be used to generate template names for the files.}
+\item{file}{A name with file extension (if device is \code{NULL}) to be given to the 
+output file. Template variables such as \code{@run_@plotfun.pdf} can be used to generate 
+template names for the files.}
 
-\item{dir}{Directory under which the xpose plot will be saved. Template variables such as \code{@dir} 
-can be used to generate template names.}
+\item{dir}{Directory under which the xpose plots will be saved. Template variables 
+such as \code{@dir} can be used to generate template names.}
 
 \item{device}{Graphical device to use. Can be either be a device function
 (e.g. \code{\link{png}}), or one of 'eps', 'ps', 'tex' (pictex),
@@ -29,7 +30,8 @@ can be used to generate template names.}
 \item{...}{Additional arguments passed on to \link[ggplot2]{ggsave} or graphics \code{device}.}
 }
 \description{
-Inspired by the \link[ggplot2]{ggsave}, this function facilitates the export of xpose plots.
+Inspired by the \link[ggplot2]{ggsave}, this function 
+facilitates the export of xpose plots.
 }
 \examples{
 \dontrun{

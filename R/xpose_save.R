@@ -1,12 +1,14 @@
 #' Save xpose plot
 #'
-#' @description Inspired by the \link[ggplot2]{ggsave}, this function facilitates the export of xpose plots.
+#' @description Inspired by the \link[ggplot2]{ggsave}, this function 
+#' facilitates the export of xpose plots.
 #'
 #' @param plot A xpose plot object.
-#' @param file A name to be given to the output file. Template variables such as 
-#' \code{@run_@plotfun.pdf} can be used to generate template names for the files.
-#' @param dir Directory under which the xpose plot will be saved. Template variables such as \code{@dir} 
-#' can be used to generate template names.
+#' @param file A name with file extension (if device is \code{NULL}) to be given to the 
+#' output file. Template variables such as \code{@run_@plotfun.pdf} can be used to generate 
+#' template names for the files.
+#' @param dir Directory under which the xpose plots will be saved. Template variables 
+#' such as \code{@dir} can be used to generate template names.
 #' @param device Graphical device to use. Can be either be a device function
 #'   (e.g. \code{\link{png}}), or one of 'eps', 'ps', 'tex' (pictex),
 #'   'pdf' (default), 'jpeg', 'tiff', 'png', 'bmp', 'svg' or 'wmf' (windows only).
