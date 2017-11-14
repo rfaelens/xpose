@@ -150,8 +150,9 @@ facilitates the export of xpose plots.</p>
     <tr>
       <th>file</th>
       <td><p>A name with file extension (if device is <code>NULL</code>) to be given to the 
-output file. Template variables such as <code>@run_@plotfun.pdf</code> can be used to generate 
-template names for the files.</p></td>
+output file. Template variables such as <code>@run</code> (run number) and <code>@plotfun</code> 
+(plot function) can be used to automatically name files e.g. 
+<code>file = '@run_@plotfun.pdf'</code>.</p></td>
     </tr>
     <tr>
       <th>dir</th>
@@ -187,7 +188,7 @@ such as <code>@dir</code> can be used to generate template names.</p></td>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='no'>xpdb_ex_pk</span> <span class='kw'>%&gt;%</span>
  <span class='fu'><a href='dv_vs_pred.html'>dv_vs_ipred</a></span>() <span class='kw'>%&gt;%</span>
- <span class='fu'>xpose_save</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>'dv_vs_ipred_example.pdf'</span>)
+ <span class='fu'>xpose_save</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='fu'>tempdir</span>(), <span class='st'>"dv_vs_ipred_example.pdf"</span>))
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
