@@ -39,7 +39,7 @@ Authors@R: c(
              email = 'info@pharmetheus.com'),
       person('Pfizer', role = 'ctb'))
 Description: Diagnostics for non-linear mixed-effects (population) 
-    models from 'NONMEM'<http://www.iconplc.com/innovation/nonmem/>. 
+    models from 'NONMEM' <http://www.iconplc.com/innovation/nonmem/>. 
     'xpose' facilitates data import, creation of numerical run summary 
     and provide 'ggplot2'-based graphics for data exploration and model 
     diagnostics.
