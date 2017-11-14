@@ -22,7 +22,7 @@
 #' \dontrun{
 #' xpdb_ex_pk %>% 
 #'  dv_vs_ipred() %>% 
-#'  xpose_save(file = 'dv_vs_ipred_example.pdf')
+#'  xpose_save(file = file.path(tempdir(), "dv_vs_ipred_example.pdf"))
 #' }
 #' @export
 xpose_save <- function(plot     = last_plot(),
