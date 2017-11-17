@@ -86,10 +86,10 @@ Multiple pages graphs can simply be saved by using the `xpose_save()` function.
 
 ```{r, eval = FALSE}
 dv_vs_ipred(xpdb_numbered, facets = c('SEX', 'MED1'), ncol = 2, nrow = 1) %>% 
-xpose_save()
+xpose_save(file = 'dv_vs_ipred_multiple.pdf')
 ```
 
-By default plots are saved as `pdf` which conveniently can store multiple pages within a single document. However other graphical devices (e.g. `'png'`, `'jpg'`) can also be used, simply ensure to have a page counter (i.e. `'%03d'`) added the file name.
+The `pdf` format can conveniently store multiple pages within a single document. However other graphical devices (e.g. `'png'`, `'jpg'`) can also be used, simply ensure to have a page counter (i.e. `'%03d'`) added the file name.
 
 ```{r, eval = FALSE}
 dv_vs_ipred(xpdb_numbered, facets = c('SEX', 'MED1'), ncol = 2, nrow = 1) %>% 

@@ -110,7 +110,7 @@
       <h1>Plots with multiple pages</h1>
                         <h4 class="author">Benjamin Guiastrennec</h4>
             
-            <h4 class="date">03 November, 2017</h4>
+            <h4 class="date">14 November, 2017</h4>
           </div>
 
     
@@ -175,8 +175,8 @@ p1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/dv_vs_pr
 <a href="#saving-multiple-pages-plots" class="anchor"></a>Saving multiple pages plots</h1>
 <p>Multiple pages graphs can simply be saved by using the <code><a href="../reference/xpose_save.html">xpose_save()</a></code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb_numbered, <span class="dt">facets =</span> <span class="kw">c</span>(<span class="st">'SEX'</span>, <span class="st">'MED1'</span>), <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">nrow =</span> <span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="kw"><a href="../reference/xpose_save.html">xpose_save</a></span>()</code></pre></div>
-<p>By default plots are saved as <code>pdf</code> which conveniently can store multiple pages within a single document. However other graphical devices (e.g. <code>'png'</code>, <code>'jpg'</code>) can also be used, simply ensure to have a page counter (i.e. <code>'%03d'</code>) added the file name.</p>
+<span class="kw"><a href="../reference/xpose_save.html">xpose_save</a></span>(<span class="dt">file =</span> <span class="st">'dv_vs_ipred_multiple.pdf'</span>)</code></pre></div>
+<p>The <code>pdf</code> format can conveniently store multiple pages within a single document. However other graphical devices (e.g. <code>'png'</code>, <code>'jpg'</code>) can also be used, simply ensure to have a page counter (i.e. <code>'%03d'</code>) added the file name.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/dv_vs_pred.html">dv_vs_ipred</a></span>(xpdb_numbered, <span class="dt">facets =</span> <span class="kw">c</span>(<span class="st">'SEX'</span>, <span class="st">'MED1'</span>), <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">nrow =</span> <span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="kw"><a href="../reference/xpose_save.html">xpose_save</a></span>(<span class="dt">file =</span> <span class="st">'@run_@plotfun_%03d.png'</span>)</code></pre></div>
 </div>

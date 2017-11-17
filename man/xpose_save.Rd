@@ -4,18 +4,19 @@
 \alias{xpose_save}
 \title{Save xpose plot}
 \usage{
-xpose_save(plot = last_plot(), file = "@run_@plotfun.pdf", dir = NULL,
-  device = NULL, width = 7, height = 6, units = c("in", "cm", "mm"),
-  dpi = 200, ...)
+xpose_save(plot = last_plot(), file = NULL, dir = NULL, device = NULL,
+  width = 7, height = 6, units = c("in", "cm", "mm"), dpi = 200, ...)
 }
 \arguments{
 \item{plot}{A xpose plot object.}
 
-\item{file}{An optional name to be given to the file. Template variables such as @run 
-can be used to generate template names.}
+\item{file}{A name with file extension (if device is \code{NULL}) to be given to the 
+output file. Template variables such as \code{@run} (run number) and \code{@plotfun} 
+(plot function) can be used to automatically name files e.g. 
+\code{file = '@run_@plotfun.pdf'}.}
 
-\item{dir}{Directory under which the xpose plot will be saved. Template variables such as @dir 
-can be used to generate template names.}
+\item{dir}{Directory under which the xpose plots will be saved. Template variables 
+such as \code{@dir} can be used to generate template names.}
 
 \item{device}{Graphical device to use. Can be either be a device function
 (e.g. \code{\link{png}}), or one of 'eps', 'ps', 'tex' (pictex),
@@ -30,16 +31,13 @@ can be used to generate template names.}
 \item{...}{Additional arguments passed on to \link[ggplot2]{ggsave} or graphics \code{device}.}
 }
 \description{
-Automatically save xpose plots to files.
-
-This function was inspired by the \link[ggplot2]{ggsave}. If no arguments are provided, 
-the function will automatically name and save a plot after its run number and the plotting 
-function name by using the metadata attached to the plot.
+Inspired by the \link[ggplot2]{ggsave}, this function 
+facilitates the export of xpose plots.
 }
 \examples{
 \dontrun{
 xpdb_ex_pk \%>\% 
  dv_vs_ipred() \%>\% 
- xpose_save()
+ xpose_save(file = file.path(tempdir(), "dv_vs_ipred_example.pdf"))
 }
 }

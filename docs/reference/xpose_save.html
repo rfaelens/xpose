@@ -133,15 +133,12 @@
     </div>
 
     
-    <p>Automatically save xpose plots to files.</p>
-<p>This function was inspired by the <a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggsave'>ggsave</a>. If no arguments are provided, 
-the function will automatically name and save a plot after its run number and the plotting 
-function name by using the metadata attached to the plot.</p>
+    <p>Inspired by the <a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggsave'>ggsave</a>, this function 
+facilitates the export of xpose plots.</p>
     
 
-    <pre class="usage"><span class='fu'>xpose_save</span>(<span class='kw'>plot</span> <span class='kw'>=</span> <span class='fu'>last_plot</span>(), <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"@run_@plotfun.pdf"</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>device</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>height</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>units</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"in"</span>, <span class='st'>"cm"</span>, <span class='st'>"mm"</span>),
-  <span class='kw'>dpi</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>xpose_save</span>(<span class='kw'>plot</span> <span class='kw'>=</span> <span class='fu'>last_plot</span>(), <span class='kw'>file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>device</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>height</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>units</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"in"</span>, <span class='st'>"cm"</span>, <span class='st'>"mm"</span>), <span class='kw'>dpi</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -152,13 +149,15 @@ function name by using the metadata attached to the plot.</p>
     </tr>
     <tr>
       <th>file</th>
-      <td><p>An optional name to be given to the file. Template variables such as @run 
-can be used to generate template names.</p></td>
+      <td><p>A name with file extension (if device is <code>NULL</code>) to be given to the 
+output file. Template variables such as <code>@run</code> (run number) and <code>@plotfun</code> 
+(plot function) can be used to automatically name files e.g. 
+<code>file = '@run_@plotfun.pdf'</code>.</p></td>
     </tr>
     <tr>
       <th>dir</th>
-      <td><p>Directory under which the xpose plot will be saved. Template variables such as @dir 
-can be used to generate template names.</p></td>
+      <td><p>Directory under which the xpose plots will be saved. Template variables 
+such as <code>@dir</code> can be used to generate template names.</p></td>
     </tr>
     <tr>
       <th>device</th>
@@ -189,7 +188,7 @@ can be used to generate template names.</p></td>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='no'>xpdb_ex_pk</span> <span class='kw'>%&gt;%</span>
  <span class='fu'><a href='dv_vs_pred.html'>dv_vs_ipred</a></span>() <span class='kw'>%&gt;%</span>
- <span class='fu'>xpose_save</span>()
+ <span class='fu'>xpose_save</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='fu'>tempdir</span>(), <span class='st'>"dv_vs_ipred_example.pdf"</span>))
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
