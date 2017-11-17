@@ -11,9 +11,11 @@ xpose <a href="https://UUPharmacometrics.github.io/xpose/"><img src="man/figures
 
 ### Installation
 
-Install the development version from github
-
 ``` r
+# Install the lastest release from the CRAN
+install.packages('xpose')
+
+# Or install the development version from GitHub
 # install.packages('devtools')
 devtools::install_github('UUPharmacometrics/xpose')
 ```
