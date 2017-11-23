@@ -4,6 +4,7 @@ xpose <a href="https://UUPharmacometrics.github.io/xpose/"><img src="man/figures
 ===============================================================================================================
 
 [![travis\_status](https://travis-ci.org/UUPharmacometrics/xpose.svg?branch=master)](https://travis-ci.org/UUPharmacometrics/xpose) [![appveyor status](https://ci.appveyor.com/api/projects/status/f6k09rf2cfi3vcs2?svg=true)](https://ci.appveyor.com/project/guiastrennec/xpose)[![cran\_version](http://www.r-pkg.org/badges/version/xpose)]() [![codecov](https://codecov.io/gh/UUPharmacometrics/xpose/branch/master/graph/badge.svg)](https://codecov.io/gh/UUPharmacometrics/xpose)
+https://cranlogs.r-pkg.org/badges/xpose
 
 ### Overview
 
