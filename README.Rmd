@@ -23,7 +23,7 @@ knitr::opts_chunk$set(fig.path   = 'man/figures/',
 [![travis_status](https://travis-ci.org/UUPharmacometrics/xpose.svg?branch=master)](https://travis-ci.org/UUPharmacometrics/xpose)
 [![appveyor status](https://ci.appveyor.com/api/projects/status/f6k09rf2cfi3vcs2?svg=true)](https://ci.appveyor.com/project/guiastrennec/xpose)[![cran_version](http://www.r-pkg.org/badges/version/xpose)]()
 [![codecov](https://codecov.io/gh/UUPharmacometrics/xpose/branch/master/graph/badge.svg)](https://codecov.io/gh/UUPharmacometrics/xpose)
-
+[![downloads](https://cranlogs.r-pkg.org/badges/grand-total/xpose)](http://cran.rstudio.com/web/packages/xpose/index.html)
 
 ### Overview
 [xpose](https://UUPharmacometrics.github.io/xpose/) was designed as a [ggplot2](https://github.com/tidyverse/ggplot2)-based alternative to [xpose4](http://xpose.sourceforge.net). xpose aims to reduce the post processing burden and improve diagnostics commonly associated the development of non-linear mixed effect models.
