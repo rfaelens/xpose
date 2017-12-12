@@ -2,7 +2,7 @@ context('Check xpose_data')
 
 
 # Load helper files -------------------------------------------------------
-load(file = file.path('data', 'theme_readable_221.RData'))
+load(file = file.path('data', 'theme_readable_221.Rdata'))
 
 # Tests start here --------------------------------------------------------
 
