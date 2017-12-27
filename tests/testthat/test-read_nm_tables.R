@@ -83,7 +83,7 @@ test_that('properly assign skip and header arguments', {
   expect_equal(read_nm_tables(file = files[2], quiet = TRUE),  ctrl_file)
 })
 
-test_that('properly pick us column signs', {
+test_that('properly pick up column signs', {
   files <- tempfile('tmp_c')
   on.exit(unlink(files))
   writeLines(text = minus_sign_test, con = files)
