@@ -3,6 +3,7 @@
 ## New features
 - [ ] Add outliers labeling features e.g. `aes(color = outlier(CWRES, ±6))`
 - [ ] Add feature to exp-transform plot scales as `exp = "xy"`
+- [ ] Add reference distribution in eta_distrib when `guide = TRUE`
 - [ ] Add data checkout diagnostics
 - [ ] Add support for time-to-event (TTE) data
 - [ ] Add support for categorical data
@@ -31,9 +32,10 @@
 - [ ] Collect (from the lst file) and make use of parameter labels and units in plot labels
 - [ ] Get shrinkage in summary from PsN shrinkage and .shk file
 - [ ] Improve `get_file()` to handle 2x same method, same issue with all file dependent functions
-- [ ] Add single point when surrounded by NA (vpc/ind_plots): 
 
-    1. Identify points that are alone 
+- [ ] Improve plotting of single line point when surrounded by NA (vpc/ind_plots): 
+
+    1. Identify line points that are "alone" 
     1. Have a special `geom_point()` mapped after the line aesthetics that is only plotted if single points are required?
 
 
@@ -43,6 +45,7 @@
 - [ ] Improve `xp_theme()` use with a + method as in ggplot2 (e.g. [here](https://github.com/tidyverse/ggplot2/blob/master/R/theme.r>))
 - [ ] Allow `eta_*()` functions to read ETA values from table data or .phi file?
 - [ ] Should `@nobs` `@nsim` `@nind` values be updated when using filtering of the data?
+- [ ] Use the `kappa()` function to calculate the condition number directly?
 
 
 ## Satelite packages development
