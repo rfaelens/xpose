@@ -35,8 +35,9 @@ test_that('properly creates the xpdb when using the file argument', {
                        gg_theme = theme_readable_221, quiet = TRUE)
   expect_true(inherits(xpdb_1, 'xpose_data'))
   
+  skip_on_cran() # Prevent issues in the absence of long double
+  
   # Correct path and quiet option for identical comparison with xpdb_ex_pk
-  skip_on_cran()
   xpdb_1$summary$value[xpdb_1$summary$label == 'dir'] <- 'analysis/models/pk/' 
   xpdb_1$options$dir <- 'analysis/models/pk/'
   attr(xpdb_1$code, 'dir') <- 'analysis/models/pk/'
@@ -51,8 +52,9 @@ test_that('properly creates the xpdb when using the runno argument', {
                        gg_theme = theme_readable_221, quiet = TRUE)
   expect_true(inherits(xpdb_2, 'xpose_data'))
   
+  skip_on_cran() # Prevent issues in the absence of long double
+  
   # Correct path and quiet option for identical comparison with xpdb_ex_pk
-  skip_on_cran()
   xpdb_2$summary$value[xpdb_2$summary$label == 'dir'] <- 'analysis/models/pk/'
   xpdb_2$options$dir <- 'analysis/models/pk/'
   attr(xpdb_2$code, 'dir') <- 'analysis/models/pk/'
