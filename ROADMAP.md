@@ -32,7 +32,7 @@
 - [ ] Collect (from the lst file) and make use of parameter labels and units in plot labels
 - [ ] Get shrinkage in summary from PsN shrinkage and .shk file
 - [ ] Improve `get_file()` to handle 2x same method, same issue with all file dependent functions
-
+- [ ] Improve integration of additional modeling tools by using more generic functions
 - [ ] Improve plotting of single line point when surrounded by NA (vpc/ind_plots): 
 
     1. Identify line points that are "alone" 
