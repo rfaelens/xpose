@@ -60,7 +60,6 @@ Imports:
   stats,
   vpc (>= 1.0.0)
 Suggests:
-  gridExtra,
   rmarkdown,
   knitr,
   testthat,
