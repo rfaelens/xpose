@@ -4,7 +4,7 @@ We are happy that you are willing to help us out with the development of xpose. 
 
 ## Submitting issues
 
-Before posting a new issue, please check that it has not already been posted.
+Before posting a new issue, please check that it has not already been posted nor is listed in our [road-map](https://github.com/UUPharmacometrics/xpose/blob/master/ROADMAP.md).
 
 * For **feature requests** make sure to include sufficient information, such as a proposed workflow, plots images, links to posters or publications describing a method, etc.
 * For **reporting a bug**, the most important thing is to include a minimal reproducible example so that we can quickly verify your problem, and figure out how to fix it. To make your example reproducible:
@@ -18,7 +18,7 @@ Before posting a new issue, please check that it has not already been posted.
 
 To contribute code to xpose please carefully follow the steps listed below.
 
-*Note 1: before getting started with a pull request, we strongly encourage you follow the procedure described above for **feature requests** and/or **reporting a bug** to ensure that your project is compatible with the our xpose road-map.*
+*Note 1: before getting started with a pull request, we strongly encourage you follow the procedure described above for **feature requests** and/or **reporting a bug** to ensure that your project is compatible with the our xpose [road-map](https://github.com/UUPharmacometrics/xpose/blob/master/ROADMAP.md).*
 
 *Note 2: if you are unfamiliar with the development of R packages, please take some time to read the [R packages](http://r-pkgs.had.co.nz) book by Hadley Wickham.*
 
