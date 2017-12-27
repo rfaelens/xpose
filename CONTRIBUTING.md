@@ -16,7 +16,11 @@ Before posting a new issue, please check that it has not already been posted.
 
 ## Submitting pull requests
 
-To contribute code to xpose please follow these steps listed below. Note: if you are unfamiliar with the development of R packages, please take some time to read the [R packages](http://r-pkgs.had.co.nz) book by Hadley Wickham.
+To contribute code to xpose please carefully follow the steps listed below.
+
+*Note 1: before getting started with a pull request, we strongly encourage you follow the procedure described above for **feature requests** and/or **reporting a bug** to ensure that your project is compatible with the our xpose road-map.*
+
+*Note 2: if you are unfamiliar with the development of R packages, please take some time to read the [R packages](http://r-pkgs.had.co.nz) book by Hadley Wickham.*
 
 1. [Fork](https://github.com/UUPharmacometrics/xpose/fork) the xpose repository.
 1. Make the changes to the code on your fork.
@@ -27,7 +31,7 @@ To contribute code to xpose please follow these steps listed below. Note: if you
     + New plots should be created using the generic `xplot_scatter()`, `xplot_distrib()` or `xplot_qq()`. Check for example the code of *R/plot_gof.R* to see how it should be done.
     + General utility functions should be added under *R/utils.R* and plot utility functions under *R/xplot_helpers.R*.
     + Use functions from the tidyverse (e.g. dplyr, tidyr, stringr, etc.) whenever possible.
-    + Add a brief description of your contribution to *NEWS.md* using bullets. Make sure to list it under the most recent xpose version and to add your name as (`@<your_github_username>`). e.g. `* Added sharkplot (@guiastrennec)`.
+    + Add a brief description of your contribution to *NEWS.md* using bullets. Make sure to list it under the most recent xpose version and to add your name as (`@<your_github_username>`). e.g. `* Added support for multiple pages plots (@guiastrennec)`. In addition, if your pull request addresses one or several issues, please reference them using the # sign e.g. `* Added support for multiple pages plots (@guiastrennec, #3)`
     
 1. Run `devtools::check()` on your fork and ensure the absence of any errors, warnings and notes.
 1. Create a pull request to the **dev branch** of the **UUPharmacometrics/xpose** repository.
@@ -37,4 +41,4 @@ To contribute code to xpose please follow these steps listed below. Note: if you
     
 1. Address all comments until the pull request is either merged or closed.
 
-All of this may seem complicated at first, but contact one of the core developers to assist you.
+All of this may seem complicated at first, but you can contact one of the core developers to assist you throughout the process.
