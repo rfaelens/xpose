@@ -1,12 +1,12 @@
 # xpose development roadmap
 
 ## New features
-- [ ] Add feature to exponentiate plot scales as `exp = "xy"`
 - [ ] Add outliers labeling features e.g. `aes(color = outlier(CWRES, ±6))`
+- [ ] Add feature to exp-transform plot scales as `exp = "xy"`
 - [ ] Add data checkout diagnostics
 - [ ] Add support for time-to-event (TTE) data
 - [ ] Add support for categorical data
-- [ ] Add gam and diagnotics
+- [ ] Add gam and diagnostics
 - [ ] Add diagnostics for bootstrap, nonpb
 - [ ] Add diagnostics for cdd
 - [ ] Add diagnostics for frem
@@ -39,19 +39,19 @@
 
 ### Low priority
 - [ ] Improve the use of color, shape scales in `ind_plots()` and `vpc()`, e.g. add color scale options to the xp_theme
-- [ ] Find a way to add doses (bolus and infusion) to individual plots (shadded areas and/or vertical lines)
+- [ ] Find a way to add doses (bolus and infusion) to individual plots (shaded areas and/or vertical lines)
 - [ ] Improve `xp_theme()` use with a + method as in ggplot2 (e.g. [here](https://github.com/tidyverse/ggplot2/blob/master/R/theme.r>))
 - [ ] Allow `eta_*()` functions to read ETA values from table data or .phi file?
 - [ ] Should `@nobs` `@nsim` `@nind` values be updated when using filtering of the data?
 
 
 ## Satelite packages development
-- [ ] xpose_shiny: a click based shiny interface for xpose
-- [ ] xpose_monolix: add support for monolix [help wanted]
-- [ ] ...
+- [ ] *xpose_shiny*: a click based shiny interface for xpose
+- [ ] *xpose_monolix*: add support for monolix *[help wanted]*
+- [ ] others ...
 
 
 ## Will not do
-- [x] Use [delayed assignment](https://github.com/hadley/pryr/blob/master/R/assign-delayed.r)
+- [x] Use [delayed assignment](https://github.com/hadley/pryr/blob/master/R/assign-delayed.r) for data importation
 - [x] Use general `aes` assignment (e.g. `color =` will impact point + lines) targeting `ggplot()`
 
