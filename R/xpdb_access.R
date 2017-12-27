@@ -280,7 +280,7 @@ get_summary <- function(xpdb,
 #' @param .subprob The subproblem to be used, by default returns the last one for each file.
 #' @param .method The estimation method to be used, by default returns the last one for each file
 #' @param digits The number of significant digits to be displayed.
-#' @param transform Should diagonal OMEGA and SIGMA elements be transformed to coeficient of variation, 
+#' @param transform Should diagonal OMEGA and SIGMA elements be transformed to standard deviation and 
 #' off diagonal elements be transformed to correlations. 
 #' @param show_all Logical, whether the 0 fixed off-diagonal elements should be removed from the output.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
