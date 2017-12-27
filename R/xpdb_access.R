@@ -342,7 +342,7 @@ get_prm <- function(xpdb,
     dplyr::mutate(prm_names = purrr::map(.x = as.list(.$problem), .f = function(x, code) {
       
       # Collect parameter names from the model code
-      code <- code[code$problem == x,]
+      code <- code[code$problem == x & nchar(code$code) > 0,]
       list(theta = code$comment[code$subroutine == 'the'],
            omega = code[code$subroutine == 'ome', ] %>%
              dplyr::filter(!(stringr::str_detect(.$code, 'BLOCK\\(\\d+\\)(?!.*SAME)') & .$comment == '')) %>% 
