@@ -13,6 +13,9 @@
 ^\.Rprofile$
 ^docs$
 ^appveyor\.yml$
-^vignettes/interactive_plots.*$
+^vignettes/about.*$
 ^vignettes/bestiarium.*$
+^vignettes/cheatsheet.pdf$
+^vignettes/faq.*$
+^vignettes/interactive_plots.*$
 ^pkgdown$
