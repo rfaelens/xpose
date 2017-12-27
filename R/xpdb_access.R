@@ -356,6 +356,11 @@ get_prm <- function(xpdb,
       prm_se   <- grab_iter(ext = data$ext, iter = -1000000001)
       prm_fix  <- grab_iter(ext = data$ext, iter = -1000000006)
       
+      if (all(is.na(prm_fix))) {
+        warning('Iteration `-1000000006` not found in the `.ext` file. Assuming no fixed parameters, check the output carefully.', call. = FALSE)
+        prm_fix[is.na(prm_fix)] <- 0
+      }
+      
       if (transform) {
         if (!is.null(data$cov)) {
           # build covariance matrix from `.cov` file
