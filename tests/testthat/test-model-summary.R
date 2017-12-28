@@ -48,6 +48,8 @@ test_that('summary is properly created with the appropriate information', {
   #expect_equal(sum_out(sum_esampleseed(model, software)), c('esampleseed', 'na'))
   expect_equal(sum_out(sum_ofv(model, software)), c('ofv', '-1403.905'))
   expect_equal(sum_out(sum_method(model, software), 1), c('method', 'foce-i'))
+  expect_equal(sum_out(sum_method(model = dplyr::data_frame(problem = 1L, level = 1L, subroutine = 'est', 
+                                                     code = 'METH=0', comment = ''), software), 1), c('method', 'fo'))
   expect_equal(sum_out(sum_method(model, software), 2), c('method', 'sim'))
   expect_equal(sum_out(sum_shk(model, software, 'eps', rounding)), c('epsshk', '14.86 [1]'))
   expect_equal(sum_out(sum_shk(model, software, 'eta', rounding)), c('etashk', '9.33 [1], 28.71 [2], 23.65 [3]'))

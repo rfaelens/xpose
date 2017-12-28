@@ -172,19 +172,19 @@ of multiple problem and/or subproblem. If <code>FALSE</code> all values are retu
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>run_summary</span> <span class='kw'>&lt;-</span> <span class='fu'>get_summary</span>(<span class='no'>xpdb_ex_pk</span>)
 <span class='no'>run_summary</span></div><div class='output co'>#&gt; # A tibble: 48 x 5
-#&gt;    problem subprob               descr       label
-#&gt;      &lt;dbl&gt;   &lt;dbl&gt;               &lt;chr&gt;       &lt;chr&gt;
-#&gt;  1       0       0     Run description       descr
-#&gt;  2       0       0       Run directory         dir
-#&gt;  3       0       0          Run errors      errors
-#&gt;  4       0       0 ESAMPLE seed number esampleseed
-#&gt;  5       0       0            Run file        file
-#&gt;  6       0       0   Number of ESAMPLE    nesample
-#&gt;  7       0       0     Reference model         ref
-#&gt;  8       0       0          Run number         run
-#&gt;  9       0       0            Software    software
-#&gt; 10       0       0      Run start time   timestart
-#&gt; # ... with 38 more rows, and 1 more variables: value &lt;chr&gt;</div><div class='input'>
+#&gt;    problem subprob descr               label       value                       
+#&gt;      &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;               &lt;chr&gt;       &lt;chr&gt;                       
+#&gt;  1       0       0 Run description     descr       NONMEM PK example for xpose 
+#&gt;  2       0       0 Run directory       dir         analysis/models/pk/         
+#&gt;  3       0       0 Run errors          errors      na                          
+#&gt;  4       0       0 ESAMPLE seed number esampleseed na                          
+#&gt;  5       0       0 Run file            file        run001.lst                  
+#&gt;  6       0       0 Number of ESAMPLE   nesample    na                          
+#&gt;  7       0       0 Reference model     ref         000                         
+#&gt;  8       0       0 Run number          run         run001                      
+#&gt;  9       0       0 Software            software    nonmem                      
+#&gt; 10       0       0 Run start time      timestart   Mon Oct 16 13:34:28 CEST 20…
+#&gt; # ... with 38 more rows</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

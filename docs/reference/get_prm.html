@@ -164,7 +164,7 @@
     </tr>
     <tr>
       <th>transform</th>
-      <td><p>Should diagonal OMEGA and SIGMA elements be transformed to coeficient of variation, 
+      <td><p>Should diagonal OMEGA and SIGMA elements be transformed to standard deviation and 
 off diagonal elements be transformed to correlations.</p></td>
     </tr>
     <tr>
@@ -191,8 +191,8 @@ off diagonal elements be transformed to correlations.</p></td>
 <span class='no'>prm</span> <span class='kw'>&lt;-</span> <span class='fu'>get_prm</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>.problem</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='message'>Returning parameter estimates from $prob no.1, subprob no.0, method foce</span></div><div class='input'>
 <span class='co'># Display parameters to the console</span>
 <span class='fu'><a href='prm_table.html'>prm_table</a></span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>.problem</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; 
-#&gt; The relative standard errors for omega and sigma are reported on the approximate
-#&gt; standard deviation scale (SE/variance estimate)/2.
+#&gt; Reporting transformed parameters:
+#&gt; For the OMEGA and SIGMA matrices, values are reported as standard deviations for the diagonal elements and as correlations for the off-diagonal elements. The relative standard errors (RSE) for OMEGA and SIGMA are reported on the approximate standard deviation scale (SE/variance estimate)/2. Use `transform = FALSE` to report untransformed parameters.
 #&gt; 
 #&gt; Estimates for $prob no.1, subprob no.0, method foce
 #&gt;  Parameter  Label      Value        RSE

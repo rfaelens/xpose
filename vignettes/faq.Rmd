@@ -24,8 +24,13 @@ knitr::opts_chunk$set(fig.dpi = 96,
 ```
 
 ## How do I install xpose?
+### From CRAN (latest stable release)
+1. Install/update xpose with the following command:  
+`install.packages('xpose')`
+
+### From github (current development version)
 1. Make sure you have the devtools package installed
-2. Install/update xpose with the following command:  
+1. Install/update xpose with the following command:  
 `devtools::install_github('UUPharmacometrics/xpose')`
 
 ## Are xpose and xpose4 cross compatible packages?
@@ -35,12 +40,13 @@ No. While the philosophy behind xpose and xpose4 is similar these are two indepe
 Not yet. The new xpose package has been fully redesigned around ggplot2 and the focus is currently on establishing the bases with basic PK diagnostic plots. New features will be added through future updates.
 
 ## How do I suggest an idea for a future version of xpose?
-1. Check on [github](https://github.com/UUPharmacometrics/xpose/issues) if this idea has not been discussed already
-2. Open a new issue on [github](https://github.com/UUPharmacometrics/xpose/issues) describing your idea
+1. Check on [github](https://github.com/UUPharmacometrics/xpose/issues) that this idea has not yet been discussed
+1. Read the [CONTRIBUTING.md](https://github.com/UUPharmacometrics/xpose/blob/master/CONTRIBUTING.md) document
+1. Open a new issue on [github](https://github.com/UUPharmacometrics/xpose/issues) describing your idea
 
 ## How do I report a bug found in xpose?
 1. Make sure you are running the latest version of xpose
-2. Check on [github](https://github.com/UUPharmacometrics/xpose/issues) if this issue has not been reported before
-3. Create a minimal reproductive example (reprex) of your issue
-4. Open a new issue on [github](https://github.com/UUPharmacometrics/xpose/issues)
+1. Check on [github](https://github.com/UUPharmacometrics/xpose/issues) that this issue has not yet been reported
+1. Read the [CONTRIBUTING.md](https://github.com/UUPharmacometrics/xpose/blob/master/CONTRIBUTING.md) document
+1. Open a new issue on [github](https://github.com/UUPharmacometrics/xpose/issues)
 
