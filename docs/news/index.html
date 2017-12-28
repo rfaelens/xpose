@@ -141,8 +141,14 @@
 <h3 class="hasAnchor">
 <a href="#general" class="anchor"></a>General</h3>
 <ul>
-<li>Improved compatibility with upcoming ggplot2 v2.2.2</li>
-<li>Improved compatibility with xpose.nlmixr</li>
+<li>Improved integration of the xpose.nlmixr package</li>
+<li>Prevented a problem in the <code>print()</code> function with the upcoming ggplot2 version</li>
+<li>Fixed bug in <code>summary()</code> where missing estimation method was reported if NM code written as METH=… instead of METHOD=…</li>
+<li>Fixed bug where labels in <code><a href="../reference/prm_table.html">prm_table()</a></code>, <code><a href="../reference/get_prm.html">get_prm()</a></code> were missing with a commented row in $THETA, $OMEGA or $SIGMA</li>
+<li>Fixed bug in <code><a href="../reference/prm_table.html">prm_table()</a></code>, <code><a href="../reference/get_prm.html">get_prm()</a></code> where only <code>NA</code> would be reported when missing the -1000000006 record in the .ext file (i.e. NM &lt;7.3)</li>
+<li>Improved description of the <code><a href="../reference/prm_table.html">prm_table()</a></code> output</li>
+<li>Fixed bug in <code><a href="../reference/ind_plots.html">ind_plots()</a></code> where the aesthetics would get mixed up if the variable names were changed</li>
+<li>Small fixes to vignettes, documentations and website</li>
 </ul>
 </div>
 </div>
