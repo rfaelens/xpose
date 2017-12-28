@@ -1,3 +1,15 @@
+# xpose 0.4.1
+### General
+* Improved integration of the xpose.nlmixr package
+* Prevented a problem in the `print()` function with the upcoming ggplot2 version
+* Fixed bug in `summary()` where missing estimation method was reported if NM code written as METH=... instead of METHOD=...
+* Fixed bug where labels in `prm_table()`, `get_prm()` were missing with a commented row in $THETA, $OMEGA or $SIGMA
+* Fixed bug in `prm_table()`, `get_prm()` where only `NA` would be reported when missing the -1000000006 record in the .ext file (i.e. NM <7.3)
+* Improved description of the `prm_table()` output
+* Fixed bug in `ind_plots()` where the aesthetics would get mixed up if the variable names were changed
+* Small fixes to vignettes, documentations and website
+
+
 # xpose 0.4.0
 ### General
 * Added xpdb memory usage to `print.xpose_data()`

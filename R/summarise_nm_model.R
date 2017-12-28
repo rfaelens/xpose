@@ -506,12 +506,12 @@ sum_method <- function(model, software) {
   if (software == 'nonmem') {
     x <- model %>% 
       dplyr::filter(.$subroutine %in% c('sim', 'est')) %>% 
-      dplyr::filter(stringr::str_detect(.$code, 'METHOD|NSUB'))
+      dplyr::filter(stringr::str_detect(.$code, 'METH|NSUB'))
     
     if (nrow(x) == 0) return(sum_tpl('method', 'na'))
     
     x %>% 
-      dplyr::mutate(value = stringr::str_match(.$code, 'METHOD\\s*=\\s*([^\\s]+)')[, 2],
+      dplyr::mutate(value = stringr::str_match(.$code, 'METH[OD]*\\s*=\\s*([^\\s]+)')[, 2],
                     inter = stringr::str_detect(.$code, '\\sINTER'),
                     lapl  = stringr::str_detect(.$code, '\\sLAPLA'),
                     like  = stringr::str_detect(.$code, '\\sLIKE')) %>% 
