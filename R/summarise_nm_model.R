@@ -317,7 +317,7 @@ sum_runtime <- function(model, software) {
   if (software == 'nonmem') {
     x <- model %>% 
       dplyr::filter(.$subroutine == 'lst') %>% 
-      dplyr::filter(stringr::str_detect(.$code, stringr::fixed('Elapsed estimation time')))
+      dplyr::filter(stringr::str_detect(.$code, 'Elapsed estimation\\s+time'))
     
     if (nrow(x) == 0) return(sum_tpl('runtime', 'na'))
     
@@ -336,7 +336,7 @@ sum_covtime <- function(model, software) {
   if (software == 'nonmem') {
     x <- model %>% 
       dplyr::filter(.$subroutine == 'lst') %>% 
-      dplyr::filter(stringr::str_detect(.$code, stringr::fixed('Elapsed covariance time')))
+      dplyr::filter(stringr::str_detect(.$code, 'Elapsed covariance\\s+time in seconds:\\s+\\d'))
     
     if (nrow(x) == 0) return(sum_tpl('covtime', 'na'))
     
