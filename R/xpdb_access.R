@@ -396,7 +396,7 @@ get_prm <- function(xpdb,
                                               stringr::str_detect(.$name, 'SIGMA') ~ 'sig'),
                       number = stringr::str_replace_all(.$name, '[^\\d,]+', ''),
                       se     = ifelse(.$fixed, NA_real_, as.numeric(.$se)),
-                      rse    = ifelse(.$fixed, NA_real_, as.numeric(.$rse))) %>%
+                      rse    = ifelse(.$fixed, NA_real_, abs(as.numeric(.$rse)))) %>%
         tidyr::separate(col = 'number', into = c('m', 'n'), sep = ',', fill = 'right') %>% 
         dplyr::mutate(diagonal = dplyr::if_else(.$m == .$n, TRUE, FALSE)) %>% 
         dplyr::rename_(.dots = list(value = 'mean')) %>% 
