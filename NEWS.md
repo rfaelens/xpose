@@ -2,6 +2,7 @@
 ### General
 * Address CRAN requests
 * Improved internal structure of VPC
+* Fixed bug with vpc 1.0.1
 
 # xpose 0.4.1
 ### General
