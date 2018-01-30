@@ -145,7 +145,10 @@ vpc_data <- function(xpdb,
   
   # Format vpc output
   xpdb$special <- vpc_dat %>%
-    purrr::discard(names(.) %in% c('sim', 'stratify_original', 'stratify_color', 'facet', 'as_percentage')) %>%
+    purrr::discard(names(.) %in% c('sim', 'stratify_original', 
+                                   'stratify_color', 'facet', 
+                                   'as_percentage', 'xlab', 
+                                   'ylab', 'labeller')) %>%
     purrr::map_at('vpc_dat', function(x) {
       x <- x %>% 
         tidyr::gather(key = 'tmp', value = 'value', dplyr::matches('\\.(low|med|up)')) %>% 
