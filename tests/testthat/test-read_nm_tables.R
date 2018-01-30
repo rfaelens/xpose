@@ -58,9 +58,8 @@ test_that('dot arguments are properly passed to readr', {
 })
 
 test_that('returns a tibble when user mode is used', {
-  # Skip test if long double not available
-  skip_if_not(capabilities('long.double')[[1]], 
-              message = 'Long double not available')
+  
+  skip_on_cran() # Skip to avoid issue with no long double
   
   expect_equal(test_tab, ctrl_tab)
 })
@@ -68,9 +67,7 @@ test_that('returns a tibble when user mode is used', {
 test_that('tables with firstonly are properly handled', {
   expect_message(tmp_table <- read_nm_tables(firstonly_test, quiet = FALSE), regexp = 'Consolidating|Joining')
   
-  # Skip test if long double not available
-  skip_if_not(capabilities('long.double')[[1]], 
-              message = 'Long double not available')
+  skip_on_cran() # Skip to avoid issue with no long double
   
   expect_equal(tmp_table$data[[1]], 
                xpdb_ex_pk$data$data[[1]][, unlist(xpdb_ex_pk$data$index[[1]][xpdb_ex_pk$data$index[[1]]$table %in% c('sdtab001', 'patab001'),]$col) ])

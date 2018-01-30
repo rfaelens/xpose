@@ -44,9 +44,8 @@ test_that('vpc_data works properly with xpdb tables', {
 })
 
 test_that('vpc_data works properly with psn_folder', {
-  # Skip test if long double not available
-  skip_if_not(capabilities('long.double')[[1]], 
-              message = 'Long double not available')
+  
+  skip_on_cran() # Skip to avoid issue with no long double
   
   # Check psn_vpc_parser
   parsed_psn_vpc <- psn_vpc_parser(xpdb = xpdb_ex_pk, psn_folder = 'data/psn_vpc/', 
