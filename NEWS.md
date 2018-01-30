@@ -1,3 +1,8 @@
+# xpose 0.4.2
+### General
+* Address CRAN requests
+* Improved internal structure of VPC
+
 # xpose 0.4.1
 ### General
 * Improved integration of the xpose.nlmixr package
