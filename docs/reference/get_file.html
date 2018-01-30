@@ -185,54 +185,56 @@ last one for each file.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Single file (returns a tibble)</span>
 <span class='no'>ext_file</span> <span class='kw'>&lt;-</span> <span class='fu'>get_file</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>'run001.ext'</span>)</div><div class='output co'>#&gt; <span class='message'>Returning data from run001.ext, $prob no.1, subprob no.0, method foce</span></div><div class='input'><span class='no'>ext_file</span></div><div class='output co'>#&gt; # A tibble: 28 x 16
-#&gt;    ITERA… THETA1 THETA2 THET… THET… THET…  THETA6  THETA7 `SIGM… `OMEGA… `OMEG…
-#&gt;     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
-#&gt;  1   0      25.4   1.47  7.45 0.214 0.200 0.00983 0.00601   1.00  0.0740      0
-#&gt;  2   1.00   26.3   1.26  7.35 0.219 0.217 0.00989 0.00602   1.00  0.0744      0
-#&gt;  3   2.00   25.6   1.47  7.29 0.216 0.212 0.00987 0.00603   1.00  0.0741      0
-#&gt;  4   3.00   26.8   1.49  5.76 0.213 0.213 0.00979 0.00628   1.00  0.0730      0
-#&gt;  5   4.00   26.7   1.49  5.69 0.213 0.212 0.00979 0.00629   1.00  0.0730      0
-#&gt;  6   5.00   26.7   1.49  5.66 0.213 0.212 0.00979 0.00630   1.00  0.0730      0
-#&gt;  7   6.00   26.6   1.49  5.03 0.210 0.217 0.0100  0.00652   1.00  0.0724      0
-#&gt;  8   7.00   26.6   1.49  4.93 0.205 0.217 0.0100  0.00658   1.00  0.0717      0
-#&gt;  9   8.00   26.6   1.48  4.62 0.211 0.217 0.00951 0.00735   1.00  0.0633      0
-#&gt; 10   9.00   26.6   1.46  4.41 0.209 0.217 0.00903 0.00874   1.00  0.0766      0
-#&gt; # ... with 18 more rows, and 5 more variables: `OMEGA(2,2)` &lt;dbl&gt;, `OMEGA(3,1)`
-#&gt; #   &lt;dbl&gt;, `OMEGA(3,2)` &lt;dbl&gt;, `OMEGA(3,3)` &lt;dbl&gt;, OBJ &lt;dbl&gt;</div><div class='input'>
+#&gt;    ITERATION THETA1 THETA2 THETA3 THETA4 THETA5  THETA6  THETA7 `SIGMA(1,1)`
+#&gt;        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;        &lt;dbl&gt;
+#&gt;  1      0      25.4   1.47   7.45  0.214  0.200 0.00983 0.00601         1.00
+#&gt;  2      1.00   26.3   1.26   7.35  0.219  0.217 0.00989 0.00602         1.00
+#&gt;  3      2.00   25.6   1.47   7.29  0.216  0.212 0.00987 0.00603         1.00
+#&gt;  4      3.00   26.8   1.49   5.76  0.213  0.213 0.00979 0.00628         1.00
+#&gt;  5      4.00   26.7   1.49   5.69  0.213  0.212 0.00979 0.00629         1.00
+#&gt;  6      5.00   26.7   1.49   5.66  0.213  0.212 0.00979 0.00630         1.00
+#&gt;  7      6.00   26.6   1.49   5.03  0.210  0.217 0.0100  0.00652         1.00
+#&gt;  8      7.00   26.6   1.49   4.93  0.205  0.217 0.0100  0.00658         1.00
+#&gt;  9      8.00   26.6   1.48   4.62  0.211  0.217 0.00951 0.00735         1.00
+#&gt; 10      9.00   26.6   1.46   4.41  0.209  0.217 0.00903 0.00874         1.00
+#&gt; # ... with 18 more rows, and 7 more variables: `OMEGA(1,1)` &lt;dbl&gt;,
+#&gt; #   `OMEGA(2,1)` &lt;dbl&gt;, `OMEGA(2,2)` &lt;dbl&gt;, `OMEGA(3,1)` &lt;dbl&gt;,
+#&gt; #   `OMEGA(3,2)` &lt;dbl&gt;, `OMEGA(3,3)` &lt;dbl&gt;, OBJ &lt;dbl&gt;</div><div class='input'>
 <span class='co'># Multiple files (returns a list)</span>
 <span class='no'>files</span> <span class='kw'>&lt;-</span> <span class='fu'>get_file</span>(<span class='no'>xpdb_ex_pk</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>'run001.ext'</span>, <span class='st'>'run001.phi'</span>))</div><div class='output co'>#&gt; <span class='message'>Returning data from run001.ext, run001.phi</span></div><div class='input'><span class='no'>files</span></div><div class='output co'>#&gt; $run001.ext_prob_1_subprob_0_foce
 #&gt; # A tibble: 28 x 16
-#&gt;    ITERA… THETA1 THETA2 THET… THET… THET…  THETA6  THETA7 `SIGM… `OMEGA… `OMEG…
-#&gt;     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
-#&gt;  1   0      25.4   1.47  7.45 0.214 0.200 0.00983 0.00601   1.00  0.0740      0
-#&gt;  2   1.00   26.3   1.26  7.35 0.219 0.217 0.00989 0.00602   1.00  0.0744      0
-#&gt;  3   2.00   25.6   1.47  7.29 0.216 0.212 0.00987 0.00603   1.00  0.0741      0
-#&gt;  4   3.00   26.8   1.49  5.76 0.213 0.213 0.00979 0.00628   1.00  0.0730      0
-#&gt;  5   4.00   26.7   1.49  5.69 0.213 0.212 0.00979 0.00629   1.00  0.0730      0
-#&gt;  6   5.00   26.7   1.49  5.66 0.213 0.212 0.00979 0.00630   1.00  0.0730      0
-#&gt;  7   6.00   26.6   1.49  5.03 0.210 0.217 0.0100  0.00652   1.00  0.0724      0
-#&gt;  8   7.00   26.6   1.49  4.93 0.205 0.217 0.0100  0.00658   1.00  0.0717      0
-#&gt;  9   8.00   26.6   1.48  4.62 0.211 0.217 0.00951 0.00735   1.00  0.0633      0
-#&gt; 10   9.00   26.6   1.46  4.41 0.209 0.217 0.00903 0.00874   1.00  0.0766      0
-#&gt; # ... with 18 more rows, and 5 more variables: `OMEGA(2,2)` &lt;dbl&gt;, `OMEGA(3,1)`
-#&gt; #   &lt;dbl&gt;, `OMEGA(3,2)` &lt;dbl&gt;, `OMEGA(3,3)` &lt;dbl&gt;, OBJ &lt;dbl&gt;
+#&gt;    ITERATION THETA1 THETA2 THETA3 THETA4 THETA5  THETA6  THETA7 `SIGMA(1,1)`
+#&gt;        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;        &lt;dbl&gt;
+#&gt;  1      0      25.4   1.47   7.45  0.214  0.200 0.00983 0.00601         1.00
+#&gt;  2      1.00   26.3   1.26   7.35  0.219  0.217 0.00989 0.00602         1.00
+#&gt;  3      2.00   25.6   1.47   7.29  0.216  0.212 0.00987 0.00603         1.00
+#&gt;  4      3.00   26.8   1.49   5.76  0.213  0.213 0.00979 0.00628         1.00
+#&gt;  5      4.00   26.7   1.49   5.69  0.213  0.212 0.00979 0.00629         1.00
+#&gt;  6      5.00   26.7   1.49   5.66  0.213  0.212 0.00979 0.00630         1.00
+#&gt;  7      6.00   26.6   1.49   5.03  0.210  0.217 0.0100  0.00652         1.00
+#&gt;  8      7.00   26.6   1.49   4.93  0.205  0.217 0.0100  0.00658         1.00
+#&gt;  9      8.00   26.6   1.48   4.62  0.211  0.217 0.00951 0.00735         1.00
+#&gt; 10      9.00   26.6   1.46   4.41  0.209  0.217 0.00903 0.00874         1.00
+#&gt; # ... with 18 more rows, and 7 more variables: `OMEGA(1,1)` &lt;dbl&gt;,
+#&gt; #   `OMEGA(2,1)` &lt;dbl&gt;, `OMEGA(2,2)` &lt;dbl&gt;, `OMEGA(3,1)` &lt;dbl&gt;,
+#&gt; #   `OMEGA(3,2)` &lt;dbl&gt;, `OMEGA(3,3)` &lt;dbl&gt;, OBJ &lt;dbl&gt;
 #&gt; 
 #&gt; $run001.phi_prob_1_subprob_0_foce
 #&gt; # A tibble: 74 x 12
-#&gt;    SUBJEC…    ID `ETA(1)` `ETA(2)` `ETA(3)` `ETC(1,1… `ETC(2,… `ETC(2… `ETC(3,…
-#&gt;      &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
-#&gt;  1    1.00   110  -0.0370 -0.00596  -2.14     0.0258  -9.61e⁻³  0.0339 -0.00930
-#&gt;  2    2.00   112  -0.0495  0.122    -0.0235   0.0140  -2.19e⁻³  0.0138 -0.00856
-#&gt;  3    3.00   113   0.332   0.0259   -1.15     0.00995  3.00e⁻⁴  0.0257 -0.00910
-#&gt;  4    4.00   121   0.304   0.249     1.89     0.00741  3.62e⁻³  0.0137  0.00511
-#&gt;  5    5.00   123   0.0271 -0.0801    1.09     0.00794  2.67e⁻³  0.0135  0.00193
-#&gt;  6    6.00   124   0.332   0.111    -1.54     0.0110  -2.19e⁻³  0.0307 -0.00944
-#&gt;  7    7.00   126   0.190  -0.0315    2.20     0.00785  3.00e⁻³  0.0136  0.00514
-#&gt;  8    8.00   127   0.190  -0.0750    0.415    0.0112   4.69e⁻³  0.0153 -0.0620 
-#&gt;  9    9.00   128  -0.0138 -0.00130  -1.27     0.0120   3.33e⁻⁵  0.0287 -0.00448
-#&gt; 10   10.0    210  -0.307  -0.108    -0.0168   0.00988  1.12e⁻³  0.0163 -0.00255
-#&gt; # ... with 64 more rows, and 3 more variables: `ETC(3,2)` &lt;dbl&gt;, `ETC(3,3)`
-#&gt; #   &lt;dbl&gt;, OBJ &lt;dbl&gt;
+#&gt;    SUBJECT_NO    ID `ETA(1)` `ETA(2)` `ETA(3)` `ETC(1,1)` `ETC(2,1)` `ETC(2,2)`
+#&gt;         &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+#&gt;  1       1.00   110  -0.0370 -0.00596  -2.14      0.0258  -0.00961       0.0339
+#&gt;  2       2.00   112  -0.0495  0.122    -0.0235    0.0140  -0.00219       0.0138
+#&gt;  3       3.00   113   0.332   0.0259   -1.15      0.00995  0.000300      0.0257
+#&gt;  4       4.00   121   0.304   0.249     1.89      0.00741  0.00362       0.0137
+#&gt;  5       5.00   123   0.0271 -0.0801    1.09      0.00794  0.00267       0.0135
+#&gt;  6       6.00   124   0.332   0.111    -1.54      0.0110  -0.00219       0.0307
+#&gt;  7       7.00   126   0.190  -0.0315    2.20      0.00785  0.00300       0.0136
+#&gt;  8       8.00   127   0.190  -0.0750    0.415     0.0112   0.00469       0.0153
+#&gt;  9       9.00   128  -0.0138 -0.00130  -1.27      0.0120   0.0000333     0.0287
+#&gt; 10      10.0    210  -0.307  -0.108    -0.0168    0.00988  0.00112       0.0163
+#&gt; # ... with 64 more rows, and 4 more variables: `ETC(3,1)` &lt;dbl&gt;,
+#&gt; #   `ETC(3,2)` &lt;dbl&gt;, `ETC(3,3)` &lt;dbl&gt;, OBJ &lt;dbl&gt;
 #&gt; </div><div class='input'>
 <span class='co'># Tip to list available files in the xpdb</span>
 <span class='fu'>print</span>(<span class='no'>xpdb_ex_pk</span>)</div><div class='output co'>#&gt; run001.lst overview: 

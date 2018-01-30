@@ -134,19 +134,34 @@
     </div>
 
     <div class="contents">
-    <div id="xpose-0-4-1" class="section level1">
+    <div id="xpose-0-4-2" class="section level1">
 <h1 class="hasAnchor">
-<a href="#xpose-0-4-1" class="anchor"></a>xpose 0.4.1</h1>
+<a href="#xpose-0-4-2" class="anchor"></a>xpose 0.4.2</h1>
 <div id="general" class="section level3">
 <h3 class="hasAnchor">
 <a href="#general" class="anchor"></a>General</h3>
+<ul>
+<li>Address CRAN requests</li>
+<li>Improved internal structure of VPC</li>
+</ul>
+</div>
+</div>
+    <div id="xpose-0-4-1" class="section level1">
+<h1 class="hasAnchor">
+<a href="#xpose-0-4-1" class="anchor"></a>xpose 0.4.1</h1>
+<div id="general-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#general-1" class="anchor"></a>General</h3>
 <ul>
 <li>Improved integration of the xpose.nlmixr package</li>
 <li>Prevented a problem in the <code>print()</code> function with the upcoming ggplot2 version</li>
 <li>Fixed bug in <code>summary()</code> where missing estimation method was reported if NM code written as METH=… instead of METHOD=…</li>
 <li>Fixed bug where labels in <code><a href="../reference/prm_table.html">prm_table()</a></code>, <code><a href="../reference/get_prm.html">get_prm()</a></code> were missing with a commented row in $THETA, $OMEGA or $SIGMA</li>
 <li>Fixed bug in <code><a href="../reference/prm_table.html">prm_table()</a></code>, <code><a href="../reference/get_prm.html">get_prm()</a></code> where only <code>NA</code> would be reported when missing the -1000000006 record in the .ext file (i.e. NM &lt;7.3)</li>
+<li>Prevented negative RSE in <code><a href="../reference/prm_table.html">prm_table()</a></code> and <code><a href="../reference/get_prm.html">get_prm()</a></code>
+</li>
 <li>Improved description of the <code><a href="../reference/prm_table.html">prm_table()</a></code> output</li>
+<li>Fixed bug in <code>summary()</code> with non numeric covariance step time</li>
 <li>Fixed bug in <code><a href="../reference/ind_plots.html">ind_plots()</a></code> where the aesthetics would get mixed up if the variable names were changed</li>
 <li>Small fixes to vignettes, documentations and website</li>
 </ul>
@@ -155,9 +170,9 @@
     <div id="xpose-0-4-0" class="section level1">
 <h1 class="hasAnchor">
 <a href="#xpose-0-4-0" class="anchor"></a>xpose 0.4.0</h1>
-<div id="general-1" class="section level3">
+<div id="general-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#general-1" class="anchor"></a>General</h3>
+<a href="#general-2" class="anchor"></a>General</h3>
 <ul>
 <li>Added xpdb memory usage to <code><a href="../reference/print.xpose_data.html">print.xpose_data()</a></code>
 </li>
@@ -202,9 +217,9 @@
     <div id="xpose-0-3-0" class="section level1">
 <h1 class="hasAnchor">
 <a href="#xpose-0-3-0" class="anchor"></a>xpose 0.3.0</h1>
-<div id="general-2" class="section level3">
+<div id="general-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#general-2" class="anchor"></a>General</h3>
+<a href="#general-3" class="anchor"></a>General</h3>
 <ul>
 <li>Improved documentation and testing</li>
 <li>Improved compatibility with NONMEM 7.4.1</li>
@@ -248,9 +263,9 @@
     <div id="xpose-0-2-0" class="section level1">
 <h1 class="hasAnchor">
 <a href="#xpose-0-2-0" class="anchor"></a>xpose 0.2.0</h1>
-<div id="general-3" class="section level3">
+<div id="general-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#general-3" class="anchor"></a>General</h3>
+<a href="#general-4" class="anchor"></a>General</h3>
 <ul>
 <li>Renamed package <code>xpose</code>
 </li>
@@ -353,6 +368,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#xpose-0-4-2">0.4.2</a></li>
         <li><a href="#xpose-0-4-1">0.4.1</a></li>
         <li><a href="#xpose-0-4-0">0.4.0</a></li>
         <li><a href="#xpose-0-3-0">0.3.0</a></li>
