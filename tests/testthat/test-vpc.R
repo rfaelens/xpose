@@ -8,7 +8,7 @@ context('Check VPCs')
 #  save(ctrl_special, file = 'data/ctrl_special.RData', compress = 'xz')
 load(file = file.path('data', 'ctrl_special.RData'))
 
-# ctrl_psn_vpc_dat <- psn_vpc_parser(xpdb = xpdb_ex_pk, psn_folder = 'data/psn_vpc/', 
+# ctrl_psn_vpc_dat <- psn_vpc_parser(xpdb = xpdb_ex_pk, psn_folder = 'data/psn_vpc/',
 #                                    psn_bins = TRUE, opt = vpc_opt(), quiet = TRUE)
 # save(ctrl_psn_vpc_dat, file = 'data/ctrl_psn_vpc.RData', compress = 'xz')
 load(file = file.path('data', 'ctrl_psn_vpc.RData'))
