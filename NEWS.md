@@ -1,3 +1,7 @@
+# xpose 0.4.3
+### General
+* Fixed bug in `get_prm()`/`prm_table()` off diagonal correlations.
+
 # xpose 0.4.2
 ### General
 * Address CRAN requests
