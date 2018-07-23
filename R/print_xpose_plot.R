@@ -24,10 +24,18 @@ print.xpose_plot <- function(x, page, ...) {
   
   # Parse template titles
   if (is.xpose.plot(x)) {
-    var_map <- as.character(x$mapping)
+    # Add prefix to title subtitle, caption and tags
     x$labels$title <- append_suffix(x$xpose, x$labels$title, 'title')
     x$labels$subtitle <- append_suffix(x$xpose, x$labels$subtitle, 'subtitle')
     x$labels$caption  <- append_suffix(x$xpose, x$labels$caption, 'caption')
+    
+    # Get the mapping variables keywords and values
+    var_map <- x$mapping %>% 
+      as.character() %>%
+      stringr::str_replace(pattern = '^~', replacement = '') %>% 
+      purrr::set_names(names(x$mapping))
+    
+    # Process the keywords
     x$labels <- x$labels %>% 
       purrr::map_if(stringr::str_detect(., '@'),
                     .f = parse_title, xpdb = x$xpose,
