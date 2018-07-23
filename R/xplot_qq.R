@@ -76,10 +76,15 @@ xplot_qq <- function(xpdb,
   
   # Add reference line
   if (guide) {
+    if (utils::packageVersion('ggplot2') >= '3.0.0') {
     xp <- xp + xp_geoms(xp_theme = xpdb$xp_theme,
                         name     = 'guide',
                         ggfun    = 'geom_qq_line',
                         ...)
+    } else {
+      warning('QQ guides are only available for ggplot2 >= 3.0.0.', 
+              call. = FALSE)
+    }
   }
   
   # Define scales
