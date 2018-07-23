@@ -33,6 +33,7 @@ xplot_qq <- function(xpdb,
                      title     = NULL,
                      subtitle  = NULL,
                      caption   = NULL,
+                     tag       = NULL,
                      plot_name = 'qq_plot',
                      gg_theme,
                      xp_theme,
@@ -109,6 +110,10 @@ xplot_qq <- function(xpdb,
   # Add labels
   xp <- xp + labs(title = title, subtitle = subtitle, caption = caption)
   
+  if (utils::packageVersion('ggplot2') >= '3.0.0') {
+    xp <- xp + labs(tag = tag)
+  }
+  
   # Add metadata to plots
   xp$xpose <- list(fun      = plot_name,
                    summary  = xpdb$summary,
@@ -116,8 +121,8 @@ xplot_qq <- function(xpdb,
                    subprob  = attr(data, 'subprob'),
                    method   = attr(data, 'method'),
                    quiet    = quiet,
-                   xp_theme = xpdb$xp_theme[stringr::str_c(c('title', 'subtitle', 'caption'), 
-                                                           '_suffix')])
+                   xp_theme = xpdb$xp_theme[stringr::str_c(c('title', 'subtitle', 
+                                                             'caption', 'tag'), '_suffix')])
   
   # Ouptut the plot
   structure(xp, class = c('xpose_plot', class(xp)))

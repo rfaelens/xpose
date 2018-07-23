@@ -25,9 +25,13 @@ print.xpose_plot <- function(x, page, ...) {
   # Parse template titles
   if (is.xpose.plot(x)) {
     # Add prefix to title subtitle, caption and tags
-    x$labels$title <- append_suffix(x$xpose, x$labels$title, 'title')
+    x$labels$title    <- append_suffix(x$xpose, x$labels$title, 'title')
     x$labels$subtitle <- append_suffix(x$xpose, x$labels$subtitle, 'subtitle')
     x$labels$caption  <- append_suffix(x$xpose, x$labels$caption, 'caption')
+    
+    if (utils::packageVersion('ggplot2') >= '3.0.0') {
+      x$labels$tag      <- append_suffix(x$xpose, x$labels$tag, 'tag')
+    }
     
     # Get the mapping variables keywords and values
     var_map <- x$mapping %>% 

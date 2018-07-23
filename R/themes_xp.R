@@ -27,6 +27,7 @@ theme_xp_default <- function() {
     title_suffix    = '',
     subtitle_suffix = '',
     caption_suffix  = '',
+    tag_suffix      = '',
     
     # Panels
     facets          = NULL,
@@ -127,6 +128,7 @@ theme_xp_xpose4 <- function() {
     title_suffix    = '',
     subtitle_suffix = '',
     caption_suffix  = '',
+    tag_suffix      = '',
     
     # Panels
     facets          = NULL,
