@@ -94,6 +94,21 @@ is.xpdb <- function(x) {
 }
 
 
+#' Convert an object to `xpose_data` class
+#' 
+#' @description Adds `xpose_data` attribute to an object
+#' 
+#' @param x An object to be modified.
+#' 
+#' @return x with `xpose_data` class.
+#' 
+#' @keywords internal
+#' @export
+as.xpdb <- function(x) {
+  structure(x, class = c('xpose_data', class(x)))
+}
+
+
 #' Test for nm_model class
 #' 
 #' @description Reports whether x is a `nm_model` object
@@ -108,6 +123,7 @@ is.xpdb <- function(x) {
 is.nm.model <- function(x) {
   inherits(x, 'nm_model')
 }
+
 
 #' Test for nm_table_list class
 #' 
