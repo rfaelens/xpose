@@ -44,6 +44,7 @@ test_that('properly creates the xpdb when using the file argument', {
   attr(xpdb_1$gg_theme, 'theme') <- 'theme_readable'
   xpdb_1$options$quiet <- FALSE
   xpdb_1$xp_theme$labeller <- xpdb_ex_pk$xp_theme$labeller
+  xpdb_1 <- as.xpdb(xpdb_1)
   expect_identical(xpdb_1, xpdb_ex_pk)
 })
 
@@ -61,6 +62,7 @@ test_that('properly creates the xpdb when using the runno argument', {
   attr(xpdb_2$gg_theme, 'theme') <- 'theme_readable'
   xpdb_2$options$quiet <- FALSE
   xpdb_2$xp_theme$labeller <- xpdb_ex_pk$xp_theme$labeller
+  xpdb_2 <- as.xpdb(xpdb_2)
   expect_identical(xpdb_2, xpdb_ex_pk)
 })
 
@@ -75,6 +77,7 @@ test_that('properly handles errors in tables', {
 test_that('properly handles errors in summary', {
   broken_theme <- theme_xp_default()
   broken_theme$rounding <- 'No'
+  broken_theme <- as.xpose.theme(broken_theme)
   expect_warning(xpdb_4 <- xpose_data(runno = '001', ext = '.lst', dir = 'data', 
                                       ignore = c('data', 'files'),
                                       quiet = TRUE, xp_theme = broken_theme),
