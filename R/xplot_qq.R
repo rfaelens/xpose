@@ -125,5 +125,5 @@ xplot_qq <- function(xpdb,
                                                              'caption', 'tag'), '_suffix')])
   
   # Ouptut the plot
-  structure(xp, class = c('xpose_plot', class(xp)))
+  as.xpose.plot(xp)
 }
