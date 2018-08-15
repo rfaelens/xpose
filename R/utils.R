@@ -90,7 +90,7 @@ is.xpose.theme <- function(x) {
 #' @export
 as.xpose.theme <- function(x) {
   if (!is.xpose.theme(x)) {
-    structure(x, class = c('xpose_theme', class(x)))
+    structure(x, class = c('xpose_theme', 'uneval'))
   } else {
     x
   }
@@ -125,7 +125,7 @@ is.xpdb <- function(x) {
 #' @export
 as.xpdb <- function(x) {
   if (!is.xpdb(x)) {
-    structure(x, class = c('xpose_data', class(x)))
+    structure(x, class = c('xpose_data', 'uneval'))
   } else {
     x
   }
