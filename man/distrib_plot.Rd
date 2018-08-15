@@ -10,8 +10,9 @@
 \usage{
 prm_distrib(xpdb, mapping = NULL, drop_fixed = TRUE, type = "hr",
   title = "Parameter distribution | @run",
-  subtitle = "Based on @nind individuals", caption = "@dir", tag = NULL,
-  log = NULL, guide = FALSE, facets, .problem, quiet, ...)
+  subtitle = "Based on @nind individuals", caption = "@dir",
+  tag = NULL, log = NULL, guide = FALSE, facets, .problem, quiet,
+  ...)
 
 eta_distrib(xpdb, mapping = NULL, drop_fixed = TRUE, type = "hr",
   title = "Eta distribution | @run",
@@ -21,13 +22,15 @@ eta_distrib(xpdb, mapping = NULL, drop_fixed = TRUE, type = "hr",
 
 res_distrib(xpdb, mapping = NULL, res = "CWRES", type = "hr",
   title = "@x distribution | @run",
-  subtitle = "Based on @nobs observations", caption = "@dir", tag = NULL,
-  log = NULL, guide = FALSE, facets, .problem, quiet, ...)
+  subtitle = "Based on @nobs observations", caption = "@dir",
+  tag = NULL, log = NULL, guide = FALSE, facets, .problem, quiet,
+  ...)
 
 cov_distrib(xpdb, mapping = NULL, drop_fixed = TRUE, type = "hr",
   title = "Continuous covariates distribution | @run",
-  subtitle = "Based on @nind individuals", caption = "@dir", tag = NULL,
-  log = NULL, guide = FALSE, facets, .problem, quiet, ...)
+  subtitle = "Based on @nind individuals", caption = "@dir",
+  tag = NULL, log = NULL, guide = FALSE, facets, .problem, quiet,
+  ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
