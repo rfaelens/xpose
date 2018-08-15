@@ -18,19 +18,19 @@ q1 <- xplot_qq(xpdb = xpdb_ex_pk, aes_string(sample = 'PRED'), guide = TRUE, typ
 
 # Facet wrap
 p2 <- xplot_scatter(xpdb = xpdb_ex_pk, aes_string(x = 'PRED', y = 'DV'), 
-                    facets = 'SEX', quiet = TRUE)
+                    facets = c('MED2', 'SEX'), quiet = TRUE)
 d2 <- xplot_distrib(xpdb = xpdb_ex_pk, aes_string(x = 'PRED'), 
-                    facets = 'SEX', quiet = TRUE, page = 1, ncol = 1, nrow = 1)
+                    facets = c('MED2', 'SEX'), quiet = TRUE, page = 1, ncol = 1, nrow = 1)
 q2 <- xplot_qq(xpdb = xpdb_ex_pk, aes_string(sample = 'PRED'), 
-               facets = 'SEX', quiet = TRUE, page = 1:2, ncol = 1, nrow = 1)
+               facets = c('MED2', 'SEX'), quiet = TRUE, page = 1:2, ncol = 1, nrow = 1)
 
 # Facet grid
 p3 <- xplot_scatter(xpdb = xpdb_ex_pk, aes_string(x = 'PRED', y = 'DV'), 
-                    facets = DOSE~SEX, quiet = TRUE, page = 1, ncol = 1, nrow = 1)
+                    facets = MED2~SEX, quiet = TRUE, page = 1, ncol = 1, nrow = 1)
 d3 <- xplot_distrib(xpdb = xpdb_ex_pk, aes_string(x = 'PRED'), 
-                    facets = DOSE~SEX, quiet = TRUE)
+                    facets = MED2~SEX, quiet = TRUE)
 q3 <- xplot_qq(xpdb = xpdb_ex_pk, aes_string(sample = 'PRED'), 
-               facets = DOSE~SEX, quiet = TRUE, page = 1:2, ncol = 1, nrow = 1)
+               facets = MED2~SEX, quiet = TRUE, page = 1:2, ncol = 1, nrow = 1)
 
 
 # Tests start here --------------------------------------------------------
@@ -97,12 +97,12 @@ test_that('faceting works properly', {
   expect_true(is.list(d2$facet$params$facets))
   expect_true(is.list(q2$facet$params$facets))
   
-  expect_equal(as.character(p3$facet$params$cols[[1]]), 'SEX')
-  expect_equal(as.character(p3$facet$params$rows[[1]]), 'DOSE')
-  expect_equal(as.character(d3$facet$params$cols[[1]]), 'SEX')
-  expect_equal(as.character(d3$facet$params$rows[[1]]), 'DOSE')
-  expect_equal(as.character(q3$facet$params$cols[[1]]), 'SEX')
-  expect_equal(as.character(q3$facet$params$rows[[1]]), 'DOSE')
+  expect_equal(as.character(p3$facet$params$cols[[1]])[2], 'SEX')   # Improve ?
+  expect_equal(as.character(p3$facet$params$rows[[1]])[2], 'MED2')  # Improve ?
+  expect_equal(as.character(d3$facet$params$cols[[1]])[2], 'SEX')   # Improve ?
+  expect_equal(as.character(d3$facet$params$rows[[1]])[2], 'MED2')  # Improve ?
+  expect_equal(as.character(q3$facet$params$cols[[1]])[2], 'SEX')   # Improve ?
+  expect_equal(as.character(q3$facet$params$rows[[1]])[2], 'MED2')  # Improve ?
 })
 
 test_that('xpose_geom mapping works properly', {
