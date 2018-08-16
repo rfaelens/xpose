@@ -4,7 +4,7 @@ We are happy that you are willing to help us out with the development of xpose. 
 
 ## Submitting issues
 
-Before posting a new issue, please check that it has not already been posted nor is listed in our [road-map](https://github.com/UUPharmacometrics/xpose/blob/master/ROADMAP.md).
+Before posting a new issue, please check that it has not already been posted.
 
 * For **feature requests** make sure to include sufficient information, such as a proposed workflow, plots images, links to posters or publications describing a method, etc.
 * For **reporting a bug**, the most important thing is to include a minimal reproducible example so that we can quickly verify your problem, and figure out how to fix it. To make your example reproducible:
@@ -18,14 +18,14 @@ Before posting a new issue, please check that it has not already been posted nor
 
 To contribute code to xpose please carefully follow the steps listed below.
 
-*Note 1: before getting started with a pull request, we strongly encourage you follow the procedure described above for **feature requests** and/or **reporting a bug** to ensure that your project is compatible with the our xpose [road-map](https://github.com/UUPharmacometrics/xpose/blob/master/ROADMAP.md).*
+*Note 1: before getting started with a pull request, we strongly encourage you follow the procedure described above for **feature requests** and/or **reporting a bug** to ensure that your project is compatible with the our xpose road-map.*
 
 *Note 2: if you are unfamiliar with the development of R packages, please take some time to read the [R packages](http://r-pkgs.had.co.nz) book by Hadley Wickham.*
 
 1. [Fork](https://github.com/UUPharmacometrics/xpose/fork) the xpose repository.
 1. Make the changes to the code on your fork.
 
-    + Use the [coding style](http://r-pkgs.had.co.nz/style.html) recommended by Hadley Wickham.
+    + Use the tidyverse [coding style](http://style.tidyverse.org/).
     + Any new function should have [Roxygen](http://r-pkgs.had.co.nz/man.html) documentation. Internal functions should contain `#' @keywords internal`. Add examples to new functions. Make sure to update the documentation with `devtools::document()` before submitting the pull request.
     + [Tests](http://r-pkgs.had.co.nz/tests.html) should be added under *tests/testthat/* to ensure for proper code coverage.
     + New plots should be created using the generic `xplot_scatter()`, `xplot_distrib()` or `xplot_qq()`. Check for example the code of *R/plot_gof.R* to see how it should be done.
