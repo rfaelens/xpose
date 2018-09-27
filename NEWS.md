@@ -1,3 +1,6 @@
+# latest
+* Fix bug in all general plot functions where a qualified package access (e.g. `xpose::dv_vs_ipred`) would result in an error when printing (@rfaelens, #95)
+
 # xpose 0.4.3
 ### General
 * Fixed bug in `get_prm()`/`prm_table()` where off diagonal correlations were improperly computed.
